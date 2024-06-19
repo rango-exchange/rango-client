@@ -12,12 +12,9 @@ import { Networks } from '@rango-dev/wallets-core/legacy';
 import { chooseInstance, getSolanaAccounts } from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import { WALLET_ID } from '../constants.js';
+import { EVM_SUPPORTED_CHAINS, WALLET_ID } from '../constants.js';
+import { phantom as phantom_instance } from '../utils.js';
 
-import {
-  EVM_SUPPORTED_CHAINS,
-  phantom as phantom_instance,
-} from './helpers.js';
 import signer from './signer.js';
 
 const config = {

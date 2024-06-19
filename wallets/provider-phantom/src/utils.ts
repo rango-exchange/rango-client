@@ -1,9 +1,9 @@
-import type { Network } from '@rango-dev/wallets-core/legacy';
-import type { ProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
+import type { ProviderApi as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
+import type { ProviderApi as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { Networks } from '@rango-dev/wallets-core/legacy';
 
-type Provider = Map<Network, any>;
+type Provider = Map<string, unknown>;
 
 export function phantom(): Provider | null {
   const { phantom } = window;
@@ -27,31 +27,29 @@ export function phantom(): Provider | null {
   return instances;
 }
 
-export function evmPhantom() {
+export function evmPhantom(): EvmProviderApi {
   const instances = phantom();
 
   const evmInstance = instances?.get(Networks.ETHEREUM);
 
   if (!instances || !evmInstance) {
     throw new Error(
-      'Are you sure Phantom injected and you have enabled evm correctly?'
+      'Are you sure Phantom injected and you have enabled EVM correctly?'
     );
   }
 
-  return evmInstance as ProviderApi;
+  return evmInstance as EvmProviderApi;
 }
 
-export function solanaPhantom() {
+export function solanaPhantom(): SolanaProviderApi {
   const instance = phantom();
   const solanaInstance = instance?.get(Networks.SOLANA);
 
   if (!instance || !solanaInstance) {
     throw new Error(
-      'Are you sure Phantom injected and you have enabled solana correctly?'
+      'Are you sure Phantom injected and you have enabled Solana correctly?'
     );
   }
 
   return solanaInstance;
 }
-
-export const EVM_SUPPORTED_CHAINS = [Networks.ETHEREUM, Networks.POLYGON];

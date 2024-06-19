@@ -1,8 +1,4 @@
 import type { LegacyState as WalletState } from './wallet.js';
-import type {
-  Namespaces,
-  NetworkTypeForNamespace,
-} from '../namespaces/common/types.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export type WalletType = string;
@@ -88,7 +84,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  namespaces?: Namespaces[];
+  namespaces?: Namespace[];
   singleNamespace?: boolean;
 };
 
@@ -145,7 +141,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
-  namespaces?: Namespaces[];
+  namespaces?: Namespace[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -228,13 +224,13 @@ export type WalletProviders = Map<
 
 export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
 
-export type NamespacesWithDiscoverMode = Namespaces | 'DISCOVER_MODE';
+export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
 
 export type NamespaceWithDiscoverMode = {
   namespace: 'DISCOVER_MODE';
   network: string;
 };
-export type NamespaceAndNetwork<T extends Namespaces = Namespaces> =
+export type NamespaceAndNetwork<T extends Namespace = Namespace> =
   | {
       /**
        * By default, you should specify namespace (e.g. evm).
@@ -247,3 +243,28 @@ export type NamespaceAndNetwork<T extends Namespaces = Namespaces> =
       network: NetworkTypeForNamespace<T>;
     }
   | NamespaceWithDiscoverMode;
+
+export enum Namespace {
+  Solana = 'solana',
+  Evm = 'evm',
+  Cosmos = 'cosmos',
+  Utxo = 'utxo',
+  Starknet = 'starknet',
+  Tron = 'tron',
+}
+
+interface NamespaceNetworkType {
+  [Namespace.Evm]: string;
+  [Namespace.Solana]: undefined;
+  [Namespace.Cosmos]: string;
+  [Namespace.Utxo]: string;
+  [Namespace.Starknet]: string;
+  [Namespace.Tron]: string;
+}
+
+export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
+  T extends 'DISCOVER_MODE'
+    ? string
+    : T extends Namespace
+    ? NamespaceNetworkType[T]
+    : never;

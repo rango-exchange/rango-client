@@ -1,9 +1,8 @@
 import type { Options } from './wallet.js';
 import type { BlockchainMeta } from 'rango-types';
 
-import { Namespaces } from '../namespaces/common/types.js';
-
 import {
+  Namespace,
   type NamespaceAndNetwork,
   type NamespaceWithDiscoverMode,
   type Network,
@@ -55,8 +54,8 @@ export function isDiscoverMode(
 
 export function isEvmNamespace(
   namespace: NamespaceAndNetwork
-): namespace is NamespaceAndNetwork<Namespaces.Evm> {
-  return namespace.namespace === Namespaces.Evm;
+): namespace is NamespaceAndNetwork<Namespace.Evm> {
+  return namespace.namespace === Namespace.Evm;
 }
 
 export const getBlockChainNameFromId = (

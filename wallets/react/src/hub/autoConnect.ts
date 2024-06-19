@@ -3,9 +3,9 @@ import type { UseV0Props } from '../legacy/useLegacy';
 import type { Hub } from '@rango-dev/wallets-core';
 import type {
   LegacyProviderInterface,
+  Namespace,
   NamespaceAndNetwork,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
 
 import { Persistor } from '@rango-dev/wallets-core/legacy';
 
@@ -95,7 +95,7 @@ export async function autoConnect(deps: {
       const legacyProvider = getLegacyProvider(id);
       const namespaces: NamespaceAndNetwork[] = lastConnectedWallets[id].map(
         (namespace) => ({
-          namespace: namespace as Namespaces,
+          namespace: namespace as Namespace,
           network: undefined,
         })
       );

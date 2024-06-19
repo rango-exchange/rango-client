@@ -1,4 +1,4 @@
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { LegacyNamespace as Namespace } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -28,7 +28,7 @@ import {
 export interface NamespacesModalState {
   providerType: string;
   providerImage: string;
-  availableNamespaces?: Namespaces[];
+  availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
 }
 
@@ -60,7 +60,7 @@ export function WalletsPage() {
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const { list, handleClick, error, disconnectConnectingWallets } =
+  const { list, connectWallet, error, disconnectConnectingWallets } =
     useWalletList({
       onBeforeConnect: (type) => {
         modalTimerId = setTimeout(() => {
@@ -140,7 +140,7 @@ export function WalletsPage() {
                     const isHub = !!wallet.properties;
 
                     const availableNamespaces = isHub
-                      ? detachedInstances?.value
+                      ? (detachedInstances?.value as Namespace[] | undefined)
                       : wallet.namespaces;
 
                     setNamespacesModalState({
@@ -150,7 +150,7 @@ export function WalletsPage() {
                       singleNamespace: wallet.singleNamespace,
                     });
                   } else {
-                    void handleClick(type);
+                    void connectWallet(type);
                   }
                 }}
                 isLoading={fetchMetaStatus === 'loading'}
@@ -170,7 +170,7 @@ export function WalletsPage() {
             onClose={() => setNamespacesModalState(null)}
             onConfirm={(namespaces) => {
               if (namespacesModalState) {
-                void handleClick(
+                void connectWallet(
                   namespacesModalState?.providerType,
                   namespaces.map((ns) => ({
                     namespace: ns,

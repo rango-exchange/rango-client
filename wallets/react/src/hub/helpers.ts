@@ -2,9 +2,9 @@ import type { UseAdapterProps } from './useAdapter';
 import type { Hub, Provider as V1 } from '@rango-dev/wallets-core';
 import type {
   LegacyProviderInterface,
+  Namespace,
   NamespaceAndNetwork,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
 
 import {
   formatAddressWithNetwork,
@@ -113,7 +113,7 @@ export function connect(
   // TODO: CommonBlockchains somehow.
   const targetNamespaces: [NamespaceAndNetwork, object][] = [];
   namespaces.forEach((namespace) => {
-    let targetNamespace: Namespaces;
+    let targetNamespace: Namespace;
     if (isDiscoverMode(namespace)) {
       targetNamespace = discoverNamespace(namespace.network);
     } else {

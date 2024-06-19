@@ -1,11 +1,11 @@
 import type {
   GetInstanceOptions,
+  Namespace,
   Network,
   WalletActions,
   WalletConfig,
   WalletType,
 } from './types.js';
-import type { Namespaces } from '../namespaces/common/types.js';
 import type { BlockchainMeta } from 'rango-types';
 
 import {
@@ -89,7 +89,7 @@ class Wallet<InstanceType = any> {
     return await this.connect(network);
   }
 
-  async connect(network?: Network, namespaces?: Namespaces[]) {
+  async connect(network?: Network, namespaces?: Namespace[]) {
     // If it's connecting, nothing do.
     if (this.state.connecting) {
       throw new Error('Connecting...');

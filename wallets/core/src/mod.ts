@@ -12,7 +12,6 @@ export type {
   FindProxiedNamespace as NamespaceInterface,
 } from './builders/mod.js';
 export { NamespaceBuilder, ProviderBuilder } from './builders/mod.js';
-export { Namespaces } from './namespaces/common/types.js';
 
 /*
  * Our `embedded` hasn't been migrated to NodeNext yet so it doesn't support `exports` field.
@@ -43,4 +42,5 @@ export type {
 export {
   readAccountAddress as legacyReadAccountAddress,
   Events as LegacyEvents,
+  Namespace as LegacyNamespace,
 } from './legacy/mod.js';

@@ -1,7 +1,7 @@
 import type { Connect, Disconnect } from '@rango-dev/wallets-core/legacy';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
-import { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
+import { Namespace } from '@rango-dev/wallets-core/legacy';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
@@ -19,7 +19,7 @@ export const config = {
 
 export const getInstance = getLedgerInstance;
 export const connect: Connect = async ({ namespaces }) => {
-  if (namespaces?.includes(Namespaces.Solana)) {
+  if (namespaces?.includes(Namespace.Solana)) {
     return await getSolanaAccounts();
   }
   return await getEthereumAccounts();
@@ -59,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
-    namespaces: [Namespaces.Evm, Namespaces.Solana],
+    namespaces: [Namespace.Evm, Namespace.Solana],
     singleNamespace: true,
     showOnMobile: false,
   };

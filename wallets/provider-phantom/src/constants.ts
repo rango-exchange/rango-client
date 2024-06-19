@@ -1,5 +1,7 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
-import { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
+import { Namespace, Networks } from '@rango-dev/wallets-core/legacy';
+
+export const EVM_SUPPORTED_CHAINS = [Networks.ETHEREUM, Networks.POLYGON];
 
 export const WALLET_ID = 'phantom';
 
@@ -15,7 +17,7 @@ export const info: ProviderInfo = {
   properties: [
     {
       name: 'detached',
-      value: [Namespaces.Solana, Namespaces.Evm],
+      value: [Namespace.Solana, Namespace.Evm],
     },
   ],
 };

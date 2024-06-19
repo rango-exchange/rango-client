@@ -10,7 +10,7 @@ import {
 } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
-import { evmPhantom } from '../legacy/helpers.js';
+import { evmPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(evmPhantom);

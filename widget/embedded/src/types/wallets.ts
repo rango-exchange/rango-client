@@ -1,4 +1,4 @@
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { LegacyNamespace as Namespace } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 export interface Wallet {
@@ -25,6 +25,6 @@ export type TokensBalance = {
 };
 
 export type WithNamespacesInfo = {
-  namespaces?: Namespaces[];
+  namespaces?: Namespace[];
   singleNamespace?: boolean;
 };

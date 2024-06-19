@@ -1,7 +1,9 @@
 import type { ProviderContext, ProviderProps } from '../legacy/types';
 import type { Store, Provider as V1 } from '@rango-dev/wallets-core';
-import type { NamespaceAndNetwork } from '@rango-dev/wallets-core/legacy';
-import type { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
+import type {
+  Namespace,
+  NamespaceAndNetwork,
+} from '@rango-dev/wallets-core/legacy';
 import type { Versions } from '@rango-dev/wallets-core/utils';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
@@ -156,7 +158,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       // TODO: CommonBlockchains somehow.
       const targetNamespaces: [NamespaceAndNetwork, object][] = [];
       namespaces.forEach((namespace) => {
-        let targetNamespace: Namespaces;
+        let targetNamespace: Namespace;
         if (isDiscoverMode(namespace)) {
           targetNamespace = discoverNamespace(namespace.network);
         } else {

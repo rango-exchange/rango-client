@@ -1,5 +1,8 @@
-import type { Network, WalletType } from '@rango-dev/wallets-core/legacy';
-import type { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
+import type {
+  Namespace,
+  Network,
+  WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { Networks } from '@rango-dev/wallets-core/legacy';
@@ -174,7 +177,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  namespaces?: Namespaces[];
+  namespaces?: Namespace[];
   singleNamespace?: boolean;
 };
 

@@ -1,7 +1,7 @@
 import type { PropTypes } from './WalletList.type';
 import type { Wallet } from '../../types';
 import type { ExtendedModalWalletInfo } from '../../utils/wallets';
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { LegacyNamespace as Namespace } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -46,7 +46,7 @@ import {
 interface WalletNamespacesModalState {
   providerType: string;
   providerImage: string;
-  availableNamespaces?: Namespaces[];
+  availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
 }
 
@@ -73,7 +73,7 @@ export function WalletList(props: PropTypes) {
   const {
     list,
     error,
-    handleClick,
+    connectWallet,
     disconnectWallet,
     disconnectConnectingWallets,
   } = useWalletList({
@@ -205,22 +205,13 @@ export function WalletList(props: PropTypes) {
           const hubCondition =
             detachedInstances && wallet.state !== 'connected';
 
-          console.log({
-            wallet,
-            hubCondition,
-            address,
-            connectedWallets,
-            walletType: wallet.type,
-            chain,
-          });
-
           if (hubCondition) {
             handleOpenNamespacesModal(wallet);
           } else if (wallet.state === WalletState.DISCONNECTED) {
             if (!!wallet.namespaces) {
               handleOpenNamespacesModal(wallet);
             } else {
-              void handleClick(wallet.type);
+              void connectWallet(wallet.type);
             }
           } else if (!!wallet.namespaces && !conciseAddress) {
             await disconnectWallet(wallet.type);
@@ -261,7 +252,7 @@ export function WalletList(props: PropTypes) {
               open={!!namespacesModalState}
               onClose={() => setNamespacesModalState(null)}
               onConfirm={(namespaces) => {
-                void handleClick(
+                void connectWallet(
                   namespacesModalState?.providerType as string,
                   namespaces.map((ns) => ({
                     namespace: ns,

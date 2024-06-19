@@ -1,9 +1,9 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { info, WALLET_ID } from './constants.js';
-import { phantom as phantomInstance } from './legacy/helpers.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
+import { phantom as phantomInstance } from './utils.js';
 
 const provider = new ProviderBuilder(WALLET_ID)
   .init(function (context) {

@@ -15,7 +15,7 @@ import { CAIP } from '@rango-dev/wallets-core/utils';
 import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants.js';
-import { solanaPhantom } from '../legacy/helpers.js';
+import { solanaPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaPhantom);

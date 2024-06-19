@@ -32,10 +32,10 @@ interface Params {
   onConnect?: (walletType: string) => void;
 }
 
-interface Api {
+interface UseWalletsListApi {
   list: ExtendedModalWalletInfo[];
   error: string;
-  handleClick: (
+  connectWallet: (
     type: WalletType,
     namespaces?: NamespaceAndNetwork[]
   ) => Promise<void>;
@@ -48,7 +48,7 @@ interface Api {
  * we need to share the logic of rendering list of wallets and handle clicking on them in different places
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
-export function useWalletList(params: Params): Api {
+export function useWalletList(params: Params): UseWalletsListApi {
   const { chain, onBeforeConnect, onConnect } = params;
   const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
@@ -88,7 +88,7 @@ export function useWalletList(params: Params): Api {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (
+  const connectWallet = async (
     type: WalletType,
     namespaces?: NamespaceAndNetwork[]
   ) => {
@@ -192,7 +192,7 @@ export function useWalletList(params: Params): Api {
       (wallet) => !shouldExcludeWallet(wallet.type, chain ?? '', blockchains)
     ),
     error,
-    handleClick,
+    connectWallet,
     disconnectConnectingWallets,
     disconnectWallet,
   };

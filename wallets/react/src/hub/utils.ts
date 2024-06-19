@@ -11,7 +11,7 @@ import {
   type NamespaceAndNetwork,
   type EventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
+import { Namespace } from '@rango-dev/wallets-core/legacy';
 import { generateStoreId, type Versions } from '@rango-dev/wallets-core/utils';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
@@ -154,7 +154,7 @@ export function checkHubStateAndTriggerEvents(
   });
 }
 
-export function discoverNamespace(network: string): Namespaces {
+export function discoverNamespace(network: string): Namespace {
   switch (network) {
     case Networks.AKASH:
     case Networks.BANDCHAIN:
@@ -187,7 +187,7 @@ export function discoverNamespace(network: string): Namespaces {
     case Networks.TERRA:
     case Networks.THORCHAIN:
     case Networks.UMEE:
-      return Namespaces.Cosmos;
+      return Namespace.Cosmos;
     case Networks.AVAX_CCHAIN:
     case Networks.ARBITRUM:
     case Networks.BOBA:
@@ -202,15 +202,15 @@ export function discoverNamespace(network: string): Namespaces {
     case Networks.OPTIMISM:
     case Networks.POLYGON:
     case Networks.STARKNET:
-      return Namespaces.Evm;
+      return Namespace.Evm;
     case Networks.SOLANA:
-      return Namespaces.Solana;
+      return Namespace.Solana;
     case Networks.BTC:
     case Networks.BCH:
     case Networks.DOGE:
     case Networks.LTC:
     case Networks.TRON:
-      return Namespaces.Utxo;
+      return Namespace.Utxo;
     case Networks.POLKADOT:
     case Networks.TON:
     case Networks.Unknown:
@@ -245,7 +245,7 @@ export function getLegacyProvider(
 }
 
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: NamespaceAndNetwork<Namespaces.Evm>,
+  namespace: NamespaceAndNetwork<Namespace.Evm>,
   meta: BlockchainMeta[]
 ) {
   const evmBlockchainsList = meta.filter(isEvmBlockchain);

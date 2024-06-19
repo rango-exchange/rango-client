@@ -1,35 +1,7 @@
 import type { Actions } from '../../hub/namespaces/mod.js';
-import type { NamespacesWithDiscoverMode } from '../../legacy/types.js';
-
-export enum Namespaces {
-  Solana = 'solana',
-  Evm = 'evm',
-  Cosmos = 'cosmos',
-  Utxo = 'utxo',
-  Starknet = 'starknet',
-  Tron = 'tron',
-}
-
-interface NamespaceNetworkType {
-  [Namespaces.Evm]: string;
-  [Namespaces.Solana]: undefined;
-  [Namespaces.Cosmos]: string;
-  [Namespaces.Utxo]: string;
-  [Namespaces.Starknet]: string;
-  [Namespaces.Tron]: string;
-}
-
-export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
-  T extends 'DISCOVER_MODE'
-    ? string
-    : T extends Namespaces
-    ? NamespaceNetworkType[T]
-    : never;
 
 export type AnyFunction = (...args: any[]) => any;
 export type AnyPromiseFunction = (...args: any[]) => Promise<any>;
-
-export type PromiseReturnType<T> = T extends Promise<infer U> ? U : never;
 
 export type AndFunction<
   T extends Record<string, AnyPromiseFunction>,
