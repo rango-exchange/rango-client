@@ -28,6 +28,17 @@ export function changeAccountSubscriber(
       const [, setState] = context.state();
 
       eventCallback = (publicKey) => {
+        if (!publicKey) {
+          console.warn(
+            `Your Solana namespace is returning nothing on change account event`,
+            {
+              publicKey,
+              solanaInstance,
+            }
+          );
+          return;
+        }
+
         setState('accounts', [
           AccountId.format({
             address: publicKey.toString(),

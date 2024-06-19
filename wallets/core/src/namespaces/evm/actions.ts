@@ -8,7 +8,7 @@ import { AccountId } from 'caip';
 
 import { recommended as commonRecommended } from '../common/actions.js';
 
-import { CAIP_ETHEREUM_CHAIN_ID, CAIP_NAMESPACE } from './constants.js';
+import { CAIP_NAMESPACE } from './constants.js';
 import { getAccounts, switchOrAddNetwork } from './utils.js';
 
 export const recommended = [...commonRecommended];
@@ -31,6 +31,8 @@ export function connect(
         await switchOrAddNetwork(evmInstance, chain);
       }
 
+      const chainId = await evmInstance.request({ method: 'eth_chainId' });
+
       const result = await getAccounts(evmInstance);
 
       const formatAccounts = result.accounts.map(
@@ -39,7 +41,7 @@ export function connect(
             address: account,
             chainId: {
               namespace: CAIP_NAMESPACE,
-              reference: CAIP_ETHEREUM_CHAIN_ID,
+              reference: chainId,
             },
           }) as CaipAccount
       );
@@ -70,13 +72,15 @@ export function changeAccountSubscriber(
 
       const [, setState] = context.state();
 
-      eventCallback = (accounts) => {
+      eventCallback = async (accounts) => {
+        const chainId = await evmInstance.request({ method: 'eth_chainId' });
+
         const formatAccounts = accounts.map((account) =>
           AccountId.format({
             address: account,
             chainId: {
               namespace: CAIP_NAMESPACE,
-              reference: CAIP_ETHEREUM_CHAIN_ID,
+              reference: chainId,
             },
           })
         );
