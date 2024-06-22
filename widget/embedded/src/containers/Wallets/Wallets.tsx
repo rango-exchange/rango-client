@@ -37,7 +37,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
-    walletConnectProjectId: props.config?.walletConnectProjectId,
+    walletConnectProjectId: config?.walletConnectProjectId,
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,

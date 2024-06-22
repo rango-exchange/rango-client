@@ -3,6 +3,8 @@ import type { PropTypes } from './Slider.types';
 import { Typography } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 
+import { DEFAULT_THEME_COLORS, PLAYGROUND_CONTAINER_ID } from '../../constants';
+
 import {
   Content,
   RangeWrapper,
@@ -11,6 +13,7 @@ import {
 } from './Slider.styles';
 
 const MAX_VALUE = 100;
+const DEFAULT_COLOR = DEFAULT_THEME_COLORS.light.secondary;
 function Slider(props: PropTypes) {
   const {
     title,
@@ -20,6 +23,7 @@ function Slider(props: PropTypes) {
     variant = 'custom',
     min,
     max = MAX_VALUE,
+    color = DEFAULT_COLOR,
     id,
   } = props;
 
@@ -27,12 +31,20 @@ function Slider(props: PropTypes) {
     const sliderEl = document.querySelector(`#${id}`) as HTMLInputElement;
     const sliderValue = parseInt(sliderEl.value);
     const mainValue = sliderValue * (MAX_VALUE / (max as number));
-    sliderEl.style.background = `linear-gradient(to right, #5BABFF ${mainValue}%, #C8E2FF ${mainValue}%)`;
+    // Get CSS variables
+    const referenceElement = document.querySelector(
+      `#${PLAYGROUND_CONTAINER_ID}`
+    ) as Element;
+    const sliderActiveColor = color;
+    const sliderColorInactive = getComputedStyle(
+      referenceElement
+    ).getPropertyValue('--colors-secondary100');
+    sliderEl.style.background = `linear-gradient(to right, ${sliderActiveColor} ${mainValue}%, ${sliderColorInactive} ${mainValue}%)`;
   };
 
   useEffect(() => {
     progressScript();
-  }, []);
+  }, [value, color]);
 
   return (
     <SliderContainer>

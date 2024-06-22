@@ -1,3 +1,4 @@
+import type { WalletInfoWithNamespaces } from '../types';
 import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -18,7 +19,7 @@ import { WalletNamespacesModal } from '../components/WalletNamespacesModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
-import { getContainer } from '../utils/common';
+import { getContainer, isSingleWalletActive } from '../utils/common';
 import {
   filterBlockchainsByWalletTypes,
   filterWalletsByCategory,
@@ -51,6 +52,7 @@ export function WalletsPage() {
   const { fetchStatus: fetchMetaStatus } = useAppStore();
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const blockchains = useAppStore().blockchains();
+  const { config } = useAppStore();
 
   const [openModal, setOpenModal] = useState(false);
   const [namespacesModalState, setNamespacesModalState] =
@@ -95,6 +97,25 @@ export function WalletsPage() {
 
   const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
 
+  const handleWalletClick = (
+    type: string,
+    wallet: WalletInfoWithNamespaces
+  ) => {
+    if (!!wallet.namespaces && wallet.state === WalletState.DISCONNECTED) {
+      if (isSingleWalletActive(list, config.multiWallets)) {
+        return;
+      }
+      setNamespacesModalState({
+        providerType: type,
+        providerImage: wallet.image,
+        availableNamespaces: wallet.namespaces,
+        singleNamespace: wallet.singleNamespace,
+      });
+    } else {
+      void handleClick(type);
+    }
+  };
+
   return (
     <Layout
       header={{
@@ -123,21 +144,7 @@ export function WalletsPage() {
                 key={key}
                 {...wallet}
                 container={getContainer()}
-                onClick={(type) => {
-                  if (
-                    !!wallet.namespaces &&
-                    wallet.state === WalletState.DISCONNECTED
-                  ) {
-                    setNamespacesModalState({
-                      providerType: type,
-                      providerImage: wallet.image,
-                      availableNamespaces: wallet.namespaces,
-                      singleNamespace: wallet.singleNamespace,
-                    });
-                  } else {
-                    void handleClick(type);
-                  }
-                }}
+                onClick={(type) => handleWalletClick(type, wallet)}
                 isLoading={fetchMetaStatus === 'loading'}
                 disabled={!isActiveTab}
               />
