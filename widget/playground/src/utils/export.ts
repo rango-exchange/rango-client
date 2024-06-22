@@ -24,9 +24,9 @@ export function filterConfig(
 ) {
   const config = {
     ...WidgetConfig,
-    wallets: WidgetConfig.wallets?.filter(
-      (wallet) => typeof wallet === 'string'
-    ),
+    wallets: WidgetConfig.externalWallets
+      ? undefined
+      : WidgetConfig.wallets?.filter((wallet) => typeof wallet === 'string'),
   };
 
   const userSelectedConfig = clearEmpties(
@@ -51,7 +51,10 @@ export function filterConfig(
     filteredConfigForExport.apiKey = config.apiKey;
   }
 
-  if (!filteredConfigForExport.walletConnectProjectId) {
+  const isWalletConnectProjectIdNeeded =
+    !filteredConfigForExport.walletConnectProjectId &&
+    (!config.wallets || config.wallets.includes('wallet-connect-2'));
+  if (isWalletConnectProjectIdNeeded) {
     filteredConfigForExport.walletConnectProjectId =
       config.walletConnectProjectId;
   }
@@ -111,14 +114,15 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
-
-  formatedConfig = insertAt(
-    formatedConfig,
-    `// This project id is only for test purpose. Don't use it in production.
+  if (config.walletConnectProjectId) {
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// This project id is only for test purpose. Don't use it in production.
     // Get your Wallet Connect project id from https://cloud.walletconnect.com/
     `,
-    formatedConfig.indexOf('walletConnectProjectId')
-  );
+      formatedConfig.indexOf('walletConnectProjectId')
+    );
+  }
 
   if (!!config.wallets) {
     formatedConfig = insertAt(

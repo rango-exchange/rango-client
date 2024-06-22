@@ -10,7 +10,7 @@ import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { initialConfig, useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
-import { RANGO_PUBLIC_API_KEY } from './utils/configs';
+import { getConfig, RANGO_PUBLIC_API_KEY } from './utils/configs';
 import { filterConfig } from './utils/export';
 
 export function App() {
@@ -21,6 +21,7 @@ export function App() {
 
   const overridedConfig: WidgetConfig = {
     theme: {},
+    ...config,
     ...filteredConfigForExport,
     apiKey: RANGO_PUBLIC_API_KEY,
     features: {
@@ -35,7 +36,11 @@ export function App() {
    * Playground widget provider should contain all wallets so we need to remove 'wallets' from config
    * to make sure we can access to list of all wallets in playground
    */
-  const playgroundConfig = { ...overridedConfig, wallets: undefined };
+  const playgroundConfig = {
+    ...overridedConfig,
+    wallets: undefined,
+    walletConnectProjectId: getConfig('WC_PROJECT_ID'),
+  };
 
   useEffect(() => {
     void fetchMeta();

@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
+import { isSingleWalletActive } from '../utils/common';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -82,10 +83,7 @@ export function useWalletList(params: Params) {
       if (wallet.connected) {
         await disconnect(type);
       } else {
-        const atLeastOneWalletIsConnected = !!wallets.find(
-          (w) => w.state === WalletState.CONNECTED
-        );
-        if (config?.multiWallets === false && atLeastOneWalletIsConnected) {
+        if (isSingleWalletActive(wallets, config.multiWallets)) {
           return;
         }
         onBeforeConnect?.(type);

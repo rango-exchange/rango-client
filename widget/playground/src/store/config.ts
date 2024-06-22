@@ -95,7 +95,7 @@ export const initialConfig: WidgetConfig = {
   },
   liquiditySources: undefined,
   wallets: undefined,
-  multiWallets: undefined,
+  multiWallets: true,
   customDestination: undefined,
   language: undefined,
   excludeLiquiditySources: undefined,
