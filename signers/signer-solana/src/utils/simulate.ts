@@ -4,13 +4,10 @@ import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { getSolanaConnection } from './helpers';
 
-const INSTRUCTION_INDEX = 4;
-const INSUFFICIENT_FUNDS_ERROR_CODE = 0x1;
-const SLIPPAGE_ERROR_CODE = 0x1771;
-
-type SimulationResponseError =
-  | string
-  | { InstructionError: [number, string | { [key: string]: number | string }] };
+const INSUFFICIENT_FUNDS_ERROR_CODE = 1;
+const SLIPPAGE_ERROR_CODE = 6001;
+const PROGRAM_FAILED_TO_COMPLETE_ERROR = 'ProgramFailedToComplete';
+const ACCOUNT_NOT_FOUND_ERROR = 'AccountNotFound';
 
 export async function simulateTransaction(
   tx: Transaction | VersionedTransaction,
@@ -33,13 +30,20 @@ export async function simulateTransaction(
        */
       console.error('Simulation Error:', { err, logs });
 
-      throw getSimulationError(err as SimulationResponseError, logs);
+      throw getSimulationError(err, logs);
     }
   }
 }
 
+function getInsufficientFundsErrorMessage(logs: string[] | null) {
+  const insufficientLamportErrorMessage = logs?.find((log) =>
+    log.toLowerCase()?.includes('insufficient lamports')
+  );
+  return insufficientLamportErrorMessage || 'Insufficient funds';
+}
+
 function getSimulationError(
-  error: SimulationResponseError,
+  error: string | { [key: string]: any },
   logs: string[] | null
 ) {
   let message =
@@ -49,23 +53,35 @@ function getSimulationError(
    * trying to detect common errors (e.g. insufficient fund or slippage error)
    * We could probably remove this code after upgrading solana/web3 lib to v2
    */
-  if (
-    typeof error === 'object' &&
-    error?.InstructionError?.[0] === INSTRUCTION_INDEX &&
-    typeof error?.InstructionError?.[1] === 'object'
-  ) {
+  if (typeof error === 'string') {
+    message =
+      error === ACCOUNT_NOT_FOUND_ERROR
+        ? 'Attempt to debit an account but found no record of a prior credit.'
+        : error;
+  } else {
     if (
-      error?.InstructionError?.[1]?.Custom === INSUFFICIENT_FUNDS_ERROR_CODE
+      Array.isArray(error?.InstructionError) &&
+      error.InstructionError.length > 1
     ) {
-      const insufficentLamportErrorMessage = logs?.find((log) =>
-        log.toLowerCase()?.includes('insufficient lamports')
-      );
+      const instructionError = error.InstructionError[1];
 
-      message = insufficentLamportErrorMessage
-        ? insufficentLamportErrorMessage
-        : 'Insufficient funds';
-    } else if (error?.InstructionError?.[1]?.Custom === SLIPPAGE_ERROR_CODE) {
-      message = 'Slippage error';
+      if (typeof instructionError === 'object') {
+        switch (instructionError.Custom) {
+          case INSUFFICIENT_FUNDS_ERROR_CODE:
+            message = getInsufficientFundsErrorMessage(logs);
+            break;
+          case SLIPPAGE_ERROR_CODE:
+            message = 'Slippage error';
+            break;
+          default:
+            break;
+        }
+      } else if (instructionError === PROGRAM_FAILED_TO_COMPLETE_ERROR) {
+        message = 'Program failed to complete';
+      }
+    } else if (error?.InsufficientFundsForRent) {
+      message =
+        'Transaction results in an account with insufficient funds for rent.';
     }
   }
 
