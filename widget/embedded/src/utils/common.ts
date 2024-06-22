@@ -1,6 +1,7 @@
+import type { WalletInfoWithNamespaces } from '../types';
 import type { Token } from 'rango-sdk';
 
-import { BlockchainCategories } from '@rango-dev/ui';
+import { BlockchainCategories, WalletState } from '@rango-dev/ui';
 import { TransactionType } from 'rango-sdk';
 
 import { WIDGET_UI_ID } from '../constants';
@@ -247,3 +248,13 @@ export const getFontUrlByName = (fontName: string) => {
   const font = SUPPORTED_FONTS.find((font) => font.value === fontName);
   return font?.url;
 };
+
+export function isSingleWalletActive(
+  wallets: WalletInfoWithNamespaces[],
+  multiWallets?: boolean
+) {
+  const atLeastOneWalletIsConnected = !!wallets.find(
+    (w) => w.state === WalletState.CONNECTED
+  );
+  return multiWallets === false && atLeastOneWalletIsConnected;
+}

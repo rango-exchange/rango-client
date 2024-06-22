@@ -8,5 +8,6 @@ export interface PropTypes {
   variant?: 'custom' | 'regular';
   min?: string;
   max?: string;
+  color?: string;
   id: string;
 }
