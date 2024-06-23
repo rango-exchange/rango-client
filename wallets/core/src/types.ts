@@ -61,6 +61,7 @@ export type Connect = (options: {
   network?: Network;
   meta: BlockchainMeta[];
   namespaces?: Namespace[];
+  derivationPath?: string;
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {

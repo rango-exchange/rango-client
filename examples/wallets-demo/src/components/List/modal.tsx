@@ -109,7 +109,7 @@ function SignModal({ type, open, onClose, tokens }: Props) {
   const handleChangeNetwork = async (network: string) => {
     if (canSwitchNetwork(network)) {
       try {
-        await connect(type, network);
+        await connect({ type, network });
       } catch (err) {
         setError(
           'Error: ' + ((err as any).message || 'Failed to connect wallet')

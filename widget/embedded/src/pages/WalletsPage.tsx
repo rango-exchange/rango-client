@@ -1,5 +1,9 @@
-import type { WalletInfoWithNamespaces } from '../types';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { WalletWithExtraInfo } from '../types';
+import type {
+  DerivationPath,
+  Namespace,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -14,6 +18,7 @@ import {
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
+import { WalletDerivationPathModal } from '../components/WalletDerivationPathModal';
 import { WalletModal } from '../components/WalletModal';
 import { WalletNamespacesModal } from '../components/WalletNamespacesModal';
 import { useWalletList } from '../hooks/useWalletList';
@@ -30,6 +35,13 @@ interface NamespacesModalState {
   providerImage: string;
   availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
+}
+
+interface DerivationPathModalState {
+  providerType: string;
+  providerImage: string;
+  namespace?: Namespace;
+  derivationPaths?: DerivationPath[];
 }
 
 const ListContainer = styled('div', {
@@ -57,6 +69,8 @@ export function WalletsPage() {
   const [openModal, setOpenModal] = useState(false);
   const [namespacesModalState, setNamespacesModalState] =
     useState<NamespacesModalState | null>(null);
+  const [derivationPathModalState, setDerivationPathModalState] =
+    useState<DerivationPathModalState | null>(null);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
@@ -97,10 +111,7 @@ export function WalletsPage() {
 
   const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
 
-  const handleWalletClick = (
-    type: string,
-    wallet: WalletInfoWithNamespaces
-  ) => {
+  const handleWalletItemClick = (type: string, wallet: WalletWithExtraInfo) => {
     if (!!wallet.namespaces && wallet.state === WalletState.DISCONNECTED) {
       if (isSingleWalletActive(list, config.multiWallets)) {
         return;
@@ -114,6 +125,40 @@ export function WalletsPage() {
     } else {
       void handleClick(type);
     }
+  };
+
+  const handleConfirmNamespaces = (namespaces: Namespace[]) => {
+    const wallet = filteredWallets.find(
+      (wallet) => wallet.type === namespacesModalState?.providerType
+    );
+    if (!!wallet?.derivationPath) {
+      setDerivationPathModalState({
+        providerType: wallet.type,
+        providerImage: wallet.image,
+        namespace: namespaces[0],
+        derivationPaths: wallet.derivationPath[namespaces[0]],
+      });
+    } else {
+      void handleClick(
+        namespacesModalState?.providerType as string,
+        namespaces
+      );
+    }
+    setNamespacesModalState(null);
+  };
+
+  const handleDerivationPathConfirm = (path: string) => {
+    if (path && derivationPathModalState) {
+      void handleClick(
+        derivationPathModalState.providerType,
+        derivationPathModalState.namespace
+          ? [derivationPathModalState.namespace]
+          : undefined,
+        path
+      );
+    }
+
+    setDerivationPathModalState(null);
   };
 
   return (
@@ -144,7 +189,7 @@ export function WalletsPage() {
                 key={key}
                 {...wallet}
                 container={getContainer()}
-                onClick={(type) => handleWalletClick(type, wallet)}
+                onClick={(type) => handleWalletItemClick(type, wallet)}
                 isLoading={fetchMetaStatus === 'loading'}
                 disabled={!isActiveTab}
               />
@@ -160,16 +205,18 @@ export function WalletsPage() {
           <WalletNamespacesModal
             open={!!namespacesModalState}
             onClose={() => setNamespacesModalState(null)}
-            onConfirm={(namespaces) => {
-              void handleClick(
-                namespacesModalState?.providerType as string,
-                namespaces
-              );
-              setNamespacesModalState(null);
-            }}
+            onConfirm={handleConfirmNamespaces}
             image={namespacesModalState?.providerImage}
             namespaces={namespacesModalState?.availableNamespaces}
             singleNamespace={namespacesModalState?.singleNamespace}
+          />
+          <WalletDerivationPathModal
+            open={!!derivationPathModalState?.derivationPaths}
+            type={derivationPathModalState?.providerType}
+            image={derivationPathModalState?.providerImage}
+            derivationPaths={derivationPathModalState?.derivationPaths}
+            onClose={() => setDerivationPathModalState(null)}
+            onConfirm={handleDerivationPathConfirm}
           />
         </ListContainer>
       </Container>

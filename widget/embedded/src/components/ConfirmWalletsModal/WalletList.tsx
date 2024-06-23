@@ -1,6 +1,10 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet, WalletInfoWithNamespaces } from '../../types';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { Wallet, WalletWithExtraInfo } from '../../types';
+import type {
+  DerivationPath,
+  Namespace,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -31,6 +35,7 @@ import {
   isExperimentalChain,
 } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
+import { WalletDerivationPathModal } from '../WalletDerivationPathModal';
 import { WalletModal } from '../WalletModal';
 import { WalletNamespacesModal } from '../WalletNamespacesModal';
 
@@ -46,6 +51,13 @@ interface WalletNamespacesModalState {
   providerImage: string;
   availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
+}
+
+interface DerivationPathModalState {
+  providerType: string;
+  providerImage: string;
+  namespace?: Namespace;
+  derivationPaths?: DerivationPath[];
 }
 
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
@@ -66,6 +78,8 @@ export function WalletList(props: PropTypes) {
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const [namespacesModalState, setNamespacesModalState] =
     useState<WalletNamespacesModalState | null>(null);
+  const [derivationPathModalState, setDerivationPathModalState] =
+    useState<DerivationPathModalState | null>(null);
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const {
@@ -91,8 +105,7 @@ export function WalletList(props: PropTypes) {
       }, TIME_TO_CLOSE_MODAL);
     },
   });
-  const [sortedList, setSortedList] =
-    useState<WalletInfoWithNamespaces[]>(list);
+  const [sortedList, setSortedList] = useState<WalletWithExtraInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -107,13 +120,47 @@ export function WalletList(props: PropTypes) {
     }
   };
 
-  const handleOpenNamespacesModal = (wallet: WalletInfoWithNamespaces) => {
+  const handleOpenNamespacesModal = (wallet: WalletWithExtraInfo) => {
     setNamespacesModalState({
       providerType: wallet.type,
       providerImage: wallet.image,
       availableNamespaces: wallet.namespaces,
       singleNamespace: wallet.singleNamespace,
     });
+  };
+
+  const handleConfirmNamespaces = (namespaces: Namespace[]) => {
+    const wallet = sortedList.find(
+      (wallet) => wallet.type === namespacesModalState?.providerType
+    );
+    if (!!wallet?.derivationPath) {
+      setDerivationPathModalState({
+        providerType: wallet.type,
+        providerImage: wallet.image,
+        namespace: namespaces[0],
+        derivationPaths: wallet.derivationPath[namespaces[0]],
+      });
+    } else {
+      void handleClick(
+        namespacesModalState?.providerType as string,
+        namespaces
+      );
+    }
+    setNamespacesModalState(null);
+  };
+
+  const handleDerivationPathConfirm = (path: string) => {
+    if (path && derivationPathModalState) {
+      void handleClick(
+        derivationPathModalState.providerType,
+        derivationPathModalState.namespace
+          ? [derivationPathModalState.namespace]
+          : undefined,
+        path
+      );
+    }
+
+    setDerivationPathModalState(null);
   };
 
   useEffect(() => {
@@ -240,16 +287,18 @@ export function WalletList(props: PropTypes) {
             <WalletNamespacesModal
               open={!!namespacesModalState}
               onClose={() => setNamespacesModalState(null)}
-              onConfirm={(namespaces) => {
-                void handleClick(
-                  namespacesModalState?.providerType as string,
-                  namespaces
-                );
-                setNamespacesModalState(null);
-              }}
+              onConfirm={handleConfirmNamespaces}
               image={namespacesModalState?.providerImage}
               namespaces={namespacesModalState?.availableNamespaces}
               singleNamespace={namespacesModalState?.singleNamespace}
+            />
+            <WalletDerivationPathModal
+              open={!!derivationPathModalState?.derivationPaths}
+              type={derivationPathModalState?.providerType}
+              image={derivationPathModalState?.providerImage}
+              derivationPaths={derivationPathModalState?.derivationPaths}
+              onClose={() => setDerivationPathModalState(null)}
+              onConfirm={handleDerivationPathConfirm}
             />
             {!!experimentalChainWallet && (
               <WatermarkedModal

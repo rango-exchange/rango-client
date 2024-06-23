@@ -7,8 +7,8 @@ import { PublicKey } from '@solana/web3.js';
 import { SignerError } from 'rango-types';
 
 import {
+  getDerivationPath,
   getLedgerError,
-  SOLANA_BIP32_PATH,
   transportConnect,
   transportDisconnect,
 } from '../helpers';
@@ -37,17 +37,17 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
         let signResult;
         if (isVersionedTransaction(solanaWeb3Transaction)) {
           signResult = await solana.signTransaction(
-            SOLANA_BIP32_PATH,
+            getDerivationPath(),
             solanaWeb3Transaction.message.serialize() as Buffer
           );
         } else {
           signResult = await solana.signTransaction(
-            SOLANA_BIP32_PATH,
+            getDerivationPath(),
             solanaWeb3Transaction.serialize()
           );
         }
 
-        const addressResult = await solana.getAddress(SOLANA_BIP32_PATH);
+        const addressResult = await solana.getAddress(getDerivationPath());
 
         const publicKey = new PublicKey(addressResult.address);
 

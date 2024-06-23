@@ -1,16 +1,17 @@
-import type {
-  Connect,
-  Disconnect,
-  WalletInfo,
-} from '@rango-dev/wallets-shared';
+import type { Disconnect, WalletInfo } from '@rango-dev/wallets-shared';
 
-import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import {
+  EVMDerivationPaths,
+  Namespace,
+  Networks,
+  SolanaDerivationPaths,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
-  getEthereumAccounts,
+  connectLedger,
   getLedgerInstance,
-  getSolanaAccounts,
   transportDisconnect,
 } from './helpers';
 import signer from './signer';
@@ -20,12 +21,7 @@ export const config = {
 };
 
 export const getInstance = getLedgerInstance;
-export const connect: Connect = async ({ namespaces }) => {
-  if (namespaces?.includes(Namespace.Solana)) {
-    return await getSolanaAccounts();
-  }
-  return await getEthereumAccounts();
-};
+export const connect = connectLedger;
 
 export const disconnect: Disconnect = async () => {
   void transportDisconnect();
@@ -64,5 +60,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     namespaces: [Namespace.Evm, Namespace.Solana],
     singleNamespace: true,
     showOnMobile: false,
+    derivationPath: {
+      [Namespace.Evm]: EVMDerivationPaths,
+      [Namespace.Solana]: SolanaDerivationPaths,
+    },
   };
 };

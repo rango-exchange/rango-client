@@ -1,5 +1,9 @@
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type {
+  DerivationPath,
+  Namespace,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 
 export interface Wallet {
   chain: string;
@@ -24,7 +28,8 @@ export type TokensBalance = {
   [key: TokenHash]: Balance;
 };
 
-export type WalletInfoWithNamespaces = WalletInfo & {
+export type WalletWithExtraInfo = WalletInfo & {
   namespaces?: Namespace[];
   singleNamespace?: boolean;
+  derivationPath?: Partial<{ [namespace in Namespace]: DerivationPath[] }>;
 };

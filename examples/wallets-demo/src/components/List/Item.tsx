@@ -50,7 +50,7 @@ function Item({
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
-          const result = await connect(type);
+          const result = await connect({ type });
           setError('');
           setNetwork(result.network || Networks.Unknown);
         } else {
@@ -72,7 +72,7 @@ function Item({
   const handleChangeNetwork = async () => {
     if (canSwitchNetwork) {
       try {
-        const result = await connect(type, network);
+        const result = await connect({ type, network });
         setError('');
         setNetwork(result.network || Networks.Unknown);
       } catch (err) {

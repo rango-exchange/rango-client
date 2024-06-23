@@ -49,7 +49,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
     }
-    return connect(wallet, network);
+    return connect({ type: wallet, network });
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>

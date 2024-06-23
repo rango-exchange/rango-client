@@ -74,7 +74,11 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
+  const handleClick = async (
+    type: WalletType,
+    namespaces?: Namespace[],
+    derivationPath?: string
+  ) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -87,7 +91,7 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type, undefined, namespaces);
+        await connect({ type, namespaces, derivationPath });
         onConnect?.(type);
       }
     } catch (e) {

@@ -1,3 +1,5 @@
+import type * as Stitches from '@stitches/react';
+
 type Item<T> = {
   value: T;
   label: string;
@@ -11,4 +13,7 @@ export type SelectPropTypes<T> = {
   value: string;
   container?: HTMLElement;
   variant: Variant;
+  styles?: {
+    trigger?: Stitches.CSS;
+  };
 };

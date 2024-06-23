@@ -235,6 +235,58 @@ export interface WalletConfig {
   isAsyncSwitchNetwork?: boolean;
 }
 
+export type DerivationPath = {
+  id: string;
+  label: string;
+  getValue: (index: string) => string;
+};
+
+export const EVMDerivationPaths: DerivationPath[] = [
+  {
+    id: 'metamask',
+    label: `Metamask (m/44'/60'/0'/0/index)`,
+    getValue: (index: string) => `44'/60'/0'/0/${index}`,
+  },
+  {
+    id: 'ledgerLive',
+    label: `LedgerLive (m/44'/60'/index'/0/0)`,
+    getValue: (index: string) => `44'/60'/${index}'/0/0`,
+  },
+  {
+    id: 'legacy',
+    label: `Legacy (m/44'/60'/0'/index)`,
+    getValue: (index: string) => `44'/60'/0'/${index}`,
+  },
+  {
+    id: 'custom',
+    label: 'Custom',
+    getValue: (index: string) => index,
+  },
+];
+
+export const SolanaDerivationPaths: DerivationPath[] = [
+  {
+    id: `(m/44'/501'/index')`,
+    label: `(m/44'/501'/index')`,
+    getValue: (index: string) => `44'/501'/${index}'`,
+  },
+  {
+    id: `(m/44'/501'/0'/index)`,
+    label: `(m/44'/501'/0'/index)`,
+    getValue: (index: string) => `44'/501'/0'/${index}`,
+  },
+  {
+    id: `(m/44'/501'/0'/0/index)`,
+    label: `(m/44'/501'/0'/0/index)`,
+    getValue: (index: string) => `44'/501'/0'/0/${index}`,
+  },
+  {
+    id: 'custom',
+    label: 'Custom',
+    getValue: (index: string) => index,
+  },
+];
+
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
@@ -262,6 +314,7 @@ export type Connect = (options: {
   network?: Network;
   meta: BlockchainMeta[];
   namespaces?: Namespace[];
+  derivationPath?: string;
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -326,6 +379,7 @@ export type WalletInfo = {
   mobileWallet?: boolean;
   namespaces?: Namespace[];
   singleNamespace?: boolean;
+  derivationPath?: Partial<{ [namespace in Namespace]: DerivationPath[] }>;
 };
 
 export interface Wallet {

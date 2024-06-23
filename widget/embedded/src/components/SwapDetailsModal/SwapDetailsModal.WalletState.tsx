@@ -1,5 +1,5 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { DerivationPath, Namespace } from '@rango-dev/wallets-shared';
 
 import { debug } from '@rango-dev/logging-core';
 import { MessageBox, Wallet } from '@rango-dev/ui';
@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 
 import { getContainer } from '../../utils/common';
 import { mapStatusToWalletState } from '../../utils/wallets';
+import { WalletDerivationPathModal } from '../WalletDerivationPathModal';
 import { WalletNamespacesModal } from '../WalletNamespacesModal';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
@@ -17,6 +18,13 @@ interface NamespacesModalState {
   providerImage: string;
   availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
+}
+
+interface DerivationPathModalState {
+  providerType: string;
+  providerImage: string;
+  namespace?: Namespace;
+  derivationPaths?: DerivationPath[];
 }
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
@@ -31,6 +39,8 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const { connect, getWalletInfo, state } = useWallets();
   const [namespacesModalState, setNamespacesModalState] =
     useState<NamespacesModalState | null>(null);
+  const [derivationPathModalState, setDerivationPathModalState] =
+    useState<DerivationPathModalState | null>(null);
   const walletType = currentStepWallet?.walletType;
   const walletState = walletType
     ? mapStatusToWalletState(state(walletType))
@@ -38,6 +48,37 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const walletInfo = walletType ? getWalletInfo(walletType) : null;
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
+
+  const handleConfirmNamespaces = (namespaces: Namespace[]) => {
+    if (!!walletInfo?.derivationPath && walletType) {
+      setDerivationPathModalState({
+        providerType: walletType,
+        providerImage: walletInfo.img,
+        namespace: namespaces[0],
+        derivationPaths: walletInfo.derivationPath[namespaces[0]],
+      });
+    } else {
+      connect({
+        type: namespacesModalState?.providerType as string,
+        namespaces,
+      }).catch((error) => debug(error));
+    }
+    setNamespacesModalState(null);
+  };
+
+  const handleDerivationPathConfirm = (path: string) => {
+    if (path && derivationPathModalState) {
+      connect({
+        type: derivationPathModalState?.providerType,
+        namespaces: derivationPathModalState.namespace
+          ? [derivationPathModalState.namespace]
+          : undefined,
+        derivationPath: path,
+      }).catch((error) => debug(error));
+    }
+
+    setDerivationPathModalState(null);
+  };
 
   return (
     <>
@@ -62,7 +103,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
                   singleNamespace: walletInfo.singleNamespace,
                 });
               } else {
-                connect(walletType).catch((error) => debug(error));
+                connect({ type: walletType }).catch((error) => debug(error));
               }
             }}
           />
@@ -71,17 +112,18 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
       <WalletNamespacesModal
         open={!!namespacesModalState}
         onClose={() => setNamespacesModalState(null)}
-        onConfirm={(namespaces) => {
-          connect(
-            namespacesModalState?.providerType as string,
-            undefined,
-            namespaces
-          ).catch((error) => debug(error));
-          setNamespacesModalState(null);
-        }}
+        onConfirm={handleConfirmNamespaces}
         image={namespacesModalState?.providerImage}
         namespaces={namespacesModalState?.availableNamespaces}
         singleNamespace={namespacesModalState?.singleNamespace}
+      />
+      <WalletDerivationPathModal
+        open={!!derivationPathModalState?.derivationPaths}
+        type={derivationPathModalState?.providerType}
+        image={derivationPathModalState?.providerImage}
+        derivationPaths={derivationPathModalState?.derivationPaths}
+        onClose={() => setDerivationPathModalState(null)}
+        onConfirm={handleDerivationPathConfirm}
       />
     </>
   );

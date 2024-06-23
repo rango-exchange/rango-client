@@ -1,13 +1,11 @@
 import type Transport from '@ledgerhq/hw-transport';
+import type { Connect, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { Networks } from '@rango-dev/wallets-shared';
+import { Namespace, Networks } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
 const ETHEREUM_CHAIN_ID = '0x1';
-
-export const ETH_BIP32_PATH = "44'/60'/0'/0/0";
-export const SOLANA_BIP32_PATH = "44'/501'/0'";
 
 export const HEXADECIMAL_BASE = 16;
 
@@ -53,6 +51,27 @@ export function getLedgerInstance() {
   return instances;
 }
 
+export const connectLedger: Connect = async ({
+  namespaces,
+  derivationPath,
+}) => {
+  const results: ProviderConnectResult[] = [];
+
+  if (derivationPath) {
+    setDerivationPath(derivationPath);
+
+    if (namespaces?.includes(Namespace.Solana)) {
+      const accounts = await getSolanaAccounts();
+      results.push(accounts);
+    } else if (namespaces?.includes(Namespace.Evm)) {
+      const accounts = await getEthereumAccounts();
+      results.push(accounts);
+    }
+  }
+
+  return results;
+};
+
 export async function getEthereumAccounts(): Promise<{
   accounts: string[];
   chainId: string;
@@ -64,7 +83,7 @@ export async function getEthereumAccounts(): Promise<{
 
     const accounts: string[] = [];
 
-    const result = await eth.getAddress(ETH_BIP32_PATH, false, true);
+    const result = await eth.getAddress(getDerivationPath(), false, true);
     accounts.push(result.address);
 
     return {
@@ -91,7 +110,7 @@ export async function getSolanaAccounts(): Promise<{
 
     const accounts: string[] = [];
 
-    const result = await solana.getAddress(SOLANA_BIP32_PATH);
+    const result = await solana.getAddress(getDerivationPath());
     accounts.push(bs58.encode(result.address));
 
     return {
@@ -120,4 +139,14 @@ export async function transportDisconnect() {
     await transportConnection.close();
     transportConnection = null;
   }
+}
+
+let derivationPath = '';
+
+export function setDerivationPath(path: string) {
+  derivationPath = path;
+}
+
+export function getDerivationPath() {
+  return derivationPath;
 }

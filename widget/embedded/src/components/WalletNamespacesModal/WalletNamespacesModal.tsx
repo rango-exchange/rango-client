@@ -79,7 +79,8 @@ export function WalletNamespacesModal(props: PropTypes) {
       onClose={props.onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }>
+      }
+      styles={{ content: { marginTop: 20 } }}>
       <MessageBox
         type="info"
         title={i18n.t('Select chain types')}
