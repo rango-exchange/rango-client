@@ -1,5 +1,5 @@
 import type { WidgetHistory } from './WidgetInfo.helpers';
-import type { FetchStatus } from '../../store/slices/data';
+import type { FetchStatus, FindToken } from '../../store/slices/data';
 import type { ConnectedWallet } from '../../store/wallets';
 import type { Wallet } from '../../types';
 import type { Notification } from '../../types/notification';
@@ -20,9 +20,11 @@ export interface WidgetInfoContextInterface {
     tokens: Token[];
     swappers: SwapperMeta[];
     loadingStatus: FetchStatus;
+    findToken: FindToken;
   };
   resetLanguage: () => void;
   notifications: {
     list: Notification[];
+    clearAll: () => void;
   };
 }
