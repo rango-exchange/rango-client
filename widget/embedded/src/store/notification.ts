@@ -66,7 +66,9 @@ export const useNotificationStore = createSelectors(
         },
         getNotifications: () => {
           const { isSynced, notifications } = get();
-          return isSynced ? notifications : [];
+          return isSynced
+            ? notifications.sort((a, b) => b.creationTime - a.creationTime)
+            : [];
         },
         syncNotifications: (swaps) => {
           const { isSynced, notifications } = get();
