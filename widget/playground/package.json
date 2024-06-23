@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.34.1-next.5",
-    "@rango-dev/ui": "^0.35.1-next.5",
+    "@rango-dev/ui": "^0.35.1-next.6",
     "@rango-dev/wallets-react": "^0.20.1-next.4",
     "@rango-dev/wallets-shared": "^0.34.1-next.4",
-    "@rango-dev/widget-embedded": "^0.29.1-next.9",
+    "@rango-dev/widget-embedded": "^0.29.1-next.10",
     "rango-sdk": "^0.1.49",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
