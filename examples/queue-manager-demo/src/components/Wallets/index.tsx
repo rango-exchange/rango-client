@@ -20,7 +20,7 @@ function Wallets() {
                   if (wallet_state.connected) {
                     void disconnect(wallet_type);
                   } else {
-                    void connect({ type: wallet_type });
+                    void connect(wallet_type);
                   }
                 }}>
                 {wallet_state.connected ? 'Disconnect' : 'Connect'}

@@ -66,7 +66,13 @@ export const connectLedger: Connect = async ({
     } else if (namespaces?.includes(Namespace.Evm)) {
       const accounts = await getEthereumAccounts();
       results.push(accounts);
+    } else {
+      throw new Error(
+        'Unsupported Namespace. Please select another namespace.'
+      );
     }
+  } else {
+    throw new Error('Derivation Path can not be empty.');
   }
 
   return results;

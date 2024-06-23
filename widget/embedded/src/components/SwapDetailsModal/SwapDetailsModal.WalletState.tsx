@@ -58,23 +58,27 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         derivationPaths: walletInfo.derivationPath[namespaces[0]],
       });
     } else {
-      connect({
-        type: namespacesModalState?.providerType as string,
-        namespaces,
-      }).catch((error) => debug(error));
+      connect(
+        namespacesModalState?.providerType as string,
+        undefined,
+        namespaces
+      ).catch((error) => debug(error));
     }
     setNamespacesModalState(null);
   };
 
   const handleDerivationPathConfirm = (path: string) => {
     if (path && derivationPathModalState) {
-      connect({
-        type: derivationPathModalState?.providerType,
-        namespaces: derivationPathModalState.namespace
+      connect(
+        derivationPathModalState?.providerType,
+        undefined,
+        derivationPathModalState.namespace
           ? [derivationPathModalState.namespace]
           : undefined,
-        derivationPath: path,
-      }).catch((error) => debug(error));
+        {
+          derivationPath: path,
+        }
+      ).catch((error) => debug(error));
     }
 
     setDerivationPathModalState(null);
@@ -103,7 +107,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
                   singleNamespace: walletInfo.singleNamespace,
                 });
               } else {
-                connect({ type: walletType }).catch((error) => debug(error));
+                connect(walletType).catch((error) => debug(error));
               }
             }}
           />

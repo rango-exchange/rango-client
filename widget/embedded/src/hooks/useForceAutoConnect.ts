@@ -21,7 +21,7 @@ export function useForceAutoConnect(): void {
       !walletState.connected;
     if (shouldTryConnect && !initiated.current[walletType]) {
       initiated.current[walletType] = true;
-      void connect({ type: walletType });
+      void connect(walletType);
     }
   }, [walletState, fetchStatus]);
 }

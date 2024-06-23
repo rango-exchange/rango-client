@@ -91,7 +91,7 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect({ type, namespaces, derivationPath });
+        await connect(type, undefined, namespaces, { derivationPath });
         onConnect?.(type);
       }
     } catch (e) {

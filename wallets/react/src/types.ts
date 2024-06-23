@@ -24,12 +24,12 @@ export type ConnectResult = {
 export type Providers = { [type in WalletType]?: any };
 
 export type ProviderContext = {
-  connect(params: {
-    type: WalletType;
-    network?: Network;
-    namespaces?: Namespace[];
-    derivationPath?: string;
-  }): Promise<ConnectResult>;
+  connect(
+    type: WalletType,
+    network?: Network,
+    namespaces?: Namespace[],
+    extra?: { derivationPath?: string }
+  ): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;

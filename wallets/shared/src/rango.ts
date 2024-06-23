@@ -238,29 +238,29 @@ export interface WalletConfig {
 export type DerivationPath = {
   id: string;
   label: string;
-  getValue: (index: string) => string;
+  generateDerivationPath: (index: string) => string;
 };
 
-export const EVMDerivationPaths: DerivationPath[] = [
+export const EvmDerivationPaths: DerivationPath[] = [
   {
     id: 'metamask',
     label: `Metamask (m/44'/60'/0'/0/index)`,
-    getValue: (index: string) => `44'/60'/0'/0/${index}`,
+    generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
   },
   {
     id: 'ledgerLive',
     label: `LedgerLive (m/44'/60'/index'/0/0)`,
-    getValue: (index: string) => `44'/60'/${index}'/0/0`,
+    generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
   },
   {
     id: 'legacy',
     label: `Legacy (m/44'/60'/0'/index)`,
-    getValue: (index: string) => `44'/60'/0'/${index}`,
+    generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
   },
   {
     id: 'custom',
     label: 'Custom',
-    getValue: (index: string) => index,
+    generateDerivationPath: (index: string) => index,
   },
 ];
 
@@ -268,22 +268,22 @@ export const SolanaDerivationPaths: DerivationPath[] = [
   {
     id: `(m/44'/501'/index')`,
     label: `(m/44'/501'/index')`,
-    getValue: (index: string) => `44'/501'/${index}'`,
+    generateDerivationPath: (index: string) => `44'/501'/${index}'`,
   },
   {
     id: `(m/44'/501'/0'/index)`,
     label: `(m/44'/501'/0'/index)`,
-    getValue: (index: string) => `44'/501'/0'/${index}`,
+    generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
   },
   {
     id: `(m/44'/501'/0'/0/index)`,
     label: `(m/44'/501'/0'/0/index)`,
-    getValue: (index: string) => `44'/501'/0'/0/${index}`,
+    generateDerivationPath: (index: string) => `44'/501'/0'/0/${index}`,
   },
   {
     id: 'custom',
     label: 'Custom',
-    getValue: (index: string) => index,
+    generateDerivationPath: (index: string) => index,
   },
 ];
 

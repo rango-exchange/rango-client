@@ -33,7 +33,7 @@ export function App(props: PropTypes) {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
     }
-    return connect({ type: wallet, network });
+    return connect(wallet, network);
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>

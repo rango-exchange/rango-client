@@ -73,16 +73,14 @@ class Wallet<InstanceType = any> {
         network,
       });
     }
-    return await this.connect({ network });
+    return await this.connect(network);
   }
 
-  async connect(params: {
-    network?: Network;
-    namespaces?: Namespace[];
-    derivationPath?: string;
-  }) {
-    const { network, namespaces, derivationPath } = params;
-
+  async connect(
+    network?: Network,
+    namespaces?: Namespace[],
+    extra?: { derivationPath?: string }
+  ) {
     // If it's connecting, nothing do.
     if (this.state.connecting) {
       throw new Error('Connecting...');
@@ -172,7 +170,7 @@ class Wallet<InstanceType = any> {
         network: requestedNetwork || undefined,
         meta: this.info.supportedBlockchains || [],
         namespaces,
-        derivationPath,
+        derivationPath: extra?.derivationPath,
       });
     } catch (e) {
       this.resetState();
@@ -277,7 +275,7 @@ class Wallet<InstanceType = any> {
 
       if (eagerConnection) {
         // Connect to wallet as usual
-        return this.connect({});
+        return this.connect();
       }
       throw new Error(error_message);
     } else {
@@ -326,7 +324,7 @@ class Wallet<InstanceType = any> {
         instance: value,
         state: this.state,
         meta: this.info.supportedBlockchains,
-        connect: async (network) => this.connect({ network }),
+        connect: this.connect.bind(this),
         disconnect: this.disconnect.bind(this),
         updateAccounts: (accounts, chainId) => {
           let network = this.state.network;

@@ -160,10 +160,7 @@ export function SwapDetails(props: SwapDetailsProps) {
       canSwitchNetworkTo(currentStepWallet.walletType, currentStepBlockchain));
 
   const switchNetwork = showSwitchNetwork
-    ? connect.bind(null, {
-        type: currentStepWallet.walletType,
-        network: currentStepBlockchain,
-      })
+    ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
     : undefined;
 
   const stepMessage = getSwapMessages(swap, currentStep);

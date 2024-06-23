@@ -84,7 +84,7 @@ function Example() {
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
-          await connect({ type });
+          await connect(type);
         }
       } else {
         disconnect('metamask');

@@ -25,7 +25,7 @@ function Modal(props: PropTypes) {
       if (wallet.connected) {
         await disconnect(type);
       } else {
-        await connect({ type });
+        await connect(type);
       }
     } catch (e) {
       if (e instanceof Error) {
