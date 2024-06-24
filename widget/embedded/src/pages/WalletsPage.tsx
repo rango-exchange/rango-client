@@ -112,10 +112,11 @@ export function WalletsPage() {
   const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
 
   const handleWalletItemClick = (type: string, wallet: WalletWithExtraInfo) => {
+    if (isSingleWalletActive(list, config.multiWallets)) {
+      return;
+    }
+
     if (!!wallet.namespaces && wallet.state === WalletState.DISCONNECTED) {
-      if (isSingleWalletActive(list, config.multiWallets)) {
-        return;
-      }
       setNamespacesModalState({
         providerType: type,
         providerImage: wallet.image,
