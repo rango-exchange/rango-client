@@ -2,14 +2,12 @@ import type {
   RemoveNameField,
   Route,
   RouteEvent,
-  RouteExecutionEvents,
   Step,
   StepEvent,
 } from '../types';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
-import mitt from 'mitt';
-
+import { getConfig } from '../configs';
 import {
   getCurrentStepTx,
   getFailedStep,
@@ -19,11 +17,11 @@ import {
 import { getCurrentBlockchainOfOrNull } from '../shared';
 import {
   EventSeverity,
-  MainEvents,
   RouteEventType,
   StepEventType,
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
+  WidgetEvents,
 } from '../types';
 
 type NotifierParams = {
@@ -142,8 +140,6 @@ function getEventPayload(
   return result;
 }
 
-export const eventEmitter = mitt<RouteExecutionEvents>();
-
 function emitRouteEvent(stepEvent: StepEvent, route: Route) {
   let routeEvent: RouteEvent | undefined;
   const { type } = stepEvent;
@@ -161,12 +157,14 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route) {
       break;
   }
   if (routeEvent) {
-    eventEmitter.emit(MainEvents.RouteEvent, { event: routeEvent, route });
+    const eventEmitter = getConfig('emitter');
+    eventEmitter?.emit(WidgetEvents.RouteEvent, { event: routeEvent, route });
   }
 }
 
 function emitStepEvent(stepEvent: StepEvent, route: Route, step: Step) {
-  eventEmitter.emit(MainEvents.StepEvent, { event: stepEvent, route, step });
+  const eventEmitter = getConfig('emitter');
+  eventEmitter?.emit(WidgetEvents.StepEvent, { event: stepEvent, route, step });
 }
 
 export function notifier(params: NotifierParams) {

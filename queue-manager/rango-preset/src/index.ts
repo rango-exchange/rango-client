@@ -28,7 +28,7 @@ export type {
   StepOutputRevealedEvent,
 } from './types';
 export {
-  MainEvents,
+  WidgetEvents,
   StepEventType,
   RouteEventType,
   StepExecutionEventStatus,
@@ -55,7 +55,7 @@ export {
   isApprovalTX,
   getLastSuccessfulStep,
 } from './helpers';
-export { useMigration, useQueueManager, useEvents } from './hooks';
+export { useMigration, useQueueManager } from './hooks';
 
 export function makeQueueDefinition(configs: Configs): SwapQueueDef {
   initConfig(configs);
