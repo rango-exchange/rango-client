@@ -1,12 +1,8 @@
 import type { Connect, WalletInfo } from '@rango-dev/wallets-shared';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
-import {
-  type BlockchainMeta,
-  evmBlockchains,
-  type SignerFactory,
-} from 'rango-types';
+import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import { getEthereumAccounts, getTrezorInstance } from './helpers';
 import signer from './signer';
@@ -33,8 +29,14 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
+  const supportedChains: BlockchainMeta[] = [];
 
+  const ethereumBlockchain = allBlockChains.find(
+    (chain) => chain.name === Networks.ETHEREUM
+  );
+  if (ethereumBlockchain) {
+    supportedChains.push(ethereumBlockchain);
+  }
   return {
     name: 'Trezor',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/trezor/icon.svg',
@@ -42,7 +44,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://trezor.io/learn/a/download-verify-trezor-suite',
     },
     color: 'black',
-    supportedChains: evms,
+    supportedChains,
     showOnMobile: false,
   };
 };
