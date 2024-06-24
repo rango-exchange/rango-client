@@ -93,7 +93,7 @@ export interface UseQueueManagerParams {
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }
 
-export enum MainEvents {
+export enum WidgetEvents {
   RouteEvent = 'routeEvent',
   StepEvent = 'stepEvent',
 }
@@ -282,6 +282,6 @@ export type RouteEventData = { route: Route; event: RouteEvent };
 export type StepEventData = { route: Route; step: Step; event: StepEvent };
 
 export type RouteExecutionEvents = {
-  [MainEvents.RouteEvent]: RouteEventData;
-  [MainEvents.StepEvent]: StepEventData;
+  [WidgetEvents.RouteEvent]: RouteEventData;
+  [WidgetEvents.StepEvent]: StepEventData;
 };

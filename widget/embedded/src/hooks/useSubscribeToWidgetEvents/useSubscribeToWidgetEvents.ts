@@ -2,14 +2,14 @@ import type { RouteEventData, StepEventData } from '../..';
 
 import {
   isApprovalTX,
-  MainEvents,
   RouteEventType,
   StepEventType,
   StepExecutionEventStatus,
-  useEvents,
+  WidgetEvents,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
+import { eventEmitter } from '../../services/eventEmitter';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useWalletsStore } from '../../store/wallets';
@@ -19,7 +19,6 @@ export function useSubscribeToWidgetEvents() {
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
   const { findToken } = useAppStore();
-  const widgetEvents = useEvents();
 
   useEffect(() => {
     const handleStepEvent = (widgetEvent: StepEventData) => {
@@ -46,10 +45,10 @@ export function useSubscribeToWidgetEvents() {
 
       setNotification(event, route);
     };
-    widgetEvents.on(MainEvents.StepEvent, handleStepEvent);
+    eventEmitter.on(WidgetEvents.StepEvent, handleStepEvent);
 
-    return () => widgetEvents.off(MainEvents.StepEvent, handleStepEvent);
-  }, [widgetEvents, connectedWallets.length]);
+    return () => eventEmitter.off(WidgetEvents.StepEvent, handleStepEvent);
+  }, [eventEmitter, connectedWallets.length]);
 
   useEffect(() => {
     const handleRouteEvent = (widgetEvent: RouteEventData) => {
@@ -62,8 +61,8 @@ export function useSubscribeToWidgetEvents() {
         setNotification(event, route);
       }
     };
-    widgetEvents.on(MainEvents.RouteEvent, handleRouteEvent);
+    eventEmitter.on(WidgetEvents.RouteEvent, handleRouteEvent);
 
-    return () => widgetEvents.off(MainEvents.RouteEvent, handleRouteEvent);
-  }, [widgetEvents, connectedWallets.length]);
+    return () => eventEmitter.off(WidgetEvents.RouteEvent, handleRouteEvent);
+  }, [eventEmitter, connectedWallets.length]);
 }
