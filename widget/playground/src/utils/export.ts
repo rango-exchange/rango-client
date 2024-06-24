@@ -58,6 +58,12 @@ export function filterConfig(
     filteredConfigForExport.walletConnectProjectId =
       config.walletConnectProjectId;
   }
+  const isNeededTrezorManifest =
+    !filteredConfigForExport.trezorManifest &&
+    (!config.wallets || config.wallets.includes('trezor'));
+  if (isNeededTrezorManifest) {
+    filteredConfigForExport.trezorManifest = config.trezorManifest;
+  }
 
   return { userSelectedConfig, filteredConfigForExport };
 }
@@ -114,6 +120,15 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
+  if (config.trezorManifest) {
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// Trezor Connect Manifest requires that you,
+    // as a Trezor Connect integrator,share your e-mail and application url
+    `,
+      formatedConfig.indexOf('trezorManifest')
+    );
+  }
   if (config.walletConnectProjectId) {
     formatedConfig = insertAt(
       formatedConfig,

@@ -12,3 +12,13 @@ export const isWalletConnectExcluded = (
       ? provider === WalletTypes.WALLET_CONNECT_2
       : provider.getWalletInfo([]).name === 'WalletConnect'
   );
+
+export const isTrezorExcluded = (
+  selectedProviders?: (WalletType | ProviderInterface)[]
+) =>
+  selectedProviders &&
+  !selectedProviders.find((provider) =>
+    typeof provider === 'string'
+      ? provider === WalletTypes.TREZOR
+      : provider.getWalletInfo([]).name === 'Trezor'
+  );

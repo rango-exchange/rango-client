@@ -1,4 +1,5 @@
 import type { Connect, WalletInfo } from '@rango-dev/wallets-shared';
+import type { Manifest } from '@trezor/connect-web';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
@@ -8,10 +9,20 @@ import { getEthereumAccounts, getTrezorInstance } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.TREZOR;
-const trezorManifest = { appUrl: 'https://rango.exchange/', email: '' };
+let trezorManifest: Manifest = {
+  appUrl: '',
+  email: '',
+};
 export const config = {
   type: WALLET,
 };
+
+export type { Manifest };
+
+export const setTrezorManifest = (manifest: Manifest) => {
+  trezorManifest = manifest;
+};
+
 export const getInstance = getTrezorInstance;
 export const connect: Connect = async () => {
   const { success } = await TrezorConnect.getDeviceState();

@@ -8,6 +8,7 @@ export interface ProvidersOptions {
   walletConnectListedDesktopWalletLink?: NonNullable<
     WidgetConfig['__UNSTABLE_OR_INTERNAL__']
   >['walletConnectListedDesktopWalletLink'];
+  trezorManifest: WidgetConfig['trezorManifest'];
 }
 
 /**
@@ -27,6 +28,7 @@ export function matchAndGenerateProviders(
         options?.walletConnectListedDesktopWalletLink,
     },
     selectedProviders: providers,
+    trezorManifest: options?.trezorManifest || { email: '', appUrl: '' },
   });
 
   if (providers) {

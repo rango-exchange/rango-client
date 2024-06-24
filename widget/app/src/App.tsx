@@ -4,7 +4,7 @@ import { Widget } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 
-import { WC_PROJECT_ID } from './constants';
+import { TREZOR_MANIFEST, WC_PROJECT_ID } from './constants';
 
 export function App() {
   const [searchParams] = useSearchParams();
@@ -35,6 +35,7 @@ export function App() {
       config = {
         apiKey: '',
         walletConnectProjectId: WC_PROJECT_ID,
+        trezorManifest: TREZOR_MANIFEST,
       };
     }
     if (!!config) {

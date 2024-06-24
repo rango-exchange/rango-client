@@ -10,7 +10,11 @@ import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { initialConfig, useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
-import { getConfig, RANGO_PUBLIC_API_KEY } from './utils/configs';
+import {
+  getConfig,
+  RANGO_PUBLIC_API_KEY,
+  TREZOR_MANIFEST,
+} from './utils/configs';
 import { filterConfig } from './utils/export';
 
 export function App() {
@@ -18,6 +22,7 @@ export function App() {
   const fetchMeta = useMetaStore.use.fetchMeta();
   const config = useConfigStore.use.config();
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
+  console.log({ filteredConfigForExport, config, initialConfig });
 
   const overridedConfig: WidgetConfig = {
     theme: {},
@@ -36,10 +41,11 @@ export function App() {
    * Playground widget provider should contain all wallets so we need to remove 'wallets' from config
    * to make sure we can access to list of all wallets in playground
    */
-  const playgroundConfig = {
+  const playgroundConfig: WidgetConfig = {
     ...overridedConfig,
     wallets: undefined,
     walletConnectProjectId: getConfig('WC_PROJECT_ID'),
+    trezorManifest: TREZOR_MANIFEST,
   };
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import type { Manifest as TrezorManifest } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
@@ -35,11 +36,12 @@ import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 
-import { isWalletConnectExcluded } from './helpers';
+import { isTrezorExcluded, isWalletConnectExcluded } from './helpers';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
+  trezorManifest: TrezorManifest;
 }
 
 export const allProviders = (options?: Options) => {
@@ -49,6 +51,16 @@ export const allProviders = (options?: Options) => {
     } else {
       throw new Error(
         'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
+      );
+    }
+  }
+
+  if (!isTrezorExcluded(options?.selectedProviders)) {
+    if (!!options?.trezorManifest) {
+      trezor.setTrezorManifest(options.trezorManifest);
+    } else {
+      throw new Error(
+        'Trezor has been included in your providers. Passing a manifest is required. Make sure you are passing "trezorManifest".'
       );
     }
   }

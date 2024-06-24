@@ -7,12 +7,13 @@ import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 
 import List from './components/List';
-import { WC_PROJECT_ID } from './constants';
+import { TREZOR_MANIFEST, WC_PROJECT_ID } from './constants';
 
 const providers = allProviders({
   walletconnect2: {
     WC_PROJECT_ID: WC_PROJECT_ID,
   },
+  trezorManifest: TREZOR_MANIFEST,
 });
 
 export function App() {

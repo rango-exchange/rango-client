@@ -45,6 +45,7 @@ export function useWalletList(params: Params) {
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =
     configWalletsToWalletName(config?.wallets, {
+      trezorManifest: config?.trezorManifest,
       walletConnectProjectId: config?.walletConnectProjectId,
       walletConnectListedDesktopWalletLink:
         config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
