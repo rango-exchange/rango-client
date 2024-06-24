@@ -205,7 +205,7 @@ export type WidgetConfig = {
   apiUrl?: string;
   title?: string;
   walletConnectProjectId?: string;
-  trezorManifest: { appUrl: string; email: string };
+  trezorManifest?: { appUrl: string; email: string };
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
