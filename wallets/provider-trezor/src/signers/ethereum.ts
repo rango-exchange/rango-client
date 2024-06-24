@@ -2,7 +2,7 @@ import type { EvmTransaction } from 'rango-types/lib/api/main';
 
 import { RPC_PROVIDER_URL } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
-import { JsonRpcProvider } from 'ethers';
+import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
 
 import { ETH_BIP32_PATH, toHexString } from '../helpers';
@@ -41,7 +41,6 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       if (!(isEIP1559 || gasPrice)) {
         throw new Error('Missing gasPrice');
       }
-      console.log({ tx });
 
       const provider = new JsonRpcProvider(RPC_PROVIDER_URL); // Provider to broadcast transaction
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
@@ -59,17 +58,16 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
             gasPrice: '0x0',
           };
 
-      console.log({ additionalFields });
-
-      const transaction: any = {
+      const transaction = {
         to: tx.to,
-        data: tx.data,
+        data: tx.data || '0x',
         value: toHexString(BigInt(tx.value?.toString() || 0)),
         gasLimit: toHexString(BigInt(tx.gasLimit?.toString() || 0)),
         chainId: Number.parseInt(chainId),
-        nonce: transactionCount.toString(),
+        nonce: toHexString(BigInt(transactionCount.toString())),
         ...additionalFields,
       };
+
       const { success, payload } = await TrezorConnect.ethereumSignTransaction({
         path: ETH_BIP32_PATH,
         transaction,
@@ -78,7 +76,14 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       if (!success) {
         throw new Error(payload.error);
       }
-      const { serializedTx } = payload;
+      const { r, s, v } = payload;
+
+      const serializedTx = Transaction.from({
+        ...transaction,
+        nonce: Number.parseInt(transaction.nonce),
+        type: isEIP1559 ? 2 : 0,
+        signature: { r, s, v: parseInt(v) },
+      }).serialized;
 
       if (!serializedTx) {
         throw new Error('Failed to sign transaction');
