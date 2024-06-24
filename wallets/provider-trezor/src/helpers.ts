@@ -1,0 +1,42 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import { Networks } from '@rango-dev/wallets-shared';
+import TrezorConnect from '@trezor/connect-web';
+
+const ETHEREUM_CHAIN_ID = '0x1';
+
+export const ETH_BIP32_PATH = "m/44'/60'/0'/0/0";
+
+export function getTrezorInstance() {
+  /*
+   * Instances have a required property which is `chainId` and is using in swap execution.
+   * Here we are setting it as Ethereum always since we are supporting only eth for now.
+   */
+  const instances = new Map();
+
+  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
+
+  return instances;
+}
+
+export async function getEthereumAccounts(): Promise<{
+  accounts: string[];
+  chainId: string;
+}> {
+  try {
+    const result = await TrezorConnect.ethereumGetAddress({
+      path: ETH_BIP32_PATH,
+      showOnTrezor: true,
+    });
+
+    if (!result.success) {
+      throw new Error(result.payload.error);
+    }
+
+    return {
+      accounts: [result.payload.address],
+      chainId: ETHEREUM_CHAIN_ID,
+    };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

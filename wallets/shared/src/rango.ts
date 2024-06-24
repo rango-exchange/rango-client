@@ -83,6 +83,7 @@ export enum WalletTypes {
   LEDGER = 'ledger',
   Rabby = 'rabby',
   TOMO = 'tomo',
+  TREZOR = 'trezor',
 }
 
 export enum Networks {
