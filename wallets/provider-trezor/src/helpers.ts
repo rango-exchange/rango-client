@@ -38,3 +38,9 @@ export async function getEthereumAccounts(): Promise<{
     throw new Error(error.message);
   }
 }
+
+export const toHexString = (value: bigint) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return value > 0n ? `0x${value.toString(16)}` : '0x0';
+};

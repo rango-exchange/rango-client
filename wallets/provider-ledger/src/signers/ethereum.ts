@@ -2,6 +2,7 @@ import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
+import { RPC_PROVIDER_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError } from 'rango-types';
 
@@ -11,8 +12,6 @@ import {
   transportConnect,
   transportDisconnect,
 } from '../helpers';
-
-export const RPC_PROVIDER_URL = 'https://rpc.ankr.com/eth';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(): Promise<string> {
