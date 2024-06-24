@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import { Networks } from '@rango-dev/wallets-shared';
+import { ETH_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
-
-const ETHEREUM_CHAIN_ID = '0x1';
 
 export const ETH_BIP32_PATH = "m/44'/60'/0'/0/0";
 
@@ -13,7 +11,7 @@ export function getTrezorInstance() {
    */
   const instances = new Map();
 
-  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
+  instances.set(Networks.ETHEREUM, { chainId: ETH_CHAIN_ID });
 
   return instances;
 }
@@ -34,7 +32,7 @@ export async function getEthereumAccounts(): Promise<{
 
     return {
       accounts: [result.payload.address],
-      chainId: ETHEREUM_CHAIN_ID,
+      chainId: ETH_CHAIN_ID,
     };
   } catch (error: any) {
     throw new Error(error.message);

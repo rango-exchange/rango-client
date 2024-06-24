@@ -37,7 +37,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 
   return {
     name: 'Trezor',
-    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/ledger/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/trezor/icon.svg',
     installLink: {
       DEFAULT: 'https://trezor.io/learn/a/download-verify-trezor-suite',
     },

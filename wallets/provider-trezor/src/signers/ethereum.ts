@@ -6,7 +6,7 @@ import { type GenericSigner } from 'rango-types';
 
 import { ETH_BIP32_PATH } from '../helpers';
 
-export const RPC_PROVIDER_URL = 'https://rpc.ankr.com/eth';
+export const RPC_PROVIDER_URL = 'https://node-router.thorswap.net/ethereum';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
