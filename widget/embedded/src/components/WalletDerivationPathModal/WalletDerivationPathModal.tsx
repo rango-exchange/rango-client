@@ -1,5 +1,4 @@
 import type { PropTypes } from './WalletDerivationPathModal.types';
-import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { Button, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
@@ -31,11 +30,16 @@ export function WalletDerivationPathModal(props: PropTypes) {
   const handleConfirm = () => {
     const selectedDerivationPath = derivationPaths?.find(
       (derivationPath) => derivationPath.id === selectedDerivationPathId
-    ) as DerivationPath;
-
-    onConfirm(
-      selectedDerivationPath.generateDerivationPath(derivationPathIndex)
     );
+
+    if (selectedDerivationPath) {
+      onConfirm(
+        selectedDerivationPath.generateDerivationPath(derivationPathIndex)
+      );
+    } else {
+      // Unreachable code
+      throw new Error('selectedDerivationPath can not be undefined');
+    }
   };
 
   useEffect(() => {

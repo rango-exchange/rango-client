@@ -241,7 +241,7 @@ export type DerivationPath = {
   generateDerivationPath: (index: string) => string;
 };
 
-export const EvmDerivationPaths: DerivationPath[] = [
+export const evmDerivationPaths: DerivationPath[] = [
   {
     id: 'metamask',
     label: `Metamask (m/44'/60'/0'/0/index)`,
@@ -264,7 +264,7 @@ export const EvmDerivationPaths: DerivationPath[] = [
   },
 ];
 
-export const SolanaDerivationPaths: DerivationPath[] = [
+export const solanaDerivationPaths: DerivationPath[] = [
   {
     id: `(m/44'/501'/index')`,
     label: `(m/44'/501'/index')`,
