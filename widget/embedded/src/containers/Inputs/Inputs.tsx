@@ -2,6 +2,7 @@ import type { PropTypes } from './Inputs.types';
 
 import { i18n } from '@lingui/core';
 import { SwapInput } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import { SwitchFromAndToButton } from '../../components/SwitchFromAndTo';
@@ -40,7 +41,6 @@ export function Inputs(props: PropTypes) {
   } = useQuoteStore();
   const { connectedWallets, getBalanceFor } = useWalletsStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
-
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
@@ -69,6 +69,11 @@ export function Inputs(props: PropTypes) {
     !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
       ? null
       : getPriceImpact(inputUsdValue.toString(), outputUsdValue.toString());
+
+  const inputUsd =
+    !inputUsdValue || !fromToken ? new BigNumber(0) : inputUsdValue;
+  const outputUsd =
+    !outputUsdValue || !toToken ? new BigNumber(0) : outputUsdValue;
   return (
     <Container>
       <FromContainer>
@@ -91,7 +96,7 @@ export function Inputs(props: PropTypes) {
             usdValue: priceImpactInputCanNotBeComputed
               ? undefined
               : numberToString(
-                  inputUsdValue,
+                  inputUsd,
                   USD_VALUE_MIN_DECIMALS,
                   USD_VALUE_MAX_DECIMALS
                 ),
@@ -140,7 +145,7 @@ export function Inputs(props: PropTypes) {
           usdValue: priceImpactOutputCanNotBeComputed
             ? undefined
             : numberToString(
-                outputUsdValue,
+                outputUsd,
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               ),
