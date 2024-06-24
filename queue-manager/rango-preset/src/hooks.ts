@@ -1,5 +1,3 @@
-import type { UseQueueManagerParams } from './types';
-
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useEffect, useState } from 'react';
 
@@ -9,7 +7,7 @@ import {
   retryOn,
 } from './helpers';
 import { migrated, migration } from './migration';
-import { eventEmitter } from './services/eventEmitter';
+import { type UseQueueManagerParams } from './types';
 
 let isCalled = 0;
 
@@ -46,7 +44,7 @@ function useMigration(): {
 
 /**
  *
- * On initial load and also connect/disconnet we may need to update swap's notified message.
+ * On initial load and also connect/disconnect we may need to update swap's notified message.
  * And also if a new wallet is connected we will retry the queue to see we can resume it or not.
  *
  */
@@ -77,14 +75,4 @@ function useQueueManager(params: UseQueueManagerParams): void {
   }, [params.disconnectedWallet]);
 }
 
-function useEvents() {
-  /**
-   * Making the 'all' method accessible runs the risk of removing all handlers already linked to all events,
-   * leading to unforeseen side effects in our widget or in Dapps that utilize it.
-   * Instead, we can utilize the 'off' method to detach listeners for specific events.
-   */
-  const { all, ...otherMethods } = eventEmitter;
-  return otherMethods;
-}
-
-export { useQueueManager, useMigration, useEvents };
+export { useQueueManager, useMigration };

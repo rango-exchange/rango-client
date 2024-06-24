@@ -12,6 +12,7 @@ import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/wallets-share
 import { isEvmBlockchain } from 'rango-types';
 import React, { useMemo } from 'react';
 
+import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
 import { useWalletsStore } from './store/wallets';
@@ -32,6 +33,9 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     return makeQueueDefinition({
       API_KEY: props.apiKey || getConfig('API_KEY'),
       BASE_URL: getConfig('BASE_URL'),
+      emitter: {
+        emit: eventEmitter.emit,
+      },
     });
   }, [props.apiKey]);
 

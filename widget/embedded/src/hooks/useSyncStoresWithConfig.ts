@@ -42,7 +42,9 @@ export function useSyncStoresWithConfig() {
   const prevConfigToBlockchain = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    setInputAmount(config?.amount?.toString() || '');
+    if (typeof config.amount !== 'undefined') {
+      setInputAmount(config.amount.toString());
+    }
   }, [config?.amount]);
 
   useEffect(() => {
