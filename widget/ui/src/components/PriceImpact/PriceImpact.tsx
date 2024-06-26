@@ -2,9 +2,13 @@ import type { PriceImpactPropTypes } from './PriceImpact.types';
 
 import React from 'react';
 
-import { Divider, Tooltip, Typography } from '..';
+import { Divider, Tooltip } from '..';
 
-import { Container, OutputUsdValue } from './PriceImpact.styles';
+import {
+  Container,
+  OutputUsdValue,
+  PercentageChange,
+} from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {
@@ -19,12 +23,8 @@ export function PriceImpact(props: PriceImpactPropTypes) {
     ...rest
   } = props;
 
-  let percentageChangeColor = '$neutral600';
-  if (!outputUsdValue || warningLevel === 'low') {
-    percentageChangeColor = '$warning500';
-  } else if (warningLevel === 'high') {
-    percentageChangeColor = '$error500';
-  }
+  const hasWarning = !outputUsdValue || warningLevel === 'low';
+  const hasError = warningLevel === 'high';
 
   return (
     <Container {...rest}>
@@ -38,10 +38,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               : undefined
           }
           side={tooltipProps?.side}>
-          <OutputUsdValue
-            size={size}
-            variant="body"
-            color={outputColor || '$neutral600'}>
+          <OutputUsdValue size={size} variant="body" color={outputColor}>
             {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
           </OutputUsdValue>
         </Tooltip>
@@ -49,8 +46,11 @@ export function PriceImpact(props: PriceImpactPropTypes) {
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <>
           <Divider direction="horizontal" size={4} />
-
-          <Typography size={size} variant="body" color={percentageChangeColor}>
+          <PercentageChange
+            hasError={hasError}
+            hasWarning={hasWarning}
+            size={size}
+            variant="body">
             {outputUsdValue &&
               percentageChange &&
               `(${
@@ -60,7 +60,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               }${percentageChange ? '%' : '-'})`}
 
             {!outputUsdValue && error}
-          </Typography>
+          </PercentageChange>
         </>
       )}
     </Container>
