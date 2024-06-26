@@ -157,13 +157,80 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
-export const namespaceMainBlockchain: Record<Namespace, string> = {
-  [Namespace.Evm]: 'ETH',
-  [Namespace.Solana]: 'SOLANA',
-  [Namespace.Cosmos]: 'COSMOS',
-  [Namespace.Utxo]: 'BTC',
-  [Namespace.Starknet]: 'STARKNET',
-  [Namespace.Tron]: 'TRON',
+export type DerivationPath = {
+  id: string;
+  label: string;
+  generateDerivationPath: (index: string) => string;
+  disableIndex?: boolean;
+};
+
+export const namespaces: Record<
+  Namespace,
+  { mainBlockchain: string; derivationPaths?: DerivationPath[] }
+> = {
+  [Namespace.Evm]: {
+    mainBlockchain: 'ETH',
+    derivationPaths: [
+      {
+        id: 'metamask',
+        label: `Metamask (m/44'/60'/0'/0/index)`,
+        generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
+      },
+      {
+        id: 'ledgerLive',
+        label: `LedgerLive (m/44'/60'/index'/0/0)`,
+        generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
+      },
+      {
+        id: 'legacy',
+        label: `Legacy (m/44'/60'/0'/index)`,
+        generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
+      },
+      {
+        id: 'custom',
+        label: 'Custom',
+        generateDerivationPath: (index: string) => index,
+      },
+    ],
+  },
+  [Namespace.Solana]: {
+    mainBlockchain: 'SOLANA',
+    derivationPaths: [
+      {
+        id: `(m/44'/501')`,
+        label: `(m/44'/501')`,
+        generateDerivationPath: () => `44'/501'`,
+        disableIndex: true,
+      },
+      {
+        id: `(m/44'/501'/index')`,
+        label: `(m/44'/501'/index')`,
+        generateDerivationPath: (index: string) => `44'/501'/${index}'`,
+      },
+      {
+        id: `(m/44'/501'/0'/index)`,
+        label: `(m/44'/501'/0'/index)`,
+        generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
+      },
+      {
+        id: 'custom',
+        label: 'Custom',
+        generateDerivationPath: (index: string) => index,
+      },
+    ],
+  },
+  [Namespace.Cosmos]: {
+    mainBlockchain: 'COSMOS',
+  },
+  [Namespace.Utxo]: {
+    mainBlockchain: 'BTC',
+  },
+  [Namespace.Starknet]: {
+    mainBlockchain: 'STARKNET',
+  },
+  [Namespace.Tron]: {
+    mainBlockchain: 'TRON',
+  },
 };
 
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
@@ -234,58 +301,6 @@ export interface WalletConfig {
   isAsyncInstance?: boolean;
   isAsyncSwitchNetwork?: boolean;
 }
-
-export type DerivationPath = {
-  id: string;
-  label: string;
-  generateDerivationPath: (index: string) => string;
-};
-
-export const evmDerivationPaths: DerivationPath[] = [
-  {
-    id: 'metamask',
-    label: `Metamask (m/44'/60'/0'/0/index)`,
-    generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
-  },
-  {
-    id: 'ledgerLive',
-    label: `LedgerLive (m/44'/60'/index'/0/0)`,
-    generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
-  },
-  {
-    id: 'legacy',
-    label: `Legacy (m/44'/60'/0'/index)`,
-    generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
-  },
-  {
-    id: 'custom',
-    label: 'Custom',
-    generateDerivationPath: (index: string) => index,
-  },
-];
-
-export const solanaDerivationPaths: DerivationPath[] = [
-  {
-    id: `(m/44'/501'/index')`,
-    label: `(m/44'/501'/index')`,
-    generateDerivationPath: (index: string) => `44'/501'/${index}'`,
-  },
-  {
-    id: `(m/44'/501'/0'/index)`,
-    label: `(m/44'/501'/0'/index)`,
-    generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
-  },
-  {
-    id: `(m/44'/501'/0'/0/index)`,
-    label: `(m/44'/501'/0'/0/index)`,
-    generateDerivationPath: (index: string) => `44'/501'/0'/0/${index}`,
-  },
-  {
-    id: 'custom',
-    label: 'Custom',
-    generateDerivationPath: (index: string) => index,
-  },
-];
 
 export type GetInstanceOptions = {
   network?: Network;
@@ -379,7 +394,7 @@ export type WalletInfo = {
   mobileWallet?: boolean;
   namespaces?: Namespace[];
   singleNamespace?: boolean;
-  derivationPath?: Partial<{ [namespace in Namespace]: DerivationPath[] }>;
+  enableDerivationPath?: boolean;
 };
 
 export interface Wallet {

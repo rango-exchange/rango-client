@@ -1,9 +1,5 @@
 import type { WalletWithExtraInfo } from '../types';
-import type {
-  DerivationPath,
-  Namespace,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -40,8 +36,7 @@ interface NamespacesModalState {
 interface DerivationPathModalState {
   providerType: string;
   providerImage: string;
-  namespace?: Namespace;
-  derivationPaths?: DerivationPath[];
+  namespace: Namespace;
 }
 
 const ListContainer = styled('div', {
@@ -128,33 +123,34 @@ export function WalletsPage() {
     }
   };
 
-  const handleConfirmNamespaces = (namespaces: Namespace[]) => {
+  const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
     const wallet = filteredWallets.find(
       (wallet) => wallet.type === namespacesModalState?.providerType
     );
-    if (!!wallet?.derivationPath) {
+    if (
+      wallet?.singleNamespace && // Currently we support derivation path only for single namespace wallets
+      wallet?.enableDerivationPath &&
+      selectedNamespaces[0]
+    ) {
       setDerivationPathModalState({
         providerType: wallet.type,
         providerImage: wallet.image,
-        namespace: namespaces[0],
-        derivationPaths: wallet.derivationPath[namespaces[0]],
+        namespace: selectedNamespaces[0],
       });
     } else {
       void handleClick(
         namespacesModalState?.providerType as string,
-        namespaces
+        selectedNamespaces
       );
     }
     setNamespacesModalState(null);
   };
 
   const handleDerivationPathConfirm = (path: string) => {
-    if (path && derivationPathModalState) {
+    if (path && derivationPathModalState?.namespace) {
       void handleClick(
         derivationPathModalState.providerType,
-        derivationPathModalState.namespace
-          ? [derivationPathModalState.namespace]
-          : undefined,
+        [derivationPathModalState.namespace],
         path
       );
     }
@@ -208,14 +204,13 @@ export function WalletsPage() {
             onClose={() => setNamespacesModalState(null)}
             onConfirm={handleConfirmNamespaces}
             image={namespacesModalState?.providerImage}
-            namespaces={namespacesModalState?.availableNamespaces}
+            availableNamespaces={namespacesModalState?.availableNamespaces}
             singleNamespace={namespacesModalState?.singleNamespace}
           />
           <WalletDerivationPathModal
-            open={!!derivationPathModalState?.derivationPaths}
+            selectedNamespace={derivationPathModalState?.namespace}
             type={derivationPathModalState?.providerType}
             image={derivationPathModalState?.providerImage}
-            derivationPaths={derivationPathModalState?.derivationPaths}
             onClose={() => setDerivationPathModalState(null)}
             onConfirm={handleDerivationPathConfirm}
           />

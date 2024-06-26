@@ -1,12 +1,6 @@
 import type { Disconnect, WalletInfo } from '@rango-dev/wallets-shared';
 
-import {
-  evmDerivationPaths,
-  Namespace,
-  Networks,
-  solanaDerivationPaths,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
+import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
@@ -60,9 +54,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     namespaces: [Namespace.Evm, Namespace.Solana],
     singleNamespace: true,
     showOnMobile: false,
-    derivationPath: {
-      [Namespace.Evm]: evmDerivationPaths,
-      [Namespace.Solana]: solanaDerivationPaths,
-    },
+    enableDerivationPath: true,
   };
 };

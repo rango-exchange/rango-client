@@ -1,7 +1,9 @@
 import type { PropTypes } from './WalletDerivationPathModal.types';
+import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { Button, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
+import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useEffect, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -20,18 +22,17 @@ import {
 } from './WalletDerivationPathModal.styles';
 
 export function WalletDerivationPathModal(props: PropTypes) {
-  const { onClose, onConfirm, open, derivationPaths, image, type } = props;
+  const { onClose, onConfirm, selectedNamespace, image, type } = props;
 
-  const [selectedDerivationPathId, setSelectedDerivationPathId] = useState(
-    derivationPaths?.[0]?.id || ''
-  );
+  const derivationPaths: DerivationPath[] | undefined = !!selectedNamespace
+    ? namespaces[selectedNamespace].derivationPaths
+    : undefined;
+
+  const [selectedDerivationPath, setSelectedDerivationPath] =
+    useState<DerivationPath | null>(derivationPaths?.[0] || null);
   const [derivationPathIndex, setDerivationPathIndex] = useState('0');
 
   const handleConfirm = () => {
-    const selectedDerivationPath = derivationPaths?.find(
-      (derivationPath) => derivationPath.id === selectedDerivationPathId
-    );
-
     if (selectedDerivationPath) {
       onConfirm(
         selectedDerivationPath.generateDerivationPath(derivationPathIndex)
@@ -43,12 +44,12 @@ export function WalletDerivationPathModal(props: PropTypes) {
   };
 
   useEffect(() => {
-    setSelectedDerivationPathId(derivationPaths?.[0]?.id || '');
+    setSelectedDerivationPath(derivationPaths?.[0] || null);
   }, [derivationPaths]);
 
   return (
     <WatermarkedModal
-      open={open}
+      open={!!derivationPaths}
       onClose={onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
@@ -76,7 +77,7 @@ export function WalletDerivationPathModal(props: PropTypes) {
         </InputLabel>
         <Select
           container={getContainer()}
-          value={selectedDerivationPathId}
+          value={selectedDerivationPath?.id || ''}
           options={
             derivationPaths?.map((derivationPath) => ({
               value: derivationPath.id,
@@ -84,7 +85,13 @@ export function WalletDerivationPathModal(props: PropTypes) {
             })) || []
           }
           variant="filled"
-          handleItemClick={(item) => setSelectedDerivationPathId(item.value)}
+          handleItemClick={(item) =>
+            setSelectedDerivationPath(
+              derivationPaths?.find(
+                (derivationPath) => derivationPath.id === item.value
+              ) ?? null
+            )
+          }
           styles={{ trigger: derivationPathInputStyles }}
         />
 
@@ -97,9 +104,12 @@ export function WalletDerivationPathModal(props: PropTypes) {
         </InputLabel>
         <TextField
           variant="contained"
-          value={derivationPathIndex}
+          value={
+            selectedDerivationPath?.disableIndex ? '' : derivationPathIndex
+          }
           onChange={(event) => setDerivationPathIndex(event.target.value)}
           style={derivationPathInputStyles}
+          disabled={selectedDerivationPath?.disableIndex}
         />
       </InputsContainer>
 
@@ -107,7 +117,9 @@ export function WalletDerivationPathModal(props: PropTypes) {
         type="primary"
         onClick={handleConfirm}
         disabled={
-          !derivationPaths || !selectedDerivationPathId || !derivationPathIndex
+          !derivationPaths ||
+          !selectedDerivationPath ||
+          (!derivationPathIndex && !selectedDerivationPath.disableIndex)
         }>
         {i18n.t('Confirm')}
       </Button>

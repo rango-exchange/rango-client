@@ -5,6 +5,6 @@ export interface PropTypes {
   image?: string;
   onClose: () => void;
   onConfirm: (namespaces: Namespace[]) => void;
-  namespaces?: Namespace[];
+  availableNamespaces?: Namespace[];
   singleNamespace?: boolean;
 }

@@ -1,5 +1,5 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
-import type { DerivationPath, Namespace } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-shared';
 
 import { debug } from '@rango-dev/logging-core';
 import { MessageBox, Wallet } from '@rango-dev/ui';
@@ -23,8 +23,7 @@ interface NamespacesModalState {
 interface DerivationPathModalState {
   providerType: string;
   providerImage: string;
-  namespace?: Namespace;
-  derivationPaths?: DerivationPath[];
+  namespace: Namespace;
 }
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
@@ -49,32 +48,34 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
 
-  const handleConfirmNamespaces = (namespaces: Namespace[]) => {
-    if (!!walletInfo?.derivationPath && walletType) {
+  const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
+    if (
+      !!walletInfo?.enableDerivationPath &&
+      walletInfo?.singleNamespace &&
+      selectedNamespaces[0] &&
+      walletType
+    ) {
       setDerivationPathModalState({
         providerType: walletType,
         providerImage: walletInfo.img,
-        namespace: namespaces[0],
-        derivationPaths: walletInfo.derivationPath[namespaces[0]],
+        namespace: selectedNamespaces[0],
       });
     } else {
       connect(
         namespacesModalState?.providerType as string,
         undefined,
-        namespaces
+        selectedNamespaces
       ).catch((error) => debug(error));
     }
     setNamespacesModalState(null);
   };
 
   const handleDerivationPathConfirm = (path: string) => {
-    if (path && derivationPathModalState) {
+    if (path && derivationPathModalState?.namespace) {
       connect(
         derivationPathModalState?.providerType,
         undefined,
-        derivationPathModalState.namespace
-          ? [derivationPathModalState.namespace]
-          : undefined,
+        [derivationPathModalState.namespace],
         {
           derivationPath: path,
         }
@@ -118,14 +119,13 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         onClose={() => setNamespacesModalState(null)}
         onConfirm={handleConfirmNamespaces}
         image={namespacesModalState?.providerImage}
-        namespaces={namespacesModalState?.availableNamespaces}
+        availableNamespaces={namespacesModalState?.availableNamespaces}
         singleNamespace={namespacesModalState?.singleNamespace}
       />
       <WalletDerivationPathModal
-        open={!!derivationPathModalState?.derivationPaths}
+        selectedNamespace={derivationPathModalState?.namespace}
         type={derivationPathModalState?.providerType}
         image={derivationPathModalState?.providerImage}
-        derivationPaths={derivationPathModalState?.derivationPaths}
         onClose={() => setDerivationPathModalState(null)}
         onConfirm={handleDerivationPathConfirm}
       />

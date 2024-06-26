@@ -96,7 +96,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         supportedChains,
-        derivationPath,
+        enableDerivationPath,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -113,7 +113,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         blockchainTypes,
-        derivationPath,
+        enableDerivationPath,
       };
     });
 }

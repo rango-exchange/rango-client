@@ -1,10 +1,9 @@
-import type { DerivationPath } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-shared';
 
 export interface PropTypes {
-  open: boolean;
+  selectedNamespace?: Namespace;
   type?: string;
   image?: string;
-  derivationPaths?: DerivationPath[];
   onClose: () => void;
   onConfirm: (path: string) => void;
 }
