@@ -21,6 +21,10 @@ export type ConnectResult = {
   provider: any;
 };
 
+export type ConnectExtraParams = {
+  derivationPath?: string;
+};
+
 export type Providers = { [type in WalletType]?: any };
 
 export type ProviderContext = {
@@ -28,7 +32,7 @@ export type ProviderContext = {
     type: WalletType,
     network?: Network,
     namespaces?: Namespace[],
-    extra?: { derivationPath?: string }
+    extra?: ConnectExtraParams
   ): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;

@@ -324,6 +324,10 @@ export type ProviderConnectResult = {
   chainId: string;
 };
 
+export type ConnectExtraParams = {
+  derivationPath?: string;
+};
+
 export type Connect = (options: {
   instance: any;
   network?: Network;

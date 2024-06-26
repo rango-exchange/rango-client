@@ -68,7 +68,7 @@ export const connectLedger: Connect = async ({
       results.push(accounts);
     } else {
       throw new Error(
-        'Unsupported Namespace. Please select another namespace.'
+        `It appears that you have selected a namespace that is not yet supported by our system. Your namespaces: ${namespaces}`
       );
     }
   } else {
