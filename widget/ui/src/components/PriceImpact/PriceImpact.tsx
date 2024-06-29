@@ -2,13 +2,9 @@ import type { PriceImpactPropTypes } from './PriceImpact.types';
 
 import React from 'react';
 
-import { Divider, Tooltip } from '..';
+import { Divider, Tooltip, Typography } from '..';
 
-import {
-  Container,
-  OutputUsdValue,
-  PercentageChange,
-} from './PriceImpact.styles';
+import { Container, ValueTypography } from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {
@@ -38,19 +34,17 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               : undefined
           }
           side={tooltipProps?.side}>
-          <OutputUsdValue size={size} variant="body" color={outputColor}>
-            {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
-          </OutputUsdValue>
+          <ValueTypography hasError={false} hasWarning={false}>
+            <Typography size={size} variant="body" color={outputColor}>
+              {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
+            </Typography>
+          </ValueTypography>
         </Tooltip>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
-        <>
+        <ValueTypography hasError={hasError} hasWarning={hasWarning}>
           <Divider direction="horizontal" size={4} />
-          <PercentageChange
-            hasError={hasError}
-            hasWarning={hasWarning}
-            size={size}
-            variant="body">
+          <Typography size={size} variant="body">
             {outputUsdValue &&
               percentageChange &&
               `(${
@@ -60,8 +54,8 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               }${percentageChange ? '%' : '-'})`}
 
             {!outputUsdValue && error}
-          </PercentageChange>
-        </>
+          </Typography>
+        </ValueTypography>
       )}
     </Container>
   );

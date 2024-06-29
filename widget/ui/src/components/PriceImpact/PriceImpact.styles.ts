@@ -1,5 +1,4 @@
 import { darkTheme, styled } from '../../theme';
-import { Typography } from '../Typography';
 
 export const Container = styled('div', {
   width: '100%',
@@ -8,31 +7,42 @@ export const Container = styled('div', {
   alignItems: 'center',
 });
 
-export const OutputUsdValue = styled(Typography, {
-  overflow: 'hidden',
+export const ValueTypography = styled('div', {
+  display: 'flex',
   whiteSpace: 'nowrap',
+  overflow: 'hidden',
   textOverflow: 'ellipsis',
-  color: '$neutral600',
-  [`.${darkTheme} &`]: {
-    color: '$neutral700',
-  },
-});
-
-export const PercentageChange = styled(Typography, {
-  color: '$neutral600',
-  [`.${darkTheme} &`]: {
-    color: '$neutral700',
-  },
-
   variants: {
     hasWarning: {
       true: {
-        color: '$warning500',
+        '& ._typography': {
+          color: '$warning500',
+        },
+      },
+      false: {
+        '& ._typography': {
+          $$color: '$colors$neutral600',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral700',
+          },
+          color: '$$color',
+        },
       },
     },
     hasError: {
       true: {
-        color: '$error500',
+        '& ._typography': {
+          color: '$error500',
+        },
+      },
+      false: {
+        '& ._typography': {
+          $$color: '$colors$neutral600',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral700',
+          },
+          color: '$$color',
+        },
       },
     },
   },
