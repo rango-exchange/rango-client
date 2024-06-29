@@ -5,6 +5,7 @@ import type {
   QuoteEventData,
   Tokens,
   WalletEventData,
+  WalletInfoWithNamespaces,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
@@ -64,6 +65,7 @@ import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { useWalletList } from './hooks/useWalletList';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
 import { widgetEventEmitter } from './services/eventEmitter';
 import {
@@ -106,6 +108,7 @@ export type {
   WidgetVariant,
   WalletEventData,
   QuoteEventData,
+  WalletInfoWithNamespaces,
 };
 export {
   Widget,
@@ -120,6 +123,7 @@ export {
    * @deprecated Use `widgetEventEmitter` instead. This hook will be removed in future versions.
    */
   useWidgetEvents,
+  useWalletList,
   customizedThemeTokens,
   widgetEventEmitter,
   WidgetEvents,
