@@ -28,6 +28,7 @@ interface Params {
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
   onConnect?: (walletType: string) => void;
+  onError?: (error?: string) => void;
 }
 
 /**
@@ -36,7 +37,7 @@ interface Params {
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
 export function useWalletList(params: Params) {
-  const { chain, onBeforeConnect, onConnect } = params;
+  const { chain, onBeforeConnect, onConnect, onError } = params;
   const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
@@ -90,8 +91,10 @@ export function useWalletList(params: Params) {
         await connect(type, undefined, namespaces);
         onConnect?.(type);
       }
-    } catch (e) {
-      setError('Error: ' + (e as any)?.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      onError?.(e?.message);
+      setError('Error: ' + e?.message);
     }
   };
 
