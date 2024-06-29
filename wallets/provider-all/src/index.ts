@@ -1,7 +1,6 @@
 import type { Manifest as TrezorManifest } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
 
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
@@ -35,17 +34,24 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isTrezorExcluded, isWalletConnectExcluded } from './helpers';
+import { isWalletTypeExcluded } from './helpers';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
-  trezorManifest: TrezorManifest;
+  trezorManifest?: TrezorManifest;
 }
 
 export const allProviders = (options?: Options) => {
-  if (!isWalletConnectExcluded(options?.selectedProviders)) {
+  if (
+    !isWalletTypeExcluded(
+      WalletTypes.WALLET_CONNECT_2,
+      'WalletConnect',
+      options?.selectedProviders
+    )
+  ) {
     if (!!options?.walletconnect2?.WC_PROJECT_ID) {
       walletconnect2.init(options.walletconnect2);
     } else {
@@ -55,9 +61,15 @@ export const allProviders = (options?: Options) => {
     }
   }
 
-  if (!isTrezorExcluded(options?.selectedProviders)) {
+  if (
+    !isWalletTypeExcluded(
+      WalletTypes.TREZOR,
+      'Trezor',
+      options?.selectedProviders
+    )
+  ) {
     if (!!options?.trezorManifest) {
-      trezor.setTrezorManifest(options.trezorManifest);
+      trezor.setManifest(options.trezorManifest);
     } else {
       throw new Error(
         'Trezor has been included in your providers. Passing a manifest is required. Make sure you are passing "trezorManifest".'

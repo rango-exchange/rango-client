@@ -22,7 +22,6 @@ export function App() {
   const fetchMeta = useMetaStore.use.fetchMeta();
   const config = useConfigStore.use.config();
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
-  console.log({ filteredConfigForExport, config, initialConfig });
 
   const overridedConfig: WidgetConfig = {
     theme: {},

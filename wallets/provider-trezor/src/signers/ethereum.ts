@@ -1,6 +1,6 @@
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
-import { RPC_PROVIDER_URL } from '@rango-dev/wallets-shared';
+import { DEFAULT_ETH_RPC_URL } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
@@ -42,7 +42,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
         throw new Error('Missing gasPrice');
       }
 
-      const provider = new JsonRpcProvider(RPC_PROVIDER_URL); // Provider to broadcast transaction
+      const provider = new JsonRpcProvider(DEFAULT_ETH_RPC_URL); // Provider to broadcast transaction
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
 
       const additionalFields = isEIP1559
@@ -81,6 +81,11 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const serializedTx = Transaction.from({
         ...transaction,
         nonce: Number.parseInt(transaction.nonce),
+        /*
+         * Type 0: This refers to the legacy transaction type that has been used since Ethereum's inception.
+         * Type 2: This refers to the new transaction type introduced with the EIP-1559 (Ethereum Improvement Proposal 1559) update,
+         * which was part of the London hard fork.
+         */
         type: isEIP1559 ? 2 : 0,
         signature: { r, s, v: parseInt(v) },
       }).serialized;

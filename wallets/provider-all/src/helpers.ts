@@ -1,24 +1,17 @@
 import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
-
-export const isWalletConnectExcluded = (
+export const isWalletTypeExcluded = (
+  walletType: WalletTypes,
+  walletName: string,
   selectedProviders?: (WalletType | ProviderInterface)[]
-) =>
-  selectedProviders &&
-  !selectedProviders.find((provider) =>
-    typeof provider === 'string'
-      ? provider === WalletTypes.WALLET_CONNECT_2
-      : provider.getWalletInfo([]).name === 'WalletConnect'
+) => {
+  return (
+    selectedProviders &&
+    !selectedProviders.find((provider) =>
+      typeof provider === 'string'
+        ? provider === walletType
+        : provider.getWalletInfo([]).name === walletName
+    )
   );
-
-export const isTrezorExcluded = (
-  selectedProviders?: (WalletType | ProviderInterface)[]
-) =>
-  selectedProviders &&
-  !selectedProviders.find((provider) =>
-    typeof provider === 'string'
-      ? provider === WalletTypes.TREZOR
-      : provider.getWalletInfo([]).name === 'Trezor'
-  );
+};

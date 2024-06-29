@@ -8,18 +8,17 @@ import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 import { getEthereumAccounts, getTrezorInstance } from './helpers';
 import signer from './signer';
 
-const WALLET = WalletTypes.TREZOR;
 let trezorManifest: Manifest = {
   appUrl: '',
   email: '',
 };
 export const config = {
-  type: WALLET,
+  type: WalletTypes.TREZOR,
 };
 
 export type { Manifest };
 
-export const setTrezorManifest = (manifest: Manifest) => {
+export const setManifest = (manifest: Manifest) => {
   trezorManifest = manifest;
 };
 

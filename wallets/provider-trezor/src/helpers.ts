@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { ETH_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
 
@@ -39,8 +38,12 @@ export async function getEthereumAccounts(): Promise<{
   }
 }
 
+/*
+ * Using BigInt in the toHexString function ensures that the function
+ * can handle very large integer values that exceed the range of standard JavaScript number types.
+ */
 export const toHexString = (value: bigint) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return value > 0n ? `0x${value.toString(16)}` : '0x0';
+  const ZERO_BIGINT = BigInt(0);
+  const HEX_BASE = 16;
+  return value > ZERO_BIGINT ? `0x${value.toString(HEX_BASE)}` : '0x0';
 };

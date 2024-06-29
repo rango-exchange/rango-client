@@ -123,9 +123,7 @@ export function formatConfig(config: WidgetConfig) {
   if (config.trezorManifest) {
     formatedConfig = insertAt(
       formatedConfig,
-      `// Trezor Connect Manifest requires that you,
-    // as a Trezor Connect integrator,share your e-mail and application url
-    `,
+      `// Here, give your email and URL.`,
       formatedConfig.indexOf('trezorManifest')
     );
   }

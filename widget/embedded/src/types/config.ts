@@ -145,6 +145,11 @@ export type Features = Partial<
 > &
   Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>>;
 
+export type Manifest = {
+  appUrl: string;
+  email: string;
+};
+
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
@@ -158,7 +163,7 @@ export type Features = Partial<
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
- * @property {{ appUrl: string; email: string }} trezorManifest - Trezor Connect Manifest requires that you,
+ * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
  * as a Trezor Connect integrator,share your e-mail and application url.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
@@ -205,7 +210,7 @@ export type WidgetConfig = {
   apiUrl?: string;
   title?: string;
   walletConnectProjectId?: string;
-  trezorManifest?: { appUrl: string; email: string };
+  trezorManifest?: Manifest;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
