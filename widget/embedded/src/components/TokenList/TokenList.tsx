@@ -110,7 +110,7 @@ export function TokenList(props: PropTypes) {
 
   useEffect(() => {
     setTokens(list.slice(0, PAGE_SIZE));
-  }, [list.length]);
+  }, [list.length, selectedBlockchain]);
 
   const renderList = () => {
     if (!tokens.length && !!searchedFor) {
