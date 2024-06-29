@@ -18,7 +18,13 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -87,10 +93,14 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
   const isFirefox = navigator?.userAgent.includes('Firefox');
 
-  const quoteWallets = getQuoteWallets({
-    filter: 'all',
-    quote: selectedQuote,
-  });
+  const quoteWallets = useMemo(
+    () =>
+      getQuoteWallets({
+        filter: 'all',
+        quote: selectedQuote,
+      }),
+    [selectedQuote]
+  );
 
   const requiredWallets = getQuoteWallets({
     filter: 'required',
@@ -113,7 +123,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           quoteWallets.includes(connectedWallet.chain)
         );
       }),
-    [connectedWallets.length, quoteWallets.length]
+    [connectedWallets, quoteWallets]
   );
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
@@ -333,7 +343,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       );
       return nextState;
     });
-  }, [connectedWallets.length, quoteWallets.length]);
+  }, [connectedWallets, quoteWallets]);
 
   useEffect(() => {
     const nextState: typeof nextSelectedWallets = [];
@@ -353,7 +363,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       });
       setNextSelectedWallets(nextState);
     }
-  }, [connectedWallets.length, nextSelectedWallets.length]);
+  }, [connectedWallets, nextSelectedWallets]);
 
   const modalContainer = document.getElementById(
     WIDGET_UI_ID.SWAP_BOX_ID
