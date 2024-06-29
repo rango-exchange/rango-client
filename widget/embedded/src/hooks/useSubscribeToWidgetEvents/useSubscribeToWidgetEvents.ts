@@ -46,9 +46,8 @@ export function useSubscribeToWidgetEvents() {
       setNotification(event, route);
     };
     eventEmitter.on(WidgetEvents.StepEvent, handleStepEvent);
-
     return () => eventEmitter.off(WidgetEvents.StepEvent, handleStepEvent);
-  }, [eventEmitter, connectedWallets.length]);
+  }, [eventEmitter, connectedWallets]);
 
   useEffect(() => {
     const handleRouteEvent = (widgetEvent: RouteEventData) => {
@@ -64,5 +63,5 @@ export function useSubscribeToWidgetEvents() {
     eventEmitter.on(WidgetEvents.RouteEvent, handleRouteEvent);
 
     return () => eventEmitter.off(WidgetEvents.RouteEvent, handleRouteEvent);
-  }, [eventEmitter, connectedWallets.length]);
+  }, [eventEmitter]);
 }
