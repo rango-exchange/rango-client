@@ -104,12 +104,9 @@ export function WalletDerivationPathModal(props: PropTypes) {
         </InputLabel>
         <TextField
           variant="contained"
-          value={
-            selectedDerivationPath?.disableIndex ? '' : derivationPathIndex
-          }
+          value={derivationPathIndex}
           onChange={(event) => setDerivationPathIndex(event.target.value)}
           style={derivationPathInputStyles}
-          disabled={selectedDerivationPath?.disableIndex}
         />
       </InputsContainer>
 
@@ -117,9 +114,7 @@ export function WalletDerivationPathModal(props: PropTypes) {
         type="primary"
         onClick={handleConfirm}
         disabled={
-          !derivationPaths ||
-          !selectedDerivationPath ||
-          (!derivationPathIndex && !selectedDerivationPath.disableIndex)
+          !derivationPaths || !selectedDerivationPath || !derivationPathIndex
         }>
         {i18n.t('Confirm')}
       </Button>

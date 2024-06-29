@@ -161,7 +161,6 @@ export type DerivationPath = {
   id: string;
   label: string;
   generateDerivationPath: (index: string) => string;
-  disableIndex?: boolean;
 };
 
 export const namespaces: Record<
@@ -196,12 +195,6 @@ export const namespaces: Record<
   [Namespace.Solana]: {
     mainBlockchain: 'SOLANA',
     derivationPaths: [
-      {
-        id: `(m/44'/501')`,
-        label: `(m/44'/501')`,
-        generateDerivationPath: () => `44'/501'`,
-        disableIndex: true,
-      },
       {
         id: `(m/44'/501'/index')`,
         label: `(m/44'/501'/index')`,
