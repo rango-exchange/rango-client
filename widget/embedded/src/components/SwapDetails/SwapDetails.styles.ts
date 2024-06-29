@@ -11,6 +11,16 @@ export const Container = styled('div', {
 
 export const HeaderDetails = styled('div', {
   width: '100%',
+  '& ._icon-button': {
+    '&:hover': {
+      '& svg': {
+        color: '$secondary550',
+        [`.${darkTheme} &`]: {
+          color: '$secondary500',
+        },
+      },
+    },
+  },
 });
 
 export const StepsList = styled(ScrollableArea, {
