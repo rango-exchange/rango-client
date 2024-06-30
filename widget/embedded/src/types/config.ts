@@ -223,10 +223,6 @@ export type WidgetConfig = {
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;
-  };
-
-  // Internal configuration options. Not intended for public use or modification.
-  _INTERNAL_SETTINGS_?: {
     autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
   };
 };
