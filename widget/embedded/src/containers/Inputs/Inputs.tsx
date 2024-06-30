@@ -44,6 +44,11 @@ export function Inputs(props: PropTypes) {
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
+  const inputUsdAmount =
+    !inputUsdValue || !fromToken ? new BigNumber(0) : inputUsdValue;
+  const outputUsdAmount =
+    !outputUsdValue || !toToken ? new BigNumber(0) : outputUsdValue;
+
   const tokenBalanceReal =
     !!fromBlockchain && !!fromToken
       ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
@@ -55,13 +60,13 @@ export function Inputs(props: PropTypes) {
 
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
     selectedQuote,
-    inputAmount,
+    inputUsdAmount.toString(),
     inputUsdValue
   );
 
   const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
     selectedQuote,
-    inputAmount,
+    inputUsdAmount.toString(),
     outputUsdValue
   );
 
@@ -70,10 +75,6 @@ export function Inputs(props: PropTypes) {
       ? null
       : getPriceImpact(inputUsdValue.toString(), outputUsdValue.toString());
 
-  const inputUsd =
-    !inputUsdValue || !fromToken ? new BigNumber(0) : inputUsdValue;
-  const outputUsd =
-    !outputUsdValue || !toToken ? new BigNumber(0) : outputUsdValue;
   return (
     <Container>
       <FromContainer>
@@ -96,13 +97,13 @@ export function Inputs(props: PropTypes) {
             usdValue: priceImpactInputCanNotBeComputed
               ? undefined
               : numberToString(
-                  inputUsd,
+                  inputUsdAmount,
                   USD_VALUE_MIN_DECIMALS,
                   USD_VALUE_MAX_DECIMALS
                 ),
             realUsdValue: priceImpactInputCanNotBeComputed
               ? undefined
-              : formatTooltipNumbers(inputUsdValue),
+              : formatTooltipNumbers(inputUsdAmount),
             error: priceImpactInputCanNotBeComputed
               ? errorMessages().unknownPriceError.impactTitle
               : undefined,
@@ -145,11 +146,11 @@ export function Inputs(props: PropTypes) {
           usdValue: priceImpactOutputCanNotBeComputed
             ? undefined
             : numberToString(
-                outputUsd,
+                outputUsdAmount,
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               ),
-          realValue: formatTooltipNumbers(outputAmount),
+          realValue: formatTooltipNumbers(outputUsdAmount),
           realUsdValue: priceImpactOutputCanNotBeComputed
             ? undefined
             : formatTooltipNumbers(outputUsdValue),
