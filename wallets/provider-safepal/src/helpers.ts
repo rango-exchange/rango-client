@@ -1,24 +1,31 @@
-import {
-  Network,
-  Networks,
-  ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
+import type { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 
-export function safepal() {
+const getEvmInstance = getEvmInstanceFor('SafePal');
+
+export async function safepal() {
   const instances = new Map();
-  const { isSafePal, safepal, safepalProvider } = window;
+  const { isSafePal, safepal } = window;
 
-  if (!isSafePal) return null;
+  if (!isSafePal) {
+    return null;
+  }
 
-  if (!!safepal && safepal.isSafePalWallet)
+  if (!!safepal && safepal.isSafePalWallet) {
     instances.set(Networks.SOLANA, safepal);
+  }
 
-  if (safepalProvider && safepalProvider)
-    instances.set(Networks.ETHEREUM, safepalProvider);
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
 
-  if (instances.size === 0) return null;
+  if (instances.size === 0) {
+    return null;
+  }
 
   return instances;
 }

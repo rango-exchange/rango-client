@@ -33,6 +33,7 @@ export const config = {
   type: WALLET,
   // TODO: Get from evm networks
   defaultNetwork: Networks.ETHEREUM,
+  isAsyncInstance: true,
 };
 export const getInstance = exodus_instances;
 

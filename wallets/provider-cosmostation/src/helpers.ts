@@ -1,18 +1,28 @@
-import { Networks } from '@rango-dev/wallets-shared';
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 
-export function cosmostation() {
+const getEvmInstance = getEvmInstanceFor('Cosmostation Wallet');
+
+export async function cosmostation() {
   const { cosmostation } = window;
   const instances = new Map();
 
-  if (!cosmostation || !cosmostation.providers) return null;
-
-  const evmInstance = cosmostation.providers.metamask;
-  if (evmInstance) instances.set(Networks.ETHEREUM, evmInstance);
+  if (!cosmostation || !cosmostation.providers) {
+    return null;
+  }
 
   const cosmosInstance = cosmostation.providers.keplr;
-  if (cosmosInstance) instances.set(Networks.COSMOS, cosmosInstance);
+  if (cosmosInstance) {
+    instances.set(Networks.COSMOS, cosmosInstance);
+  }
 
-  if (instances.size === 0) return null;
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
+
+  if (instances.size === 0) {
+    return null;
+  }
 
   return instances;
 }

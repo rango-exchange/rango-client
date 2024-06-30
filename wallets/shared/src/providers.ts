@@ -7,6 +7,7 @@ import type {
   SwitchNetwork,
   WalletType,
 } from './rango';
+import type { EIP6963AnnounceProviderEvent } from './types';
 import type { BlockchainMeta } from 'rango-types';
 
 import { isEvmBlockchain } from 'rango-types';
@@ -16,6 +17,39 @@ import {
   switchOrAddNetworkForMetamaskCompatibleWallets,
 } from './helpers';
 import { Networks } from './rango';
+
+export const EIP_6963_ANNOUNCE_PROVIDER = 'eip6963:announceProvider';
+export const EIP_6963_REQUEST_PROVIDER = 'eip6963:requestProvider';
+
+export function getEvmInstanceFor(providerName: string) {
+  const TIMEOUT_FOR_ANNOUNCE_PROVIDERS = 100;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let instance: any = null;
+
+  const onAnnounceProvider = (event: EIP6963AnnounceProviderEvent) => {
+    if (instance === null && event.detail.info.name === providerName) {
+      instance = event.detail.provider;
+    }
+  };
+
+  return async () => {
+    if (instance === null) {
+      window.addEventListener(EIP_6963_ANNOUNCE_PROVIDER, onAnnounceProvider);
+      window.dispatchEvent(new Event(EIP_6963_REQUEST_PROVIDER));
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          window.removeEventListener(
+            EIP_6963_ANNOUNCE_PROVIDER,
+            onAnnounceProvider
+          );
+          resolve(instance);
+        }, TIMEOUT_FOR_ANNOUNCE_PROVIDERS);
+      });
+    }
+    return instance;
+  };
+}
 
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([

@@ -37,6 +37,7 @@ const WALLET = WalletTypes.COSMOSTATION;
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.COSMOS,
+  isAsyncInstance: true,
 };
 
 export const getInstance = cosmostation_instance;

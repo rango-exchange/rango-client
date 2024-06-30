@@ -34,6 +34,7 @@ const WALLET = WalletTypes.XDEFI;
 export const config = {
   type: WALLET,
   defaultNetwork: DEFAULT_NETWORK,
+  isAsyncInstance: true,
 };
 
 export const getInstance = xdefi_instances;

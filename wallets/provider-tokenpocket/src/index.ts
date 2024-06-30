@@ -25,6 +25,7 @@ const WALLET = WalletTypes.TOKEN_POCKET;
 
 export const config = {
   type: WALLET,
+  isAsyncInstance: true,
 };
 
 export const getInstance = tokenpocket_instance;

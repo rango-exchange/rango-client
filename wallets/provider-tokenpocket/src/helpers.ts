@@ -1,6 +1,8 @@
-export function tokenpocket() {
-  const { ethereum } = window;
-  if (ethereum && ethereum.isTokenPocket) return ethereum;
+import { getEvmInstanceFor } from '@rango-dev/wallets-shared';
 
-  return null;
+const getEvmInstance = getEvmInstanceFor('TokenPocket');
+
+export async function tokenpocket() {
+  const instance = await getEvmInstance();
+  return instance;
 }
