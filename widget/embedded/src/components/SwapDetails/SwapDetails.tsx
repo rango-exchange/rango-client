@@ -446,7 +446,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         walletButtonDisabled={!isActiveTab}
       />
       <SwapDetailsCompleteModal
-        open={!showCompletedModal}
+        open={!!showCompletedModal}
         diagnosisUrl={diagnosisUrl}
         onClose={() => setShowCompletedModal(null)}
         status={swap.status === 'success' ? 'success' : 'failed'}
