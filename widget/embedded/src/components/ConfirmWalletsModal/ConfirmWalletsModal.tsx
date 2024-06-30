@@ -513,7 +513,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     />
                   </ListContainer>
                   {!isLastWallet && <Divider size={32} />}
-                  {isLastWallet && config?.customDestination && (
+                  {isLastWallet && config?.customDestination !== false && (
                     <CustomDestination>
                       <CustomCollapsible
                         onOpenChange={
