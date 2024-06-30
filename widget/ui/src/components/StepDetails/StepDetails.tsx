@@ -7,7 +7,7 @@ import { ChainToken } from '../../components/ChainToken/ChainToken';
 import { NextIcon } from '../../icons';
 import { Image } from '../common';
 import { Divider } from '../Divider';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -133,7 +133,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 tokenImage={step.from.token.image}
                 size="small"
               />
-              <Tooltip
+              <NumericTooltip
                 content={step.from.price.realValue}
                 container={tooltipContainer}>
                 <Divider direction="horizontal" size={4} />
@@ -141,7 +141,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                   size="small"
                   color="$neutral700"
                   variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
-              </Tooltip>
+              </NumericTooltip>
               <Divider direction="horizontal" size={4} />
 
               <NextIcon color="gray" />
@@ -151,7 +151,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 tokenImage={step.to.token.image}
                 size="small"
               />
-              <Tooltip
+              <NumericTooltip
                 content={step.to.price.realValue}
                 container={tooltipContainer}>
                 <Divider direction="horizontal" size={4} />
@@ -161,7 +161,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 }${step.to.price.value} ${
                   step.to.token.displayName
                 }`}</Typography>
-              </Tooltip>
+              </NumericTooltip>
             </div>
             <Alerts pb={hasSeparator && type === 'quote-details'}>
               {step.alerts}

@@ -5,7 +5,7 @@ import React from 'react';
 import { ChainToken } from '../ChainToken';
 import { Divider } from '../Divider';
 import { PriceImpact } from '../PriceImpact';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -32,7 +32,7 @@ export function TokenAmount(props: PropTypes) {
             </Typography>
           )}
           <div>
-            <Tooltip
+            <NumericTooltip
               content={props.price.realValue}
               open={!props.price.realValue ? false : undefined}
               container={props.tooltipContainer}>
@@ -49,13 +49,13 @@ export function TokenAmount(props: PropTypes) {
                 style={{ fontWeight: 400 }}>
                 {props.token.displayName}
               </Typography>
-            </Tooltip>
+            </NumericTooltip>
           </div>
         </div>
       </div>
       {props.price.usdValue && props.price.usdValue !== '0' && (
         <div className={usdValueStyles()}>
-          <Tooltip
+          <NumericTooltip
             content={props.price.realUsdValue}
             container={props.tooltipContainer}>
             {props.type === 'input' && (
@@ -66,7 +66,7 @@ export function TokenAmount(props: PropTypes) {
                 <Divider direction="horizontal" size={4} />
               </>
             )}
-          </Tooltip>
+          </NumericTooltip>
           {props.type === 'output' && (
             <PriceImpact
               size="small"

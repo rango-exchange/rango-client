@@ -8,8 +8,8 @@ import {
   CloseIcon,
   Divider,
   IconButton,
+  NumericTooltip,
   QuoteCost,
-  Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
@@ -22,7 +22,7 @@ import {
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import { getContainer } from '../../utils/common';
-import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
+import { numberToString } from '../../utils/numbers';
 import { getFeesGroup, getTotalFeesInUsd, getUsdFee } from '../../utils/swap';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
@@ -117,9 +117,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                       color="neutral600">
                       {NAME_OF_FEES[payableFeesKey as NameOfFees]}
                     </Typography>
-                    <Tooltip
-                      content={formatTooltipNumbers(fee.amount)}
-                      container={container}>
+                    <NumericTooltip content={fee.amount} container={container}>
                       <Typography variant="label" size="medium">
                         {numberToString(
                           fee.amount,
@@ -134,7 +132,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                         )}
                         )
                       </Typography>
-                    </Tooltip>
+                    </NumericTooltip>
                   </FeeSection>
                 );
               })
