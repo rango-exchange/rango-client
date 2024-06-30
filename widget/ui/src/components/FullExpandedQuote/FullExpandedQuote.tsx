@@ -8,7 +8,7 @@ import { Image } from '../common';
 import { Divider } from '../Divider';
 import { QuoteCost } from '../QuoteCost';
 import { QuoteTag } from '../QuoteTag';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip, Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -236,7 +236,7 @@ export function FullExpandedQuote(props: PropTypes) {
                       />
                       <Divider size={4} />
                       <div>
-                        <Tooltip
+                        <NumericTooltip
                           content={props.outputPrice.realValue}
                           container={tooltipContainer}
                           open={
@@ -249,7 +249,7 @@ export function FullExpandedQuote(props: PropTypes) {
                           <Typography size="xmedium" variant="title">
                             {step.to.token.displayName}
                           </Typography>
-                        </Tooltip>
+                        </NumericTooltip>
                       </div>
                       <StyledPriceImpact
                         size="small"

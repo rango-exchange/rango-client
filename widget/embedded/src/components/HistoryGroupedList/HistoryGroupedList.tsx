@@ -15,7 +15,7 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../../constants/routing';
 import { getContainer } from '../../utils/common';
-import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
+import { numberToString } from '../../utils/numbers';
 
 import { calculateGroupsSoFar } from './HistoryGroupedList.helpers';
 import {
@@ -130,7 +130,7 @@ export function HistoryGroupedList(props: PropTypes) {
                     TOKEN_AMOUNT_MIN_DECIMALS,
                     TOKEN_AMOUNT_MAX_DECIMALS
                   ),
-                  realAmount: formatTooltipNumbers(swap.inputAmount),
+                  realAmount: swap.inputAmount,
                 },
                 to: {
                   token: {
@@ -147,10 +147,10 @@ export function HistoryGroupedList(props: PropTypes) {
                     TOKEN_AMOUNT_MIN_DECIMALS,
                     TOKEN_AMOUNT_MAX_DECIMALS
                   ),
-                  realAmount: formatTooltipNumbers(
+                  realAmount:
                     lastStep.outputAmount ||
-                      lastStep.expectedOutputAmountHumanReadable
-                  ),
+                    lastStep.expectedOutputAmountHumanReadable ||
+                    '',
                 },
               }}
             />

@@ -3,7 +3,7 @@ import type { ChainTokenPropTypes } from '../ChainToken';
 import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types';
 import type { PropTypes as QuoteCostProps } from '../QuoteCost/QuoteCost.types';
 import type { InternalSwap, Step } from '../StepDetails/StepDetails.types';
-import type { TooltipPropTypes } from '../Tooltip/Tooltip.types';
+import type { NumericTooltipPropTypes, TooltipPropTypes } from '../Tooltip';
 import type { CSSProperties } from '@stitches/react';
 import type { RouteTag } from 'rango-sdk';
 
@@ -41,7 +41,7 @@ export interface TokenSectionPropTypes {
   style?: CSSProperties;
   tooltipProps?: {
     container: TooltipPropTypes['container'];
-    content: TooltipPropTypes['content'];
+    content: NumericTooltipPropTypes['content'];
     open?: TooltipPropTypes['open'];
   };
   isInternalSwap?: boolean;
