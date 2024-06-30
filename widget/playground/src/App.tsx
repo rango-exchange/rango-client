@@ -27,7 +27,7 @@ export function App() {
     features: {
       theme: 'hidden',
     },
-    _INTERNAL_SETTINGS_: {
+    __UNSTABLE_OR_INTERNAL__: {
       autoUpdateSettings: true,
     },
   };
