@@ -10,6 +10,7 @@ import {
   updateAppStoreConfig,
 } from '../../test-utils/fixtures';
 import { createTokenHash } from '../../utils/meta';
+import { areTokensEqual } from '../../utils/wallets';
 import { createAppStore } from '../app';
 
 let appStoreState: AppStoreState;
@@ -52,12 +53,10 @@ beforeEach(() => {
   customTokens.forEach((token) => {
     const tokenHash = createTokenHash(token);
     initData._tokensMapByTokenHash.set(tokenHash, token);
-    initData._supportedSourceTokens = Array.from(
-      initData._tokensMapByTokenHash.values()
-    );
-    initData._supportedDestinationTokens = Array.from(
-      initData._tokensMapByTokenHash.values()
-    );
+    if (!initData._tokensMapByBlockchainName[token.blockchain]) {
+      initData._tokensMapByBlockchainName[token.blockchain] = [];
+    }
+    initData._tokensMapByBlockchainName[token.blockchain].push(tokenHash);
   });
 
   const appStore = createAppStore();
@@ -355,5 +354,91 @@ describe('search in tokens', () => {
 
     expect(firstResult).toBe(djangoToken.symbol);
     expect(secondResult).toBe('RNG');
+  });
+});
+
+describe('supported tokens from config', () => {
+  test('Should ensure tokens include only source tokens from the config', () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    const configTokens = [rangoToken, djangoToken];
+
+    appStoreState = updateAppStoreConfig(appStoreState, {
+      from: {
+        tokens: [rangoToken, djangoToken],
+      },
+    });
+
+    const tokens = appStoreState.tokens({
+      type: 'source',
+    });
+
+    const isTokensSubsetOfConfigTokens = (tokens: Token[]) =>
+      tokens.every((token) =>
+        configTokens.some((configToken) => areTokensEqual(token, configToken))
+      );
+
+    let tokensIsSubsetOfConfig = isTokensSubsetOfConfigTokens(tokens);
+
+    expect(tokensIsSubsetOfConfig).toBeTruthy();
+
+    appStoreState = appStoreState = updateAppStoreConfig(appStoreState, {
+      from: {
+        blockchains: [rangoBlockchain.name],
+        tokens: {
+          [rangoBlockchain.name]: {
+            tokens: [rangoToken, djangoToken],
+            isExcluded: false,
+          },
+        },
+      },
+    });
+
+    tokensIsSubsetOfConfig = isTokensSubsetOfConfigTokens(tokens);
+
+    expect(tokensIsSubsetOfConfig).toBeTruthy();
+  });
+
+  test('Should ensure tokens include only destination tokens from the config', () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    const configTokens = [rangoToken, djangoToken];
+
+    appStoreState = updateAppStoreConfig(appStoreState, {
+      to: {
+        tokens: [rangoToken, djangoToken],
+      },
+    });
+
+    const tokens = appStoreState.tokens({
+      type: 'destination',
+    });
+
+    const isTokensSubsetOfConfigTokens = (tokens: Token[]) =>
+      tokens.every((token) =>
+        configTokens.some((configToken) => areTokensEqual(token, configToken))
+      );
+
+    let tokensIsSubsetOfConfig = isTokensSubsetOfConfigTokens(tokens);
+
+    expect(tokensIsSubsetOfConfig).toBeTruthy();
+
+    appStoreState = appStoreState = updateAppStoreConfig(appStoreState, {
+      to: {
+        blockchains: [rangoBlockchain.name],
+        tokens: {
+          [rangoBlockchain.name]: {
+            tokens: [rangoToken, djangoToken],
+            isExcluded: false,
+          },
+        },
+      },
+    });
+
+    tokensIsSubsetOfConfig = isTokensSubsetOfConfigTokens(tokens);
+
+    expect(tokensIsSubsetOfConfig).toBeTruthy();
   });
 });

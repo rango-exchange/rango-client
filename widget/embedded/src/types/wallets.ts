@@ -13,7 +13,7 @@ export type Balance = {
   usdValue: string;
 };
 
-type Blockchain = string;
+export type Blockchain = string;
 type TokenSymbol = string;
 type Address = string;
 

@@ -1,15 +1,79 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
-import type { Balance, BlockchainAndTokenConfig, TokenHash } from '../../types';
+import type { CachedEntries } from '../../services/cacheService';
+import type {
+  Balance,
+  Blockchain,
+  BlockchainAndTokenConfig,
+  TokenHash,
+} from '../../types';
 import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
+import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
+
+export const calculateSupportedTokens = (params: {
+  type: 'source' | 'destination';
+  config: {
+    blockchains: BlockchainAndTokenConfig['blockchains'];
+    tokens: BlockchainAndTokenConfig['tokens'];
+  };
+  meta: {
+    tokensMapByTokenHash: DataSlice['_tokensMapByTokenHash'];
+    tokensMapByBlockchainName: DataSlice['_tokensMapByBlockchainName'];
+  };
+}) => {
+  const { config, meta } = params;
+  let nextState: Record<TokenHash, Token> = {};
+  if (Array.isArray(config.tokens)) {
+    config.tokens.forEach((token) => {
+      const tokenHash = createTokenHash(token);
+      const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
+
+      if (tokenFromMeta) {
+        nextState[tokenHash] = tokenFromMeta;
+      }
+    });
+  } else if (!config.blockchains) {
+    nextState = Object.fromEntries(meta.tokensMapByTokenHash);
+  } else {
+    config.blockchains.forEach((blockchain) => {
+      const value = !Array.isArray(config.tokens)
+        ? config.tokens?.[blockchain]
+        : undefined;
+      if (
+        (!value || value?.isExcluded) &&
+        meta.tokensMapByBlockchainName?.[blockchain]
+      ) {
+        meta.tokensMapByBlockchainName[blockchain].forEach((tokenHash) => {
+          const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
+          if (tokenFromMeta) {
+            nextState[tokenHash] = tokenFromMeta;
+          }
+        });
+      }
+      value?.tokens.forEach((token) => {
+        const tokenHash = createTokenHash(token);
+        if (value.isExcluded) {
+          delete nextState[tokenHash];
+        } else {
+          const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
+          if (tokenFromMeta) {
+            nextState[tokenHash] = tokenFromMeta;
+          }
+        }
+      });
+    });
+  }
+
+  return Object.values(nextState);
+};
 
 type BlockchainOptions = {
   type?: 'source' | 'destination';
@@ -29,7 +93,7 @@ export type FetchStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
   _tokensMapByTokenHash: Map<TokenHash, Token>;
-  _tokensMapByBlockchainName: Record<string, Record<TokenHash, Token>>;
+  _tokensMapByBlockchainName: Record<Blockchain, TokenHash[]>;
   _supportedSourceTokens: Token[];
   _supportedDestinationTokens: Token[];
   _popularTokens: Token[];
@@ -41,13 +105,6 @@ export interface DataSlice {
   isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
   findToken: FindToken;
   fetch: () => Promise<void>;
-  setSupportedTokens: (options: {
-    type: 'source' | 'destination';
-    data: {
-      blockchains: BlockchainAndTokenConfig['blockchains'];
-      tokens: BlockchainAndTokenConfig['tokens'];
-    };
-  }) => void;
 }
 
 export const createDataSlice: StateCreator<
@@ -96,22 +153,43 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const supportedSourceTokens = get()._supportedSourceTokens;
-    const supportedDestinationTokens = get()._supportedDestinationTokens;
-    const tokensFromState =
-      options?.type === 'source'
-        ? supportedSourceTokens
-        : supportedDestinationTokens;
+    const {
+      _tokensMapByTokenHash: tokensMapByTokenHash,
+      _tokensMapByBlockchainName: tokensMapByBlockchainName,
+      config,
+    } = get();
+    const tokensFromState = Array.from(tokensMapByTokenHash?.values() || []);
     const blockchainsMapByName = get()._blockchainsMapByName;
-    if (!options || !options?.type) {
+    if (!options || !options.type) {
       return tokensFromState;
+    }
+
+    const configType = options.type === 'source' ? 'from' : 'to';
+    const cacheKey: keyof CachedEntries =
+      options.type === 'source'
+        ? 'supportedSourceTokens'
+        : 'supportedDestinationTokens';
+
+    let supportedTokens = cacheService.get(cacheKey);
+    if (!supportedTokens) {
+      supportedTokens = calculateSupportedTokens({
+        type: options.type,
+        config: {
+          blockchains: config[configType]?.blockchains,
+          tokens: config[configType]?.tokens,
+        },
+        meta: {
+          tokensMapByTokenHash,
+          tokensMapByBlockchainName,
+        },
+      });
     }
 
     const blockchains = get().blockchains({
       type: options.type,
     });
 
-    const list = tokensFromState
+    const list = supportedTokens
       .filter((token) => {
         // If a specific blockchain has passed, we only keep that blockchain's tokens.
         if (!!options.blockchain && token.blockchain !== options.blockchain) {
@@ -305,10 +383,10 @@ export const createDataSlice: StateCreator<
       tokens.forEach((token) => {
         const tokenHash = createTokenHash(token);
         if (!tokensMapByBlockchainName[token.blockchain]) {
-          tokensMapByBlockchainName[token.blockchain] = {};
+          tokensMapByBlockchainName[token.blockchain] = [];
         }
         tokensMapByTokenHash.set(tokenHash, token);
-        tokensMapByBlockchainName[token.blockchain][tokenHash] = token;
+        tokensMapByBlockchainName[token.blockchain].push(tokenHash);
       });
 
       set({
@@ -322,58 +400,5 @@ export const createDataSlice: StateCreator<
       set({ fetchStatus: 'failed' });
       throw error;
     }
-  },
-  setSupportedTokens: (options) => {
-    const tokensMapByBlockchainName = get()._tokensMapByBlockchainName;
-    let nextState: Record<TokenHash, Token> = {};
-    if (Array.isArray(options.data.tokens)) {
-      options.data.tokens.forEach((token) => {
-        const tokenHash = createTokenHash(token);
-        const tokenFromMeta =
-          tokensMapByBlockchainName?.[token.blockchain]?.[tokenHash];
-        if (tokenFromMeta) {
-          nextState[tokenHash] = tokenFromMeta;
-        }
-      });
-    } else if (!options.data.blockchains) {
-      nextState = Object.fromEntries(get()._tokensMapByTokenHash.entries());
-    } else {
-      options.data.blockchains.forEach((blockchain) => {
-        const value = !Array.isArray(options.data.tokens)
-          ? options.data.tokens?.[blockchain]
-          : undefined;
-        if (
-          (!value || value?.isExcluded) &&
-          tokensMapByBlockchainName?.[blockchain]
-        ) {
-          nextState = {
-            ...nextState,
-            ...tokensMapByBlockchainName[blockchain],
-          };
-        }
-        value?.tokens.forEach((token) => {
-          const tokenHash = createTokenHash(token);
-          if (value.isExcluded) {
-            delete nextState?.[tokenHash];
-          } else {
-            const tokenFromMeta =
-              tokensMapByBlockchainName?.[blockchain]?.[tokenHash];
-            if (tokenFromMeta) {
-              nextState = {
-                ...nextState,
-                [tokenHash]: tokenFromMeta,
-              };
-            }
-          }
-        });
-      });
-    }
-
-    const propertyForUpdate: keyof DataSlice =
-      options.type === 'source'
-        ? '_supportedSourceTokens'
-        : '_supportedDestinationTokens';
-
-    set({ [propertyForUpdate]: Object.values(nextState) });
   },
 });

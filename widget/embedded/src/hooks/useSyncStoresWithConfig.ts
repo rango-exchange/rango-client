@@ -27,7 +27,7 @@ export function useSyncStoresWithConfig() {
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
-  const { findToken, setSupportedTokens } = useAppStore();
+  const { findToken } = useAppStore();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useAppStore();
@@ -83,12 +83,7 @@ export function useSyncStoresWithConfig() {
     if (isBlockchainExcludedInConfig(fromBlockchain, fromBlockchainsConfig)) {
       setFromBlockchain(null);
     }
-
-    setSupportedTokens({
-      type: 'source',
-      data: { blockchains: fromBlockchainsConfig, tokens: fromTokensConfig },
-    });
-  }, [fromTokensConfig, fromBlockchainsConfig, fetchMetaStatus]);
+  }, [fromTokensConfig, fromBlockchainsConfig]);
 
   useEffect(() => {
     if (isTokenExcludedInConfig(toToken, toTokensConfig)) {
@@ -97,12 +92,7 @@ export function useSyncStoresWithConfig() {
     if (isBlockchainExcludedInConfig(toBlockchain, toBlockchainsConfig)) {
       setToBlockchain(null);
     }
-
-    setSupportedTokens({
-      type: 'destination',
-      data: { blockchains: toBlockchainsConfig, tokens: toTokensConfig },
-    });
-  }, [toTokensConfig, toBlockchainsConfig, fetchMetaStatus]);
+  }, [toTokensConfig, toBlockchainsConfig]);
 
   useEffect(() => {
     if (fetchMetaStatus === 'success') {
