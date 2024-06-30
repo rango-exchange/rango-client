@@ -159,6 +159,8 @@ export const createSettingsSlice: StateCreator<
     const isLanguageHidden = isFeatureHidden('language', features);
     const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
     const singleTheme = theme?.singleTheme;
+    const autoUpdateSettings =
+      nextConfig?.__UNSTABLE_OR_INTERNAL__?.autoUpdateSettings;
 
     set({
       ...(isThemeHidden && { theme: nextConfig.theme?.mode || 'auto' }),
@@ -169,7 +171,8 @@ export const createSettingsSlice: StateCreator<
       ...(isLiquidityHidden && {
         disabledLiquiditySources: nextConfig.liquiditySources || [],
       }),
-      ...(nextConfig?._INTERNAL_SETTINGS_?.autoUpdateSettings && {
+      ...(autoUpdateSettings && {
+        // For the time being, we have added the language; if more are needed later, we can add other parameters.
         language: nextConfig.language || DEFAULT_LANGUAGE,
       }),
     });
