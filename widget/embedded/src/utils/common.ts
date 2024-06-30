@@ -1,4 +1,4 @@
-import type { WalletInfoWithNamespaces } from '../types';
+import type { CustomEventPayload, WalletInfoWithNamespaces } from '../types';
 import type { Token } from 'rango-sdk';
 
 import { BlockchainCategories, WalletState } from '@rango-dev/ui';
@@ -39,6 +39,22 @@ export function debounce(fn: Function, time: number) {
       fn(...args);
     }, time);
   }
+}
+
+export function createCustomEvent<T extends Record<string, unknown>>(
+  eventProps?: T
+): CustomEventPayload<T> {
+  let defaultPrevented = false;
+
+  return {
+    preventDefault() {
+      defaultPrevented = true;
+    },
+    get defaultPrevented() {
+      return defaultPrevented;
+    },
+    ...eventProps,
+  } as CustomEventPayload<T>;
 }
 
 export function containsText(text: string, searchText: string): boolean {

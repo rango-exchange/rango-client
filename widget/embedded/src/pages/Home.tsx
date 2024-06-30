@@ -1,9 +1,7 @@
-import type { SelectedQuote } from '../types';
-
 import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HeaderButtons } from '../components/HeaderButtons';
@@ -15,10 +13,13 @@ import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
+import { eventEmitter } from '../services/eventEmitter';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
+import { type SelectedQuote, UiEventTypes, WidgetEvents } from '../types';
+import { createCustomEvent } from '../utils/common';
 import { isVariantExpandable } from '../utils/configs';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
@@ -57,6 +58,7 @@ export function Home() {
   const { connectedWallets } = useWalletsStore();
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
+  const clickConnectWalletEvent = useRef(createCustomEvent());
 
   const needsToWarnEthOnPath = false;
 
@@ -138,7 +140,13 @@ export function Home() {
             fullWidth
             onClick={() => {
               if (swapButtonState.action === 'connect-wallet') {
-                onHandleNavigation(navigationRoutes.wallets);
+                eventEmitter.emit(WidgetEvents.UiEvent, {
+                  type: UiEventTypes.CLICK_CONNECT_WALLET,
+                  payload: clickConnectWalletEvent.current,
+                });
+                if (!clickConnectWalletEvent.current.defaultPrevented) {
+                  onHandleNavigation(navigationRoutes.wallets);
+                }
               } else if (swapButtonState.action === 'confirm-warning') {
                 setShowQuoteWarningModal(true);
               } else {

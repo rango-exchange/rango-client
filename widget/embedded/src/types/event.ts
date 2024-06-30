@@ -7,6 +7,13 @@ import type {
 
 import { WidgetEvents as QueueManagerEvents } from '@rango-dev/queue-manager-rango-preset';
 
+export type CustomEventPayload<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = {
+  preventDefault: () => void;
+  defaultPrevented: boolean;
+} & T;
+
 type Account = Wallet;
 
 export enum QuoteEventTypes {
@@ -17,6 +24,10 @@ export enum QuoteEventTypes {
 export enum WalletEventTypes {
   CONNECT = 'connect',
   DISCONNECT = 'disconnect',
+}
+
+export enum UiEventTypes {
+  CLICK_CONNECT_WALLET = 'clickConnectWallet',
 }
 
 export type QuoteInputUpdateEventPayload = {
@@ -41,6 +52,8 @@ export type DisconnectWalletEventPayload = {
   walletType: string;
 };
 
+export type ClickConnectWalletPayload = CustomEventPayload;
+
 export type QuoteEventData =
   | {
       type: QuoteEventTypes.QUOTE_INPUT_UPDATE;
@@ -61,11 +74,17 @@ export type WalletEventData =
       payload: DisconnectWalletEventPayload;
     };
 
+export type UiEventData = {
+  type: UiEventTypes.CLICK_CONNECT_WALLET;
+  payload: ClickConnectWalletPayload;
+};
+
 export enum WidgetEvents {
   RouteEvent = QueueManagerEvents.RouteEvent,
   StepEvent = QueueManagerEvents.StepEvent,
   QuoteEvent = 'quoteEvent',
   WalletEvent = 'walletEvent',
+  UiEvent = 'uiEvent',
 }
 
 export type Events = {
@@ -73,6 +92,7 @@ export type Events = {
   [WidgetEvents.StepEvent]: StepEventData;
   [WidgetEvents.QuoteEvent]: QuoteEventData;
   [WidgetEvents.WalletEvent]: WalletEventData;
+  [WidgetEvents.UiEvent]: UiEventData;
 };
 
 declare type EventHandler<T = unknown> = (event: T) => void;
