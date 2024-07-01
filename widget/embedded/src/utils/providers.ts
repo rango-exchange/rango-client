@@ -28,7 +28,9 @@ export function matchAndGenerateProviders(
         options?.walletConnectListedDesktopWalletLink,
     },
     selectedProviders: providers,
-    trezorManifest: options?.trezorManifest,
+    trezor: options?.trezorManifest
+      ? { manifest: options?.trezorManifest }
+      : undefined,
   });
 
   if (providers) {

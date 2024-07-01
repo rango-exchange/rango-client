@@ -1,7 +1,7 @@
-import { ETH_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
+import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import TrezorConnect from '@trezor/connect-web';
 
-export const ETH_BIP32_PATH = "m/44'/60'/0'/0/0";
+export const ETHEREUM_BIP32_PATH = "m/44'/60'/0'/0/0";
 
 export function getTrezorInstance() {
   /*
@@ -10,40 +10,37 @@ export function getTrezorInstance() {
    */
   const instances = new Map();
 
-  instances.set(Networks.ETHEREUM, { chainId: ETH_CHAIN_ID });
+  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
 
   return instances;
 }
 
-export async function getEthereumAccounts(): Promise<{
+export async function getEthereumAccounts(path: string): Promise<{
   accounts: string[];
   chainId: string;
 }> {
-  try {
-    const result = await TrezorConnect.ethereumGetAddress({
-      path: ETH_BIP32_PATH,
-      showOnTrezor: true,
-    });
+  const result = await TrezorConnect.ethereumGetAddress({
+    path,
+  });
 
-    if (!result.success) {
-      throw new Error(result.payload.error);
-    }
-
-    return {
-      accounts: [result.payload.address],
-      chainId: ETH_CHAIN_ID,
-    };
-  } catch (error: any) {
-    throw new Error(error.message);
+  if (!result.success) {
+    throw new Error(result.payload.error);
   }
+
+  return {
+    accounts: [result.payload.address],
+    chainId: ETHEREUM_CHAIN_ID,
+  };
 }
 
 /*
- * Using BigInt in the toHexString function ensures that the function
+ * Using BigInt in the valueToHex function ensures that the function
  * can handle very large integer values that exceed the range of standard JavaScript number types.
  */
-export const toHexString = (value: bigint) => {
+export const valueToHex = (value: string) => {
   const ZERO_BIGINT = BigInt(0);
   const HEX_BASE = 16;
-  return value > ZERO_BIGINT ? `0x${value.toString(HEX_BASE)}` : '0x0';
+  return BigInt(value) > ZERO_BIGINT
+    ? `0x${BigInt(value).toString(HEX_BASE)}`
+    : '0x0';
 };

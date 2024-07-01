@@ -1,7 +1,7 @@
 import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { ETH_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
+import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
 export const ETH_BIP32_PATH = "44'/60'/0'/0/0";
@@ -45,7 +45,7 @@ export function getLedgerInstance() {
    */
   const instances = new Map();
 
-  instances.set(Networks.ETHEREUM, { chainId: ETH_CHAIN_ID });
+  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
   instances.set(Networks.SOLANA, { chainId: Networks.SOLANA });
 
   return instances;
@@ -67,7 +67,7 @@ export async function getEthereumAccounts(): Promise<{
 
     return {
       accounts: accounts,
-      chainId: ETH_CHAIN_ID,
+      chainId: ETHEREUM_CHAIN_ID,
     };
   } catch (error: any) {
     throw getLedgerError(error);

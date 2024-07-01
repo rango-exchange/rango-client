@@ -10,11 +10,7 @@ import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { initialConfig, useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
-import {
-  getConfig,
-  RANGO_PUBLIC_API_KEY,
-  TREZOR_MANIFEST,
-} from './utils/configs';
+import { RANGO_PUBLIC_API_KEY } from './utils/configs';
 import { filterConfig } from './utils/export';
 
 export function App() {
@@ -43,8 +39,6 @@ export function App() {
   const playgroundConfig: WidgetConfig = {
     ...overridedConfig,
     wallets: undefined,
-    walletConnectProjectId: getConfig('WC_PROJECT_ID'),
-    trezorManifest: TREZOR_MANIFEST,
   };
 
   useEffect(() => {

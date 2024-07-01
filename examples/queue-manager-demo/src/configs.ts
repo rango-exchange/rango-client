@@ -8,7 +8,10 @@ export interface Configs {
  */
 const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
 export const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
-export const TREZOR_MANIFEST = { appUrl: 'https://rango.exchange/', email: '' };
+export const TREZOR_MANIFEST = {
+  appUrl: 'https://rango.exchange/',
+  email: 'hi@rango.exchange',
+};
 
 let configs: Configs = {
   API_KEY: RANGO_PUBLIC_API_KEY,

@@ -1,17 +1,16 @@
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-export const isWalletTypeExcluded = (
-  walletType: WalletTypes,
-  walletName: string,
-  selectedProviders?: (WalletType | ProviderInterface)[]
+export const isWalletExcluded = (
+  providers: (WalletType | ProviderInterface)[],
+  wallet: { name: string; type: WalletTypes }
 ) => {
   return (
-    selectedProviders &&
-    !selectedProviders.find((provider) =>
+    providers.length &&
+    !providers.find((provider) =>
       typeof provider === 'string'
-        ? provider === walletType
-        : provider.getWalletInfo([]).name === walletName
+        ? provider === wallet.type
+        : provider.getWalletInfo([]).name === wallet.name
     )
   );
 };

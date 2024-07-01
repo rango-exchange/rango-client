@@ -145,7 +145,7 @@ export type Features = Partial<
 > &
   Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>>;
 
-export type Manifest = {
+export type TrezorManifest = {
   appUrl: string;
   email: string;
 };
@@ -210,7 +210,7 @@ export type WidgetConfig = {
   apiUrl?: string;
   title?: string;
   walletConnectProjectId?: string;
-  trezorManifest?: Manifest;
+  trezorManifest?: TrezorManifest;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;

@@ -1,4 +1,3 @@
-export interface Manifest extends Record<string, string> {
-  appUrl: string;
-  email: string;
+export interface Environments {
+  manifest: { appUrl: string; email: string };
 }

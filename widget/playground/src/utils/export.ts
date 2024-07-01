@@ -18,6 +18,17 @@ function clearEmpties<T extends Record<string, any>>(obj: T): T {
   return obj;
 }
 
+function isWalletConfigNeeded(
+  config: WidgetConfig,
+  configKey: keyof WidgetConfig,
+  walletKey: string
+): boolean {
+  return (
+    !config[configKey] &&
+    (!config.wallets || config.wallets.includes(walletKey))
+  );
+}
+
 export function filterConfig(
   WidgetConfig: WidgetConfig,
   initialConfig: WidgetConfig
@@ -51,17 +62,22 @@ export function filterConfig(
     filteredConfigForExport.apiKey = config.apiKey;
   }
 
-  const isWalletConnectProjectIdNeeded =
-    !filteredConfigForExport.walletConnectProjectId &&
-    (!config.wallets || config.wallets.includes('wallet-connect-2'));
-  if (isWalletConnectProjectIdNeeded) {
+  const isWalletConnectNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'walletConnectProjectId',
+    'wallet-connect-2'
+  );
+  if (isWalletConnectNeeded) {
     filteredConfigForExport.walletConnectProjectId =
       config.walletConnectProjectId;
   }
-  const isNeededTrezorManifest =
-    !filteredConfigForExport.trezorManifest &&
-    (!config.wallets || config.wallets.includes('trezor'));
-  if (isNeededTrezorManifest) {
+  const isTrezorNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'trezorManifest',
+    'trezor'
+  );
+
+  if (isTrezorNeeded) {
     filteredConfigForExport.trezorManifest = config.trezorManifest;
   }
 
@@ -123,7 +139,8 @@ export function formatConfig(config: WidgetConfig) {
   if (config.trezorManifest) {
     formatedConfig = insertAt(
       formatedConfig,
-      `// Here, give your email and URL.`,
+      `// Here, give your email and URL.
+    `,
       formatedConfig.indexOf('trezorManifest')
     );
   }
