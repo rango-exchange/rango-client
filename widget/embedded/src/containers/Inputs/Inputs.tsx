@@ -60,13 +60,13 @@ export function Inputs(props: PropTypes) {
 
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
     selectedQuote,
-    inputUsdAmount.toString(),
+    inputAmount,
     inputUsdValue
   );
 
   const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
     selectedQuote,
-    inputUsdAmount.toString(),
+    inputAmount,
     outputUsdValue
   );
 
@@ -150,7 +150,7 @@ export function Inputs(props: PropTypes) {
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               ),
-          realValue: formatTooltipNumbers(outputUsdAmount),
+          realValue: formatTooltipNumbers(outputAmount),
           realUsdValue: priceImpactOutputCanNotBeComputed
             ? undefined
             : formatTooltipNumbers(outputUsdValue),
