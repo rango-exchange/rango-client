@@ -153,7 +153,7 @@ export function Inputs(props: PropTypes) {
           realValue: formatTooltipNumbers(outputAmount),
           realUsdValue: priceImpactOutputCanNotBeComputed
             ? undefined
-            : formatTooltipNumbers(outputUsdValue),
+            : formatTooltipNumbers(outputUsdAmount),
           error: priceImpactOutputCanNotBeComputed
             ? errorMessages().unknownPriceError.impactTitle
             : undefined,
