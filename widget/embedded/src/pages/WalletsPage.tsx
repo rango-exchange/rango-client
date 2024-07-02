@@ -1,4 +1,4 @@
-import type { WalletWithExtraInfo } from '../types';
+import type { WalletInfoWithExtra } from '../types';
 import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -106,7 +106,7 @@ export function WalletsPage() {
 
   const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
 
-  const handleWalletItemClick = (type: string, wallet: WalletWithExtraInfo) => {
+  const handleWalletItemClick = (type: string, wallet: WalletInfoWithExtra) => {
     if (isSingleWalletActive(list, config.multiWallets)) {
       return;
     }
@@ -129,7 +129,7 @@ export function WalletsPage() {
     );
     if (
       wallet?.singleNamespace && // Currently we support derivation path only for single namespace wallets
-      wallet?.enableDerivationPath &&
+      wallet?.needsDerivationPath &&
       selectedNamespaces[0]
     ) {
       setDerivationPathModalState({
@@ -140,19 +140,19 @@ export function WalletsPage() {
     } else {
       void handleClick(
         namespacesModalState?.providerType as string,
-        selectedNamespaces
+        selectedNamespaces.map((namespace) => ({
+          namespace,
+        }))
       );
     }
     setNamespacesModalState(null);
   };
 
-  const handleDerivationPathConfirm = (path: string) => {
-    if (path && derivationPathModalState?.namespace) {
-      void handleClick(
-        derivationPathModalState.providerType,
-        [derivationPathModalState.namespace],
-        path
-      );
+  const handleDerivationPathConfirm = (derivationPath: string) => {
+    if (derivationPath && derivationPathModalState?.namespace) {
+      void handleClick(derivationPathModalState.providerType, [
+        { namespace: derivationPathModalState.namespace, derivationPath },
+      ]);
     }
 
     setDerivationPathModalState(null);

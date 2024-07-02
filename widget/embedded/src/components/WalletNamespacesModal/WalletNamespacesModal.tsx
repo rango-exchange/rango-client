@@ -6,16 +6,17 @@ import { i18n } from '@lingui/core';
 import {
   Button,
   Checkbox,
+  Divider,
   Image,
   ListItemButton,
   MessageBox,
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { namespaces } from '../../constants/namespaces';
 import { useAppStore } from '../../store/AppStore';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
@@ -49,6 +50,7 @@ export function WalletNamespacesModal(props: PropTypes) {
           blockchains,
           namespaces[namespace].mainBlockchain
         ),
+        title: namespaces[namespace].title,
       })),
     [availableNamespaces]
   );
@@ -79,8 +81,8 @@ export function WalletNamespacesModal(props: PropTypes) {
       onClose={props.onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }
-      styles={{ content: { marginTop: 20 } }}>
+      }>
+      <Divider size={20} />
       <MessageBox
         type="info"
         title={i18n.t('Select chain types')}
@@ -103,7 +105,7 @@ export function WalletNamespacesModal(props: PropTypes) {
               <ListItemButton
                 key={namespaceInfoItem.name}
                 id={namespaceInfoItem.name}
-                title={namespaceInfoItem.name}
+                title={namespaceInfoItem.title}
                 hasDivider
                 style={{ height: 60 }}
                 onClick={() => onSelect(namespaceInfoItem.name)}

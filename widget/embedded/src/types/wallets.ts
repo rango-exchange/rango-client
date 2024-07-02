@@ -24,8 +24,8 @@ export type TokensBalance = {
   [key: TokenHash]: Balance;
 };
 
-export type WalletWithExtraInfo = WalletInfo & {
+export type WalletInfoWithExtra = WalletInfo & {
   namespaces?: Namespace[];
   singleNamespace?: boolean;
-  enableDerivationPath?: boolean;
+  needsDerivationPath?: boolean;
 };

@@ -7,11 +7,11 @@ import { PublicKey } from '@solana/web3.js';
 import { SignerError } from 'rango-types';
 
 import {
-  getDerivationPath,
   getLedgerError,
   transportConnect,
   transportDisconnect,
 } from '../helpers';
+import { getDerivationPath } from '../state';
 
 export function isVersionedTransaction(
   transaction: Transaction | VersionedTransaction

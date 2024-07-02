@@ -1,6 +1,6 @@
 import type { State as WalletState } from './wallet';
 import type {
-  Namespace,
+  NamespaceData,
   Network,
   WalletInfo,
   WalletType,
@@ -60,8 +60,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
-  namespaces?: Namespace[];
-  derivationPath?: string;
+  namespaces?: NamespaceData[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {

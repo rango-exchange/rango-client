@@ -1,7 +1,6 @@
 import type { GetInstanceOptions, WalletActions, WalletConfig } from './types';
 import type {
-  ConnectExtraParams,
-  Namespace,
+  NamespaceData,
   Network,
   WalletType,
 } from '@rango-dev/wallets-shared';
@@ -81,11 +80,7 @@ class Wallet<InstanceType = any> {
     return await this.connect(network);
   }
 
-  async connect(
-    network?: Network,
-    namespaces?: Namespace[],
-    extra?: ConnectExtraParams
-  ) {
+  async connect(network?: Network, namespaces?: NamespaceData[]) {
     // If it's connecting, nothing do.
     if (this.state.connecting) {
       throw new Error('Connecting...');
@@ -175,7 +170,6 @@ class Wallet<InstanceType = any> {
         network: requestedNetwork || undefined,
         meta: this.info.supportedBlockchains || [],
         namespaces,
-        derivationPath: extra?.derivationPath,
       });
     } catch (e) {
       this.resetState();

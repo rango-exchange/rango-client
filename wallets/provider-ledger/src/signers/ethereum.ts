@@ -6,11 +6,11 @@ import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError } from 'rango-types';
 
 import {
-  getDerivationPath,
   getLedgerError,
   transportConnect,
   transportDisconnect,
 } from '../helpers';
+import { getDerivationPath } from '../state';
 
 export const RPC_PROVIDER_URL = 'https://rpc.ankr.com/eth';
 

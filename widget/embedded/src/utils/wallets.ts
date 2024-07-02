@@ -5,7 +5,7 @@ import type {
   SelectedQuote,
   TokensBalance,
   Wallet,
-  WalletWithExtraInfo,
+  WalletInfoWithExtra,
 } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
@@ -68,7 +68,7 @@ export function mapWalletTypesToWalletInfo(
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[],
   chain?: string
-): WalletWithExtraInfo[] {
+): WalletInfoWithExtra[] {
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
@@ -96,7 +96,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         supportedChains,
-        enableDerivationPath,
+        needsDerivationPath,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -113,7 +113,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         blockchainTypes,
-        enableDerivationPath,
+        needsDerivationPath,
       };
     });
 }
@@ -436,8 +436,8 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: WalletWithExtraInfo[]
-): WalletWithExtraInfo[] {
+  wallets: WalletInfoWithExtra[]
+): WalletInfoWithExtra[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
@@ -551,7 +551,7 @@ export function filterBlockchainsByWalletTypes(
 }
 
 export function filterWalletsByCategory(
-  wallets: WalletWithExtraInfo[],
+  wallets: WalletInfoWithExtra[],
   category: string
 ) {
   if (category === BlockchainCategories.ALL) {

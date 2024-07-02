@@ -1,21 +1,63 @@
-import type { Disconnect, WalletInfo } from '@rango-dev/wallets-shared';
+import type {
+  Connect,
+  Disconnect,
+  ProviderConnectResult,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
 
 import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
-  connectLedger,
+  getEthereumAccounts,
   getLedgerInstance,
+  getSolanaAccounts,
   transportDisconnect,
 } from './helpers';
 import signer from './signer';
+import { setDerivationPath } from './state';
 
 export const config = {
   type: WalletTypes.LEDGER,
 };
 
 export const getInstance = getLedgerInstance;
-export const connect = connectLedger;
+export const connect: Connect = async ({ namespaces }) => {
+  const results: ProviderConnectResult[] = [];
+
+  const solanaNamespace = namespaces?.find(
+    (namespaceItem) => namespaceItem.namespace === Namespace.Solana
+  );
+  const evmNamespace = namespaces?.find(
+    (namespaceItem) => namespaceItem.namespace === Namespace.Evm
+  );
+
+  if (solanaNamespace) {
+    if (solanaNamespace.derivationPath) {
+      setDerivationPath(solanaNamespace.derivationPath);
+      const accounts = await getSolanaAccounts();
+      results.push(accounts);
+    } else {
+      throw new Error('Derivation Path can not be empty.');
+    }
+  } else if (evmNamespace) {
+    if (evmNamespace.derivationPath) {
+      setDerivationPath(evmNamespace.derivationPath);
+      const accounts = await getEthereumAccounts();
+      results.push(accounts);
+    } else {
+      throw new Error('Derivation Path can not be empty.');
+    }
+  } else {
+    throw new Error(
+      `It appears that you have selected a namespace that is not yet supported by our system. Your namespaces: ${namespaces?.map(
+        (namespaceItem) => namespaceItem.namespace
+      )}`
+    );
+  }
+
+  return results;
+};
 
 export const disconnect: Disconnect = async () => {
   void transportDisconnect();
@@ -54,6 +96,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     namespaces: [Namespace.Evm, Namespace.Solana],
     singleNamespace: true,
     showOnMobile: false,
-    enableDerivationPath: true,
+    needsDerivationPath: true,
   };
 };

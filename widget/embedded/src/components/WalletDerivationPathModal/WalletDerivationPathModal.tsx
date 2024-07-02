@@ -2,11 +2,18 @@ import type { PropTypes } from './WalletDerivationPathModal.types';
 import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
-import { Button, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
-import { namespaces } from '@rango-dev/wallets-shared';
+import {
+  Button,
+  Divider,
+  Image,
+  MessageBox,
+  Select,
+  TextField,
+} from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { namespaces } from '../../constants/namespaces';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import {
@@ -32,6 +39,16 @@ export function WalletDerivationPathModal(props: PropTypes) {
     useState<DerivationPath | null>(derivationPaths?.[0] || null);
   const [derivationPathIndex, setDerivationPathIndex] = useState('0');
 
+  const handleDerivationPathItemClick = ({ value }: { value: string }) => {
+    const selectedDerivationPath = derivationPaths?.find(
+      (derivationPath) => derivationPath.id === value
+    );
+
+    if (selectedDerivationPath) {
+      setSelectedDerivationPath(selectedDerivationPath);
+    }
+  };
+
   const handleConfirm = () => {
     if (selectedDerivationPath) {
       onConfirm(
@@ -53,8 +70,8 @@ export function WalletDerivationPathModal(props: PropTypes) {
       onClose={onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }
-      styles={{ content: { marginTop: 20 } }}>
+      }>
+      <Divider size={20} />
       <MessageBox
         type="info"
         title={i18n.t('Select Derivation Path')}
@@ -75,25 +92,25 @@ export function WalletDerivationPathModal(props: PropTypes) {
         <InputLabel variant="body" size="xsmall" color="$neutral600">
           {i18n.t('Choose Derivation Path Template')}
         </InputLabel>
-        <Select
-          container={getContainer()}
-          value={selectedDerivationPath?.id || ''}
-          options={
-            derivationPaths?.map((derivationPath) => ({
-              value: derivationPath.id,
-              label: derivationPath.label,
-            })) || []
-          }
-          variant="filled"
-          handleItemClick={(item) =>
-            setSelectedDerivationPath(
-              derivationPaths?.find(
-                (derivationPath) => derivationPath.id === item.value
-              ) ?? null
-            )
-          }
-          styles={{ trigger: derivationPathInputStyles }}
-        />
+        {derivationPaths ? (
+          <Select
+            container={getContainer()}
+            value={selectedDerivationPath?.id || ''}
+            options={
+              derivationPaths?.map((derivationPath) => ({
+                value: derivationPath.id,
+                label: derivationPath.label,
+              })) || []
+            }
+            variant="filled"
+            handleItemClick={handleDerivationPathItemClick}
+            styles={{ trigger: derivationPathInputStyles }}
+          />
+        ) : (
+          <p>
+            {i18n.t('No derivation path is avalable for selected namespace.')}
+          </p>
+        )}
 
         <InputLabel
           variant="body"

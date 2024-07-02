@@ -1,5 +1,5 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet, WalletWithExtraInfo } from '../../types';
+import type { Wallet, WalletInfoWithExtra } from '../../types';
 import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -100,7 +100,7 @@ export function WalletList(props: PropTypes) {
       }, TIME_TO_CLOSE_MODAL);
     },
   });
-  const [sortedList, setSortedList] = useState<WalletWithExtraInfo[]>(list);
+  const [sortedList, setSortedList] = useState<WalletInfoWithExtra[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -115,7 +115,7 @@ export function WalletList(props: PropTypes) {
     }
   };
 
-  const handleOpenNamespacesModal = (wallet: WalletWithExtraInfo) => {
+  const handleOpenNamespacesModal = (wallet: WalletInfoWithExtra) => {
     setNamespacesModalState({
       providerType: wallet.type,
       providerImage: wallet.image,
@@ -130,7 +130,7 @@ export function WalletList(props: PropTypes) {
     );
     if (
       wallet?.singleNamespace && // Currently we support derivation path only for single namespace wallets
-      wallet?.enableDerivationPath &&
+      wallet?.needsDerivationPath &&
       selectedNamespaces[0]
     ) {
       setDerivationPathModalState({
@@ -141,19 +141,19 @@ export function WalletList(props: PropTypes) {
     } else {
       void handleClick(
         namespacesModalState?.providerType as string,
-        selectedNamespaces
+        selectedNamespaces.map((namespace) => ({
+          namespace,
+        }))
       );
     }
     setNamespacesModalState(null);
   };
 
-  const handleDerivationPathConfirm = (path: string) => {
-    if (path && derivationPathModalState?.namespace) {
-      void handleClick(
-        derivationPathModalState.providerType,
-        [derivationPathModalState.namespace],
-        path
-      );
+  const handleDerivationPathConfirm = (derivationPath: string) => {
+    if (derivationPath && derivationPathModalState?.namespace) {
+      void handleClick(derivationPathModalState.providerType, [
+        { namespace: derivationPathModalState.namespace, derivationPath },
+      ]);
     }
 
     setDerivationPathModalState(null);

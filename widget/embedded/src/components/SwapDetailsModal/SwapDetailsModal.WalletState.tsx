@@ -50,7 +50,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
 
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
     if (
-      !!walletInfo?.enableDerivationPath &&
+      !!walletInfo?.needsDerivationPath &&
       walletInfo?.singleNamespace &&
       selectedNamespaces[0] &&
       walletType
@@ -64,22 +64,19 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
       connect(
         namespacesModalState?.providerType as string,
         undefined,
-        selectedNamespaces
+        selectedNamespaces.map((namespace) => ({
+          namespace,
+        }))
       ).catch((error) => debug(error));
     }
     setNamespacesModalState(null);
   };
 
-  const handleDerivationPathConfirm = (path: string) => {
-    if (path && derivationPathModalState?.namespace) {
-      connect(
-        derivationPathModalState?.providerType,
-        undefined,
-        [derivationPathModalState.namespace],
-        {
-          derivationPath: path,
-        }
-      ).catch((error) => debug(error));
+  const handleDerivationPathConfirm = (derivationPath: string) => {
+    if (derivationPath && derivationPathModalState?.namespace) {
+      connect(derivationPathModalState?.providerType, undefined, [
+        { namespace: derivationPathModalState.namespace, derivationPath },
+      ]).catch((error) => debug(error));
     }
 
     setDerivationPathModalState(null);

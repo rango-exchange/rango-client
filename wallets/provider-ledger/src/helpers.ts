@@ -1,9 +1,10 @@
 import type Transport from '@ledgerhq/hw-transport';
-import type { Connect, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { Namespace, Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
+
+import { getDerivationPath } from './state';
 
 const ETHEREUM_CHAIN_ID = '0x1';
 
@@ -50,33 +51,6 @@ export function getLedgerInstance() {
 
   return instances;
 }
-
-export const connectLedger: Connect = async ({
-  namespaces,
-  derivationPath,
-}) => {
-  const results: ProviderConnectResult[] = [];
-
-  if (derivationPath) {
-    setDerivationPath(derivationPath);
-
-    if (namespaces?.includes(Namespace.Solana)) {
-      const accounts = await getSolanaAccounts();
-      results.push(accounts);
-    } else if (namespaces?.includes(Namespace.Evm)) {
-      const accounts = await getEthereumAccounts();
-      results.push(accounts);
-    } else {
-      throw new Error(
-        `It appears that you have selected a namespace that is not yet supported by our system. Your namespaces: ${namespaces}`
-      );
-    }
-  } else {
-    throw new Error('Derivation Path can not be empty.');
-  }
-
-  return results;
-};
 
 export async function getEthereumAccounts(): Promise<{
   accounts: string[];
@@ -145,14 +119,4 @@ export async function transportDisconnect() {
     await transportConnection.close();
     transportConnection = null;
   }
-}
-
-let derivationPath = '';
-
-export function setDerivationPath(path: string) {
-  derivationPath = path;
-}
-
-export function getDerivationPath() {
-  return derivationPath;
 }
