@@ -2,7 +2,6 @@ import type { PropTypes } from './Inputs.types';
 
 import { i18n } from '@lingui/core';
 import { SwapInput } from '@rango-dev/ui';
-import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import { SwitchFromAndToButton } from '../../components/SwitchFromAndTo';
@@ -43,11 +42,6 @@ export function Inputs(props: PropTypes) {
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
-
-  const inputUsdAmount =
-    !inputUsdValue || !fromToken ? new BigNumber(0) : inputUsdValue;
-  const outputUsdAmount =
-    !outputUsdValue || !toToken ? new BigNumber(0) : outputUsdValue;
 
   const tokenBalanceReal =
     !!fromBlockchain && !!fromToken
@@ -97,13 +91,13 @@ export function Inputs(props: PropTypes) {
             usdValue: priceImpactInputCanNotBeComputed
               ? undefined
               : numberToString(
-                  inputUsdAmount,
+                  inputUsdValue,
                   USD_VALUE_MIN_DECIMALS,
                   USD_VALUE_MAX_DECIMALS
                 ),
             realUsdValue: priceImpactInputCanNotBeComputed
               ? undefined
-              : formatTooltipNumbers(inputUsdAmount),
+              : formatTooltipNumbers(inputUsdValue),
             error: priceImpactInputCanNotBeComputed
               ? errorMessages().unknownPriceError.impactTitle
               : undefined,
@@ -146,14 +140,14 @@ export function Inputs(props: PropTypes) {
           usdValue: priceImpactOutputCanNotBeComputed
             ? undefined
             : numberToString(
-                outputUsdAmount,
+                outputUsdValue,
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               ),
           realValue: formatTooltipNumbers(outputAmount),
           realUsdValue: priceImpactOutputCanNotBeComputed
             ? undefined
-            : formatTooltipNumbers(outputUsdAmount),
+            : formatTooltipNumbers(outputUsdValue),
           error: priceImpactOutputCanNotBeComputed
             ? errorMessages().unknownPriceError.impactTitle
             : undefined,
