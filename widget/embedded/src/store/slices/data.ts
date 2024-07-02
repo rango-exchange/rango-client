@@ -2,12 +2,7 @@
 
 import type { ConfigSlice } from './config';
 import type { CachedEntries } from '../../services/cacheService';
-import type {
-  Balance,
-  Blockchain,
-  BlockchainAndTokenConfig,
-  TokenHash,
-} from '../../types';
+import type { Balance, Blockchain, TokenHash } from '../../types';
 import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
@@ -17,63 +12,7 @@ import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
-
-export const calculateSupportedTokens = (params: {
-  type: 'source' | 'destination';
-  config: {
-    blockchains: BlockchainAndTokenConfig['blockchains'];
-    tokens: BlockchainAndTokenConfig['tokens'];
-  };
-  meta: {
-    tokensMapByTokenHash: DataSlice['_tokensMapByTokenHash'];
-    tokensMapByBlockchainName: DataSlice['_tokensMapByBlockchainName'];
-  };
-}) => {
-  const { config, meta } = params;
-  let nextState: Record<TokenHash, Token> = {};
-  if (Array.isArray(config.tokens)) {
-    config.tokens.forEach((token) => {
-      const tokenHash = createTokenHash(token);
-      const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
-
-      if (tokenFromMeta) {
-        nextState[tokenHash] = tokenFromMeta;
-      }
-    });
-  } else if (!config.blockchains) {
-    nextState = Object.fromEntries(meta.tokensMapByTokenHash);
-  } else {
-    config.blockchains.forEach((blockchain) => {
-      const value = !Array.isArray(config.tokens)
-        ? config.tokens?.[blockchain]
-        : undefined;
-      if (
-        (!value || value?.isExcluded) &&
-        meta.tokensMapByBlockchainName?.[blockchain]
-      ) {
-        meta.tokensMapByBlockchainName[blockchain].forEach((tokenHash) => {
-          const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
-          if (tokenFromMeta) {
-            nextState[tokenHash] = tokenFromMeta;
-          }
-        });
-      }
-      value?.tokens.forEach((token) => {
-        const tokenHash = createTokenHash(token);
-        if (value.isExcluded) {
-          delete nextState[tokenHash];
-        } else {
-          const tokenFromMeta = meta.tokensMapByTokenHash.get(tokenHash);
-          if (tokenFromMeta) {
-            nextState[tokenHash] = tokenFromMeta;
-          }
-        }
-      });
-    });
-  }
-
-  return Object.values(nextState);
-};
+import { calculateSupportedTokens } from '../utils';
 
 type BlockchainOptions = {
   type?: 'source' | 'destination';
@@ -94,8 +33,6 @@ export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
   _tokensMapByTokenHash: Map<TokenHash, Token>;
   _tokensMapByBlockchainName: Record<Blockchain, TokenHash[]>;
-  _supportedSourceTokens: Token[];
-  _supportedDestinationTokens: Token[];
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
   fetchStatus: FetchStatus;
@@ -117,8 +54,6 @@ export const createDataSlice: StateCreator<
   _blockchainsMapByName: new Map(),
   _tokensMapByTokenHash: new Map(),
   _tokensMapByBlockchainName: {},
-  _supportedSourceTokens: [],
-  _supportedDestinationTokens: [],
   _popularTokens: [],
   _swappers: [],
   fetchStatus: 'loading',
@@ -153,12 +88,8 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const {
-      _tokensMapByTokenHash: tokensMapByTokenHash,
-      _tokensMapByBlockchainName: tokensMapByBlockchainName,
-      config,
-    } = get();
-    const tokensFromState = Array.from(tokensMapByTokenHash?.values() || []);
+    const { _tokensMapByTokenHash, _tokensMapByBlockchainName, config } = get();
+    const tokensFromState = Array.from(_tokensMapByTokenHash.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
     if (!options || !options.type) {
       return tokensFromState;
@@ -179,10 +110,11 @@ export const createDataSlice: StateCreator<
           tokens: config[configType]?.tokens,
         },
         meta: {
-          tokensMapByTokenHash,
-          tokensMapByBlockchainName,
+          tokensMapByTokenHash: _tokensMapByTokenHash,
+          tokensMapByBlockchainName: _tokensMapByBlockchainName,
         },
       });
+      cacheService.set(cacheKey, supportedTokens);
     }
 
     const blockchains = get().blockchains({

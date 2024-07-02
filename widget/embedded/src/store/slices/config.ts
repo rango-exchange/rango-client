@@ -4,8 +4,7 @@ import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 
 import { cacheService } from '../../services/cacheService';
-
-import { calculateSupportedTokens } from './data';
+import { calculateSupportedTokens } from '../utils';
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
