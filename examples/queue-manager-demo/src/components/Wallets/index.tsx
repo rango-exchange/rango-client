@@ -1,5 +1,5 @@
-import React from 'react';
 import { useWallets } from '@rango-dev/wallets-react';
+import React from 'react';
 
 function Wallets() {
   const { connect, providers, state, disconnect } = useWallets();
@@ -12,15 +12,15 @@ function Wallets() {
           const wallet_type = type;
           const wallet_state = state(wallet_type);
           return (
-            <div className="wallet">
+            <div className="wallet" key={type}>
               <h5>{wallet_type}</h5>
               <p>Address: {wallet_state.accounts?.join(',')}</p>
               <button
                 onClick={() => {
                   if (wallet_state.connected) {
-                    disconnect(wallet_type);
+                    void disconnect(wallet_type);
                   } else {
-                    connect(wallet_type);
+                    void connect(wallet_type);
                   }
                 }}>
                 {wallet_state.connected ? 'Disconnect' : 'Connect'}

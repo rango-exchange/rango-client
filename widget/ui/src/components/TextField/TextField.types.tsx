@@ -20,4 +20,5 @@ export type TextFieldPropTypes = {
   variant?: BaseVariants;
   fullWidth?: boolean;
   labelProps?: TypographyPropTypes;
+  style?: Stitches.CSS;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;

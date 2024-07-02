@@ -11,7 +11,7 @@ import { SelectContent, SelectItem, SelectTrigger } from './Select.styles';
 export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
-  const { options, value, container, handleItemClick, variant } = props;
+  const { options, value, container, handleItemClick, variant, styles } = props;
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -39,7 +39,8 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
           onKeyDown={(event) => event.key === 'Enter' && handleToggle()}
           onClick={handleToggle}
           open={open}
-          aria-label={selectedLabel}>
+          aria-label={selectedLabel}
+          css={styles?.trigger}>
           <Select.Value>
             <Typography variant="body" size="small">
               {selectedLabel}
@@ -51,7 +52,10 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
           </Select.Icon>
         </SelectTrigger>
         <Select.Portal container={container}>
-          <SelectContent position="popper" sideOffset={5}>
+          <SelectContent
+            position="popper"
+            sideOffset={5}
+            style={{ zIndex: 9999 }}>
             <Select.ScrollUpButton className="SelectScrollButton">
               <ChevronUpIcon />
             </Select.ScrollUpButton>

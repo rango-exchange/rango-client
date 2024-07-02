@@ -1,5 +1,5 @@
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -75,7 +75,10 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
+  const handleClick = async (
+    type: WalletType,
+    namespaces?: NamespaceData[]
+  ) => {
     const wallet = state(type);
     try {
       if (error) {
