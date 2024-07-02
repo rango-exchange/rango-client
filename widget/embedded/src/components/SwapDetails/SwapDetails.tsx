@@ -328,7 +328,9 @@ export function SwapDetails(props: SwapDetailsProps) {
                     : i18n.t('Copy Request ID')
                 }
                 open={isCopied || undefined}
-                side="bottom">
+                side="bottom"
+                alignOffset={-16}
+                align="end">
                 <IconButton
                   variant="ghost"
                   onClick={handleCopy.bind(null, requestId || '')}>
