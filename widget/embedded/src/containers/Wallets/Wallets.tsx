@@ -38,6 +38,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
 
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: config?.walletConnectProjectId,
+    trezorManifest: config?.trezorManifest,
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,

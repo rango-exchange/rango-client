@@ -1,10 +1,8 @@
 import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { Networks } from '@rango-dev/wallets-shared';
+import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
-
-const ETHEREUM_CHAIN_ID = '0x1';
 
 export const ETH_BIP32_PATH = "44'/60'/0'/0/0";
 export const SOLANA_BIP32_PATH = "44'/501'/0'";
