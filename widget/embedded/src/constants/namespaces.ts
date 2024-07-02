@@ -25,11 +25,6 @@ export const namespaces: Record<
         label: `Legacy (m/44'/60'/0'/index)`,
         generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
       },
-      {
-        id: 'custom',
-        label: 'Custom',
-        generateDerivationPath: (index: string) => index,
-      },
     ],
   },
   [Namespace.Solana]: {
@@ -45,11 +40,6 @@ export const namespaces: Record<
         id: `(m/44'/501'/0'/index)`,
         label: `(m/44'/501'/0'/index)`,
         generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
-      },
-      {
-        id: 'custom',
-        label: 'Custom',
-        generateDerivationPath: (index: string) => index,
       },
     ],
   },

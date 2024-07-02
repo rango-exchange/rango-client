@@ -10,7 +10,7 @@ import {
   Select,
   TextField,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { namespaces } from '../../constants/namespaces';
@@ -28,16 +28,42 @@ import {
   InputsContainer,
 } from './WalletDerivationPathModal.styles';
 
+const customDerivationPath: DerivationPath = {
+  id: 'custom',
+  label: 'Custom',
+  generateDerivationPath: (index: string) => index,
+};
+
 export function WalletDerivationPathModal(props: PropTypes) {
   const { onClose, onConfirm, selectedNamespace, image, type } = props;
 
-  const derivationPaths: DerivationPath[] | undefined = !!selectedNamespace
-    ? namespaces[selectedNamespace].derivationPaths
-    : undefined;
-
   const [selectedDerivationPath, setSelectedDerivationPath] =
-    useState<DerivationPath | null>(derivationPaths?.[0] || null);
+    useState<DerivationPath | null>(null);
   const [derivationPathIndex, setDerivationPathIndex] = useState('0');
+
+  const {
+    isOpen,
+    derivationPaths,
+  }: { derivationPaths: DerivationPath[]; isOpen: boolean } = useMemo(() => {
+    const selectedNamespaceDerivationPaths = selectedNamespace
+      ? namespaces[selectedNamespace].derivationPaths
+      : undefined;
+
+    const isOpen = !!selectedNamespaceDerivationPaths;
+
+    let derivationPaths: DerivationPath[] = [];
+    if (!!selectedNamespaceDerivationPaths) {
+      derivationPaths = derivationPaths.concat(
+        selectedNamespaceDerivationPaths
+      );
+    }
+    derivationPaths.push(customDerivationPath);
+
+    return { isOpen, derivationPaths };
+  }, [selectedNamespace]);
+
+  const isCustomOptionSelected =
+    selectedDerivationPath?.id === customDerivationPath.id;
 
   const handleDerivationPathItemClick = ({ value }: { value: string }) => {
     const selectedDerivationPath = derivationPaths?.find(
@@ -66,7 +92,7 @@ export function WalletDerivationPathModal(props: PropTypes) {
 
   return (
     <WatermarkedModal
-      open={!!derivationPaths}
+      open={isOpen}
       onClose={onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
@@ -92,34 +118,28 @@ export function WalletDerivationPathModal(props: PropTypes) {
         <InputLabel variant="body" size="xsmall" color="$neutral600">
           {i18n.t('Choose Derivation Path Template')}
         </InputLabel>
-        {derivationPaths ? (
-          <Select
-            container={getContainer()}
-            value={selectedDerivationPath?.id || ''}
-            options={
-              derivationPaths?.map((derivationPath) => ({
-                value: derivationPath.id,
-                label: derivationPath.label,
-              })) || []
-            }
-            variant="filled"
-            handleItemClick={handleDerivationPathItemClick}
-            styles={{ trigger: derivationPathInputStyles }}
-          />
-        ) : (
-          <p>
-            {i18n.t('No derivation path is avalable for selected namespace.')}
-          </p>
-        )}
+        <Select
+          container={getContainer()}
+          value={selectedDerivationPath?.id || ''}
+          options={
+            derivationPaths.map((derivationPath) => ({
+              value: derivationPath.id,
+              label: derivationPath.label,
+            })) || []
+          }
+          variant="filled"
+          handleItemClick={handleDerivationPathItemClick}
+          styles={{ trigger: derivationPathInputStyles }}
+        />
 
-        <InputLabel
-          variant="body"
-          size="xsmall"
-          color="$neutral600"
-          css={{ marginTop: 20 }}>
-          {i18n.t('Enter Index')}
+        <Divider size={20} />
+        <InputLabel variant="body" size="xsmall" color="$neutral600">
+          {isCustomOptionSelected
+            ? i18n.t('Enter Path')
+            : i18n.t('Enter Index')}
         </InputLabel>
         <TextField
+          type={isCustomOptionSelected ? 'text' : 'number'}
           variant="contained"
           value={derivationPathIndex}
           onChange={(event) => setDerivationPathIndex(event.target.value)}

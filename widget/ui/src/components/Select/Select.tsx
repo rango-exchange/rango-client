@@ -52,7 +52,10 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
           </Select.Icon>
         </SelectTrigger>
         <Select.Portal container={container}>
-          <SelectContent position="popper" sideOffset={5}>
+          <SelectContent
+            position="popper"
+            sideOffset={5}
+            style={{ zIndex: 9999 }}>
             <Select.ScrollUpButton className="SelectScrollButton">
               <ChevronUpIcon />
             </Select.ScrollUpButton>
