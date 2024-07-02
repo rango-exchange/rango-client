@@ -21,6 +21,7 @@ export function Tooltip(props: PropsWithChildren<TooltipPropTypes>) {
     side = 'top',
     styles,
     align,
+    alignOffset,
   } = props;
 
   return (
@@ -31,6 +32,7 @@ export function Tooltip(props: PropsWithChildren<TooltipPropTypes>) {
         </RadixTooltip.Trigger>
         <RadixTooltip.Portal container={container}>
           <TooltipContent
+            alignOffset={alignOffset}
             align={align}
             side={side}
             sideOffset={sideOffset}

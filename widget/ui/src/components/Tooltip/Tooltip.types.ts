@@ -17,4 +17,5 @@ export interface TooltipPropTypes {
     content?: CSS;
   };
   align?: RadixTooltipContentProps['align'];
+  alignOffset?: RadixTooltipContentProps['alignOffset'];
 }
