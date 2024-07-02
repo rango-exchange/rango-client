@@ -1,3 +1,5 @@
-import { connectAndUpdateStateForSingleNetwork } from '../common/and.js';
+import { connectAndUpdateStateForSingleNetwork } from '../common/mod.js';
 
-export const recommended = [connectAndUpdateStateForSingleNetwork()];
+export const recommended = [
+  ['connect', connectAndUpdateStateForSingleNetwork] as const,
+];

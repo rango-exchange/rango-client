@@ -1,14 +1,9 @@
 import type { Context } from '../../hub/namespaces/mod.js';
 
-export function intoConnecting() {
-  return [
-    'connect',
-    (context: Context) => {
-      const [, setState] = context.state();
-      setState('connecting', true);
-    },
-  ] as const;
+export function intoConnecting(context: Context) {
+  const [, setState] = context.state();
+  setState('connecting', true);
 }
 
 // Please consider if you are going to add something here, make sure it works on all namespaces.
-export const recommended = [intoConnecting()];
+export const recommended = [['connect', intoConnecting] as const];

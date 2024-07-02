@@ -3,41 +3,37 @@ import type { Context } from '../../hub/namespaces/mod.js';
 
 import { isValidCaipAddress } from './helpers.js';
 
-export function connectAndUpdateStateForSingleNetwork() {
-  return [
-    'connect',
-    (context: Context, accounts: Accounts) => {
-      if (!accounts.every(isValidCaipAddress)) {
-        throw new Error(
-          `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${accounts}`
-        );
-      }
+export function connectAndUpdateStateForSingleNetwork(
+  context: Context,
+  accounts: Accounts
+) {
+  if (!accounts.every(isValidCaipAddress)) {
+    throw new Error(
+      `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${accounts}`
+    );
+  }
 
-      const [, setState] = context.state();
-      setState('accounts', accounts);
-      setState('connected', true);
-      return accounts;
-    },
-  ] as const;
+  const [, setState] = context.state();
+  setState('accounts', accounts);
+  setState('connected', true);
+  return accounts;
 }
 
-export function connectAndUpdateStateForMultiNetworks() {
-  return [
-    'connect',
-    (context: Context, accounts: AccountsWithActiveChain) => {
-      if (!accounts.accounts.every(isValidCaipAddress)) {
-        throw new Error(
-          `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${accounts.accounts}`
-        );
-      }
+export function connectAndUpdateStateForMultiNetworks(
+  context: Context,
+  accounts: AccountsWithActiveChain
+) {
+  if (!accounts.accounts.every(isValidCaipAddress)) {
+    throw new Error(
+      `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${accounts.accounts}`
+    );
+  }
 
-      const [, setState] = context.state();
-      setState('accounts', accounts.accounts);
-      setState('network', accounts.network);
-      setState('connected', true);
-      return accounts;
-    },
-  ] as const;
+  const [, setState] = context.state();
+  setState('accounts', accounts.accounts);
+  setState('network', accounts.network);
+  setState('connected', true);
+  return accounts;
 }
 
 export const recommended = [];

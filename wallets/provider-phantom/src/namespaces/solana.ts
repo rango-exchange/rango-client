@@ -2,7 +2,7 @@ import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { utils } from '@rango-dev/wallets-core/namespaces/common';
+import { apply } from '@rango-dev/wallets-core/namespaces/common';
 import {
   actions,
   after,
@@ -54,13 +54,13 @@ const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
   .orUse([['connect', changeAccountCleanup]])
   .build();
 
-utils.apply(
+apply(
   'before',
   [...before.recommended, ['connect', changeAccountSubscriber]],
   solana
 );
 
-utils.apply(
+apply(
   'after',
   [...after.recommended, ['disconnect', changeAccountCleanup]],
   solana

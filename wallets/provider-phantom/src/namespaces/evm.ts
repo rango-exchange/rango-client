@@ -1,13 +1,8 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { utils } from '@rango-dev/wallets-core/namespaces/common';
-import {
-  actions,
-  after,
-  and,
-  before,
-} from '@rango-dev/wallets-core/namespaces/evm';
+import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
 import { evmPhantom } from '../utils.js';
@@ -15,24 +10,24 @@ import { evmPhantom } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(evmPhantom);
 
+const connect = builders
+  .connect()
+  .action(actions.connect(evmPhantom))
+  .before(changeAccountSubscriber)
+  .or(changeAccountCleanup)
+  .build();
+
+const disconnect = commonBuilders
+  .disconnect<EvmActions>()
+  .after(changeAccountCleanup)
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('evm', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from evm cb');
   })
-  .action([...actions.recommended, actions.connect(evmPhantom)])
-  .andUse(and.recommended)
-  .orUse([['connect', changeAccountCleanup]])
+  .action(connect)
+  .action(disconnect)
   .build();
-
-utils.apply(
-  'before',
-  [...before.recommended, ['connect', changeAccountSubscriber]],
-  evm
-);
-utils.apply(
-  'after',
-  [...after.recommended, ['disconnect', changeAccountCleanup]],
-  evm
-);
 
 export { evm };

@@ -11,7 +11,11 @@ export type {
   ProxiedNamespace,
   FindProxiedNamespace as NamespaceInterface,
 } from './builders/mod.js';
-export { NamespaceBuilder, ProviderBuilder } from './builders/mod.js';
+export {
+  NamespaceBuilder,
+  ProviderBuilder,
+  ActionBuilder,
+} from './builders/mod.js';
 
 /*
  * Our `embedded` hasn't been migrated to NodeNext yet so it doesn't support `exports` field.

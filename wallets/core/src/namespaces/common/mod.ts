@@ -1,6 +1,14 @@
 export * as actions from './actions.js';
-export * as after from './after.js';
-export * as and from './and.js';
-export * as before from './before.js';
-export * as utils from './utils.js';
+export * as builders from './builders.js';
+export {
+  intoConnectionFinished,
+  recommended as afterRecommended,
+} from './after.js';
+export {
+  connectAndUpdateStateForMultiNetworks,
+  connectAndUpdateStateForSingleNetwork,
+  recommended as andRecommended,
+} from './and.js';
+export { intoConnecting, recommended as beforeRecommended } from './before.js';
+export { apply } from './utils.js';
 export { type CaipAccount } from './types.js';

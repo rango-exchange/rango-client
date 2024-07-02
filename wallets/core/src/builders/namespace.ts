@@ -1,10 +1,12 @@
 import type { ProxiedNamespace } from './types.js';
+import type { Action } from '../hub/action/action.js';
 import type {
   Actions,
   ActionsMap,
   Context,
   SingleHookActions,
 } from '../hub/namespaces/mod.js';
+import type { HookActions } from '../hub/namespaces/types.js';
 import type { NamespaceConfig } from '../hub/store/mod.js';
 import type {
   AndFunction,
@@ -32,6 +34,8 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #actions: ActionsMap<T> = new Map();
   #andUseList: SingleHookActions<T> = new Map();
   #orUseList: SingleHookActions<T> = new Map();
+  #beforeUseList: HookActions<T> = new Map();
+  #afterUseList: HookActions<T> = new Map();
   #configs: NamespaceConfig;
 
   constructor(id: string, providerId: string) {
@@ -79,6 +83,10 @@ export class NamespaceBuilder<T extends Actions<T>> {
     actionFn: FunctionWithContext<T[K], Context>
   ): NamespaceBuilder<T>;
 
+  public action<K extends keyof T>(
+    action: InstanceType<typeof Action<T, K>>
+  ): NamespaceBuilder<T>;
+
   /**
    *
    * Actions are piece of functionality that a namespace can have, for example it can be a `connect` function
@@ -99,6 +107,23 @@ export class NamespaceBuilder<T extends Actions<T>> {
       action.forEach(([name, actionFnForItem]) => {
         this.#actions.set(name, actionFnForItem);
       });
+      return this;
+    }
+
+    /*
+     * Action builder mode
+     *
+     * TODO:
+     *  I don't know why `action instanceof Action` doesn't work.
+     *  As a workaround, I'm relying on `actionName` which is available on `Action` class as a public property.
+     */
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (typeof action === 'object' && !!action?.actionName) {
+      const builtAction = action as InstanceType<typeof Action<T, K>>;
+      builtAction.toNamespace(this);
+
       return this;
     }
 
@@ -137,6 +162,26 @@ export class NamespaceBuilder<T extends Actions<T>> {
   ) {
     list.forEach(([name, cb]) => {
       this.#orUseList.set(name, cb);
+    });
+
+    return this;
+  }
+
+  public beforeUse<K extends keyof T>(
+    list: (readonly [K, FunctionWithContext<AnyFunction, Context>[]])[]
+  ) {
+    list.forEach(([name, cb]) => {
+      this.#beforeUseList.set(name, cb);
+    });
+
+    return this;
+  }
+
+  public afterUse<K extends keyof T>(
+    list: (readonly [K, FunctionWithContext<AnyFunction, Context>[]])[]
+  ) {
+    list.forEach(([name, cb]) => {
+      this.#afterUseList.set(name, cb);
     });
 
     return this;

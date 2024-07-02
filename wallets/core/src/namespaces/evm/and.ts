@@ -1,3 +1,5 @@
-import { connectAndUpdateStateForMultiNetworks } from '../common/and.js';
+import { connectAndUpdateStateForMultiNetworks } from '../common/mod.js';
 
-export const recommended = [connectAndUpdateStateForMultiNetworks()];
+export const recommended = [
+  ['connect', connectAndUpdateStateForMultiNetworks] as const,
+];

@@ -15,45 +15,42 @@ export const recommended = [...commonRecommended];
 
 export function connect(
   instance: () => ProviderApi
-): ['connect', FunctionWithContext<EvmActions['connect'], Context>] {
-  return [
-    'connect',
-    async (_context, chain) => {
-      const evmInstance = instance();
+): FunctionWithContext<EvmActions['connect'], Context> {
+  return async (_context, chain) => {
+    const evmInstance = instance();
 
-      if (!evmInstance) {
-        throw new Error(
-          'Do your wallet injected correctly and is evm compatible?'
-        );
-      }
-
-      if (chain) {
-        await switchOrAddNetwork(evmInstance, chain);
-      }
-
-      const chainId = await evmInstance.request({ method: 'eth_chainId' });
-
-      const result = await getAccounts(evmInstance);
-
-      const formatAccounts = result.accounts.map(
-        (account) =>
-          AccountId.format({
-            address: account,
-            chainId: {
-              namespace: CAIP_NAMESPACE,
-              reference: chainId,
-            },
-          }) as CaipAccount
+    if (!evmInstance) {
+      throw new Error(
+        'Do your wallet injected correctly and is evm compatible?'
       );
+    }
 
-      console.log('[evm] you are a trader?', { formatAccounts });
+    if (chain) {
+      await switchOrAddNetwork(evmInstance, chain);
+    }
 
-      return {
-        accounts: formatAccounts,
-        network: result.chainId,
-      };
-    },
-  ] as const;
+    const chainId = await evmInstance.request({ method: 'eth_chainId' });
+
+    const result = await getAccounts(evmInstance);
+
+    const formatAccounts = result.accounts.map(
+      (account) =>
+        AccountId.format({
+          address: account,
+          chainId: {
+            namespace: CAIP_NAMESPACE,
+            reference: chainId,
+          },
+        }) as CaipAccount
+    );
+
+    console.log('[evm] you are a trader?', { formatAccounts });
+
+    return {
+      accounts: formatAccounts,
+      network: result.chainId,
+    };
+  };
 }
 
 export function changeAccountSubscriber(

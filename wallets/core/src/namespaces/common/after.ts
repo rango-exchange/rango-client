@@ -1,13 +1,8 @@
 import type { Context } from '../../hub/namespaces/mod.js';
 
-function intoConnectionFinished() {
-  return [
-    'connect',
-    (context: Context) => {
-      const [, setState] = context.state();
-      setState('connecting', false);
-    },
-  ] as const;
+export function intoConnectionFinished(context: Context) {
+  const [, setState] = context.state();
+  setState('connecting', false);
 }
 
-export const recommended = [intoConnectionFinished()];
+export const recommended = [['connect', intoConnectionFinished] as const];
