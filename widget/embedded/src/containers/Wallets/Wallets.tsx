@@ -31,7 +31,12 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 });
 
 function Main(props: PropsWithChildren<PropTypes>) {
-  const { updateConfig, updateSettings, fetch: fetchMeta } = useAppStore();
+  const {
+    updateConfig,
+    updateSettings,
+    fetch: fetchMeta,
+    fetchStatus,
+  } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const { findToken } = useAppStore();
   const config = useAppStore().config;
@@ -60,7 +65,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         dappConfig: props.config,
       };
     }
-  }, [props.config]);
+  }, [props.config, fetchStatus]);
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
