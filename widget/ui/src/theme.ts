@@ -225,6 +225,8 @@ export const darkTheme = createTheme('dark-theme-ui', {
 });
 
 export const rangoDarkColors = {
+  secondary800: '#242D5B',
+  secondary850: '#131C49',
   neutral: '#161C38',
   neutral100: '#101327',
   neutral200: '#0D122C',
