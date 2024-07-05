@@ -15,6 +15,13 @@ import {
 } from '../utils/configs';
 import { customizedThemeTokens } from '../utils/ui';
 
+function doesWindowPreferDarkColorScheme() {
+  return (
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
+}
+
 export function useTheme(props: WidgetTheme) {
   const {
     colors,
@@ -23,7 +30,9 @@ export function useTheme(props: WidgetTheme) {
     secondaryBorderRadius = DEFAULT_SECONDARY_RADIUS,
   } = props;
 
-  const [OSTheme, setOSTheme] = useState('light');
+  const [OSTheme, setOSTheme] = useState(
+    doesWindowPreferDarkColorScheme() ? 'dark' : 'light'
+  );
 
   const { theme } = useAppStore();
 
@@ -64,10 +73,7 @@ export function useTheme(props: WidgetTheme) {
       }
     };
 
-    if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
+    if (doesWindowPreferDarkColorScheme()) {
       setOSTheme('dark');
     }
 
