@@ -24,6 +24,7 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
+import { removeDuplicateFrom } from '../../utils/common';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
   getAddress,
@@ -117,23 +118,65 @@ export function WalletList(props: PropTypes) {
   };
 
   useEffect(() => {
-    setSortedList((sortedList) => {
-      const selectedWalletIndex = list.findIndex((wallet) =>
-        isSelected(wallet.type, chain)
-      );
+    const selectedWalletIndex = list.findIndex((wallet) =>
+      isSelected(wallet.type, chain)
+    );
 
-      if (shouldShowMoreWallets && selectedWalletIndex > 1) {
-        return [list[selectedWalletIndex]].concat(
-          list.filter((_, index) => index !== selectedWalletIndex)
+    const updateSortedList = (
+      list: WalletInfoWithNamespaces[],
+      selectedWalletIndex: number
+    ) => {
+      const selectedWallet = list[selectedWalletIndex];
+      if (selectedWallet) {
+        setSortedList(
+          [selectedWallet].concat(
+            list.filter((_, index) => index !== selectedWalletIndex)
+          )
         );
+      } else {
+        setSortedList(list);
       }
-      return sortedList.map(
-        (sortedItem) =>
-          list.find((listItem) => listItem.type === sortedItem.type) ??
-          sortedItem
-      );
+    };
+
+    if (!limit) {
+      return updateSortedList(list, selectedWalletIndex);
+    }
+
+    const prevConnectedWallets = sortedList
+      .filter((wallet) => wallet.state === WalletState.CONNECTED)
+      .map((wallet) => wallet.type);
+
+    const nextConnectedWallets = list
+      .filter((wallet) => wallet.state === WalletState.CONNECTED)
+      .map((wallet) => wallet.type);
+
+    const allConnectedWallets = removeDuplicateFrom(
+      prevConnectedWallets.concat(nextConnectedWallets)
+    );
+
+    const connectedWallets = allConnectedWallets.filter(
+      (wallet) => !prevConnectedWallets.includes(wallet)
+    );
+
+    const disconnectedWallets = allConnectedWallets.filter(
+      (wallet) => !nextConnectedWallets.includes(wallet)
+    );
+
+    connectedWallets.forEach(() => updateSortedList(list, selectedWalletIndex));
+    disconnectedWallets.forEach((wallet) => {
+      if (!isSelected(wallet, chain)) {
+        updateSortedList(list, selectedWalletIndex);
+      }
     });
-  }, [JSON.stringify(list)]);
+
+    if (
+      !connectedWallets.length &&
+      !disconnectedWallets.length &&
+      list.findIndex((wallet) => isSelected(wallet.type, chain)) >= limit
+    ) {
+      updateSortedList(list, selectedWalletIndex);
+    }
+  }, [JSON.stringify(list), isSelected]);
 
   const modalContainer = document.getElementById(
     WIDGET_UI_ID.SWAP_BOX_ID
