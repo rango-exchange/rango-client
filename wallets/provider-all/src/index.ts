@@ -1,6 +1,6 @@
+import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
 
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
@@ -29,26 +29,47 @@ import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
+import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isWalletConnectExcluded } from './helpers';
+import { isWalletExcluded } from './helpers';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
+  trezor?: TrezorEnvironments;
 }
 
 export const allProviders = (options?: Options) => {
-  if (!isWalletConnectExcluded(options?.selectedProviders)) {
+  const providers = options?.selectedProviders || [];
+
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.WALLET_CONNECT_2,
+      name: 'WalletConnect',
+    })
+  ) {
     if (!!options?.walletconnect2?.WC_PROJECT_ID) {
       walletconnect2.init(options.walletconnect2);
     } else {
       throw new Error(
         'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
       );
+    }
+  }
+
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.TREZOR,
+      name: 'Trezor',
+    })
+  ) {
+    if (!!options?.trezor?.manifest) {
+      trezor.init(options.trezor);
     }
   }
 
@@ -84,5 +105,6 @@ export const allProviders = (options?: Options) => {
     braavos,
     ledger,
     rabby,
+    trezor,
   ];
 };

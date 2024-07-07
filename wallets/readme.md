@@ -156,6 +156,8 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Taho           | ETH,Polygon,Arbitrum,Arbitrum,Avax,Binance,Fantom            | Fantom                                            | &cross;              | https://taho.xyz/                    |
 | TokenPocket    | EVM                                                          | -                                                 | &check;              | https://extension.tokenpocket.pro/#/ |
 | Tomo           | EVM,Cosmos,BTC                                               | Cosmos,BTC                                        | &check;              | https://tomo.inc/                    |
+| Trezor         | Ethereum,Solana                                              |Solana                                                  | &cross;              | https://trezor.io/              |
+
 | TronLink       | Tron                                                         | -                                                 | &cross;              | -                                    |
 | Trust Wallet   | EVM,Solana                                                   | Solana                                            | &check;              | https://trustwallet.com/             |
 | Wallet Connect | Evm,Solana,Cosmos                                            | Solana,Cosmos                                     | &cross;              | -                                    |
