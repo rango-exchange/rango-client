@@ -33,6 +33,16 @@ function TextFieldComponent(
     }
   };
 
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    if (inputAttributes?.type === 'number') {
+      const data = event.clipboardData.getData('text');
+      const numericPattern = /^\d+(\.\d+)?$/;
+      if (!numericPattern.test(data)) {
+        event.preventDefault();
+      }
+    }
+  };
+
   return (
     <>
       {label && (
@@ -58,6 +68,7 @@ function TextFieldComponent(
         <Input
           {...inputAttributes}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
           spellCheck={false}
           suffix={!!suffix}
           ref={ref}
