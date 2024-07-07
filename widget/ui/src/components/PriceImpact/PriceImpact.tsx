@@ -2,7 +2,7 @@ import type { PriceImpactPropTypes } from './PriceImpact.types';
 
 import React from 'react';
 
-import { Divider, Tooltip, Typography } from '..';
+import { Divider, NumericTooltip, Typography } from '..';
 
 import { Container, ValueTypography } from './PriceImpact.styles';
 
@@ -25,7 +25,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
   return (
     <Container {...rest}>
       {outputUsdValue && (
-        <Tooltip
+        <NumericTooltip
           content={realOutputUsdValue}
           container={tooltipProps?.container}
           open={
@@ -39,7 +39,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
             </Typography>
           </ValueTypography>
-        </Tooltip>
+        </NumericTooltip>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <ValueTypography hasError={hasError} hasWarning={hasWarning}>

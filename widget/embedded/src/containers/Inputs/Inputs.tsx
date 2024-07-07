@@ -17,7 +17,7 @@ import {
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
-import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
+import { numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { canComputePriceImpact } from '../../utils/swap';
 import { formatBalance, isFetchingBalance } from '../../utils/wallets';
@@ -97,7 +97,7 @@ export function Inputs(props: PropTypes) {
                 ),
             realUsdValue: priceImpactInputCanNotBeComputed
               ? undefined
-              : formatTooltipNumbers(inputUsdValue),
+              : inputUsdValue?.toString(),
             error: priceImpactInputCanNotBeComputed
               ? errorMessages().unknownPriceError.impactTitle
               : undefined,
@@ -144,10 +144,10 @@ export function Inputs(props: PropTypes) {
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               ),
-          realValue: formatTooltipNumbers(outputAmount),
+          realValue: outputAmount?.toString(),
           realUsdValue: priceImpactOutputCanNotBeComputed
             ? undefined
-            : formatTooltipNumbers(outputUsdValue),
+            : outputUsdValue?.toString(),
           error: priceImpactOutputCanNotBeComputed
             ? errorMessages().unknownPriceError.impactTitle
             : undefined,

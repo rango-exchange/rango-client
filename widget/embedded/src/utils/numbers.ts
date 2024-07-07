@@ -4,8 +4,6 @@ import type { BestRouteResponse } from 'rango-sdk';
 
 import { BigNumber } from 'bignumber.js';
 
-import { TOOLTIP_DECIMALS } from '../constants/routing';
-
 /*
  * if time > 1h -> rounded with 5 minutes precision
  * if time < 1h -> rounded with 15 seconds precision
@@ -127,13 +125,3 @@ export const containsText = (text: string, searchText: string) =>
 
 export const isPositiveNumber = (text?: string) =>
   !!text && parseFloat(text) > 0;
-10;
-
-export function formatTooltipNumbers(
-  number: BigNumber | string | number | null | undefined
-) {
-  return numberToString(number, TOOLTIP_DECIMALS, TOOLTIP_DECIMALS).replace(
-    /(?:\.0*|(\.\d+?)0*)$/,
-    '$1'
-  );
-}
