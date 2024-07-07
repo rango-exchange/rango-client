@@ -253,7 +253,6 @@ export function FullExpandedQuote(props: PropTypes) {
                       </div>
                       <StyledPriceImpact
                         size="small"
-                        outputColor="$neutral700"
                         warningLevel={warningLevel}
                         outputUsdValue={props.outputPrice.usdValue}
                         realOutputUsdValue={props.outputPrice.realUsdValue}

@@ -5,6 +5,7 @@ import React from 'react';
 import { ChainToken } from '../ChainToken';
 import { Divider } from '../Divider';
 import { PriceImpact } from '../PriceImpact';
+import { ValueTypography } from '../PriceImpact/PriceImpact.styles';
 import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
@@ -59,12 +60,12 @@ export function TokenAmount(props: PropTypes) {
             content={props.price.realUsdValue}
             container={props.tooltipContainer}>
             {props.type === 'input' && (
-              <>
-                <Typography size="small" variant="body" color="$neutral700">
+              <ValueTypography>
+                <Typography size="small" variant="body">
                   {`~$${props.price.usdValue}`}
                 </Typography>
                 <Divider direction="horizontal" size={4} />
-              </>
+              </ValueTypography>
             )}
           </Tooltip>
           {props.type === 'output' && (

@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Divider, Tooltip, Typography } from '..';
 
-import { Container, OutputUsdValue } from './PriceImpact.styles';
+import { Container, ValueTypography } from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {
@@ -19,12 +19,8 @@ export function PriceImpact(props: PriceImpactPropTypes) {
     ...rest
   } = props;
 
-  let percentageChangeColor = '$neutral600';
-  if (!outputUsdValue || warningLevel === 'low') {
-    percentageChangeColor = '$warning500';
-  } else if (warningLevel === 'high') {
-    percentageChangeColor = '$error500';
-  }
+  const hasWarning = !outputUsdValue || warningLevel === 'low';
+  const hasError = warningLevel === 'high';
 
   return (
     <Container {...rest}>
@@ -38,19 +34,17 @@ export function PriceImpact(props: PriceImpactPropTypes) {
               : undefined
           }
           side={tooltipProps?.side}>
-          <OutputUsdValue
-            size={size}
-            variant="body"
-            color={outputColor || '$neutral600'}>
-            {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
-          </OutputUsdValue>
+          <ValueTypography>
+            <Typography size={size} variant="body" color={outputColor}>
+              {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
+            </Typography>
+          </ValueTypography>
         </Tooltip>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
-        <>
+        <ValueTypography hasError={hasError} hasWarning={hasWarning}>
           <Divider direction="horizontal" size={4} />
-
-          <Typography size={size} variant="body" color={percentageChangeColor}>
+          <Typography size={size} variant="body">
             {outputUsdValue &&
               percentageChange &&
               `(${
@@ -61,7 +55,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
 
             {!outputUsdValue && error}
           </Typography>
-        </>
+        </ValueTypography>
       )}
     </Container>
   );
