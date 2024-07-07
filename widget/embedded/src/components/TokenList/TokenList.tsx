@@ -136,17 +136,17 @@ export function TokenList(props: PropTypes) {
           ) as BlockchainMeta;
           const colors = createTintsAndShades(blockchain.color, 'main');
           const customCssForTag = {
-            $$color: colors.main250,
+            $$color: colors.main150,
             [`.${darkTheme} &`]: {
-              $$color: colors.main850,
+              $$color: colors.main750,
             },
             backgroundColor: '$$color',
           };
 
           const customCssForTagTitle = {
-            $$color: colors.main600,
+            $$color: colors.main750,
             [`.${darkTheme} &`]: {
-              $$color: colors.main200,
+              $$color: colors.main150,
             },
             color: '$$color',
           };
