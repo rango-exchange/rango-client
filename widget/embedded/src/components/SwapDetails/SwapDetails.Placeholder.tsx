@@ -22,7 +22,7 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
   return (
     <Layout
       header={{
-        title: i18n.t('Swap and Bridge'),
+        title: i18n.t('Swap Details'),
         suffix: <SuffixContainer />,
       }}>
       {showSkeleton && (

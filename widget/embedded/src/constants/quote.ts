@@ -1,6 +1,5 @@
+import type { I18n } from '@lingui/core';
 import type { SwapFee, TagValue } from 'rango-sdk';
-
-import { i18n } from '@lingui/core';
 
 export type NameOfFees =
   | 'Swapper Fee'
@@ -9,13 +8,16 @@ export type NameOfFees =
   | 'Rango Fee'
   | 'Network Fee';
 
-export const NAME_OF_FEES: Record<NameOfFees, string> = {
-  'Network Fee': i18n.t('Network Fee'),
-  'Swapper Fee': i18n.t('Protocol Fee'),
-  'Affiliate Fee': i18n.t('Affiliate Fee'),
-  'Outbound network fee': i18n.t('Outbound Fee'),
-  'Rango Fee': i18n.t('Rango Fee'),
-};
+export function getFeeLabel(fee: NameOfFees, t: I18n['t']): string {
+  const data: Record<NameOfFees, string> = {
+    'Network Fee': t('Network Fee'),
+    'Swapper Fee': t('Protocol Fee'),
+    'Affiliate Fee': t('Affiliate Fee'),
+    'Outbound network fee': t('Outbound Fee'),
+    'Rango Fee': t('Rango Fee'),
+  };
+  return data[fee];
+}
 
 export type FeesGroup = {
   payable: { [key in NameOfFees]?: SwapFee[] };

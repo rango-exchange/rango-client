@@ -21,7 +21,7 @@ export function makeInfo(state: WalletState): Info {
     case WalletState.CONNECTING:
       return {
         color: 'neutral600',
-        description: i18n.t('Connecting...'),
+        description: i18n.t('Connecting ...'),
         tooltipText: i18n.t('Connecting'),
       };
     case WalletState.DISCONNECTED:

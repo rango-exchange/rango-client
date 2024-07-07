@@ -8,13 +8,13 @@ import {
   CloseIcon,
   Divider,
   IconButton,
+  NumericTooltip,
   QuoteCost,
-  Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { NAME_OF_FEES } from '../../constants/quote';
+import { getFeeLabel } from '../../constants/quote';
 import {
   GAS_FEE_MAX_DECIMALS,
   GAS_FEE_MIN_DECIMALS,
@@ -22,7 +22,7 @@ import {
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import { getContainer } from '../../utils/common';
-import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
+import { numberToString } from '../../utils/numbers';
 import { getFeesGroup, getTotalFeesInUsd, getUsdFee } from '../../utils/swap';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
@@ -115,11 +115,9 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                       variant="label"
                       size="medium"
                       color="neutral600">
-                      {NAME_OF_FEES[payableFeesKey as NameOfFees]}
+                      {getFeeLabel(payableFeesKey as NameOfFees, i18n.t)}
                     </Typography>
-                    <Tooltip
-                      content={formatTooltipNumbers(fee.amount)}
-                      container={container}>
+                    <NumericTooltip content={fee.amount} container={container}>
                       <Typography variant="label" size="medium">
                         {numberToString(
                           fee.amount,
@@ -134,7 +132,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                         )}
                         )
                       </Typography>
-                    </Tooltip>
+                    </NumericTooltip>
                   </FeeSection>
                 );
               })
@@ -184,7 +182,10 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
               {Object.entries(feesGroup.nonePayable).map(
                 ([nonPayableFeesKey, fees], index) => {
                   const totalFeeInUsd = getTotalFeesInUsd(fees);
-                  const label = NAME_OF_FEES[nonPayableFeesKey as NameOfFees];
+                  const label = getFeeLabel(
+                    nonPayableFeesKey as NameOfFees,
+                    i18n.t
+                  );
                   const key = `non-payable-fee-${index}`;
                   return (
                     <NonPayableFee
