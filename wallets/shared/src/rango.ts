@@ -158,13 +158,15 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
-export const namespaceMainBlockchain: Record<Namespace, string> = {
-  [Namespace.Evm]: 'ETH',
-  [Namespace.Solana]: 'SOLANA',
-  [Namespace.Cosmos]: 'COSMOS',
-  [Namespace.Utxo]: 'BTC',
-  [Namespace.Starknet]: 'STARKNET',
-  [Namespace.Tron]: 'TRON',
+export type NamespaceData = {
+  namespace: Namespace;
+  derivationPath?: string;
+};
+
+export type DerivationPath = {
+  id: string;
+  label: string;
+  generateDerivationPath: (index: string) => string;
 };
 
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
@@ -264,7 +266,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
-  namespaces?: Namespace[];
+  namespaces?: NamespaceData[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -329,6 +331,7 @@ export type WalletInfo = {
   mobileWallet?: boolean;
   namespaces?: Namespace[];
   singleNamespace?: boolean;
+  needsDerivationPath?: boolean;
 };
 
 export interface Wallet {
