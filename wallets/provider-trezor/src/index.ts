@@ -8,6 +8,7 @@ import {
   ETHEREUM_BIP32_PATH,
   getEthereumAccounts,
   getTrezorInstance,
+  getTrezorModule,
 } from './helpers';
 import signer from './signer';
 
@@ -29,13 +30,14 @@ export const getInstance = getTrezorInstance;
 
 let isTrezorInitialized = false;
 export const connect: Connect = async () => {
-  const { default: TrezorConnect } = await import('@trezor/connect-web');
+  const TrezorConnect = await getTrezorModule();
 
   if (!isTrezorInitialized) {
     await TrezorConnect.init({
       lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
       manifest: trezorManifest,
     });
+
     isTrezorInitialized = true;
   }
   return await getEthereumAccounts(ETHEREUM_BIP32_PATH);

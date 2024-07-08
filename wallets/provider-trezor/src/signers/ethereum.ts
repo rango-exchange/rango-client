@@ -7,12 +7,13 @@ import { type GenericSigner } from 'rango-types';
 import {
   ETHEREUM_BIP32_PATH,
   getTrezorErrorMessage,
+  getTrezorModule,
   valueToHex,
 } from '../helpers';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
-    const { default: TrezorConnect } = await import('@trezor/connect-web');
+    const TrezorConnect = await getTrezorModule();
 
     const { success, payload } = await TrezorConnect.signMessage({
       message: msg,
@@ -30,7 +31,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     chainId: string
   ): Promise<{ hash: string }> {
     try {
-      const { default: TrezorConnect } = await import('@trezor/connect-web');
+      const TrezorConnect = await getTrezorModule();
       const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = tx;
       const isEIP1559 = maxFeePerGas && maxPriorityFeePerGas;
 
