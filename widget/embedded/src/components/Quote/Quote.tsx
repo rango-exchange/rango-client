@@ -155,16 +155,15 @@ export function Quote(props: QuoteProps) {
 
       return {
         swapper: {
-          displayName: getSwapperDisplayName(swap.swapperId, swappers),
+          displayName: getSwapperDisplayName(swap.swapperId, swappers) ?? '',
           image: swap.swapperLogo,
         },
         from: {
           token: { displayName: swap.from.symbol, image: swap.from.logo },
           chain: {
-            displayName: getBlockchainShortNameFor(
-              swap.from.blockchain,
-              blockchains
-            ),
+            displayName:
+              getBlockchainShortNameFor(swap.from.blockchain, blockchains) ??
+              '',
             image: swap.from.blockchainLogo,
           },
           price: {
@@ -194,10 +193,8 @@ export function Quote(props: QuoteProps) {
         to: {
           token: { displayName: swap.to.symbol, image: swap.to.logo },
           chain: {
-            displayName: getBlockchainShortNameFor(
-              swap.to.blockchain,
-              blockchains
-            ),
+            displayName:
+              getBlockchainShortNameFor(swap.to.blockchain, blockchains) || '',
             image: swap.to.blockchainLogo,
           },
           price: {

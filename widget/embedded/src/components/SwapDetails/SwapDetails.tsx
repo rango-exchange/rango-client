@@ -385,7 +385,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 ),
                 usdValue: outputUsdValue,
                 realUsdValue: realOutputUsdValue,
-                realValue: outputAmount,
+                realValue: outputAmount || '',
               },
               token: {
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
