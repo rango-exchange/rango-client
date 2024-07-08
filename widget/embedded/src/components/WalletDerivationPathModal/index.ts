@@ -1,0 +1,1 @@
+export { WalletDerivationPathModal } from './WalletDerivationPathModal';
