@@ -1,7 +1,23 @@
+import type { TrezorConnect } from '@trezor/connect-web';
+
 import { cleanEvmError } from '@rango-dev/signer-evm';
 import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 
 export const ETHEREUM_BIP32_PATH = "m/44'/60'/0'/0/0";
+
+// `@trezor/connect-web` is commonjs, when we are importing it dynamically, it has some differences in different tooling. for example vite (you can check widget-examples), goes throw error. this is a workaround for solving this interop issue.
+export async function getTrezorModule() {
+  const mod = await import('@trezor/connect-web');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (mod.default.default) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return mod.default.default as unknown as TrezorConnect;
+  }
+
+  return mod.default;
+}
 
 export function getTrezorErrorMessage(error: any) {
   if (error?.shortMessage) {
@@ -30,7 +46,7 @@ export async function getEthereumAccounts(path: string): Promise<{
   accounts: string[];
   chainId: string;
 }> {
-  const { default: TrezorConnect } = await import('@trezor/connect-web');
+  const TrezorConnect = await getTrezorModule();
   const result = await TrezorConnect.ethereumGetAddress({
     path,
   });
