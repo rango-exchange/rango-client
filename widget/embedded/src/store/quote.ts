@@ -168,11 +168,12 @@ export const useQuoteStore = createSelectors(
 
           return {
             fromBlockchain: chain,
+            inputUsdValue: new BigNumber(0),
             ...(state.fromToken && {
               selectedQuote: null,
               fromToken: null,
               outputAmount: null,
-              outputUsdValue: null,
+              outputUsdValue: new BigNumber(0),
             }),
           };
         });
@@ -203,7 +204,7 @@ export const useQuoteStore = createSelectors(
               selectedQuote: null,
               toToken: null,
               outputAmount: null,
-              outputUsdValue: null,
+              outputUsdValue: new BigNumber(0),
             }),
           };
         });
@@ -268,8 +269,10 @@ export const useQuoteStore = createSelectors(
         set(() => ({
           fromToken: null,
           fromBlockchain: null,
+          outputUsdValue: new BigNumber(0),
+          inputUsdValue: new BigNumber(0),
+          inputAmount: '',
           outputAmount: null,
-          outputUsdValue: null,
           selectedQuote: null,
         })),
       resetToBlockchain: () =>
@@ -277,7 +280,7 @@ export const useQuoteStore = createSelectors(
           toToken: null,
           toBlockchain: null,
           outputAmount: null,
-          outputUsdValue: null,
+          outputUsdValue: new BigNumber(0),
           selectedQuote: null,
         })),
       setQuoteWalletConfirmed: (flag) =>
