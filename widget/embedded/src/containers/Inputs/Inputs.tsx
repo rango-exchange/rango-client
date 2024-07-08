@@ -40,7 +40,6 @@ export function Inputs(props: PropTypes) {
   } = useQuoteStore();
   const { connectedWallets, getBalanceFor } = useWalletsStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
-
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
@@ -69,6 +68,7 @@ export function Inputs(props: PropTypes) {
     !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
       ? null
       : getPriceImpact(inputUsdValue.toString(), outputUsdValue.toString());
+
   return (
     <Container>
       <FromContainer>
