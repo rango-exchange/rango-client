@@ -5,7 +5,7 @@ import type {
   QuoteEventData,
   Tokens,
   WalletEventData,
-  WalletInfoWithNamespaces,
+  WalletInfoWithExtra,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
@@ -108,7 +108,7 @@ export type {
   WidgetVariant,
   WalletEventData,
   QuoteEventData,
-  WalletInfoWithNamespaces,
+  WalletInfoWithExtra,
 };
 export {
   Widget,

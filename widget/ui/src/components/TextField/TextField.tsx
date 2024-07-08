@@ -62,7 +62,7 @@ function TextFieldComponent(
         fullWidth={fullWidth}
         variant={variant}
         size={size}
-        style={style}
+        css={style}
         className="_text-field">
         {prefix || null}
         <Input

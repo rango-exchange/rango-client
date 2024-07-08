@@ -7,11 +7,11 @@ import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError } from 'rango-types';
 
 import {
-  ETH_BIP32_PATH,
   getLedgerError,
   transportConnect,
   transportDisconnect,
 } from '../helpers';
+import { getDerivationPath } from '../state';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(): Promise<string> {
@@ -53,7 +53,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
 
       const signature = await eth.signTransaction(
-        ETH_BIP32_PATH,
+        getDerivationPath(),
         unsignedTx,
         resolution
       );
