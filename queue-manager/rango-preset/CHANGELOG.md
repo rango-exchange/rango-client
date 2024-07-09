@@ -1,3 +1,17 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.33.2...queue-manager-rango-preset@0.35.0) (2024-07-09)
+
+
+### Features
+
+* support new widget events ([37a9b6c](https://github.com/rango-exchange/rango-client/commit/37a9b6c023cba660c87af27bcbfceadfb8daa8d0))
+
+
+### Performance Improvements
+
+* improve finding tokens from store ([3e890bd](https://github.com/rango-exchange/rango-client/commit/3e890bdcd47971b072f347c368c4370225cb11ff))
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.33.2...queue-manager-rango-preset@0.34.0) (2024-06-01)
 
 

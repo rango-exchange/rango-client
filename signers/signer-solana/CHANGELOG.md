@@ -1,3 +1,13 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.28.0...signer-solana@0.30.0) (2024-07-09)
+
+
+### Features
+
+* add custom solana rpc url to config ([8d46ebf](https://github.com/rango-exchange/rango-client/commit/8d46ebf4fcd58c7ecd180ea29c071176c0f863e9))
+* improve solana simulation failed errors ([c7ccb97](https://github.com/rango-exchange/rango-client/commit/c7ccb97cbdc571b615ee3129a8fcadd52cb0bc9f))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.28.0...signer-solana@0.29.0) (2024-06-01)
 
 

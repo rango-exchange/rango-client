@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.27.1...signer-evm@0.28.0) (2024-07-09)
+
+
+### Bug Fixes
+
+* fix tx data for evm signers when transfering native tokens ([a5d9f6e](https://github.com/rango-exchange/rango-client/commit/a5d9f6e3f5bada210a05c0d1f5c57d7917bf869c))
+
+
+
 ## [0.27.1](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.27.0...signer-evm@0.27.1) (2024-05-26)
 
 

@@ -1,3 +1,12 @@
+# [0.36.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.34.0...wallets-core@0.36.0) (2024-07-09)
+
+
+### Features
+
+* add a modal for setting custom derivation path for ledger ([5b74ec0](https://github.com/rango-exchange/rango-client/commit/5b74ec049393ed74e3e7547edc72b68bd70b7dce))
+
+
+
 # [0.35.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.34.0...wallets-core@0.35.0) (2024-06-01)
 
 
