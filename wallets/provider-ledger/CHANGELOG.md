@@ -1,3 +1,18 @@
+# [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.3.0...provider-ledger@0.5.0) (2024-07-09)
+
+
+### Bug Fixes
+
+* exclud ledger on mobile and fix injected wallet bug ([a6d90aa](https://github.com/rango-exchange/rango-client/commit/a6d90aa01b7b1fcea01ab46d1a74583ff6f98ff8))
+
+
+### Features
+
+* add a modal for setting custom derivation path for ledger ([5b74ec0](https://github.com/rango-exchange/rango-client/commit/5b74ec049393ed74e3e7547edc72b68bd70b7dce))
+* add support for Trezor hardware wallet ([6edecbb](https://github.com/rango-exchange/rango-client/commit/6edecbb14fd008fc741c892bfa3e025c10160b9b))
+
+
+
 # [0.4.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.3.0...provider-ledger@0.4.0) (2024-06-01)
 
 
