@@ -1,5 +1,5 @@
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
+import { isSingleWalletActive } from '../utils/common';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -27,6 +28,7 @@ interface Params {
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
   onConnect?: (walletType: string) => void;
+  onError?: (error?: string) => void;
 }
 
 /**
@@ -35,7 +37,7 @@ interface Params {
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
 export function useWalletList(params: Params) {
-  const { chain, onBeforeConnect, onConnect } = params;
+  const { chain, onBeforeConnect, onConnect, onError } = params;
   const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
@@ -44,6 +46,7 @@ export function useWalletList(params: Params) {
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =
     configWalletsToWalletName(config?.wallets, {
+      trezorManifest: config?.trezorManifest,
       walletConnectProjectId: config?.walletConnectProjectId,
       walletConnectListedDesktopWalletLink:
         config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
@@ -73,7 +76,10 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
+  const handleClick = async (
+    type: WalletType,
+    namespaces?: NamespaceData[]
+  ) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -82,18 +88,17 @@ export function useWalletList(params: Params) {
       if (wallet.connected) {
         await disconnect(type);
       } else {
-        const atLeastOneWalletIsConnected = !!wallets.find(
-          (w) => w.state === WalletState.CONNECTED
-        );
-        if (config?.multiWallets === false && atLeastOneWalletIsConnected) {
+        if (isSingleWalletActive(wallets, config.multiWallets)) {
           return;
         }
         onBeforeConnect?.(type);
         await connect(type, undefined, namespaces);
         onConnect?.(type);
       }
-    } catch (e) {
-      setError('Error: ' + (e as any)?.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      onError?.(e?.message);
+      setError('Error: ' + e?.message);
     }
   };
 

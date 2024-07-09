@@ -1,4 +1,4 @@
-## Widget [0.16.0] (DATE)
+## Widget [0.16.0] (2024-06-01)
 
 _includes `@rango-dev/widget-embedded@0.29.0`_
 

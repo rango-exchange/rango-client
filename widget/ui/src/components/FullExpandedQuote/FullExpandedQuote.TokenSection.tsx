@@ -3,7 +3,7 @@ import type { TokenSectionPropTypes } from './FullExpandedQuote.types';
 import React from 'react';
 
 import { ChainToken } from '../ChainToken';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -27,7 +27,7 @@ export function TokenSection(props: TokenSectionPropTypes) {
     <TokenSectionContainer style={style} isInternalSwap={isInternalSwap}>
       <ChainToken size={size} chainImage={chainImage} tokenImage={tokenImage} />
       <TokenInfo className="token-info">
-        <Tooltip
+        <NumericTooltip
           content={tooltipProps?.content}
           container={tooltipProps?.container}
           side="bottom"
@@ -38,7 +38,7 @@ export function TokenSection(props: TokenSectionPropTypes) {
             className={isInternalSwap ? tokenLabelStyles() : ''}>
             {amount}
           </Typography>
-        </Tooltip>
+        </NumericTooltip>
         <Typography size="xsmall" variant="body" className={tokenLabelStyles()}>
           {name}
         </Typography>

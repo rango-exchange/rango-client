@@ -21,10 +21,14 @@ export function App() {
 
   const overridedConfig: WidgetConfig = {
     theme: {},
+    ...config,
     ...filteredConfigForExport,
     apiKey: RANGO_PUBLIC_API_KEY,
     features: {
       theme: 'hidden',
+    },
+    __UNSTABLE_OR_INTERNAL__: {
+      autoUpdateSettings: true,
     },
   };
 
@@ -32,7 +36,10 @@ export function App() {
    * Playground widget provider should contain all wallets so we need to remove 'wallets' from config
    * to make sure we can access to list of all wallets in playground
    */
-  const playgroundConfig = { ...overridedConfig, wallets: undefined };
+  const playgroundConfig: WidgetConfig = {
+    ...overridedConfig,
+    wallets: undefined,
+  };
 
   useEffect(() => {
     void fetchMeta();

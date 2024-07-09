@@ -33,11 +33,12 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 function Main(props: PropsWithChildren<PropTypes>) {
   const { updateConfig, updateSettings, fetch: fetchMeta } = useAppStore();
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
-    walletConnectProjectId: props.config?.walletConnectProjectId,
+    walletConnectProjectId: config?.walletConnectProjectId,
+    trezorManifest: config?.trezorManifest,
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,
@@ -79,7 +80,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
           meta.isContractWallet
         );
         if (data.length) {
-          connectWallet(data, tokens);
+          connectWallet(data, findToken);
         }
       } else {
         disconnectWallet(type);

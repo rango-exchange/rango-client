@@ -1,20 +1,22 @@
 import type { PropTypes } from './WalletNamespacesModal.types';
+import type { Namespace } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
   Button,
   Checkbox,
+  Divider,
   Image,
   ListItemButton,
   MessageBox,
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import { Namespace } from '@rango-dev/wallets-shared';
 import React, { useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { namespaces } from '../../constants/namespaces';
 import { useAppStore } from '../../store/AppStore';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
@@ -25,15 +27,6 @@ import {
 
 import { NamespaceList } from './WalletNamespacesModal.styles';
 
-export const namespaceMainBlockchain: Record<Namespace, string> = {
-  [Namespace.Evm]: 'ETH',
-  [Namespace.Solana]: 'SOLANA',
-  [Namespace.Cosmos]: 'COSMOS',
-  [Namespace.Utxo]: 'BTC',
-  [Namespace.Starknet]: 'STARKNET',
-  [Namespace.Tron]: 'TRON',
-};
-
 const getBlockchainLogo = (
   blockchains: BlockchainMeta[],
   blockchainName: string
@@ -43,7 +36,7 @@ const getBlockchainLogo = (
 };
 
 export function WalletNamespacesModal(props: PropTypes) {
-  const { singleNamespace, namespaces } = props;
+  const { singleNamespace, availableNamespaces } = props;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
 
@@ -51,14 +44,15 @@ export function WalletNamespacesModal(props: PropTypes) {
 
   const namespacesInfo = useMemo(
     () =>
-      namespaces?.map((namespace) => ({
+      availableNamespaces?.map((namespace) => ({
         name: namespace,
         logo: getBlockchainLogo(
           blockchains,
-          namespaceMainBlockchain[namespace]
+          namespaces[namespace].mainBlockchain
         ),
+        title: namespaces[namespace].title,
       })),
-    [namespaces]
+    [availableNamespaces]
   );
 
   const onSelect = (namespace: Namespace) => {
@@ -88,6 +82,7 @@ export function WalletNamespacesModal(props: PropTypes) {
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
       }>
+      <Divider size={20} />
       <MessageBox
         type="info"
         title={i18n.t('Select chain types')}
@@ -110,7 +105,7 @@ export function WalletNamespacesModal(props: PropTypes) {
               <ListItemButton
                 key={namespaceInfoItem.name}
                 id={namespaceInfoItem.name}
-                title={namespaceInfoItem.name}
+                title={namespaceInfoItem.title}
                 hasDivider
                 style={{ height: 60 }}
                 onClick={() => onSelect(namespaceInfoItem.name)}

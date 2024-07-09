@@ -14,7 +14,7 @@ import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 import { DEFAULT_THEME_COLORS } from '../constants';
-import { getConfig } from '../utils/configs';
+import { getConfig, TREZOR_MANIFEST } from '../utils/configs';
 
 import createSelectors from './selectors';
 
@@ -76,6 +76,7 @@ interface ConfigState {
 export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
   walletConnectProjectId: getConfig('WC_PROJECT_ID'),
+  trezorManifest: TREZOR_MANIFEST,
   amount: undefined,
   externalWallets: false,
   variant: 'default',
@@ -95,7 +96,7 @@ export const initialConfig: WidgetConfig = {
   },
   liquiditySources: undefined,
   wallets: undefined,
-  multiWallets: undefined,
+  multiWallets: true,
   customDestination: undefined,
   language: undefined,
   excludeLiquiditySources: undefined,

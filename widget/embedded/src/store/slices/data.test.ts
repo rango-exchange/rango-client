@@ -9,6 +9,7 @@ import {
   createToken,
   updateAppStoreConfig,
 } from '../../test-utils/fixtures';
+import { createTokenHash } from '../../utils/meta';
 import { createAppStore } from '../app';
 
 let appStoreState: AppStoreState;
@@ -48,7 +49,10 @@ beforeEach(() => {
 
   const initData = createInitialAppStore();
   initData._blockchainsMapByName.set(rangoBlockchain.name, rangoBlockchain);
-  customTokens.forEach((token) => initData._tokens.push(token));
+  customTokens.forEach((token) => {
+    const tokenHash = createTokenHash(token);
+    initData._tokensMapByTokenHash.set(tokenHash, token);
+  });
 
   const appStore = createAppStore();
   appStore.setState(initData);
@@ -149,10 +153,10 @@ describe('check sorting tokens is working correctly in app store', () => {
 
   test('put popular token with lowest blockchain sort at first', () => {
     const rangoToken = customTokens[0];
-    const rangoIndex = appStoreState._tokens.findIndex(
-      (tokenItem) => tokenItem.symbol === rangoToken.symbol
-    );
-    appStoreState._tokens[rangoIndex].isPopular = true;
+    const token = appStoreState.findToken(rangoToken);
+    if (token) {
+      token.isPopular = true;
+    }
     appStoreState._blockchainsMapByName.set(rangoToken.blockchain, {
       ...rangoBlockchain,
       sort: 0,

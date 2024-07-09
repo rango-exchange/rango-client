@@ -8,10 +8,10 @@ import {
   Divider,
   FullExpandedQuote,
   InfoIcon,
+  NumericTooltip,
   QuoteTag,
   StepDetails,
   TokenAmount,
-  Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
@@ -40,7 +40,6 @@ import {
   getSwapperDisplayName,
 } from '../../utils/meta';
 import {
-  formatTooltipNumbers,
   numberToString,
   roundedSecondsToString,
   totalArrivalTime,
@@ -88,7 +87,7 @@ export function Quote(props: QuoteProps) {
     container: propContainer,
   } = props;
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const swappers = useAppStore().swappers();
   const { customSlippage, slippage } = useAppStore();
   const userSlippage = customSlippage || slippage;
@@ -156,16 +155,15 @@ export function Quote(props: QuoteProps) {
 
       return {
         swapper: {
-          displayName: getSwapperDisplayName(swap.swapperId, swappers),
+          displayName: getSwapperDisplayName(swap.swapperId, swappers) ?? '',
           image: swap.swapperLogo,
         },
         from: {
           token: { displayName: swap.from.symbol, image: swap.from.logo },
           chain: {
-            displayName: getBlockchainShortNameFor(
-              swap.from.blockchain,
-              blockchains
-            ),
+            displayName:
+              getBlockchainShortNameFor(swap.from.blockchain, blockchains) ??
+              '',
             image: swap.from.blockchainLogo,
           },
           price: {
@@ -186,23 +184,17 @@ export function Quote(props: QuoteProps) {
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
             ),
-            realValue: formatTooltipNumbers(
-              index === 0 ? input.value : swap.fromAmount
-            ),
-            realUsdValue: formatTooltipNumbers(
-              new BigNumber(swap.from.usdPrice ?? 0).multipliedBy(
-                swap.fromAmount
-              )
-            ),
+            realValue: index === 0 ? input.value : swap.fromAmount,
+            realUsdValue: new BigNumber(swap.from.usdPrice ?? 0)
+              .multipliedBy(swap.fromAmount)
+              .toString(),
           },
         },
         to: {
           token: { displayName: swap.to.symbol, image: swap.to.logo },
           chain: {
-            displayName: getBlockchainShortNameFor(
-              swap.to.blockchain,
-              blockchains
-            ),
+            displayName:
+              getBlockchainShortNameFor(swap.to.blockchain, blockchains) || '',
             image: swap.to.blockchainLogo,
           },
           price: {
@@ -216,10 +208,10 @@ export function Quote(props: QuoteProps) {
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
             ),
-            realValue: formatTooltipNumbers(swap.toAmount),
-            realUsdValue: formatTooltipNumbers(
-              new BigNumber(swap.to.usdPrice ?? 0).multipliedBy(swap.toAmount)
-            ),
+            realValue: swap.toAmount,
+            realUsdValue: new BigNumber(swap.to.usdPrice ?? 0)
+              .multipliedBy(swap.toAmount)
+              .toString(),
           },
         },
         state: stepState,
@@ -303,7 +295,7 @@ export function Quote(props: QuoteProps) {
           ) : undefined,
         time: roundedSecondsToString(swap.estimatedTimeInSeconds),
         fee: numberToString(
-          getUsdFeeOfStep(swap, tokens),
+          getUsdFeeOfStep(swap, findToken),
           GAS_FEE_MIN_DECIMALS,
           GAS_FEE_MAX_DECIMALS
         ),
@@ -320,7 +312,7 @@ export function Quote(props: QuoteProps) {
   const sortedQuoteTags = sortTags(props.quote.tags || []);
   const showAllRoutesButton = !!onClickAllRoutes;
   const totalTime = roundedSecondsToString(totalArrivalTime(quote?.swaps));
-  const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], tokens);
+  const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], findToken);
   const fee = numberToString(
     totalFee,
     GAS_FEE_MIN_DECIMALS,
@@ -343,8 +335,8 @@ export function Quote(props: QuoteProps) {
       outputPrice={{
         value: roundedOutput,
         usdValue: roundedOutputUsdValue,
-        realValue: formatTooltipNumbers(output.value),
-        realUsdValue: formatTooltipNumbers(output.usdValue),
+        realValue: output.value,
+        realUsdValue: output.usdValue,
       }}
     />
   ) : (
@@ -414,8 +406,8 @@ export function Quote(props: QuoteProps) {
               <BasicInfoOutput size="small" variant="body">
                 {`${roundedInput} ${steps[0].from.token.displayName} = `}
               </BasicInfoOutput>
-              <Tooltip
-                content={formatTooltipNumbers(output.value)}
+              <NumericTooltip
+                content={output.value}
                 container={container}
                 open={!output.value ? false : undefined}>
                 <BasicInfoOutput size="small" variant="body">
@@ -424,16 +416,14 @@ export function Quote(props: QuoteProps) {
                     steps[steps.length - 1].to.token.displayName
                   }`}
                 </BasicInfoOutput>
-              </Tooltip>
+              </NumericTooltip>
             </ContainerInfoOutput>
-            <Tooltip
-              content={formatTooltipNumbers(output.usdValue)}
-              container={container}>
+            <NumericTooltip content={output.usdValue} container={container}>
               <Divider size={2} direction="horizontal" />
               <Typography color="$neutral600" size="xsmall" variant="body">
                 {`($${roundedOutputUsdValue})`}
               </Typography>
-            </Tooltip>
+            </NumericTooltip>
           </div>
         )}
         {type === 'list-item' && (
@@ -444,8 +434,8 @@ export function Quote(props: QuoteProps) {
             price={{
               value: roundedOutput,
               usdValue: roundedOutputUsdValue,
-              realValue: formatTooltipNumbers(output.value),
-              realUsdValue: formatTooltipNumbers(output.usdValue),
+              realValue: output.value,
+              realUsdValue: output.usdValue,
             }}
             token={{
               displayName: steps[numberOfSteps - 1].to.token.displayName,

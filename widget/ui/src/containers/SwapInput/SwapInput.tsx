@@ -5,9 +5,9 @@ import React from 'react';
 
 import {
   Divider,
+  NumericTooltip,
   PriceImpact,
   Skeleton,
-  Tooltip,
   Typography,
 } from '../../components';
 import { UI_ID } from '../../constants';
@@ -96,7 +96,8 @@ export function SwapInput(props: SwapInputPropTypes) {
             </>
           ) : (
             <>
-              <Tooltip
+              <NumericTooltip
+                align="end"
                 content={props.price.realValue}
                 container={props.tooltipContainer}
                 open={
@@ -109,6 +110,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                   style={{ padding: 0 }}
                   value={props.price.value}
                   type={'onInputChange' in props ? 'number' : 'text'}
+                  step="any"
                   size="large"
                   placeholder="0"
                   variant="ghost"
@@ -119,7 +121,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                       props.onInputChange(event.target.value),
                   })}
                 />
-              </Tooltip>
+              </NumericTooltip>
               {'percentageChange' in props ? (
                 <PriceImpact
                   size="medium"
@@ -134,7 +136,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <Tooltip
+                <NumericTooltip
                   content={props.price.realUsdValue}
                   container={props.tooltipContainer}
                   open={
@@ -153,7 +155,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                         : props.price.error}
                     </UsdPrice>
                   </ValueTypography>
-                </Tooltip>
+                </NumericTooltip>
               )}
             </>
           )}

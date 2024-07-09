@@ -45,7 +45,7 @@ import {
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
 import { TransactionType } from 'rango-sdk';
-import { PendingSwapNetworkStatus } from 'rango-types';
+import { PendingSwapNetworkStatus, SignerError } from 'rango-types';
 
 import {
   DEFAULT_ERROR_CODE,
@@ -53,7 +53,6 @@ import {
   ERROR_MESSAGE_WAIT_FOR_WALLET,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
 } from './constants';
-import { RangoPresetError } from './errors';
 import { httpService } from './services';
 import { notifier } from './services/eventEmitter';
 import {
@@ -353,7 +352,7 @@ export function updateSwapStatus({
 
     // If trace of error was available, we will send it to the api (except user rejection)
     const errorReasonForAPI =
-      errorCode !== 'USER_REJECT' &&
+      errorCode !== 'REJECTED_BY_USER' &&
       trace?.message &&
       typeof trace.message === 'string'
         ? trace.message
@@ -1140,17 +1139,16 @@ export function signTransaction(
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
 
-      // Logging RPC errors
-      const log_msg = new RangoPresetError(
-        error?.trace?.stack || error?.trace || error?.root || error
-      );
-      warn(log_msg, {
+      warn(error, {
         tags: {
           requestId: swap.requestId,
           rpc: true,
           swapper: currentStep?.swapperId || '',
           walletType: sourceWallet?.walletType || '',
         },
+        context: SignerError.isSignerError(error)
+          ? error.getErrorContext()
+          : {},
       });
 
       const updateResult = updateSwapStatus({
@@ -1161,7 +1159,7 @@ export function signTransaction(
         message: extraMessage,
         details: extraMessageDetail,
         errorCode: extraMessageErrorCode,
-        trace: error?.trace,
+        trace: error?.cause,
       });
 
       notifier({

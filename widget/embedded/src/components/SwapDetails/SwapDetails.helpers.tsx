@@ -1,6 +1,6 @@
 import type { GetStep } from '../SwapDetailsAlerts';
 import type { Step, StepDetailsProps } from '@rango-dev/ui';
-import type { PendingSwapStep } from 'rango-types';
+import type { PendingSwapStep, SwapperType } from 'rango-types';
 
 import React from 'react';
 
@@ -46,7 +46,7 @@ export const getSteps = ({
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
-          realValue: amountToConvert,
+          realValue: amountToConvert ?? '',
         },
       },
       to: {
@@ -63,13 +63,13 @@ export const getSteps = ({
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
           realValue:
-            step.outputAmount || step.expectedOutputAmountHumanReadable,
+            step.outputAmount || step.expectedOutputAmountHumanReadable || '',
         },
       },
       swapper: {
-        displayName: getSwapperDisplayName(step.swapperId, swappers),
+        displayName: getSwapperDisplayName(step.swapperId, swappers) ?? '',
         image: step.swapperLogo ?? '',
-        type: step.swapperType,
+        type: step.swapperType as SwapperType,
       },
       internalSwaps: step.internalSwaps
         ? step.internalSwaps.map((internalSwap) => {
@@ -95,12 +95,10 @@ export const getSteps = ({
                 },
               },
               swapper: {
-                displayName: getSwapperDisplayName(
-                  internalSwap.swapperId,
-                  swappers
-                ),
+                displayName:
+                  getSwapperDisplayName(internalSwap.swapperId, swappers) ?? '',
                 image: internalSwap.swapperLogo ?? '',
-                type: internalSwap.swapperType,
+                type: internalSwap.swapperType as SwapperType,
               },
             };
           })

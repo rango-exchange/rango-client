@@ -1,4 +1,3 @@
-import type { QuoteError, QuoteWarning, SelectedQuote, Wallet } from '../types';
 import type {
   BlockchainMeta,
   MetaResponse,
@@ -6,15 +5,23 @@ import type {
   PreferenceType,
   Token,
 } from 'rango-sdk';
-import type { PendingSwap } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { ZERO } from '../constants/numbers';
+import { eventEmitter } from '../services/eventEmitter';
+import {
+  type QuoteError,
+  QuoteEventTypes,
+  type QuoteWarning,
+  type SelectedQuote,
+  type Wallet,
+  WidgetEvents,
+} from '../types';
 import { isPositiveNumber } from '../utils/numbers';
-import { createRetryQuote, getQuoteToTokenUsdPrice } from '../utils/quote';
+import { getQuoteToTokenUsdPrice } from '../utils/quote';
 import { calcOutputUsdValue } from '../utils/swap';
 
 import createSelectors from './selectors';
@@ -38,7 +45,13 @@ type SomeQuoteState = {
   error: QuoteError | null;
   warning: QuoteWarning | null;
 };
-
+export type RetryQuote = {
+  fromBlockchain: BlockchainMeta | null;
+  fromToken?: Token;
+  toBlockchain: BlockchainMeta | null;
+  toToken?: Token;
+  inputAmount: string;
+};
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
   toBlockchain: BlockchainMeta | null;
@@ -73,7 +86,7 @@ export interface QuoteState {
   ) => void;
   setInputAmount: (amount: string) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
-  retry: (pendingSwap: PendingSwap, meta: Meta) => void;
+  retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: () => void;
   setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
@@ -155,11 +168,12 @@ export const useQuoteStore = createSelectors(
 
           return {
             fromBlockchain: chain,
+            inputUsdValue: new BigNumber(0),
             ...(state.fromToken && {
               selectedQuote: null,
               fromToken: null,
               outputAmount: null,
-              outputUsdValue: null,
+              outputUsdValue: new BigNumber(0),
             }),
           };
         });
@@ -190,7 +204,7 @@ export const useQuoteStore = createSelectors(
               selectedQuote: null,
               toToken: null,
               outputAmount: null,
-              outputUsdValue: null,
+              outputUsdValue: new BigNumber(0),
             }),
           };
         });
@@ -219,15 +233,15 @@ export const useQuoteStore = createSelectors(
           }),
         }));
       },
-      retry: (pendingSwap, meta) => {
-        const { tokens, blockchains } = meta;
+      retry: (retryQuote) => {
         const {
           fromBlockchain,
           fromToken,
           toBlockchain,
           toToken,
           inputAmount,
-        } = createRetryQuote(pendingSwap, blockchains, tokens);
+        } = retryQuote;
+
         set({
           fromBlockchain,
           fromToken,
@@ -255,8 +269,10 @@ export const useQuoteStore = createSelectors(
         set(() => ({
           fromToken: null,
           fromBlockchain: null,
+          outputUsdValue: new BigNumber(0),
+          inputUsdValue: new BigNumber(0),
+          inputAmount: '',
           outputAmount: null,
-          outputUsdValue: null,
           selectedQuote: null,
         })),
       resetToBlockchain: () =>
@@ -264,7 +280,7 @@ export const useQuoteStore = createSelectors(
           toToken: null,
           toBlockchain: null,
           outputAmount: null,
-          outputUsdValue: null,
+          outputUsdValue: new BigNumber(0),
           selectedQuote: null,
         })),
       setQuoteWalletConfirmed: (flag) =>
@@ -283,4 +299,58 @@ export const useQuoteStore = createSelectors(
         set({ quoteWarningsConfirmed: flag }),
     }))
   )
+);
+
+export const unsubscribeQuoteStore = useQuoteStore.subscribe(
+  (selectedState, previousSelectedState) => {
+    if (
+      selectedState.fromBlockchain !== previousSelectedState.fromBlockchain ||
+      selectedState.fromToken !== previousSelectedState.fromToken ||
+      selectedState.toBlockchain !== previousSelectedState.toBlockchain ||
+      selectedState.toToken !== previousSelectedState.toToken ||
+      selectedState.inputAmount !== previousSelectedState.inputAmount
+    ) {
+      // useEffect hook can not be used in Zustand subscribe
+      eventEmitter.emit(WidgetEvents.QuoteEvent, {
+        type: QuoteEventTypes.QUOTE_INPUT_UPDATE,
+        payload: {
+          fromBlockchain: selectedState.fromBlockchain?.name,
+          toBlockchain: selectedState.toBlockchain?.name,
+          fromToken: selectedState.fromToken
+            ? {
+                symbol: selectedState.fromToken.symbol,
+                name: selectedState.fromToken.name,
+                address: selectedState.fromToken.address,
+              }
+            : undefined,
+          toToken: selectedState.toToken
+            ? {
+                symbol: selectedState.toToken.symbol,
+                name: selectedState.toToken.name,
+                address: selectedState.toToken.address,
+              }
+            : undefined,
+          requestAmount: selectedState.inputAmount,
+        },
+      });
+    }
+
+    if (
+      selectedState.selectedQuote?.requestId !==
+      previousSelectedState.selectedQuote?.requestId
+    ) {
+      eventEmitter.emit(WidgetEvents.QuoteEvent, {
+        type: QuoteEventTypes.QUOTE_OUTPUT_UPDATE,
+        payload: selectedState.selectedQuote
+          ? {
+              requestAmount: selectedState.selectedQuote.requestAmount,
+              swaps: selectedState.selectedQuote.swaps,
+              outputAmount: selectedState.selectedQuote.outputAmount,
+              resultType: selectedState.selectedQuote.resultType,
+              tags: selectedState.selectedQuote.tags,
+            }
+          : null,
+      });
+    }
+  }
 );

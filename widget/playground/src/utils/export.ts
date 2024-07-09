@@ -18,15 +18,26 @@ function clearEmpties<T extends Record<string, any>>(obj: T): T {
   return obj;
 }
 
+function isWalletConfigNeeded(
+  config: WidgetConfig,
+  configKey: keyof WidgetConfig,
+  walletKey: string
+): boolean {
+  return (
+    !config[configKey] &&
+    (!config.wallets || config.wallets.includes(walletKey))
+  );
+}
+
 export function filterConfig(
   WidgetConfig: WidgetConfig,
   initialConfig: WidgetConfig
 ) {
   const config = {
     ...WidgetConfig,
-    wallets: WidgetConfig.wallets?.filter(
-      (wallet) => typeof wallet === 'string'
-    ),
+    wallets: WidgetConfig.externalWallets
+      ? undefined
+      : WidgetConfig.wallets?.filter((wallet) => typeof wallet === 'string'),
   };
 
   const userSelectedConfig = clearEmpties(
@@ -51,9 +62,23 @@ export function filterConfig(
     filteredConfigForExport.apiKey = config.apiKey;
   }
 
-  if (!filteredConfigForExport.walletConnectProjectId) {
+  const isWalletConnectNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'walletConnectProjectId',
+    'wallet-connect-2'
+  );
+  if (isWalletConnectNeeded) {
     filteredConfigForExport.walletConnectProjectId =
       config.walletConnectProjectId;
+  }
+  const isTrezorNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'trezorManifest',
+    'trezor'
+  );
+
+  if (isTrezorNeeded) {
+    filteredConfigForExport.trezorManifest = config.trezorManifest;
   }
 
   return { userSelectedConfig, filteredConfigForExport };
@@ -111,14 +136,23 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
-
-  formatedConfig = insertAt(
-    formatedConfig,
-    `// This project id is only for test purpose. Don't use it in production.
+  if (config.trezorManifest) {
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// Here, give your email and URL.
+    `,
+      formatedConfig.indexOf('trezorManifest')
+    );
+  }
+  if (config.walletConnectProjectId) {
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// This project id is only for test purpose. Don't use it in production.
     // Get your Wallet Connect project id from https://cloud.walletconnect.com/
     `,
-    formatedConfig.indexOf('walletConnectProjectId')
-  );
+      formatedConfig.indexOf('walletConnectProjectId')
+    );
+  }
 
   if (!!config.wallets) {
     formatedConfig = insertAt(

@@ -81,6 +81,9 @@ export enum WalletTypes {
   MY_TON_WALLET = 'mytonwallet',
   SOLFLARE_SNAP = 'solflare-snap',
   LEDGER = 'ledger',
+  Rabby = 'rabby',
+  TOMO = 'tomo',
+  TREZOR = 'trezor',
 }
 
 export enum Networks {
@@ -155,6 +158,17 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
+export type NamespaceData = {
+  namespace: Namespace;
+  derivationPath?: string;
+};
+
+export type DerivationPath = {
+  id: string;
+  label: string;
+  generateDerivationPath: (index: string) => string;
+};
+
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.BTC,
   Networks.LTC,
@@ -169,9 +183,12 @@ export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
   WalletTypes.LEAP_COSMOS,
+  WalletTypes.XDEFI,
 ];
 
 export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
+export const ETHEREUM_CHAIN_ID = '0x1';
+export const DEFAULT_ETHEREUM_RPC_URL = 'https://rpc.ankr.com/eth';
 
 export type Asset = {
   blockchain: Network;
@@ -249,7 +266,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
-  namespaces?: Namespace[];
+  namespaces?: NamespaceData[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -314,13 +331,14 @@ export type WalletInfo = {
   mobileWallet?: boolean;
   namespaces?: Namespace[];
   singleNamespace?: boolean;
+  needsDerivationPath?: boolean;
 };
 
 export interface Wallet {
   type: WalletType;
   extensionAvailable: boolean;
   connected: boolean;
-  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+  info: Omit<WalletInfo, 'color'>;
 }
 
 export type Providers = { [type in WalletType]?: any };

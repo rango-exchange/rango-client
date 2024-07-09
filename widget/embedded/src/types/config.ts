@@ -1,4 +1,4 @@
-import type { Language } from '@rango-dev/ui';
+import type { Language, theme } from '@rango-dev/ui';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
@@ -49,6 +49,7 @@ export type WidgetTheme = {
   mode?: 'auto' | 'light' | 'dark';
   fontFamily?: string;
   colors?: { light?: WidgetColors; dark?: WidgetColors };
+  shadows?: typeof theme.shadows;
   borderRadius?: number;
   secondaryBorderRadius?: number;
   width?: number;
@@ -144,6 +145,11 @@ export type Features = Partial<
 > &
   Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>>;
 
+export type TrezorManifest = {
+  appUrl: string;
+  email: string;
+};
+
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
@@ -157,6 +163,8 @@ export type Features = Partial<
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
+ * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
+ * as a Trezor Connect integrator,share your e-mail and application url.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.
@@ -202,6 +210,7 @@ export type WidgetConfig = {
   apiUrl?: string;
   title?: string;
   walletConnectProjectId?: string;
+  trezorManifest?: TrezorManifest;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
@@ -222,5 +231,6 @@ export type WidgetConfig = {
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;
+    autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
   };
 };

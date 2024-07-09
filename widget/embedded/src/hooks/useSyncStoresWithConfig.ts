@@ -8,7 +8,6 @@ import {
   isBlockchainExcludedInConfig,
   isTokenExcludedInConfig,
 } from '../utils/configs';
-import { areTokensEqual } from '../utils/wallets';
 
 export function useSyncStoresWithConfig() {
   const {
@@ -28,6 +27,7 @@ export function useSyncStoresWithConfig() {
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useAppStore();
@@ -42,7 +42,9 @@ export function useSyncStoresWithConfig() {
   const prevConfigToBlockchain = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    setInputAmount(config?.amount?.toString() || '');
+    if (typeof config.amount !== 'undefined') {
+      setInputAmount(config.amount.toString());
+    }
   }, [config?.amount]);
 
   useEffect(() => {
@@ -51,9 +53,8 @@ export function useSyncStoresWithConfig() {
       const chain = blockchains.find(
         (chain) => chain.name === config?.from?.blockchain
       );
-      const token = tokens.find((t) =>
-        areTokensEqual(t, config?.from?.token || null)
-      );
+      const fromToken = config?.from?.token;
+      const token = fromToken && findToken(fromToken);
 
       if (chain || (!chain && prevConfigFromBlockchain.current)) {
         setFromBlockchain(chain ?? null);
@@ -101,9 +102,9 @@ export function useSyncStoresWithConfig() {
       const chain = blockchains.find(
         (chain) => chain.name === config?.to?.blockchain
       );
-      const token = tokens.find((t) =>
-        areTokensEqual(t, config?.to?.token || null)
-      );
+
+      const toToken = config?.to?.token;
+      const token = toToken && findToken(toToken);
 
       if (chain || (!chain && prevConfigToBlockchain.current)) {
         setToBlockchain(chain ?? null);

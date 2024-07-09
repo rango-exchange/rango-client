@@ -42,12 +42,15 @@ import { useQuoteStore } from '../../store/quote';
 import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import {
-  formatTooltipNumbers,
   numberToString,
   roundedSecondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
-import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
+import {
+  createRetryQuote,
+  getPriceImpact,
+  getPriceImpactLevel,
+} from '../../utils/quote';
 import {
   getLastConvertedTokenInFailedSwap,
   getSwapMessages,
@@ -81,7 +84,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const retry = useQuoteStore.use.retry();
   const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
@@ -202,14 +205,14 @@ export function SwapDetails(props: SwapDetailsProps) {
   );
 
   const realOutputUsdValue = outputAmount
-    ? formatTooltipNumbers(
-        new BigNumber(outputAmount).multipliedBy(lastStep.toUsdPrice || 0)
-      )
+    ? new BigNumber(outputAmount)
+        .multipliedBy(lastStep.toUsdPrice || 0)
+        .toString()
     : '';
 
-  const realInputUsdValue = formatTooltipNumbers(
-    new BigNumber(swap.inputAmount).multipliedBy(firstStep.fromUsdPrice || 0)
-  );
+  const realInputUsdValue = new BigNumber(swap.inputAmount)
+    .multipliedBy(firstStep.fromUsdPrice || 0)
+    .toString();
 
   const percentageChange = getPriceImpact(inputUsdValue, outputUsdValue);
 
@@ -268,7 +271,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   return (
     <Layout
       header={{
-        title: i18n.t('Swap and Bridge'),
+        title: i18n.t('Swap Details'),
         onCancel:
           swap.status === 'running' ? () => setModalState('cancel') : undefined,
         suffix: swap.status !== 'running' && (
@@ -294,7 +297,8 @@ export function SwapDetails(props: SwapDetailsProps) {
             type="primary"
             size="large"
             onClick={() => {
-              retry(swap, { blockchains: blockchains, tokens: tokens });
+              const swapInput = createRetryQuote(swap, blockchains, findToken);
+              retry(swapInput);
               setTimeout(() => {
                 const home = '../../';
                 navigate(home);
@@ -333,7 +337,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </div>
           <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
-              {`${i18n.t(swap.finishTime ? 'Finished at' : 'Created at')}:`}
+              {swap.finishTime ? i18n.t('Finished at') : i18n.t('Created at')}
             </Typography>
             <Typography variant="label" size="small" color="neutral700">
               {swapDate}
@@ -381,7 +385,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 ),
                 usdValue: outputUsdValue,
                 realUsdValue: realOutputUsdValue,
-                realValue: outputAmount,
+                realValue: outputAmount || '',
               },
               token: {
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
@@ -453,7 +457,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         )}
         usdValue={outputUsdValue}
         realUsdValue={realOutputUsdValue}
-        realValue={formatTooltipNumbers(outputAmount)}
+        realValue={outputAmount || ''}
         percentageChange={numberToString(
           percentageChange,
           PERCENTAGE_CHANGE_MIN_DECIMALS,

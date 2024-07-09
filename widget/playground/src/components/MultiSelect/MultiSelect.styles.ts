@@ -35,6 +35,16 @@ export const Select = styled('div', {
           cursor: 'pointer',
         },
       },
+      true: {
+        '& .chips': {
+          '& div': {
+            backgroundColor: '$neutral500',
+            '& span': {
+              color: '$neutral600',
+            },
+          },
+        },
+      },
     },
   },
 });

@@ -2,17 +2,16 @@ import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
+import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError } from 'rango-types';
 
 import {
-  ETH_BIP32_PATH,
   getLedgerError,
   transportConnect,
   transportDisconnect,
 } from '../helpers';
-
-export const RPC_PROVIDER_URL = 'https://rpc.ankr.com/eth';
+import { getDerivationPath } from '../state';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(): Promise<string> {
@@ -26,7 +25,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     try {
-      const provider = new JsonRpcProvider(RPC_PROVIDER_URL); // Provider to broadcast transaction
+      const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
 
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
 
@@ -54,7 +53,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
 
       const signature = await eth.signTransaction(
-        ETH_BIP32_PATH,
+        getDerivationPath(),
         unsignedTx,
         resolution
       );
