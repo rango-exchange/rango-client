@@ -32,6 +32,7 @@ export function useConfirmSwap(): ConfirmSwap {
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
 
   const userSlippage = customSlippage || slippage;
 
@@ -96,7 +97,8 @@ export function useConfirmSwap(): ConfirmSwap {
           {
             fromToken,
             toToken,
-            meta: { blockchains, tokens },
+            meta: { blockchains },
+            findToken,
             selectedWallets,
             userSlippage,
           }

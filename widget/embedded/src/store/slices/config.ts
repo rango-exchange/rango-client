@@ -9,6 +9,10 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   excludeLiquiditySources: true,
   customDestination: true,
   variant: 'default',
+  trezorManifest: {
+    appUrl: 'https://widget.rango.exchange/',
+    email: 'hi+trezorwidget@rango.exchange',
+  },
 };
 
 interface IframeConfigs {

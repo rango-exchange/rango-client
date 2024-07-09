@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { RetryQuote } from '../store/quote';
+import type { FindToken } from '../store/slices/data';
 import type { QuoteWarning, SelectedQuote, Wallet } from '../types';
 import type {
   PriceImpactWarningLevel,
@@ -27,7 +29,7 @@ import { getUsdValue } from '../store/quote';
 import { QuoteWarningType } from '../types';
 
 import { areEqual } from './common';
-import { findBlockchain, findToken } from './meta';
+import { createTokenHash, findBlockchain } from './meta';
 import {
   checkSlippageWarnings,
   getMinRequiredSlippage,
@@ -130,27 +132,18 @@ export function findCommonTokens<T extends Asset[], R extends Asset[]>(
   listA: T,
   listB: R
 ) {
-  const tokenToString = (token: Asset): string =>
-    `${token.symbol}-${token.blockchain}-${token.address ?? ''}`;
-
   const set = new Set();
 
-  listA.forEach((token) => set.add(tokenToString(token)));
+  listA.forEach((token) => set.add(createTokenHash(token)));
 
-  return listB.filter((token) => set.has(tokenToString(token))) as R;
+  return listB.filter((token) => set.has(createTokenHash(token))) as R;
 }
 
 export function createRetryQuote(
   pendingSwap: PendingSwap,
   blockchains: BlockchainMeta[],
-  tokens: Token[]
-): {
-  fromBlockchain: BlockchainMeta | null;
-  fromToken: Token | null;
-  toBlockchain: BlockchainMeta | null;
-  toToken: Token | null;
-  inputAmount: string;
-} {
+  findToken: FindToken
+): RetryQuote {
   const firstStep = pendingSwap.steps[0];
   const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
   const lastSuccessfulStep = getLastSuccessfulStep(pendingSwap.steps);
@@ -179,10 +172,9 @@ export function createRetryQuote(
           blockchain: fromBlockchainMeta?.name ?? '',
           symbol: firstStep.fromSymbol,
           address: firstStep.fromSymbolAddress,
-        },
-    tokens
+        }
   );
-  const toTokenMeta = findToken(toToken, tokens);
+  const toTokenMeta = findToken(toToken);
   const inputAmount = lastSuccessfulStep
     ? lastSuccessfulStep.outputAmount ?? ''
     : pendingSwap.inputAmount;
@@ -201,11 +193,11 @@ export function generateQuoteWarnings(
   params: {
     fromToken: Token;
     toToken: Token;
-    tokens: Token[];
+    findToken: FindToken;
     userSlippage: number;
   }
 ): QuoteWarning | null {
-  const { fromToken, toToken, tokens, userSlippage } = params;
+  const { fromToken, toToken, findToken, userSlippage } = params;
   const inputUsdValue = getUsdValue(fromToken, quote.requestAmount);
   const outputUsdValue = getUsdValue(toToken, quote?.outputAmount ?? '');
 
@@ -218,7 +210,7 @@ export function generateQuoteWarnings(
       !!priceImpact && hasHighValueLoss(inputUsdValue, priceImpact);
 
     if (highValueLoss) {
-      const totalFee = getTotalFeeInUsd(quote?.swaps, tokens);
+      const totalFee = getTotalFeeInUsd(quote?.swaps, findToken);
       const warningLevel = getPriceImpactLevel(priceImpact);
       return {
         type: QuoteWarningType.HIGH_VALUE_LOSS,

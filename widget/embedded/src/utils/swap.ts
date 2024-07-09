@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { FeesGroup, NameOfFees } from '../constants/quote';
-import type { FetchStatus } from '../store/slices/data';
+import type { FetchStatus, FindToken } from '../store/slices/data';
 import type { ConnectedWallet } from '../store/wallets';
 import type {
   ConvertedToken,
@@ -260,24 +260,9 @@ export function canComputePriceImpact(
   );
 }
 
-export const getUsdPrice = (
-  blockchain: string,
-  symbol: string,
-  address: string | null,
-  allTokens: Token[]
-): number | null => {
-  const token = allTokens?.find(
-    (t) =>
-      t.blockchain === blockchain &&
-      t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
-      t.address === address
-  );
-  return token?.usdPrice || null;
-};
-
 export function getUsdFeeOfStep(
   step: SwapResult,
-  allTokens: Token[]
+  findToken: FindToken
 ): BigNumber {
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
@@ -286,12 +271,7 @@ export function getUsdFeeOfStep(
       continue;
     }
 
-    const unitPrice = getUsdPrice(
-      fee.asset.blockchain,
-      fee.asset.symbol,
-      fee.asset.address,
-      allTokens
-    );
+    const unitPrice = findToken(fee.asset)?.usdPrice || null;
     totalFeeInUsd = totalFeeInUsd.plus(
       new BigNumber(fee.amount).multipliedBy(unitPrice || 0)
     );
@@ -302,11 +282,11 @@ export function getUsdFeeOfStep(
 
 export function getTotalFeeInUsd(
   swaps: SwapResult[],
-  allTokens: Token[]
+  findToken: FindToken
 ): BigNumber {
   return swaps.reduce(
     (totalFee: BigNumber, step) =>
-      totalFee.plus(getUsdFeeOfStep(step, allTokens)),
+      totalFee.plus(getUsdFeeOfStep(step, findToken)),
     ZERO
   );
 }

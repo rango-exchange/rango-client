@@ -1,4 +1,9 @@
 export const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
+export const TREZOR_MANIFEST = {
+  appUrl: 'https://widget.rango.exchange/',
+  email: 'hi+trezorwidget@rango.exchange',
+};
+
 export const swaps = {
   EVM: {
     from: 'BSC.USDC.0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',

@@ -1,16 +1,19 @@
+import type { WalletType } from '@rango-dev/wallets-shared';
+
+import { allProviders } from '@rango-dev/provider-all';
+import { Events, Provider } from '@rango-dev/wallets-react';
+import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Events, Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
-import { RangoClient } from 'rango-sdk';
+
 import { App } from './App';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { WC_PROJECT_ID } from './configs';
+import { TREZOR_MANIFEST, WC_PROJECT_ID } from './configs';
 
 const providers = allProviders({
   walletconnect2: {
     WC_PROJECT_ID: WC_PROJECT_ID,
   },
+  trezorManifest: TREZOR_MANIFEST,
 });
 
 function AppContainer() {
@@ -26,12 +29,12 @@ function AppContainer() {
       try {
         const res = await client.getAllMetadata();
         setBlockChains(res.blockchains);
-      } catch (e) {
+      } catch (e: any) {
         setError(e.message);
       }
       setLoading(false);
     };
-    getAllBlockchains();
+    void getAllBlockchains();
   }, []);
 
   return (

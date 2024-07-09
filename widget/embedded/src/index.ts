@@ -2,7 +2,10 @@ import type { WidgetProps } from './containers/Widget';
 import type { ConnectedWallet } from './store/wallets';
 import type {
   BlockchainAndTokenConfig,
+  QuoteEventData,
   Tokens,
+  WalletEventData,
+  WalletInfoWithExtra,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
@@ -43,12 +46,10 @@ import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
   EventSeverity,
-  MainEvents,
   RouteEventType,
   StepEventType,
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
-  useEvents as useWidgetEvents,
 } from '@rango-dev/queue-manager-rango-preset';
 import {
   readAccountAddress,
@@ -64,6 +65,15 @@ import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { useWalletList } from './hooks/useWalletList';
+import { useWidgetEvents } from './hooks/useWidgetEvents';
+import { widgetEventEmitter } from './services/eventEmitter';
+import {
+  WidgetEvents as MainEvents,
+  QuoteEventTypes,
+  WalletEventTypes,
+  WidgetEvents,
+} from './types';
 import { customizedThemeTokens } from './utils/ui';
 
 export type {
@@ -96,6 +106,9 @@ export type {
   ConnectedWallet,
   Tokens,
   WidgetVariant,
+  WalletEventData,
+  QuoteEventData,
+  WalletInfoWithExtra,
 };
 export {
   Widget,
@@ -106,9 +119,20 @@ export {
   WidgetProvider,
   useWidget,
   useWallets,
+  /**
+   * @deprecated Use `widgetEventEmitter` instead. This hook will be removed in future versions.
+   */
   useWidgetEvents,
+  useWalletList,
   customizedThemeTokens,
+  widgetEventEmitter,
+  WidgetEvents,
+  /**
+   * @deprecated Use `WidgetEvents` instead. This enum will be removed in future versions.
+   */
   MainEvents,
+  QuoteEventTypes,
+  WalletEventTypes,
   RouteEventType,
   StepEventType,
   StepExecutionEventStatus,

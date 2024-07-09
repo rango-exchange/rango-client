@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-default",
-  "version": "0.31.0",
+  "version": "0.31.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.27.1",
-    "@rango-dev/wallets-shared": "^0.34.0",
-    "rango-types": "^0.1.59"
+    "@rango-dev/signer-evm": "^0.27.2-next.1",
+    "@rango-dev/wallets-shared": "^0.34.1-next.6",
+    "rango-types": "^0.1.69"
   },
   "publishConfig": {
     "access": "public"

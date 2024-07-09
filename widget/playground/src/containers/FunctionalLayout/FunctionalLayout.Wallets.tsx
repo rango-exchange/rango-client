@@ -1,5 +1,4 @@
 import type { WalletType } from '@rango-dev/wallets-shared';
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import {
   Button,
@@ -14,7 +13,6 @@ import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect';
-import { NOT_FOUND } from '../../constants';
 import { useConfigStore } from '../../store/config';
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
@@ -37,38 +35,28 @@ export function WalletSection() {
   const allWalletList = Object.values(WalletTypes)
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((wallet) => {
-      const { name: title, img: logo, supportedChains } = getWalletInfo(wallet);
+      const type = wallet as string;
+
+      const { name: title, img: logo, supportedChains } = getWalletInfo(type);
       return {
         title,
         logo,
-        name: wallet,
+        name: type,
         supportedNetworks: getCategoryNetworks(supportedChains),
       };
     });
 
   const onChangeExternalWallet = (checked: boolean) => {
-    let selectedWallets: WidgetConfig['wallets'] = !!wallets
-      ? [...wallets]
-      : [];
-    if (checked) {
-      const index = selectedWallets.findIndex(
-        (wallet) => wallet === WalletTypes.META_MASK
-      );
-      if (index !== NOT_FOUND) {
-        selectedWallets.splice(index, 1);
-      }
-      selectedWallets = [...selectedWallets, WalletTypes.META_MASK];
-    } else {
+    if (!checked) {
       if (state('metamask').connected) {
         void disconnect(WalletTypes.META_MASK);
       }
-      if (selectedWallets.length === 1) {
-        selectedWallets = [];
-      }
     }
     onChangeBooleansConfig('externalWallets', checked);
-    onChangeWallets(!selectedWallets.length ? undefined : selectedWallets);
   };
+
+  const isSelectAllWallets =
+    wallets?.length === allWalletList.length || externalWallets;
 
   return (
     <>
@@ -76,16 +64,13 @@ export function WalletSection() {
         label="Supported Wallets"
         icon={<WalletIcon />}
         type="Wallets"
-        value={
-          wallets?.length === allWalletList.length
-            ? undefined
-            : (wallets as WalletType[])
-        }
+        value={isSelectAllWallets ? undefined : (wallets as WalletType[])}
         defaultSelectedItems={
           (wallets as WalletType[]) ||
           allWalletList.map((wallet) => wallet.name)
         }
         list={allWalletList}
+        disabled={!!externalWallets}
         onChange={onChangeWallets}
       />
       <Divider size={24} />

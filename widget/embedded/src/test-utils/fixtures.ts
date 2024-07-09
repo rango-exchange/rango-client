@@ -1,9 +1,11 @@
 import type { AppStoreState } from '../store/app';
-import type { WidgetConfig } from '../types';
+import type { TokenHash, WidgetConfig } from '../types';
 import type { BlockchainMeta, EvmBlockchainMeta, Token } from 'rango-sdk';
 
 import { faker } from '@faker-js/faker';
 import { TransactionType } from 'rango-sdk';
+
+import { createTokenHash } from '../utils/meta';
 
 const TOKENS_COUNT = 20;
 const BLOCKCHAINS_COUNT = 20;
@@ -230,7 +232,12 @@ export function createInitialAppStore() {
   });
 
   return {
-    _tokens: tokens,
+    _tokensMapByTokenHash: new Map<TokenHash, Token>(
+      tokens.map((token) => {
+        const tokenHash = createTokenHash(token);
+        return [tokenHash, token];
+      })
+    ),
     _blockchainsMapByName: new Map<string, BlockchainMeta>(
       blockchains.map((meta) => [meta.name, meta])
     ),

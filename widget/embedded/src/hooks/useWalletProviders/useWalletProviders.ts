@@ -1,11 +1,13 @@
-import type { WidgetConfig } from '../types';
-import type { ProvidersOptions } from '../utils/providers';
+import type { WidgetConfig } from '../../types';
+import type { ProvidersOptions } from '../../utils/providers';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import { useEffect } from 'react';
 
-import { useWalletsStore } from '../store/wallets';
-import { matchAndGenerateProviders } from '../utils/providers';
+import { useWalletsStore } from '../../store/wallets';
+import { matchAndGenerateProviders } from '../../utils/providers';
+
+import { hashProviders } from './useWalletProviders.helpers';
 
 export function useWalletProviders(
   providers: WidgetConfig['wallets'],
@@ -20,7 +22,11 @@ export function useWalletProviders(
   useEffect(() => {
     clearConnectedWallet();
     generateProviders = matchAndGenerateProviders(providers, options);
-  }, [providers?.length]);
+  }, [
+    hashProviders(providers ?? []),
+    options?.walletConnectProjectId,
+    options?.walletConnectListedDesktopWalletLink,
+  ]);
 
   return {
     providers: generateProviders,

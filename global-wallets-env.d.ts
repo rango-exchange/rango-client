@@ -33,5 +33,6 @@ declare global {
     bitkeep: any;
     mytonwallet: any;
     offlineSigner: any;
+    tomo_evm: any;
   }
 }

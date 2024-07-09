@@ -21,7 +21,9 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
   const isActiveTab = useUiStore.use.isActiveTab();
   const retrySwap = useQuoteStore.use.retry();
-  const history = new WidgetHistory(manager, { retrySwap });
+  const { findToken } = useAppStore();
+
+  const history = new WidgetHistory(manager, { retrySwap, findToken });
   const details = useWalletsStore.use.connectedWallets();
   const isLoading = useWalletsStore.use.loading();
   const totalBalance = calculateWalletUsdValue(details);
@@ -32,6 +34,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const loadingStatus = useAppStore().fetchStatus;
   const resetLanguage = useLanguage().resetLanguage;
   const notifications = useNotificationStore().getNotifications();
+  const clearNotifications = useNotificationStore().clearNotifications;
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {
@@ -42,17 +45,19 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       isLoading,
       details,
       totalBalance,
-      refetch,
+      refetch: (accounts) => refetch(accounts, findToken),
     },
     meta: {
       blockchains,
       tokens,
       swappers,
       loadingStatus,
+      findToken,
     },
     resetLanguage,
     notifications: {
       list: notifications,
+      clearAll: clearNotifications,
     },
   };
 

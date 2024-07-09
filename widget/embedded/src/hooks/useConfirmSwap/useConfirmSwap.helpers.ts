@@ -1,4 +1,5 @@
 import type { ConfirmSwapFetchResult } from './useConfirmSwap.types';
+import type { FindToken } from '../../store/slices/data';
 import type {
   ConfirmSwapWarnings,
   QuoteErrorResponse,
@@ -87,9 +88,10 @@ export function generateWarnings(
   params: {
     fromToken: Token;
     toToken: Token;
-    meta: { blockchains: BlockchainMeta[]; tokens: Token[] };
+    meta: { blockchains: BlockchainMeta[] };
     selectedWallets: Wallet[];
     userSlippage: number;
+    findToken: FindToken;
   }
 ): ConfirmSwapWarnings {
   let quoteChanged = false;
@@ -105,7 +107,7 @@ export function generateWarnings(
   const quoteWarning = generateQuoteWarnings(currentQuote, {
     fromToken: params.fromToken,
     toToken: params.toToken,
-    tokens: params.meta.tokens,
+    findToken: params.findToken,
     userSlippage: params.userSlippage,
   });
 

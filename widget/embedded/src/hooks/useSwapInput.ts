@@ -53,7 +53,6 @@ export function useSwapInput({
   } = useAppStore().config;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
-  const tokens = useAppStore().tokens();
   const {
     fromToken,
     toToken,
@@ -78,6 +77,7 @@ export function useSwapInput({
   const liquiditySources = useAppStore().getLiquiditySources();
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const excludeLiquiditySources = useAppStore().excludeLiquiditySources();
+  const { findToken } = useAppStore();
 
   const [loading, setLoading] = useState(true);
   const prevInputAmount = useRef(inputAmount);
@@ -153,7 +153,7 @@ export function useSwapInput({
               fromToken,
               toToken,
               userSlippage,
-              tokens,
+              findToken,
             });
           updateQuotePartialState('warning', quoteWarning);
         })

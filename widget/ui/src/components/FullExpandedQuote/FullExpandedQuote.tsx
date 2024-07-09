@@ -1,5 +1,7 @@
 import type { DataLoadedProps, PropTypes } from './FullExpandedQuote.types';
+import type { Tag } from 'rango-sdk';
 
+import { i18n } from '@lingui/core';
 import React, { useState } from 'react';
 
 import { ErrorIcon, WarningIcon } from '../../icons';
@@ -8,10 +10,11 @@ import { Image } from '../common';
 import { Divider } from '../Divider';
 import { QuoteCost } from '../QuoteCost';
 import { QuoteTag } from '../QuoteTag';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip, Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
+  getTagLabel,
   ITEM_SKELETON_COUNT,
   shortenAmount,
   shortenDisplayName,
@@ -79,7 +82,11 @@ export function FullExpandedQuote(props: PropTypes) {
             />
             <TagsContainer>
               {props.tags.map((tag) => (
-                <QuoteTag key={tag.label} label={tag.label} value={tag.value} />
+                <QuoteTag
+                  key={tag.label}
+                  label={getTagLabel(tag.value as Tag, i18n.t)}
+                  value={tag.value}
+                />
               ))}
             </TagsContainer>
           </>
@@ -236,7 +243,7 @@ export function FullExpandedQuote(props: PropTypes) {
                       />
                       <Divider size={4} />
                       <div>
-                        <Tooltip
+                        <NumericTooltip
                           content={props.outputPrice.realValue}
                           container={tooltipContainer}
                           open={
@@ -249,11 +256,10 @@ export function FullExpandedQuote(props: PropTypes) {
                           <Typography size="xmedium" variant="title">
                             {step.to.token.displayName}
                           </Typography>
-                        </Tooltip>
+                        </NumericTooltip>
                       </div>
                       <StyledPriceImpact
                         size="small"
-                        outputColor="$neutral700"
                         warningLevel={warningLevel}
                         outputUsdValue={props.outputPrice.usdValue}
                         realOutputUsdValue={props.outputPrice.realUsdValue}

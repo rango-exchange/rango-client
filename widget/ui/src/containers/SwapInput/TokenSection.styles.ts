@@ -1,6 +1,5 @@
-import { ChainImageContainer } from 'src/components/ChainToken/ChainToken.styles';
-
 import { Button } from '../../components';
+import { ChainImageContainer } from '../../components/ChainToken/ChainToken.styles';
 import { css, darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {

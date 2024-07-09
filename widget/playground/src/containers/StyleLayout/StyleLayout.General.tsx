@@ -25,6 +25,7 @@ import {
 } from '../../constants';
 import { DEFAULT_FONT } from '../../constants/fonts';
 import { VARIANTS } from '../../constants/variants';
+import { useTheme } from '../../hooks/useTheme';
 import { useConfigStore } from '../../store/config';
 
 import { Field, FieldTitle, GeneralContainer } from './StyleLayout.styles';
@@ -39,7 +40,9 @@ export function General() {
   const onChangeVariant = useConfigStore.use.onChangeVariant();
 
   const borderRadius = useConfigStore.use.config().theme?.borderRadius;
-
+  const colors = useConfigStore.use.config().theme?.colors;
+  const { activeStyle } = useTheme();
+  const mode = activeStyle.indexOf('dark') !== -1 ? 'dark' : 'light';
   const secondaryBorderRadius =
     useConfigStore.use.config().theme?.secondaryBorderRadius;
   const fontFamily =
@@ -139,6 +142,7 @@ export function General() {
           </FieldTitle>
           <Divider size={16} />
           <Slider
+            color={colors?.[mode]?.secondary}
             showValue
             title="Widget"
             id="range1"
@@ -148,6 +152,7 @@ export function General() {
           />
           <Divider size={4} />
           <Slider
+            color={colors?.[mode]?.secondary}
             id="range2"
             showValue
             title="Button"

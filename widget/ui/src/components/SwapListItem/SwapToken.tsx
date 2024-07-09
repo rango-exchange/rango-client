@@ -7,7 +7,7 @@ import { NextIcon } from '../../icons';
 import { ChainToken } from '../ChainToken';
 import { Divider } from '../Divider';
 import { Skeleton } from '../Skeleton';
-import { Tooltip } from '../Tooltip';
+import { NumericTooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -129,11 +129,13 @@ export function SwapToken(props: PropTypes) {
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
-              <Tooltip content={fromRealAmount} container={tooltipContainer}>
+              <NumericTooltip
+                content={fromRealAmount}
+                container={tooltipContainer}>
                 <Typography size="small" variant="body" color="neutral700">
                   {fromAmount}
                 </Typography>
-              </Tooltip>
+              </NumericTooltip>
             )}
           </TokenInfo>
           <Icon>
@@ -143,11 +145,11 @@ export function SwapToken(props: PropTypes) {
             <Typography size="medium" variant="title">
               {toToken.displayName}
             </Typography>
-            <Tooltip content={toRealAmount} container={tooltipContainer}>
+            <NumericTooltip content={toRealAmount} container={tooltipContainer}>
               <Typography size="small" variant="body" color="neutral700">
                 {toAmount}
               </Typography>
-            </Tooltip>
+            </NumericTooltip>
           </TokenInfo>
         </Layout>
       )}
