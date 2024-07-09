@@ -1,3 +1,50 @@
+## Widget [0.17.0] (2024-07-19)
+
+_includes `@rango-dev/widget-embedded@0.30.0`_
+
+### Bug Fixes
+
+- fix tx data for evm signers when transfering native tokens ([a5d9f6e](https://github.com/rango-exchange/rango-client/commit/a5d9f6e3f5bada210a05c0d1f5c57d7917bf869c))
+- import Trezor module ([cd71eb5](https://github.com/rango-exchange/rango-client/commit/cd71eb5f390f1b07974ea9e2368f35db383a8c82))
+- fix the bug where xdefi is not displayed for experimental networks ([723eb2d](https://github.com/rango-exchange/rango-client/commit/723eb2dc3bfacce8753eeee011910b595d45028d))
+- bug in updating input & output amount ([49c902b](https://github.com/rango-exchange/rango-client/commit/49c902be7adc1ba9ae7808f145ec975c724a728f))
+- fix bug displaying the same token list for blockchains with the same number of tokens ([f4dc82f](https://github.com/rango-exchange/rango-client/commit/f4dc82f5f319f9133fac7d8a68023596a773cd96))
+- improve generate colors for tokens label and price impact color ([5f2893c](https://github.com/rango-exchange/rango-client/commit/5f2893c03b17af24a8b3886e12b1631b5cc208fb))
+- refactor numeric tooltip and fix missing translations ([59f1fb9](https://github.com/rango-exchange/rango-client/commit/59f1fb96027a9b51cea5f6362b247b6cf180d809))
+- fix playground exported config bugs and slider color bug ([9505b63](https://github.com/rango-exchange/rango-client/commit/9505b6330363839aa5acc7abfdb6cd7288f946d6))
+- fix state of custom destination in playground ([ae9cd78](https://github.com/rango-exchange/rango-client/commit/ae9cd783aebc797ffa98e2cd0fb87744ae92caf8))
+
+### Features
+
+- support new widget events ([37a9b6c](https://github.com/rango-exchange/rango-client/commit/37a9b6c023cba660c87af27bcbfceadfb8daa8d0))
+- improve solana simulation failed errors ([c7ccb97](https://github.com/rango-exchange/rango-client/commit/c7ccb97cbdc571b615ee3129a8fcadd52cb0bc9f))
+- add a modal for setting custom derivation path for ledger ([5b74ec0](https://github.com/rango-exchange/rango-client/commit/5b74ec049393ed74e3e7547edc72b68bd70b7dce))
+- add support for Trezor hardware wallet ([6edecbb](https://github.com/rango-exchange/rango-client/commit/6edecbb14fd008fc741c892bfa3e025c10160b9b))
+- integrate rabby wallet extension ([145fb8f](https://github.com/rango-exchange/rango-client/commit/145fb8ffbbf5e46e7e8386aeffcefc8f4ddb22e7))
+- integrate tomo wallet extension ([9f0f065](https://github.com/rango-exchange/rango-client/commit/9f0f0650fcd213a621dcc6ddca3e32424c1a5ada))
+- adding 'shadows' to widget config for theme ([2be1f1a](https://github.com/rango-exchange/rango-client/commit/2be1f1aa508fb642a797610471b63219cd3d2ccf))
+- display all notifications in the notification popover ([c3eda22](https://github.com/rango-exchange/rango-client/commit/c3eda22cf1f06b928fdf0c98512fd444cc46823c))
+- export useWalletList for use in dapp ([e5fb662](https://github.com/rango-exchange/rango-client/commit/e5fb662adc119fb341db2c6c68b3b9e45c0353a2))
+- make update settings optional to make it enable in playground ([c13a902](https://github.com/rango-exchange/rango-client/commit/c13a902fba9a03b111bde6fed02a1f3a081ee590))
+- add credit and disconnect icons ([b5e5357](https://github.com/rango-exchange/rango-client/commit/b5e5357cf3a5b13f602b8d5cdb829f3699ee3197))
+
+### Performance Improvements
+
+- improve finding tokens from store ([3e890bd](https://github.com/rango-exchange/rango-client/commit/3e890bdcd47971b072f347c368c4370225cb11ff))
+
+## Playground [0.17.0] (2024-07-19)
+
+_includes `@rango-dev/widget-embedded@0.30.0`_
+
+### Bug Fixes 
+
+- fix playground exported config bugs and slider color bug ([9505b63](https://github.com/rango-exchange/rango-client/commit/9505b6330363839aa5acc7abfdb6cd7288f946d6))
+- fix state of custom destination in playground ([ae9cd78](https://github.com/rango-exchange/rango-client/commit/ae9cd783aebc797ffa98e2cd0fb87744ae92caf8))
+
+### Features
+
+- make update settings optional to make it enable in playground ([c13a902](https://github.com/rango-exchange/rango-client/commit/c13a902fba9a03b111bde6fed02a1f3a081ee590))
+
 ## Widget [0.16.0] (2024-06-01)
 
 _includes `@rango-dev/widget-embedded@0.29.0`_
