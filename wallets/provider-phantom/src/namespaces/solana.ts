@@ -2,12 +2,10 @@ import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { apply } from '@rango-dev/wallets-core/namespaces/common';
+import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import {
   actions,
-  after,
-  and,
-  before,
+  builders,
   CAIP_NAMESPACE,
   CAIP_SOLANA_CHAIN_ID,
 } from '@rango-dev/wallets-core/namespaces/solana';
@@ -20,11 +18,9 @@ import { solanaPhantom } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaPhantom);
 
-const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
-  .action('init', () => {
-    console.log('[phantom]init called from solana cb');
-  })
-  .action('connect', async function () {
+const connect = builders
+  .connect()
+  .action(async function () {
     const solanaInstance = solanaPhantom();
 
     const result = await getSolanaAccounts({
@@ -49,21 +45,21 @@ const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
     console.log('you are a trader?', formatAccounts);
     return formatAccounts;
   })
-  .action(actions.recommended)
-  .andUse(and.recommended)
-  .orUse([['connect', changeAccountCleanup]])
+  .before(changeAccountSubscriber)
+  .or(changeAccountCleanup)
   .build();
 
-apply(
-  'before',
-  [...before.recommended, ['connect', changeAccountSubscriber]],
-  solana
-);
+const disconnect = commonBuilders
+  .disconnect<SolanaActions>()
+  .after(changeAccountCleanup)
+  .build();
 
-apply(
-  'after',
-  [...after.recommended, ['disconnect', changeAccountCleanup]],
-  solana
-);
+const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
+  .action('init', () => {
+    console.log('[phantom]init called from solana cb');
+  })
+  .action(connect)
+  .action(disconnect)
+  .build();
 
 export { solana };
