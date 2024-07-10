@@ -1,3 +1,20 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.33.0...wallets-shared@0.35.0) (2024-07-09)
+
+
+### Bug Fixes
+
+* fix the bug where xdefi is not displayed for experimental networks ([723eb2d](https://github.com/rango-exchange/rango-client/commit/723eb2dc3bfacce8753eeee011910b595d45028d))
+
+
+### Features
+
+* add a modal for setting custom derivation path for ledger ([5b74ec0](https://github.com/rango-exchange/rango-client/commit/5b74ec049393ed74e3e7547edc72b68bd70b7dce))
+* add support for Trezor hardware wallet ([6edecbb](https://github.com/rango-exchange/rango-client/commit/6edecbb14fd008fc741c892bfa3e025c10160b9b))
+* integrate rabby wallet extension ([145fb8f](https://github.com/rango-exchange/rango-client/commit/145fb8ffbbf5e46e7e8386aeffcefc8f4ddb22e7))
+* integrate tomo wallet extension ([9f0f065](https://github.com/rango-exchange/rango-client/commit/9f0f0650fcd213a621dcc6ddca3e32424c1a5ada))
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.33.0...wallets-shared@0.34.0) (2024-06-01)
 
 

@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.26.2...provider-walletconnect-2@0.28.0) (2024-07-09)
+
+
+### Features
+
+* add an option to wallet connect provider to open a desktop wallet directly ([bee0a1f](https://github.com/rango-exchange/rango-client/commit/bee0a1f57ef5470564f6cdc379d00981e7d34b0a))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.26.2...provider-walletconnect-2@0.27.0) (2024-06-01)
 
 
