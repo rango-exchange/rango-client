@@ -1,3 +1,14 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.33.2...provider-all@0.35.0) (2024-07-09)
+
+
+### Features
+
+* add support for Trezor hardware wallet ([6edecbb](https://github.com/rango-exchange/rango-client/commit/6edecbb14fd008fc741c892bfa3e025c10160b9b))
+* integrate rabby wallet extension ([145fb8f](https://github.com/rango-exchange/rango-client/commit/145fb8ffbbf5e46e7e8386aeffcefc8f4ddb22e7))
+* integrate tomo wallet extension ([9f0f065](https://github.com/rango-exchange/rango-client/commit/9f0f0650fcd213a621dcc6ddca3e32424c1a5ada))
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.33.2...provider-all@0.34.0) (2024-06-01)
 
 
