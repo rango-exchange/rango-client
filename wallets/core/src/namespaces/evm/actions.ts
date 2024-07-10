@@ -56,11 +56,12 @@ export function connect(
 export function changeAccountSubscriber(
   instance: () => ProviderApi
 ): [Subscriber, SubscriberCleanUp] {
-  const evmInstance = instance();
   let eventCallback: EIP1193EventMap['accountsChanged'];
 
   return [
     (context) => {
+      const evmInstance = instance();
+
       if (!evmInstance) {
         throw new Error(
           'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
@@ -88,14 +89,11 @@ export function changeAccountSubscriber(
       evmInstance.on('accountsChanged', eventCallback);
     },
     () => {
+      const evmInstance = instance();
+
       if (eventCallback && evmInstance) {
         evmInstance.removeListener('accountsChanged', eventCallback);
       }
-      console.log(
-        '[evm] accountsChanged cleaned up.',
-        !!eventCallback,
-        !!evmInstance
-      );
     },
   ];
 }

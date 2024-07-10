@@ -14,11 +14,12 @@ export const recommended = [...commonRecommended];
 export function changeAccountSubscriber(
   instance: () => ProviderApi | undefined
 ): [Subscriber, SubscriberCleanUp] {
-  const solanaInstance = instance();
   let eventCallback: AnyFunction;
 
   return [
     (context) => {
+      const solanaInstance = instance();
+
       if (!solanaInstance) {
         throw new Error(
           'Trying to subscribe to your Solana wallet, but seems its instance is not available.'
@@ -55,6 +56,8 @@ export function changeAccountSubscriber(
       solanaInstance.on('accountChanged', eventCallback);
     },
     () => {
+      const solanaInstance = instance();
+
       if (eventCallback && solanaInstance) {
         solanaInstance.off('accountChanged', eventCallback);
       }

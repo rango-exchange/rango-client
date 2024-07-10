@@ -93,6 +93,17 @@ export async function autoConnect(deps: {
     const eagerConnectQueue: any[] = [];
     walletIds.forEach((id) => {
       const legacyProvider = getLegacyProvider(id);
+
+      let legacyInstance;
+      try {
+        legacyInstance = legacyProvider.getInstance();
+      } catch (e) {
+        console.warn(
+          "It seems instance isn't available yet. This can happens when extension not loaded yet (sometimes when opening browser for first time) or extension is disabled."
+        );
+        return;
+      }
+
       const namespaces: NamespaceAndNetwork[] = lastConnectedWallets[id].map(
         (namespace) => ({
           namespace: namespace as Namespace,
@@ -105,7 +116,7 @@ export async function autoConnect(deps: {
         allBlockChains,
         getHub,
         canEagerConnect: legacyProvider.canEagerConnect?.bind(null, {
-          instance: legacyProvider.getInstance(),
+          instance: legacyInstance,
           meta: legacyProvider.getWalletInfo(allBlockChains || [])
             .supportedChains,
         }),
