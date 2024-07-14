@@ -10,10 +10,10 @@ import {
   Select,
   TextField,
 } from '@rango-dev/ui';
+import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useEffect, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
-import { namespaces } from '../../constants/namespaces';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import {
   LogoContainer,
