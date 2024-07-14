@@ -13,10 +13,10 @@ import {
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
+import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
-import { namespaces } from '../../constants/namespaces';
 import { useAppStore } from '../../store/AppStore';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
