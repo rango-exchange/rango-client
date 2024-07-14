@@ -48,9 +48,11 @@ class Namespace<T extends Actions<T>> {
       actions: ActionsMap<T>;
       andUse: SingleHookActions<T>;
       orUse: SingleHookActions<T>;
+      afterUse: HookActions<T>;
+      beforeUse: HookActions<T>;
     }
   ) {
-    const { configs, actions, andUse, orUse } = options;
+    const { configs, actions, andUse, orUse, afterUse, beforeUse } = options;
 
     this.namespaceId = id;
     this.providerId = providerId;
@@ -59,6 +61,8 @@ class Namespace<T extends Actions<T>> {
     this.#actions = actions;
     this.#andActions = andUse;
     this.#orActions = orUse;
+    this.#afterActions = afterUse;
+    this.#beforeActions = beforeUse;
   }
 
   public state(): [GetState, SetState] {
@@ -233,14 +237,16 @@ class Namespace<T extends Actions<T>> {
     const afterActions = this.#afterActions.get(actionName);
 
     if (afterActions) {
-      afterActions.forEach((afterAction) => afterAction());
+      const context = this.#context();
+      afterActions.forEach((afterAction) => afterAction(context));
     }
   }
 
   #tryRunBeforeActions<K extends keyof T>(actionName: K): void {
     const beforeActions = this.#beforeActions.get(actionName);
     if (beforeActions) {
-      beforeActions.forEach((beforeAction) => beforeAction());
+      const context = this.#context();
+      beforeActions.forEach((beforeAction) => beforeAction(context));
     }
   }
 

@@ -63,6 +63,6 @@ export class Action<T extends Actions<T>, K extends keyof T> {
     namespaceBuilder.andUse(ands);
     namespaceBuilder.orUse(ors);
     namespaceBuilder.afterUse(afters);
-    namespaceBuilder.afterUse(befores);
+    namespaceBuilder.beforeUse(befores);
   }
 }

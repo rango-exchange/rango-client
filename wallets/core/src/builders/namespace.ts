@@ -214,6 +214,8 @@ export class NamespaceBuilder<T extends Actions<T>> {
       actions: this.#actions,
       andUse: this.#andUseList,
       orUse: this.#orUseList,
+      afterUse: this.#afterUseList,
+      beforeUse: this.#beforeUseList,
     });
 
     const api = new Proxy(namespace, {
