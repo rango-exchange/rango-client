@@ -1,3 +1,7 @@
+## [0.35.1](https://github.com/rango-exchange/rango-client/compare/provider-leap-cosmos@0.35.0...provider-leap-cosmos@0.35.1) (2024-07-14)
+
+
+
 # [0.35.0](https://github.com/rango-exchange/rango-client/compare/provider-leap-cosmos@0.33.0...provider-leap-cosmos@0.35.0) (2024-07-09)
 
 
