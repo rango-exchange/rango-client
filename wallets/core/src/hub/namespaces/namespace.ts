@@ -28,7 +28,7 @@ class Namespace<T extends Actions<T>> {
   public readonly providerId: string;
 
   #actions: ActionsMap<T>;
-  #andActions: SingleHookActions<T> = new Map();
+  #andActions: HookActions<T> = new Map();
   #orActions: SingleHookActions<T> = new Map();
   // `context` for these two can be Namespace context or Provider context
   #beforeActions: HookActions<T> = new Map();
@@ -46,7 +46,7 @@ class Namespace<T extends Actions<T>> {
     options: {
       configs: NamespaceConfig;
       actions: ActionsMap<T>;
-      andUse: SingleHookActions<T>;
+      andUse: HookActions<T>;
       orUse: SingleHookActions<T>;
       afterUse: HookActions<T>;
       beforeUse: HookActions<T>;
@@ -95,10 +95,12 @@ class Namespace<T extends Actions<T>> {
    * This hook helps us to run a sync function if action ran successfully.
    * For example, if we have a `connect` action, we can add function to be run after `connect` if it ran successfully.
    *
-   * TODO: for each action only one `and` can be set right now. that would be great to support more than one `and` action.
    */
   public and<K extends keyof T>(name: K, action: AndFunction<T, K>) {
-    this.#andActions.set(name, action);
+    const nextAndActions = this.#andActions.get(name) || [];
+    nextAndActions.push(action);
+    this.#andActions.set(name, nextAndActions);
+
     return this;
   }
 
@@ -207,7 +209,7 @@ class Namespace<T extends Actions<T>> {
       result = action(context, ...params);
       result = this.#tryRunAndAction(result, name);
     } catch (e) {
-      this.#tryRunOrAction(e, name);
+      result = this.#tryRunOrAction(e, name);
     } finally {
       this.#tryRunAfterActions(name);
     }
@@ -251,11 +253,13 @@ class Namespace<T extends Actions<T>> {
   }
 
   #tryRunAndAction<K extends keyof T>(result: unknown, actionName: K): unknown {
-    const andAction = this.#andActions.get(actionName);
+    const andActions = this.#andActions.get(actionName);
 
-    if (andAction) {
+    if (andActions) {
       const context = this.#context();
-      result = andAction(context, result);
+      result = andActions.reduce((prev, andAction) => {
+        return andAction(context, prev);
+      }, result);
     }
     return result;
   }
@@ -269,7 +273,7 @@ class Namespace<T extends Actions<T>> {
     if (orAction) {
       try {
         const context = this.#context();
-        orAction(context);
+        return orAction(context, actionError);
       } catch (orError) {
         throw new Error(OR_ACTION_FAILED_ERROR(actionName.toString()), {
           cause: actionError,

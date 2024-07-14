@@ -32,7 +32,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
   #providerId: string;
   #actions: ActionsMap<T> = new Map();
-  #andUseList: SingleHookActions<T> = new Map();
+  #andUseList: HookActions<T> = new Map();
   #orUseList: SingleHookActions<T> = new Map();
   #beforeUseList: HookActions<T> = new Map();
   #afterUseList: HookActions<T> = new Map();
@@ -151,7 +151,12 @@ export class NamespaceBuilder<T extends Actions<T>> {
     list: (readonly [K, FunctionWithContext<AndFunction<T, K>, Context>])[]
   ) {
     list.forEach(([name, cb]) => {
-      this.#andUseList.set(name, cb);
+      const ands = this.#andUseList.get(name);
+      if (!ands) {
+        this.#andUseList.set(name, [cb]);
+      } else {
+        this.#andUseList.set(name, [...ands, cb]);
+      }
     });
 
     return this;

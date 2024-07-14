@@ -2,6 +2,8 @@ import { describe, expect, test, vi } from 'vitest';
 
 import { NamespaceBuilder } from '../../builders/mod.js';
 
+import { Namespace } from './namespace.js';
+
 describe('check NamespaceBuilder works as expected', () => {
   const NAMESPACE = 'bip122';
   const PROVIDER_ID = 'garbage provider';
@@ -81,5 +83,107 @@ describe('check NamespaceBuilder works as expected', () => {
     expect(anotherBeforeAction).toBeCalledTimes(2);
     expect(afterAction).toBeCalledTimes(1);
     expect(anotherAfterAction).toBeCalledTimes(1);
+  });
+
+  test('should call `and` sequentially.', () => {
+    const andActionFirst = vi.fn((_ctx, result) => result + 1);
+    const andActionSecond = vi.fn((_ctx, result) => result + 1);
+
+    const connectAction = vi.fn(() => 0);
+    const disconnectAction = vi.fn();
+
+    const andActions = new Map();
+    andActions.set('connect', [andActionFirst, andActionSecond]);
+
+    const actions = new Map();
+    actions.set('connect', connectAction);
+    actions.set('disconnect', disconnectAction);
+
+    const ns = new Namespace<{
+      connect: () => void;
+      disconnect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+      andUse: andActions,
+      orUse: new Map(),
+      afterUse: new Map(),
+      beforeUse: new Map(),
+      configs: {},
+    });
+
+    const result = ns.run('connect');
+
+    expect(connectAction).toBeCalledTimes(1);
+    expect(andActionFirst).toBeCalledTimes(1);
+    expect(andActionSecond).toBeCalledTimes(1);
+
+    expect(result).toBe(2);
+
+    ns.run('connect');
+    expect(connectAction).toBeCalledTimes(2);
+    expect(andActionFirst).toBeCalledTimes(2);
+    expect(andActionSecond).toBeCalledTimes(2);
+  });
+
+  test("shouldn't run other `and` hooks if one of them fails then fallback to `or`.", () => {
+    const andActionFirst = vi.fn((_ctx, _result) => {
+      throw new Error('Oops!');
+    });
+    const andActionSecond = vi.fn((_ctx, result) => result + 1);
+    const andActions = new Map();
+    andActions.set('connect', [andActionFirst, andActionSecond]);
+
+    const orAction = vi.fn((_ctx, e) => e instanceof Error);
+    const orActions = new Map();
+    orActions.set('connect', orAction);
+
+    const connectAction = vi.fn(() => 0);
+    const actions = new Map();
+    actions.set('connect', connectAction);
+
+    const ns = new Namespace<{
+      connect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+      andUse: andActions,
+      orUse: orActions,
+      afterUse: new Map(),
+      beforeUse: new Map(),
+      configs: {},
+    });
+
+    const result = ns.run('connect');
+
+    expect(connectAction).toBeCalledTimes(1);
+    expect(andActionFirst).toBeCalledTimes(1);
+    expect(andActionSecond).toBeCalledTimes(0);
+    expect(orAction).toBeCalledTimes(1);
+    expect(result).toBe(true);
+  });
+
+  test('should throw error if there are no `or` to handle error', () => {
+    const andActionFirst = vi.fn((_ctx, _result) => {
+      throw new Error('Oops!');
+    });
+    const andActionSecond = vi.fn((_ctx, result) => result + 1);
+    const andActions = new Map();
+    andActions.set('connect', [andActionFirst, andActionSecond]);
+
+    const connectAction = vi.fn(() => 0);
+    const actions = new Map();
+    actions.set('connect', connectAction);
+
+    const ns = new Namespace<{
+      connect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+      andUse: andActions,
+      orUse: new Map(),
+      afterUse: new Map(),
+      beforeUse: new Map(),
+      configs: {},
+    });
+
+    expect(() => ns.run('connect')).toThrowError();
   });
 });
