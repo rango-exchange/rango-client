@@ -1,11 +1,6 @@
 import type { ProxiedNamespace } from './types.js';
 import type { Action } from '../hub/action/action.js';
-import type {
-  Actions,
-  ActionsMap,
-  Context,
-  SingleHookActions,
-} from '../hub/namespaces/mod.js';
+import type { Actions, ActionsMap, Context } from '../hub/namespaces/mod.js';
 import type { HookActions } from '../hub/namespaces/types.js';
 import type { NamespaceConfig } from '../hub/store/mod.js';
 import type {
@@ -33,7 +28,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #providerId: string;
   #actions: ActionsMap<T> = new Map();
   #andUseList: HookActions<T> = new Map();
-  #orUseList: SingleHookActions<T> = new Map();
+  #orUseList: HookActions<T> = new Map();
   #beforeUseList: HookActions<T> = new Map();
   #afterUseList: HookActions<T> = new Map();
   #configs: NamespaceConfig;
@@ -166,7 +161,12 @@ export class NamespaceBuilder<T extends Actions<T>> {
     list: (readonly [K, FunctionWithContext<AnyFunction, Context>])[]
   ) {
     list.forEach(([name, cb]) => {
-      this.#orUseList.set(name, cb);
+      const ors = this.#orUseList.get(name);
+      if (!ors) {
+        this.#orUseList.set(name, [cb]);
+      } else {
+        this.#orUseList.set(name, [...ors, cb]);
+      }
     });
 
     return this;

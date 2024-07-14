@@ -8,6 +8,8 @@ describe('check NamespaceBuilder works as expected', () => {
   const NAMESPACE = 'bip122';
   const PROVIDER_ID = 'garbage provider';
 
+  test.todo('ensure namespace without any hooks running correctly');
+
   test('add actions and run them.', () => {
     const builder = new NamespaceBuilder<{
       hello: () => void;
@@ -135,7 +137,7 @@ describe('check NamespaceBuilder works as expected', () => {
 
     const orAction = vi.fn((_ctx, e) => e instanceof Error);
     const orActions = new Map();
-    orActions.set('connect', orAction);
+    orActions.set('connect', [orAction]);
 
     const connectAction = vi.fn(() => 0);
     const actions = new Map();
@@ -185,5 +187,72 @@ describe('check NamespaceBuilder works as expected', () => {
     });
 
     expect(() => ns.run('connect')).toThrowError();
+  });
+
+  test('ensure `or` has access to error', () => {
+    const orActions = new Map();
+    orActions.set('connect', [
+      (_ctx: any, err: any) => {
+        return err instanceof Error;
+      },
+    ]);
+
+    const actions = new Map();
+    actions.set('connect', () => {
+      throw new Error('Oops!');
+    });
+
+    const ns = new Namespace<{
+      connect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+      andUse: new Map(),
+      orUse: orActions,
+      afterUse: new Map(),
+      beforeUse: new Map(),
+      configs: {},
+    });
+
+    const result = ns.run('connect');
+    expect(result).toBe(true);
+  });
+
+  test('should call `or` sequentially.', () => {
+    const orActionFirst = vi.fn((_ctx, _err) => 1);
+    const orActionSecond = vi.fn((_ctx, _err) => _err + 1);
+
+    const connectAction = vi.fn(() => {
+      throw new Error('Oops!');
+    });
+
+    const orActions = new Map();
+    orActions.set('connect', [orActionFirst, orActionSecond]);
+
+    const actions = new Map();
+    actions.set('connect', connectAction);
+
+    const ns = new Namespace<{
+      connect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+      andUse: new Map(),
+      orUse: orActions,
+      afterUse: new Map(),
+      beforeUse: new Map(),
+      configs: {},
+    });
+
+    const result = ns.run('connect');
+
+    expect(connectAction).toBeCalledTimes(1);
+    expect(orActionFirst).toBeCalledTimes(1);
+    expect(orActionSecond).toBeCalledTimes(1);
+
+    expect(result).toBe(2);
+
+    ns.run('connect');
+    expect(connectAction).toBeCalledTimes(2);
+    expect(orActionFirst).toBeCalledTimes(2);
+    expect(orActionSecond).toBeCalledTimes(2);
   });
 });

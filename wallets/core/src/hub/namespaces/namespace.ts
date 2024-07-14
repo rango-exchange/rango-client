@@ -5,7 +5,6 @@ import type {
   GetState,
   HookActions,
   SetState,
-  SingleHookActions,
   State,
 } from './types.js';
 import type {
@@ -29,7 +28,7 @@ class Namespace<T extends Actions<T>> {
 
   #actions: ActionsMap<T>;
   #andActions: HookActions<T> = new Map();
-  #orActions: SingleHookActions<T> = new Map();
+  #orActions: HookActions<T> = new Map();
   // `context` for these two can be Namespace context or Provider context
   #beforeActions: HookActions<T> = new Map();
   #afterActions: HookActions<T> = new Map();
@@ -47,7 +46,7 @@ class Namespace<T extends Actions<T>> {
       configs: NamespaceConfig;
       actions: ActionsMap<T>;
       andUse: HookActions<T>;
-      orUse: SingleHookActions<T>;
+      orUse: HookActions<T>;
       afterUse: HookActions<T>;
       beforeUse: HookActions<T>;
     }
@@ -267,14 +266,17 @@ class Namespace<T extends Actions<T>> {
   #tryRunOrAction<K extends keyof T>(
     actionError: unknown,
     actionName: K
-  ): void {
-    const orAction = this.#orActions.get(actionName);
+  ): unknown {
+    const orActions = this.#orActions.get(actionName);
 
-    if (orAction) {
+    if (orActions) {
       try {
         const context = this.#context();
-        return orAction(context, actionError);
+        return orActions.reduce((prev, orAction) => {
+          return orAction(context, prev);
+        }, actionError);
       } catch (orError) {
+        console.log({ orError });
         throw new Error(OR_ACTION_FAILED_ERROR(actionName.toString()), {
           cause: actionError,
         });
