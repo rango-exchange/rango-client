@@ -1,4 +1,4 @@
-## Widget [0.17.0] (2024-07-19)
+## Widget [0.17.0] (2024-07-09)
 
 _includes `@rango-dev/widget-embedded@0.30.0`_
 
@@ -32,9 +32,7 @@ _includes `@rango-dev/widget-embedded@0.30.0`_
 
 - improve finding tokens from store ([3e890bd](https://github.com/rango-exchange/rango-client/commit/3e890bdcd47971b072f347c368c4370225cb11ff))
 
-## Playground [0.17.0] (2024-07-19)
-
-_includes `@rango-dev/widget-embedded@0.30.0`_
+## Playground [0.17.0] (2024-07-09)
 
 ### Bug Fixes 
 
