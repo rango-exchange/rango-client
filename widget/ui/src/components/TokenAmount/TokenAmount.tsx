@@ -12,6 +12,7 @@ import { Typography } from '../Typography';
 import {
   Container,
   tokenAmountStyles,
+  tooltipRootStyle,
   usdValueStyles,
 } from './TokenAmount.styles';
 
@@ -34,6 +35,7 @@ export function TokenAmount(props: PropTypes) {
           )}
           <div>
             <NumericTooltip
+              styles={{ root: tooltipRootStyle }}
               content={props.price.realValue}
               open={!props.price.realValue ? false : undefined}
               container={props.tooltipContainer}>
@@ -64,7 +66,6 @@ export function TokenAmount(props: PropTypes) {
                 <Typography size="small" variant="body">
                   {`~$${props.price.usdValue}`}
                 </Typography>
-                <Divider direction="horizontal" size={4} />
               </ValueTypography>
             )}
           </NumericTooltip>
