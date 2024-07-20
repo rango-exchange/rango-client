@@ -1,6 +1,10 @@
+import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
+
+import { cacheService } from '../../services/cacheService';
+import { matchTokensFromConfigWithMeta } from '../utils';
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
@@ -50,7 +54,7 @@ export interface ConfigSlice {
 
 export const createConfigSlice: StateCreatorWithInitialData<
   WidgetConfig,
-  ConfigSlice & SettingsSlice,
+  ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
   return {
@@ -83,6 +87,40 @@ export const createConfigSlice: StateCreatorWithInitialData<
     // Actions
     updateConfig: (nextConfig: WidgetConfig) => {
       const currentConfig = get().config;
+      const {
+        _tokensMapByTokenHash: tokensMapByTokenHash,
+        _tokensMapByBlockchainName: tokensMapByBlockchainName,
+      } = get();
+
+      const supportedSourceTokens = matchTokensFromConfigWithMeta({
+        type: 'source',
+        config: {
+          blockchains: nextConfig.from?.blockchains,
+          tokens: nextConfig.from?.tokens,
+        },
+        meta: {
+          tokensMapByBlockchainName,
+          tokensMapByTokenHash,
+        },
+      });
+
+      const supportedDestinationTokens = matchTokensFromConfigWithMeta({
+        type: 'destination',
+        config: {
+          blockchains: nextConfig.to?.blockchains,
+          tokens: nextConfig.to?.tokens,
+        },
+        meta: {
+          tokensMapByBlockchainName,
+          tokensMapByTokenHash,
+        },
+      });
+
+      cacheService.set('supportedSourceTokens', supportedSourceTokens);
+      cacheService.set(
+        'supportedDestinationTokens',
+        supportedDestinationTokens
+      );
 
       set({
         config: {
