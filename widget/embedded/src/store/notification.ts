@@ -36,6 +36,7 @@ export const useNotificationStore = createSelectors(
             creationTime: Date.now(),
             requestId: route.requestId,
             route: {
+              creationTime: parseInt(route.creationTime),
               from: {
                 blockchain: fromStep.fromBlockchain,
                 address: fromStep.fromSymbolAddress,
@@ -67,7 +68,18 @@ export const useNotificationStore = createSelectors(
         getNotifications: () => {
           const { isSynced, notifications } = get();
           return isSynced
-            ? notifications.sort((a, b) => b.creationTime - a.creationTime)
+            ? notifications.sort((a, b) => {
+                if (a.route.creationTime && !b.route.creationTime) {
+                  return -1;
+                }
+                if (!a.route.creationTime && b.route.creationTime) {
+                  return 1;
+                }
+                if (!a.route.creationTime && !b.route.creationTime) {
+                  return b.creationTime - a.creationTime;
+                }
+                return b.route.creationTime - a.route.creationTime;
+              })
             : [];
         },
         syncNotifications: (swaps) => {
