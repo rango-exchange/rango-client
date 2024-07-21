@@ -4,6 +4,7 @@ import type {
   BlockchainAndTokenConfig,
   QuoteEventData,
   Tokens,
+  UiEventData,
   WalletEventData,
   WalletInfoWithExtra,
   WidgetColors,
@@ -71,6 +72,7 @@ import { widgetEventEmitter } from './services/eventEmitter';
 import {
   WidgetEvents as MainEvents,
   QuoteEventTypes,
+  UiEventTypes,
   WalletEventTypes,
   WidgetEvents,
 } from './types';
@@ -108,6 +110,7 @@ export type {
   WidgetVariant,
   WalletEventData,
   QuoteEventData,
+  UiEventData,
   WalletInfoWithExtra,
 };
 export {
@@ -133,6 +136,7 @@ export {
   MainEvents,
   QuoteEventTypes,
   WalletEventTypes,
+  UiEventTypes,
   RouteEventType,
   StepEventType,
   StepExecutionEventStatus,
