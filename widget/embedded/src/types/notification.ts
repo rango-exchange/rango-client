@@ -6,6 +6,7 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 
 type NotificationRoute = {
+  creationTime: number;
   from: {
     blockchain: Step['fromBlockchain'];
     symbol: Step['fromSymbol'];
