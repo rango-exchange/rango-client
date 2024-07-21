@@ -7,6 +7,17 @@ import type {
 
 import { WidgetEvents as QueueManagerEvents } from '@rango-dev/queue-manager-rango-preset';
 
+type EventData<
+  T extends QuoteEventTypes | WalletEventTypes | UiEventTypes,
+  U extends Record<string, unknown> | null
+> = { type: T; payload: U };
+
+export type PreventableEventPayload<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = {
+  preventDefault: () => void;
+} & T;
+
 type Account = Wallet;
 
 export enum QuoteEventTypes {
@@ -17,6 +28,14 @@ export enum QuoteEventTypes {
 export enum WalletEventTypes {
   CONNECT = 'connect',
   DISCONNECT = 'disconnect',
+}
+
+/**
+ * We use a prefix for interaction type and a name for defining the event name: INTERACTION_EVENT_NAME
+ * e.g. CLICK_X_BUTTON or NAVIGATE_WALLET_PAGE
+ */
+export enum UiEventTypes {
+  CLICK_CONNECT_WALLET = 'clickConnectWallet',
 }
 
 export type QuoteInputUpdateEventPayload = {
@@ -41,31 +60,27 @@ export type DisconnectWalletEventPayload = {
   walletType: string;
 };
 
+export type ClickConnectWalletPayload = PreventableEventPayload;
+
 export type QuoteEventData =
-  | {
-      type: QuoteEventTypes.QUOTE_INPUT_UPDATE;
-      payload: QuoteInputUpdateEventPayload;
-    }
-  | {
-      type: QuoteEventTypes.QUOTE_OUTPUT_UPDATE;
-      payload: QuoteUpdateEventPayload;
-    };
+  | EventData<QuoteEventTypes.QUOTE_INPUT_UPDATE, QuoteInputUpdateEventPayload>
+  | EventData<QuoteEventTypes.QUOTE_OUTPUT_UPDATE, QuoteUpdateEventPayload>;
 
 export type WalletEventData =
-  | {
-      type: WalletEventTypes.CONNECT;
-      payload: ConnectWalletEventPayload;
-    }
-  | {
-      type: WalletEventTypes.DISCONNECT;
-      payload: DisconnectWalletEventPayload;
-    };
+  | EventData<WalletEventTypes.CONNECT, ConnectWalletEventPayload>
+  | EventData<WalletEventTypes.DISCONNECT, DisconnectWalletEventPayload>;
+
+export type UiEventData = EventData<
+  UiEventTypes.CLICK_CONNECT_WALLET,
+  ClickConnectWalletPayload
+>;
 
 export enum WidgetEvents {
   RouteEvent = QueueManagerEvents.RouteEvent,
   StepEvent = QueueManagerEvents.StepEvent,
   QuoteEvent = 'quoteEvent',
   WalletEvent = 'walletEvent',
+  UiEvent = 'uiEvent',
 }
 
 export type Events = {
@@ -73,6 +88,7 @@ export type Events = {
   [WidgetEvents.StepEvent]: StepEventData;
   [WidgetEvents.QuoteEvent]: QuoteEventData;
   [WidgetEvents.WalletEvent]: WalletEventData;
+  [WidgetEvents.UiEvent]: UiEventData;
 };
 
 declare type EventHandler<T = unknown> = (event: T) => void;
