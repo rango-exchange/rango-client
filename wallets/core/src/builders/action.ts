@@ -1,16 +1,17 @@
+import type { Actions, Context, HookActions } from '../hub/namespaces/types.js';
 import type {
-  Actions,
-  Context,
-  HookActions,
-  SingleHookActions,
-} from '../hub/namespaces/types.js';
-import type {
-  AndFunction,
   AnyFunction,
   FunctionWithContext,
 } from '../namespaces/common/types.js';
 
-import { Action } from '../hub/action/mod.js';
+export interface ActionByBuilder<T, Context> {
+  actionName: keyof T;
+  and: HookActions<T>;
+  or: HookActions<T>;
+  after: HookActions<T>;
+  before: HookActions<T>;
+  action: FunctionWithContext<T[keyof T], Context>;
+}
 
 /*
  * TODO:
@@ -24,8 +25,8 @@ import { Action } from '../hub/action/mod.js';
  */
 export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
   readonly name: K;
-  #and: SingleHookActions<T> = new Map();
-  #or: SingleHookActions<T> = new Map();
+  #and: HookActions<T> = new Map();
+  #or: HookActions<T> = new Map();
   #after: HookActions<T> = new Map();
   #before: HookActions<T> = new Map();
   #action: FunctionWithContext<T[keyof T], Context> | undefined;
@@ -34,13 +35,19 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     this.name = name;
   }
 
-  public and(action: FunctionWithContext<AndFunction<T, K>, Context>) {
-    this.#and.set(this.name, action);
+  public and(action: FunctionWithContext<AnyFunction, Context>) {
+    if (!this.#and.has(this.name)) {
+      this.#and.set(this.name, []);
+    }
+    this.#and.get(this.name)?.push(action);
     return this;
   }
 
   public or(action: FunctionWithContext<AnyFunction, Context>) {
-    this.#or.set(this.name, action);
+    if (!this.#or.has(this.name)) {
+      this.#or.set(this.name, []);
+    }
+    this.#or.get(this.name)?.push(action);
     return this;
   }
 
@@ -65,12 +72,18 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     return this;
   }
 
-  public build() {
-    return new Action<T, K>(this.name, this.#action, {
-      after: this.#after,
+  public build(): ActionByBuilder<T, Context> {
+    if (!this.#action) {
+      throw new Error('Your action builder should includes an action.');
+    }
+
+    return {
+      actionName: this.name,
+      action: this.#action,
       before: this.#before,
+      after: this.#after,
       and: this.#and,
       or: this.#or,
-    });
+    };
   }
 }

@@ -94,9 +94,6 @@ describe('check NamespaceBuilder works as expected', () => {
     const connectAction = vi.fn(() => 0);
     const disconnectAction = vi.fn();
 
-    const andActions = new Map();
-    andActions.set('connect', [andActionFirst, andActionSecond]);
-
     const actions = new Map();
     actions.set('connect', connectAction);
     actions.set('disconnect', disconnectAction);
@@ -106,12 +103,10 @@ describe('check NamespaceBuilder works as expected', () => {
       disconnect: () => void;
     }>(NAMESPACE, PROVIDER_ID, {
       actions: actions,
-      andUse: andActions,
-      orUse: new Map(),
-      afterUse: new Map(),
-      beforeUse: new Map(),
       configs: {},
     });
+    ns.and('connect', andActionFirst);
+    ns.and('connect', andActionSecond);
 
     const result = ns.run('connect');
 
@@ -132,12 +127,8 @@ describe('check NamespaceBuilder works as expected', () => {
       throw new Error('Oops!');
     });
     const andActionSecond = vi.fn((_ctx, result) => result + 1);
-    const andActions = new Map();
-    andActions.set('connect', [andActionFirst, andActionSecond]);
 
     const orAction = vi.fn((_ctx, e) => e instanceof Error);
-    const orActions = new Map();
-    orActions.set('connect', [orAction]);
 
     const connectAction = vi.fn(() => 0);
     const actions = new Map();
@@ -147,12 +138,12 @@ describe('check NamespaceBuilder works as expected', () => {
       connect: () => void;
     }>(NAMESPACE, PROVIDER_ID, {
       actions: actions,
-      andUse: andActions,
-      orUse: orActions,
-      afterUse: new Map(),
-      beforeUse: new Map(),
       configs: {},
     });
+    ns.and('connect', andActionFirst);
+    ns.and('connect', andActionSecond);
+
+    ns.or('connect', orAction);
 
     const result = ns.run('connect');
 
@@ -168,8 +159,6 @@ describe('check NamespaceBuilder works as expected', () => {
       throw new Error('Oops!');
     });
     const andActionSecond = vi.fn((_ctx, result) => result + 1);
-    const andActions = new Map();
-    andActions.set('connect', [andActionFirst, andActionSecond]);
 
     const connectAction = vi.fn(() => 0);
     const actions = new Map();
@@ -179,24 +168,16 @@ describe('check NamespaceBuilder works as expected', () => {
       connect: () => void;
     }>(NAMESPACE, PROVIDER_ID, {
       actions: actions,
-      andUse: andActions,
-      orUse: new Map(),
-      afterUse: new Map(),
-      beforeUse: new Map(),
       configs: {},
     });
+
+    ns.and('connect', andActionFirst);
+    ns.and('connect', andActionSecond);
 
     expect(() => ns.run('connect')).toThrowError();
   });
 
   test('ensure `or` has access to error', () => {
-    const orActions = new Map();
-    orActions.set('connect', [
-      (_ctx: any, err: any) => {
-        return err instanceof Error;
-      },
-    ]);
-
     const actions = new Map();
     actions.set('connect', () => {
       throw new Error('Oops!');
@@ -206,11 +187,11 @@ describe('check NamespaceBuilder works as expected', () => {
       connect: () => void;
     }>(NAMESPACE, PROVIDER_ID, {
       actions: actions,
-      andUse: new Map(),
-      orUse: orActions,
-      afterUse: new Map(),
-      beforeUse: new Map(),
       configs: {},
+    });
+
+    ns.or('connect', (_ctx: any, err: any) => {
+      return err instanceof Error;
     });
 
     const result = ns.run('connect');
@@ -225,9 +206,6 @@ describe('check NamespaceBuilder works as expected', () => {
       throw new Error('Oops!');
     });
 
-    const orActions = new Map();
-    orActions.set('connect', [orActionFirst, orActionSecond]);
-
     const actions = new Map();
     actions.set('connect', connectAction);
 
@@ -235,12 +213,11 @@ describe('check NamespaceBuilder works as expected', () => {
       connect: () => void;
     }>(NAMESPACE, PROVIDER_ID, {
       actions: actions,
-      andUse: new Map(),
-      orUse: orActions,
-      afterUse: new Map(),
-      beforeUse: new Map(),
       configs: {},
     });
+
+    ns.or('connect', orActionFirst);
+    ns.or('connect', orActionSecond);
 
     const result = ns.run('connect');
 

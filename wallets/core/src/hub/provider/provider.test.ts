@@ -1,4 +1,3 @@
-import type { Provider } from './mod.js';
 import type { EvmActions } from '../../namespaces/evm/types.js';
 import type { SolanaActions } from '../../namespaces/solana/types.js';
 import type { Store } from '../store/mod.js';
@@ -148,12 +147,12 @@ describe('providers', () => {
 
   test('`before/after` is calling with correct context ', () => {
     const connect = vi.fn();
-    const before = vi.fn(function (this: Provider) {
-      const [, setState] = this.state();
+    const before = vi.fn(function (context) {
+      const [, setState] = context.state();
       setState('installed', true);
     });
-    const after = vi.fn(function (this: Provider) {
-      const [, setState] = this.state();
+    const after = vi.fn(function (context) {
+      const [, setState] = context.state();
       setState('installed', false);
     });
 

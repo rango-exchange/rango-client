@@ -4,6 +4,7 @@ import type {
   Context,
   GetState,
   HookActions,
+  HookActionsWithOptions,
   SetState,
   State,
 } from './types.js';
@@ -30,8 +31,8 @@ class Namespace<T extends Actions<T>> {
   #andActions: HookActions<T> = new Map();
   #orActions: HookActions<T> = new Map();
   // `context` for these two can be Namespace context or Provider context
-  #beforeActions: HookActions<T> = new Map();
-  #afterActions: HookActions<T> = new Map();
+  #beforeActions: HookActionsWithOptions<T> = new Map();
+  #afterActions: HookActionsWithOptions<T> = new Map();
   #initiated = false;
   #store: Store | undefined;
   // Namespace doesn't has any configs now, but we will need the feature in future
@@ -45,23 +46,15 @@ class Namespace<T extends Actions<T>> {
     options: {
       configs: NamespaceConfig;
       actions: ActionsMap<T>;
-      andUse: HookActions<T>;
-      orUse: HookActions<T>;
-      afterUse: HookActions<T>;
-      beforeUse: HookActions<T>;
     }
   ) {
-    const { configs, actions, andUse, orUse, afterUse, beforeUse } = options;
+    const { configs, actions } = options;
 
     this.namespaceId = id;
     this.providerId = providerId;
 
     this.#configs = configs;
     this.#actions = actions;
-    this.#andActions = andUse;
-    this.#orActions = orUse;
-    this.#afterActions = afterUse;
-    this.#beforeActions = beforeUse;
   }
 
   public state(): [GetState, SetState] {
@@ -95,44 +88,75 @@ class Namespace<T extends Actions<T>> {
    * For example, if we have a `connect` action, we can add function to be run after `connect` if it ran successfully.
    *
    */
-  public and<K extends keyof T>(name: K, action: AndFunction<T, K>) {
-    const nextAndActions = this.#andActions.get(name) || [];
-    nextAndActions.push(action);
-    this.#andActions.set(name, nextAndActions);
+  public and<K extends keyof T>(
+    name: K,
+    action: FunctionWithContext<AndFunction<T, K>, Context>
+  ) {
+    const currentAndActions = this.#andActions.get(name) || [];
+    this.#andActions.set(name, currentAndActions.concat(action));
+
+    return this;
+  }
+
+  /*
+   * If an action fails, a hook action can be called after that which `or`.
+   * For example, if we have a `connect` action, we can add function to be run when `connect` fails (throw an error).
+   *
+   */
+  public or<K extends keyof T>(
+    name: K,
+    action: FunctionWithContext<AnyFunction, Context>
+  ) {
+    const currentOrActions = this.#orActions.get(name) || [];
+    this.#orActions.set(name, currentOrActions.concat(action));
 
     return this;
   }
 
   /**
-   * Running a function after a specific
+   * Running a function after a specific action
+   *
+   * Note: the context can be set from outside as well. this is useful for Provider to set its context instead of namespace context.
    */
   public after<K extends keyof T, C = unknown>(
     name: K,
     action: FunctionWithContext<AnyFunction, C>,
     options?: { context?: C }
   ) {
-    const actionWithContext = options?.context
-      ? action.bind(null, options.context)
-      : action.bind(null, this.#context() as C);
+    const currentAfterActions = this.#afterActions.get(name) || [];
+    const actionWithOptions = {
+      action: action,
+      options: {
+        context: options?.context,
+      },
+    };
 
-    const nextAfterActions = this.#afterActions.get(name) || [];
-    nextAfterActions.push(actionWithContext);
-
-    this.#afterActions.set(name, nextAfterActions);
+    this.#afterActions.set(name, currentAfterActions.concat(actionWithOptions));
     return this;
   }
 
+  /**
+   * Running a function before a specific action
+   *
+   * Note: the context can be set from outside as well. this is useful for Provider to set its context instead of using namespace context.
+   */
   public before<K extends keyof T, C = unknown>(
     name: K,
     action: FunctionWithContext<AnyFunction, C>,
     options?: { context?: C }
   ) {
-    const actionWithContext = options?.context
-      ? action.bind(null, options.context)
-      : action.bind(null, this.#context() as C);
+    const currentBeforeActions = this.#beforeActions.get(name) || [];
+    const actionWithOptions = {
+      action: action,
+      options: {
+        context: options?.context,
+      },
+    };
+    this.#beforeActions.set(
+      name,
+      currentBeforeActions.concat(actionWithOptions)
+    );
 
-    const nextBeforeActions = this.#beforeActions.get(name) || [];
-    this.#beforeActions.set(name, nextBeforeActions.concat(actionWithContext));
     return this;
   }
 
@@ -238,16 +262,20 @@ class Namespace<T extends Actions<T>> {
     const afterActions = this.#afterActions.get(actionName);
 
     if (afterActions) {
-      const context = this.#context();
-      afterActions.forEach((afterAction) => afterAction(context));
+      afterActions.forEach((afterAction) => {
+        const context = afterAction.options?.context || this.#context();
+        afterAction.action(context);
+      });
     }
   }
 
   #tryRunBeforeActions<K extends keyof T>(actionName: K): void {
     const beforeActions = this.#beforeActions.get(actionName);
     if (beforeActions) {
-      const context = this.#context();
-      beforeActions.forEach((beforeAction) => beforeAction(context));
+      beforeActions.forEach((beforeAction) => {
+        const context = beforeAction.options?.context || this.#context();
+        beforeAction.action(context);
+      });
     }
   }
 

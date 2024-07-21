@@ -197,13 +197,16 @@ export class Provider {
     const context = {
       state: this.state.bind(this),
     };
-    const cbWithContext = cb.bind(context);
 
     this.#namespaces.forEach((namespace) => {
       if (hookName === 'after') {
-        namespace.after(action as any, cbWithContext);
+        namespace.after(action as any, cb, {
+          context,
+        });
       } else if (hookName === 'before') {
-        namespace.before(action as any, cbWithContext);
+        namespace.before(action as any, cb, {
+          context,
+        });
       } else {
         throw new Error(`You hook name is invalid: ${hookName}`);
       }

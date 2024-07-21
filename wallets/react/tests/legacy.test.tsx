@@ -8,7 +8,7 @@
 // import useWallets to call available methods
 
 // write expect
-import { Namespaces } from '@rango-dev/wallets-core';
+import { LegacyNamespace } from '@rango-dev/wallets-core';
 import { legacyProviderImportsToVersionsInterface } from '@rango-dev/wallets-core/utils';
 import { renderHook } from '@testing-library/react-hooks';
 import { TransactionType } from 'rango-types';
@@ -87,11 +87,11 @@ describe('check legacy connect method is working', () => {
 
     const connectResult = await result.current.connect('legacy-garbage', [
       {
-        namespace: Namespaces.Evm,
+        namespace: LegacyNamespace.Evm,
         network: 'eth',
       },
       {
-        namespace: Namespaces.Evm,
+        namespace: LegacyNamespace.Evm,
         network: 'arb',
       },
     ]);
@@ -125,7 +125,7 @@ describe('check legacy connect method is working', () => {
 
     // connecting successfully.
     await result.current.connect('legacy-garbage', [
-      { namespace: Namespaces.Evm, network: 'ETH' },
+      { namespace: LegacyNamespace.Evm, network: 'ETH' },
     ]);
 
     expect(result.current.state('legacy-garbage')).toMatchObject({
@@ -139,7 +139,7 @@ describe('check legacy connect method is working', () => {
     // unsuccessful connection
     await expect(
       result.current.connect('legacy-garbage', [
-        { namespace: Namespaces.Evm, network: 'When Airdrop?' },
+        { namespace: LegacyNamespace.Evm, network: 'When Airdrop?' },
       ])
     ).rejects.toThrowError();
     // state should be reset
@@ -208,7 +208,7 @@ describe('check legacy switching network', () => {
     // First we should connect to any network
     await result.current.connect('legacy-garbage', [
       {
-        namespace: Namespaces.Evm,
+        namespace: LegacyNamespace.Evm,
         network: 'ETH',
       },
     ]);
@@ -227,7 +227,7 @@ describe('check legacy switching network', () => {
     // Then passing a different network name, will trigger switch network.
     await result.current.connect('legacy-garbage', [
       {
-        namespace: Namespaces.Evm,
+        namespace: LegacyNamespace.Evm,
         network: 'COSMOS',
       },
     ]);

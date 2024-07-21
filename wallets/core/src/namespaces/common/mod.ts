@@ -10,5 +10,4 @@ export {
   recommended as andRecommended,
 } from './and.js';
 export { intoConnecting, recommended as beforeRecommended } from './before.js';
-export { apply } from './utils.js';
 export { type CaipAccount } from './types.js';

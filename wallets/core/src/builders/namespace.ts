@@ -1,13 +1,8 @@
+import type { ActionByBuilder } from './action.js';
 import type { ProxiedNamespace } from './types.js';
-import type { Action } from '../hub/action/action.js';
 import type { Actions, ActionsMap, Context } from '../hub/namespaces/mod.js';
-import type { HookActions } from '../hub/namespaces/types.js';
 import type { NamespaceConfig } from '../hub/store/mod.js';
-import type {
-  AndFunction,
-  AnyFunction,
-  FunctionWithContext,
-} from '../namespaces/common/types.js';
+import type { FunctionWithContext } from '../namespaces/common/types.js';
 
 import { Namespace } from '../hub/mod.js';
 
@@ -20,6 +15,8 @@ export const allowedMethods = [
   'state',
   'after',
   'before',
+  'and',
+  'or',
   'store',
 ] as const;
 
@@ -27,10 +24,12 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
   #providerId: string;
   #actions: ActionsMap<T> = new Map();
-  #andUseList: HookActions<T> = new Map();
-  #orUseList: HookActions<T> = new Map();
-  #beforeUseList: HookActions<T> = new Map();
-  #afterUseList: HookActions<T> = new Map();
+  /*
+   * We keep a list of `ActionBuilder` outputs here to use them in separate phases.
+   * Actually, `ActionBuilder` is packing action and its hooks in one place, here we should expand them and them in appropriate places.
+   * Eventually, action will be added to `#actions` and its hooks will be added to `Namespace`.
+   */
+  #actionBuilders: ActionByBuilder<T, Context>[] = [];
   #configs: NamespaceConfig;
 
   constructor(id: string, providerId: string) {
@@ -78,9 +77,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
     actionFn: FunctionWithContext<T[K], Context>
   ): NamespaceBuilder<T>;
 
-  public action<K extends keyof T>(
-    action: InstanceType<typeof Action<T, K>>
-  ): NamespaceBuilder<T>;
+  public action(action: ActionByBuilder<T, Context>): NamespaceBuilder<T>;
 
   /**
    *
@@ -105,20 +102,12 @@ export class NamespaceBuilder<T extends Actions<T>> {
       return this;
     }
 
-    /*
-     * Action builder mode
-     *
-     * TODO:
-     *  I don't know why `action instanceof Action` doesn't work.
-     *  As a workaround, I'm relying on `actionName` which is available on `Action` class as a public property.
-     */
+    // Action builder mode
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof action === 'object' && !!action?.actionName) {
-      const builtAction = action as InstanceType<typeof Action<T, K>>;
-      builtAction.toNamespace(this);
-
+      this.#actionBuilders.push(action);
       return this;
     }
 
@@ -126,68 +115,6 @@ export class NamespaceBuilder<T extends Actions<T>> {
     if (!!actionFn) {
       this.#actions.set(action, actionFn);
     }
-
-    return this;
-  }
-
-  /**
-   * Getting a list of `and` functions.
-   * Instead of setting `and` one by one, you can put them in a list and use `andUse` to apply them.
-   * e.g.
-   * ```ts
-   * .andUse([
-   *    ['connect', () =>{}],
-   *    ['disconnect', () =>{}],
-   * ])
-   * ```
-   */
-  // TODO: it has a known type problem where a key will be type checked with return type of the whole list (T). see: providers.test.ts at 97
-  public andUse<K extends keyof T>(
-    list: (readonly [K, FunctionWithContext<AndFunction<T, K>, Context>])[]
-  ) {
-    list.forEach(([name, cb]) => {
-      const ands = this.#andUseList.get(name);
-      if (!ands) {
-        this.#andUseList.set(name, [cb]);
-      } else {
-        this.#andUseList.set(name, [...ands, cb]);
-      }
-    });
-
-    return this;
-  }
-
-  public orUse<K extends keyof T>(
-    list: (readonly [K, FunctionWithContext<AnyFunction, Context>])[]
-  ) {
-    list.forEach(([name, cb]) => {
-      const ors = this.#orUseList.get(name);
-      if (!ors) {
-        this.#orUseList.set(name, [cb]);
-      } else {
-        this.#orUseList.set(name, [...ors, cb]);
-      }
-    });
-
-    return this;
-  }
-
-  public beforeUse<K extends keyof T>(
-    list: (readonly [K, FunctionWithContext<AnyFunction, Context>[]])[]
-  ) {
-    list.forEach(([name, cb]) => {
-      this.#beforeUseList.set(name, cb);
-    });
-
-    return this;
-  }
-
-  public afterUse<K extends keyof T>(
-    list: (readonly [K, FunctionWithContext<AnyFunction, Context>[]])[]
-  ) {
-    list.forEach(([name, cb]) => {
-      this.#afterUseList.set(name, cb);
-    });
 
     return this;
   }
@@ -210,18 +137,59 @@ export class NamespaceBuilder<T extends Actions<T>> {
     return true;
   }
 
+  /*
+   * Extracting hooks and add them to `Namespace` for the action.
+   *
+   * Note: this should be called after `addActionsFromActionBuilders` to ensure the action is added first.
+   */
+  #addHooksFromActionBuilders(namespace: Namespace<T>) {
+    this.#actionBuilders.forEach((actionByBuild) => {
+      actionByBuild.after.forEach((afterHooks) => {
+        afterHooks.map((action) => {
+          namespace.after(actionByBuild.actionName, action);
+        });
+      });
+
+      actionByBuild.before.forEach((beforeHooks) => {
+        beforeHooks.map((action) => {
+          namespace.before(actionByBuild.actionName, action);
+        });
+      });
+
+      actionByBuild.and.forEach((andHooks) => {
+        andHooks.map((action) => {
+          namespace.and(actionByBuild.actionName, action);
+        });
+      });
+
+      actionByBuild.or.forEach((orHooks) => {
+        orHooks.map((action) => {
+          namespace.or(actionByBuild.actionName, action);
+        });
+      });
+    });
+  }
+
+  /**
+   * Iterate over `actionBuilders` and add them to exists `actions`.
+   * Note: Hooks will be added in a separate phase.
+   */
+  #addActionsFromActionBuilders() {
+    this.#actionBuilders.forEach((actionByBuild) => {
+      this.#actions.set(actionByBuild.actionName, actionByBuild.action);
+    });
+  }
+
   /**
    * Build a Proxy object to call actions in a more convenient way. e.g `.connect()` instead of `.run(connect)`
    */
   #buildApi(configs: NamespaceConfig): ProxiedNamespace<T> {
+    this.#addActionsFromActionBuilders();
     const namespace = new Namespace<T>(this.#id, this.#providerId, {
       configs,
       actions: this.#actions,
-      andUse: this.#andUseList,
-      orUse: this.#orUseList,
-      afterUse: this.#afterUseList,
-      beforeUse: this.#beforeUseList,
     });
+    this.#addHooksFromActionBuilders(namespace);
 
     const api = new Proxy(namespace, {
       get: (_, property) => {

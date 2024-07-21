@@ -1,6 +1,7 @@
 import type { Context } from '../src/hub/namespaces/mod.js';
 import type {
   AccountsWithActiveChain,
+  CaipAccount,
   FunctionWithContext,
 } from '../src/namespaces/common/types.js';
 import type { EvmActions } from '../src/namespaces/evm/types.js';
@@ -8,7 +9,11 @@ import type { SolanaActions } from '../src/namespaces/solana/types.js';
 
 import { describe, expect, test, vi } from 'vitest';
 
-import { NamespaceBuilder, ProviderBuilder } from '../src/builders/mod.js';
+import {
+  ActionBuilder,
+  NamespaceBuilder,
+  ProviderBuilder,
+} from '../src/builders/mod.js';
 import { garbageWalletInfo } from '../src/test-utils/fixtures.js';
 
 describe('check Provider works with Blockchain correctly', () => {
@@ -75,9 +80,10 @@ describe('check Provider works with Blockchain correctly', () => {
       async function (_context, _chain) {
         spyOnConnect();
         return {
+          // `as CaipAccount` is ok here because we are going to make to `CaipAccount` in `and` hook.
           accounts: [
-            '0x000000000000000000000000000000000000dead',
-            '0x0000000000000000000000000000000000000000',
+            '0x000000000000000000000000000000000000dead' as CaipAccount,
+            '0x0000000000000000000000000000000000000000' as CaipAccount,
           ],
           network: 'eth',
         };
@@ -93,14 +99,23 @@ describe('check Provider works with Blockchain correctly', () => {
     const evmDisconnect = vi.fn();
     const afterDisconnect = vi.fn();
 
-    const evmProvider = new NamespaceBuilder<EvmActions>('eip155', walletName)
-      .action('connect', evmConnect)
-      .action('disconnect', evmDisconnect)
-      .andUse([
-        ['disconnect', afterDisconnect],
-        ['connect', andConnect],
-      ])
+    const connectAction = new ActionBuilder<EvmActions, 'connect'>('connect')
+      .action(evmConnect)
+      .and(andConnect)
       .build();
+
+    const disconnectAction = new ActionBuilder<EvmActions, 'disconnect'>(
+      'disconnect'
+    )
+      .action(evmDisconnect)
+      .after(afterDisconnect)
+      .build();
+
+    const evmProvider = new NamespaceBuilder<EvmActions>('eip155', walletName)
+      .action(connectAction)
+      .action(disconnectAction)
+      .build();
+
     const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
       'info',
       garbageWalletInfo
@@ -124,7 +139,7 @@ describe('check Provider works with Blockchain correctly', () => {
     expect(afterDisconnect).toBeCalledTimes(1);
   });
 
-  test('check `and` and `or` actions to work correctly.', async () => {
+  test('check action builder works with namespace correctly.', async () => {
     const spyOnSuccessAndAction = vi.fn((_ctx, value) => value);
     const spyOnThrowAndAction = vi.fn();
     const spyOnThrowAndActionWithOr = vi.fn();
@@ -132,37 +147,52 @@ describe('check Provider works with Blockchain correctly', () => {
     const spyOnSuccessOrAction = vi.fn();
     const spyOnThrowOrAction = vi.fn();
 
+    interface GarbageActions {
+      successfulAction: () => string;
+      throwErrorAction: () => void;
+      throwErrorActionWithOr: () => void;
+    }
+
+    const successfulAction = new ActionBuilder<
+      GarbageActions,
+      'successfulAction'
+    >('successfulAction')
+      .action(() => {
+        return 'yay!';
+      })
+      .and(spyOnSuccessAndAction)
+      .or(spyOnSuccessOrAction)
+      .build();
+
+    const throwErrorAction = new ActionBuilder<
+      GarbageActions,
+      'throwErrorAction'
+    >('throwErrorAction')
+      .action(() => {
+        throw new Error('whatever');
+      })
+      .and(spyOnThrowAndAction)
+      .build();
+
+    const throwErrorActionWithOr = new ActionBuilder<
+      GarbageActions,
+      'throwErrorActionWithOr'
+    >('throwErrorActionWithOr')
+      .action(() => {
+        throw new Error('whatever');
+      })
+      .and(spyOnThrowAndActionWithOr)
+      .or(spyOnThrowOrAction)
+      .build();
+
     const garbageProvider = new NamespaceBuilder<{
       successfulAction: () => string;
       throwErrorAction: () => void;
       throwErrorActionWithOr: () => void;
     }>('eip155', walletName)
-      .action('successfulAction', () => {
-        return 'yay!';
-      })
-      .action([
-        [
-          'throwErrorAction',
-          () => {
-            throw new Error('whatever');
-          },
-        ],
-        [
-          'throwErrorActionWithOr',
-          () => {
-            throw new Error('whatever');
-          },
-        ],
-      ])
-      .andUse([
-        ['successfulAction', spyOnSuccessAndAction],
-        ['throwErrorAction', spyOnThrowAndAction],
-        ['throwErrorActionWithOr', spyOnThrowAndActionWithOr],
-      ])
-      .orUse([
-        ['successfulAction', spyOnSuccessOrAction],
-        ['throwErrorActionWithOr', spyOnThrowOrAction],
-      ])
+      .action(successfulAction)
+      .action(throwErrorAction)
+      .action(throwErrorActionWithOr)
       .build();
 
     garbageProvider.successfulAction();
