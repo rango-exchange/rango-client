@@ -260,14 +260,26 @@ export function WalletList(props: PropTypes) {
             })
           : conciseAddress;
 
-        const onClick = async () => {
+        const onSelectableWalletClick = async () => {
           if (wallet.state === WalletState.DISCONNECTED) {
-            if (!!wallet.namespaces) {
-              handleOpenNamespacesModal(wallet);
+            if (!!wallet.namespaces?.length) {
+              if (wallet.namespaces.length > 1) {
+                handleOpenNamespacesModal(wallet);
+              } else if (wallet.needsDerivationPath) {
+                setDerivationPathModalState({
+                  open: true,
+                  providerType: wallet.type,
+                  providerImage: wallet.image,
+                  namespace: wallet.namespaces[0],
+                });
+              } else {
+                void handleClick(wallet.type);
+              }
             } else {
               void handleClick(wallet.type);
             }
           } else if (!!wallet.namespaces && !conciseAddress) {
+            // wallet is connected on a different namespace
             await disconnectWallet(wallet.type);
             handleOpenNamespacesModal(wallet);
           } else if (couldAddExperimentalChain) {
@@ -409,7 +421,7 @@ export function WalletList(props: PropTypes) {
             <SelectableWallet
               key={wallet.type}
               description={connectedWalletDescription}
-              onClick={onClick}
+              onClick={onSelectableWalletClick}
               selected={isSelected(wallet.type, chain)}
               disabled={!isActiveTab}
               {...wallet}
