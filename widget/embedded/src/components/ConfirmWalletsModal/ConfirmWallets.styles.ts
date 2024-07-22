@@ -1,4 +1,4 @@
-import { css, darkTheme, IconButton, styled, TextField } from '@rango-dev/ui';
+import { css, darkTheme, IconButton, styled } from '@rango-dev/ui';
 
 export const Title = styled('div', {
   display: 'flex',
@@ -93,56 +93,8 @@ export const walletsListStyles = css({
   height: '100%',
 });
 
-export const CustomDestination = styled('div', {
-  padding: '$10 $0',
-  '& .button__content': {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  '& .alarms': { paddingTop: '$5' },
-  '& .collapsible_content': {
-    backgroundColor: '$neutral100',
-  },
-  '& .collapsible_root': {
-    backgroundColor: '$neutral100',
-  },
-});
-
-export const alarmsStyles = css({
-  paddingTop: '$5',
-});
-
 export const ConfirmButton = styled('div', {
   display: 'flex',
 });
 
-export const StyledTextField = styled(TextField, {
-  backgroundColor: '$neutral100',
-  padding: '$15',
-});
-
 export const Wallets = styled('div', { overflow: 'visible', width: '100%' });
-
-export const CustomDestinationButton = styled('div', {
-  width: '100%',
-  borderRadius: '$sm',
-  display: 'flex',
-  padding: '$15',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  $$color: '$colors$neutral100',
-  [`.${darkTheme} &`]: {
-    $$color: '$colors$neutral300',
-  },
-  backgroundColor: '$$color',
-  borderBottomRightRadius: '0',
-  borderBottomLeftRadius: '0',
-  '&:focus-visible': {
-    $$background: '$colors$secondary100',
-    [`.${darkTheme} &`]: {
-      $$background: '$colors$info700',
-    },
-    backgroundColor: '$$background',
-    outline: 0,
-  },
-});
