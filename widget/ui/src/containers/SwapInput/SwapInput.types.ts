@@ -31,6 +31,7 @@ type FromProps = {
   loadingBalance: boolean;
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
+  anyWalletConnected: boolean;
 };
 
 type ToProps = {
