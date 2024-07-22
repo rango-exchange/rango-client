@@ -32,7 +32,8 @@ export function SwapInput(props: SwapInputPropTypes) {
     'balance' in props &&
     !props.loading &&
     !props.loadingBalance &&
-    props.token.displayName;
+    props.token.displayName &&
+    props.anyWalletConnected;
 
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
