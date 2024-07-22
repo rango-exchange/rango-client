@@ -188,13 +188,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   )?.diagnosisUrl;
 
   const outputUsdValue = numberToString(
-    parseFloat(
-      numberToString(
-        outputAmount,
-        TOKEN_AMOUNT_MIN_DECIMALS,
-        TOKEN_AMOUNT_MAX_DECIMALS
-      )
-    ) * (lastStep.toUsdPrice || 0),
+    parseFloat(outputAmount || '0') * (lastStep.toUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
