@@ -179,6 +179,8 @@ export type TrezorManifest = {
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
  * address for the transaction. If set to true, the widget will allow the user to input a custom
  * address for the destination.
+ * @property {{[blockchain: string]: string }} defaultCustomDestinations - The `defaultCustomDestinations` property is a map of supported `blockchain` names to an arbitrary blockchain address.
+ * You could use it to set a default custom destination for some blockchains.  e.g. {'BSC': '0x2be.....c1','ETH': '0x2be.....c1'}
  * @property {string} language - The language property is an optional string that specifies the
  * default language in which the widget should be displayed. If not provided, the widget will default to the
  * language of the user's browser.
@@ -219,6 +221,7 @@ export type WidgetConfig = {
   wallets?: (WalletType | ProviderInterface)[];
   multiWallets?: boolean;
   customDestination?: boolean;
+  defaultCustomDestinations?: { [blockchain: string]: string };
   language?: Language;
   theme?: WidgetTheme;
   externalWallets?: boolean;
@@ -227,7 +230,6 @@ export type WidgetConfig = {
   variant?: WidgetVariant;
   enableCentralizedSwappers?: boolean;
   signers?: SignersConfig;
-
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;

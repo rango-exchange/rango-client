@@ -722,7 +722,7 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
 
 export function isConfirmSwapDisabled(
   fetching: boolean,
-  showCustomDestination: boolean,
+  isCustomDestinationOpen: boolean,
   customDestination: string | null,
   quote: SelectedQuote | null,
   selectedWallets: { walletType: string; chain: string }[],
@@ -752,9 +752,9 @@ export function isConfirmSwapDisabled(
       : false;
 
   return (
-    (!showCustomDestination && !everyWalletSelected) ||
-    (showCustomDestination && !customDestination) ||
-    (showCustomDestination &&
+    (!isCustomDestinationOpen && !everyWalletSelected) ||
+    (isCustomDestinationOpen && !customDestination) ||
+    (isCustomDestinationOpen &&
       !!customDestination &&
       (!customDestinationIsValid || !everyRequiredWalletSelected))
   );
