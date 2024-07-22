@@ -29,7 +29,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
    * Actually, `ActionBuilder` is packing action and its hooks in one place, here we should expand them and them in appropriate places.
    * Eventually, action will be added to `#actions` and its hooks will be added to `Namespace`.
    */
-  #actionBuilders: ActionByBuilder<T, Context>[] = [];
+  #actionBuilders: ActionByBuilder<T, Context<T>>[] = [];
   #configs: NamespaceConfig;
 
   constructor(id: string, providerId: string) {
@@ -60,7 +60,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
    *
    */
   public action<K extends keyof T>(
-    action: (readonly [K, FunctionWithContext<T[K], Context>])[]
+    action: (readonly [K, FunctionWithContext<T[K], Context<T>>])[]
   ): NamespaceBuilder<T>;
 
   /**
@@ -74,10 +74,10 @@ export class NamespaceBuilder<T extends Actions<T>> {
    */
   public action<K extends keyof T>(
     action: K,
-    actionFn: FunctionWithContext<T[K], Context>
+    actionFn: FunctionWithContext<T[K], Context<T>>
   ): NamespaceBuilder<T>;
 
-  public action(action: ActionByBuilder<T, Context>): NamespaceBuilder<T>;
+  public action(action: ActionByBuilder<T, Context<T>>): NamespaceBuilder<T>;
 
   /**
    *
@@ -91,8 +91,8 @@ export class NamespaceBuilder<T extends Actions<T>> {
    *
    */
   public action<K extends keyof T>(
-    action: (readonly [K, FunctionWithContext<T[K], Context>])[] | K,
-    actionFn?: FunctionWithContext<T[K], Context>
+    action: (readonly [K, FunctionWithContext<T[K], Context<T>>])[] | K,
+    actionFn?: FunctionWithContext<T[K], Context<T>>
   ) {
     // List mode
     if (Array.isArray(action)) {

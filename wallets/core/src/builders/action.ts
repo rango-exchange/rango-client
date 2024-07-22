@@ -29,13 +29,13 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
   #or: HookActions<T> = new Map();
   #after: HookActions<T> = new Map();
   #before: HookActions<T> = new Map();
-  #action: FunctionWithContext<T[keyof T], Context> | undefined;
+  #action: FunctionWithContext<T[keyof T], Context<T>> | undefined;
 
   constructor(name: K) {
     this.name = name;
   }
 
-  public and(action: FunctionWithContext<AnyFunction, Context>) {
+  public and(action: FunctionWithContext<AnyFunction, Context<T>>) {
     if (!this.#and.has(this.name)) {
       this.#and.set(this.name, []);
     }
@@ -43,7 +43,7 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     return this;
   }
 
-  public or(action: FunctionWithContext<AnyFunction, Context>) {
+  public or(action: FunctionWithContext<AnyFunction, Context<T>>) {
     if (!this.#or.has(this.name)) {
       this.#or.set(this.name, []);
     }
@@ -51,7 +51,7 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     return this;
   }
 
-  public before(action: FunctionWithContext<AnyFunction, Context>) {
+  public before(action: FunctionWithContext<AnyFunction, Context<T>>) {
     if (!this.#before.has(this.name)) {
       this.#before.set(this.name, []);
     }
@@ -59,7 +59,7 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     return this;
   }
 
-  public after(action: FunctionWithContext<AnyFunction, Context>) {
+  public after(action: FunctionWithContext<AnyFunction, Context<T>>) {
     if (!this.#after.has(this.name)) {
       this.#after.set(this.name, []);
     }
@@ -67,12 +67,12 @@ export class ActionBuilder<T extends Actions<T>, K extends keyof T> {
     return this;
   }
 
-  public action(action: FunctionWithContext<T[keyof T], Context>) {
+  public action(action: FunctionWithContext<T[keyof T], Context<T>>) {
     this.#action = action;
     return this;
   }
 
-  public build(): ActionByBuilder<T, Context> {
+  public build(): ActionByBuilder<T, Context<T>> {
     if (!this.#action) {
       throw new Error('Your action builder should includes an action.');
     }

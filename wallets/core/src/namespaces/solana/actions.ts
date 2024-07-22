@@ -29,14 +29,12 @@ export function changeAccountSubscriber(
       const [, setState] = context.state();
 
       eventCallback = (publicKey) => {
+        /*
+         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
+         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
+         */
         if (!publicKey) {
-          console.warn(
-            `Your Solana namespace is returning nothing on change account event`,
-            {
-              publicKey,
-              solanaInstance,
-            }
-          );
+          context.action('disconnect');
           return;
         }
 

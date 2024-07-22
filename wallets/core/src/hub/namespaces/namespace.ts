@@ -330,9 +330,10 @@ class Namespace<T extends Actions<T>> {
     return generateStoreId(this.providerId, this.namespaceId);
   }
 
-  #context(): Context {
+  #context(): Context<T> {
     return {
       state: this.state.bind(this),
+      action: this.run.bind(this),
     };
   }
 }

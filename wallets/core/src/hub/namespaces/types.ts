@@ -2,11 +2,12 @@ import type {
   AnyFunction,
   FunctionWithContext,
 } from '../../namespaces/common/types.js';
+import type { SolanaActions } from '../../namespaces/solana/types.js';
 import type { NamespaceData } from '../store/mod.js';
 
 type ActionName<K> = K | Omit<K, string>;
 
-export type Subscriber = (context: Context) => void;
+export type Subscriber = (context: Context<SolanaActions>) => void;
 export type SubscriberCleanUp = () => void;
 export type State = NamespaceData;
 export type SetState = <K extends keyof State>(
@@ -17,9 +18,9 @@ export type GetState = {
   (): State;
   <K extends keyof State>(name: K): State[K];
 };
-export type ActionsMap<T> = Map<
+export type ActionsMap<T extends Actions<T>> = Map<
   ActionName<keyof T>,
-  FunctionWithContext<T[keyof T], Context>
+  FunctionWithContext<T[keyof T], Context<T>>
 >;
 
 export type AndUseActions<T> = Map<keyof T, AnyFunction>;
@@ -33,8 +34,9 @@ export type HookActionsWithOptions<T> = Map<
     };
   }[]
 >;
-export type Context = {
+export type Context<T extends Actions<T> = object> = {
   state: () => [GetState, SetState];
+  action: (name: keyof T, ...args: any[]) => any;
 };
 
 /**
