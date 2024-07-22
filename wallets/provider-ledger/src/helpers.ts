@@ -6,9 +6,6 @@ import bs58 from 'bs58';
 
 import { getDerivationPath } from './state';
 
-export const ETH_BIP32_PATH = "44'/60'/0'/0/0";
-export const SOLANA_BIP32_PATH = "44'/501'/0'";
-
 export const HEXADECIMAL_BASE = 16;
 
 const ledgerFrequentErrorMessages: { [statusCode: number]: string } = {
