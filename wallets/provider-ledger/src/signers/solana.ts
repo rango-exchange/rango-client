@@ -4,7 +4,7 @@ import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
 import { PublicKey } from '@solana/web3.js';
-import { SignerError } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 import {
   getLedgerError,
@@ -20,8 +20,22 @@ export function isVersionedTransaction(
 }
 
 export class SolanaSigner implements GenericSigner<SolanaTransaction> {
-  async signMessage(): Promise<string> {
-    throw SignerError.UnimplementedError('signMessage');
+  async signMessage(msg: string): Promise<string> {
+    try {
+      const transport = await transportConnect();
+
+      const solana = new (await import('@ledgerhq/hw-app-solana')).default(
+        transport
+      );
+
+      const result = await solana.signOffchainMessage(
+        getDerivationPath(),
+        Buffer.from(msg)
+      );
+      return result.signature.toString();
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {

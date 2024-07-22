@@ -19,8 +19,15 @@ export class SolflareSnapSolanaSigner
     this.provider = provider;
   }
 
-  async signMessage(): Promise<string> {
-    throw SignerError.UnimplementedError('signMessage');
+  async signMessage(msg: string): Promise<string> {
+    try {
+      const encodedMessage = new TextEncoder().encode(msg);
+      const encodedHash = await this.provider.signMessage(encodedMessage);
+      const decodedHash = new TextDecoder().decode(encodedHash);
+      return decodedHash;
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
