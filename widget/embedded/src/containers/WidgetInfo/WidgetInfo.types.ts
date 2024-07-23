@@ -1,7 +1,7 @@
 import type { WidgetHistory } from './WidgetInfo.helpers';
 import type { FetchStatus, FindToken } from '../../store/slices/data';
 import type { ConnectedWallet } from '../../store/wallets';
-import type { Wallet } from '../../types';
+import type { UpdateQuoteInput, Wallet } from '../../types';
 import type { Notification } from '../../types/notification';
 import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 
@@ -26,5 +26,8 @@ export interface WidgetInfoContextInterface {
   notifications: {
     list: Notification[];
     clearAll: () => void;
+  };
+  quote: {
+    updateQuoteInput: UpdateQuoteInput;
   };
 }
