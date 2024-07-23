@@ -4,11 +4,14 @@
   "license": "MIT",
   "type": "module",
   "source": "./src/legacy/index.ts",
-  "main": "./dist/legacy/index.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/legacy/index.d.ts",
   "exports": {
-    ".": "./dist/legacy/index.js"
+    ".": {
+      "types": "./dist/legacy/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
-  "typings": "dist/legacy/index.d.ts",
   "files": [
     "dist",
     "src"

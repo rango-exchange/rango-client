@@ -1,4 +1,8 @@
-import type { GetInstanceOptions, WalletActions, WalletConfig } from './types';
+import type {
+  GetInstanceOptions,
+  WalletActions,
+  WalletConfig,
+} from './types.js';
 import type {
   NamespaceData,
   Network,
@@ -8,8 +12,11 @@ import type { BlockchainMeta } from 'rango-types';
 
 import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
 
-import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
-import { Events } from './types';
+import {
+  accountAddressesWithNetwork,
+  needsCheckInstallation,
+} from './helpers.js';
+import { Events } from './types.js';
 
 export type EventHandler = (
   type: WalletType,

@@ -1,4 +1,4 @@
-import type { Options } from './wallet';
+import type { Options } from './wallet.js';
 import type { Network } from '@rango-dev/wallets-shared';
 
 export function formatAddressWithNetwork(

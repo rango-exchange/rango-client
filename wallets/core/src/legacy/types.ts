@@ -1,4 +1,4 @@
-import type { State as WalletState } from './wallet';
+import type { State as WalletState } from './wallet.js';
 import type {
   NamespaceData,
   Network,
