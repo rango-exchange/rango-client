@@ -4,6 +4,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
 import { useLanguage } from '../../hooks/useLanguage';
+import { useUpdateQuoteInput } from '../../hooks/useUpdateQuoteInput/useUpdateQuoteInput';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
@@ -35,6 +36,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const resetLanguage = useLanguage().resetLanguage;
   const notifications = useNotificationStore().getNotifications();
   const clearNotifications = useNotificationStore().clearNotifications;
+  const updateQuoteInput = useUpdateQuoteInput();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {
@@ -58,6 +60,9 @@ export function WidgetInfo(props: React.PropsWithChildren) {
     notifications: {
       list: notifications,
       clearAll: clearNotifications,
+    },
+    quote: {
+      updateQuoteInput,
     },
   };
 
