@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-core",
-  "version": "0.26.0",
+  "version": "0.26.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
