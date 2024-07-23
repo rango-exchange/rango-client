@@ -31,7 +31,7 @@ async function run() {
     cwd: pkgPath,
     stderr: process.stderr,
     stdout: process.stdout,
-  })`tsc --declaration --emitDeclarationOnly`;
+  })`tsc --declaration --emitDeclarationOnly -p tsconfig.build.json`;
   const esbuildTask = esbuild.build({
     bundle: true,
     minify: true,
