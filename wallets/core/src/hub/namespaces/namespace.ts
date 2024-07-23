@@ -304,7 +304,6 @@ class Namespace<T extends Actions<T>> {
           return orAction(context, prev);
         }, actionError);
       } catch (orError) {
-        console.log({ orError });
         throw new Error(OR_ACTION_FAILED_ERROR(actionName.toString()), {
           cause: actionError,
         });

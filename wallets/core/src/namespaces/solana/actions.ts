@@ -16,8 +16,9 @@ export function changeAccountSubscriber(
 ): [Subscriber, SubscriberCleanUp] {
   let eventCallback: AnyFunction;
 
+  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
   return [
-    (context) => {
+    (context, err) => {
       const solanaInstance = instance();
 
       if (!solanaInstance) {
@@ -31,7 +32,7 @@ export function changeAccountSubscriber(
       eventCallback = (publicKey) => {
         /*
          * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
-         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
+         * So null means we don't have access to account and we 0 need to disconnect and let the user connect the account.
          */
         if (!publicKey) {
           context.action('disconnect');
@@ -52,12 +53,20 @@ export function changeAccountSubscriber(
         });
       };
       solanaInstance.on('accountChanged', eventCallback);
+
+      if (err instanceof Error) {
+        throw err;
+      }
     },
-    () => {
+    (_context, err) => {
       const solanaInstance = instance();
 
       if (eventCallback && solanaInstance) {
         solanaInstance.off('accountChanged', eventCallback);
+      }
+
+      if (err instanceof Error) {
+        throw err;
       }
     },
   ];

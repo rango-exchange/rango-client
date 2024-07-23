@@ -28,7 +28,9 @@ const connect = builders
       meta: [],
     });
     if (Array.isArray(result)) {
-      throw new Error("It shouldn't be array");
+      throw new Error(
+        'Expecting solana response to be a single value, not an array.'
+      );
     }
 
     const formatAccounts = result.accounts.map(

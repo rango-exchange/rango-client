@@ -7,8 +7,14 @@ import type { NamespaceData } from '../store/mod.js';
 
 type ActionName<K> = K | Omit<K, string>;
 
-export type Subscriber = (context: Context<SolanaActions>) => void;
-export type SubscriberCleanUp = () => void;
+export type Subscriber = (
+  context: Context<SolanaActions>,
+  ...args: any[]
+) => void;
+export type SubscriberCleanUp = (
+  context: Context<SolanaActions>,
+  ...args: any[]
+) => void;
 export type State = NamespaceData;
 export type SetState = <K extends keyof State>(
   name: K,
