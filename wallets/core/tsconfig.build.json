@@ -1,12 +1,9 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
-  "extends": "../../tsconfig.lib.json",
-  "include": ["src", "types"],
+  "extends": "../../tsconfig.libnext.json",
+  "include": ["src"],
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "./src",
-    "lib": ["dom", "esnext"],
-    "jsx": "react"
-    // match output dir to input dir. e.g. dist/index instead of dist/src/index
+    "rootDir": "./src"
   }
 }

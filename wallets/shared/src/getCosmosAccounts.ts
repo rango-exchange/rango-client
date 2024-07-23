@@ -1,4 +1,4 @@
-import type { Connect, ProviderConnectResult, Suggest } from './rango';
+import type { Connect, ProviderConnectResult, Suggest } from './rango.js';
 import type { Keplr as InstanceType } from '@keplr-wallet/types';
 import type {
   BlockchainMeta,
@@ -6,7 +6,7 @@ import type {
   CosmosChainInfo,
 } from 'rango-types';
 
-import { deepCopy } from './helpers';
+import { deepCopy } from './helpers.js';
 
 export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
   chainId: string;
