@@ -3,6 +3,7 @@
 import type { PriceImpactWarningLevel } from '@rango-dev/ui';
 import type BigNumber from 'bignumber.js';
 import type {
+  Asset,
   BlockchainValidationStatus,
   RouteTag,
   RoutingResultType,
@@ -131,3 +132,11 @@ export type QuoteErrorResponse = {
   message: string;
   options: QuoteError;
 };
+
+export type UpdateQuoteInput = (params: {
+  fromBlockchain?: string | null;
+  toBlockchain?: string | null;
+  fromToken?: Asset | null;
+  toToken?: Asset | null;
+  requestAmount?: string;
+}) => void;
