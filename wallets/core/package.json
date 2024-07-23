@@ -3,18 +3,18 @@
   "version": "0.36.2-next.1",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/legacy/index.ts",
+  "main": "./dist/legacy/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/legacy/index.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/legacy/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/legacy/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
