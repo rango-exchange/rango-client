@@ -3,7 +3,7 @@ import type {
   State,
   WalletActions,
   WalletProviders,
-} from './types';
+} from './types.js';
 import type Wallet from '@rango-dev/wallets-core';
 import type {
   Options,
@@ -14,7 +14,7 @@ import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
 
 import { Persistor } from '@rango-dev/wallets-core';
 
-import { LAST_CONNECTED_WALLETS } from './constants';
+import { LAST_CONNECTED_WALLETS } from './constants.js';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
