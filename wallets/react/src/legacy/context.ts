@@ -1,4 +1,4 @@
-import type { ProviderContext } from './types';
+import type { ProviderContext } from './types.js';
 
 import { createContext } from 'react';
 

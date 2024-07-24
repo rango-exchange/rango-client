@@ -1,9 +1,9 @@
-import type { ProviderContext, ProviderProps } from './legacy/types';
+import type { ProviderContext, ProviderProps } from './legacy/types.js';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import React, { useEffect, useReducer, useRef } from 'react';
 
-import { WalletContext } from './legacy/context';
+import { WalletContext } from './legacy/context.js';
 import {
   autoConnect,
   availableWallets,
@@ -15,8 +15,8 @@ import {
   state_reducer,
   tryPersistWallet,
   tryRemoveWalletFromPersistance,
-} from './legacy/helpers';
-import { useInitializers } from './legacy/hooks';
+} from './legacy/helpers.js';
+import { useInitializers } from './legacy/hooks.js';
 
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});

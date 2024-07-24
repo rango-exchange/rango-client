@@ -1,10 +1,10 @@
-import type { ProviderContext, WalletActions, WalletConfig } from './types';
+import type { ProviderContext, WalletActions, WalletConfig } from './types.js';
 import type { EventHandler as WalletEventHandler } from '@rango-dev/wallets-core';
 
 import Wallet from '@rango-dev/wallets-core';
 import { useContext, useRef } from 'react';
 
-import { WalletContext } from './context';
+import { WalletContext } from './context.js';
 
 /**
  *
