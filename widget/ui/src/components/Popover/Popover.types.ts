@@ -26,4 +26,5 @@ export interface ContentType {
 
 export type PopoverPropTypes = ContentType & {
   content: ReactNode;
+  open?: boolean;
 };

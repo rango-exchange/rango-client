@@ -39,10 +39,11 @@ export function Popover(props: PropsWithChildren<PopoverPropTypes>) {
     collisionPadding = 0,
     container = document.body,
     onOpenChange,
+    open,
     ...rest
   } = props;
   return (
-    <RadixPopover.Root onOpenChange={onOpenChange}>
+    <RadixPopover.Root onOpenChange={onOpenChange} open={open}>
       <RadixPopover.Trigger asChild>{children}</RadixPopover.Trigger>
       <PopoverContent
         align={align}

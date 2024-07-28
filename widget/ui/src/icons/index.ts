@@ -68,6 +68,7 @@ export { default as BullhornIcon } from './Bullhorn';
 export { default as ChainsIcon } from './Chains';
 export { default as ColorsIcon } from './Colors';
 export { default as DiscordIcon } from './Discord';
+export { default as FilterIcon } from './Filter';
 export { default as InfinityIcon } from './Infinity';
 export { default as KeyIcon } from './Key';
 export { default as MediumIcon } from './Medium';
