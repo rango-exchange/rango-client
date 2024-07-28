@@ -1,5 +1,6 @@
-import { QueueID, QueueName } from './manager';
-import Queue, { QueueState, Task } from './queue';
+import type { QueueID, QueueName } from './manager';
+import type { QueueState, Task } from './queue';
+import type Queue from './queue';
 
 export enum Status {
   PENDING = 'PENDING',
@@ -10,7 +11,7 @@ export enum Status {
   BLOCKED = 'BLOCKED',
 }
 
-export const SYNC_POLLING_INTERVAL = 5_000
+export const SYNC_POLLING_INTERVAL = 5_000;
 
 export type QueueStorage = Record<string, unknown>;
 
