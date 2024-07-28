@@ -224,7 +224,7 @@ export const useQuoteStore = createSelectors(
         set((state) => ({
           inputAmount: amount,
           ...(!amount && {
-            outputAmount: new BigNumber(0),
+            outputAmount: null,
             outputUsdValue: new BigNumber(0),
             selectedQuote: null,
           }),
