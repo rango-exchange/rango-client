@@ -3,6 +3,7 @@ import type { Token } from 'rango-sdk';
 import { i18n } from '@lingui/core';
 import {
   Button,
+  CustomTokensDarkIcon,
   CustomTokensIcon,
   DeleteIcon,
   Divider,
@@ -44,7 +45,8 @@ const DeleteIconButton = styled(IconButton, {
 });
 export function CustomTokensPage() {
   const [searchedFor, setSearchedFor] = useState<string>('');
-  const { customTokens, deleteCustomToken } = useAppStore();
+  const { customTokens, deleteCustomToken, theme } = useAppStore();
+  const isDarkTheme = theme === 'dark';
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [selectedToken, setSelectedToken] = useState<Token>();
@@ -89,7 +91,11 @@ export function CustomTokensPage() {
             </>
           ) : (
             <NotFoundContent>
-              <CustomTokensIcon size={200} />
+              {isDarkTheme ? (
+                <CustomTokensDarkIcon size={200} />
+              ) : (
+                <CustomTokensIcon size={200} />
+              )}
               <NotFound
                 hasIcon={false}
                 title={i18n.t('No custom tokens')}

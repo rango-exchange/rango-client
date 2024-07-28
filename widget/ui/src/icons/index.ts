@@ -15,6 +15,7 @@ export { default as CreditCardIcon } from './CreditCard';
 export { default as CustomTokensIcon } from './CustomTokens';
 export { default as CustomTokenIcon } from './CustomToken';
 export { default as CustomColorsIcon } from './CustomColors';
+export { default as CustomTokensDarkIcon } from './CustomTokensDark';
 export { default as DarkModeIcon } from './DarkMode';
 export { default as DeleteIcon } from './Delete';
 export { default as DesktopIcon } from './Desktop';
