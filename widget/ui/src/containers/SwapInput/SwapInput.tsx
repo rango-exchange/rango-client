@@ -115,7 +115,6 @@ export function SwapInput(props: SwapInputPropTypes) {
                   size="large"
                   placeholder="0"
                   variant="ghost"
-                  isZero={props.price.value === '0'}
                   min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
