@@ -13,6 +13,7 @@ export { default as CopyIcon } from './Copy';
 export { default as CosmosCategoryIcon } from './CosmosCategory';
 export { default as CreditCardIcon } from './CreditCard';
 export { default as CustomTokensIcon } from './CustomTokens';
+export { default as CustomTokenIcon } from './CustomToken';
 export { default as CustomColorsIcon } from './CustomColors';
 export { default as DarkModeIcon } from './DarkMode';
 export { default as DeleteIcon } from './Delete';

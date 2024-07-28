@@ -6,6 +6,7 @@ import {
   AutoThemeIcon,
   BridgesIcon,
   ChevronRightIcon,
+  CustomTokenIcon,
   DarkModeIcon,
   Divider,
   ExchangeIcon,
@@ -101,6 +102,7 @@ export function SettingsLists() {
   const isThemeHidden = isFeatureHidden('theme', features);
   const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
   const isLanguageHidden = isFeatureHidden('language', features);
+  const isCustomTokensHidden = isFeatureHidden('customTokens', features);
 
   const infiniteApprove = useAppStore().infiniteApprove;
   const toggleInfiniteApprove = useAppStore().toggleInfiniteApprove;
@@ -202,7 +204,7 @@ export function SettingsLists() {
         <ChevronRightIcon color="black" />
       </>
     ),
-    start: <ExchangeIcon color="gray" size={16} />,
+    start: <CustomTokenIcon color="gray" size={16} />,
     onClick: () => navigate(navigationRoutes.customTokens),
   };
   const languageItem = {
@@ -281,7 +283,9 @@ export function SettingsLists() {
   const settingItems: ListPropTypes['items'] = isLiquidityHidden
     ? []
     : [bridgeItem, exchangeItem];
-  settingItems.push(customTokensItem);
+  if (!isCustomTokensHidden) {
+    settingItems.push(customTokensItem);
+  }
   if (!isLanguageHidden) {
     settingItems.push(languageItem);
   }
