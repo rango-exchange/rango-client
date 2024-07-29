@@ -4,7 +4,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
 import { useLanguage } from '../../hooks/useLanguage';
-import { useUpdateQuoteInput } from '../../hooks/useUpdateQuoteInput/useUpdateQuoteInput';
+import { useUpdateQuoteInputs } from '../../hooks/useUpdateQuoteInputs/useUpdateQuoteInputs';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
@@ -36,7 +36,9 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const resetLanguage = useLanguage().resetLanguage;
   const notifications = useNotificationStore().getNotifications();
   const clearNotifications = useNotificationStore().clearNotifications;
-  const updateQuoteInput = useUpdateQuoteInput();
+  const updateQuoteInputs = useUpdateQuoteInputs();
+  const { fromBlockchain, toBlockchain, fromToken, toToken, inputAmount } =
+    useQuoteStore();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {
@@ -62,7 +64,26 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       clearAll: clearNotifications,
     },
     quote: {
-      updateQuoteInput,
+      quoteInputs: {
+        fromBlockchain: fromBlockchain?.name ?? null,
+        fromToken: fromToken
+          ? {
+              symbol: fromToken.symbol,
+              blockchain: fromToken.blockchain,
+              address: fromToken.address,
+            }
+          : null,
+        toBlockchain: toBlockchain?.name ?? null,
+        toToken: toToken
+          ? {
+              symbol: toToken.symbol,
+              blockchain: toToken.blockchain,
+              address: toToken.address,
+            }
+          : null,
+        requestAmount: inputAmount,
+      },
+      updateQuoteInputs,
     },
   };
 

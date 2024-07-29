@@ -133,10 +133,12 @@ export type QuoteErrorResponse = {
   options: QuoteError;
 };
 
-export type UpdateQuoteInput = (params: {
-  fromBlockchain?: string | null;
-  toBlockchain?: string | null;
-  fromToken?: Asset | null;
-  toToken?: Asset | null;
-  requestAmount?: string;
-}) => void;
+export type QuoteInputs = {
+  fromBlockchain: string | null;
+  toBlockchain: string | null;
+  fromToken: Asset | null;
+  toToken: Asset | null;
+  requestAmount: string;
+};
+
+export type UpdateQuoteInputs = (params: Partial<QuoteInputs>) => void;
