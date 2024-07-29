@@ -5,24 +5,46 @@ import React from 'react';
 
 import { Typography } from '../Typography';
 
-import { Container, globalHeaderStyles, Suffix } from './Header.styles';
+import { Container, globalHeaderStyles, Prefix, Suffix } from './Header.styles';
 
 export function Header({
   prefix,
   suffix,
   title,
+  disableCurves,
+  titlePosition,
+  transparent,
+  css,
 }: PropsWithChildren<PropTypes>) {
   globalHeaderStyles();
 
+  const renderTitle = () => {
+    if (!title) {
+      return null;
+    } else if (typeof title === 'string') {
+      return (
+        <Typography variant="headline" size="small">
+          {title}
+        </Typography>
+      );
+    }
+    return title;
+  };
+
   return (
-    <Container>
-      {prefix}
-      <Typography variant="headline" size="small">
-        {title}
-      </Typography>
+    <Container
+      titlePosition={titlePosition || 'center'}
+      transparent={!!transparent}
+      css={css}>
+      <Prefix>{prefix}</Prefix>
+      {renderTitle()}
       <Suffix>{suffix}</Suffix>
-      <div className="rng-curve-left"></div>
-      <div className="rng-curve-right"></div>
+      {!disableCurves && (
+        <>
+          <div className="rng-curve-left" />
+          <div className="rng-curve-right" />
+        </>
+      )}
     </Container>
   );
 }

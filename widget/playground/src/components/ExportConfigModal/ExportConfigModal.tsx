@@ -7,9 +7,9 @@ import {
   CloseIcon,
   Divider,
   ExternalLinkIcon,
+  Header,
   KeyIcon,
   Modal,
-  ModalHeader,
   Tabs,
   TextField,
   Typography,
@@ -70,16 +70,23 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
       }}
       hasWatermark={false}
       header={
-        <ModalHeader>
-          <Typography variant="headline" size="large">
-            Export Code
-          </Typography>
-          <ModalFlex>
-            <StyledIconButton onClick={onClose} variant="ghost">
-              <CloseIcon color="gray" size={22} />
-            </StyledIconButton>
-          </ModalFlex>
-        </ModalHeader>
+        <Header
+          transparent
+          disableCurves
+          title={
+            <Typography variant="headline" size="large">
+              Export Code
+            </Typography>
+          }
+          titlePosition="left"
+          suffix={
+            <ModalFlex>
+              <StyledIconButton onClick={onClose} variant="ghost">
+                <CloseIcon color="gray" size={22} />
+              </StyledIconButton>
+            </ModalFlex>
+          }
+        />
       }
       open={open}
       onClose={onClose}
