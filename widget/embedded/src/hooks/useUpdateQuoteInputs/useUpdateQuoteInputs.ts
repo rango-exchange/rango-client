@@ -1,10 +1,10 @@
-import type { UpdateQuoteInput } from '../../types';
+import type { UpdateQuoteInputs } from '../../types';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 
 // This hook provides a function to update quote inputs using fewer and simpler parameters.
-export function useUpdateQuoteInput() {
+export function useUpdateQuoteInputs() {
   const { findToken } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
@@ -16,7 +16,7 @@ export function useUpdateQuoteInput() {
     setInputAmount,
   } = useQuoteStore();
 
-  const updateQuoteInput: UpdateQuoteInput = (params) => {
+  const updateQuoteInputs: UpdateQuoteInputs = (params) => {
     const { fromBlockchain, fromToken, toBlockchain, toToken, requestAmount } =
       params;
     const meta = { blockchains, tokens };
@@ -46,5 +46,5 @@ export function useUpdateQuoteInput() {
     }
   };
 
-  return updateQuoteInput;
+  return updateQuoteInputs;
 }
