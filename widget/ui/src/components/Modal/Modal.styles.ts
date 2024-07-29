@@ -48,7 +48,7 @@ export const ModalContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,
-  transform: 'translateY(100%)',
+  transform: 'translateY(100vh)',
   transition: 'transform .45s ease-in-out',
 
   variants: {
@@ -61,7 +61,7 @@ export const ModalContainer = styled('div', {
       right: {
         borderTopRightRadius: '0',
         borderBottomRightRadius: '0',
-        transform: 'translateX(100%)',
+        transform: 'translateX(100vw)',
       },
     },
     active: {
