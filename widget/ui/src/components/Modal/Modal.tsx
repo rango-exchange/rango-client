@@ -19,9 +19,6 @@ import {
   ModalHeader,
 } from './Modal.styles';
 
-const CLOSED_DELAY = 600;
-const OPEN_DELAY = 100;
-
 export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   const {
     title,
@@ -38,12 +35,12 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     footer,
     hasWatermark = true,
     hasCloseIcon = true,
-    transitionDuration,
   } = props;
 
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -52,40 +49,29 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
       onClose();
     }
   };
+
+  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    if (!open && ref.current === e.target) {
+      setIsMount(false);
+      container.style.removeProperty('overflow');
+    }
+  };
+
+  useEffect(() => {
+    if (isMount) {
+      setActive(true);
+    }
+  }, [isMount]);
+
   useEffect(() => {
     if (container) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
-        timeoutRef.current = setTimeout(
-          () => {
-            setActive(true);
-          },
-          typeof transitionDuration?.enter !== 'undefined'
-            ? transitionDuration?.enter
-            : OPEN_DELAY
-        );
       } else {
         setActive(false);
-        timeoutRef.current = setTimeout(
-          () => {
-            setIsMount(false);
-            container.style.removeProperty('overflow');
-          },
-          typeof transitionDuration?.exit !== 'undefined'
-            ? transitionDuration?.exit
-            : CLOSED_DELAY
-        );
       }
     }
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
   }, [open, container]);
 
   return (
@@ -101,7 +87,9 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             <ModalContainer
               active={active}
               css={styles?.container}
-              anchor={anchor}>
+              anchor={anchor}
+              onTransitionEnd={handleTransitionEnd}
+              ref={ref}>
               {header ?? (
                 <ModalHeader noTitle={!title && dismissible && !prefix}>
                   {prefix}
