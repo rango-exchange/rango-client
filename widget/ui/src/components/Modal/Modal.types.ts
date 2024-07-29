@@ -24,8 +24,4 @@ export interface ModalPropTypes {
   footer?: React.ReactNode;
   hasWatermark?: boolean;
   hasCloseIcon?: boolean;
-  transitionDuration?: {
-    enter?: number;
-    exit?: number;
-  };
 }

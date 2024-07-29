@@ -20,7 +20,8 @@ export function Header() {
   const config = useConfigStore.use.config();
   const { addToast } = useToast();
 
-  const toggleModal = () => setOpenExportModal((prev) => !prev);
+  const openModal = () => setOpenExportModal(true);
+  const closeModal = () => setOpenExportModal(false);
 
   return (
     <HeaderContainer>
@@ -48,12 +49,12 @@ export function Header() {
         type="secondary"
         size="medium"
         variant="contained"
-        onClick={toggleModal}>
+        onClick={openModal}>
         Export Code
       </StyledButton>
       <ExportConfigModal
         open={openExportModal}
-        onClose={toggleModal}
+        onClose={closeModal}
         config={config}
       />
     </HeaderContainer>
