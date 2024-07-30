@@ -186,7 +186,7 @@ export function HistoryPage() {
                     : i18n.t('No transactions')
                 }
                 titleColor={!searchedFor ? '$info' : undefined}
-                hasIcon={!!searchedFor}
+                icon={!searchedFor && <></>}
                 description={
                   searchedFor
                     ? i18n.t('Try using different keywords')
