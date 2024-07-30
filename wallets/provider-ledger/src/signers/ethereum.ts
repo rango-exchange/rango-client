@@ -15,7 +15,6 @@ import { getDerivationPath } from '../state';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
-    // TODO: Should be implemented using eth.signPersonalMessage
     try {
       const transport = await transportConnect();
 
