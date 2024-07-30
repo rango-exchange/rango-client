@@ -3,17 +3,18 @@
   "version": "0.17.0",
   "license": "MIT",
   "private": true,
-  "source": "public/index.html",
+  "source": "index.html",
   "main": "dist/index.html",
+  "type": "module",
   "targets": {
     "main": false
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel -p 3002 --cache-dir=.parcel-cache --no-cache",
-    "build": "parcel build --cache-dir=.parcel-cache",
+    "dev": "vite --force",
+    "build": "vite build",    
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
-    "clean": "rimraf .parcel-cache && rimraf dist",
+    "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
