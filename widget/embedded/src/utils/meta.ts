@@ -1,5 +1,12 @@
 import type { TokenHash } from '../types';
-import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
+
+import {
+  type Asset,
+  type BlockchainMeta,
+  type SwapperMeta,
+  type Token,
+  TransactionType,
+} from 'rango-sdk';
 
 export function getBlockchainDisplayNameFor(
   blockchainName: string,
@@ -60,12 +67,17 @@ export function createTokenHash(asset: Asset): TokenHash {
   return `${asset.blockchain}-${asset.symbol}-${asset.address ?? ''}`;
 }
 
-export function isValidEvmAddress(address: string) {
-  const evmAddressPattern = /^0x[a-fA-F0-9]{40}$/;
-  return evmAddressPattern.test(address);
-}
-
-export function isValidSolanaAddress(address: string) {
-  const solanaAddressPattern = /^[1-9A-HJ-NP-Za-km-z]{44}$/;
-  return solanaAddressPattern.test(address);
+export function isValidTokenAddress(
+  blockchain: BlockchainMeta,
+  address: string
+) {
+  const tokenAddressPattern = {
+    [TransactionType.EVM]: /^[1-9A-HJ-NP-Za-km-z]{44}$/,
+    [TransactionType.SOLANA]: /^[1-9A-HJ-NP-Za-km-z]{44}$/,
+  };
+  return (
+    (blockchain.type === TransactionType.EVM ||
+      blockchain.type === TransactionType.SOLANA) &&
+    tokenAddressPattern[blockchain.type].test(address)
+  );
 }

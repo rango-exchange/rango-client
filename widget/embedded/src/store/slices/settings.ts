@@ -46,7 +46,7 @@ export interface SettingsSlice {
   ) => void;
   addPreferredBlockchain: (blockchain: string) => void;
   updateSettings: (config: WidgetConfig) => void;
-  setCustomTokens: (token: Token) => void;
+  setCustomToken: (token: Token) => void;
   deleteCustomToken: (token: Token) => void;
 }
 
@@ -139,7 +139,7 @@ export const createSettingsSlice: StateCreator<
     set((state) => ({
       infiniteApprove: !state.infiniteApprove,
     })),
-  setCustomTokens: (token) =>
+  setCustomToken: (token) =>
     set((state) => ({
       customTokens: [token, ...state.customTokens],
     })),

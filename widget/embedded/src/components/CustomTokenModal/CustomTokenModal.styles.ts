@@ -6,17 +6,32 @@ export const StyledLink = styled('a', {
   [`.${darkTheme} &`]: {
     color: '$colors$neutral900',
   },
-  '&:hover': {
-    color: '$colors$secondary550',
-    '& svg': {
-      color: '$colors$secondary550',
-    },
-  },
+
   '& svg': {
     marginLeft: '$4',
     color: '$colors$neutral700',
     [`.${darkTheme} &`]: {
       color: '$colors$neutral900',
+    },
+  },
+
+  variants: {
+    hasHover: {
+      true: {
+        '&:hover': {
+          color: '$colors$secondary550',
+          [`.${darkTheme} &`]: {
+            color: '$colors$secondary500',
+          },
+          '& svg': {
+            color: '$colors$secondary550',
+            [`.${darkTheme} &`]: {
+              color: '$colors$secondary500',
+            },
+          },
+        },
+      },
+      false: {},
     },
   },
 });

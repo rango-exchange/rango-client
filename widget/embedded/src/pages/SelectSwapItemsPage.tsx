@@ -1,14 +1,14 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
-import { Divider } from '@rango-dev/ui';
+import { Divider, styled, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainsSection } from '../components/BlockchainsSection';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
-import { TokenListContent } from '../components/TokenList';
+import { TokenList } from '../components/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
@@ -18,6 +18,13 @@ import { useWalletsStore } from '../store/wallets';
 interface PropTypes {
   type: 'source' | 'destination';
 }
+
+export const TokenContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  overflow: 'hidden',
+});
 
 export function SelectSwapItemsPage(props: PropTypes) {
   const { type } = props;
@@ -95,24 +102,30 @@ export function SelectSwapItemsPage(props: PropTypes) {
           onChange={(event) => setSearchedFor(event.target.value)}
         />
         <Divider size={16} />
-        <TokenListContent
-          list={tokens}
-          selectedBlockchain={selectedBlockchainName}
-          searchedFor={searchedFor}
-          type={type}
-          onChange={(token) => {
-            updateToken(token);
+        <TokenContainer>
+          <Typography variant="label" size="large">
+            {i18n.t('Select Token')}
+          </Typography>
+          <Divider size={4} />
+          <TokenList
+            list={tokens}
+            selectedBlockchain={selectedBlockchainName}
+            searchedFor={searchedFor}
+            type={type}
+            onChange={(token) => {
+              updateToken(token);
 
-            const tokenBlockchain = blockchains.find(
-              (chain) => token.blockchain === chain.name
-            );
-            if (tokenBlockchain) {
-              updateBlockchain(tokenBlockchain);
-            }
+              const tokenBlockchain = blockchains.find(
+                (chain) => token.blockchain === chain.name
+              );
+              if (tokenBlockchain) {
+                updateBlockchain(tokenBlockchain);
+              }
 
-            navigateBack();
-          }}
-        />
+              navigateBack();
+            }}
+          />
+        </TokenContainer>
       </PageContainer>
     </Layout>
   );

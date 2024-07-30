@@ -39,11 +39,11 @@ export function useFetchCustomToken(): UseFetchCustomToken {
     });
   };
 
-  const handleTokenNotFoundError = () => {
+  const handleTokenNotFoundError = (blockchain: string) => {
     setError({
       title: i18n.t('Token Not Found'),
       message: i18n.t(
-        'Sorry, no token was found on Binance blockchain with the provided address. please make sure you have entered the right token address.'
+        `Sorry, no token was found on ${blockchain} blockchain with the provided address. please make sure you have entered the right token address.`
       ),
       type: 'TOKEN_ERROR',
     });
@@ -75,7 +75,7 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         contentType.includes('application/json') &&
         (await res.json());
       if (!response || response.error) {
-        handleTokenNotFoundError();
+        handleTokenNotFoundError(blockchain);
         return undefined;
       }
 

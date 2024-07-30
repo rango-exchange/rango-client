@@ -4,12 +4,13 @@ import {
   Button,
   darkTheme,
   Divider,
+  DoneIcon,
   MessageBox,
   styled,
   TextField,
   Typography,
 } from '@rango-dev/ui';
-import { type Token, TransactionType } from 'rango-sdk';
+import { type Token } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ import { useFetchCustomToken } from '../hooks/useFetchCustomToken';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { getContainer } from '../utils/common';
-import { isValidEvmAddress, isValidSolanaAddress } from '../utils/meta';
+import { isValidTokenAddress } from '../utils/meta';
 
 const Content = styled('div', {
   display: 'flex',
@@ -47,20 +48,17 @@ export function AddCustomTokenPage() {
   const {
     selectedBlockchainForCustomToken,
     setSelectedBlockchainForCustomToken,
-    setCustomTokens,
+    setCustomToken,
   } = useAppStore();
   const [address, setAddress] = useState('');
-  const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
-  const [openImportModal, setOpenImportModal] = useState<boolean>(false);
-  const [customToken, setCustomToken] = useState<Token>();
+  const [isOpenErrorModal, setIsOpenErrorModal] = useState<boolean>(false);
+  const [isOpenImportModal, setIsOpenImportModal] = useState<boolean>(false);
+  const [token, setToken] = useState<Token>();
   const { fetchCustomToken, loading, error } = useFetchCustomToken();
 
   const isValidAddress =
     !!selectedBlockchainForCustomToken &&
-    ((selectedBlockchainForCustomToken.type === TransactionType.SOLANA &&
-      isValidSolanaAddress(address)) ||
-      (selectedBlockchainForCustomToken.type === TransactionType.EVM &&
-        isValidEvmAddress(address)));
+    isValidTokenAddress(selectedBlockchainForCustomToken, address);
   const isImportDisabled =
     !selectedBlockchainForCustomToken || !address || !isValidAddress;
 
@@ -71,8 +69,8 @@ export function AddCustomTokenPage() {
         tokenAddress: address,
       });
       if (!!res) {
-        setCustomToken(res);
-        setOpenImportModal(true);
+        setToken(res);
+        setIsOpenImportModal(true);
       }
     }
   };
@@ -81,7 +79,7 @@ export function AddCustomTokenPage() {
       setSelectedBlockchainForCustomToken(null);
       setAddress('');
     }
-    setOpenErrorModal(false);
+    setIsOpenErrorModal(false);
   };
 
   const handleErrorModalButtonClick = async () => {
@@ -93,7 +91,7 @@ export function AddCustomTokenPage() {
 
   useEffect(() => {
     if (!!error) {
-      setOpenErrorModal(true);
+      setIsOpenErrorModal(true);
     }
   }, [error]);
   return (
@@ -125,6 +123,10 @@ export function AddCustomTokenPage() {
               placeholder={i18n.t('Enter token address')}
               size="large"
               value={address}
+              suffix={
+                !!address &&
+                isValidAddress && <DoneIcon color="success" size={12} />
+              }
               onChange={(e) => setAddress(e.target.value)}
             />
             {!isValidAddress && !!address && (
@@ -134,6 +136,7 @@ export function AddCustomTokenPage() {
               </>
             )}
           </div>
+          <Divider size={20} />
 
           <Button
             disabled={isImportDisabled}
@@ -146,7 +149,7 @@ export function AddCustomTokenPage() {
           </Button>
         </Content>
         <WatermarkedModal
-          open={openErrorModal}
+          open={isOpenErrorModal}
           dismissible
           onClose={closeErrorModal}
           container={getContainer()}>
@@ -172,15 +175,16 @@ export function AddCustomTokenPage() {
         {!!selectedBlockchainForCustomToken && (
           <CustomTokenModal
             blockchain={selectedBlockchainForCustomToken}
-            token={customToken}
+            token={token}
             handleSubmitClick={() => {
-              if (customToken) {
-                setCustomTokens(customToken);
+              if (token) {
+                setCustomToken(token);
+                setIsOpenImportModal(false);
                 navigateBack();
               }
             }}
-            onClose={() => setOpenImportModal(false)}
-            open={openImportModal}
+            onClose={() => setIsOpenImportModal(false)}
+            open={isOpenImportModal}
           />
         )}
       </PageContainer>

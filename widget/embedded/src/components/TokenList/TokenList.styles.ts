@@ -48,13 +48,6 @@ export const tokenAddressStyles = css({
 export const tokenWithoutNameStyles = css({});
 export const usdValueStyles = css();
 
-export const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  overflow: 'hidden',
-});
-
 export const Title = styled('div', {
   display: 'flex',
   alignItems: 'center',

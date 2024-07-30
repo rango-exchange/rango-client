@@ -21,7 +21,7 @@ import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useAppStore } from '../store/AppStore';
-import { getContainer } from '../utils/common';
+import { containsText, getContainer } from '../utils/common';
 
 const Content = styled('div', {
   display: 'flex',
@@ -48,12 +48,20 @@ export function CustomTokensPage() {
   const { customTokens, deleteCustomToken, theme } = useAppStore();
   const isDarkTheme = theme === 'dark';
   const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
   const [selectedToken, setSelectedToken] = useState<Token>();
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
   };
+
+  const filterCustomTokens = () =>
+    customTokens.filter(
+      (token) =>
+        containsText(token.symbol, searchedFor) ||
+        containsText(token.address || '', searchedFor) ||
+        containsText(token.name || '', searchedFor)
+    );
 
   return (
     <Layout
@@ -75,13 +83,13 @@ export function CustomTokensPage() {
               />
               <Divider size={16} />
               <TokenList
-                list={customTokens}
+                list={filterCustomTokens()}
                 searchedFor={searchedFor}
                 endTokensItem={(token) => (
                   <DeleteIconButton
                     variant="ghost"
                     onClick={() => {
-                      setOpen(true);
+                      setIsOpenDeleteModal(true);
                       setSelectedToken(token);
                     }}>
                     <DeleteIcon size={12} color="gray" />
@@ -91,13 +99,14 @@ export function CustomTokensPage() {
             </>
           ) : (
             <NotFoundContent>
-              {isDarkTheme ? (
-                <CustomTokensDarkIcon size={200} />
-              ) : (
-                <CustomTokensIcon size={200} />
-              )}
               <NotFound
-                hasIcon={false}
+                icon={
+                  isDarkTheme ? (
+                    <CustomTokensDarkIcon size={200} />
+                  ) : (
+                    <CustomTokensIcon size={200} />
+                  )
+                }
                 title={i18n.t('No custom tokens')}
                 description={i18n.t(
                   'press the button to add your custom token'
@@ -115,9 +124,9 @@ export function CustomTokensPage() {
           </Button>
         </Content>
         <WatermarkedModal
-          open={open}
+          open={isOpenDeleteModal}
           dismissible
-          onClose={() => setOpen(false)}
+          onClose={() => setIsOpenDeleteModal(false)}
           container={getContainer()}>
           <MessageBox
             title={i18n.t('Delete Custom Token')}
@@ -133,7 +142,7 @@ export function CustomTokensPage() {
               size="large"
               onClick={() => {
                 selectedToken && deleteCustomToken(selectedToken);
-                setOpen(false);
+                setIsOpenDeleteModal(false);
               }}>
               {i18n.t('Yes, Delete it')}
             </Button>
@@ -143,7 +152,7 @@ export function CustomTokensPage() {
               variant="outlined"
               type="primary"
               size="large"
-              onClick={() => setOpen(false)}>
+              onClick={() => setIsOpenDeleteModal(false)}>
               {i18n.t('No, Continue')}
             </Button>
           </MessageBox>

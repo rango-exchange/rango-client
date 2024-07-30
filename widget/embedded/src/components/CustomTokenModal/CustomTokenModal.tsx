@@ -33,32 +33,39 @@ export function CustomTokenModal(props: PropTypes) {
           {blockchain.displayName}
         </Typography>
         <Divider size={4} />
+
         <Typography variant="body" size="medium">
-          <StyledLink
-            href={
-              !!blockchain.info && blockchain?.type !== 'COSMOS'
-                ? blockchain.info.addressUrl
-                    .split('{wallet}')
-                    .join(token?.address || '')
-                : ''
-            }
-            target="_blank"
-            rel="nofollow noreferrer">
-            {token?.address}
-            <ExternalLinkIcon size={12} color="gray" />
-          </StyledLink>
+          {token?.address &&
+          blockchain?.type !== 'COSMOS' &&
+          !!blockchain?.info?.addressUrl ? (
+            <StyledLink
+              hasHover
+              href={blockchain.info.addressUrl
+                .split('{wallet}')
+                .join(token?.address || '')}
+              target="_blank"
+              rel="nofollow noreferrer">
+              {token?.address}
+              <ExternalLinkIcon size={12} color="gray" />
+            </StyledLink>
+          ) : (
+            <StyledLink>{token?.address}</StyledLink>
+          )}
         </Typography>
+
         <Divider size={4} />
 
-        <Typography className="_coin-source" variant="body" size="xsmall">
-          via{' '}
-          <Typography
-            className="_coin-source-name"
-            variant="body"
-            size="xsmall">
-            {token?.coinSource}
+        {token?.coinSource && (
+          <Typography className="_coin-source" variant="body" size="xsmall">
+            {i18n.t('via')}{' '}
+            <Typography
+              className="_coin-source-name"
+              variant="body"
+              size="xsmall">
+              {token?.coinSource}
+            </Typography>
           </Typography>
-        </Typography>
+        )}
         <Divider size={'32'} />
 
         <Typography

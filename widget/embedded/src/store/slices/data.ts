@@ -18,7 +18,10 @@ import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
-import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
+import {
+  isFeatureHidden,
+  sortLiquiditySourcesByGroupTitle,
+} from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
 import { matchTokensFromConfigWithMeta } from '../utils';
 
@@ -138,9 +141,14 @@ export const createDataSlice: StateCreator<
       });
       cacheService.set(cacheKey, supportedTokens);
     }
+    const isCustomTokensHidden = isFeatureHidden(
+      'customTokens',
+      config.features
+    );
 
-    supportedTokens = supportedTokens.concat(customTokens);
-    console.log({ supportedTokens });
+    supportedTokens = isCustomTokensHidden
+      ? supportedTokens
+      : supportedTokens.concat(customTokens);
 
     const blockchains = get().blockchains({
       type: options.type,
