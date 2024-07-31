@@ -46,14 +46,6 @@ import {
   WalletImageContainer,
 } from './WalletList.styles';
 
-interface WalletNamespacesModalState {
-  open: boolean;
-  providerType: string;
-  providerImage: string;
-  availableNamespaces?: Namespace[];
-  singleNamespace?: boolean;
-}
-
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore, onConnect } =
@@ -70,8 +62,6 @@ export function WalletList(props: PropTypes) {
     useState(false);
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
-  const [namespacesModalState, setNamespacesModalState] =
-    useState<WalletNamespacesModalState | null>(null);
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const {
@@ -119,23 +109,13 @@ export function WalletList(props: PropTypes) {
     }
   };
 
-  const handleOpenNamespacesModal = (wallet: WalletInfoWithExtra) => {
-    setNamespacesModalState({
-      open: true,
-      providerType: wallet.type,
-      providerImage: wallet.image,
-      availableNamespaces: wallet.namespaces,
-      singleNamespace: wallet.singleNamespace,
-    });
-  };
-
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
     if (isSingleWalletActive(list, config.multiWallets)) {
       return;
     }
 
     const wallet = sortedList.find(
-      (wallet) => wallet.type === namespacesModalState?.providerType
+      (wallet) => wallet.type === getState().namespace?.providerType
     );
     handleNamespace(wallet!, selectedNamespaces).catch(catchErrorOnHandle);
   };
@@ -232,7 +212,10 @@ export function WalletList(props: PropTypes) {
           } else if (!!wallet.namespaces && !conciseAddress) {
             // wallet is connected on a different namespace
             await handleDisconnect(wallet.type);
-            handleOpenNamespacesModal(wallet);
+
+            handleConnect(wallet, handleConnectParams).catch(
+              catchErrorOnHandle
+            );
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({
               walletType: wallet.type,
