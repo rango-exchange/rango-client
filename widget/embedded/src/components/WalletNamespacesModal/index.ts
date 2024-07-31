@@ -1,1 +1,0 @@
-export { WalletNamespacesModal } from './WalletNamespacesModal';

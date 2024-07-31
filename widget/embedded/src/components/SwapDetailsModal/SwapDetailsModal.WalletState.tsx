@@ -8,8 +8,10 @@ import React, { useState } from 'react';
 
 import { getContainer } from '../../utils/common';
 import { mapStatusToWalletState } from '../../utils/wallets';
-import { WalletDerivationPathModal } from '../WalletDerivationPathModal';
-import { WalletNamespacesModal } from '../WalletNamespacesModal';
+import {
+  WalletDerivationPathModal,
+  WalletNamespacesModal,
+} from '../WalletStatefulConnect';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
 
@@ -87,6 +89,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             namespace: walletInfo.namespaces[0],
           });
         } else {
+          //
           connect(walletType).catch((error) => debug(error));
         }
       } else {

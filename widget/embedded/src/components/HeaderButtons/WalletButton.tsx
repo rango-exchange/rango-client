@@ -14,7 +14,7 @@ import {
 } from './HeaderButtons.styles';
 
 function WalletButton(props: PropTypes) {
-  const { list } = useWalletList({});
+  const { list } = useWalletList();
   const connectedWallets = list.filter(
     (wallet) => wallet.state === 'connected'
   );
