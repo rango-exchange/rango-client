@@ -17,6 +17,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
+import { useObserveBalanceChanges } from '../../hooks/useObserveBalanceChanges';
 import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
 import { createTintsAndShades } from '../../utils/colors';
@@ -99,6 +100,11 @@ export function TokenList(props: PropTypes) {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const { getBalanceFor, loading: loadingWallet } = useWalletsStore();
   const { isTokenPinned } = useAppStore();
+  /**
+   * We can create the key by hashing the list of tokens,
+   * but if the list is large, the memory usage and cost of comparisons may be high.
+   */
+  const { balanceKey } = useObserveBalanceChanges(selectedBlockchain);
 
   const loadNextPage = () => {
     setTokens(list.slice(0, tokens.length + PAGE_SIZE));
@@ -110,7 +116,7 @@ export function TokenList(props: PropTypes) {
 
   useEffect(() => {
     setTokens(list.slice(0, PAGE_SIZE));
-  }, [list.length, selectedBlockchain]);
+  }, [list.length, selectedBlockchain, balanceKey]);
 
   const renderList = () => {
     if (!tokens.length && !!searchedFor) {
@@ -244,7 +250,7 @@ export function TokenList(props: PropTypes) {
           );
         }}
         totalCount={tokens.length}
-        key={`${selectedBlockchain}-${searchedFor}`}
+        key={`${selectedBlockchain}-${searchedFor}-${balanceKey}`}
       />
     );
   };
