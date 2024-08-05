@@ -51,6 +51,13 @@ export async function executeSolanaTransaction(
   const DefaultSolanaSigner: SolanaWeb3Signer = async (
     solanaWeb3Transaction
   ) => {
+    if (!solanaProvider.publicKey) {
+      throw new SignerError(
+        SignerErrorCode.SIGN_TX_ERROR,
+        'Please make sure the required account is connected properly.'
+      );
+    }
+
     if (tx.from !== solanaProvider.publicKey?.toString()) {
       throw new SignerError(
         SignerErrorCode.SIGN_TX_ERROR,
