@@ -25,6 +25,7 @@ import * as phantom from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
+import * as solflare from '@rango-dev/provider-solflare';
 import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
@@ -106,5 +107,6 @@ export const allProviders = (options?: Options) => {
     ledger,
     rabby,
     trezor,
+    solflare,
   ];
 };

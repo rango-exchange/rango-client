@@ -84,6 +84,7 @@ export enum WalletTypes {
   Rabby = 'rabby',
   TOMO = 'tomo',
   TREZOR = 'trezor',
+  SOLFLARE = 'solflare',
 }
 
 export enum Networks {
