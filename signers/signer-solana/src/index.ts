@@ -1,5 +1,6 @@
 export { DefaultSolanaSigner } from './signer';
 export {
+  executeSolanaTransaction,
   generalSolanaTransactionExecutor,
   prepareTransaction,
   getSolanaConnection,
