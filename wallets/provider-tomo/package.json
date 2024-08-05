@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tomo",
-  "version": "0.2.2-next.2",
+  "version": "0.2.2-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.28.1-next.1",
-    "@rango-dev/wallets-shared": "^0.35.2-next.1",
+    "@rango-dev/wallets-shared": "^0.35.2-next.2",
     "rango-types": "^0.1.69"
   },
   "publishConfig": {
