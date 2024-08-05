@@ -18,7 +18,13 @@ import { Container, List } from './BlockchainList.styles';
 import { LoadingBlockchainList } from './LoadingBlockchainList';
 
 export function BlockchainList(props: PropTypes) {
-  const { list, searchedFor, onChange, blockchainCategory } = props;
+  const {
+    list,
+    searchedFor,
+    onChange,
+    blockchainCategory,
+    showLabel = true,
+  } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
   const { fetchStatus } = useAppStore();
 
@@ -62,10 +68,14 @@ export function BlockchainList(props: PropTypes) {
 
   return (
     <Container>
-      <Typography variant="label" size="large">
-        {i18n.t('Select Blockchain')}
-      </Typography>
-      <Divider size={4} />
+      {showLabel && (
+        <>
+          <Typography variant="label" size="large">
+            {i18n.t('Select Blockchain')}
+          </Typography>
+          <Divider size={4} />
+        </>
+      )}
       {fetchStatus === 'loading' && <LoadingBlockchainList />}
       {fetchStatus === 'success' && renderList()}
     </Container>

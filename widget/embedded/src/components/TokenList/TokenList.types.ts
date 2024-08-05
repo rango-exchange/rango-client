@@ -1,11 +1,13 @@
 import type { Token } from 'rango-sdk';
+import type { ReactElement } from 'react';
 
 export interface PropTypes {
   list: Token[];
   searchedFor?: string;
-  onChange: (token: Token) => void;
+  onChange?: (token: Token) => void;
   selectedBlockchain?: string;
-  type: 'source' | 'destination';
+  type?: 'source' | 'destination';
+  endTokensItem?: (token: Token) => ReactElement;
 }
 
 export interface LoadingTokenListProps {

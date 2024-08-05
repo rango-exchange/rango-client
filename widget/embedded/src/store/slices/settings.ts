@@ -1,6 +1,6 @@
 import type { ConfigSlice } from './config';
 import type { WidgetConfig } from '../../types';
-import type { SwapperMeta } from 'rango-sdk';
+import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import { type Language } from '@rango-dev/ui';
@@ -25,7 +25,10 @@ export interface SettingsSlice {
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
+  customTokens: Token[];
+  selectedBlockchainForCustomToken: BlockchainMeta | null;
 
+  setSelectedBlockchainForCustomToken: (chian: BlockchainMeta | null) => void;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
@@ -43,6 +46,8 @@ export interface SettingsSlice {
   ) => void;
   addPreferredBlockchain: (blockchain: string) => void;
   updateSettings: (config: WidgetConfig) => void;
+  setCustomTokens: (token: Token) => void;
+  deleteCustomToken: (token: Token) => void;
 }
 
 export const createSettingsSlice: StateCreator<
@@ -61,6 +66,8 @@ export const createSettingsSlice: StateCreator<
   affiliateRef: null,
   affiliatePercent: null,
   affiliateWallets: null,
+  customTokens: [],
+  selectedBlockchainForCustomToken: null,
 
   addPreferredBlockchain: (blockchain) => {
     const currentPreferredBlockchains = get().preferredBlockchains;
@@ -93,6 +100,7 @@ export const createSettingsSlice: StateCreator<
     set(() => ({
       slippage: slippage,
     })),
+
   setCustomSlippage: (customSlippage) =>
     set(() => ({
       customSlippage: customSlippage,
@@ -130,6 +138,16 @@ export const createSettingsSlice: StateCreator<
   toggleInfiniteApprove: () =>
     set((state) => ({
       infiniteApprove: !state.infiniteApprove,
+    })),
+  setCustomTokens: (token) =>
+    set((state) => ({
+      customTokens: [token, ...state.customTokens],
+    })),
+  deleteCustomToken: (token) =>
+    set((state) => ({
+      customTokens: state.customTokens.filter(
+        (customToken) => customToken.address !== token.address
+      ),
     })),
   toggleLiquiditySource: (name) =>
     set((state) => {
@@ -176,5 +194,10 @@ export const createSettingsSlice: StateCreator<
         language: nextConfig.language || DEFAULT_LANGUAGE,
       }),
     });
+  },
+  setSelectedBlockchainForCustomToken: (chain) => {
+    set(() => ({
+      selectedBlockchainForCustomToken: chain,
+    }));
   },
 });

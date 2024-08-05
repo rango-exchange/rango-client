@@ -14,7 +14,8 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 
 interface PropTypes {
-  type: 'source' | 'destination';
+  type: 'source' | 'destination' | 'custom';
+  showCategory?: boolean;
 }
 
 export function SelectBlockchainPage(props: PropTypes) {
@@ -24,15 +25,17 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
   const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
-  const fetchStatus = useAppStore().fetchStatus;
-
+  const { fetchStatus, setSelectedBlockchainForCustomToken } = useAppStore();
   const blockchains = useAppStore().blockchains({
     type,
   });
 
   const activeCategoriesCount = getCategoriesCount(blockchains);
 
-  const showCategory = activeCategoriesCount !== 1;
+  const showCategory =
+    props.showCategory === false
+      ? props.showCategory
+      : activeCategoriesCount !== 1;
 
   return (
     <Layout
@@ -66,13 +69,16 @@ export function SelectBlockchainPage(props: PropTypes) {
 
         <BlockchainList
           list={blockchains}
+          showLabel={type !== 'custom'}
           searchedFor={searchedFor}
           blockchainCategory={blockchainCategory}
           onChange={(blockchain) => {
             if (type === 'source') {
               setFromBlockchain(blockchain);
-            } else {
+            } else if (type === 'destination') {
               setToBlockchain(blockchain);
+            } else {
+              setSelectedBlockchainForCustomToken(blockchain);
             }
             navigateBack();
           }}

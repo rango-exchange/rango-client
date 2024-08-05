@@ -1,10 +1,18 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
+import type { SettingsSlice } from './settings';
 import type { CachedEntries } from '../../services/cacheService';
 import type { Balance, Blockchain, TokenHash } from '../../types';
-import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
+
+import {
+  type Asset,
+  type BlockchainMeta,
+  type SwapperMeta,
+  type Token,
+  TransactionType,
+} from 'rango-sdk';
 
 import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
@@ -15,7 +23,7 @@ import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
 import { matchTokensFromConfigWithMeta } from '../utils';
 
 type BlockchainOptions = {
-  type?: 'source' | 'destination';
+  type?: 'source' | 'destination' | 'custom';
 };
 
 type TokenOptions = {
@@ -45,7 +53,7 @@ export interface DataSlice {
 }
 
 export const createDataSlice: StateCreator<
-  DataSlice & ConfigSlice,
+  DataSlice & ConfigSlice & SettingsSlice,
   [],
   [],
   DataSlice
@@ -68,6 +76,14 @@ export const createDataSlice: StateCreator<
       return blockchainsFromState;
     }
 
+    if (options.type === 'custom') {
+      return blockchainsFromState.filter(
+        (blockchain) =>
+          blockchain.type === TransactionType.EVM ||
+          blockchain.type === TransactionType.SOLANA
+      );
+    }
+
     const config = get().config;
     const supportedBlockchainsFromConfig =
       (options.type === 'source'
@@ -88,7 +104,12 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const { _tokensMapByTokenHash, _tokensMapByBlockchainName, config } = get();
+    const {
+      _tokensMapByTokenHash,
+      _tokensMapByBlockchainName,
+      config,
+      customTokens,
+    } = get();
     const tokensFromState = Array.from(_tokensMapByTokenHash.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
     if (!options || !options.type) {
@@ -102,6 +123,7 @@ export const createDataSlice: StateCreator<
         : 'supportedDestinationTokens';
 
     let supportedTokens = cacheService.get(cacheKey);
+
     if (!supportedTokens) {
       supportedTokens = matchTokensFromConfigWithMeta({
         type: options.type,
@@ -116,6 +138,9 @@ export const createDataSlice: StateCreator<
       });
       cacheService.set(cacheKey, supportedTokens);
     }
+
+    supportedTokens = supportedTokens.concat(customTokens);
+    console.log({ supportedTokens });
 
     const blockchains = get().blockchains({
       type: options.type,

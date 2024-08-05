@@ -96,6 +96,7 @@ export function SettingsLists() {
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const {
     config: { features },
+    customTokens,
   } = useAppStore();
   const isThemeHidden = isFeatureHidden('theme', features);
   const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
@@ -185,6 +186,25 @@ export function SettingsLists() {
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
+  const customTokensItem = {
+    id: 'custom-tokens-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Custom Tokens')}
+      </Typography>
+    ),
+    end: (
+      <>
+        <Typography variant="body" size="medium">
+          {`${customTokens.length}`}
+        </Typography>
+        <Divider direction="horizontal" size={8} />
+        <ChevronRightIcon color="black" />
+      </>
+    ),
+    start: <ExchangeIcon color="gray" size={16} />,
+    onClick: () => navigate(navigationRoutes.customTokens),
+  };
   const languageItem = {
     id: 'language-item',
     title: (
@@ -261,7 +281,7 @@ export function SettingsLists() {
   const settingItems: ListPropTypes['items'] = isLiquidityHidden
     ? []
     : [bridgeItem, exchangeItem];
-
+  settingItems.push(customTokensItem);
   if (!isLanguageHidden) {
     settingItems.push(languageItem);
   }

@@ -59,3 +59,13 @@ export function isTokenNative(
 export function createTokenHash(asset: Asset): TokenHash {
   return `${asset.blockchain}-${asset.symbol}-${asset.address ?? ''}`;
 }
+
+export function isValidEvmAddress(address: string) {
+  const evmAddressPattern = /^0x[a-fA-F0-9]{40}$/;
+  return evmAddressPattern.test(address);
+}
+
+export function isValidSolanaAddress(address: string) {
+  const solanaAddressPattern = /^[1-9A-HJ-NP-Za-km-z]{44}$/;
+  return solanaAddressPattern.test(address);
+}

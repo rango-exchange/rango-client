@@ -26,11 +26,9 @@ import { formatBalance } from '../../utils/wallets';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
-  Container,
   descriptionStyles,
   End,
   ImageSection,
-  List,
   Pin,
   StyledLink,
   Tag,
@@ -38,6 +36,7 @@ import {
   Title,
   tokenAddressStyles,
   TokenBalance,
+  TokenListContainer,
   tokenNameStyles,
   tokenTitleStyles,
   tokenWithoutNameStyles,
@@ -92,7 +91,14 @@ const renderDesc = (props: RenderDescProps) => {
 };
 
 export function TokenList(props: PropTypes) {
-  const { list, searchedFor = '', onChange, selectedBlockchain } = props;
+  const {
+    list,
+    searchedFor = '',
+    onChange,
+    selectedBlockchain,
+    showTitle,
+    action,
+  } = props;
 
   const [tokens, setTokens] = useState<Token[]>(list);
   const fetchStatus = useAppStore().fetchStatus;
@@ -121,13 +127,10 @@ export function TokenList(props: PropTypes) {
   const renderList = () => {
     if (!tokens.length && !!searchedFor) {
       return (
-        <>
-          <Divider size={32} />
-          <NotFound
-            title={i18n.t('No results found')}
-            description={i18n.t('Try using different keywords')}
-          />
-        </>
+        <NotFound
+          title={i18n.t('No results found')}
+          description={i18n.t('Try using different keywords')}
+        />
       );
     }
     return (
@@ -220,7 +223,9 @@ export function TokenList(props: PropTypes) {
                     : token.name || undefined
                 }
                 end={
-                  loadingWallet ? (
+                  action ? (
+                    action(token)
+                  ) : loadingWallet ? (
                     <End>
                       <Skeleton variant="text" size="large" width={70} />
                       <Divider size={4} />
@@ -256,13 +261,20 @@ export function TokenList(props: PropTypes) {
   };
 
   return (
-    <Container>
-      <Typography variant="label" size="large">
-        {i18n.t('Select Token')}
-      </Typography>
-      <Divider size={4} />
-      {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {fetchStatus === 'success' && <List as="ul">{renderList()}</List>}
-    </Container>
+    <>
+      {showTitle && (
+        <>
+          <Typography variant="label" size="large">
+            {i18n.t('Select Token')}
+          </Typography>
+          <Divider size={4} />
+        </>
+      )}
+
+      <TokenListContainer>
+        {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
+        {fetchStatus === 'success' && renderList()}
+      </TokenListContainer>
+    </>
   );
 }
