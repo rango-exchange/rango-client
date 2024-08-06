@@ -6,7 +6,6 @@ import {
   AutoThemeIcon,
   BridgesIcon,
   ChevronRightIcon,
-  CustomTokenIcon,
   DarkModeIcon,
   Divider,
   ExchangeIcon,
@@ -21,6 +20,7 @@ import {
   styled,
   Switch,
   Tabs,
+  TargetIcon,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
@@ -97,8 +97,8 @@ export function SettingsLists() {
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const {
     config: { features },
-    customTokens,
   } = useAppStore();
+  const customTokens = useAppStore().customTokens();
   const isThemeHidden = isFeatureHidden('theme', features);
   const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
   const isLanguageHidden = isFeatureHidden('language', features);
@@ -204,7 +204,7 @@ export function SettingsLists() {
         <ChevronRightIcon color="black" />
       </>
     ),
-    start: <CustomTokenIcon color="gray" size={16} />,
+    start: <TargetIcon color="gray" size={16} />,
     onClick: () => navigate(navigationRoutes.customTokens),
   };
   const languageItem = {

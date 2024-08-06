@@ -1,11 +1,11 @@
 export interface PropTypes {
   onClick: () => void;
-  value: {
-    label?: string;
-    logo?: string | React.ComponentType<{ size?: number }>;
+  value?: {
+    name: string;
+    logo: string;
   };
   title: string;
-  placeholder?: string;
+  placeholder: string;
   hasLogo?: boolean;
   disabled?: boolean;
 }

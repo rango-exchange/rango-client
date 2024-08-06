@@ -1,4 +1,8 @@
-import type { BlockchainAndTokenConfig, TokenHash } from '../../types';
+import type {
+  BlockchainAndTokenConfig,
+  TokenHash,
+  WidgetConfig,
+} from '../../types';
 import type { DataSlice } from '../slices/data';
 import type { Asset, Token } from 'rango-sdk';
 
@@ -114,4 +118,17 @@ export function matchTokensFromConfigWithMeta(params: {
   });
 
   return Object.values(result);
+}
+
+// Get similar blockchains between 'from' and 'to' configurations
+export function getSupportedBlockchainsFromConfig(params: {
+  config: WidgetConfig;
+}): string[] {
+  const { config } = params;
+  const configFromBlockchains = config.from?.blockchains || [];
+  const configToBlockchains = config.to?.blockchains || [];
+
+  return configFromBlockchains.filter((type) =>
+    configToBlockchains.includes(type)
+  );
 }

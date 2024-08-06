@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/AppStore';
 
 import { filterBlockchains } from './BlockchainList.helpers';
-import { Container, List } from './BlockchainList.styles';
+import { BlockchainListContainer, List } from './BlockchainList.styles';
 import { LoadingBlockchainList } from './LoadingBlockchainList';
 
 export function BlockchainList(props: PropTypes) {
@@ -23,7 +23,7 @@ export function BlockchainList(props: PropTypes) {
     searchedFor,
     onChange,
     blockchainCategory,
-    showLabel = true,
+    showTitle = true,
   } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
   const { fetchStatus } = useAppStore();
@@ -37,13 +37,10 @@ export function BlockchainList(props: PropTypes) {
   const renderList = () => {
     if (!blockchains.length && !!searchedFor) {
       return (
-        <>
-          <Divider size={32} />
-          <NotFound
-            title={i18n.t('No results found')}
-            description={i18n.t('Try using different keywords')}
-          />
-        </>
+        <NotFound
+          title={i18n.t('No results found')}
+          description={i18n.t('Try using different keywords')}
+        />
       );
     }
     return (
@@ -67,8 +64,8 @@ export function BlockchainList(props: PropTypes) {
   };
 
   return (
-    <Container>
-      {showLabel && (
+    <>
+      {showTitle && (
         <>
           <Typography variant="label" size="large">
             {i18n.t('Select Blockchain')}
@@ -76,8 +73,10 @@ export function BlockchainList(props: PropTypes) {
           <Divider size={4} />
         </>
       )}
-      {fetchStatus === 'loading' && <LoadingBlockchainList />}
-      {fetchStatus === 'success' && renderList()}
-    </Container>
+      <BlockchainListContainer>
+        {fetchStatus === 'loading' && <LoadingBlockchainList />}
+        {fetchStatus === 'success' && renderList()}
+      </BlockchainListContainer>
+    </>
   );
 }

@@ -6,6 +6,14 @@ import {
   Typography,
 } from '@rango-dev/ui';
 
+export const TokenListContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  overflow: 'hidden',
+  justifyContent: 'center',
+});
+
 export const tokenNameStyles = css({
   position: 'absolute',
   transform: 'none',

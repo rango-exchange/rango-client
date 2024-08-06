@@ -4,16 +4,11 @@ import React, { createElement } from 'react';
 
 import { SvgIcon } from '../components/SvgIcon';
 
-function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
+function SvgCustomTokensZeroStateDark(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,
-    <svg
-      width="200"
-      height="173"
-      viewBox="0 0 200 173"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 173" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="Custom Tokens">
         <path
           id="Vector 10"
@@ -25,21 +20,21 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             id="Vector 5"
             d="M33.3549 82.5155C30.8013 80.4597 27.5271 80.6121 23.2312 81.7805"
             stroke="#D1D1D1"
-            strokeWidth="0.876984"
+            strokeWidth={0.876984}
             strokeLinecap="round"
           />
           <path
             id="Vector 6"
             d="M37.9128 74.8615C35.292 71.5671 34.7292 69.5732 34.2246 65.261"
             stroke="#D1D1D1"
-            strokeWidth="0.876984"
+            strokeWidth={0.876984}
             strokeLinecap="round"
           />
           <path
             id="Vector 7"
             d="M34.4533 77.5497C31.2532 74.6003 27.0895 71.9673 23.1592 69.833"
             stroke="#D1D1D1"
-            strokeWidth="0.876984"
+            strokeWidth={0.876984}
             strokeLinecap="round"
           />
         </g>
@@ -48,14 +43,14 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             id="Vector 2"
             d="M138.142 102.767C138.49 99.7086 138.723 96.5943 139.635 93.6495C140.416 91.126 141.655 88.9323 143.402 86.9893C144.858 85.3701 146.598 83.9147 148.625 83.1229C150.596 82.3531 152.779 82.1166 154.881 82.1214C157.399 82.1272 160.052 82.4497 162.373 83.5426C164.176 84.3912 165.662 86.1799 166.677 87.8937C168.435 90.8633 167.923 94.5274 165.757 97.113C164.993 98.0243 164.003 98.885 162.895 99.3162C161.33 99.9252 159.86 99.3294 158.765 98.0726C156.289 95.2291 157.146 90.6821 158.443 87.5208C159.967 83.8057 162.721 80.5889 165.978 78.3715C168.338 76.7645 171.005 75.6328 173.657 74.6358C176.276 73.6511 178.939 72.9793 181.628 72.2427"
             stroke="#D1D1D1"
-            strokeWidth="0.876984"
+            strokeWidth={0.876984}
             strokeDasharray="3.51 2.63"
           />
           <circle
             id="Ellipse 1940"
-            cx="182.957"
-            cy="72.2431"
-            r="2.74629"
+            cx={182.957}
+            cy={72.2431}
+            r={2.74629}
             fill="#D1D1D1"
           />
         </g>
@@ -64,57 +59,57 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             <g id="Group 1000007748">
               <g id="Rectangle 6610">
                 <rect
-                  x="43.6162"
-                  y="113.849"
-                  width="100.216"
-                  height="28.8071"
-                  rx="4.60784"
+                  x={43.6162}
+                  y={113.849}
+                  width={100.216}
+                  height={28.8071}
+                  rx={4.60784}
                   fill="#444444"
-                  fillOpacity="0.5"
+                  fillOpacity={0.5}
                 />
                 <rect
-                  x="43.8197"
-                  y="114.053"
-                  width="99.8093"
-                  height="28.4001"
-                  rx="4.40431"
+                  x={43.8197}
+                  y={114.053}
+                  width={99.8093}
+                  height={28.4001}
+                  rx={4.40431}
                   stroke="#787878"
-                  strokeOpacity="0.25"
-                  strokeWidth="0.407059"
+                  strokeOpacity={0.25}
+                  strokeWidth={0.407059}
                 />
               </g>
               <rect
                 id="Rectangle 6611"
-                x="67.5557"
-                y="121.557"
-                width="71.0035"
-                height="4.46308"
-                rx="2.23154"
+                x={67.5557}
+                y={121.557}
+                width={71.0035}
+                height={4.46308}
+                rx={2.23154}
                 fill="#343434"
               />
               <rect
                 id="Rectangle 6612"
-                x="67.5557"
-                y="131.298"
-                width="71.0035"
-                height="4.46308"
-                rx="2.23154"
+                x={67.5557}
+                y={131.298}
+                width={71.0035}
+                height={4.46308}
+                rx={2.23154}
                 fill="#343434"
               />
             </g>
             <g id="Ellipse 1952">
               <ellipse
-                cx="56.1948"
-                cy="128.461"
-                rx="8.11468"
-                ry="8.11468"
+                cx={56.1948}
+                cy={128.461}
+                rx={8.11468}
+                ry={8.11468}
                 fill="#3F3F3F"
               />
               <path
                 d="M64.2094 128.461C64.2094 132.887 60.6211 136.475 56.1948 136.475C51.7684 136.475 48.1801 132.887 48.1801 128.461C48.1801 124.034 51.7684 120.446 56.1948 120.446C60.6211 120.446 64.2094 124.034 64.2094 128.461Z"
                 stroke="#787878"
-                strokeOpacity="0.25"
-                strokeWidth="0.2"
+                strokeOpacity={0.25}
+                strokeWidth={0.2}
               />
             </g>
           </g>
@@ -122,95 +117,95 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             <g id="Group 1000007748_2">
               <g id="Rectangle 6610_2">
                 <rect
-                  x="43.6162"
-                  y="46.2336"
-                  width="100.216"
-                  height="28.8071"
-                  rx="4.60784"
+                  x={43.6162}
+                  y={46.2336}
+                  width={100.216}
+                  height={28.8071}
+                  rx={4.60784}
                   fill="#444444"
-                  fillOpacity="0.5"
+                  fillOpacity={0.5}
                 />
                 <rect
-                  x="43.8197"
-                  y="46.4372"
-                  width="99.8093"
-                  height="28.4001"
-                  rx="4.40431"
+                  x={43.8197}
+                  y={46.4372}
+                  width={99.8093}
+                  height={28.4001}
+                  rx={4.40431}
                   stroke="#787878"
-                  strokeOpacity="0.25"
-                  strokeWidth="0.407059"
+                  strokeOpacity={0.25}
+                  strokeWidth={0.407059}
                 />
               </g>
               <rect
                 id="Rectangle 6611_2"
-                x="67.5557"
-                y="53.9412"
-                width="71.0035"
-                height="4.46308"
-                rx="2.23154"
+                x={67.5557}
+                y={53.9412}
+                width={71.0035}
+                height={4.46308}
+                rx={2.23154}
                 fill="#343434"
               />
               <rect
                 id="Rectangle 6612_2"
-                x="67.5557"
-                y="63.6826"
-                width="71.0035"
-                height="4.46308"
-                rx="2.23154"
+                x={67.5557}
+                y={63.6826}
+                width={71.0035}
+                height={4.46308}
+                rx={2.23154}
                 fill="#343434"
               />
             </g>
             <g id="Ellipse 1952_2">
               <ellipse
-                cx="56.1948"
-                cy="60.8449"
-                rx="8.11468"
-                ry="8.11468"
+                cx={56.1948}
+                cy={60.8449}
+                rx={8.11468}
+                ry={8.11468}
                 fill="#3F3F3F"
               />
               <path
                 d="M64.2094 60.8449C64.2094 65.2713 60.6211 68.8596 56.1948 68.8596C51.7684 68.8596 48.1801 65.2713 48.1801 60.8449C48.1801 56.4185 51.7684 52.8302 56.1948 52.8302C60.6211 52.8302 64.2094 56.4185 64.2094 60.8449Z"
                 stroke="#787878"
-                strokeOpacity="0.25"
-                strokeWidth="0.2"
+                strokeOpacity={0.25}
+                strokeWidth={0.2}
               />
             </g>
           </g>
           <g id="Group 1000007811">
             <g id="Rectangle 6610_3" filter="url(#filter2_d_19281_419835)">
               <rect
-                x="35.3213"
-                y="78.5015"
-                width="106.238"
-                height="30.538"
-                rx="4.88471"
+                x={35.3213}
+                y={78.5015}
+                width={106.238}
+                height={30.538}
+                rx={4.88471}
                 fill="#414141"
               />
               <rect
-                x="35.5248"
-                y="78.705"
-                width="105.831"
-                height="30.131"
-                rx="4.68118"
+                x={35.5248}
+                y={78.705}
+                width={105.831}
+                height={30.131}
+                rx={4.68118}
                 stroke="#313134"
-                strokeWidth="0.407059"
+                strokeWidth={0.407059}
               />
             </g>
             <g id="Group 1000007823">
               <g id="Group 1000007726">
                 <g id="Ellipse 1938" filter="url(#filter3_bd_19281_419835)">
                   <circle
-                    cx="52.4858"
-                    cy="93.5847"
-                    r="9.88228"
+                    cx={52.4858}
+                    cy={93.5847}
+                    r={9.88228}
                     fill="#363636"
                   />
                   <circle
-                    cx="52.4858"
-                    cy="93.5847"
-                    r="9.78911"
+                    cx={52.4858}
+                    cy={93.5847}
+                    r={9.78911}
                     stroke="#787878"
-                    strokeWidth="0.186346"
+                    strokeWidth={0.186346}
                   />
                 </g>
                 <g id="Group 1000007725">
@@ -218,37 +213,37 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
                     id="Line 351"
                     d="M51.2324 92.3315L53.7389 94.838"
                     stroke="white"
-                    strokeWidth="0.745383"
+                    strokeWidth={0.745383}
                     strokeLinecap="round"
                   />
                   <path
                     id="Line 352"
                     d="M51.2324 94.8362L53.7389 92.3297"
                     stroke="white"
-                    strokeWidth="0.745383"
+                    strokeWidth={0.745383}
                     strokeLinecap="round"
                   />
                 </g>
                 <circle
                   id="Ellipse 1939"
-                  cx="52.4894"
-                  cy="93.5833"
-                  r="4.10556"
+                  cx={52.4894}
+                  cy={93.5833}
+                  r={4.10556}
                   fill="#B6B6B6"
-                  fillOpacity="0.38"
+                  fillOpacity={0.38}
                   stroke="#B8B8B8"
-                  strokeWidth="0.745383"
+                  strokeWidth={0.745383}
                 />
               </g>
               <g id="Group 1000007808">
                 <g id="Group 1000007740">
                   <g id="Ellipse 1941" filter="url(#filter4_b_19281_419835)">
                     <circle
-                      cx="51.3139"
-                      cy="94.4919"
-                      r="9.74949"
+                      cx={51.3139}
+                      cy={94.4919}
+                      r={9.74949}
                       stroke="#A5A5A5"
-                      strokeWidth="0.446247"
+                      strokeWidth={0.446247}
                       strokeDasharray="1.78 1.34"
                     />
                   </g>
@@ -257,20 +252,20 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             </g>
             <rect
               id="Rectangle 6611_3"
-              x="66.5283"
-              y="86.8232"
-              width="69.6961"
-              height="4.16096"
-              rx="2.08048"
+              x={66.5283}
+              y={86.8232}
+              width={69.6961}
+              height={4.16096}
+              rx={2.08048}
               fill="#5A5A5A"
             />
             <rect
               id="Rectangle 6612_3"
-              x="66.5283"
-              y="97.2258"
-              width="69.6961"
-              height="4.16096"
-              rx="2.08048"
+              x={66.5283}
+              y={97.2258}
+              width={69.6961}
+              height={4.16096}
+              rx={2.08048}
               fill="#5A5A5A"
             />
           </g>
@@ -279,13 +274,13 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
       <defs>
         <filter
           id="filter0_f_19281_419835"
-          x="43.2322"
-          y="113.465"
-          width="100.985"
-          height="29.5751"
+          x={43.2322}
+          y={113.465}
+          width={100.985}
+          height={29.5751}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -293,19 +288,19 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             result="shape"
           />
           <feGaussianBlur
-            stdDeviation="0.191993"
+            stdDeviation={0.191993}
             result="effect1_foregroundBlur_19281_419835"
           />
         </filter>
         <filter
           id="filter1_f_19281_419835"
-          x="43.2322"
-          y="45.8497"
-          width="100.985"
-          height="29.5751"
+          x={43.2322}
+          y={45.8497}
+          width={100.985}
+          height={29.5751}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -313,27 +308,27 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             result="shape"
           />
           <feGaussianBlur
-            stdDeviation="0.191993"
+            stdDeviation={0.191993}
             result="effect1_foregroundBlur_19281_419835"
           />
         </filter>
         <filter
           id="filter2_d_19281_419835"
-          x="22.044"
-          y="70.5351"
-          width="132.793"
-          height="57.0927"
+          x={22.044}
+          y={70.5351}
+          width={132.793}
+          height={57.0927}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
             result="hardAlpha"
           />
-          <feOffset dy="5.31093" />
-          <feGaussianBlur stdDeviation="6.63866" />
+          <feOffset dy={5.31093} />
+          <feGaussianBlur stdDeviation={6.63866} />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix
             type="matrix"
@@ -353,14 +348,14 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
         </filter>
         <filter
           id="filter3_bd_19281_419835"
-          x="38.8766"
-          y="81.4662"
-          width="27.2185"
-          height="27.2185"
+          x={38.8766}
+          y={81.4662}
+          width={27.2185}
+          height={27.2185}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feGaussianBlur in="BackgroundImageFix" stdDeviation="0.372692" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
+          <feGaussianBlur in="BackgroundImageFix" stdDeviation={0.372692} />
           <feComposite
             in2="SourceAlpha"
             operator="in"
@@ -372,8 +367,8 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
             result="hardAlpha"
           />
-          <feOffset dy="1.49077" />
-          <feGaussianBlur stdDeviation="1.86346" />
+          <feOffset dy={1.49077} />
+          <feGaussianBlur stdDeviation={1.86346} />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix
             type="matrix"
@@ -393,14 +388,14 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
         </filter>
         <filter
           id="filter4_b_19281_419835"
-          x="40.4493"
-          y="83.6268"
-          width="21.7293"
-          height="21.7303"
+          x={40.4493}
+          y={83.6268}
+          width={21.7293}
+          height={21.7303}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feGaussianBlur in="BackgroundImageFix" stdDeviation="0.446247" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
+          <feGaussianBlur in="BackgroundImageFix" stdDeviation={0.446247} />
           <feComposite
             in2="SourceAlpha"
             operator="in"
@@ -417,4 +412,4 @@ function SvgCustomTokensDark(props: SvgIconPropsWithChildren) {
     </svg>
   );
 }
-export default SvgCustomTokensDark;
+export default SvgCustomTokensZeroStateDark;

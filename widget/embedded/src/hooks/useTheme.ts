@@ -93,8 +93,12 @@ export function useTheme(props: WidgetTheme) {
     if (theme === 'auto') {
       return OSTheme === 'dark' ? darkClassNames : lightClassNames;
     }
+
     return theme === 'dark' ? darkClassNames : lightClassNames;
   };
 
-  return { activeTheme: getActiveTheme };
+  return {
+    activeTheme: getActiveTheme,
+    mode: theme === 'auto' ? OSTheme : theme,
+  };
 }

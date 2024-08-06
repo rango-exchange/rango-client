@@ -11,22 +11,25 @@ import {
   type BlockchainMeta,
   type SwapperMeta,
   type Token,
-  TransactionType,
 } from 'rango-sdk';
 
+import { ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS } from '../../constants/customTokens';
 import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
 import {
-  isFeatureHidden,
+  addCustomTokensToSupportedTokens,
   sortLiquiditySourcesByGroupTitle,
 } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
-import { matchTokensFromConfigWithMeta } from '../utils';
+import {
+  getSupportedBlockchainsFromConfig,
+  matchTokensFromConfigWithMeta,
+} from '../utils';
 
 type BlockchainOptions = {
-  type?: 'source' | 'destination' | 'custom';
+  type?: 'source' | 'destination' | 'custom-token';
 };
 
 type TokenOptions = {
@@ -78,16 +81,31 @@ export const createDataSlice: StateCreator<
     if (!options || !options?.type) {
       return blockchainsFromState;
     }
+    const config = get().config;
 
-    if (options.type === 'custom') {
-      return blockchainsFromState.filter(
-        (blockchain) =>
-          blockchain.type === TransactionType.EVM ||
-          blockchain.type === TransactionType.SOLANA
-      );
+    if (options.type === 'custom-token') {
+      const supportedBlockchainsFromConfig = getSupportedBlockchainsFromConfig({
+        config,
+      });
+
+      // Filter blockchains from state based on common types and active custom tokens
+      return blockchainsFromState.filter((blockchain) => {
+        const isActiveForCustomTokens =
+          ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain.type);
+
+        if (!supportedBlockchainsFromConfig.length) {
+          // If there are no supported blockchains, only filter by active blockchains
+          return isActiveForCustomTokens;
+        }
+
+        // Otherwise, filter by both supported blockchains and active custom tokens
+        return (
+          supportedBlockchainsFromConfig.includes(blockchain.name) &&
+          isActiveForCustomTokens
+        );
+      });
     }
 
-    const config = get().config;
     const supportedBlockchainsFromConfig =
       (options.type === 'source'
         ? config.from?.blockchains
@@ -111,7 +129,7 @@ export const createDataSlice: StateCreator<
       _tokensMapByTokenHash,
       _tokensMapByBlockchainName,
       config,
-      customTokens,
+      _customTokens,
     } = get();
     const tokensFromState = Array.from(_tokensMapByTokenHash.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
@@ -141,14 +159,12 @@ export const createDataSlice: StateCreator<
       });
       cacheService.set(cacheKey, supportedTokens);
     }
-    const isCustomTokensHidden = isFeatureHidden(
-      'customTokens',
+
+    supportedTokens = addCustomTokensToSupportedTokens(
+      supportedTokens,
+      _customTokens,
       config.features
     );
-
-    supportedTokens = isCustomTokensHidden
-      ? supportedTokens
-      : supportedTokens.concat(customTokens);
 
     const blockchains = get().blockchains({
       type: options.type,

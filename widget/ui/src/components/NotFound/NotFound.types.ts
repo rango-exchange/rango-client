@@ -5,4 +5,5 @@ export type NotFoundPropTypes = {
   description?: string;
   titleColor?: string;
   icon?: ReactNode;
+  hasIcon?: boolean;
 };

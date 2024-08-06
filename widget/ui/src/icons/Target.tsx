@@ -4,7 +4,7 @@ import React, { createElement } from 'react';
 
 import { SvgIcon } from '../components/SvgIcon';
 
-function SvgCustomToken(props: SvgIconPropsWithChildren) {
+function SvgTarget(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,
@@ -21,4 +21,4 @@ function SvgCustomToken(props: SvgIconPropsWithChildren) {
     </svg>
   );
 }
-export default SvgCustomToken;
+export default SvgTarget;

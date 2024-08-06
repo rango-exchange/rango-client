@@ -2,10 +2,12 @@ import { ImageContainer, styled } from '@rango-dev/ui';
 
 import { ScrollableArea } from '../Layout';
 
-export const Container = styled('div', {
+export const BlockchainListContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
+  height: '100%',
+  justifyContent: 'center',
 });
 
 export const List = styled(ScrollableArea, {

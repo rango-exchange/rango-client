@@ -7,7 +7,8 @@ export interface PropTypes {
   onChange?: (token: Token) => void;
   selectedBlockchain?: string;
   type?: 'source' | 'destination';
-  endTokensItem?: (token: Token) => ReactElement;
+  action?: (token: Token) => ReactElement;
+  showTitle?: boolean;
 }
 
 export interface LoadingTokenListProps {

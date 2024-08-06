@@ -99,7 +99,10 @@ export function AppRoutes() {
                 {
                   path: navigationRoutes.blockchains,
                   element: (
-                    <SelectBlockchainPage showCategory={false} type="custom" />
+                    <SelectBlockchainPage
+                      hideCategory={true}
+                      type="custom-token"
+                    />
                   ),
                 },
               ],

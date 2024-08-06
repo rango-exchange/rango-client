@@ -4,6 +4,6 @@ export type PropTypes = {
   open: boolean;
   onClose: () => void;
   handleSubmitClick: () => void;
-  token?: Token;
+  token: Token;
   blockchain: BlockchainMeta;
 };

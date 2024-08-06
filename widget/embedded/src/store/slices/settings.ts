@@ -1,6 +1,6 @@
 import type { ConfigSlice } from './config';
 import type { WidgetConfig } from '../../types';
-import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
+import type { SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import { type Language } from '@rango-dev/ui';
@@ -10,6 +10,7 @@ import { DEFAULT_LANGUAGE } from '../../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../../constants/swapSettings';
 import { removeDuplicateFrom } from '../../utils/common';
 import { isFeatureHidden } from '../../utils/settings';
+import { getSupportedBlockchainsFromConfig } from '../utils';
 
 export type ThemeMode = 'auto' | 'dark' | 'light';
 
@@ -25,10 +26,8 @@ export interface SettingsSlice {
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
-  customTokens: Token[];
-  selectedBlockchainForCustomToken: BlockchainMeta | null;
+  _customTokens: Token[];
 
-  setSelectedBlockchainForCustomToken: (chian: BlockchainMeta | null) => void;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
@@ -48,6 +47,7 @@ export interface SettingsSlice {
   updateSettings: (config: WidgetConfig) => void;
   setCustomToken: (token: Token) => void;
   deleteCustomToken: (token: Token) => void;
+  customTokens: () => Token[];
 }
 
 export const createSettingsSlice: StateCreator<
@@ -66,8 +66,7 @@ export const createSettingsSlice: StateCreator<
   affiliateRef: null,
   affiliatePercent: null,
   affiliateWallets: null,
-  customTokens: [],
-  selectedBlockchainForCustomToken: null,
+  _customTokens: [],
 
   addPreferredBlockchain: (blockchain) => {
     const currentPreferredBlockchains = get().preferredBlockchains;
@@ -139,16 +138,7 @@ export const createSettingsSlice: StateCreator<
     set((state) => ({
       infiniteApprove: !state.infiniteApprove,
     })),
-  setCustomToken: (token) =>
-    set((state) => ({
-      customTokens: [token, ...state.customTokens],
-    })),
-  deleteCustomToken: (token) =>
-    set((state) => ({
-      customTokens: state.customTokens.filter(
-        (customToken) => customToken.address !== token.address
-      ),
-    })),
+
   toggleLiquiditySource: (name) =>
     set((state) => {
       if (state.disabledLiquiditySources.includes(name)) {
@@ -195,9 +185,26 @@ export const createSettingsSlice: StateCreator<
       }),
     });
   },
-  setSelectedBlockchainForCustomToken: (chain) => {
-    set(() => ({
-      selectedBlockchainForCustomToken: chain,
-    }));
+  setCustomToken: (token) =>
+    set((state) => ({
+      _customTokens: [token, ...state._customTokens],
+    })),
+  deleteCustomToken: (token) =>
+    set((state) => ({
+      _customTokens: state._customTokens.filter(
+        (customToken) => customToken.address !== token.address
+      ),
+    })),
+  customTokens: () => {
+    const customTokens = get()._customTokens;
+    const config = get().config;
+    const supportedBlockchainsFromConfig = getSupportedBlockchainsFromConfig({
+      config,
+    });
+    return !supportedBlockchainsFromConfig.length
+      ? customTokens
+      : customTokens.filter((token) =>
+          supportedBlockchainsFromConfig.includes(token.blockchain)
+        );
   },
 });

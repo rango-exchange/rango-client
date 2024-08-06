@@ -9,7 +9,6 @@ import { getConfig } from '../utils/configs';
 type ErrorType = {
   title: string;
   message: string;
-  type: 'TOKEN_ERROR' | 'NETWORK_ERROR';
 };
 
 interface UseFetchCustomToken {
@@ -27,27 +26,37 @@ interface UseFetchCustomToken {
 export function useFetchCustomToken(): UseFetchCustomToken {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<undefined | ErrorType>(undefined);
-  const { findToken, customTokens } = useAppStore();
+  const { findToken } = useAppStore();
+  const customTokens = useAppStore().customTokens();
 
-  const handleTokenIsDuplicateError = () => {
-    setError({
-      title: i18n.t('Duplicate Token'),
-      message: i18n.t(
-        'The address you entered is duplicate, please enter a new address.'
-      ),
-      type: 'TOKEN_ERROR',
-    });
-  };
-
-  const handleTokenNotFoundError = (blockchain: string) => {
-    setError({
-      title: i18n.t('Token Not Found'),
-      message: i18n.t(
-        `Sorry, no token was found on ${blockchain} blockchain with the provided address. please make sure you have entered the right token address.`
-      ),
-      type: 'TOKEN_ERROR',
-    });
-  };
+  function produceErrorMessage(
+    type: 'duplicated' | 'not-found' | 'token-exist',
+    blockchain?: string
+  ) {
+    switch (type) {
+      case 'duplicated':
+        return {
+          title: i18n.t('Duplicate Token'),
+          message: i18n.t(
+            'The address you entered is duplicate, please enter a new address.'
+          ),
+        };
+      case 'token-exist':
+        return {
+          title: i18n.t('Token Already Exists'),
+          message: i18n.t(
+            `There's no need to add this token again because it already exists and is supported by us.`
+          ),
+        };
+      case 'not-found':
+        return {
+          title: i18n.t('Token Not Found'),
+          message: i18n.t(
+            `Sorry, no token was found on ${blockchain} blockchain with the provided address. please make sure you have entered the right token address.`
+          ),
+        };
+    }
+  }
 
   const fetchCustomToken: UseFetchCustomToken['fetchCustomToken'] = async ({
     blockchain,
@@ -60,7 +69,8 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         (token) => token.address?.toLowerCase() === tokenAddress.toLowerCase()
       );
       if (isDuplicate) {
-        handleTokenIsDuplicateError();
+        const errorMessage = produceErrorMessage('duplicated');
+        setError(errorMessage);
         return undefined;
       }
 
@@ -75,30 +85,27 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         contentType.includes('application/json') &&
         (await res.json());
       if (!response || response.error) {
-        handleTokenNotFoundError(blockchain);
+        const errorMessage = produceErrorMessage('not-found');
+        setError(errorMessage);
         return undefined;
       }
 
       // Check if token is already in the system
       const isTokenFound = findToken({
         blockchain: response.blockchain,
-        address: tokenAddress,
+        address: response.address,
         symbol: response.symbol,
       });
       if (isTokenFound) {
-        handleTokenIsDuplicateError();
+        const errorMessage = produceErrorMessage('token-exist');
+        setError(errorMessage);
         return undefined;
       }
 
       return response;
     } catch (error: any) {
-      if (error.message === 'Failed to fetch') {
-        setError({
-          title: i18n.t('Network Error'),
-          message: i18n.t('Failed Network, Please retry.'),
-          type: 'NETWORK_ERROR',
-        });
-      }
+      setError(undefined);
+      throw new Error(error.message);
     } finally {
       setLoading(false);
     }

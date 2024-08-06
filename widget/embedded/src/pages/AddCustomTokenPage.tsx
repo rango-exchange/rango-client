@@ -12,18 +12,19 @@ import {
 } from '@rango-dev/ui';
 import { type Token } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { BlockchainSelectorButton } from '../components/BlockchainSelectorButton';
 import { WatermarkedModal } from '../components/common/WatermarkedModal';
 import { CustomTokenModal } from '../components/CustomTokenModal';
-import { ItemPicker } from '../components/ItemPicker';
 import { Layout, PageContainer } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { SearchParams } from '../constants/searchParams';
 import { useFetchCustomToken } from '../hooks/useFetchCustomToken';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { getContainer } from '../utils/common';
-import { isValidTokenAddress } from '../utils/meta';
+import { findBlockchain, isValidTokenAddress } from '../utils/meta';
 
 const Content = styled('div', {
   display: 'flex',
@@ -40,51 +41,59 @@ const Content = styled('div', {
     height: '$40',
   },
 });
+const CUSTOM_TOKEN_REFRESH_DELAY = 1000;
 
 export function AddCustomTokenPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const navigateBack = useNavigateBack();
+  const { setCustomToken } = useAppStore();
+  const blockchains = useAppStore().blockchains();
 
-  const {
-    selectedBlockchainForCustomToken,
-    setSelectedBlockchainForCustomToken,
-    setCustomToken,
-  } = useAppStore();
+  const blockchainName = searchParams.get(SearchParams.BLOCKCHAIN) || '';
+  const blockchain = findBlockchain(blockchainName, blockchains);
   const [address, setAddress] = useState('');
   const [isOpenErrorModal, setIsOpenErrorModal] = useState<boolean>(false);
-  const [isOpenImportModal, setIsOpenImportModal] = useState<boolean>(false);
   const [token, setToken] = useState<Token>();
   const { fetchCustomToken, loading, error } = useFetchCustomToken();
-
+  const [networkError, setNetworkError] = useState('');
   const isValidAddress =
-    !!selectedBlockchainForCustomToken &&
-    isValidTokenAddress(selectedBlockchainForCustomToken, address);
-  const isImportDisabled =
-    !selectedBlockchainForCustomToken || !address || !isValidAddress;
+    !!blockchain && isValidTokenAddress(blockchain, address);
+  const isImportDisabled = !blockchain || !address || !isValidAddress;
 
   const getCustomToken = async () => {
-    if (selectedBlockchainForCustomToken) {
-      const res = await fetchCustomToken({
-        blockchain: selectedBlockchainForCustomToken.name,
-        tokenAddress: address,
-      });
-      if (!!res) {
-        setToken(res);
-        setIsOpenImportModal(true);
+    if (blockchain) {
+      try {
+        const res = await fetchCustomToken({
+          blockchain: blockchainName,
+          tokenAddress: address,
+        });
+        setNetworkError('');
+        if (!!res) {
+          setToken(res);
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        if (error.message === 'Failed to fetch') {
+          setNetworkError(i18n.t('Network Error'));
+          setIsOpenErrorModal(true);
+        }
       }
     }
   };
+
   const closeErrorModal = () => {
-    if (error?.type === 'TOKEN_ERROR') {
-      setSelectedBlockchainForCustomToken(null);
+    if (!!error) {
       setAddress('');
     }
     setIsOpenErrorModal(false);
   };
 
   const handleErrorModalButtonClick = async () => {
-    if (error?.type === 'NETWORK_ERROR') {
-      await getCustomToken();
+    if (!!networkError) {
+      setTimeout(async () => {
+        await getCustomToken();
+      }, CUSTOM_TOKEN_REFRESH_DELAY);
     }
     closeErrorModal();
   };
@@ -102,13 +111,19 @@ export function AddCustomTokenPage() {
       <PageContainer>
         <Content>
           <div>
-            <ItemPicker
-              onClick={() => navigate(navigationRoutes.blockchains)}
-              hasLogo={!!selectedBlockchainForCustomToken?.logo}
-              value={{
-                label: selectedBlockchainForCustomToken?.displayName,
-                logo: selectedBlockchainForCustomToken?.logo,
-              }}
+            <BlockchainSelectorButton
+              onClick={() =>
+                navigate(navigationRoutes.blockchains, { replace: true })
+              }
+              hasLogo={!!blockchain?.logo}
+              value={
+                !!blockchain
+                  ? {
+                      name: blockchain.displayName,
+                      logo: blockchain.logo,
+                    }
+                  : undefined
+              }
               title={i18n.t('Select chain')}
               placeholder={i18n.t('Select chain')}
             />
@@ -119,6 +134,7 @@ export function AddCustomTokenPage() {
             <Divider size={10} />
             <TextField
               fullWidth
+              disabled={!blockchain}
               variant="contained"
               placeholder={i18n.t('Enter token address')}
               size="large"
@@ -136,7 +152,6 @@ export function AddCustomTokenPage() {
               </>
             )}
           </div>
-          <Divider size={20} />
 
           <Button
             disabled={isImportDisabled}
@@ -154,9 +169,11 @@ export function AddCustomTokenPage() {
           onClose={closeErrorModal}
           container={getContainer()}>
           <MessageBox
-            title={error?.title || ''}
+            title={error?.title || networkError}
             type="error"
-            description={error?.message}>
+            description={
+              error?.message || i18n.t('Failed Network, Please retry.')
+            }>
             <Divider size={40} />
             <Divider size={10} />
 
@@ -166,25 +183,25 @@ export function AddCustomTokenPage() {
               type="primary"
               fullWidth
               onClick={handleErrorModalButtonClick}>
-              {error?.type === 'NETWORK_ERROR'
+              {networkError
                 ? i18n.t('Retry')
                 : i18n.t('Add another custom token')}
             </Button>
           </MessageBox>
         </WatermarkedModal>
-        {!!selectedBlockchainForCustomToken && (
+        {blockchain && token && (
           <CustomTokenModal
-            blockchain={selectedBlockchainForCustomToken}
+            blockchain={blockchain}
             token={token}
             handleSubmitClick={() => {
               if (token) {
                 setCustomToken(token);
-                setIsOpenImportModal(false);
+                setToken(undefined);
                 navigateBack();
               }
             }}
-            onClose={() => setIsOpenImportModal(false)}
-            open={isOpenImportModal}
+            onClose={() => setToken(undefined)}
+            open={!!blockchain && !!token}
           />
         )}
       </PageContainer>

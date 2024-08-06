@@ -87,7 +87,7 @@ export function HistoryPage() {
   const loading = !state.loadedFromPersistor;
   const [filterBy, setFilterBy] = useState('');
   const [openClearModal, setOpenClearModal] = useState(false);
-  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
   };
@@ -159,7 +159,7 @@ export function HistoryPage() {
             variant="contained"
             placeholder={i18n.t('Search Transaction')}
             autoFocus
-            onChange={searchHandler}
+            onChange={handleSearch}
             style={{ height: 36 }}
             value={searchedFor}
           />
@@ -186,7 +186,7 @@ export function HistoryPage() {
                     : i18n.t('No transactions')
                 }
                 titleColor={!searchedFor ? '$info' : undefined}
-                icon={!searchedFor && <></>}
+                hasIcon={!!searchedFor}
                 description={
                   searchedFor
                     ? i18n.t('Try using different keywords')
