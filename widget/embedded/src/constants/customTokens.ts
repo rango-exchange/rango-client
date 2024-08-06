@@ -1,7 +1,25 @@
-import { TransactionType } from 'rango-types';
-
-// Define the active blockchains for custom tokens
 export const ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS = [
-  TransactionType.EVM,
-  TransactionType.SOLANA,
+  'BSC',
+  'ETH',
+  'ARBITRUM',
+  'POLYGON',
+  'ZKSYNC',
+  'OPTIMISM',
+  'AVAX_CCHAIN',
+  'POLYGONZK',
+  'BASE',
+  'LINEA',
+  'MODE',
+  'SCROLL',
+  'METIS',
+  'BLAST',
+  'CRONOS',
+  'AURORA',
+  'BOBA',
+  'MOONBEAM',
+  'MOONRIVER',
+  'OKC',
+  'CELO',
+  'XLAYER',
+  'SOLANA',
 ];

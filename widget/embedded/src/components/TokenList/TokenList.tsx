@@ -26,6 +26,7 @@ import { formatBalance } from '../../utils/wallets';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
+  Container,
   descriptionStyles,
   End,
   ImageSection,
@@ -37,7 +38,6 @@ import {
   Title,
   tokenAddressStyles,
   TokenBalance,
-  TokenListContainer,
   tokenNameStyles,
   tokenTitleStyles,
   tokenWithoutNameStyles,
@@ -181,7 +181,7 @@ export function TokenList(props: PropTypes) {
                   start={
                     <ImageSection>
                       <Image src={token.image} size={30} />
-                      {props.type && isTokenPinned(token, props.type) && (
+                      {isTokenPinned(token, props.type) && (
                         <Pin>
                           <PinIcon size={12} color="gray" />
                         </Pin>
@@ -274,11 +274,11 @@ export function TokenList(props: PropTypes) {
         </>
       )}
 
-      <TokenListContainer>
+      <Container>
         <Divider size={4} />
         {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
         {fetchStatus === 'success' && renderList()}
-      </TokenListContainer>
+      </Container>
     </>
   );
 }

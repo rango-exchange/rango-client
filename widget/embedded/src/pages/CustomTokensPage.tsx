@@ -86,6 +86,7 @@ export function CustomTokensPage() {
               <Divider size={16} />
               <TokenList
                 list={customTokensResults}
+                type="custom-token"
                 searchedFor={searchedFor}
                 showTitle={false}
                 action={(token) => (

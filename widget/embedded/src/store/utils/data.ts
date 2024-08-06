@@ -120,15 +120,18 @@ export function matchTokensFromConfigWithMeta(params: {
   return Object.values(result);
 }
 
-// Get similar blockchains between 'from' and 'to' configurations
 export function getSupportedBlockchainsFromConfig(params: {
   config: WidgetConfig;
 }): string[] {
   const { config } = params;
   const configFromBlockchains = config.from?.blockchains || [];
   const configToBlockchains = config.to?.blockchains || [];
+  if (!configFromBlockchains.length || !configToBlockchains.length) {
+    return [];
+  }
+  const blockchains = [...configFromBlockchains, ...configToBlockchains];
 
-  return configFromBlockchains.filter((type) =>
-    configToBlockchains.includes(type)
-  );
+  const supportedBlockchains = new Set(blockchains);
+
+  return Array.from(supportedBlockchains);
 }

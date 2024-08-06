@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 
-export const TokenListContainer = styled('div', {
+export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,

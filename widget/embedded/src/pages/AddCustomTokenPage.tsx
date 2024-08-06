@@ -193,7 +193,7 @@ export function AddCustomTokenPage() {
           <CustomTokenModal
             blockchain={blockchain}
             token={token}
-            handleSubmitClick={() => {
+            onSubmitClick={() => {
               if (token) {
                 setCustomToken(token);
                 setToken(undefined);

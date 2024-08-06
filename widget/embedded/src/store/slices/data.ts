@@ -53,7 +53,10 @@ export interface DataSlice {
   blockchains: (options?: BlockchainOptions) => BlockchainMeta[];
   tokens: (options?: TokenOptions) => Token[];
   swappers: () => SwapperMeta[];
-  isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
+  isTokenPinned: (
+    token: Token,
+    type: 'source' | 'destination' | 'custom-token'
+  ) => boolean;
   findToken: FindToken;
   fetch: () => Promise<void>;
 }
@@ -88,22 +91,23 @@ export const createDataSlice: StateCreator<
         config,
       });
 
-      // Filter blockchains from state based on common types and active custom tokens
-      return blockchainsFromState.filter((blockchain) => {
-        const isActiveForCustomTokens =
-          ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain.type);
+      let supportedBlockchainsForCustomTokens: string[] =
+        ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS;
 
-        if (!supportedBlockchainsFromConfig.length) {
-          // If there are no supported blockchains, only filter by active blockchains
-          return isActiveForCustomTokens;
-        }
+      /*
+       * Supported blockchains can be configured and be limited.
+       * In this case, we only keep those active blockchains which exist in config.
+       */
+      if (supportedBlockchainsFromConfig.length > 0) {
+        supportedBlockchainsForCustomTokens =
+          supportedBlockchainsFromConfig.filter((blockchain) =>
+            ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain)
+          );
+      }
 
-        // Otherwise, filter by both supported blockchains and active custom tokens
-        return (
-          supportedBlockchainsFromConfig.includes(blockchain.name) &&
-          isActiveForCustomTokens
-        );
-      });
+      return blockchainsFromState.filter((blockchain) =>
+        supportedBlockchainsForCustomTokens.includes(blockchain.name)
+      );
     }
 
     const supportedBlockchainsFromConfig =

@@ -1,4 +1,4 @@
-import type { ConfigSlice } from './config';
+import type { DataSlice } from './data';
 import type { WidgetConfig } from '../../types';
 import type { SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
@@ -10,7 +10,6 @@ import { DEFAULT_LANGUAGE } from '../../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../../constants/swapSettings';
 import { removeDuplicateFrom } from '../../utils/common';
 import { isFeatureHidden } from '../../utils/settings';
-import { getSupportedBlockchainsFromConfig } from '../utils';
 
 export type ThemeMode = 'auto' | 'dark' | 'light';
 
@@ -51,7 +50,7 @@ export interface SettingsSlice {
 }
 
 export const createSettingsSlice: StateCreator<
-  SettingsSlice & ConfigSlice,
+  SettingsSlice & DataSlice,
   [],
   [],
   SettingsSlice
@@ -197,14 +196,13 @@ export const createSettingsSlice: StateCreator<
     })),
   customTokens: () => {
     const customTokens = get()._customTokens;
-    const config = get().config;
-    const supportedBlockchainsFromConfig = getSupportedBlockchainsFromConfig({
-      config,
-    });
-    return !supportedBlockchainsFromConfig.length
+    const blockchains = get().blockchains({ type: 'custom-token' });
+    const blockchainNames = blockchains.map((blockchain) => blockchain.name);
+
+    return !blockchains.length
       ? customTokens
       : customTokens.filter((token) =>
-          supportedBlockchainsFromConfig.includes(token.blockchain)
+          blockchainNames.includes(token.blockchain)
         );
   },
 });

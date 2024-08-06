@@ -61,11 +61,10 @@ export function createTokenHash(asset: Asset): TokenHash {
 }
 
 export function isValidTokenAddress(
-  blockchain: BlockchainMeta,
+  chain: BlockchainMeta,
   address: string
-) {
-  const addressPattern = blockchain.addressPatterns[0];
-
-  const addressRegex = new RegExp(addressPattern);
-  return addressRegex.test(address);
+): boolean {
+  const regex = chain.addressPatterns;
+  const valid = regex.filter((r) => new RegExp(r).test(address)).length > 0;
+  return valid;
 }

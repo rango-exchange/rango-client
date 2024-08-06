@@ -17,7 +17,7 @@ import { generateExplorerLink } from './CustomTokenModal.helpers';
 import { Container, StyledLink } from './CustomTokenModal.styles';
 
 export function CustomTokenModal(props: PropTypes) {
-  const { open, onClose, token, handleSubmitClick, blockchain } = props;
+  const { open, onClose, token, onSubmitClick, blockchain } = props;
 
   const explorerLink = generateExplorerLink(token.address, blockchain);
 
@@ -84,7 +84,7 @@ export function CustomTokenModal(props: PropTypes) {
         size="large"
         type="primary"
         fullWidth
-        onClick={handleSubmitClick}>
+        onClick={onSubmitClick}>
         {i18n.t('Import')}
       </Button>
     </WatermarkedModal>
