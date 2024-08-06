@@ -1,6 +1,5 @@
-import type { PropTypes } from './WalletNamespacesModal.types';
+import type { PropTypes } from './Namespaces.types';
 import type { Namespace } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
@@ -16,27 +15,15 @@ import {
 import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useMemo, useState } from 'react';
 
-import { WIDGET_UI_ID } from '../../constants';
 import { useAppStore } from '../../store/AppStore';
-import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
-import {
-  LogoContainer,
-  Spinner,
-} from '../WalletModal/WalletModalContent.styles';
 
-import { NamespaceList } from './WalletNamespacesModal.styles';
+import { LogoContainer, Spinner } from './ConnectStatus.styles';
+import { getBlockchainLogo } from './Namespaces.helpers';
+import { NamespaceList } from './Namespaces.styles';
 
-const getBlockchainLogo = (
-  blockchains: BlockchainMeta[],
-  blockchainName: string
-) => {
-  return blockchains.find((blockchain) => blockchain.name === blockchainName)
-    ?.logo;
-};
-
-export function WalletNamespacesModal(props: PropTypes) {
-  const { singleNamespace, availableNamespaces } = props;
+export function Namespaces(props: PropTypes) {
+  const { singleNamespace, availableNamespaces, providerImage } = props.value;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
 
@@ -76,12 +63,7 @@ export function WalletNamespacesModal(props: PropTypes) {
   };
 
   return (
-    <WatermarkedModal
-      open={props.open}
-      onClose={props.onClose}
-      container={
-        document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }>
+    <>
       <Divider size={20} />
       <MessageBox
         type="info"
@@ -92,7 +74,7 @@ export function WalletNamespacesModal(props: PropTypes) {
         icon={
           <LogoContainer>
             <WalletImageContainer>
-              <Image src={props.image} size={45} />
+              <Image src={providerImage} size={45} />
             </WalletImageContainer>
             <Spinner />
           </LogoContainer>
@@ -132,6 +114,6 @@ export function WalletNamespacesModal(props: PropTypes) {
         onClick={() => props.onConfirm(selectedNamespaces)}>
         {i18n.t('Confirm')}
       </Button>
-    </WatermarkedModal>
+    </>
   );
 }

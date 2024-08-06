@@ -11,7 +11,6 @@ import {
 } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
-import { useStatefulConnect } from '../components/WalletStatefulConnect/useStatefulConnect';
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
 import { configWalletsToWalletName } from '../utils/providers';
@@ -21,6 +20,8 @@ import {
   mapWalletTypesToWalletInfo,
   sortWalletsBasedOnConnectionState,
 } from '../utils/wallets';
+
+import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
 
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 

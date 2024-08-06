@@ -1,3 +1,4 @@
+import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
 import type {
   Namespace,
@@ -9,101 +10,22 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
-interface API {
+import { initState, reducer, type State } from './useStatefulConnect.state';
+import { ResultStatus } from './useStatefulConnect.types';
+
+interface UseStatefulConnect {
   handleConnect: (
     wallet: WalletInfoWithExtra,
     options?: HandleConnectOptions
-  ) => Promise<void>;
+  ) => Promise<Result>;
   handleNamespace: (
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
-  ) => Promise<void>;
-  handleDerivationPath: (path: string) => Promise<void>;
-  handleDisconnect: (type: WalletType) => Promise<void>;
+  ) => Promise<Result>;
+  handleDerivationPath: (path: string) => Promise<Result>;
+  handleDisconnect: (type: WalletType) => Promise<Result>;
   getState(): State;
   resetState(section?: 'derivation'): void;
-}
-
-interface HandleConnectOptions {
-  onBeforeConnect?: (walletType: string) => void;
-  onConnect?: (walletType: string) => void;
-}
-
-interface NeedsNamespacesState {
-  providerType: string;
-  providerImage: string;
-  availableNamespaces?: Namespace[];
-  singleNamespace?: boolean;
-}
-
-interface NeedsDerivationPathState {
-  providerType: string;
-  providerImage: string;
-  namespace: Namespace;
-}
-
-interface State {
-  status: 'init' | 'namespace' | 'derivationPath';
-  namespace: NeedsNamespacesState | null;
-  derivationPath: NeedsDerivationPathState | null;
-}
-
-interface UpdateNamespaceAction {
-  type: 'needsNamespace';
-  payload: NeedsNamespacesState;
-}
-
-interface UpdateDerivationPathAction {
-  type: 'needsDerivationPath';
-  payload: NeedsDerivationPathState;
-}
-
-interface ResetAction {
-  type: 'reset';
-}
-
-interface ResetDerivationAction {
-  type: 'resetDerivation';
-}
-
-type Actions =
-  | ResetAction
-  | ResetDerivationAction
-  | UpdateDerivationPathAction
-  | UpdateNamespaceAction;
-
-const initState: State = {
-  status: 'init',
-  namespace: null,
-  derivationPath: null,
-};
-
-function reducer(state: State, action: Actions): State {
-  switch (action.type) {
-    case 'needsNamespace':
-      return {
-        ...state,
-        status: 'namespace',
-        namespace: action.payload,
-        derivationPath: null,
-      };
-    case 'needsDerivationPath':
-      return {
-        ...state,
-        status: 'derivationPath',
-        derivationPath: action.payload,
-      };
-    case 'reset':
-      return initState;
-    case 'resetDerivation':
-      return {
-        ...state,
-        derivationPath: null,
-        status: 'namespace',
-      };
-    default:
-      throw new Error(`Action hasn't been defined.`);
-  }
 }
 
 /**
@@ -116,7 +38,7 @@ function reducer(state: State, action: Actions): State {
  * or what derivation path should be used for.
  *
  */
-export function useStatefulConnect(): API {
+export function useStatefulConnect(): UseStatefulConnect {
   const { state, disconnect, connect } = useWallets();
 
   const [connectState, dispatch] = useReducer(reducer, initState);
@@ -124,8 +46,8 @@ export function useStatefulConnect(): API {
   const runConnect = async (
     type: WalletType,
     namespaces?: NamespaceData[],
-    options?: HandleConnectOptions
-  ) => {
+    _options?: HandleConnectOptions
+  ): Promise<{ status: ResultStatus }> => {
     /*
      * When running this function, it means all optional steps (like namespace and derivation path) has passed, or wallet doesn't need them at all.
      * By resetting state, we will make sure when user tries to connect other wallets, it doesn't have unexpected states.
@@ -134,15 +56,10 @@ export function useStatefulConnect(): API {
       type: 'reset',
     });
 
-    const wallet = state(type);
     try {
-      if (wallet.connected) {
-        await disconnect(type);
-      } else {
-        options?.onBeforeConnect?.(type);
-        await connect(type, undefined, namespaces);
-        options?.onConnect?.(type);
-      }
+      await connect(type, undefined, namespaces);
+
+      return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       const message = e?.message
@@ -156,10 +73,16 @@ export function useStatefulConnect(): API {
   const handleConnect = async (
     wallet: WalletInfoWithExtra,
     options?: HandleConnectOptions
-  ) => {
+  ): Promise<{
+    status: ResultStatus;
+  }> => {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
-    if (isDisconnected && !!wallet.namespaces?.length) {
+    if (isDisconnected) {
+      if (!wallet.namespaces) {
+        return await runConnect(wallet.type, undefined, options);
+      }
+
       const needsNamespace = wallet.namespaces.length > 1;
       const needsDerivationPath = wallet.needsDerivationPath;
 
@@ -173,7 +96,7 @@ export function useStatefulConnect(): API {
             singleNamespace: wallet.singleNamespace,
           },
         });
-        return;
+        return { status: ResultStatus.Namespace };
       } else if (needsDerivationPath) {
         dispatch({
           type: 'needsDerivationPath',
@@ -183,17 +106,28 @@ export function useStatefulConnect(): API {
             namespace: wallet.namespaces[0],
           },
         });
-      } else {
-        // TODO: Not sure why undefined
-        return runConnect(wallet.type, undefined, options);
+        return { status: ResultStatus.DerivationPath };
       }
+
+      return await runConnect(
+        wallet.type,
+        wallet.namespaces.map((namespace) => ({ namespace })),
+        options
+      );
     }
+
+    if (options?.disconnectIfConnected) {
+      await handleDisconnect(wallet.type);
+      return { status: ResultStatus.Disconnected };
+    }
+
+    return { status: ResultStatus.DisconnectedUnhandled };
   };
 
   const handleNamespace = async (
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
-  ) => {
+  ): Promise<Result> => {
     const isSingleNamespace = wallet.singleNamespace;
     const needsDerivationPath = wallet.needsDerivationPath;
     const firstSelectedNamespace = selectedNamespaces[0];
@@ -218,21 +152,25 @@ export function useStatefulConnect(): API {
           namespace: firstSelectedNamespace,
         },
       });
-    } else {
-      /**
-       * If execution reaches here, means we don't have any more optional step (like namespace and derivation)
-       * So we should start connecting wallet.
-       */
-      const type = connectState.namespace!.providerType;
-      const namespaces = selectedNamespaces.map((namespace) => ({
-        namespace,
-      }));
 
-      return runConnect(type, namespaces);
+      return { status: ResultStatus.DerivationPath };
     }
+
+    /**
+     * If execution reaches here, means we don't have any more optional step (like namespace and derivation)
+     * So we should start connecting wallet.
+     */
+    const type = connectState.namespace!.providerType;
+    const namespaces = selectedNamespaces.map((namespace) => ({
+      namespace,
+    }));
+
+    return await runConnect(type, namespaces);
   };
 
-  const handleDerivationPath = async (derivationPath: string) => {
+  const handleDerivationPath = async (
+    derivationPath: string
+  ): Promise<Result> => {
     if (!derivationPath) {
       throw new Error(
         "Derivation path is empty. Please make sure you've filled the field correctly."
@@ -250,14 +188,17 @@ export function useStatefulConnect(): API {
     const selectedNamespace = connectState.derivationPath!.namespace;
     const namespaces = [{ namespace: selectedNamespace, derivationPath }];
 
-    return runConnect(type, namespaces);
+    return await runConnect(type, namespaces);
   };
 
-  const handleDisconnect = async (type: WalletType) => {
+  const handleDisconnect = async (type: WalletType): Promise<Result> => {
     const wallet = state(type);
     if (wallet.connected) {
       await disconnect(type);
+      return { status: ResultStatus.Disconnected };
     }
+
+    return { status: ResultStatus.Noop };
   };
 
   return {

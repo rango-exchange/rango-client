@@ -1,5 +1,4 @@
 import type { WalletInfoWithExtra } from '../types';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -9,17 +8,11 @@ import {
   styled,
   Typography,
   Wallet,
-  WalletState,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
-import { WalletModal } from '../components/WalletModal';
-import {
-  WalletDerivationPathModal,
-  WalletNamespacesModal,
-} from '../components/WalletStatefulConnect';
-import { useStatefulConnect } from '../components/WalletStatefulConnect/useStatefulConnect';
+import { ModalStatefulConnect } from '../components/ModalStatefulConnect';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -42,60 +35,17 @@ const Container = styled(PageContainer, {
   textAlign: 'center',
 });
 
-export const TIME_TO_CLOSE_MODAL = 3_000;
-export const TIME_TO_IGNORE_MODAL = 300;
-
 export function WalletsPage() {
   const { fetchStatus: fetchMetaStatus } = useAppStore();
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const blockchains = useAppStore().blockchains();
   const { config } = useAppStore();
 
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
-  let modalTimerId: ReturnType<typeof setTimeout> | null = null;
+  const [selectedWalletToConnect, setSelectedWalletToConnect] =
+    useState<WalletInfoWithExtra>();
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const {
-    handleConnect,
-    handleDerivationPath,
-    handleNamespace,
-    getState,
-    resetState,
-  } = useStatefulConnect();
-
-  const handleConnectParams = {
-    onBeforeConnect: (type: WalletType) => {
-      modalTimerId = setTimeout(() => {
-        setOpenModal(true);
-        setSelectedWalletType(type);
-      }, TIME_TO_IGNORE_MODAL);
-    },
-    onConnect: () => {
-      if (modalTimerId) {
-        clearTimeout(modalTimerId);
-      }
-      setTimeout(() => {
-        setOpenModal(false);
-      }, TIME_TO_CLOSE_MODAL);
-    },
-  };
-
-  const [error, setError] = useState<string>();
-  const catchErrorOnHandle = (error: any) => setError(error.message);
-  const { list, terminateConnectingWallets } = useWalletList();
-
-  const handleCloseWalletModal = () => {
-    terminateConnectingWallets();
-    setOpenModal(false);
-  };
-
-  const selectedWallet = list.find(
-    (wallet) => wallet.type === selectedWalletType
-  );
-  const selectedWalletImage = selectedWallet?.image || '';
-  const selectedWalletState =
-    selectedWallet?.state || WalletState.NOT_INSTALLED;
+  const { list } = useWalletList();
 
   const filteredBlockchains = filterBlockchainsByWalletTypes(list, blockchains);
   const activeCategoriesCount = getCategoriesCount(filteredBlockchains);
@@ -108,25 +58,7 @@ export function WalletsPage() {
       return;
     }
 
-    handleConnect(wallet, handleConnectParams).catch(catchErrorOnHandle);
-  };
-
-  const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
-    const wallet = filteredWallets.find(
-      (wallet) => wallet.type === getState().namespace?.providerType
-    );
-
-    handleNamespace(wallet!, selectedNamespaces).catch(catchErrorOnHandle);
-  };
-
-  const handleDerivationPathConfirm = (derivationPath: string) => {
-    if (!derivationPath) {
-      throw new Error(
-        "Derivation path is empty. Please make sure you've filled the field correctly."
-      );
-    }
-
-    handleDerivationPath(derivationPath).catch(catchErrorOnHandle);
+    setSelectedWalletToConnect(wallet);
   };
 
   return (
@@ -163,32 +95,11 @@ export function WalletsPage() {
               />
             );
           })}
-          <WalletModal
-            open={!!openModal}
-            onClose={handleCloseWalletModal}
-            image={selectedWalletImage}
-            state={selectedWalletState}
-            error={error}
-          />
-          <WalletNamespacesModal
-            open={getState().status === 'namespace'}
+          <ModalStatefulConnect
+            wallet={selectedWalletToConnect}
             onClose={() => {
-              resetState();
+              setSelectedWalletToConnect(undefined);
             }}
-            onConfirm={handleConfirmNamespaces}
-            image={getState().namespace?.providerImage}
-            availableNamespaces={getState().namespace?.availableNamespaces}
-            singleNamespace={getState().namespace?.singleNamespace}
-          />
-          <WalletDerivationPathModal
-            open={getState().status === 'derivationPath'}
-            onClose={() => {
-              resetState('derivation');
-            }}
-            onConfirm={handleDerivationPathConfirm}
-            selectedNamespace={getState().derivationPath?.namespace}
-            type={getState().derivationPath?.providerType}
-            image={getState().derivationPath?.providerImage}
           />
         </ListContainer>
       </Container>

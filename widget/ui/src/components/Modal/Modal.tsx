@@ -27,6 +27,8 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     title,
     open,
     onClose,
+    onEnter,
+    onExit,
     styles,
     anchor = 'bottom',
     container = document.body,
@@ -44,6 +46,17 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const modalContainerRef = useRef<HTMLElement | null>(null);
+  const exitCallbackRef = useRef<ModalPropTypes['onExit']>();
+  const enterCallbackRef = useRef<ModalPropTypes['onEnter']>();
+
+  useEffect(() => {
+    exitCallbackRef.current = onExit;
+  }, [onExit]);
+
+  useEffect(() => {
+    exitCallbackRef.current = onEnter;
+  }, [onEnter]);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -81,7 +94,35 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
         );
       }
     }
+
+    if (enterCallbackRef.current) {
+      modalContainerRef.current?.addEventListener(
+        'transitionstart',
+        enterCallbackRef.current
+      );
+    }
+    if (exitCallbackRef.current) {
+      modalContainerRef.current?.addEventListener(
+        'transitionend',
+        exitCallbackRef.current
+      );
+    }
+
     return () => {
+      if (enterCallbackRef.current) {
+        modalContainerRef.current?.removeEventListener(
+          'transitionstart',
+          enterCallbackRef.current
+        );
+      }
+
+      if (exitCallbackRef.current) {
+        modalContainerRef.current?.removeEventListener(
+          'transitionend',
+          exitCallbackRef.current
+        );
+      }
+
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -101,7 +142,8 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             <ModalContainer
               active={active}
               css={styles?.container}
-              anchor={anchor}>
+              anchor={anchor}
+              ref={(ref) => (modalContainerRef.current = ref)}>
               {header ?? (
                 <ModalHeader noTitle={!title && dismissible && !prefix}>
                   {prefix}
