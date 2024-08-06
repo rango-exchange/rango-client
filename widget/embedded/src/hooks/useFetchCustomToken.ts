@@ -85,7 +85,7 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         contentType.includes('application/json') &&
         (await res.json());
       if (!response || response.error) {
-        const errorMessage = produceErrorMessage('not-found');
+        const errorMessage = produceErrorMessage('not-found', blockchain);
         setError(errorMessage);
         return undefined;
       }
