@@ -32,7 +32,7 @@ export const getUsdValue = (
 ): BigNumber | null =>
   token?.usdPrice
     ? new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0)
-    : new BigNumber(ZERO);
+    : null;
 
 export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 

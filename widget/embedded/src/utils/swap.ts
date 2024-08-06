@@ -246,17 +246,16 @@ export function getSwapButtonState(params: {
 }
 
 export function canComputePriceImpact(
-  quote: SelectedQuote | null,
   inputAmount: string,
   usdValue: BigNumber | null
 ) {
+  const inputAmountNumber = parseFloat(inputAmount || '0');
+
   return !(
     (!usdValue || usdValue.lte(ZERO)) &&
-    !!quote &&
-    !!inputAmount &&
+    inputAmount &&
     inputAmount !== '0' &&
-    parseFloat(inputAmount || '0') !== 0 &&
-    !!quote
+    inputAmountNumber !== 0
   );
 }
 

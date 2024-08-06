@@ -37,6 +37,15 @@ export function SwapInput(props: SwapInputPropTypes) {
 
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
+  const price = props.price;
+
+  const isUsdValueZeroOrFalsy =
+    !props.price.usdValue || props.price.usdValue === '0';
+
+  const displayUsdValue =
+    props.price.error ||
+    (isUsdValueZeroOrFalsy ? '0.00' : `~$${props.price.usdValue}`);
+
   return (
     <Container
       id={
@@ -99,17 +108,17 @@ export function SwapInput(props: SwapInputPropTypes) {
             <>
               <NumericTooltip
                 align="end"
-                content={props.price.realValue}
+                content={price.realValue}
                 container={props.tooltipContainer}
                 open={
-                  !props.price.realValue || props.price.realValue === '0'
+                  !price.realValue || price.realValue === '0'
                     ? false
                     : undefined
                 }>
                 <InputAmount
                   disabled={props.disabled || props.mode === 'To'}
                   style={{ padding: 0 }}
-                  value={props.price.value}
+                  value={price.value}
                   type={'onInputChange' in props ? 'number' : 'text'}
                   step="any"
                   size="large"
@@ -129,30 +138,21 @@ export function SwapInput(props: SwapInputPropTypes) {
                     container: props.tooltipContainer,
                     side: 'bottom',
                   }}
-                  outputUsdValue={props.price.usdValue}
-                  realOutputUsdValue={props.price.realUsdValue}
-                  error={props.price.error}
+                  outputUsdValue={price.usdValue}
+                  realOutputUsdValue={price.realUsdValue}
+                  error={price.error}
                   percentageChange={props.percentageChange}
                   warningLevel={props.warningLevel}
                 />
               ) : (
                 <NumericTooltip
-                  content={props.price.realUsdValue}
+                  content={price.realUsdValue}
                   container={props.tooltipContainer}
-                  open={
-                    !props.price.realUsdValue ||
-                    props.price.realUsdValue === '0'
-                      ? false
-                      : undefined
-                  }
+                  open={isUsdValueZeroOrFalsy ? false : undefined}
                   side="bottom">
-                  <ValueTypography hasWarning={!!props.price.error}>
+                  <ValueTypography hasWarning={!!price.error}>
                     <UsdPrice variant="body" size="medium">
-                      {props.price.usdValue
-                        ? props.price.usdValue === '0'
-                          ? '0.00'
-                          : `~$${props.price.usdValue}`
-                        : props.price.error}
+                      {displayUsdValue}
                     </UsdPrice>
                   </ValueTypography>
                 </NumericTooltip>

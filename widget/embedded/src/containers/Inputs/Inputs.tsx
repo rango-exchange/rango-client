@@ -53,13 +53,11 @@ export function Inputs(props: PropTypes) {
     isFetchingBalance(connectedWallets, fromBlockchain.name);
 
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
     inputAmount,
     inputUsdValue
   );
 
   const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
     inputAmount,
     outputUsdValue
   );
