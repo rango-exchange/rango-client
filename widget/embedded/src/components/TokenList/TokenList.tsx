@@ -126,14 +126,6 @@ export function TokenList(props: PropTypes) {
   }, [list.length, selectedBlockchain, balanceKey]);
 
   const renderList = () => {
-    if (!tokens.length && !!searchedFor) {
-      return (
-        <NotFound
-          title={i18n.t('No results found')}
-          description={i18n.t('Try using different keywords')}
-        />
-      );
-    }
     return (
       <List as="ul">
         <VirtualizedList
@@ -181,11 +173,12 @@ export function TokenList(props: PropTypes) {
                   start={
                     <ImageSection>
                       <Image src={token.image} size={30} />
-                      {isTokenPinned(token, props.type) && (
-                        <Pin>
-                          <PinIcon size={12} color="gray" />
-                        </Pin>
-                      )}
+                      {props.type !== 'custom-token' &&
+                        isTokenPinned(token, props.type) && (
+                          <Pin>
+                            <PinIcon size={12} color="gray" />
+                          </Pin>
+                        )}
                     </ImageSection>
                   }
                   title={
@@ -263,6 +256,8 @@ export function TokenList(props: PropTypes) {
     );
   };
 
+  const hasResult = tokens.length > 0 && !!searchedFor;
+
   return (
     <>
       {showTitle && (
@@ -277,7 +272,14 @@ export function TokenList(props: PropTypes) {
       <Container>
         <Divider size={4} />
         {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-        {fetchStatus === 'success' && renderList()}
+        {fetchStatus === 'success' && hasResult ? (
+          <List as="ul">{renderList()}</List>
+        ) : (
+          <NotFound
+            title={i18n.t('No results found')}
+            description={i18n.t('Try using different keywords')}
+          />
+        )}
       </Container>
     </>
   );

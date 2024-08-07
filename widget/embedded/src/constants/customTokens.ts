@@ -1,25 +1,6 @@
-export const ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS = [
-  'BSC',
-  'ETH',
-  'ARBITRUM',
-  'POLYGON',
-  'ZKSYNC',
-  'OPTIMISM',
-  'AVAX_CCHAIN',
-  'POLYGONZK',
-  'BASE',
-  'LINEA',
-  'MODE',
-  'SCROLL',
-  'METIS',
-  'BLAST',
-  'CRONOS',
-  'AURORA',
-  'BOBA',
-  'MOONBEAM',
-  'MOONRIVER',
-  'OKC',
-  'CELO',
-  'XLAYER',
-  'SOLANA',
+import { TransactionType } from 'rango-types';
+
+export const ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS: string[] = [
+  TransactionType.EVM,
+  TransactionType.SOLANA,
 ];

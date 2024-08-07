@@ -6,14 +6,6 @@ import {
   Typography,
 } from '@rango-dev/ui';
 
-export const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  overflow: 'hidden',
-  justifyContent: 'center',
-});
-
 export const tokenNameStyles = css({
   position: 'absolute',
   transform: 'none',
@@ -55,6 +47,14 @@ export const tokenAddressStyles = css({
 });
 export const tokenWithoutNameStyles = css({});
 export const usdValueStyles = css();
+
+export const Container = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  overflow: 'hidden',
+  justifyContent: 'center',
+});
 
 export const Title = styled('div', {
   display: 'flex',

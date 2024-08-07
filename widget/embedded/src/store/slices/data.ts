@@ -53,10 +53,7 @@ export interface DataSlice {
   blockchains: (options?: BlockchainOptions) => BlockchainMeta[];
   tokens: (options?: TokenOptions) => Token[];
   swappers: () => SwapperMeta[];
-  isTokenPinned: (
-    token: Token,
-    type: 'source' | 'destination' | 'custom-token'
-  ) => boolean;
+  isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
   findToken: FindToken;
   fetch: () => Promise<void>;
 }
@@ -91,22 +88,20 @@ export const createDataSlice: StateCreator<
         config,
       });
 
-      let supportedBlockchainsForCustomTokens: string[] =
-        ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS;
+      let supportedBlockchains: BlockchainMeta[] = blockchainsFromState;
 
       /*
        * Supported blockchains can be configured and be limited.
        * In this case, we only keep those active blockchains which exist in config.
        */
       if (supportedBlockchainsFromConfig.length > 0) {
-        supportedBlockchainsForCustomTokens =
-          supportedBlockchainsFromConfig.filter((blockchain) =>
-            ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain)
-          );
+        supportedBlockchains = supportedBlockchains.filter((blockchain) =>
+          supportedBlockchainsFromConfig.includes(blockchain.name)
+        );
       }
 
-      return blockchainsFromState.filter((blockchain) =>
-        supportedBlockchainsForCustomTokens.includes(blockchain.name)
+      return supportedBlockchains.filter((blockchain) =>
+        ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain.type)
       );
     }
 
