@@ -22,9 +22,8 @@ export class SolflareSnapSolanaSigner
   async signMessage(msg: string): Promise<string> {
     try {
       const encodedMessage = new TextEncoder().encode(msg);
-      const encodedHash = await this.provider.signMessage(encodedMessage);
-      const decodedHash = new TextDecoder().decode(encodedHash);
-      return decodedHash;
+      const signature = await this.provider.signMessage(encodedMessage);
+      return Buffer.from(signature).toString('base64');
     } catch (error) {
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
     }
