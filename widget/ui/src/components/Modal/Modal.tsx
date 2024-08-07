@@ -19,6 +19,9 @@ import {
   ModalHeader,
 } from './Modal.styles';
 
+const CLOSED_DELAY = 600;
+const OPEN_DELAY = 100;
+
 export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   const {
     title,
@@ -39,8 +42,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
 
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
-
-  const ref = useRef<HTMLDivElement | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -49,29 +51,30 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
       onClose();
     }
   };
-
-  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
-    if (!open && ref.current === e.target) {
-      setIsMount(false);
-      container.style.removeProperty('overflow');
-    }
-  };
-
-  useEffect(() => {
-    if (isMount) {
-      setActive(true);
-    }
-  }, [isMount]);
-
   useEffect(() => {
     if (container) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
+        timeoutRef.current = setTimeout(() => {
+          setActive(true);
+        }, OPEN_DELAY);
       } else {
         setActive(false);
+        timeoutRef.current = setTimeout(() => {
+          setIsMount(false);
+          container.style.removeProperty('overflow');
+        }, CLOSED_DELAY);
       }
     }
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [open, container]);
 
   return (
@@ -82,14 +85,11 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
           <BackDrop
             active={active}
             onClick={handleBackDropClick}
-            anchor={anchor}
             css={styles?.root}>
             <ModalContainer
               active={active}
               css={styles?.container}
-              anchor={anchor}
-              onTransitionEnd={handleTransitionEnd}
-              ref={ref}>
+              anchor={anchor}>
               {header ?? (
                 <ModalHeader noTitle={!title && dismissible && !prefix}>
                   {prefix}
