@@ -29,7 +29,7 @@ export const defaultWalletState: WalletState = {
   network: null,
 };
 
-export function state_reducer(state: State, action: any) {
+export function stateReducer(state: State, action: any) {
   if (action.type === 'new_state') {
     // TODO fix problem and remove ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
