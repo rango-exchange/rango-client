@@ -122,6 +122,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
           </>
         }
         title={header.title}
+        titlePosition={showBackButton ? 'center' : 'left'}
         suffix={
           <>
             {header.suffix}

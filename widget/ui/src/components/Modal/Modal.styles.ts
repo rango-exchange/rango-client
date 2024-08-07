@@ -88,20 +88,6 @@ export const Flex = styled('div', {
     padding: '$5',
   },
 });
-export const ModalHeader = styled('div', {
-  padding: '$20 $20 $0 $20',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  position: 'relative',
-  variants: {
-    noTitle: {
-      true: {
-        justifyContent: 'flex-end',
-      },
-    },
-  },
-});
 
 export const Content = styled('div', {
   display: 'flex',

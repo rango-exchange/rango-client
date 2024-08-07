@@ -51,6 +51,7 @@ export function ExpandedQuotes(props: PropTypes) {
       id={WIDGET_UI_ID.EXPANDED_BOX_ID}>
       <Header
         title={i18n.t('Routes')}
+        titlePosition="left"
         suffix={
           <>
             <SelectStrategy container={container} />

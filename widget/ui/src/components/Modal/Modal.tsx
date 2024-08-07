@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom';
 import { CloseIcon } from '../../icons';
 import { BottomLogo } from '../BottomLogo';
 import { Divider } from '../Divider';
+import { Header } from '../Header';
 import { IconButton } from '../IconButton/IconButton';
 import { Typography } from '../Typography';
 
@@ -16,7 +17,6 @@ import {
   Flex,
   Footer,
   ModalContainer,
-  ModalHeader,
 } from './Modal.styles';
 
 const CLOSED_DELAY = 600;
@@ -91,22 +91,27 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
               css={styles?.container}
               anchor={anchor}>
               {header ?? (
-                <ModalHeader noTitle={!title && dismissible && !prefix}>
-                  {prefix}
-                  {title && (
+                <Header
+                  prefix={prefix}
+                  title={
                     <Typography variant="title" size="small">
                       {title}
                     </Typography>
-                  )}
-                  <Flex>
-                    {suffix}
-                    {dismissible && hasCloseIcon && (
-                      <IconButton onClick={onClose} variant="ghost">
-                        <CloseIcon color="gray" size={14} />
-                      </IconButton>
-                    )}
-                  </Flex>
-                </ModalHeader>
+                  }
+                  suffix={
+                    <Flex>
+                      {suffix}
+                      {dismissible && hasCloseIcon && (
+                        <IconButton onClick={onClose} variant="ghost">
+                          <CloseIcon color="gray" size={14} />
+                        </IconButton>
+                      )}
+                    </Flex>
+                  }
+                  transparent
+                  css={{ padding: '$20 $20 $0 $20', minHeight: '44px' }}
+                  disableCurves
+                />
               )}
               <Content css={styles?.content}>{children}</Content>
 
