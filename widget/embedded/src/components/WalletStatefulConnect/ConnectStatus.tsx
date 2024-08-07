@@ -1,4 +1,4 @@
-import type { ModalContentProps } from './WalletModal.types';
+import type { ConnectStatusProps } from './ConnectStatus.types';
 
 import { i18n } from '@lingui/core';
 import { Image, MessageBox, WalletState } from '@rango-dev/ui';
@@ -8,10 +8,12 @@ import {
   LogoContainer,
   Spinner,
   WalletImageContainer,
-} from './WalletModalContent.styles';
+} from './ConnectStatus.styles';
 
-export function ModalContent(props: ModalContentProps) {
-  const { state, image, error } = props;
+export function ConnectStatus(props: ConnectStatusProps) {
+  const { error } = props;
+  const { state, image } = props.wallet;
+
   if (state === WalletState.CONNECTED) {
     return (
       <MessageBox
