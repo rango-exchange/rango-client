@@ -5,34 +5,17 @@ export const BackDrop = styled('div', {
   position: 'absolute',
   top: '0',
   left: '0',
+  right: '0',
+  bottom: '0',
   width: '100%',
   height: '100%',
   backgroundColor: 'transparent',
   zIndex: 10,
   borderRadius: '$primary',
-  display: 'flex',
   overflow: 'hidden',
   transition: 'background .35s',
 
   variants: {
-    anchor: {
-      bottom: {
-        justifyContent: 'end',
-        alignItems: 'end',
-        bottom: '0',
-      },
-      center: {
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      right: {
-        right: '0',
-        left: 'unset',
-        borderTopRightRadius: '0',
-        borderBottomRightRadius: '0',
-        justifyContent: 'end',
-      },
-    },
     active: {
       true: {
         backgroundColor: 'color-mix(in srgb, $neutral500 70%, transparent)',
@@ -48,26 +31,26 @@ export const ModalContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,
-  transform: 'translateY(100vh)',
-  transition: 'transform .45s ease-in-out',
+  position: 'absolute',
+  transition:
+    'transform .45s ease-in-out, top .45s ease-in-out, left .45s ease-in-out',
 
   variants: {
     anchor: {
-      bottom: {
-        width: '100%',
-        maxHeight: '95%',
-      },
-      center: { height: '100%' },
       right: {
-        borderTopRightRadius: '0',
-        borderBottomRightRadius: '0',
-        transform: 'translateX(100vw)',
+        left: '100%',
+      },
+      center: {
+        top: '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+      },
+      bottom: {
+        top: '100%',
       },
     },
     active: {
-      true: {
-        transform: 'translateY(0)',
-      },
+      true: {},
     },
   },
   compoundVariants: [
@@ -75,7 +58,23 @@ export const ModalContainer = styled('div', {
       active: true,
       anchor: 'right',
       css: {
-        transform: 'translateX(0)',
+        transform: 'translateX(-100%)',
+      },
+    },
+    {
+      active: true,
+      anchor: 'center',
+      css: {
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      },
+    },
+    {
+      active: true,
+      anchor: 'bottom',
+      css: {
+        transform: 'translateY(-100%)',
       },
     },
   ],
