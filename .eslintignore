@@ -2,3 +2,4 @@ node_modules
 dist
 *.js
 scripts
+vitest.config.ts
