@@ -52,17 +52,11 @@ export function Inputs(props: PropTypes) {
     !!fromBlockchain &&
     isFetchingBalance(connectedWallets, fromBlockchain.name);
 
-  const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
-    inputAmount,
-    inputUsdValue
-  );
+  const priceImpactInputCanNotBeComputed =
+    fromToken && !canComputePriceImpact(inputAmount, inputUsdValue);
 
-  const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
-    inputAmount,
-    outputUsdValue
-  );
+  const priceImpactOutputCanNotBeComputed =
+    selectedQuote && !canComputePriceImpact(inputAmount, outputUsdValue);
 
   const percentageChange =
     !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)

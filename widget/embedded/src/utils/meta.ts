@@ -59,3 +59,12 @@ export function isTokenNative(
 export function createTokenHash(asset: Asset): TokenHash {
   return `${asset.blockchain}-${asset.symbol}-${asset.address ?? ''}`;
 }
+
+export function isValidTokenAddress(
+  chain: BlockchainMeta,
+  address: string
+): boolean {
+  const regex = chain.addressPatterns;
+  const valid = regex.filter((r) => new RegExp(r).test(address)).length > 0;
+  return valid;
+}

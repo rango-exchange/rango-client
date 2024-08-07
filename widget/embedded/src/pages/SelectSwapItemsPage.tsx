@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { BlockchainsSection } from '../components/BlockchainsSection';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
-import { TokenList } from '../components/TokenList/TokenList';
+import { TokenList } from '../components/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';

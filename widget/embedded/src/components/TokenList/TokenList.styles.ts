@@ -53,6 +53,7 @@ export const Container = styled('div', {
   flexDirection: 'column',
   flexGrow: 1,
   overflow: 'hidden',
+  justifyContent: 'center',
 });
 
 export const Title = styled('div', {

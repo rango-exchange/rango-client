@@ -113,6 +113,9 @@ export const Input = styled('input', {
 
   '&::placeholder, &::-webkit-input-placeholder': {
     color: '$neutral700',
+    [`.${darkTheme} &`]: {
+      color: '$neutral900',
+    },
   },
   '&:focus-visible': {
     outline: 'none',

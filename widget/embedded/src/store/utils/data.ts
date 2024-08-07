@@ -1,4 +1,8 @@
-import type { BlockchainAndTokenConfig, TokenHash } from '../../types';
+import type {
+  BlockchainAndTokenConfig,
+  TokenHash,
+  WidgetConfig,
+} from '../../types';
 import type { DataSlice } from '../slices/data';
 import type { Asset, Token } from 'rango-sdk';
 
@@ -114,4 +118,25 @@ export function matchTokensFromConfigWithMeta(params: {
   });
 
   return Object.values(result);
+}
+
+export function getSupportedBlockchainsFromConfig(params: {
+  config: WidgetConfig;
+}): string[] {
+  const { config } = params;
+  const configFromBlockchains = config.from?.blockchains || [];
+  const configToBlockchains = config.to?.blockchains || [];
+
+  /*
+   * Empty array means all blockchains. So if any of to or from has an empty array,
+   * it means all blockchains is available to use and there is no limitation from config.
+   */
+  if (!configFromBlockchains.length || !configToBlockchains.length) {
+    return [];
+  }
+  const blockchains = [...configFromBlockchains, ...configToBlockchains];
+
+  const supportedBlockchains = new Set(blockchains);
+
+  return Array.from(supportedBlockchains);
 }

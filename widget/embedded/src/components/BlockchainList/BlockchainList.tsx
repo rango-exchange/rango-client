@@ -14,11 +14,17 @@ import React, { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/AppStore';
 
 import { filterBlockchains } from './BlockchainList.helpers';
-import { Container, List } from './BlockchainList.styles';
+import { BlockchainListContainer, List } from './BlockchainList.styles';
 import { LoadingBlockchainList } from './LoadingBlockchainList';
 
 export function BlockchainList(props: PropTypes) {
-  const { list, searchedFor, onChange, blockchainCategory } = props;
+  const {
+    list,
+    searchedFor,
+    onChange,
+    blockchainCategory,
+    showTitle = true,
+  } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
   const { fetchStatus } = useAppStore();
 
@@ -31,13 +37,10 @@ export function BlockchainList(props: PropTypes) {
   const renderList = () => {
     if (!blockchains.length && !!searchedFor) {
       return (
-        <>
-          <Divider size={32} />
-          <NotFound
-            title={i18n.t('No results found')}
-            description={i18n.t('Try using different keywords')}
-          />
-        </>
+        <NotFound
+          title={i18n.t('No results found')}
+          description={i18n.t('Try using different keywords')}
+        />
       );
     }
     return (
@@ -61,13 +64,19 @@ export function BlockchainList(props: PropTypes) {
   };
 
   return (
-    <Container>
-      <Typography variant="label" size="large">
-        {i18n.t('Select Blockchain')}
-      </Typography>
-      <Divider size={4} />
-      {fetchStatus === 'loading' && <LoadingBlockchainList />}
-      {fetchStatus === 'success' && renderList()}
-    </Container>
+    <>
+      {showTitle && (
+        <>
+          <Typography variant="label" size="large">
+            {i18n.t('Select Blockchain')}
+          </Typography>
+          <Divider size={4} />
+        </>
+      )}
+      <BlockchainListContainer>
+        {fetchStatus === 'loading' && <LoadingBlockchainList />}
+        {fetchStatus === 'success' && renderList()}
+      </BlockchainListContainer>
+    </>
   );
 }

@@ -31,7 +31,6 @@ import {
 import BigNumber from 'bignumber.js';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
-import { isValidAddress } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { errorMessages } from '../constants/errors';
 import { swapButtonTitles } from '../constants/messages';
 import { ZERO } from '../constants/numbers';
@@ -42,7 +41,7 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
 
-import { getBlockchainShortNameFor } from './meta';
+import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
 import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
 import { getQuoteWallets } from './wallets';
@@ -246,17 +245,16 @@ export function getSwapButtonState(params: {
 }
 
 export function canComputePriceImpact(
-  quote: SelectedQuote | null,
   inputAmount: string,
   usdValue: BigNumber | null
 ) {
+  const inputAmountNumber = parseFloat(inputAmount || '0');
+
   return !(
     (!usdValue || usdValue.lte(ZERO)) &&
-    !!quote &&
-    !!inputAmount &&
+    inputAmount &&
     inputAmount !== '0' &&
-    parseFloat(inputAmount || '0') !== 0 &&
-    !!quote
+    inputAmountNumber !== 0
   );
 }
 
@@ -748,7 +746,7 @@ export function isConfirmSwapDisabled(
 
   const customDestinationIsValid =
     customDestination && lastStepToBlockchain
-      ? isValidAddress(lastStepToBlockchain, customDestination)
+      ? isValidTokenAddress(lastStepToBlockchain, customDestination)
       : false;
 
   return (

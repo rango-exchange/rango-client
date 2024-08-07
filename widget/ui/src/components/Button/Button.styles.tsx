@@ -57,11 +57,12 @@ export const ButtonBase = styled('button', {
           outline: 0,
         },
         '&:disabled': {
+          backgroundColor: '$neutral600',
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
+            backgroundColor: '$neutral700',
           },
-          backgroundColor: '$neutral600',
           color: '$$color',
           pointerEvents: 'none',
         },
@@ -137,10 +138,11 @@ export const ButtonBase = styled('button', {
         },
         '&:disabled': {
           $$color: '$colors$background',
+          background: '$neutral600',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
+            backgroundColor: '$neutral700',
           },
-          background: '$neutral600',
           color: '$$color',
           pointerEvents: 'none',
         },

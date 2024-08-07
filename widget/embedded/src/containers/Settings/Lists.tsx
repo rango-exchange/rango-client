@@ -20,6 +20,7 @@ import {
   styled,
   Switch,
   Tabs,
+  TargetIcon,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
@@ -97,9 +98,11 @@ export function SettingsLists() {
   const {
     config: { features },
   } = useAppStore();
+  const customTokens = useAppStore().customTokens();
   const isThemeHidden = isFeatureHidden('theme', features);
   const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
   const isLanguageHidden = isFeatureHidden('language', features);
+  const isCustomTokensHidden = isFeatureHidden('customTokens', features);
 
   const infiniteApprove = useAppStore().infiniteApprove;
   const toggleInfiniteApprove = useAppStore().toggleInfiniteApprove;
@@ -185,6 +188,25 @@ export function SettingsLists() {
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
+  const customTokensItem = {
+    id: 'custom-tokens-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Custom Tokens')}
+      </Typography>
+    ),
+    end: (
+      <>
+        <Typography variant="body" size="medium">
+          {`${customTokens.length}`}
+        </Typography>
+        <Divider direction="horizontal" size={8} />
+        <ChevronRightIcon color="black" />
+      </>
+    ),
+    start: <TargetIcon color="gray" size={16} />,
+    onClick: () => navigate(navigationRoutes.customTokens),
+  };
   const languageItem = {
     id: 'language-item',
     title: (
@@ -261,7 +283,9 @@ export function SettingsLists() {
   const settingItems: ListPropTypes['items'] = isLiquidityHidden
     ? []
     : [bridgeItem, exchangeItem];
-
+  if (!isCustomTokensHidden) {
+    settingItems.push(customTokensItem);
+  }
   if (!isLanguageHidden) {
     settingItems.push(languageItem);
   }

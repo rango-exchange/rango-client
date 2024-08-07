@@ -16,8 +16,10 @@ import React, { useEffect, useRef } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { getBlockchainDisplayNameFor } from '../../utils/meta';
-import { isValidAddress } from '../ConfirmWalletsModal/ConfirmWallets.helpers';
+import {
+  getBlockchainDisplayNameFor,
+  isValidTokenAddress,
+} from '../../utils/meta';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
 import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
 
@@ -44,7 +46,7 @@ export function CustomDestination(props: PropTypes) {
   const isFirefox = navigator?.userAgent.includes('Firefox');
   const isAddressChecked = open && !!customDestination && blockchain;
   const isAddressInvalid =
-    isAddressChecked && !isValidAddress(blockchain, customDestination);
+    isAddressChecked && !isValidTokenAddress(blockchain, customDestination);
   const handleClear = () => {
     setCustomDestination('');
   };
