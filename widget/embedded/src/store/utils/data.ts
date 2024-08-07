@@ -126,6 +126,11 @@ export function getSupportedBlockchainsFromConfig(params: {
   const { config } = params;
   const configFromBlockchains = config.from?.blockchains || [];
   const configToBlockchains = config.to?.blockchains || [];
+
+  /*
+   * Empty array means all blockchains. So if any of to or from has an empty array,
+   * it means all blockchains is available to use and there is no limitation from config.
+   */
   if (!configFromBlockchains.length || !configToBlockchains.length) {
     return [];
   }

@@ -125,13 +125,48 @@ export function TokenList(props: PropTypes) {
     setTokens(list.slice(0, PAGE_SIZE));
   }, [list.length, selectedBlockchain, balanceKey]);
 
+  const endRenderer = (token: Token) => {
+    const tokenBalance = formatBalance(getBalanceFor(token));
+
+    if (action) {
+      return action(token);
+    }
+    if (loadingWallet) {
+      return (
+        <End>
+          <Skeleton variant="text" size="large" width={70} />
+          <Divider size={4} />
+          <Skeleton variant="text" size="medium" width={50} />
+        </End>
+      );
+    }
+
+    return (
+      tokenBalance && (
+        <BalanceContainer>
+          <TokenBalance variant="title" size="small">
+            {tokenBalance.amount}
+          </TokenBalance>
+          <div />
+          {tokenBalance.usdValue && (
+            <Typography
+              variant="body"
+              className={usdValueStyles()}
+              size="xsmall">
+              {`$${tokenBalance.usdValue}`}
+            </Typography>
+          )}
+        </BalanceContainer>
+      )
+    );
+  };
+
   const renderList = () => {
     return (
       <VirtualizedList
         endReached={hasNextPage ? loadNextPage : undefined}
         itemContent={(index) => {
           const token = tokens[index];
-          const tokenBalance = formatBalance(getBalanceFor(token));
           const address = token.address || '';
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
@@ -216,34 +251,7 @@ export function TokenList(props: PropTypes) {
                       })
                     : token.name || undefined
                 }
-                end={
-                  action ? (
-                    action(token)
-                  ) : loadingWallet ? (
-                    <End>
-                      <Skeleton variant="text" size="large" width={70} />
-                      <Divider size={4} />
-                      <Skeleton variant="text" size="medium" width={50} />
-                    </End>
-                  ) : (
-                    tokenBalance && (
-                      <BalanceContainer>
-                        <TokenBalance variant="title" size="small">
-                          {tokenBalance.amount}
-                        </TokenBalance>
-                        <div />
-                        {tokenBalance.usdValue && (
-                          <Typography
-                            variant="body"
-                            className={usdValueStyles()}
-                            size="xsmall">
-                            {`$${tokenBalance.usdValue}`}
-                          </Typography>
-                        )}
-                      </BalanceContainer>
-                    )
-                  )
-                }
+                end={endRenderer(token)}
               />
             </div>
           );
