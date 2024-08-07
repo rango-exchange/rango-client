@@ -6,11 +6,14 @@ import { useContext, useRef } from 'react';
 
 import { WalletContext } from './context.js';
 
-/**
- *
- *
- */
-export function useInitializers(onChangeState: WalletEventHandler) {
+export type GetWalletInstance = (wallet: {
+  actions: WalletActions;
+  config: WalletConfig;
+}) => Wallet;
+
+export function useInitializers(
+  onChangeState: WalletEventHandler
+): GetWalletInstance {
   const availableWallets = useRef<{
     [key: string]: Wallet | undefined;
   }>({});
