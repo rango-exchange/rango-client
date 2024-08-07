@@ -2,8 +2,10 @@ import type { GenericSigner, TronTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
+/*
+ * TODO - replace with real type
+ * tslint:disable-next-line: no-any
+ */
 type TronExternalProvider = any;
 
 export class DefaultTronSigner implements GenericSigner<TronTransaction> {
@@ -13,8 +15,31 @@ export class DefaultTronSigner implements GenericSigner<TronTransaction> {
     this.provider = provider;
   }
 
-  async signMessage(): Promise<string> {
-    throw SignerError.UnimplementedError('signMessage');
+  static buildTx(tronTx: TronTransaction) {
+    let tx = {};
+    if (!!tronTx.txID) {
+      tx = { ...tx, txID: tronTx.txID };
+    }
+    if (tronTx.visible !== undefined) {
+      tx = { ...tx, visible: tronTx.visible };
+    }
+    if (!!tronTx.__payload__) {
+      tx = { ...tx, __payload__: tronTx.__payload__ };
+    }
+    if (!!tronTx.raw_data) {
+      tx = { ...tx, raw_data: tronTx.raw_data };
+    }
+    if (!!tronTx.raw_data_hex) {
+      tx = { ...tx, raw_data_hex: tronTx.raw_data_hex };
+    }
+    return tx;
+  }
+  async signMessage(msg: string): Promise<string> {
+    try {
+      return await this.provider.tronWeb.trx.signMessageV2(msg);
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
   }
 
   async signAndSendTx(tx: TronTransaction): Promise<{ hash: string }> {
@@ -29,16 +54,5 @@ export class DefaultTronSigner implements GenericSigner<TronTransaction> {
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }
-  }
-
-  static buildTx(tronTx: TronTransaction) {
-    let tx = {};
-    if (!!tronTx.txID) tx = { ...tx, txID: tronTx.txID };
-    if (tronTx.visible !== undefined) tx = { ...tx, visible: tronTx.visible };
-    if (!!tronTx.__payload__) tx = { ...tx, __payload__: tronTx.__payload__ };
-    if (!!tronTx.raw_data) tx = { ...tx, raw_data: tronTx.raw_data };
-    if (!!tronTx.raw_data_hex)
-      tx = { ...tx, raw_data_hex: tronTx.raw_data_hex };
-    return tx;
   }
 }

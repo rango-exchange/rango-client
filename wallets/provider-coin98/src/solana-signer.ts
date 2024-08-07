@@ -1,13 +1,16 @@
-import { GenericSigner, SignerError, SolanaTransaction } from 'rango-types';
-import { PublicKey, Transaction, VersionedTransaction } from '@solana/web3.js';
-import bs58 from 'bs58';
-import {
-  SolanaWeb3Signer,
-  generalSolanaTransactionExecutor,
-} from '@rango-dev/signer-solana';
+import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
+import type { Transaction, VersionedTransaction } from '@solana/web3.js';
+import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
+import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
+import { PublicKey } from '@solana/web3.js';
+import bs58 from 'bs58';
+import { SignerError, SignerErrorCode } from 'rango-types';
+
+/*
+ * TODO - replace with real type
+ * tslint:disable-next-line: no-any
+ */
 type SolanaExternalProvider = any;
 
 export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
@@ -16,8 +19,13 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
     this.provider = provider;
   }
 
-  async signMessage(): Promise<string> {
-    throw SignerError.UnimplementedError('signMessage');
+  async signMessage(msg: string): Promise<string> {
+    try {
+      const result = await this.provider.signMessage(msg);
+      return result.signature;
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {

@@ -1,4 +1,5 @@
-import type { GenericSigner, CosmosTransaction } from 'rango-types';
+import type { CosmosTransaction, GenericSigner } from 'rango-types';
+
 import { executeTerraTransaction } from './helpers';
 
 type TerraExternalProvider = any;
@@ -15,9 +16,14 @@ export class DefaultTerraSigner implements GenericSigner<CosmosTransaction> {
     address: string,
     chainId: string | null
   ): Promise<string> {
-    if (!chainId) throw Error('ChainId is required');
-    const { result } = await this.provider.signBytes(msg, address);
-    return result.signature;
+    if (!chainId) {
+      throw Error('ChainId is required');
+    }
+    const { result } = await this.provider.signBytes(
+      Buffer.from(msg, 'utf-8'),
+      address
+    );
+    return Buffer.from(result.signature).toString('base64');
   }
 
   async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
