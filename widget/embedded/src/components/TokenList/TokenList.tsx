@@ -262,8 +262,6 @@ export function TokenList(props: PropTypes) {
     );
   };
 
-  const hasResult = tokens.length > 0 && !!searchedFor;
-
   return (
     <>
       {showTitle && (
@@ -278,14 +276,17 @@ export function TokenList(props: PropTypes) {
       <Container>
         <Divider size={4} />
         {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-        {fetchStatus === 'success' && hasResult ? (
-          <List as="ul">{renderList()}</List>
-        ) : (
-          <NotFound
-            title={i18n.t('No results found')}
-            description={i18n.t('Try using different keywords')}
-          />
-        )}
+        {fetchStatus === 'success' &&
+          (tokens.length ? (
+            <List as="ul">{renderList()}</List>
+          ) : (
+            !!searchedFor && (
+              <NotFound
+                title={i18n.t('No results found')}
+                description={i18n.t('Try using different keywords')}
+              />
+            )
+          ))}
       </Container>
     </>
   );
