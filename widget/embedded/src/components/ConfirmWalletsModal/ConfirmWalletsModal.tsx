@@ -327,6 +327,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       dismissible={!showMoreWalletFor}
       container={modalContainer}
       {...(!showMoreWalletFor && {
+        styles: { container: { height: '100%' } },
         footer: (
           <ConfirmButton>
             <Button
@@ -350,7 +351,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         ),
       })}
       {...(showMoreWalletFor && {
-        styles: { container: { padding: '$0' } },
+        styles: { container: { height: '100%', padding: '$0' } },
         header: (
           <ShowMoreHeader>
             <NavigateBack

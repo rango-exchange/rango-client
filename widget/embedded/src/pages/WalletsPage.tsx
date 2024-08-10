@@ -80,12 +80,14 @@ export function WalletsPage() {
           setSelectedWalletType(type);
         }, TIME_TO_IGNORE_MODAL);
       },
-      onConnect: () => {
+      onConnect: (type) => {
         if (modalTimerId) {
           clearTimeout(modalTimerId);
         }
         setTimeout(() => {
-          setOpenModal(false);
+          if (selectedWalletType === type) {
+            setOpenModal(false);
+          }
         }, TIME_TO_CLOSE_MODAL);
       },
     });
