@@ -4,7 +4,7 @@ import type { EvmTransaction } from 'rango-types/lib/api/main';
 
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
-import { SignerError } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 import {
   getLedgerError,
@@ -14,9 +14,24 @@ import {
 import { getDerivationPath } from '../state';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
-  async signMessage(): Promise<string> {
-    // TODO: Should be implemented using eth.signPersonalMessage
-    throw SignerError.UnimplementedError('signMessage');
+  async signMessage(msg: string): Promise<string> {
+    try {
+      const transport = await transportConnect();
+
+      const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
+      const result = await eth.signPersonalMessage(
+        getDerivationPath(),
+        Buffer.from(msg).toString('hex')
+      );
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      let v = (result['v'] - 27).toString(16);
+      if (v.length < 2) {
+        v = '0' + v;
+      }
+      return '0x' + result['r'] + result['s'] + v;
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
   }
 
   async signAndSendTx(
