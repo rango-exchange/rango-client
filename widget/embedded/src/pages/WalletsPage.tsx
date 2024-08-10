@@ -69,24 +69,16 @@ export function WalletsPage() {
   const [derivationPathModalState, setDerivationPathModalState] =
     useState<DerivationPathModalState | null>(null);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
-  let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
 
   const { list, handleClick, error, disconnectConnectingWallets } =
     useWalletList({
       onBeforeConnect: (type) => {
-        modalTimerId = setTimeout(() => {
-          setOpenModal(true);
-          setSelectedWalletType(type);
-        }, TIME_TO_IGNORE_MODAL);
+        setOpenModal(true);
+        setSelectedWalletType(type);
       },
       onConnect: () => {
-        if (modalTimerId) {
-          clearTimeout(modalTimerId);
-        }
-        setTimeout(() => {
-          setOpenModal(false);
-        }, TIME_TO_CLOSE_MODAL);
+        setOpenModal(false);
       },
     });
 
