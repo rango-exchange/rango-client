@@ -1,3 +1,12 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-core@0.26.0...queue-manager-core@0.27.0) (2024-08-11)
+
+
+### Features
+
+* add filter and clear to widget history ([d43b603](https://github.com/rango-exchange/rango-client/commit/d43b603462feabf297d5be389fcaa35402d667b5))
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-core@0.25.0...queue-manager-core@0.26.0) (2024-02-20)
 
 

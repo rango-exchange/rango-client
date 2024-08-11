@@ -1,3 +1,7 @@
+# [0.36.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.35.1...provider-trustwallet@0.36.0) (2024-08-11)
+
+
+
 ## [0.35.1](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.35.0...provider-trustwallet@0.35.1) (2024-07-14)
 
 

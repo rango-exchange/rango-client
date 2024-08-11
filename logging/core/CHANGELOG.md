@@ -1,3 +1,7 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/logging-core@0.5.0...logging-core@0.6.0) (2024-08-11)
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/logging-core@0.3.0...logging-core@0.5.0) (2024-07-09)
 
 
