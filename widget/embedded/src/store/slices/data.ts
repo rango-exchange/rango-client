@@ -102,7 +102,7 @@ export const createDataSlice: StateCreator<
         : 'supportedDestinationTokens';
 
     let supportedTokens = cacheService.get(cacheKey);
-    if (!supportedTokens) {
+    if (!supportedTokens?.length) {
       supportedTokens = matchTokensFromConfigWithMeta({
         type: options.type,
         config: {
