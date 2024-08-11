@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-09 14:11\n"
+"PO-Revision-Date: 2024-08-11 16:10\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -19,18 +19,78 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
+msgid "Status"
+msgstr "Статус"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
+msgid "Copied To Clipboard"
+msgstr "Скопировано в буфер обмена"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:321
+msgid "Copy Request ID"
+msgstr "Копировать ID запроса"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:59
+msgid "Complete"
+msgstr "Complete"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:63
+msgid "Running"
+msgstr "Выполняется"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:148
+msgid "Clear all Txs"
+msgstr "Очистить все Txs"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:186
+msgid "No transactions"
+msgstr "Нет транзакций"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:193
+msgid "Your transaction history is stored locally and will appear here after you start a swap"
+msgstr "Ваша история транзакций хранится локально и появится здесь после запуска обмена"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:217
+msgid "Clear History"
+msgstr "Очистить историю"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:221
+msgid "This would clear all succeeded/failed transactions from widget. Do you wish to proceed?"
+msgstr "Это удалит все успешные/неудачные транзакции из виджета. Вы хотите продолжить?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:228
+msgid "Hint: This does not clear your transaction history on blockchain. Only hides them in this page."
+msgstr "Подсказка: Это не очищает историю транзакций в блокчейне. Скрывает их только на этой странице."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:243
+msgid "Yes, Clear history"
+msgstr "Да, очистить историю"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:274
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
 msgid "Swap Details"
 msgstr "Детали обмена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:340
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:352
 msgid "Finished at"
 msgstr "Завершено в"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:340
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:352
 msgid "Created at"
 msgstr "Создано в"
 
@@ -60,7 +120,7 @@ msgid "Connecting ..."
 msgstr "Подключение..."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:569
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:121
 msgid "Enter {blockchainName} address"
 msgstr "Введите адрес {blockchainName}"
 
@@ -70,7 +130,7 @@ msgid "Clear all"
 msgstr "Очистить все"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:331
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:343
 msgid "View on Rango Explorer"
 msgstr "Просмотр в проводнике Rango"
 
@@ -116,16 +176,16 @@ msgstr "Что-то пошло не так. Пожалуйста, обновит
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:121
-#: widget/embedded/src/pages/HistoryPage.tsx:85
+#: widget/embedded/src/components/TokenList/TokenList.tsx:127
+#: widget/embedded/src/pages/HistoryPage.tsx:185
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
 msgstr "Ничего не найдено"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:122
-#: widget/embedded/src/pages/HistoryPage.tsx:87
+#: widget/embedded/src/components/TokenList/TokenList.tsx:128
+#: widget/embedded/src/pages/HistoryPage.tsx:192
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
 msgstr "Попробуйте использовать разные ключевые слова"
@@ -169,41 +229,41 @@ msgstr "В настоящее время некоторые транзакции
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:402
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:349
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:348
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:361
 #: widget/embedded/src/components/WalletDerivationPathModal/WalletDerivationPathModal.tsx:150
 #: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:133
 msgid "Confirm"
 msgstr "Подтвердить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:417
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:495
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:363
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:444
 msgid "Your {blockchainName} wallets"
 msgstr "Ваши кошельки {blockchainName}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:436
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:382
 msgid "Insufficient account balance"
 msgstr "Недостаточно средств на счете"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:445
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:391
 msgid "Proceed anyway"
 msgstr "Все равно продолжить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:504
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:453
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Вам нужно подключить кошелек {blockchainName}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:548
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:105
 msgid "Send to a different address"
 msgstr "Отправить на другой адрес"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:593
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:139
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "{destination} не соответствует шаблону адреса блокчейна."
 
@@ -213,39 +273,39 @@ msgid "Add {chain} chain"
 msgstr "Добавить цепочку {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:329
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:362
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:341
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:374
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Добавить цепочку {blockchainDisplayName}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:334
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:366
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:346
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:378
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "Вы должны подключить кошелек {blockchainDisplayName} или выбрать другой адрес {blockchainDisplayName}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:384
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:396
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} цепочка добавлена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:388
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:400
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} добавлен в ваш кошелек, вы можете использовать его для смены."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:398
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:410
 msgid "Request Rejected"
 msgstr "Запрос отклонен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:399
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:411
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Вы отклонили добавление цепочки {blockchainDisplayName} в ваш кошелек."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:423
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:435
 msgid "Show more wallets"
 msgstr "Показать больше кошельков"
 
@@ -293,7 +353,7 @@ msgstr "Сегодня"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:409
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:421
 msgid "Swaps steps"
 msgstr "Меняет шаги"
 
@@ -303,6 +363,7 @@ msgid "Retry"
 msgstr "Повторить"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:29
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
 #: widget/embedded/src/pages/SettingsPage.tsx:51
 msgid "Reset"
@@ -520,7 +581,7 @@ msgstr "Этот параметр применяется на каждом ша�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:315
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:310
 msgid "Request ID"
 msgstr "ID запроса"
 
@@ -535,27 +596,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Поменять на ID запроса = {requestId} не найдено."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:224
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Вы получили {amount} {token} на {conciseAddress} кошельке на цепочке {chain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:247
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 msgid "Transaction was not sent."
 msgstr "Транзакция не отправлена."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:249
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} на {blockchain} остается в вашем кошельке"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:285
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "Delete"
 msgstr "Удалить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:307
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:302
 msgid "Try again"
 msgstr "Попробовать еще раз"
 
@@ -632,6 +693,7 @@ msgstr "Да, удалить"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:27
+#: widget/embedded/src/pages/HistoryPage.tsx:252
 msgid "No, Cancel"
 msgstr "Нет, отменить"
 
@@ -646,7 +708,7 @@ msgid "Network Changed"
 msgstr "Сеть изменена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:255
+#: widget/embedded/src/components/TokenList/TokenList.tsx:261
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
 msgid "Select Token"
 msgstr "Выбрать токен"
@@ -763,7 +825,7 @@ msgstr "Подтвердите неизвестную цену в USD"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:156
+#: widget/embedded/src/pages/Home.tsx:159
 msgid "Swap"
 msgstr "Поменять"
 
@@ -809,7 +871,7 @@ msgid "From"
 msgstr "От"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:117
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:118
 msgid "To"
 msgstr "Кому"
 
@@ -882,12 +944,12 @@ msgid "You get"
 msgstr "Вы получаете"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:67
+#: widget/embedded/src/pages/HistoryPage.tsx:139
 msgid "History"
 msgstr "История"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:74
+#: widget/embedded/src/pages/HistoryPage.tsx:160
 msgid "Search Transaction"
 msgstr "Поиск транзакций"
 
@@ -947,13 +1009,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Идентификатор запроса необходим для отображения сведений о swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:186
+#: widget/embedded/src/pages/WalletsPage.tsx:202
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Подключить кошельки"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:201
+#: widget/embedded/src/pages/WalletsPage.tsx:217
 msgid "Choose a wallet to connect."
 msgstr "Выберите кошелек для подключения."
 
@@ -1089,6 +1151,7 @@ msgid "Bridge to {toChain} via {swapper}"
 msgstr "Мост к {toChain} через {swapper}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:65
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Неудачный"
@@ -1140,12 +1203,12 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "необходимо передать Кошельку правильное состояние."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:56
 msgid "Balance"
 msgstr "Баланс"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:63
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:64
 msgid "Max"
 msgstr "Макс"
 
