@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.2.1...provider-trezor@0.3.0) (2024-08-11)
+
+
+### Features
+
+* add derivation path modal for trezor wallet ([364422f](https://github.com/rango-exchange/rango-client/commit/364422f099b202a27a529591c5e3628bbb35508d))
+
+
+
 ## [0.2.1](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.2.0...provider-trezor@0.2.1) (2024-07-14)
 
 

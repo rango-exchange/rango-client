@@ -1,3 +1,13 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.30.0...signer-solana@0.31.0) (2024-08-11)
+
+
+### Features
+
+* implement sign message method for providers with a custom signer ([cf9515f](https://github.com/rango-exchange/rango-client/commit/cf9515feb5d3754aac9c228fe83315daf1350c85))
+* integrate solflare wallet ([fb6aaf1](https://github.com/rango-exchange/rango-client/commit/fb6aaf1c255149df18a75a7bfb16fc83c23b85a8))
+
+
+
 # [0.30.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.28.0...signer-solana@0.30.0) (2024-07-09)
 
 
