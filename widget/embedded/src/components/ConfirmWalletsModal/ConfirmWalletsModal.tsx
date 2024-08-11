@@ -1,30 +1,18 @@
 import type { PropTypes } from './ConfirmWalletsModal.types';
 import type { ConnectedWallet } from '../../store/wallets';
 import type { ConfirmSwapWarnings, Wallet } from '../../types';
-import type { MouseEvent } from 'react';
 
 import { i18n } from '@lingui/core';
 import {
   Alert,
   BalanceErrors,
   Button,
-  ChevronDownIcon,
   ChevronLeftIcon,
-  CloseIcon,
   Divider,
-  IconButton,
   MessageBox,
-  PasteIcon,
   Typography,
-  WalletIcon,
 } from '@rango-dev/ui';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -33,26 +21,17 @@ import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
-import {
-  getBlockchainDisplayNameFor,
-  getBlockchainShortNameFor,
-} from '../../utils/meta';
+import { getBlockchainShortNameFor } from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
 import { getQuoteWallets } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
-import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
-import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
+import { CustomDestination } from '../CustomDestination/CustomDestination';
 
-import { isValidAddress } from './ConfirmWallets.helpers';
 import {
-  alarmsStyles,
   ConfirmButton,
-  CustomDestination,
-  CustomDestinationButton,
   ListContainer,
   NavigateBack,
   ShowMoreHeader,
-  StyledTextField,
   Title,
   Wallets,
   WalletsContainer,
@@ -66,10 +45,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
   //TODO: move component's logics to a custom hook
   const { open, onClose, onCancel, onCheckBalance, loading } = props;
   const navigate = useNavigate();
-  const config = useAppStore().config;
-
-  const customDestinationInputRef = useRef<HTMLInputElement | null>(null);
-
   const blockchains = useAppStore().blockchains();
   const {
     selectedQuote,
@@ -80,6 +55,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     setCustomDestination,
   } = useQuoteStore();
   const { connectedWallets, selectWallets } = useWalletsStore();
+  const { config } = useAppStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
@@ -87,11 +63,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [quoteWarning, setQuoteWarning] = useState<
     ConfirmSwapWarnings['quoteUpdate'] | null
   >(null);
-  const [showCustomDestination, setShowCustomDestination] = useState(
+
+  const [isCustomDestinationOpen, setCustomDestinationOpen] = useState(
     !!customDestination
   );
-
-  const isFirefox = navigator?.userAgent.includes('Firefox');
 
   const quoteWallets = useMemo(
     () =>
@@ -156,62 +131,50 @@ export function ConfirmWalletsModal(props: PropTypes) {
           (!isWalletRequiredFor(chain) && !customDestination))
     );
 
-  const isAddressMatched =
-    !!customDestination &&
-    showCustomDestination &&
-    lastStepToBlockchain &&
-    !isValidAddress(lastStepToBlockchain, customDestination);
-
-  const resetCustomDestination = () => {
-    setShowCustomDestination(false);
-    setCustomDestination(null);
-    setSelectableWallets((selectableWallets) => {
-      let anyWalletSelected = false;
-      return selectableWallets.map((selectableWallet) => {
-        if (
-          !anyWalletSelected &&
-          selectableWallet.chain === lastStepToBlockchain?.name
-        ) {
-          anyWalletSelected = true;
-          return {
-            ...selectableWallet,
-            selected: true,
-          };
+  const updateSelectableWallets = (
+    wallets: ConnectedWallet[],
+    chainName: string,
+    shouldSelect: boolean
+  ) => {
+    let isAnyWalletSelected = false;
+    return wallets.map((wallet) => {
+      if (wallet.chain === chainName) {
+        let selected = wallet.selected;
+        if (!isAnyWalletSelected && shouldSelect) {
+          isAnyWalletSelected = true;
+          selected = true;
+        } else if (!shouldSelect) {
+          selected = false;
         }
-        return selectableWallet;
-      });
+        return {
+          ...wallet,
+          selected,
+        };
+      }
+      return wallet;
     });
   };
 
-  const handleClearCustomDestination = () => setCustomDestination('');
-
-  const handlePasteCustomDestination = async (
-    event: MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    if (navigator.clipboard !== undefined) {
-      const pastedText = await navigator.clipboard.readText();
-      setCustomDestination(pastedText);
-      customDestinationInputRef?.current?.focus();
-    }
-  };
-
-  const handleCustomDestinationCollapsibleOpenChange = (checked: boolean) => {
-    if (!checked) {
-      resetCustomDestination();
+  const handleCustomDestinationCollapsibleOpenChange = (open: boolean) => {
+    setCustomDestinationOpen(open);
+    if (!open) {
+      setCustomDestination('');
+      setSelectableWallets((selectableWallets) => {
+        return updateSelectableWallets(
+          selectableWallets,
+          lastStepToBlockchain?.name || '',
+          true
+        );
+      });
     } else {
       if (!isWalletRequiredFor(lastStepToBlockchain?.name ?? '')) {
-        setSelectableWallets((selectableWallets) =>
-          selectableWallets.map((selectableWallet) => {
-            if (selectableWallet.chain === lastStepToBlockchain?.name) {
-              return {
-                ...selectableWallet,
-                selected: false,
-              };
-            }
-            return selectableWallet;
-          })
-        );
+        setSelectableWallets((selectableWallets) => {
+          return updateSelectableWallets(
+            selectableWallets,
+            lastStepToBlockchain?.name || '',
+            false
+          );
+        });
       }
     }
   };
@@ -237,10 +200,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
     onCancel();
     if (
       wallet.chain === lastStepToBlockchain?.name &&
-      showCustomDestination &&
+      isCustomDestinationOpen &&
       !isWalletRequiredFor(lastStepToBlockchain.name)
     ) {
-      setShowCustomDestination(false);
+      setCustomDestinationOpen(false);
       setCustomDestination(null);
     }
     setSelectableWallets((selectableWallets) =>
@@ -285,24 +248,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
     } else {
       setBalanceWarnings(warnings?.balance?.messages ?? []);
     }
-  };
-
-  const renderCustomDestinationSuffix = () => {
-    if (customDestination) {
-      return (
-        <IconButton onClick={handleClearCustomDestination} variant="ghost">
-          <CloseIcon size={12} color="gray" />
-        </IconButton>
-      );
-    } else if (!isFirefox) {
-      return (
-        <IconButton onClick={handlePasteCustomDestination} variant="ghost">
-          <PasteIcon size={16} />
-        </IconButton>
-      );
-    }
-
-    return null;
   };
 
   useEffect(() => {
@@ -382,13 +327,14 @@ export function ConfirmWalletsModal(props: PropTypes) {
       dismissible={!showMoreWalletFor}
       container={modalContainer}
       {...(!showMoreWalletFor && {
+        styles: { container: { height: '100%' } },
         footer: (
           <ConfirmButton>
             <Button
               loading={loading}
               disabled={isConfirmSwapDisabled(
                 loading,
-                showCustomDestination,
+                isCustomDestinationOpen,
                 customDestination,
                 selectedQuote,
                 selectableWallets,
@@ -405,7 +351,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         ),
       })}
       {...(showMoreWalletFor && {
-        styles: { container: { padding: '$0' } },
+        styles: { container: { height: '100%', padding: '$0' } },
         header: (
           <ShowMoreHeader>
             <NavigateBack
@@ -487,7 +433,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
               const key = `wallet-${index}`;
               const isLastWallet = index === quoteWallets.length - 1;
-
+              const showCustomDestination =
+                isLastWallet &&
+                lastStepToBlockchain &&
+                config?.customDestination !== false;
               return (
                 <div key={key}>
                   <Title>
@@ -523,81 +472,14 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     />
                   </ListContainer>
                   {!isLastWallet && <Divider size={32} />}
-                  {isLastWallet && config?.customDestination !== false && (
-                    <CustomDestination>
-                      <CustomCollapsible
-                        onOpenChange={
-                          handleCustomDestinationCollapsibleOpenChange
-                        }
-                        hasSelected
-                        open={showCustomDestination}
-                        triggerAnchor="top"
-                        trigger={
-                          <CustomDestinationButton>
-                            <div className="button__content">
-                              <WalletIcon size={18} color="info" />
-                              <Divider size={4} direction="horizontal" />
-                              <Typography
-                                variant="label"
-                                size="medium"
-                                color={
-                                  showCustomDestination
-                                    ? '$neutral600'
-                                    : undefined
-                                }>
-                                {i18n.t('Send to a different address')}
-                              </Typography>
-                            </div>
-                            <ExpandedIcon
-                              orientation={
-                                showCustomDestination ? 'up' : 'down'
-                              }>
-                              <ChevronDownIcon size={10} color="secondary" />
-                            </ExpandedIcon>
-                          </CustomDestinationButton>
-                        }
-                        onClickTrigger={() =>
-                          setShowCustomDestination((prev) => !prev)
-                        }>
-                        <StyledTextField
-                          ref={customDestinationInputRef}
-                          style={{
-                            padding: 0,
-                            paddingRight: customDestination ? '8px' : '5px',
-                          }}
-                          autoFocus
-                          placeholder={i18n.t(
-                            'Enter {blockchainName} address',
-                            {
-                              blockchainName: getBlockchainDisplayNameFor(
-                                requiredWallet,
-                                blockchains
-                              ),
-                            }
-                          )}
-                          value={customDestination || ''}
-                          suffix={renderCustomDestinationSuffix()}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            setCustomDestination(value);
-                          }}
-                          {...(!customDestination && { autoFocus: true })}
-                        />
-                      </CustomCollapsible>
-
-                      {isAddressMatched && (
-                        <div className={alarmsStyles()}>
-                          <Alert
-                            variant="alarm"
-                            type="error"
-                            title={i18n.t({
-                              values: { destination: customDestination },
-                              id: "Address {destination} doesn't match the blockchain address pattern.",
-                            })}
-                          />
-                        </div>
-                      )}
-                    </CustomDestination>
+                  {showCustomDestination && (
+                    <CustomDestination
+                      blockchain={lastStepToBlockchain}
+                      open={isCustomDestinationOpen}
+                      handleOpenChange={
+                        handleCustomDestinationCollapsibleOpenChange
+                      }
+                    />
                   )}
                 </div>
               );

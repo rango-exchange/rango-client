@@ -80,12 +80,14 @@ export function WalletsPage() {
           setSelectedWalletType(type);
         }, TIME_TO_IGNORE_MODAL);
       },
-      onConnect: () => {
+      onConnect: (type) => {
         if (modalTimerId) {
           clearTimeout(modalTimerId);
         }
         setTimeout(() => {
-          setOpenModal(false);
+          if (selectedWalletType === type) {
+            setOpenModal(false);
+          }
         }, TIME_TO_CLOSE_MODAL);
       },
     });
@@ -126,21 +128,35 @@ export function WalletsPage() {
 
   const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
 
-  const handleWalletItemClick = (type: string, wallet: WalletInfoWithExtra) => {
+  const handleWalletItemClick = (wallet: WalletInfoWithExtra) => {
     if (isSingleWalletActive(list, config.multiWallets)) {
       return;
     }
 
-    if (!!wallet.namespaces && wallet.state === WalletState.DISCONNECTED) {
-      setNamespacesModalState({
-        open: true,
-        providerType: type,
-        providerImage: wallet.image,
-        availableNamespaces: wallet.namespaces,
-        singleNamespace: wallet.singleNamespace,
-      });
+    if (
+      !!wallet.namespaces?.length &&
+      wallet.state === WalletState.DISCONNECTED
+    ) {
+      if (wallet.namespaces.length > 1) {
+        setNamespacesModalState({
+          open: true,
+          providerType: wallet.type,
+          providerImage: wallet.image,
+          availableNamespaces: wallet.namespaces,
+          singleNamespace: wallet.singleNamespace,
+        });
+      } else if (wallet.needsDerivationPath) {
+        setDerivationPathModalState({
+          open: true,
+          providerType: wallet.type,
+          providerImage: wallet.image,
+          namespace: wallet.namespaces[0],
+        });
+      } else {
+        void handleClick(wallet.type);
+      }
     } else {
-      void handleClick(type);
+      void handleClick(wallet.type);
     }
   };
 
@@ -208,7 +224,7 @@ export function WalletsPage() {
                 key={key}
                 {...wallet}
                 container={getContainer()}
-                onClick={(type) => handleWalletItemClick(type, wallet)}
+                onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}
                 disabled={!isActiveTab}
               />

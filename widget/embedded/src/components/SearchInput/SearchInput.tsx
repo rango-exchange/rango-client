@@ -13,6 +13,7 @@ export function SearchInput(props: PropTypes) {
     size,
     onChange,
     value,
+    style,
     setValue,
     ...inputAttributes
   } = props;
@@ -41,6 +42,7 @@ export function SearchInput(props: PropTypes) {
         padding: 10,
         borderRadius: 25,
         alignItems: 'center',
+        ...style,
       }}
       size={size}
       value={value}

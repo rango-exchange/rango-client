@@ -19,7 +19,9 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
+import { UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
+import { emitPreventableEvent } from '../utils/events';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
 const MainContainer = styled('div', {
@@ -115,14 +117,12 @@ export function Home() {
       navigate(route);
     }
   };
-
   const onClickOnQuote = (quote: SelectedQuote) => {
     if (selectedQuote?.requestId !== quote.requestId) {
       setShowQuoteWarningModal(false);
       setSelectedQuote(quote);
     }
   };
-
   return (
     <MainContainer>
       <Layout
@@ -138,7 +138,10 @@ export function Home() {
             fullWidth
             onClick={() => {
               if (swapButtonState.action === 'connect-wallet') {
-                onHandleNavigation(navigationRoutes.wallets);
+                emitPreventableEvent(
+                  { type: UiEventTypes.CLICK_CONNECT_WALLET },
+                  () => onHandleNavigation(navigationRoutes.wallets)
+                );
               } else if (swapButtonState.action === 'confirm-warning') {
                 setShowQuoteWarningModal(true);
               } else {

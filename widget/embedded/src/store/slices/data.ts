@@ -1,16 +1,18 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
-import type { Balance, TokenHash } from '../../types';
+import type { CachedEntries } from '../../services/cacheService';
+import type { Balance, Blockchain, TokenHash } from '../../types';
 import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
+import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
-import { isTokenExcludedInConfig } from '../../utils/configs';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
+import { matchTokensFromConfigWithMeta } from '../utils';
 
 type BlockchainOptions = {
   type?: 'source' | 'destination';
@@ -30,6 +32,7 @@ export type FetchStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
   _tokensMapByTokenHash: Map<TokenHash, Token>;
+  _tokensMapByBlockchainName: Record<Blockchain, TokenHash[]>;
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
   fetchStatus: FetchStatus;
@@ -48,8 +51,9 @@ export const createDataSlice: StateCreator<
   DataSlice
 > = (set, get) => ({
   // State
-  _blockchainsMapByName: new Map<string, BlockchainMeta>(),
-  _tokensMapByTokenHash: new Map<TokenHash, Token>(),
+  _blockchainsMapByName: new Map(),
+  _tokensMapByTokenHash: new Map(),
+  _tokensMapByBlockchainName: {},
   _popularTokens: [],
   _swappers: [],
   fetchStatus: 'loading',
@@ -84,31 +88,41 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const tokensMapByHashToken = get()._tokensMapByTokenHash;
-    const tokensFromState = Array.from(tokensMapByHashToken?.values() || []);
+    const { _tokensMapByTokenHash, _tokensMapByBlockchainName, config } = get();
+    const tokensFromState = Array.from(_tokensMapByTokenHash.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
-
-    if (!options || !options?.type) {
+    if (!options || !options.type) {
       return tokensFromState;
     }
 
-    const config = get().config;
-    const supportedTokensConfig =
-      (options.type === 'source' ? config.from?.tokens : config.to?.tokens) ??
-      {};
+    const configType = options.type === 'source' ? 'from' : 'to';
+    const cacheKey: keyof CachedEntries =
+      options.type === 'source'
+        ? 'supportedSourceTokens'
+        : 'supportedDestinationTokens';
+
+    let supportedTokens = cacheService.get(cacheKey);
+    if (!supportedTokens?.length) {
+      supportedTokens = matchTokensFromConfigWithMeta({
+        type: options.type,
+        config: {
+          blockchains: config[configType]?.blockchains,
+          tokens: config[configType]?.tokens,
+        },
+        meta: {
+          tokensMapByTokenHash: _tokensMapByTokenHash,
+          tokensMapByBlockchainName: _tokensMapByBlockchainName,
+        },
+      });
+      cacheService.set(cacheKey, supportedTokens);
+    }
+
     const blockchains = get().blockchains({
       type: options.type,
     });
 
-    const list = tokensFromState
+    const list = supportedTokens
       .filter((token) => {
-        if (
-          supportedTokensConfig &&
-          isTokenExcludedInConfig(token, supportedTokensConfig)
-        ) {
-          return false;
-        }
-
         // If a specific blockchain has passed, we only keep that blockchain's tokens.
         if (!!options.blockchain && token.blockchain !== options.blockchain) {
           return false;
@@ -261,17 +275,18 @@ export const createDataSlice: StateCreator<
       const response = await sdk().getAllMetadata({
         enableCentralizedSwappers,
       });
-
       set({ fetchStatus: 'success' });
       const blockchainsMapByName: Map<string, BlockchainMeta> = new Map<
         string,
         BlockchainMeta
       >();
 
-      const tokensMapByHashToken: Map<TokenHash, Token> = new Map<
+      const tokensMapByTokenHash: Map<TokenHash, Token> = new Map<
         TokenHash,
         Token
       >();
+      const tokensMapByBlockchainName: DataSlice['_tokensMapByBlockchainName'] =
+        {};
       const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
       const swappers: SwapperMeta[] = response.swappers;
@@ -299,12 +314,17 @@ export const createDataSlice: StateCreator<
 
       tokens.forEach((token) => {
         const tokenHash = createTokenHash(token);
-        tokensMapByHashToken.set(tokenHash, token);
+        if (!tokensMapByBlockchainName[token.blockchain]) {
+          tokensMapByBlockchainName[token.blockchain] = [];
+        }
+        tokensMapByTokenHash.set(tokenHash, token);
+        tokensMapByBlockchainName[token.blockchain].push(tokenHash);
       });
 
       set({
         _blockchainsMapByName: blockchainsMapByName,
-        _tokensMapByTokenHash: tokensMapByHashToken,
+        _tokensMapByTokenHash: tokensMapByTokenHash,
+        _tokensMapByBlockchainName: tokensMapByBlockchainName,
         _popularTokens: popularTokens,
         _swappers: swappers,
       });

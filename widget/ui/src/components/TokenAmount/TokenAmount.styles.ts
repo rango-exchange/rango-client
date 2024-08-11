@@ -27,3 +27,7 @@ export const usdValueStyles = css({
   display: 'flex',
   paddingTop: '$5',
 });
+
+export const tooltipRootStyle = {
+  width: 'fit-content',
+};

@@ -109,6 +109,7 @@ export function Inputs(props: PropTypes) {
           onSelectMaxBalance={() => {
             setInputAmount(tokenBalanceReal.split(',').join(''));
           }}
+          anyWalletConnected={connectedWallets.length > 0}
         />
         <SwitchFromAndToButton />
       </FromContainer>

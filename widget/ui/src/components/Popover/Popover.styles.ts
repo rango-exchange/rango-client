@@ -6,6 +6,7 @@ export const PopoverContainer = styled(RadixPopover.Content, {
   borderRadius: '$sm',
   filter: 'drop-shadow(0px 5px 20px rgba(130, 130, 130, 0.20))',
   backgroundColor: '$neutral100',
+  zIndex: 10,
   [`.${darkTheme} &`]: {
     backgroundColor: '$neutral300',
   },

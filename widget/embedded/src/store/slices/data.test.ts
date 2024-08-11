@@ -3,6 +3,7 @@ import type { EvmBlockchainMeta, Token } from 'rango-sdk';
 
 import { assert, beforeEach, describe, expect, test } from 'vitest';
 
+import { cacheService } from '../../services/cacheService';
 import {
   createEvmBlockchain,
   createInitialAppStore,
@@ -17,6 +18,7 @@ let customTokens: [Token, Token, Token];
 let rangoBlockchain: EvmBlockchainMeta;
 
 beforeEach(() => {
+  cacheService.clear();
   rangoBlockchain = createEvmBlockchain();
 
   customTokens = [
@@ -52,6 +54,10 @@ beforeEach(() => {
   customTokens.forEach((token) => {
     const tokenHash = createTokenHash(token);
     initData._tokensMapByTokenHash.set(tokenHash, token);
+    if (!initData._tokensMapByBlockchainName[token.blockchain]) {
+      initData._tokensMapByBlockchainName[token.blockchain] = [];
+    }
+    initData._tokensMapByBlockchainName[token.blockchain].push(tokenHash);
   });
 
   const appStore = createAppStore();
@@ -349,5 +355,83 @@ describe('search in tokens', () => {
 
     expect(firstResult).toBe(djangoToken.symbol);
     expect(secondResult).toBe('RNG');
+  });
+});
+
+describe('supported tokens from config', () => {
+  test('Should ensure tokens include only tokens from the config', () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    const configTokens = [rangoToken, djangoToken];
+
+    appStoreState = updateAppStoreConfig(appStoreState, {
+      from: {
+        tokens: configTokens,
+      },
+      to: { tokens: configTokens },
+    });
+
+    let sourceTokens = appStoreState.tokens({
+      type: 'source',
+    });
+
+    let destinationTokens = appStoreState.tokens({
+      type: 'destination',
+    });
+
+    expect(configTokens).toMatchObject(sourceTokens);
+    expect(configTokens).toMatchObject(destinationTokens);
+
+    appStoreState = updateAppStoreConfig(appStoreState, {
+      from: {
+        blockchains: [rangoBlockchain.name],
+        tokens: {
+          [rangoBlockchain.name]: {
+            tokens: configTokens,
+            isExcluded: false,
+          },
+        },
+      },
+      to: {
+        blockchains: [rangoBlockchain.name],
+        tokens: {
+          [rangoBlockchain.name]: {
+            tokens: configTokens,
+            isExcluded: false,
+          },
+        },
+      },
+    });
+
+    sourceTokens = appStoreState.tokens({
+      type: 'source',
+    });
+
+    destinationTokens = appStoreState.tokens({
+      type: 'destination',
+    });
+
+    expect(sourceTokens).toMatchObject(sourceTokens);
+    expect(configTokens).toMatchObject(destinationTokens);
+  });
+
+  test('Check tokens calculation is caching', () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    appStoreState = updateAppStoreConfig(appStoreState, {
+      from: {
+        tokens: [rangoToken, djangoToken],
+      },
+    });
+
+    expect(cacheService.get('supportedSourceTokens')?.length ?? 0).toBe(0);
+
+    appStoreState.tokens({
+      type: 'source',
+    });
+
+    expect(cacheService.get('supportedSourceTokens')?.length ?? 0).toBe(2);
   });
 });

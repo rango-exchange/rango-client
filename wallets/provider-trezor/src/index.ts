@@ -1,16 +1,21 @@
 import type { Environments } from './types';
-import type { Connect, WalletInfo } from '@rango-dev/wallets-shared';
+import type {
+  Connect,
+  ProviderConnectResult,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
-  ETHEREUM_BIP32_PATH,
   getEthereumAccounts,
   getTrezorInstance,
   getTrezorModule,
+  getTrezorNormalizedDerivationPath,
 } from './helpers';
 import signer from './signer';
+import { setDerivationPath } from './state';
 
 let trezorManifest: Environments['manifest'] = {
   appUrl: '',
@@ -29,18 +34,44 @@ export const init = (environments: Environments) => {
 export const getInstance = getTrezorInstance;
 
 let isTrezorInitialized = false;
-export const connect: Connect = async () => {
+export const connect: Connect = async ({ namespaces }) => {
+  const results: ProviderConnectResult[] = [];
+
   const TrezorConnect = await getTrezorModule();
 
-  if (!isTrezorInitialized) {
-    await TrezorConnect.init({
-      lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
-      manifest: trezorManifest,
-    });
+  const evmNamespace = namespaces?.find(
+    (namespaceItem) => namespaceItem.namespace === Namespace.Evm
+  );
 
-    isTrezorInitialized = true;
+  if (evmNamespace) {
+    if (evmNamespace.derivationPath) {
+      setDerivationPath(
+        getTrezorNormalizedDerivationPath(evmNamespace.derivationPath)
+      );
+
+      if (!isTrezorInitialized) {
+        await TrezorConnect.init({
+          lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
+          manifest: trezorManifest,
+        });
+
+        isTrezorInitialized = true;
+      }
+
+      const accounts = await getEthereumAccounts();
+      results.push(accounts);
+    } else {
+      throw new Error('Derivation Path can not be empty.');
+    }
+  } else {
+    throw new Error(
+      `It appears that you have selected a namespace that is not yet supported by our system. Your namespaces: ${namespaces?.map(
+        (namespaceItem) => namespaceItem.namespace
+      )}`
+    );
   }
-  return await getEthereumAccounts(ETHEREUM_BIP32_PATH);
+
+  return results;
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;
@@ -64,6 +95,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
+    namespaces: [Namespace.Evm],
+    singleNamespace: true,
     showOnMobile: false,
+    needsDerivationPath: true,
   };
 };

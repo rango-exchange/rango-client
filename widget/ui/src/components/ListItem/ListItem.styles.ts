@@ -56,9 +56,6 @@ export const BaseListItem = styled('li', {
         },
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
-        '&:hover': {
-          borderRadius: 0,
-        },
       },
     },
   },

@@ -11,6 +11,7 @@ import {
   Button,
   CopyIcon,
   Divider,
+  DoneIcon,
   IconButton,
   QuoteCost,
   RangoExplorerIcon,
@@ -88,7 +89,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const retry = useQuoteStore.use.retry();
   const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
-  const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
+  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const listRef = useRef<HTMLDivElement | null>(null);
   const [modalState, setModalState] = useState<ModalState>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
@@ -187,13 +188,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   )?.diagnosisUrl;
 
   const outputUsdValue = numberToString(
-    parseFloat(
-      numberToString(
-        outputAmount,
-        TOKEN_AMOUNT_MIN_DECIMALS,
-        TOKEN_AMOUNT_MAX_DECIMALS
-      )
-    ) * (lastStep.toUsdPrice || 0),
+    parseFloat(outputAmount || '0') * (lastStep.toUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
@@ -318,11 +313,28 @@ export function SwapDetails(props: SwapDetailsProps) {
               <Typography variant="label" size="small" color="neutral700">
                 {requestId}
               </Typography>
-              <IconButton
-                variant="ghost"
-                onClick={handleCopy.bind(null, requestId || '')}>
-                <CopyIcon size={16} color="gray" />
-              </IconButton>
+              <Tooltip
+                container={getContainer()}
+                content={
+                  isCopied
+                    ? i18n.t('Copied To Clipboard')
+                    : i18n.t('Copy Request ID')
+                }
+                open={isCopied || undefined}
+                side="bottom"
+                alignOffset={-16}
+                align="end">
+                <IconButton
+                  variant="ghost"
+                  onClick={handleCopy.bind(null, requestId || '')}>
+                  {isCopied ? (
+                    <DoneIcon size={16} color="secondary" />
+                  ) : (
+                    <CopyIcon size={16} color="gray" />
+                  )}
+                </IconButton>
+              </Tooltip>
+
               <StyledLink
                 target="_blank"
                 href={`${SCANNER_BASE_URL}/swap/${requestId}`}>

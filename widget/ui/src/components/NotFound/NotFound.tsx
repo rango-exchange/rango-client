@@ -9,13 +9,15 @@ import { Typography } from '../Typography';
 import { Container } from './NotFound.styles';
 
 export function NotFound(props: NotFoundPropTypes) {
+  const { hasIcon = true, titleColor } = props;
   return (
     <Container>
-      <SearchIcon color="secondary" size={26} />
+      {hasIcon && <SearchIcon color="secondary" size={26} />}
       <Divider size={4} />
-      <Typography variant="title" size="medium">
+      <Typography variant="title" size="medium" color={titleColor}>
         {props.title}
       </Typography>
+      <Divider size={10} />
       <Typography variant="body" size="medium" color="neutral700">
         {props.description}
       </Typography>

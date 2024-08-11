@@ -21,7 +21,7 @@ export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
           message: encodedMessage,
         },
       });
-      return signature;
+      return Buffer.from(signature).toString('base64');
     } catch (error) {
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
     }

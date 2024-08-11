@@ -277,6 +277,20 @@ class Manager {
     this.queues.delete(queue_id);
     void this.persistor.deleteQueue(queue_id);
   }
+
+  public async clearQueue() {
+    // Identify queues that are not running
+    this.queues.forEach((queue, queue_id) => {
+      if (
+        queue.status !== Status.RUNNING &&
+        queue.status !== Status.PENDING &&
+        queue.status !== Status.BLOCKED
+      ) {
+        this.deleteQueue(queue_id);
+      }
+    });
+  }
+
   /**
    *
    * Ask from manager to run pending queues.
