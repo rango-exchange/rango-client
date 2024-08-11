@@ -1,3 +1,7 @@
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.36.1...provider-clover@0.37.0) (2024-08-11)
+
+
+
 ## [0.36.1](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.36.0...provider-clover@0.36.1) (2024-07-14)
 
 
