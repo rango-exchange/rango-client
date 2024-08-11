@@ -34,5 +34,6 @@ declare global {
     mytonwallet: any;
     offlineSigner: any;
     tomo_evm: any;
+    solflare: any;
   }
 }

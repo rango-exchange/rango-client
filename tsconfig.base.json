@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     // use Node's module resolution algorithm, instead of the legacy TS one
+    "target": "ES2015",
     "moduleResolution": "node",
     // stricter type-checking for stronger correctness. Recommended by TS
     "strict": true,

@@ -38,17 +38,6 @@ export const InputAmount = styled(TextField, {
   '&:disabled': {
     cursor: 'unset',
   },
-  variants: {
-    isZero: {
-      true: {
-        $$color: '$colors$neutral700',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral900',
-        },
-        color: '$$color',
-      },
-    },
-  },
 });
 export const MaxButton = styled(Button, {
   $$color: '$colors$secondary200',

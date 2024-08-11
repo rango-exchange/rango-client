@@ -1,8 +1,7 @@
 import type { RadioPropTypes } from '@rango-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Root as RadioRoot } from '@radix-ui/react-radio-group';
-import { Radio } from '@rango-dev/ui';
+import { Radio, RadioRoot } from '@rango-dev/ui';
 import React from 'react';
 
 export default {

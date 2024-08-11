@@ -32,7 +32,8 @@ export function SwapInput(props: SwapInputPropTypes) {
     'balance' in props &&
     !props.loading &&
     !props.loadingBalance &&
-    props.token.displayName;
+    props.token.displayName &&
+    props.anyWalletConnected;
 
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
@@ -114,7 +115,6 @@ export function SwapInput(props: SwapInputPropTypes) {
                   size="large"
                   placeholder="0"
                   variant="ghost"
-                  isZero={props.price.value === '0'}
                   min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>

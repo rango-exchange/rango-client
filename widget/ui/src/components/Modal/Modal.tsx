@@ -38,7 +38,6 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     footer,
     hasWatermark = true,
     hasCloseIcon = true,
-    transitionDuration,
   } = props;
 
   const [active, setActive] = useState(false);
@@ -60,25 +59,15 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
-        timeoutRef.current = setTimeout(
-          () => {
-            setActive(true);
-          },
-          typeof transitionDuration?.enter !== 'undefined'
-            ? transitionDuration?.enter
-            : OPEN_DELAY
-        );
+        timeoutRef.current = setTimeout(() => {
+          setActive(true);
+        }, OPEN_DELAY);
       } else {
         setActive(false);
-        timeoutRef.current = setTimeout(
-          () => {
-            setIsMount(false);
-            container.style.removeProperty('overflow');
-          },
-          typeof transitionDuration?.exit !== 'undefined'
-            ? transitionDuration?.exit
-            : CLOSED_DELAY
-        );
+        timeoutRef.current = setTimeout(() => {
+          setIsMount(false);
+          container.style.removeProperty('overflow');
+        }, CLOSED_DELAY);
       }
     }
     return () => {
@@ -96,7 +85,6 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
           <BackDrop
             active={active}
             onClick={handleBackDropClick}
-            anchor={anchor}
             css={styles?.root}>
             <ModalContainer
               active={active}

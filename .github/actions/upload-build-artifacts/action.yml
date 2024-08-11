@@ -2,7 +2,7 @@ name: Upload Build Artifacts
 description: 'Upload ESBuild build artifacts'
 outputs:
   hashed:
-    description: "Hashed branch name"
+    description: 'Hashed branch name'
     value: ${{ steps.hash_current_branch_name.outputs.hashed }}
 
 runs:
@@ -20,6 +20,7 @@ runs:
         name: ${{steps.hash_current_branch_name.outputs.hashed}}
         path: |
           **/**/**.build.json
+          !**/**/tsconfig.build.json
           !**/node_modules/**
         retention-days: 30
         overwrite: true

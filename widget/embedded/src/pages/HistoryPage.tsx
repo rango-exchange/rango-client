@@ -1,15 +1,30 @@
-import type { PendingSwap, PendingSwapStep } from 'rango-types';
-
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
-import { Divider, NotFound, styled } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import {
+  Button,
+  darkTheme,
+  Divider,
+  MessageBox,
+  NotFound,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
+import {
+  type PendingSwap,
+  type PendingSwapStep,
+  TransactionStatus,
+} from 'rango-types';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { WatermarkedModal } from '../components/common/WatermarkedModal';
+import { FilterSelector } from '../components/FilterSelector';
+import { SuffixContainer } from '../components/HeaderButtons/HeaderButtons.styles';
 import { HistoryGroupedList } from '../components/HistoryGroupedList';
 import { NotFoundContainer } from '../components/HistoryGroupedList/HistoryGroupedList.styles';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
+import { getContainer } from '../utils/common';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
 import { getPendingSwaps } from '../utils/queue';
@@ -22,6 +37,33 @@ const HistoryGroupedListContainer = styled('div', {
   gap: 15,
   height: '100%',
 });
+
+const SearchAndFilterBar = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const Description = styled('div', {
+  '._typography': {
+    color: '$neutral700',
+    [`.${darkTheme}&`]: {
+      color: '$neutral900',
+    },
+  },
+});
+
+const transactionStatusFilters = [
+  {
+    id: TransactionStatus.SUCCESS,
+    title: i18n.t('Complete'),
+  },
+  {
+    id: TransactionStatus.RUNNING,
+    title: i18n.t('Running'),
+  },
+  { id: TransactionStatus.FAILED, title: i18n.t('Failed') },
+];
 
 const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
   if (!steps?.length) {
@@ -41,50 +83,116 @@ export function HistoryPage() {
   const { manager, state } = useManager();
   const list: PendingSwap[] = getPendingSwaps(manager).map(({ swap }) => swap);
   const [searchedFor, setSearchedFor] = useState<string>('');
+  const [openFilterSelector, setOpenFilterSelector] = useState(false);
   const loading = !state.loadedFromPersistor;
-
+  const [filterBy, setFilterBy] = useState('');
+  const [openClearModal, setOpenClearModal] = useState(false);
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
   };
 
-  let filteredList = list;
-  if (searchedFor) {
-    filteredList = list.filter(
-      (swap) =>
-        containsText(swap.inputAmount, searchedFor) ||
-        containsText(swap.status, searchedFor) ||
-        isStepContainsText(swap.steps, searchedFor) ||
-        containsText(swap.requestId, searchedFor)
-    );
-  }
+  const filteredList = useMemo(() => {
+    if (!searchedFor && !filterBy) {
+      return list;
+    }
+
+    return list.filter((swap) => {
+      const { inputAmount, status, steps, requestId } = swap;
+
+      const matchesSearch =
+        !searchedFor ||
+        containsText(inputAmount, searchedFor) ||
+        containsText(status, searchedFor) ||
+        isStepContainsText(steps, searchedFor) ||
+        containsText(requestId, searchedFor);
+
+      const matchesFilter = !filterBy || filterBy === status;
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [list, searchedFor, filterBy]);
 
   const isEmpty = !filteredList?.length && !loading;
+
+  const onCloseModal = () => setOpenClearModal(false);
+  const onClear = async () => {
+    try {
+      await manager?.clearQueue();
+
+      setOpenClearModal(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const isClearButtonDisabled = useMemo(() => {
+    return !list.some(
+      (swap) =>
+        swap.status === TransactionStatus.SUCCESS ||
+        swap.status === TransactionStatus.FAILED
+    );
+  }, [list]);
 
   return (
     <Layout
       header={{
         title: i18n.t('History'),
+        suffix: (
+          <SuffixContainer>
+            <Button
+              disabled={isClearButtonDisabled}
+              variant="ghost"
+              size="xsmall"
+              onClick={() => setOpenClearModal(true)}>
+              <Typography size="medium" variant="label" color="error">
+                {i18n.t('Clear all Txs')}
+              </Typography>
+            </Button>
+          </SuffixContainer>
+        ),
       }}>
       <PageContainer>
-        <SearchInput
-          setValue={setSearchedFor}
-          fullWidth
-          variant="contained"
-          placeholder={i18n.t('Search Transaction')}
-          autoFocus
-          onChange={searchHandler}
-          value={searchedFor}
-        />
+        <SearchAndFilterBar>
+          <SearchInput
+            setValue={setSearchedFor}
+            fullWidth
+            variant="contained"
+            placeholder={i18n.t('Search Transaction')}
+            autoFocus
+            onChange={searchHandler}
+            style={{ height: 36 }}
+            value={searchedFor}
+          />
+          <Divider size={10} direction="horizontal" />
+
+          <FilterSelector
+            filterBy={filterBy}
+            open={openFilterSelector}
+            onOpenChange={(open) => setOpenFilterSelector(open)}
+            onClickItem={(id) => setFilterBy(id)}
+            list={transactionStatusFilters}
+          />
+        </SearchAndFilterBar>
+
         <Divider size="16" />
         <HistoryGroupedListContainer>
           {isEmpty && (
             <NotFoundContainer>
               <Divider size={32} />
               <NotFound
-                title={i18n.t('No results found')}
+                title={
+                  searchedFor
+                    ? i18n.t('No results found')
+                    : i18n.t('No transactions')
+                }
+                titleColor={!searchedFor ? '$info' : undefined}
+                hasIcon={!!searchedFor}
                 description={
-                  searchedFor ? i18n.t('Try using different keywords') : ''
+                  searchedFor
+                    ? i18n.t('Try using different keywords')
+                    : i18n.t(
+                        'Your transaction history is stored locally and will appear here after you start a swap'
+                      )
                 }
               />
             </NotFoundContainer>
@@ -99,6 +207,52 @@ export function HistoryPage() {
           )}
         </HistoryGroupedListContainer>
       </PageContainer>
+      <WatermarkedModal
+        open={openClearModal}
+        onClose={onCloseModal}
+        container={getContainer()}>
+        <Divider size={20} />
+        <MessageBox
+          type="warning"
+          title={i18n.t('Clear History')}
+          description={
+            <Description>
+              <Typography variant="body" size="medium">
+                {i18n.t(
+                  'This would clear all succeeded/failed transactions from widget. Do you wish to proceed?'
+                )}
+              </Typography>
+              <Divider size={'24'} />
+
+              <Typography variant="body" size="small">
+                {i18n.t(
+                  'Hint: This does not clear your transaction history on blockchain. Only hides them in this page.'
+                )}
+              </Typography>
+            </Description>
+          }
+        />
+        <Divider size={40} />
+
+        <Divider size={10} />
+        <Button
+          variant="contained"
+          type="primary"
+          size="large"
+          onClick={onClear}>
+          {i18n.t('Yes, Clear history')}
+        </Button>
+        <Divider size={10} />
+        <Button
+          variant="outlined"
+          type="primary"
+          size="large"
+          onClick={onCloseModal}>
+          <Typography variant="title" size="medium" color="primary">
+            {i18n.t('No, Cancel')}
+          </Typography>
+        </Button>
+      </WatermarkedModal>
     </Layout>
   );
 }

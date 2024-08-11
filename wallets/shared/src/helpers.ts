@@ -5,10 +5,10 @@ import type {
   InstallObjects,
   Network,
   Wallet,
-} from './rango';
+} from './rango.js';
 import type { EvmBlockchainMeta } from 'rango-types';
 
-import { Networks } from './rango';
+import { Networks } from './rango.js';
 
 export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
 

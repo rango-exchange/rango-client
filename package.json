@@ -6,14 +6,19 @@
     "node": ">=20",
     "npm": "please-use-yarn"
   },
-  "workspaces": [
-    "examples/*",
-    "widget/*",
-    "queue-manager/*",
-    "wallets/*",
-    "signers/*",
-    "logging/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "examples/*",
+      "widget/*",
+      "queue-manager/*",
+      "wallets/*",
+      "signers/*",
+      "logging/*"
+    ],
+    "nohoist": [
+      "**/@types/web"
+    ]
+  },
   "scripts": {
     "clean-root": "rimraf .parcel-cache && nx clear-cache",
     "clean": "yarn clean-root && nx run-many --target=clean",

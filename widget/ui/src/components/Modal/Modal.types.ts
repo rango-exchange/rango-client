@@ -1,8 +1,8 @@
-import type { BackDrop } from './Modal.styles';
+import type { ModalContainer } from './Modal.styles';
 import type { config } from '../../theme';
 import type * as Stitches from '@stitches/react';
 
-type BaseProps = Stitches.VariantProps<typeof BackDrop>;
+type BaseProps = Stitches.VariantProps<typeof ModalContainer>;
 type BaseAnchor = Exclude<BaseProps['anchor'], object>;
 
 export interface ModalPropTypes {
@@ -24,8 +24,4 @@ export interface ModalPropTypes {
   footer?: React.ReactNode;
   hasWatermark?: boolean;
   hasCloseIcon?: boolean;
-  transitionDuration?: {
-    enter?: number;
-    exit?: number;
-  };
 }

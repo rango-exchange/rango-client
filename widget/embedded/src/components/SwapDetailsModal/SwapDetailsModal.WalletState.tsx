@@ -68,6 +68,33 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
     }
   };
 
+  const handleWalletItemClick = () => {
+    if (!!walletType && !!walletInfo) {
+      if (!!walletInfo.namespaces?.length) {
+        if (walletInfo.namespaces.length > 1) {
+          setNamespacesModalState({
+            open: true,
+            providerType: walletType,
+            providerImage: walletInfo.img,
+            availableNamespaces: walletInfo.namespaces,
+            singleNamespace: walletInfo.singleNamespace,
+          });
+        } else if (walletInfo.needsDerivationPath) {
+          setDerivationPathModalState({
+            open: true,
+            providerType: walletType,
+            providerImage: walletInfo.img,
+            namespace: walletInfo.namespaces[0],
+          });
+        } else {
+          connect(walletType).catch((error) => debug(error));
+        }
+      } else {
+        connect(walletType).catch((error) => debug(error));
+      }
+    }
+  };
+
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
     if (
       !!walletInfo?.needsDerivationPath &&
@@ -117,19 +144,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             link={walletInfo.installLink}
             disabled={walletButtonDisabled}
             // TODO we need to show an error modal when user reject the connection
-            onClick={async () => {
-              if (walletInfo.namespaces) {
-                setNamespacesModalState({
-                  open: true,
-                  providerType: walletType,
-                  providerImage: walletInfo.img,
-                  availableNamespaces: walletInfo.namespaces,
-                  singleNamespace: walletInfo.singleNamespace,
-                });
-              } else {
-                connect(walletType).catch((error) => debug(error));
-              }
-            }}
+            onClick={handleWalletItemClick}
           />
         </WalletContainer>
       )}
