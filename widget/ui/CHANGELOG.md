@@ -1,3 +1,23 @@
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/ui@0.36.1...ui@0.37.0) (2024-08-11)
+
+
+### Bug Fixes
+
+* fix bug in swap input handling empty value ([3c9b082](https://github.com/rango-exchange/rango-client/commit/3c9b082b7b548ddd3981fff100d4dc880581b98d))
+* fix modal animation bug ([98814f6](https://github.com/rango-exchange/rango-client/commit/98814f60fae6f5ba112aeee01fcc47cad821cd5c))
+* fix modal animation inconsistency in different scrren sizes bug by improving styles ([eda308e](https://github.com/rango-exchange/rango-client/commit/eda308e41fe6d4f8fc0777cc5d7f059a83e46078))
+* fix swap price alignment ([e8e3bbb](https://github.com/rango-exchange/rango-client/commit/e8e3bbb25ab56c31b92d3a5af1806fa70275bb70))
+
+
+### Features
+
+* add filter and clear to widget history ([d43b603](https://github.com/rango-exchange/rango-client/commit/d43b603462feabf297d5be389fcaa35402d667b5))
+* changing the request ID copy process ([490cdfa](https://github.com/rango-exchange/rango-client/commit/490cdfa41131eea20d8a552f8f0714b77d21ac71))
+* hide balance and max button when no wallet connected ([80b2754](https://github.com/rango-exchange/rango-client/commit/80b27547376394a3070aea7065d4bb9652f454e4))
+* update bullhorn icon ([4829803](https://github.com/rango-exchange/rango-client/commit/4829803ee8aa5daad43d8224069b583f4138a316))
+
+
+
 ## [0.36.1](https://github.com/rango-exchange/rango-client/compare/ui@0.36.0...ui@0.36.1) (2024-07-14)
 
 

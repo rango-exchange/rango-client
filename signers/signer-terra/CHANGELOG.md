@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/signer-terra@0.27.0...signer-terra@0.28.0) (2024-08-11)
+
+
+### Features
+
+* implement sign message method for providers with a custom signer ([cf9515f](https://github.com/rango-exchange/rango-client/commit/cf9515feb5d3754aac9c228fe83315daf1350c85))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/signer-terra@0.26.0...signer-terra@0.27.0) (2024-07-09)
 
 

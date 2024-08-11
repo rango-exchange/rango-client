@@ -1,3 +1,13 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.5.1...provider-ledger@0.6.0) (2024-08-11)
+
+
+### Features
+
+* add derivation path modal for trezor wallet ([364422f](https://github.com/rango-exchange/rango-client/commit/364422f099b202a27a529591c5e3628bbb35508d))
+* implement sign message method for providers with a custom signer ([cf9515f](https://github.com/rango-exchange/rango-client/commit/cf9515feb5d3754aac9c228fe83315daf1350c85))
+
+
+
 ## [0.5.1](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.5.0...provider-ledger@0.5.1) (2024-07-14)
 
 
