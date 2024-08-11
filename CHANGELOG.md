@@ -1,3 +1,36 @@
+
+## Widget [0.18.0] (2024-08-11)
+
+_includes `@rango-dev/widget-embedded@x0.31.0`_
+
+### Bug Fixes
+
+* address the issue where the token list does not update when the balance changes ([d1fb4e4](https://github.com/rango-exchange/rango-client/commit/d1fb4e4bb57e97cd730cba4c33ca0b2202600c09))
+* fix bug in swap input handling empty value ([3c9b082](https://github.com/rango-exchange/rango-client/commit/3c9b082b7b548ddd3981fff100d4dc880581b98d))
+* fix flicker in playground ([6ae2d58](https://github.com/rango-exchange/rango-client/commit/6ae2d588ba36822856a43cea7cabc3618cf72c11))
+* fix missing usd value in estimated output ([a46d19a](https://github.com/rango-exchange/rango-client/commit/a46d19a80b4f6fc1ca29e289e1b6441e89aa730c))
+* fix sort logic of notifications ([ffcf4c2](https://github.com/rango-exchange/rango-client/commit/ffcf4c2d70da7887e17042f3e6fe46224cd21fe1))
+* fix wallet modal closing bug ([146f7e2](https://github.com/rango-exchange/rango-client/commit/146f7e24450be278aee53b03319399934cf84f17))
+* recalculate supported tokens even if it's empty list ([8ccda6b](https://github.com/rango-exchange/rango-client/commit/8ccda6b2e246425102e6f6ab5f0d1edd131c6794))
+
+
+### Features
+
+* add derivation path modal for trezor wallet ([364422f](https://github.com/rango-exchange/rango-client/commit/364422f099b202a27a529591c5e3628bbb35508d))
+* add filter and clear to widget history ([d43b603](https://github.com/rango-exchange/rango-client/commit/d43b603462feabf297d5be389fcaa35402d667b5))
+* add functionality to update the quote inputs from outside the widget ([d9722fb](https://github.com/rango-exchange/rango-client/commit/d9722fbd5629ecb760b94a3d4a9ad7c0a07687ad))
+* add preventable event and a new ui event called CLICK_CONNECT_WALLET ([e4363bb](https://github.com/rango-exchange/rango-client/commit/e4363bb6fb98d49b22c1b608ecf6d37650ff3035))
+* add the option to define a default custom destination for each blockchain in the widget config ([7982ab6](https://github.com/rango-exchange/rango-client/commit/7982ab633dcb5b07ee5c313c9414d68baa6cbc38))
+* changing the request ID copy process ([490cdfa](https://github.com/rango-exchange/rango-client/commit/490cdfa41131eea20d8a552f8f0714b77d21ac71))
+* hide balance and max button when no wallet connected ([80b2754](https://github.com/rango-exchange/rango-client/commit/80b27547376394a3070aea7065d4bb9652f454e4))
+
+
+### Performance Improvements
+
+* improve token list performance by caching target tokens on load and config change ([3cc55ff](https://github.com/rango-exchange/rango-client/commit/3cc55ff95dde1f87f53efb2496e995beeb943b00))
+
+
+
 ## Widget [0.17.0] (2024-07-09)
 
 _includes `@rango-dev/widget-embedded@0.30.0`_
