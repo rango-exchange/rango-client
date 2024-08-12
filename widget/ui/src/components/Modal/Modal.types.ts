@@ -9,6 +9,7 @@ export interface ModalPropTypes {
   title?: string;
   open: boolean;
   onClose: () => void;
+  onExit?: () => void;
   anchor?: BaseAnchor;
   dismissible?: boolean;
   header?: React.ReactNode;

@@ -1,5 +1,5 @@
+import type { WalletInfoWithExtra } from '../types';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -9,11 +9,10 @@ import {
   KEPLR_COMPATIBLE_WALLETS,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
-import { isSingleWalletActive } from '../utils/common';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -22,26 +21,33 @@ import {
   sortWalletsBasedOnConnectionState,
 } from '../utils/wallets';
 
+import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
+
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 
 interface Params {
   chain?: string;
-  onBeforeConnect?: (walletType: string) => void;
-  onConnect?: (walletType: string) => void;
-  onError?: (error?: string) => void;
+}
+
+interface API {
+  list: WalletInfoWithExtra[];
+  terminateConnectingWallets: () => void;
 }
 
 /**
- * gets list of wallets with their information and an action for handling click callback fo UI
- * we need to share the logic of rendering list of wallets and handle clicking on them in different places
- * you can use this list whenever you need to show the list of wallets and needed callbacks
+ *
+ * Returning list of wallets which has a applied sorting and filtering (some of wallet can be excluded).
+ * It can have some functionality on list itself,
+ * now it only has a method to disconnect the wallets that has `connecting` status. This is useful for exiting page and terminating wallet connection.
+ *
  */
-export function useWalletList(params: Params) {
-  const { chain, onBeforeConnect, onConnect, onError } = params;
+export function useWalletList(params?: Params): API {
+  const { chain } = params || {};
   const { config } = useAppStore();
-  const { state, disconnect, getWalletInfo, connect } = useWallets();
+  const { state, getWalletInfo } = useWallets();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
+  const { handleDisconnect } = useStatefulConnect();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =
@@ -67,7 +73,6 @@ export function useWalletList(params: Params) {
     : wallets;
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
-  const [error, setError] = useState('');
 
   const isExperimentalChainNotAdded = (walletType: string) =>
     !connectedWallets.find(
@@ -76,51 +81,18 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (
-    type: WalletType,
-    namespaces?: NamespaceData[]
-  ) => {
-    const wallet = state(type);
-    try {
-      if (error) {
-        setError('');
-      }
-      if (wallet.connected) {
-        await disconnect(type);
-      } else {
-        if (isSingleWalletActive(wallets, config.multiWallets)) {
-          return;
-        }
-        onBeforeConnect?.(type);
-        await connect(type, undefined, namespaces);
-        onConnect?.(type);
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      onError?.(e?.message);
-      setError('Error: ' + e?.message);
-    }
-  };
-
-  const disconnectConnectingWallets = useCallback(() => {
+  const terminateConnectingWallets = useCallback(() => {
     const connectingWallets =
       wallets?.filter((wallet) => wallet.state === WalletState.CONNECTING) ||
       [];
     for (const wallet of connectingWallets) {
-      void disconnect(wallet.type);
+      void handleDisconnect(wallet.type);
     }
   }, [hashWalletsState(wallets)]);
 
-  const disconnectWallet = async (type: WalletType) => {
-    const wallet = state(type);
-    if (wallet.connected) {
-      await disconnect(type);
-    }
-  };
-
   useEffect(() => {
     return () => {
-      disconnectConnectingWallets();
+      terminateConnectingWallets();
     };
   }, []);
 
@@ -175,9 +147,6 @@ export function useWalletList(params: Params) {
     list: sortedWallets.filter(
       (wallet) => !shouldExcludeWallet(wallet.type, chain ?? '', blockchains)
     ),
-    error,
-    handleClick,
-    disconnectConnectingWallets,
-    disconnectWallet,
+    terminateConnectingWallets,
   };
 }
