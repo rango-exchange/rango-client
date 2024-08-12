@@ -1,5 +1,5 @@
-import type { PropTypes } from './WalletDerivationPathModal.types';
-import type { DerivationPath, Namespace } from '@rango-dev/wallets-shared';
+import type { PropTypes } from './DerivationPath.types';
+import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -10,43 +10,30 @@ import {
   Select,
   TextField,
 } from '@rango-dev/ui';
-import { namespaces } from '@rango-dev/wallets-shared';
 import React, { useEffect, useState } from 'react';
 
-import { WIDGET_UI_ID } from '../../constants';
-import { WatermarkedModal } from '../common/WatermarkedModal';
 import {
   LogoContainer,
   Spinner,
   WalletImageContainer,
-} from '../WalletModal/WalletModalContent.styles';
-
+} from './ConnectStatus.styles';
+import {
+  CUSTOM_DERIVATION_PATH,
+  getDerivationPaths,
+} from './DerivationPath.helpers';
 import {
   derivationPathInputStyles,
   InputLabel,
   InputsContainer,
-} from './WalletDerivationPathModal.styles';
+} from './DerivationPath.styles';
 
-const customDerivationPath: DerivationPath = {
-  id: 'custom',
-  label: 'Custom',
-  generateDerivationPath: (index: string) => index,
-};
-
-function getDerivationPaths(selectedNamespace?: Namespace) {
-  const selectedNamespaceDerivationPaths = selectedNamespace
-    ? namespaces[selectedNamespace].derivationPaths
-    : null;
-
-  const derivationPaths: DerivationPath[] = !!selectedNamespaceDerivationPaths
-    ? [...selectedNamespaceDerivationPaths, customDerivationPath]
-    : [];
-
-  return derivationPaths;
-}
-
-export function WalletDerivationPathModal(props: PropTypes) {
-  const { onClose, onConfirm, selectedNamespace, image, type, open } = props;
+export function DerivationPath(props: PropTypes) {
+  const { onConfirm } = props;
+  const {
+    namespace: selectedNamespace,
+    providerImage: image,
+    providerType: type,
+  } = props.value;
 
   const [selectedDerivationPathId, setSelectedDerivationPathId] = useState<
     string | null
@@ -54,7 +41,7 @@ export function WalletDerivationPathModal(props: PropTypes) {
   const [derivationPathIndex, setDerivationPathIndex] = useState('0');
 
   const isCustomOptionSelected =
-    selectedDerivationPathId === customDerivationPath.id;
+    selectedDerivationPathId === CUSTOM_DERIVATION_PATH.id;
 
   const derivationPaths = getDerivationPaths(selectedNamespace);
 
@@ -89,12 +76,7 @@ export function WalletDerivationPathModal(props: PropTypes) {
   }, [selectedNamespace]);
 
   return (
-    <WatermarkedModal
-      open={open}
-      onClose={onClose}
-      container={
-        document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }>
+    <>
       <Divider size={20} />
       <MessageBox
         type="info"
@@ -149,6 +131,6 @@ export function WalletDerivationPathModal(props: PropTypes) {
         }>
         {i18n.t('Confirm')}
       </Button>
-    </WatermarkedModal>
+    </>
   );
 }
