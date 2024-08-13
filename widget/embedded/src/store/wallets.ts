@@ -220,13 +220,13 @@ export const useWalletsStore = createSelectors(
                             findToken
                           ),
                           loading: false,
+                          error: false,
                         }
                       : connectedWallet;
                   }
                 );
 
                 const balances = makeTokensBalance(connectedWallets);
-
                 return {
                   loading: false,
                   balances,
