@@ -1,4 +1,8 @@
-import type { ConnectParams, CreateSessionParams, Environments } from './types';
+import type {
+  ConnectParams,
+  CreateSessionParams,
+  Environments,
+} from './types.js';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type {
   PairingTypes,
@@ -11,14 +15,14 @@ import { Networks, timeout } from '@rango-dev/wallets-shared';
 import { getSdkError } from '@walletconnect/utils';
 import { AccountId } from 'caip';
 
-import { CHAIN_ID_STORAGE, PING_TIMEOUT } from './constants';
+import { CHAIN_ID_STORAGE, PING_TIMEOUT } from './constants.js';
 import {
   generateOptionalNamespace,
   getCurrentEvmAccountAddress,
   getEvmAccount,
   getModal,
   solanaChainIdToNetworkName,
-} from './helpers';
+} from './helpers.js';
 
 export function getLastSession(client: SignClient) {
   return client.session.values[client.session.values.length - 1];
@@ -93,7 +97,7 @@ export async function createSession(
           .flat() as string[];
 
         const modal = getModal();
-        void modal.openModal({ uri, standaloneChains });
+        void modal.openModal({ uri, chains: standaloneChains });
 
         onCloseModal = new Promise((_, reject) => {
           modal.subscribeModal((state) => {

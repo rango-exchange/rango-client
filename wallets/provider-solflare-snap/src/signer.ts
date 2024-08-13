@@ -2,7 +2,7 @@ import type { SignerFactory } from 'rango-types';
 
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
-import { SolflareSnapSolanaSigner } from './signers/solanaSigner';
+import { SolflareSnapSolanaSigner } from './signers/solanaSigner.js';
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();

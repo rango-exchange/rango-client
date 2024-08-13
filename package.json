@@ -54,7 +54,8 @@
     "i18n": "yarn i18n:extract && yarn i18n:compile",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "commitlint": "commitlint --edit"
+    "commitlint": "commitlint --edit",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "husky": "^8.0.3",
@@ -100,6 +101,8 @@
     "nx": "16.2.1",
     "os-browserify": "^0.3.0",
     "parcel": "^2.11.0",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",

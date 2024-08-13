@@ -1,1 +1,1 @@
-export { DefaultTonSigner } from './signer';
+export { DefaultTonSigner } from './signer.js';

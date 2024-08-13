@@ -1,6 +1,7 @@
-import type { GenericSigner, CosmosTransaction } from 'rango-types';
-import { executeCosmosTransaction } from './helpers';
-import { Keplr } from '@keplr-wallet/types';
+import type { Keplr } from '@keplr-wallet/types';
+import type { CosmosTransaction, GenericSigner } from 'rango-types';
+
+import { executeCosmosTransaction } from './helpers.js';
 
 type CosmosExternalProvider = Keplr;
 
@@ -16,7 +17,9 @@ export class DefaultCosmosSigner implements GenericSigner<CosmosTransaction> {
     address: string,
     chainId: string | null
   ): Promise<string> {
-    if (!chainId) throw Error('ChainId is required');
+    if (!chainId) {
+      throw Error('ChainId is required');
+    }
     const { signature } = await this.provider.signArbitrary(
       chainId,
       address,

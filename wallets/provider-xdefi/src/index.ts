@@ -24,9 +24,9 @@ import {
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 import { cosmosBlockchains, isCosmosBlockchain } from 'rango-types';
 
-import { SUPPORTED_COSMOS_CHAINS, SUPPORTED_ETH_CHAINS } from './constants';
-import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
-import signer from './signer';
+import { SUPPORTED_COSMOS_CHAINS, SUPPORTED_ETH_CHAINS } from './constants.js';
+import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers.js';
+import signer from './signer.js';
 
 const DEFAULT_NETWORK = Networks.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
@@ -159,4 +159,4 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 };
 
 // it is required in /examples/queue-manager-demo
-export { SUPPORTED_ETH_CHAINS } from './constants';
+export { SUPPORTED_ETH_CHAINS } from './constants.js';

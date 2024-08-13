@@ -1,0 +1,11 @@
+diff --git a/node_modules/@solflare-wallet/sdk/package.json b/node_modules/@solflare-wallet/sdk/package.json
+index 6d43e38..8fd0274 100644
+--- a/node_modules/@solflare-wallet/sdk/package.json
++++ b/node_modules/@solflare-wallet/sdk/package.json
+@@ -1,5 +1,6 @@
+ {
+   "name": "@solflare-wallet/sdk",
++  "type": "module",
+   "version": "1.4.2",
+   "description": "",
+   "repository": "https://github.com/solflare-wallet/solflare-sdk",

@@ -24,8 +24,8 @@ import {
   getSolanaAccounts,
   okx_instance,
   OKX_WALLET_SUPPORTED_CHAINS,
-} from './helpers';
-import signer from './signer';
+} from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.OKX;
 

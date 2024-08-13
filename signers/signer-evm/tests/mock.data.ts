@@ -1,5 +1,6 @@
+import type { EvmTransaction } from 'rango-types/mainApi';
+
 import { TransactionType } from 'rango-types';
-import { EvmTransaction } from 'rango-types/lib/api/main';
 
 export const address = '0x17ec8597ff92C3F44523bDc65BF0f1bE632917ff';
 export const privateKey =

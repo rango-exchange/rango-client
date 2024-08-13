@@ -1,12 +1,12 @@
-import type { SolanaExternalProvider, SolanaWeb3Signer } from './types';
+import type { SolanaExternalProvider, SolanaWeb3Signer } from './types.js';
 import type { SolanaTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { getSolanaConnection } from './helpers';
-import { prepareTransaction } from './prepare';
-import { transactionSenderAndConfirmationWaiter } from './send';
-import { simulateTransaction } from './simulate';
+import { getSolanaConnection } from './helpers.js';
+import { prepareTransaction } from './prepare.js';
+import { transactionSenderAndConfirmationWaiter } from './send.js';
+import { simulateTransaction } from './simulate.js';
 
 /*
  * https://docs.phantom.app/integrating/sending-a-transaction

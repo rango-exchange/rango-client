@@ -17,8 +17,8 @@ import {
   DEFAULT_SOLANA_CHAIN_ID,
   EthereumRPCMethods,
   NAMESPACES,
-} from './constants';
-import { getLastSession } from './session';
+} from './constants.js';
+import { getLastSession } from './session.js';
 
 let web3Modal: WalletConnectModal;
 export function createModalInstance(projectId: string) {

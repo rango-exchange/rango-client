@@ -7,7 +7,7 @@ import {
   SignerErrorCode,
 } from 'rango-types';
 
-import { MetamaskErrorCodes, RPCErrorCode, RPCErrorMessage } from './types';
+import { MetamaskErrorCodes, RPCErrorCode, RPCErrorMessage } from './types.js';
 
 export const cleanEvmError = (error: any): SignerErrorType => {
   if (!error) {

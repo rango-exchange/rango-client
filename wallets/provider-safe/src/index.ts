@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain } from 'rango-types';
 
-import { getSafeInstance } from './helpers';
-import signer from './signer';
+import { getSafeInstance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.SAFE;
 

@@ -18,15 +18,16 @@ async function run() {
     { name: 'path', type: String },
     // It accepts a comma separated file paths. e.g. src/main.ts,src/net.ts
     { name: 'inputs', type: String },
+    // Comma separated list. https://esbuild.github.io/api/#external
+    { name: 'external', type: String },
   ];
-  const { path, inputs } = commandLineArgs(optionDefinitions);
+  const { path, inputs, external } = commandLineArgs(optionDefinitions);
 
   if (!path) {
     throw new Error('You need to specify package name.');
   }
 
   const pkgPath = `${root}/${path}`;
-  const entryPoint = `${pkgPath}/src/index.ts`;
   const packageName = packageNameWithoutScope(packageJson(path).name);
 
   let entryPoints = [];
@@ -34,6 +35,18 @@ async function run() {
     entryPoints = [`${pkgPath}/src/index.ts`];
   } else {
     entryPoints = inputs.split(',').map((input) => `${pkgPath}/${input}`);
+  }
+
+  // read more: https://esbuild.github.io/api/#packages
+  let externalPackages = {};
+  if (!external) {
+    externalPackages = {
+      packages: 'external',
+    };
+  } else {
+    externalPackages = {
+      external: external.split(','),
+    };
   }
 
   console.log(`[build] Running for ${path}`);
@@ -50,10 +63,10 @@ async function run() {
     sourcemap: true,
     platform: 'node',
     format: 'esm',
-    packages: 'external',
     outdir: `${pkgPath}/dist`,
     entryPoints: entryPoints,
     metafile: true,
+    ...externalPackages,
   });
   const result = await Promise.all([typeCheckingTask, esbuildTask]);
   console.log(`[build] ${path} built successfully.`);

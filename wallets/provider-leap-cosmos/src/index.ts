@@ -14,8 +14,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
 
-import { getSupportedChains, leap_cosmos_instance } from './helpers';
-import signer from './signer';
+import { getSupportedChains, leap_cosmos_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.LEAP_COSMOS;
 

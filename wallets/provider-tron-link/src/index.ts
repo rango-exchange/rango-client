@@ -9,8 +9,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { tronBlockchain } from 'rango-types';
 
-import { tronLink as tronLink_instance } from './helpers';
-import signer from './signer';
+import { tronLink as tronLink_instance } from './helpers.js';
+import signer from './signer.js';
 
 /*
  * https://docs.tronlink.org/dapp/start-developing
