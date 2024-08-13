@@ -35,7 +35,7 @@
     "@walletconnect/sign-client": "^2.11.2",
     "@walletconnect/utils": "^2.11.2",
     "bs58": "^5.0.0",
-    "caip": "^1.1.0",
+    "caip": "^1.1.1",
     "cosmos-wallet": "^1.2.0",
     "rango-types": "^0.1.69"
   },

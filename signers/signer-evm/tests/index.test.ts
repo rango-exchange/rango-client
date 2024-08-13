@@ -1,7 +1,9 @@
-import { describe, beforeEach, it, expect } from 'vitest';
-import { DefaultEvmSigner } from '../src/index';
-import { MockEvmProvider } from '../../../test-utils/mock.evm.provider';
-import { EVM_TX, address, privateKey } from './mock.data';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import { MockEvmProvider } from '../../../test-utils/mock.evm.provider.js';
+import { DefaultEvmSigner } from '../src/index.js';
+
+import { address, EVM_TX, privateKey } from './mock.data.js';
 
 describe('Test EVM Signer', () => {
   let provider: MockEvmProvider;

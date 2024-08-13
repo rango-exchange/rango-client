@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.lib.json",
+  "extends": "../../tsconfig.libnext.json",
   "include": ["src", "types"],
   "compilerOptions": {
     "outDir": "dist",

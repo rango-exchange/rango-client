@@ -20,8 +20,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain, solanaBlockchain } from 'rango-types';
 
-import { clover as clover_instance, getNonEvmAccounts } from './helpers';
-import signer from './signer';
+import { clover as clover_instance, getNonEvmAccounts } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.CLOVER;
 

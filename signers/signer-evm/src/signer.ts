@@ -3,7 +3,7 @@ import type {
   TransactionResponse,
 } from '@ethersproject/abstract-provider';
 import type { GenericSigner } from 'rango-types';
-import type { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { providers } from 'ethers';
 import {
@@ -12,8 +12,8 @@ import {
   SignerErrorCode,
 } from 'rango-types';
 
-import { cleanEvmError, getTenderlyError, waitMs } from './helper';
-import { RPCErrorCode } from './types';
+import { cleanEvmError, getTenderlyError, waitMs } from './helper.js';
+import { RPCErrorCode } from './types.js';
 
 type ProviderType = ConstructorParameters<typeof providers.Web3Provider>[0];
 

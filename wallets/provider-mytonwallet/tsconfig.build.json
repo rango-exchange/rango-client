@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.lib.json",
+  "extends": "../../tsconfig.libnext.json",
   "include": ["src", "types", "../../global-wallets-env.d.ts"],
   "compilerOptions": {
     "outDir": "dist",
