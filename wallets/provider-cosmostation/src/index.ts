@@ -29,8 +29,8 @@ import {
   isEvmBlockchain,
 } from 'rango-types';
 
-import { cosmostation as cosmostation_instance } from './helpers';
-import signer from './signer';
+import { cosmostation as cosmostation_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.COSMOSTATION;
 

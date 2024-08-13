@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { trustWallet as trustwallet_instance } from './helpers';
-import signer from './signer';
+import { trustWallet as trustwallet_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.TRUST_WALLET;
 

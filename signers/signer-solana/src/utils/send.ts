@@ -1,12 +1,12 @@
 import type {
   TransactionSenderAndConfirmationWaiterArgs,
   TransactionSenderAndConfirmationWaiterResponse,
-} from './types';
+} from './types.js';
 
 import { TransactionExpiredBlockheightExceededError } from '@solana/web3.js';
 import promiseRetry from 'promise-retry';
 
-import { wait } from './helpers';
+import { wait } from './helpers.js';
 
 const SEND_OPTIONS = {
   skipPreflight: true,

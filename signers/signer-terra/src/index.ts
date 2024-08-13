@@ -1,2 +1,2 @@
-export { DefaultTerraSigner } from './signer';
-export { executeTerraTransaction } from './helpers';
+export { DefaultTerraSigner } from './signer.js';
+export { executeTerraTransaction } from './helpers.js';

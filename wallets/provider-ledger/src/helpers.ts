@@ -4,7 +4,7 @@ import { getAltStatusMessage } from '@ledgerhq/errors';
 import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
-import { getDerivationPath } from './state';
+import { getDerivationPath } from './state.js';
 
 export const HEXADECIMAL_BASE = 16;
 

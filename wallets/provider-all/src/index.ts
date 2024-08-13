@@ -37,7 +37,7 @@ import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isWalletExcluded } from './helpers';
+import { isWalletExcluded } from './helpers.js';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;

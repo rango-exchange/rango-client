@@ -2,7 +2,7 @@ import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { getSolanaConnection } from './helpers';
+import { getSolanaConnection } from './helpers.js';
 
 const INSUFFICIENT_FUNDS_ERROR_CODE = 1;
 const SLIPPAGE_ERROR_CODE = 6001;

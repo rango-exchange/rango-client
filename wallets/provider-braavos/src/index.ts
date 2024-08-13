@@ -10,8 +10,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
 
-import { getBraavosInstance } from './helpers';
-import signer from './signer';
+import { getBraavosInstance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.BRAAVOS;
 

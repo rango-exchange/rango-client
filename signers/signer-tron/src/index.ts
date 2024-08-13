@@ -1,1 +1,1 @@
-export { DefaultTronSigner } from './signer';
+export { DefaultTronSigner } from './signer.js';

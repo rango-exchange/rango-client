@@ -1,4 +1,6 @@
-import { GenericSigner, SignerError, TonTransaction } from 'rango-types';
+import type { GenericSigner, TonTransaction } from 'rango-types';
+
+import { SignerError } from 'rango-types';
 
 export class DefaultTonSigner implements GenericSigner<TonTransaction> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,9 +20,9 @@ export class DefaultTonSigner implements GenericSigner<TonTransaction> {
       params: [JSON.stringify(transactionObjectForSign)],
     });
     /*
-      No hash is returned when signing a Ton transaction.
-      Returns a string for API consistency 
-    */
+     *No hash is returned when signing a Ton transaction.
+     *Returns a string for API consistency
+     */
     return { hash: 'xxxxxxxx' };
   }
 }

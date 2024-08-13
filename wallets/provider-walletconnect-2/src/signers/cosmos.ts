@@ -11,10 +11,10 @@ import { AccountId, ChainId } from 'caip';
 import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { CosmosRPCMethods, NAMESPACES } from '../constants';
+import { CosmosRPCMethods, NAMESPACES } from '../constants.js';
 
-import { sendTx } from './helper';
-import { supportedChains } from './mock';
+import { sendTx } from './helper.js';
+import { supportedChains } from './mock.js';
 
 const NAMESPACE_NAME = NAMESPACES.COSMOS;
 type DirectSignResponse = {

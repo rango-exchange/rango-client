@@ -9,8 +9,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
 
-import { getSolflareSnapInstance } from './helpers';
-import signer from './signer';
+import { getSolflareSnapInstance } from './helpers.js';
+import signer from './signer.js';
 
 export const config = {
   type: WalletTypes.SOLFLARE_SNAP,

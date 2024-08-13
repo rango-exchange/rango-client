@@ -10,8 +10,8 @@ import {
   getLedgerError,
   transportConnect,
   transportDisconnect,
-} from '../helpers';
-import { getDerivationPath } from '../state';
+} from '../helpers.js';
+import { getDerivationPath } from '../state.js';
 
 export function isVersionedTransaction(
   transaction: Transaction | VersionedTransaction

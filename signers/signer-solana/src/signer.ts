@@ -1,9 +1,9 @@
-import type { SolanaExternalProvider } from './utils/types';
+import type { SolanaExternalProvider } from './utils/types.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { executeSolanaTransaction } from './utils/main';
+import { executeSolanaTransaction } from './utils/main.js';
 
 export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
   private provider: SolanaExternalProvider;

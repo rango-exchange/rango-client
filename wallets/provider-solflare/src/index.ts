@@ -10,7 +10,7 @@ import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import Solflare from '@solflare-wallet/sdk';
 import { solanaBlockchain } from 'rango-types';
 
-import signer from './signer';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.SOLFLARE;
 

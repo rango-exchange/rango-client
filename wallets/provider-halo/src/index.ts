@@ -19,8 +19,8 @@ import {
 import {
   getHaloInstance as halo_instance,
   HALO_WALLET_SUPPORTED_CHAINS,
-} from './helpers';
-import signer from './signer';
+} from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.HALO;
 

@@ -1,8 +1,8 @@
-export type { SolanaWeb3Signer, SolanaExternalProvider } from './types';
+export type { SolanaWeb3Signer, SolanaExternalProvider } from './types.js';
 export {
   executeSolanaTransaction,
   generalSolanaTransactionExecutor,
-} from './main';
-export { prepareTransaction } from './prepare';
-export { getSolanaConnection } from './helpers';
-export { simulateTransaction } from './simulate';
+} from './main.js';
+export { prepareTransaction } from './prepare.js';
+export { getSolanaConnection } from './helpers.js';
+export { simulateTransaction } from './simulate.js';

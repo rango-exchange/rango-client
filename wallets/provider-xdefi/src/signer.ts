@@ -5,8 +5,8 @@ import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
 import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
-import { CustomCosmosSigner } from './cosmos-signer';
-import { CustomTransferSigner } from './utxo-signer';
+import { CustomCosmosSigner } from './cosmos-signer.js';
+import { CustomTransferSigner } from './utxo-signer.js';
 
 export default function getSigners(provider: any): SignerFactory {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);

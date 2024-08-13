@@ -1,4 +1,5 @@
 import type { NetworkInfo } from '@terra-money/wallet-controller';
+
 import { WalletController } from '@terra-money/wallet-controller';
 
 export const TERRA_STATION_WALLET_ID = 'station';
