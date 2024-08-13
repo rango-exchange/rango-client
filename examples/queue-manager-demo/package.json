@@ -19,8 +19,8 @@
     "rango-sdk": "^0.1.49"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.36.0",
-    "@rango-dev/provider-xdefi": "^0.36.0",
+    "@rango-dev/provider-all": "^0.36.1-next.0",
+    "@rango-dev/provider-xdefi": "^0.36.1-next.0",
     "@rango-dev/queue-manager-rango-preset": "^0.36.0",
     "@rango-dev/queue-manager-react": "^0.27.0",
     "@rango-dev/wallets-react": "^0.22.0",
