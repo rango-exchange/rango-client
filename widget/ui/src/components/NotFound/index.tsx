@@ -1,2 +1,2 @@
-export { NotFound } from './NotFound';
-export type { NotFoundPropTypes } from './NotFound.types';
+export { NotFound } from './NotFound.js';
+export type { NotFoundPropTypes } from './NotFound.types.js';

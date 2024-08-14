@@ -1,4 +1,4 @@
-import { darkTheme, keyframes, styled } from '../../theme';
+import { darkTheme, keyframes, styled } from '../../theme.js';
 
 const waveSquares = keyframes({
   '0%': {

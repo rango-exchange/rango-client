@@ -1,4 +1,4 @@
-import type { SwapInputPropTypes } from './SwapInput.types';
+import type { SwapInputPropTypes } from './SwapInput.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
@@ -9,8 +9,8 @@ import {
   PriceImpact,
   Skeleton,
   Typography,
-} from '../../components';
-import { UI_ID } from '../../constants';
+} from '../../components/index.js';
+import { UI_ID } from '../../constants/index.js';
 
 import {
   amountStyles,
@@ -24,8 +24,8 @@ import {
   textStyles,
   UsdPrice,
   ValueTypography,
-} from './SwapInput.styles';
-import { TokenSection } from './TokenSection';
+} from './SwapInput.styles.js';
+import { TokenSection } from './TokenSection.js';
 
 export function SwapInput(props: SwapInputPropTypes) {
   const showBalance =

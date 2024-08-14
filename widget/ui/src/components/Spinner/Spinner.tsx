@@ -1,10 +1,10 @@
-import type { SpinnerPropTypes } from './Spinner.types';
+import type { SpinnerPropTypes } from './Spinner.types.js';
 
 import React from 'react';
 
-import { LoadingIcon } from '../../icons';
+import { LoadingIcon } from '../../icons/index.js';
 
-import { SpinnerContainer } from './Spinner.styles';
+import { SpinnerContainer } from './Spinner.styles.js';
 
 export function Spinner(props: SpinnerPropTypes) {
   const { size, color, css = {} } = props;

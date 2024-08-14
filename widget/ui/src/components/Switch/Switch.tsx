@@ -1,8 +1,8 @@
-import type { SwitchPropTypes } from './Switch.types';
+import type { SwitchPropTypes } from './Switch.types.js';
 
 import React from 'react';
 
-import { StyledSwitchRoot, StyledSwitchThumb } from './Switch.styles';
+import { StyledSwitchRoot, StyledSwitchThumb } from './Switch.styles.js';
 
 export function Switch(props: SwitchPropTypes) {
   const { checked, onChange } = props;

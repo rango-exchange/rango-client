@@ -1,4 +1,4 @@
-export { Tooltip } from './Tooltip';
-export type { TooltipPropTypes } from './Tooltip.types';
-export { NumericTooltip } from './NumericTooltip';
-export type { NumericTooltipPropTypes } from './NumericTooltip.types';
+export { Tooltip } from './Tooltip.js';
+export type { TooltipPropTypes } from './Tooltip.types.js';
+export { NumericTooltip } from './NumericTooltip.js';
+export type { NumericTooltipPropTypes } from './NumericTooltip.types.js';

@@ -1,14 +1,14 @@
-import type { ModalPropTypes } from './Modal.types';
+import type { ModalPropTypes } from './Modal.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { CloseIcon } from '../../icons';
-import { BottomLogo } from '../BottomLogo';
-import { Divider } from '../Divider';
-import { IconButton } from '../IconButton/IconButton';
-import { Typography } from '../Typography';
+import { CloseIcon } from '../../icons/index.js';
+import { BottomLogo } from '../BottomLogo/index.js';
+import { Divider } from '../Divider/index.js';
+import { IconButton } from '../IconButton/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   BackDrop,
@@ -17,7 +17,7 @@ import {
   Footer,
   ModalContainer,
   ModalHeader,
-} from './Modal.styles';
+} from './Modal.styles.js';
 
 const CLOSED_DELAY = 600;
 const OPEN_DELAY = 100;

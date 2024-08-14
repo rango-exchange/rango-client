@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Typography } from '../../components';
-import { styled } from '../../theme';
+import { Typography } from '../../components/index.js';
+import { styled } from '../../theme.js';
 
 interface PropTypes {
   messages: string[];

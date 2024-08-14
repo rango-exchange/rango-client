@@ -1,4 +1,4 @@
-import type { AlertPropTypes } from './Alert.types';
+import type { AlertPropTypes } from './Alert.types.js';
 
 import React from 'react';
 
@@ -7,8 +7,8 @@ import {
   ErrorIcon,
   InfoErrorIcon,
   WarningIcon,
-} from '../../icons';
-import { Spinner } from '../Spinner';
+} from '../../icons/index.js';
+import { Spinner } from '../Spinner/index.js';
 
 function AlertIcon(props: Pick<AlertPropTypes, 'type'>) {
   switch (props.type) {

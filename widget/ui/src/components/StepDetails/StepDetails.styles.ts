@@ -1,6 +1,6 @@
 import { css } from '@stitches/react';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const Container = styled('div', {
   width: '100%',

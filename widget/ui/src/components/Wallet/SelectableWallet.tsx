@@ -1,17 +1,17 @@
 import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
-import { Image } from '../common';
-import { Typography } from '../Typography';
+import { Image } from '../common/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { makeInfo } from './Wallet.helpers';
+import { makeInfo } from './Wallet.helpers.js';
 import {
   Text,
   Title,
   WalletButton,
   WalletImageContainer,
-} from './Wallet.styles';
-import { type SelectablePropTypes, WalletState } from './Wallet.types';
+} from './Wallet.styles.js';
+import { type SelectablePropTypes, WalletState } from './Wallet.types.js';
 
 export function SelectableWallet(props: SelectablePropTypes) {
   const {

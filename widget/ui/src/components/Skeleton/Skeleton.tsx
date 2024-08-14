@@ -1,8 +1,8 @@
-import type { SkeletonPropTypes } from './Skeleton.types';
+import type { SkeletonPropTypes } from './Skeleton.types.js';
 
 import React from 'react';
 
-import { SkeletonContainer } from './Skeleton.styles';
+import { SkeletonContainer } from './Skeleton.styles.js';
 
 export function Skeleton(props: SkeletonPropTypes) {
   const { width = '100%' } = props;

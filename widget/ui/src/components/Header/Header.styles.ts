@@ -1,8 +1,8 @@
 import { globalCss } from '@stitches/react';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
-import { HEADER_CORNDER_RADIUS } from './Header.constants';
+import { HEADER_CORNDER_RADIUS } from './Header.constants.js';
 
 export const globalHeaderStyles = globalCss({
   '.rng-scrolled': {

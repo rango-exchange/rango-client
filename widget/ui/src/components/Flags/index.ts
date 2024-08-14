@@ -1,27 +1,27 @@
-import Bengali from './Bengali';
-import Chinese from './Chinese';
-import English from './English';
-import Finland from './Finland';
-import French from './French';
-import German from './German';
-import Greece from './Greece';
-import Hindi from './Hindi';
-import Indonesian from './Indonesian';
-import Italian from './Italian';
-import Japanese from './Japanese';
-import Malay from './Malay';
-import Netherlands from './Netherlands';
-import Poland from './Poland';
-import Portuguese from './Portuguese';
-import Russian from './Russian';
-import Spanish from './Spanish';
-import Swedish from './Swedish';
-import Thai from './Thai';
-import Turkish from './Turkish';
-import Ukrainian from './Ukrainian';
-import Vietnamese from './Vietnamese';
+import Bengali from './Bengali.js';
+import Chinese from './Chinese.js';
+import English from './English.js';
+import Finland from './Finland.js';
+import French from './French.js';
+import German from './German.js';
+import Greece from './Greece.js';
+import Hindi from './Hindi.js';
+import Indonesian from './Indonesian.js';
+import Italian from './Italian.js';
+import Japanese from './Japanese.js';
+import Malay from './Malay.js';
+import Netherlands from './Netherlands.js';
+import Poland from './Poland.js';
+import Portuguese from './Portuguese.js';
+import Russian from './Russian.js';
+import Spanish from './Spanish.js';
+import Swedish from './Swedish.js';
+import Thai from './Thai.js';
+import Turkish from './Turkish.js';
+import Ukrainian from './Ukrainian.js';
+import Vietnamese from './Vietnamese.js';
 
-export type { FlagPropTypes } from './Flags.types';
+export type { FlagPropTypes } from './Flags.types.js';
 
 export {
   English,

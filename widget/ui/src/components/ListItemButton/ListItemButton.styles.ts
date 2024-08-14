@@ -1,5 +1,5 @@
-import { darkTheme, styled } from '../../theme';
-import { ListItem } from '../ListItem/ListItem';
+import { darkTheme, styled } from '../../theme.js';
+import { ListItem } from '../ListItem/ListItem.js';
 
 export const BaseListItemButton = styled(ListItem, {
   transition: 'all 0.35s',

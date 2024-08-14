@@ -1,8 +1,8 @@
-import type { SvgIconPropsWithChildren } from '../components/SvgIcon';
+import type { SvgIconPropsWithChildren } from '../components/SvgIcon/index.js';
 
 import React, { createElement } from 'react';
 
-import { SvgIcon } from '../components/SvgIcon';
+import { SvgIcon } from '../components/SvgIcon/index.js';
 
 function SvgCreditCard(props: SvgIconPropsWithChildren) {
   return createElement(

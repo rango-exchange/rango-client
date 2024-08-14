@@ -1,4 +1,4 @@
-import { keyframes, styled } from '../../theme';
+import { keyframes, styled } from '../../theme.js';
 
 const spin = keyframes({
   '100%': {

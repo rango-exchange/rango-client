@@ -1,4 +1,4 @@
-import type { RadioPropTypes } from '../Radio';
+import type { RadioPropTypes } from '../Radio/index.js';
 import type { CSSProperties } from '@stitches/react';
 
 export interface RadioGroupPropTypes {

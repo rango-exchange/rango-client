@@ -1,17 +1,17 @@
-import type { CheckboxPropTypes } from './Checkbox.types';
+import type { CheckboxPropTypes } from './Checkbox.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { DoneIcon } from '../../icons';
-import { Divider } from '../Divider';
+import { DoneIcon } from '../../icons/index.js';
+import { Divider } from '../Divider/index.js';
 
 import {
   CheckboxContainer,
   CheckboxIndicator,
   CheckboxRoot,
   Label,
-} from './Checkbox.styles';
+} from './Checkbox.styles.js';
 
 export function Checkbox(props: PropsWithChildren<CheckboxPropTypes>) {
   const { id, label, ...otherProps } = props;

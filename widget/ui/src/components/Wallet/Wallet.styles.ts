@@ -1,5 +1,5 @@
-import { darkTheme, styled } from '../../theme';
-import { Typography } from '../Typography';
+import { darkTheme, styled } from '../../theme.js';
+import { Typography } from '../Typography/index.js';
 
 export const WalletImageContainer = styled('div', {
   '& img': {

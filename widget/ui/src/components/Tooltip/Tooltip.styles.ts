@@ -1,7 +1,7 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 
-import { darkTheme, styled } from '../../theme';
-import { Typography } from '../Typography';
+import { darkTheme, styled } from '../../theme.js';
+import { Typography } from '../Typography/index.js';
 
 export const TooltipContent = styled(RadixTooltip.Content, {
   zIndex: '999999',

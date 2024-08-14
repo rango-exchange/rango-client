@@ -1,9 +1,9 @@
-import type { TypographyPropTypes } from './Typography.types';
+import type { TypographyPropTypes } from './Typography.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { TypographyContainer } from './Typography.styles';
+import { TypographyContainer } from './Typography.styles.js';
 
 export function Typography({
   children,

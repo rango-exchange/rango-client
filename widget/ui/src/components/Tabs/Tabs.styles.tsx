@@ -1,5 +1,5 @@
-import { darkTheme, styled } from '../../theme';
-import { Button } from '../Button';
+import { darkTheme, styled } from '../../theme.js';
+import { Button } from '../Button/index.js';
 
 export const Tabs = styled('div', {
   display: 'flex',

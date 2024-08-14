@@ -1,6 +1,6 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 
-import { keyframes, styled } from '../../theme';
+import { keyframes, styled } from '../../theme.js';
 
 const slideDown = keyframes({
   from: {

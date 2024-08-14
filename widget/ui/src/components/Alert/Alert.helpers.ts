@@ -1,4 +1,4 @@
-import type { AlertPropTypes, Type } from './Alert.types';
+import type { AlertPropTypes, Type } from './Alert.types.js';
 
 export const getColor = (type: Type, variant: AlertPropTypes['variant']) => {
   if (variant === 'regular') {

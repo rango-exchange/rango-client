@@ -1,4 +1,4 @@
-import type { ButtonBase } from './Button.styles';
+import type { ButtonBase } from './Button.styles.js';
 import type * as Stitches from '@stitches/react';
 import type { HTMLAttributes } from 'react';
 

@@ -1,2 +1,2 @@
-export { Alert } from './Alert';
-export type { AlertPropTypes } from './Alert.types';
+export { Alert } from './Alert.js';
+export type { AlertPropTypes } from './Alert.types.js';

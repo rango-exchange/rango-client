@@ -1,5 +1,5 @@
-import { darkTheme, styled } from '../../theme';
-import { Image } from '../common';
+import { darkTheme, styled } from '../../theme.js';
+import { Image } from '../common/index.js';
 
 export const Container = styled('div', {
   position: 'relative',

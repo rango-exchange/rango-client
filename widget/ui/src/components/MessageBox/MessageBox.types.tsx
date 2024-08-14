@@ -1,4 +1,4 @@
-import type { IconHighlight } from './MessageBox.styles';
+import type { IconHighlight } from './MessageBox.styles.js';
 import type * as Stitches from '@stitches/react';
 import type { ReactNode } from 'react';
 

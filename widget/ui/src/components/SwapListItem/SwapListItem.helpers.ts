@@ -1,4 +1,4 @@
-import type { Status } from './SwapListItem.types';
+import type { Status } from './SwapListItem.types.js';
 
 import { i18n } from '@lingui/core';
 

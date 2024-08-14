@@ -1,16 +1,16 @@
-import type { PropTypes } from './CollapsibleMessageBox.types';
+import type { PropTypes } from './CollapsibleMessageBox.types.js';
 import type { PropsWithChildren } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
 import React, { useState } from 'react';
 
-import { ChevronDownIcon, ChevronUpIcon } from '../../icons';
-import { CollapsibleContent } from '../common/styles';
-import { Divider } from '../Divider';
+import { ChevronDownIcon, ChevronUpIcon } from '../../icons/index.js';
+import { CollapsibleContent } from '../common/styles.js';
+import { Divider } from '../Divider/index.js';
 
-import { Trigger } from './CollapsibleMessageBox.styles';
+import { Trigger } from './CollapsibleMessageBox.styles.js';
 
-import { MessageBox } from '.';
+import { MessageBox } from './index.js';
 
 export function CollapsibleMessageBox(props: PropsWithChildren<PropTypes>) {
   const { description, status, title, children } = props;

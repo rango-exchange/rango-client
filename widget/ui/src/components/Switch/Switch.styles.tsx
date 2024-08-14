@@ -1,6 +1,6 @@
 import * as RadixSwitch from '@radix-ui/react-switch';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   boxSizing: 'border-box',

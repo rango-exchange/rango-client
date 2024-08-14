@@ -1,4 +1,4 @@
-import { css, darkTheme, styled } from '../../theme';
+import { css, darkTheme, styled } from '../../theme.js';
 
 export const getLabelStyles = css({});
 

@@ -1,4 +1,4 @@
-import type { Tabs } from './Tabs.styles';
+import type { Tabs } from './Tabs.styles.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseItem = {

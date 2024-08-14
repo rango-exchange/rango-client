@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
 export const TokenContainer = styled('div', {
   display: 'flex',

@@ -1,5 +1,5 @@
-import type { InputContainer } from './TextField.styles';
-import type { TypographyPropTypes } from '../Typography';
+import type { InputContainer } from './TextField.styles.js';
+import type { TypographyPropTypes } from '../Typography/index.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof InputContainer>;

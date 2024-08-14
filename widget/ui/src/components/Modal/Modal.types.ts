@@ -1,5 +1,5 @@
-import type { ModalContainer } from './Modal.styles';
-import type { config } from '../../theme';
+import type { ModalContainer } from './Modal.styles.js';
+import type { config } from '../../theme.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof ModalContainer>;
