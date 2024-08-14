@@ -1,2 +1,2 @@
-export { StepDetails } from './StepDetails';
-export type { StepDetailsProps, Step } from './StepDetails.types';
+export { StepDetails } from './StepDetails.js';
+export type { StepDetailsProps, Step } from './StepDetails.types.js';

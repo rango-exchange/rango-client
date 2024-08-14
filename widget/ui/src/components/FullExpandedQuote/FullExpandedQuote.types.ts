@@ -1,11 +1,14 @@
-import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types';
-import type { ChainTokenPropTypes } from '../ChainToken';
-import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types';
-import type { PropTypes as QuoteCostProps } from '../QuoteCost/QuoteCost.types';
-import type { InternalSwap, Step } from '../StepDetails/StepDetails.types';
-import type { NumericTooltipPropTypes, TooltipPropTypes } from '../Tooltip';
+import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types.js';
+import type { ChainTokenPropTypes } from '../ChainToken/index.js';
+import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types.js';
+import type { PropTypes as QuoteCostProps } from '../QuoteCost/QuoteCost.types.js';
+import type { InternalSwap, Step } from '../StepDetails/StepDetails.types.js';
+import type {
+  NumericTooltipPropTypes,
+  TooltipPropTypes,
+} from '../Tooltip/index.js';
 import type { CSSProperties } from '@stitches/react';
-import type { RouteTag } from 'rango-sdk';
+import type { RouteTag } from 'rango-types/lib/api/main';
 
 type BaseProps = {
   percentageChange?: PriceImpactPropTypes['percentageChange'];

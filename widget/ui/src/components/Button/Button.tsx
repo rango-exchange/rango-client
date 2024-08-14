@@ -1,12 +1,12 @@
-import type { ButtonPropTypes, Ref } from './Button.types';
+import type { ButtonPropTypes, Ref } from './Button.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Spinner } from '../Spinner';
+import { Spinner } from '../Spinner/Spinner.js';
 
-import { ButtonBase, Content } from './Button.styles';
-import Ripple from './Ripple';
+import { ButtonBase, Content } from './Button.styles.js';
+import Ripple from './Ripple.js';
 
 function ButtonComponent(props: PropsWithChildren<ButtonPropTypes>, ref?: Ref) {
   const {

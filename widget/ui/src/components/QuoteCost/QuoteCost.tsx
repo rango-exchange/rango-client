@@ -1,18 +1,18 @@
-import type { PropTypes } from './QuoteCost.types';
+import type { PropTypes } from './QuoteCost.types.js';
 
 import React from 'react';
 
-import { GasIcon, NumberIcon, TimeIcon } from '../../icons';
-import { Divider } from '../Divider';
-import { Tooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { GasIcon, NumberIcon, TimeIcon } from '../../icons/index.js';
+import { Divider } from '../Divider/index.js';
+import { Tooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   Container,
   iconStyles,
   itemStyles,
   Separator,
-} from './QuoteCost.styles';
+} from './QuoteCost.styles.js';
 
 export function QuoteCost(props: PropTypes) {
   const {

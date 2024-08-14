@@ -1,8 +1,8 @@
-import type { FlagPropTypes } from './Flags.types';
+import type { FlagPropTypes } from './Flags.types.js';
 
 import React from 'react';
 
-import { DEFAULT_SIZE } from './Flags.constants';
+import { DEFAULT_SIZE } from './Flags.constants.js';
 
 export default function Turkish(props: FlagPropTypes) {
   const { size = DEFAULT_SIZE } = props;

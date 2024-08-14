@@ -1,8 +1,8 @@
-import type { PropTypes } from './Divider.types';
+import type { PropTypes } from './Divider.types.js';
 
 import React from 'react';
 
-import { DividerContainer } from './Divider.styles';
+import { DividerContainer } from './Divider.styles.js';
 
 const DEFAULT_SIZE = 12;
 

@@ -1,4 +1,4 @@
-import type { DividerContainer } from './Divider.styles';
+import type { DividerContainer } from './Divider.styles.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof DividerContainer>;

@@ -1,10 +1,10 @@
-import { css, darkTheme, lightTheme, styled } from '../../theme';
-import { Typography } from '../Typography';
+import { css, darkTheme, lightTheme, styled } from '../../theme.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   HOVER_TRANSITION_DURATION,
   TOAST_TRANSITION_DURATION,
-} from './Toast.helpers';
+} from './Toast.helpers.js';
 
 export const toastContentStyles = css({
   transition: `transform ${HOVER_TRANSITION_DURATION}ms ease-in-out`,

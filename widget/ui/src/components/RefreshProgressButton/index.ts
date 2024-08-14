@@ -1,1 +1,1 @@
-export { RefreshProgressButton } from './RefreshProgressButton';
+export { RefreshProgressButton } from './RefreshProgressButton.js';

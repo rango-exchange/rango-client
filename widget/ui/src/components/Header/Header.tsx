@@ -1,11 +1,11 @@
-import type { PropTypes } from './Header.types';
+import type { PropTypes } from './Header.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Typography } from '../Typography';
+import { Typography } from '../Typography/index.js';
 
-import { Container, globalHeaderStyles, Suffix } from './Header.styles';
+import { Container, globalHeaderStyles, Suffix } from './Header.styles.js';
 
 export function Header({
   prefix,

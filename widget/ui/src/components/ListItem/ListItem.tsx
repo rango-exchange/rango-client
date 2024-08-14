@@ -1,10 +1,10 @@
-import type { ListItemPropTypes } from './ListItem.types';
+import type { ListItemPropTypes } from './ListItem.types.js';
 
 import React from 'react';
 
-import { Typography } from '../Typography';
+import { Typography } from '../Typography/index.js';
 
-import { BaseListItem } from './ListItem.styles';
+import { BaseListItem } from './ListItem.styles.js';
 
 function ListItem(props: ListItemPropTypes) {
   const { start, title, description, end, onClick, hasDivider, ...restProps } =

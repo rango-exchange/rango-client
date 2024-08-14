@@ -1,6 +1,6 @@
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
 export const RadioRoot = styled(RadioGroup.Root, {
   variants: {

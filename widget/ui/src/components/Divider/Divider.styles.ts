@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
 export const DividerContainer = styled('div', {
   flexShrink: 0,

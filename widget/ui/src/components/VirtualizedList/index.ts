@@ -1,1 +1,1 @@
-export { VirtualizedList, GroupedVirtualizedList } from './VirtualizedList';
+export { VirtualizedList, GroupedVirtualizedList } from './VirtualizedList.js';

@@ -1,4 +1,4 @@
-export { SelectableCategoryList } from './SelectableCategoryList';
-export type { SelectableCategoryListPropTypes } from './SelectableCategoryList.types';
-export { BlockchainCategories } from './SelectableCategoryList.types';
-export { getCategoriesCount } from './SelectableCategoryList.helpers';
+export { SelectableCategoryList } from './SelectableCategoryList.js';
+export type { SelectableCategoryListPropTypes } from './SelectableCategoryList.types.js';
+export { BlockchainCategories } from './SelectableCategoryList.types.js';
+export { getCategoriesCount } from './SelectableCategoryList.helpers.js';

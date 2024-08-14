@@ -1,10 +1,10 @@
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Divider, Typography } from '../../components';
-import { NoNotificationIcon } from '../../icons';
+import { Divider, Typography } from '../../components/index.js';
+import { NoNotificationIcon } from '../../icons/index.js';
 
-import { NotFoundContainer } from './Notifications.styles';
+import { NotFoundContainer } from './Notifications.styles.js';
 
 export function NotificationNotFound() {
   return (

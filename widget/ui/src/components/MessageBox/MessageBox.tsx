@@ -1,2 +1,2 @@
-export { MessageBox } from './DefaultMessageBox';
-export { CollapsibleMessageBox } from './CollapsibleMessageBox';
+export { MessageBox } from './DefaultMessageBox.js';
+export { CollapsibleMessageBox } from './CollapsibleMessageBox.js';

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ChainToken } from '../ChainToken';
-import { Skeleton } from '../Skeleton';
+import { ChainToken } from '../ChainToken/index.js';
+import { Skeleton } from '../Skeleton/index.js';
 
 import {
   FlexCenter,
@@ -9,7 +9,7 @@ import {
   Separator,
   SkeletonItemLeftContainer,
   VerticalLine,
-} from './FullExpandedQuote.styles';
+} from './FullExpandedQuote.styles.js';
 
 export function SkeletonHeader() {
   return (
