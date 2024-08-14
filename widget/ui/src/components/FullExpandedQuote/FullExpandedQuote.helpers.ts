@@ -1,5 +1,5 @@
 import type { I18n } from '@lingui/core';
-import type { Tag } from 'rango-sdk';
+import type { Tag } from 'rango-types/lib/api/main';
 
 export const ITEM_SKELETON_COUNT = 3;
 export const TOOLTIP_SIDE_OFFSET = 10;

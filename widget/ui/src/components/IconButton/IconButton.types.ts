@@ -1,4 +1,4 @@
-import type { ButtonPropTypes } from '../Button/Button.types';
+import type { ButtonPropTypes } from '../Button/Button.types.js';
 import type { CSSProperties } from 'react';
 
 export type IconButtonPropTypes = {

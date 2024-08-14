@@ -1,3 +1,3 @@
-export { Typography } from './Typography';
-export { NotSelectableTypography } from './NotSelectableTypography';
-export type { TypographyPropTypes } from './Typography.types';
+export { Typography } from './Typography.js';
+export { NotSelectableTypography } from './NotSelectableTypography.js';
+export type { TypographyPropTypes } from './Typography.types.js';

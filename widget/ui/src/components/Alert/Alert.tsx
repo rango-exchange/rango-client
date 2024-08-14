@@ -1,14 +1,19 @@
-import type { AlertPropTypes } from './Alert.types';
+import type { AlertPropTypes } from './Alert.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Divider } from '../Divider';
-import { Typography } from '../Typography';
+import { Divider } from '../Divider/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { getColor, mapVariantToSize } from './Alert.helpers';
-import AlertIcon from './Alert.icon';
-import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
+import { getColor, mapVariantToSize } from './Alert.helpers.js';
+import AlertIcon from './Alert.icon.js';
+import {
+  Container,
+  IconHighlight,
+  Main,
+  TitleContainer,
+} from './Alert.styles.js';
 
 export function Alert(props: PropsWithChildren<AlertPropTypes>) {
   const {

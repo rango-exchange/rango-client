@@ -1,5 +1,5 @@
-export { SwapListItem } from './SwapListItem';
+export { SwapListItem } from './SwapListItem.js';
 export type {
   SwapTokenData,
   SwapListItemPropTypes,
-} from './SwapListItem.types';
+} from './SwapListItem.types.js';

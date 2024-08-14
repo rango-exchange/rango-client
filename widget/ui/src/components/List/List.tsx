@@ -1,10 +1,10 @@
-import type { ListPropTypes } from './List.types';
+import type { ListPropTypes } from './List.types.js';
 
 import React from 'react';
 
-import { ListItem } from '../ListItem';
+import { ListItem } from '../ListItem/index.js';
 
-import { BaseList } from './List.styles';
+import { BaseList } from './List.styles.js';
 
 function List(props: ListPropTypes) {
   return (

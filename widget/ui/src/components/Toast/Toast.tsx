@@ -1,23 +1,23 @@
-import type { ToastPropTypes } from './Toast.types';
+import type { ToastPropTypes } from './Toast.types.js';
 
 import React, { useEffect, useState } from 'react';
 
-import { CloseIcon } from '../../icons';
-import { Alert } from '../Alert';
-import AlertIcon from '../Alert/Alert.icon';
-import { IconHighlight } from '../Alert/Alert.styles';
-import { Divider } from '../Divider';
-import { IconButton } from '../IconButton';
+import { CloseIcon } from '../../icons/index.js';
+import AlertIcon from '../Alert/Alert.icon.js';
+import { IconHighlight } from '../Alert/Alert.styles.js';
+import { Alert } from '../Alert/index.js';
+import { Divider } from '../Divider/index.js';
+import { IconButton } from '../IconButton/index.js';
 
-import { TOAST_HIDE_DELAY, TOAST_UNMOUNT_DELAY } from './Toast.helpers';
-import { useToast } from './Toast.Provider';
+import { TOAST_HIDE_DELAY, TOAST_UNMOUNT_DELAY } from './Toast.helpers.js';
+import { useToast } from './Toast.Provider.js';
 import {
   AlertBox,
   AlertFlexContainer,
   StyledTypography,
   ToastContentContainer,
   toastContentStyles,
-} from './Toast.styles';
+} from './Toast.styles.js';
 
 export const Toast = (props: ToastPropTypes) => {
   const {

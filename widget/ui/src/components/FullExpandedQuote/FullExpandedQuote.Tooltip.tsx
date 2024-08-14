@@ -1,13 +1,13 @@
-import type { TooltipContentProps } from './FullExpandedQuote.types';
+import type { TooltipContentProps } from './FullExpandedQuote.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { ChevronRightIcon } from '../../icons';
-import { Image } from '../common';
-import { Divider } from '../Divider';
-import { QuoteCost } from '../QuoteCost';
-import { Typography } from '../Typography';
+import { ChevronRightIcon } from '../../icons/index.js';
+import { Image } from '../common/index.js';
+import { Divider } from '../Divider/index.js';
+import { QuoteCost } from '../QuoteCost/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   FlexCenter,
@@ -17,8 +17,8 @@ import {
   TooltipContainer,
   TooltipFooter,
   TooltipHeader,
-} from './FullExpandedQuote.styles';
-import { TokenSection } from './FullExpandedQuote.TokenSection';
+} from './FullExpandedQuote.styles.js';
+import { TokenSection } from './FullExpandedQuote.TokenSection.js';
 
 export function TooltipContent(props: TooltipContentProps) {
   const { internalSwaps, time, fee, alerts } = props;

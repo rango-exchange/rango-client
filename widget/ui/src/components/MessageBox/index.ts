@@ -1,1 +1,1 @@
-export * from './MessageBox';
+export * from './MessageBox.js';

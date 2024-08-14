@@ -1,4 +1,4 @@
-import { css, styled } from '../../theme';
+import { css, styled } from '../../theme.js';
 
 export const Container = styled('div', {
   display: 'flex',

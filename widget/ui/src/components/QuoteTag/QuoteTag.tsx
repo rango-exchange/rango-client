@@ -1,10 +1,10 @@
-import type { RouteTag, Tag } from 'rango-sdk';
+import type { RouteTag, Tag } from 'rango-types/lib/api/main';
 
 import React from 'react';
 
-import { Typography } from '../Typography';
+import { Typography } from '../Typography/index.js';
 
-import { getLabelStyles, TagContainer } from './QuoteTag.styles';
+import { getLabelStyles, TagContainer } from './QuoteTag.styles.js';
 
 export const QuoteTag = (props: RouteTag) => {
   const { value, label } = props;

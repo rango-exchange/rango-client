@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
 export const TypographyContainer = styled('span', {
   display: 'inline-block',

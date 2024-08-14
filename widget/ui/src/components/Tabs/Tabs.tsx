@@ -1,11 +1,11 @@
-import type { TabsPropTypes } from './Tabs.types';
+import type { TabsPropTypes } from './Tabs.types.js';
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Divider } from '../Divider';
-import { Tooltip } from '../Tooltip';
+import { Divider } from '../Divider/index.js';
+import { Tooltip } from '../Tooltip/index.js';
 
-import { BackdropTab, Tab, Tabs } from './Tabs.styles';
+import { BackdropTab, Tab, Tabs } from './Tabs.styles.js';
 
 const INITIAL_RENDER_DELAY = 100;
 export function TabsComponent(props: TabsPropTypes) {

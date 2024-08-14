@@ -1,3 +1,3 @@
-export * from './Wallet';
-export type { WalletInfo } from './Wallet.types';
-export { WalletState } from './Wallet.types';
+export * from './Wallet.js';
+export type { WalletInfo } from './Wallet.types.js';
+export { WalletState } from './Wallet.types.js';

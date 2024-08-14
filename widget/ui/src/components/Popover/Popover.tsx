@@ -1,10 +1,10 @@
-import type { ContentType, PopoverPropTypes, Ref } from './Popover.types';
+import type { ContentType, PopoverPropTypes, Ref } from './Popover.types.js';
 import type { PropsWithChildren } from 'react';
 
 import * as RadixPopover from '@radix-ui/react-popover';
 import React from 'react';
 
-import { PopoverArrow, PopoverContainer } from './Popover.styles';
+import { PopoverArrow, PopoverContainer } from './Popover.styles.js';
 
 const DEFAULT_SIDE_OFFSET = 0;
 const DEFAULT_ALIGN_OFFSET = 0;

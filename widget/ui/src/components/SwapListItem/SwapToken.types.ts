@@ -1,4 +1,8 @@
-import type { LoadingProps, Status, SwapTokenData } from './SwapListItem.types';
+import type {
+  LoadingProps,
+  Status,
+  SwapTokenData,
+} from './SwapListItem.types.js';
 
 export interface SwapTokenProps {
   data: SwapTokenData;

@@ -1,12 +1,12 @@
-import type { PropTypes } from './Notifications.types';
+import type { PropTypes } from './Notifications.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { ChainToken, Divider, Typography } from '../../components';
-import { ChevronRightIcon } from '../../icons';
+import { ChainToken, Divider, Typography } from '../../components/index.js';
+import { ChevronRightIcon } from '../../icons/index.js';
 
-import { NotificationNotFound } from './NotificationNotFound';
+import { NotificationNotFound } from './NotificationNotFound.js';
 import {
   ClearAllButton,
   Container,
@@ -15,7 +15,7 @@ import {
   Images,
   List,
   ListItem,
-} from './Notifications.styles';
+} from './Notifications.styles.js';
 
 export function Notifications(props: PropTypes) {
   const {

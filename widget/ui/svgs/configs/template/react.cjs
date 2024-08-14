@@ -1,8 +1,8 @@
 const template = (variables, options) => {
   return options.tpl`
   import React, {createElement} from 'react';
-  import type {SvgIconPropsWithChildren} from '../components/SvgIcon';
-  import {SvgIcon} from '../components/SvgIcon';
+  import type {SvgIconPropsWithChildren} from '../components/SvgIcon/index.js';
+  import {SvgIcon} from '../components/SvgIcon/index.js';
   
     ${variables.imports};
   

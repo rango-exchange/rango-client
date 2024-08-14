@@ -1,12 +1,12 @@
-import type { Ref, TextFieldPropTypes } from './TextField.types';
+import type { Ref, TextFieldPropTypes } from './TextField.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Divider } from '../Divider';
-import { Typography } from '../Typography';
+import { Divider } from '../Divider/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { Input, InputContainer, Label } from './TextField.styles';
+import { Input, InputContainer, Label } from './TextField.styles.js';
 
 function TextFieldComponent(
   props: PropsWithChildren<TextFieldPropTypes>,

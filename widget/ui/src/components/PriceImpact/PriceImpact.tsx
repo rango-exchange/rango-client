@@ -1,10 +1,10 @@
-import type { PriceImpactPropTypes } from './PriceImpact.types';
+import type { PriceImpactPropTypes } from './PriceImpact.types.js';
 
 import React from 'react';
 
-import { Divider, NumericTooltip, Typography } from '..';
+import { Divider, NumericTooltip, Typography } from '../index.js';
 
-import { Container, ValueTypography } from './PriceImpact.styles';
+import { Container, ValueTypography } from './PriceImpact.styles.js';
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {

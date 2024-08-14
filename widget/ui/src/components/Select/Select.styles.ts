@@ -1,6 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const EXPANDABLE_QUOTE_TRANSITION_DURATION = 300;
 

@@ -1,5 +1,5 @@
-import { Button, TextField, Typography } from '../../components';
-import { css, darkTheme, styled } from '../../theme';
+import { Button, TextField, Typography } from '../../components/index.js';
+import { css, darkTheme, styled } from '../../theme.js';
 
 export const textStyles = css();
 

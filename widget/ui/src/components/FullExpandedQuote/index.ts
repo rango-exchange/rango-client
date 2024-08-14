@@ -1,1 +1,1 @@
-export { FullExpandedQuote } from './FullExpandedQuote';
+export { FullExpandedQuote } from './FullExpandedQuote.js';

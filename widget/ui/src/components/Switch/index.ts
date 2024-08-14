@@ -1,2 +1,2 @@
-export { Switch } from './Switch';
-export type { SwitchPropTypes } from './Switch.types';
+export { Switch } from './Switch.js';
+export type { SwitchPropTypes } from './Switch.types.js';

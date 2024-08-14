@@ -4,15 +4,15 @@ import type {
   ToastPosition,
   ToastPropTypes,
   ToastType,
-} from './Toast.types';
+} from './Toast.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Toast } from './Toast';
-import { idGenerator } from './Toast.helpers';
-import { ToastContainer } from './Toast.styles';
+import { idGenerator } from './Toast.helpers.js';
+import { Toast } from './Toast.js';
+import { ToastContainer } from './Toast.styles.js';
 
 const ToastContext = createContext<ProviderContext | undefined>(undefined);
 

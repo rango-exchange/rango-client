@@ -1,5 +1,5 @@
-import { css, darkTheme, styled } from '../../theme';
-import { PriceImpact } from '../PriceImpact';
+import { css, darkTheme, styled } from '../../theme.js';
+import { PriceImpact } from '../PriceImpact/index.js';
 
 export const tokenLabelStyles = css({});
 

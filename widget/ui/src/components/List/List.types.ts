@@ -1,4 +1,4 @@
-import type { ListItemPropTypes } from '../ListItem';
+import type { ListItemPropTypes } from '../ListItem/index.js';
 import type * as Stitches from '@stitches/react';
 import type React from 'react';
 

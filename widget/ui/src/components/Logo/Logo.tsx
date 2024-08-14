@@ -1,8 +1,8 @@
-import type { SvgIconProps } from '../SvgIcon';
+import type { SvgIconProps } from '../SvgIcon/index.js';
 
 import React from 'react';
 
-import { SvgWithColor } from '../SvgIcon/SvgIcon.style';
+import { SvgWithColor } from '../SvgIcon/SvgIcon.style.js';
 
 export function Logo(props: SvgIconProps) {
   const { size = '1em', color } = props;

@@ -1,4 +1,4 @@
-import type { CSS } from '../../theme';
+import type { CSS } from '../../theme.js';
 import type * as RadixTooltip from '@radix-ui/react-tooltip';
 import type * as Stitches from '@stitches/react';
 import type { ComponentProps, ReactNode } from 'react';

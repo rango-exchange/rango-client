@@ -1,9 +1,14 @@
-import type { TokenSectionProps } from './TokenSection.types';
+import type { TokenSectionProps } from './TokenSection.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { ChainToken, Divider, Skeleton, Typography } from '../../components';
+import {
+  ChainToken,
+  Divider,
+  Skeleton,
+  Typography,
+} from '../../components/index.js';
 
 import {
   chainNameStyles,
@@ -11,7 +16,7 @@ import {
   skeletonStyles,
   tokenChainStyles,
   TokenSectionContainer,
-} from './TokenSection.styles';
+} from './TokenSection.styles.js';
 
 export function TokenSection(props: TokenSectionProps) {
   const {
