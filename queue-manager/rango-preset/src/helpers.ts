@@ -38,7 +38,7 @@ import type {
 
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
-import { readAccountAddress } from '@rango-dev/wallets-core';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   getBlockChainNameFromId,
   getEvmProvider,

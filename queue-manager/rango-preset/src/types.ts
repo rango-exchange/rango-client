@@ -4,7 +4,7 @@ import type {
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
-import type { ConnectResult } from '@rango-dev/wallets-core';
+import type { LegacyConnectResult as ConnectResult } from '@rango-dev/wallets-core/legacy';
 import type {
   Meta,
   Network,

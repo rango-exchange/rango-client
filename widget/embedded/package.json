@@ -32,6 +32,7 @@
     "@rango-dev/signer-solana": "^0.31.1-next.0",
     "@rango-dev/ui": "^0.37.1-next.1",
     "@rango-dev/wallets-react": "^0.22.0",
+    "@rango-dev/wallets-core": "^0.37.0",
     "@rango-dev/wallets-shared": "^0.36.0",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",

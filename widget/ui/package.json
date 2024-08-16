@@ -5,8 +5,11 @@
   "type": "module",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
-  "exports": "./dist/index.js",
-  "typings": "dist/widget/ui/src/index.d.ts",
+  "exports": {
+    "types": "./dist/widget/ui/src/index.d.ts",
+    "default": "./dist/index.js"
+  },
+  "typings": "./dist/widget/ui/src/index.d.ts",
   "files": [
     "dist",
     "src"
