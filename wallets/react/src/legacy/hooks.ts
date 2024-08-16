@@ -1,7 +1,7 @@
 import type { ProviderContext, WalletActions, WalletConfig } from './types.js';
-import type { EventHandler as WalletEventHandler } from '@rango-dev/wallets-core';
+import type { LegacyEventHandler as WalletEventHandler } from '@rango-dev/wallets-core/legacy';
 
-import Wallet from '@rango-dev/wallets-core';
+import { LegacyWallet as Wallet } from '@rango-dev/wallets-core/legacy';
 import { useContext, useRef } from 'react';
 
 import { WalletContext } from './context.js';

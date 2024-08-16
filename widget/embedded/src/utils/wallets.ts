@@ -26,7 +26,7 @@ import {
   BlockchainCategories,
   WalletState as WalletStatus,
 } from '@rango-dev/ui';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
   getCosmosExperimentalChainInfo,
