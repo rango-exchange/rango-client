@@ -14,7 +14,6 @@ export const globalHeaderStyles = globalCss({
 
 export const Container = styled('div', {
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center',
   padding: '$20 $20 $15 $20',
   $$color: '$colors$neutral100',
@@ -23,6 +22,20 @@ export const Container = styled('div', {
   },
   backgroundColor: '$$color',
   position: 'relative',
+
+  variants: {
+    titlePosition: {
+      left: {
+        justifyContent: 'start',
+      },
+      center: {
+        justifyContent: 'center',
+      },
+      right: {
+        justifyContent: 'end',
+      },
+    },
+  },
 
   '.rng-curve-left,.rng-curve-right': {
     width: HEADER_CORNDER_RADIUS * 2,
@@ -59,7 +72,17 @@ export const Container = styled('div', {
   },
 });
 
+export const Prefix = styled('div', {
+  position: 'absolute',
+  left: '$20',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$5',
+});
+
 export const Suffix = styled('div', {
+  position: 'absolute',
+  right: '$20',
   display: 'flex',
   alignItems: 'center',
   gap: '$5',
