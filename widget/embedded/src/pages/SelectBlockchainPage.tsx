@@ -5,6 +5,7 @@ import {
   SelectableCategoryList,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { BlockchainList } from '../components/BlockchainList';
 import { Layout, PageContainer } from '../components/Layout';
@@ -14,7 +15,8 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 
 interface PropTypes {
-  type: 'source' | 'destination';
+  type: 'source' | 'destination' | 'custom-token';
+  hideCategory?: boolean;
 }
 
 export function SelectBlockchainPage(props: PropTypes) {
@@ -24,15 +26,15 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
   const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
-  const fetchStatus = useAppStore().fetchStatus;
+  const { fetchStatus } = useAppStore();
+  const navigate = useNavigate();
 
   const blockchains = useAppStore().blockchains({
     type,
   });
-
   const activeCategoriesCount = getCategoriesCount(blockchains);
 
-  const showCategory = activeCategoriesCount !== 1;
+  const showCategory = !props.hideCategory && activeCategoriesCount !== 1;
 
   return (
     <Layout
@@ -66,15 +68,20 @@ export function SelectBlockchainPage(props: PropTypes) {
 
         <BlockchainList
           list={blockchains}
+          showTitle={type !== 'custom-token'}
           searchedFor={searchedFor}
           blockchainCategory={blockchainCategory}
           onChange={(blockchain) => {
-            if (type === 'source') {
-              setFromBlockchain(blockchain);
+            if (type === 'custom-token') {
+              navigate(`..?blockchain=${blockchain.name}`, { replace: true });
             } else {
-              setToBlockchain(blockchain);
+              if (type === 'source') {
+                setFromBlockchain(blockchain);
+              } else {
+                setToBlockchain(blockchain);
+              }
+              navigateBack();
             }
-            navigateBack();
           }}
         />
       </PageContainer>
