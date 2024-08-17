@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-11 16:10\n"
+"PO-Revision-Date: 2024-08-17 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,110 @@ msgstr ""
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+msgid "via"
+msgstr "via"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Dit token verschijnt niet op de actieve tokenlijsten. Zorg ervoor dat dit het token is dat je wilt verhandelen."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:88
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:163
+msgid "Import"
+msgstr "Importeren"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/pages/CustomTokensPage.tsx:90
+msgid "Custom Tokens"
+msgstr "Aangepaste Tokens"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+msgid "Duplicate Token"
+msgstr "Duplicate Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+msgid "The address you entered is duplicate, please enter a new address."
+msgstr "Het opgegeven adres is dubbel, voer een nieuw adres in."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+msgid "Token Already Exists"
+msgstr "Token bestaat al"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+msgid "There's no need to add this token again because it already exists and is supported by us."
+msgstr "Het is niet nodig om dit token opnieuw toe te voegen omdat het al bestaat en door ons wordt ondersteund."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+msgid "Token Not Found"
+msgstr "Token niet gevonden"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
+msgid "Network Error"
+msgstr "Netwerk fout"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
+#: widget/embedded/src/pages/CustomTokensPage.tsx:147
+msgid "Add Custom Token"
+msgstr "Aangepaste Token toevoegen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+msgid "Select chain"
+msgstr "Selecteer keten"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+msgid "Enter Address"
+msgstr "Voer adres in"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+msgid "Enter token address"
+msgstr "Voer token adres in"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:175
+msgid "Failed Network, Please retry."
+msgstr "Mislukt netwerk, probeer het opnieuw."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:188
+msgid "Add another custom token"
+msgstr "Nog een aangepast token toevoegen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:133
+msgid "No custom tokens"
+msgstr "Geen aangepaste tokens"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+msgid "press the button to add your custom token"
+msgstr "druk op de knop om je eigen token toe te voegen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:156
+msgid "Delete Custom Token"
+msgstr "Aangepaste token verwijderen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+msgid "Are you sure you want to Delete this Token?"
+msgstr "Weet u zeker dat u deze token wilt verwijderen?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -120,7 +224,7 @@ msgid "Connecting ..."
 msgstr "Verbinden ..."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:121
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:123
 msgid "Enter {blockchainName} address"
 msgstr "Voer {blockchainName} adres in"
 
@@ -175,25 +279,25 @@ msgid "Something went wrong. Please refresh the app."
 msgstr "Er is iets fout gegaan. Vernieuw de app."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:127
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
+#: widget/embedded/src/components/TokenList/TokenList.tsx:285
 #: widget/embedded/src/pages/HistoryPage.tsx:185
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
 msgstr "Geen resultaten gevonden"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:128
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
+#: widget/embedded/src/components/TokenList/TokenList.tsx:286
 #: widget/embedded/src/pages/HistoryPage.tsx:192
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
 msgstr "Probeer andere trefwoorden te gebruiken"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:71
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:40
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 msgid "Select Blockchain"
 msgstr "Selecteer Blockchain"
 
@@ -258,12 +362,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Je moet een {blockchainName} portemonnee verbinden."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:105
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:107
 msgid "Send to a different address"
 msgstr "Stuur naar een ander adres"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:139
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:141
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adres {destination} komt niet overeen met het blockchainadrespatroon."
 
@@ -359,6 +463,7 @@ msgstr "Swaps stappen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:187
 msgid "Retry"
 msgstr "Opnieuw"
 
@@ -673,6 +778,7 @@ msgstr "Ja, annuleren"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:26
+#: widget/embedded/src/pages/CustomTokensPage.tsx:177
 msgid "No, Continue"
 msgstr "Nee, ga verder"
 
@@ -688,6 +794,7 @@ msgstr "Weet u zeker dat u deze swap wilt verwijderen?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:22
+#: widget/embedded/src/pages/CustomTokensPage.tsx:168
 msgid "Yes, Delete it"
 msgstr "Ja, verwijder het"
 
@@ -708,7 +815,7 @@ msgid "Network Changed"
 msgstr "Netwerk gewijzigd"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:261
+#: widget/embedded/src/components/TokenList/TokenList.tsx:270
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
 msgid "Select Token"
 msgstr "Selecteer Token"
@@ -876,55 +983,55 @@ msgid "To"
 msgstr "tot"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:48
+#: widget/embedded/src/containers/Settings/Lists.tsx:49
 msgid "Light"
 msgstr "Licht"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:57
+#: widget/embedded/src/containers/Settings/Lists.tsx:58
 msgid "Dark"
 msgstr "Donker"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:66
+#: widget/embedded/src/containers/Settings/Lists.tsx:67
 msgid "Auto"
 msgstr "Automatisch"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:137
+#: widget/embedded/src/containers/Settings/Lists.tsx:140
 msgid "Loading failed"
 msgstr "Laden mislukt"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:153
+#: widget/embedded/src/containers/Settings/Lists.tsx:156
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Bridges"
 msgstr "Bruggen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:171
+#: widget/embedded/src/containers/Settings/Lists.tsx:174
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Exchanges"
 msgstr "Uitwisselingen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:192
+#: widget/embedded/src/containers/Settings/Lists.tsx:214
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "Taal"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:213
+#: widget/embedded/src/containers/Settings/Lists.tsx:235
 msgid "Infinite approval"
 msgstr "Oneindige goedkeuring"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:223
+#: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Het inschakelen van de 'Oneindige goedkeuring' modus verleent onbeperkte toegang tot slimme contracten van DEXes/Bridges, waardoor ze het goedgekeurde token bedrag zonder beperkingen kunnen gebruiken."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:243
+#: widget/embedded/src/containers/Settings/Lists.tsx:265
 msgid "Theme"
 msgstr "Thema"
 
@@ -974,7 +1081,7 @@ msgid "Search {sourceType}"
 msgstr "Zoek {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
 msgid "Search Blockchain"
 msgstr "Zoek Blockchain"
 
@@ -994,6 +1101,7 @@ msgid "Swap {type}"
 msgstr "Wissel {type}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:102
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
 msgstr "Zoek Token"
@@ -1035,22 +1143,22 @@ msgid "This year"
 msgstr "Dit jaar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:130
+#: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
 msgstr "Vereist: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:143
+#: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
 msgstr "Vereist: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:158
+#: widget/embedded/src/utils/swap.ts:157
 msgid "Required: <= {max} {symbol}"
 msgstr "Vereist: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:171
+#: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
 msgstr "Vereist: < {max} {symbol}"
 
@@ -1203,12 +1311,12 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "u moet een juiste status doorgeven aan Wallet."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:56
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
 msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:64
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
 msgid "Max"
 msgstr "Max."
 
