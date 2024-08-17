@@ -1,3 +1,12 @@
+# [0.38.0](https://github.com/rango-exchange/rango-client/compare/ui@0.37.0...ui@0.38.0) (2024-08-17)
+
+
+### Features
+
+* add functionality to support custom tokens ([a1aa0af](https://github.com/rango-exchange/rango-client/commit/a1aa0afed98f164488a3caffaaff2fd060ab8b3d))
+
+
+
 # [0.37.0](https://github.com/rango-exchange/rango-client/compare/ui@0.36.1...ui@0.37.0) (2024-08-11)
 
 
