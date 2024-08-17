@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -6,4 +6,10 @@ export const Container = styled('div', {
   alignItems: 'center',
   flexDirection: 'column',
   textAlign: 'center',
+  '& .not-found-description': {
+    color: '$neutral700',
+    [`.${darkTheme} &`]: {
+      color: '$neutral900',
+    },
+  },
 });

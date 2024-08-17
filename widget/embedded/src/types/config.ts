@@ -139,7 +139,8 @@ export type Features = Partial<
     | 'language'
     | 'connectWalletButton'
     | 'notification'
-    | 'liquiditySource',
+    | 'liquiditySource'
+    | 'customTokens',
     'visible' | 'hidden'
   >
 > &
@@ -198,7 +199,9 @@ export type TrezorManifest = {
  *   - 'liquiditySource': Visibility state for liquidity source.
  *   - 'connectWalletButton': Visibility state for the wallet connect icon.
  *   - 'language': Visibility state for the language.
+ *   - 'customTokens': Visibility state for the custom tokens.
  *   - 'experimentalRoute': Enablement state for the experimental route.
+ *
  * @property {WidgetVariant} variant
  *   If it is expanded, multiple routes will show up on the home page;
  *   If it is full-expanded, multiple routes will show up on the home page with full routes;

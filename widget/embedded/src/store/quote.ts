@@ -21,7 +21,10 @@ import {
   WidgetEvents,
 } from '../types';
 import { isPositiveNumber } from '../utils/numbers';
-import { getQuoteToTokenUsdPrice } from '../utils/quote';
+import {
+  getQuoteFromTokenUsdPrice,
+  getQuoteToTokenUsdPrice,
+} from '../utils/quote';
 import { calcOutputUsdValue } from '../utils/swap';
 
 import createSelectors from './selectors';
@@ -125,6 +128,8 @@ export const useQuoteStore = createSelectors(
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
+
+          let inputUsdValue = state.inputUsdValue;
           if (!isPositiveNumber(state.inputAmount)) {
             return {};
           }
@@ -132,8 +137,12 @@ export const useQuoteStore = createSelectors(
             outputAmount = !!quote?.outputAmount
               ? new BigNumber(quote?.outputAmount)
               : null;
+            inputUsdValue = calcOutputUsdValue(
+              state.inputAmount,
+              getQuoteFromTokenUsdPrice(quote) || state.fromToken?.usdPrice
+            );
             outputUsdValue = calcOutputUsdValue(
-              quote?.outputAmount,
+              quote.outputAmount,
               getQuoteToTokenUsdPrice(quote) || state.toToken?.usdPrice
             );
           }
@@ -142,6 +151,7 @@ export const useQuoteStore = createSelectors(
             ...(!!quote && {
               outputAmount,
               outputUsdValue,
+              inputUsdValue,
             }),
           };
         }),

@@ -1,21 +1,35 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
+import type { SettingsSlice } from './settings';
 import type { CachedEntries } from '../../services/cacheService';
 import type { Balance, Blockchain, TokenHash } from '../../types';
-import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
+import {
+  type Asset,
+  type BlockchainMeta,
+  type SwapperMeta,
+  type Token,
+} from 'rango-sdk';
+
+import { ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS } from '../../constants/customTokens';
 import { cacheService } from '../../services/cacheService';
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
-import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
+import {
+  addCustomTokensToSupportedTokens,
+  sortLiquiditySourcesByGroupTitle,
+} from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
-import { matchTokensFromConfigWithMeta } from '../utils';
+import {
+  getSupportedBlockchainsFromConfig,
+  matchTokensFromConfigWithMeta,
+} from '../utils';
 
 type BlockchainOptions = {
-  type?: 'source' | 'destination';
+  type?: 'source' | 'destination' | 'custom-token';
 };
 
 type TokenOptions = {
@@ -45,7 +59,7 @@ export interface DataSlice {
 }
 
 export const createDataSlice: StateCreator<
-  DataSlice & ConfigSlice,
+  DataSlice & ConfigSlice & SettingsSlice,
   [],
   [],
   DataSlice
@@ -67,8 +81,30 @@ export const createDataSlice: StateCreator<
     if (!options || !options?.type) {
       return blockchainsFromState;
     }
-
     const config = get().config;
+
+    if (options.type === 'custom-token') {
+      const supportedBlockchainsFromConfig = getSupportedBlockchainsFromConfig({
+        config,
+      });
+
+      let supportedBlockchains: BlockchainMeta[] = blockchainsFromState;
+
+      /*
+       * Supported blockchains can be configured and be limited.
+       * In this case, we only keep those active blockchains which exist in config.
+       */
+      if (supportedBlockchainsFromConfig.length > 0) {
+        supportedBlockchains = supportedBlockchains.filter((blockchain) =>
+          supportedBlockchainsFromConfig.includes(blockchain.name)
+        );
+      }
+
+      return supportedBlockchains.filter((blockchain) =>
+        ACTIVE_BLOCKCHAINS_FOR_CUSTOM_TOKENS.includes(blockchain.type)
+      );
+    }
+
     const supportedBlockchainsFromConfig =
       (options.type === 'source'
         ? config.from?.blockchains
@@ -88,7 +124,12 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const { _tokensMapByTokenHash, _tokensMapByBlockchainName, config } = get();
+    const {
+      _tokensMapByTokenHash,
+      _tokensMapByBlockchainName,
+      config,
+      _customTokens,
+    } = get();
     const tokensFromState = Array.from(_tokensMapByTokenHash.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
     if (!options || !options.type) {
@@ -116,6 +157,12 @@ export const createDataSlice: StateCreator<
       });
       cacheService.set(cacheKey, supportedTokens);
     }
+
+    supportedTokens = addCustomTokensToSupportedTokens(
+      supportedTokens,
+      _customTokens,
+      config.features
+    );
 
     const blockchains = get().blockchains({
       type: options.type,
@@ -217,8 +264,14 @@ export const createDataSlice: StateCreator<
   },
   findToken: (asset) => {
     const tokensMapByHashToken = get()._tokensMapByTokenHash;
+    const customTokens = get().customTokens();
     const tokenHash = createTokenHash(asset);
-    const token = tokensMapByHashToken.get(tokenHash);
+    let token = tokensMapByHashToken.get(tokenHash);
+    if (!token) {
+      token = customTokens.find(
+        (customToken) => createTokenHash(customToken) === tokenHash
+      );
+    }
     return token;
   },
   isTokenPinned: (token, type) => {
