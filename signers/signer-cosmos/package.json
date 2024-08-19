@@ -18,15 +18,14 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
-    "postinstall": "patch-package"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.31.0",
     "@keplr-wallet/cosmos": "^0.9.12",
     "cosmjs-types": "^0.5.2",
-    "long": "^5.2.1",
+    "long": "^5.2.3",
     "rango-types": "^0.1.69"
   },
   "devDependencies": {
