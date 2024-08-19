@@ -1,7 +1,8 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
   "extends": "../../tsconfig.bundler.json",
-  "include": ["src", "../../global-wallets-env.d.ts"],
+  "include": ["src"],
+  "files": ["../../global-wallets-env.d.ts"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "./src",
