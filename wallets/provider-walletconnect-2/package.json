@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2 --external-all-except @walletconnect/modal",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -31,7 +31,6 @@
     "@rango-dev/wallets-shared": "^0.36.0",
     "@solana/web3.js": "^1.91.4",
     "@walletconnect/encoding": "^1.0.2",
-    "@walletconnect/modal": "^2.6.2",
     "@walletconnect/sign-client": "^2.11.2",
     "@walletconnect/utils": "^2.11.2",
     "bs58": "^5.0.0",
@@ -40,7 +39,8 @@
     "rango-types": "^0.1.69"
   },
   "devDependencies": {
-    "@walletconnect/types": "^2.11.2"
+    "@walletconnect/types": "^2.11.2",
+    "@walletconnect/modal": "^2.6.2"
   },
   "publishConfig": {
     "access": "public"
