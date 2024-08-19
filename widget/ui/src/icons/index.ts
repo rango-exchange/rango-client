@@ -62,6 +62,7 @@ export { default as RouteIcon } from './Route.js';
 export { default as ScoreIcon } from './Score.js';
 export { default as SearchIcon } from './Search.js';
 export { default as ShareIcon } from './Share.js';
+export { default as SlippageIcon } from './Slippage.js';
 export { default as StatsIcon } from './Stats.js';
 export { default as SupportIcon } from './Support.js';
 export { default as SwapIcon } from './Swap.js';
