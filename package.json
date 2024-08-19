@@ -55,7 +55,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "commitlint": "commitlint --edit",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && yarn workspace @rango-dev/signer-cosmos run patch-package"
   },
   "dependencies": {
     "husky": "^8.0.3",
