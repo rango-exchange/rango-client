@@ -14,7 +14,7 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { useWallets } from '@rango-dev/wallets-react';
 import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
