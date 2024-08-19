@@ -20,15 +20,30 @@ async function run() {
     { name: 'inputs', type: String },
     // Comma separated list. https://esbuild.github.io/api/#external
     { name: 'external', type: String },
+    // When you want to make all the packages external, and only include some specific packages as your library bundle, this will be usefull.
+    // Comma separated.
+    { name: 'external-all-except', type: String },
   ];
-  const { path, inputs, external } = commandLineArgs(optionDefinitions);
+
+  const {
+    path,
+    inputs,
+    external,
+    'external-all-except': externalAllExcept,
+  } = commandLineArgs(optionDefinitions);
 
   if (!path) {
     throw new Error('You need to specify package name.');
   }
 
+  if (!!external && !!externalAllExcept)
+    throw new Error(
+      'You should only use one of `external` or `external-all-except` at the sametime.'
+    );
+
   const pkgPath = `${root}/${path}`;
-  const packageName = packageNameWithoutScope(packageJson(path).name);
+  const pkg = packageJson(path);
+  const packageName = packageNameWithoutScope(pkg.name);
 
   let entryPoints = [];
   if (!inputs) {
@@ -39,13 +54,22 @@ async function run() {
 
   // read more: https://esbuild.github.io/api/#packages
   let externalPackages = {};
-  if (!external) {
+  if (!!external) {
     externalPackages = {
-      packages: 'external',
+      external: external.split(','),
+    };
+  } else if (!!externalAllExcept) {
+    const excludedPackages = externalAllExcept.split(',');
+    const dependencies = Object.keys(pkg.dependencies).filter(
+      (name) => !excludedPackages.includes(name)
+    );
+
+    externalPackages = {
+      external: dependencies,
     };
   } else {
     externalPackages = {
-      external: external.split(','),
+      packages: 'external',
     };
   }
 
