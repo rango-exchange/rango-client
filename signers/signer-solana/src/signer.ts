@@ -1,6 +1,7 @@
 import type { SolanaExternalProvider } from './utils/types.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
+import base58 from 'bs58';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { executeSolanaTransaction } from './utils/main.js';
@@ -21,7 +22,7 @@ export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
           message: encodedMessage,
         },
       });
-      return Buffer.from(signature).toString('base64');
+      return base58.encode(signature);
     } catch (error) {
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
     }
