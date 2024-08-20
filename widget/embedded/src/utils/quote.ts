@@ -25,12 +25,12 @@ import BigNumber from 'bignumber.js';
 import { HIGH_PRIORITY_TAGS } from '../constants/quote';
 import { HIGHT_PRICE_IMPACT, LOW_PRICE_IMPACT } from '../constants/routing';
 import { HIGH_SLIPPAGE } from '../constants/swapSettings';
-import { getUsdValue } from '../store/quote';
 import { QuoteWarningType } from '../types';
 
 import { areEqual } from './common';
 import { createTokenHash, findBlockchain } from './meta';
 import {
+  calcOutputUsdValue,
   checkSlippageWarnings,
   getMinRequiredSlippage,
   getPercentageChange,
@@ -44,6 +44,13 @@ export function getQuoteToTokenUsdPrice(
 ): number | null | undefined {
   const swaps = quote?.swaps || [];
   return swaps[swaps.length - 1].to.usdPrice;
+}
+
+export function getQuoteFromTokenUsdPrice(
+  quote: SelectedQuote | null
+): number | null | undefined {
+  const swaps = quote?.swaps || [];
+  return swaps[0].from.usdPrice;
 }
 
 export function isNumberOfSwapsChanged(
@@ -198,8 +205,14 @@ export function generateQuoteWarnings(
   }
 ): QuoteWarning | null {
   const { fromToken, toToken, findToken, userSlippage } = params;
-  const inputUsdValue = getUsdValue(fromToken, quote.requestAmount);
-  const outputUsdValue = getUsdValue(toToken, quote?.outputAmount ?? '');
+  const inputUsdValue = calcOutputUsdValue(
+    quote.requestAmount,
+    getQuoteFromTokenUsdPrice(quote) || fromToken?.usdPrice
+  );
+  const outputUsdValue = calcOutputUsdValue(
+    quote.outputAmount,
+    getQuoteToTokenUsdPrice(quote) || toToken?.usdPrice
+  );
 
   if (!!quote && inputUsdValue && outputUsdValue) {
     const priceImpact = getPriceImpact(

@@ -4,7 +4,9 @@ import { useRoutes } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
 import { useSyncUrlAndStore } from '../hooks/useSyncUrlAndStore';
+import { AddCustomTokenPage } from '../pages/AddCustomTokenPage';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
+import { CustomTokensPage } from '../pages/CustomTokensPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LanguagePage } from '../pages/LanguagePage';
@@ -80,8 +82,36 @@ export function AppRoutes() {
           path: navigationRoutes.bridges,
           element: <LiquiditySourcePage sourceType="Bridges" />,
         },
+        {
+          path: navigationRoutes.customTokens,
+          children: [
+            {
+              index: true,
+              element: <CustomTokensPage />,
+            },
+            {
+              path: navigationRoutes.addCustomTokens,
+              children: [
+                {
+                  index: true,
+                  element: <AddCustomTokenPage />,
+                },
+                {
+                  path: navigationRoutes.blockchains,
+                  element: (
+                    <SelectBlockchainPage
+                      hideCategory={true}
+                      type="custom-token"
+                    />
+                  ),
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
+
     {
       path: navigationRoutes.swaps,
       children: [

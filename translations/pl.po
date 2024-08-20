@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-11 16:10\n"
+"PO-Revision-Date: 2024-08-17 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -17,6 +17,110 @@ msgstr ""
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+msgid "via"
+msgstr "przez"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Ten token nie pojawia się na listach aktywnych tokenów. Upewnij się, że to jest token, który chcesz wymienić."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:88
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:163
+msgid "Import"
+msgstr "Importuj"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/pages/CustomTokensPage.tsx:90
+msgid "Custom Tokens"
+msgstr "Niestandardowe tokeny"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+msgid "Duplicate Token"
+msgstr "Duplicate Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+msgid "The address you entered is duplicate, please enter a new address."
+msgstr "Podany adres jest zduplikowany, wprowadź nowy adres."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+msgid "Token Already Exists"
+msgstr "Token już istnieje"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+msgid "There's no need to add this token again because it already exists and is supported by us."
+msgstr "Nie ma potrzeby dodawania tego tokenu ponownie, ponieważ już istnieje i jest obsługiwany przez nas."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+msgid "Token Not Found"
+msgstr "Token nie znaleziony"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
+msgid "Network Error"
+msgstr "Błąd sieci"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
+#: widget/embedded/src/pages/CustomTokensPage.tsx:147
+msgid "Add Custom Token"
+msgstr "Dodaj własny token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+msgid "Select chain"
+msgstr "Wybierz łańcuch"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+msgid "Enter Address"
+msgstr "Wprowadź adres"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+msgid "Enter token address"
+msgstr "Wprowadź adres tokenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:175
+msgid "Failed Network, Please retry."
+msgstr "Nieudana sieć, spróbuj ponownie."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:188
+msgid "Add another custom token"
+msgstr "Dodaj kolejny niestandardowy token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:133
+msgid "No custom tokens"
+msgstr "Brak niestandardowych tokenów"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+msgid "press the button to add your custom token"
+msgstr "naciśnij przycisk, aby dodać własny token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:156
+msgid "Delete Custom Token"
+msgstr "Usuń własny token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+msgid "Are you sure you want to Delete this Token?"
+msgstr "Czy na pewno chcesz usunąć ten token?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -120,7 +224,7 @@ msgid "Connecting ..."
 msgstr "Łączenie..."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:121
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:123
 msgid "Enter {blockchainName} address"
 msgstr "Wprowadź adres {blockchainName}"
 
@@ -175,25 +279,25 @@ msgid "Something went wrong. Please refresh the app."
 msgstr "Coś poszło nie tak. Proszę odświeżyć aplikację."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:127
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
+#: widget/embedded/src/components/TokenList/TokenList.tsx:285
 #: widget/embedded/src/pages/HistoryPage.tsx:185
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
 msgstr "Nie znaleziono wyników"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:128
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
+#: widget/embedded/src/components/TokenList/TokenList.tsx:286
 #: widget/embedded/src/pages/HistoryPage.tsx:192
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
 msgstr "Spróbuj użyć różnych słów kluczowych"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:71
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:40
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 msgid "Select Blockchain"
 msgstr "Wybierz łańcuch bloków"
 
@@ -258,12 +362,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Musisz połączyć portfel {blockchainName}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:105
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:107
 msgid "Send to a different address"
 msgstr "Wyślij na inny adres"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:139
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:141
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adres {destination} nie pasuje do wzoru adresu blockchain."
 
@@ -359,6 +463,7 @@ msgstr "Etapy swapów"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:187
 msgid "Retry"
 msgstr "Ponów próbę"
 
@@ -673,6 +778,7 @@ msgstr "Tak, anuluj"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:26
+#: widget/embedded/src/pages/CustomTokensPage.tsx:177
 msgid "No, Continue"
 msgstr "Nie, Kontynuuj"
 
@@ -688,6 +794,7 @@ msgstr "Czy na pewno chcesz usunąć tę swap?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:22
+#: widget/embedded/src/pages/CustomTokensPage.tsx:168
 msgid "Yes, Delete it"
 msgstr "Tak, usuń"
 
@@ -708,7 +815,7 @@ msgid "Network Changed"
 msgstr "Sieć zmieniona"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:261
+#: widget/embedded/src/components/TokenList/TokenList.tsx:270
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
 msgid "Select Token"
 msgstr "Wybierz token"
@@ -876,55 +983,55 @@ msgid "To"
 msgstr "Do"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:48
+#: widget/embedded/src/containers/Settings/Lists.tsx:49
 msgid "Light"
 msgstr "Światło"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:57
+#: widget/embedded/src/containers/Settings/Lists.tsx:58
 msgid "Dark"
 msgstr "Ciemny"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:66
+#: widget/embedded/src/containers/Settings/Lists.tsx:67
 msgid "Auto"
 msgstr "Auto"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:137
+#: widget/embedded/src/containers/Settings/Lists.tsx:140
 msgid "Loading failed"
 msgstr "Ładowanie nie powiodło się"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:153
+#: widget/embedded/src/containers/Settings/Lists.tsx:156
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Bridges"
 msgstr "Mosty"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:171
+#: widget/embedded/src/containers/Settings/Lists.tsx:174
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Exchanges"
 msgstr "Wymiana"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:192
+#: widget/embedded/src/containers/Settings/Lists.tsx:214
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "Język"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:213
+#: widget/embedded/src/containers/Settings/Lists.tsx:235
 msgid "Infinite approval"
 msgstr "Nieskończone zatwierdzenie"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:223
+#: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Włączenie trybu 'Nieskończone zatwierdzenia' zapewnia nieograniczony dostęp do inteligentnych kontraktów DEX/mostów, umożliwiając im wykorzystanie zatwierdzonej ilości tokenów bez ograniczeń."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:243
+#: widget/embedded/src/containers/Settings/Lists.tsx:265
 msgid "Theme"
 msgstr "Motyw"
 
@@ -974,7 +1081,7 @@ msgid "Search {sourceType}"
 msgstr "Szukaj {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
 msgid "Search Blockchain"
 msgstr "Szukaj łańcucha bloków"
 
@@ -994,6 +1101,7 @@ msgid "Swap {type}"
 msgstr "Zamień {type}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:102
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
 msgstr "Token wyszukiwania"
@@ -1035,22 +1143,22 @@ msgid "This year"
 msgstr "W tym roku"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:130
+#: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
 msgstr "Wymagane: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:143
+#: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
 msgstr "Wymagane: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:158
+#: widget/embedded/src/utils/swap.ts:157
 msgid "Required: <= {max} {symbol}"
 msgstr "Wymagane: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:171
+#: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
 msgstr "Wymagane: < {max} {symbol}"
 
@@ -1203,12 +1311,12 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "musisz przekazać poprawny stan Wallet."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:56
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
 msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:64
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
 msgid "Max"
 msgstr "Maks."
 

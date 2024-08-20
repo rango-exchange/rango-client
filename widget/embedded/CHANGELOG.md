@@ -1,3 +1,16 @@
+## [0.32.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.32.0...widget-embedded@0.32.1) (2024-08-17)
+
+
+
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.31.0...widget-embedded@0.32.0) (2024-08-17)
+
+
+### Features
+
+* add functionality to support custom tokens ([a1aa0af](https://github.com/rango-exchange/rango-client/commit/a1aa0afed98f164488a3caffaaff2fd060ab8b3d))
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.30.1...widget-embedded@0.31.0) (2024-08-11)
 
 
