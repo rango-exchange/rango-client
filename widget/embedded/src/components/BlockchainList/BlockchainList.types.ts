@@ -5,4 +5,5 @@ export interface PropTypes {
   searchedFor: string;
   blockchainCategory: string;
   onChange: (blockchain: BlockchainMeta) => void;
+  showTitle?: boolean;
 }
