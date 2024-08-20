@@ -63,6 +63,7 @@ import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { useStatefulConnect } from './hooks/useStatefulConnect';
 import { useWalletList } from './hooks/useWalletList';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
 import { widgetEventEmitter } from './services/eventEmitter';
@@ -119,6 +120,7 @@ export {
   WidgetProvider,
   useWidget,
   useWallets,
+  useStatefulConnect,
   /**
    * @deprecated Use `widgetEventEmitter` instead. This hook will be removed in future versions.
    */
