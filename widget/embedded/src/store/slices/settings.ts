@@ -1,6 +1,7 @@
 import type { ConfigSlice } from './config';
+import type { DataSlice } from './data';
 import type { WidgetConfig } from '../../types';
-import type { SwapperMeta } from 'rango-sdk';
+import type { SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import { type Language } from '@rango-dev/ui';
@@ -10,6 +11,7 @@ import { DEFAULT_LANGUAGE } from '../../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../../constants/swapSettings';
 import { removeDuplicateFrom } from '../../utils/common';
 import { isFeatureHidden } from '../../utils/settings';
+import { getSupportedBlockchainsFromConfig } from '../utils';
 
 export type ThemeMode = 'auto' | 'dark' | 'light';
 
@@ -25,6 +27,7 @@ export interface SettingsSlice {
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
+  _customTokens: Token[];
 
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
@@ -43,10 +46,13 @@ export interface SettingsSlice {
   ) => void;
   addPreferredBlockchain: (blockchain: string) => void;
   updateSettings: (config: WidgetConfig) => void;
+  setCustomToken: (token: Token) => void;
+  deleteCustomToken: (token: Token) => void;
+  customTokens: () => Token[];
 }
 
 export const createSettingsSlice: StateCreator<
-  SettingsSlice & ConfigSlice,
+  SettingsSlice & DataSlice & ConfigSlice,
   [],
   [],
   SettingsSlice
@@ -61,6 +67,7 @@ export const createSettingsSlice: StateCreator<
   affiliateRef: null,
   affiliatePercent: null,
   affiliateWallets: null,
+  _customTokens: [],
 
   addPreferredBlockchain: (blockchain) => {
     const currentPreferredBlockchains = get().preferredBlockchains;
@@ -93,6 +100,7 @@ export const createSettingsSlice: StateCreator<
     set(() => ({
       slippage: slippage,
     })),
+
   setCustomSlippage: (customSlippage) =>
     set(() => ({
       customSlippage: customSlippage,
@@ -131,6 +139,7 @@ export const createSettingsSlice: StateCreator<
     set((state) => ({
       infiniteApprove: !state.infiniteApprove,
     })),
+
   toggleLiquiditySource: (name) =>
     set((state) => {
       if (state.disabledLiquiditySources.includes(name)) {
@@ -176,5 +185,29 @@ export const createSettingsSlice: StateCreator<
         language: nextConfig.language || DEFAULT_LANGUAGE,
       }),
     });
+  },
+  setCustomToken: (token) =>
+    set((state) => ({
+      _customTokens: [token, ...state._customTokens],
+    })),
+  deleteCustomToken: (token) =>
+    set((state) => ({
+      _customTokens: state._customTokens.filter(
+        (customToken) => customToken.address !== token.address
+      ),
+    })),
+  customTokens: () => {
+    const config = get().config;
+
+    const customTokens = get()._customTokens;
+    const supportedBlockchainsFromConfig = getSupportedBlockchainsFromConfig({
+      config,
+    });
+
+    return !supportedBlockchainsFromConfig.length
+      ? customTokens
+      : customTokens.filter((token) =>
+          supportedBlockchainsFromConfig.includes(token.blockchain)
+        );
   },
 });

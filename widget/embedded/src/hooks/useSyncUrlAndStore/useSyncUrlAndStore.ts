@@ -54,6 +54,8 @@ export function useSyncUrlAndStore() {
     const clientUrl = searchParams.get(SearchParams.CLIENT_URL);
     const liquiditySources = searchParams.get(SearchParams.LIQUIDITY_SOURCES);
 
+    const blockchain = searchParams.get(SearchParams.BLOCKCHAIN);
+
     return {
       fromAmount,
       fromBlockchain,
@@ -64,6 +66,7 @@ export function useSyncUrlAndStore() {
       clientUrl,
       liquiditySources,
       utmQueryParams,
+      blockchain,
     };
   };
 
@@ -79,7 +82,8 @@ export function useSyncUrlAndStore() {
   };
 
   useEffect(() => {
-    const { autoConnect, clientUrl, utmQueryParams } = getUrlSearchParams();
+    const { autoConnect, clientUrl, utmQueryParams, blockchain } =
+      getUrlSearchParams();
     if (isInRouterContext && fetchMetaStatus === 'success') {
       updateUrlSearchParams({
         [SearchParams.FROM_BLOCKCHAIN]: fromBlockchain?.name,
@@ -89,6 +93,7 @@ export function useSyncUrlAndStore() {
         [SearchParams.FROM_AMOUNT]: inputAmount,
         [SearchParams.AUTO_CONNECT]: autoConnect ?? undefined,
         [SearchParams.CLIENT_URL]: clientUrl ?? undefined,
+        [SearchParams.BLOCKCHAIN]: blockchain ?? undefined,
         [SearchParams.LIQUIDITY_SOURCES]: campaignMode
           ? liquiditySourcesParamsRef.current
           : undefined,

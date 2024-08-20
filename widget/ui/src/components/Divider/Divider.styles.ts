@@ -15,6 +15,7 @@ export const DividerContainer = styled('div', {
       24: {},
       30: {},
       32: {},
+      36: {},
       40: {},
     },
     direction: {
@@ -168,6 +169,20 @@ export const DividerContainer = styled('div', {
       direction: 'horizontal',
       css: {
         width: '$32',
+      },
+    },
+    {
+      size: 36,
+      direction: 'vertical',
+      css: {
+        height: '$36',
+      },
+    },
+    {
+      size: 36,
+      direction: 'horizontal',
+      css: {
+        width: '$36',
       },
     },
     {

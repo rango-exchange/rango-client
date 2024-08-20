@@ -86,7 +86,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     };
   });
 
-  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
   };
@@ -120,7 +120,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           placeholder={i18n.t('Search {sourceType}', {
             sourceType: types[sourceType],
           })}
-          onChange={searchHandler}
+          onChange={handleSearch}
         />
         {fetchStatus === 'loading' && <LoadingLiquiditySourceList />}
 
