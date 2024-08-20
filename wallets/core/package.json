@@ -18,7 +18,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "legacy"
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/legacy/mod.ts",
