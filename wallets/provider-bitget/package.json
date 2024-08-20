@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitget",
-  "version": "0.33.1-next.2",
+  "version": "0.33.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

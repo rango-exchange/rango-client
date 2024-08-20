@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.36.1-next.4",
+  "version": "0.36.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/provider-argentx": "^0.37.1-next.2",
-    "@rango-dev/provider-bitget": "^0.33.1-next.2",
+    "@rango-dev/provider-bitget": "^0.33.1-next.3",
     "@rango-dev/provider-braavos": "^0.30.1-next.2",
     "@rango-dev/provider-brave": "^0.37.1-next.3",
     "@rango-dev/provider-clover": "^0.37.1-next.3",
@@ -50,7 +50,7 @@
     "@rango-dev/provider-tokenpocket": "^0.36.1-next.2",
     "@rango-dev/provider-tomo": "^0.3.1-next.2",
     "@rango-dev/provider-trezor": "^0.3.1-next.2",
-    "@rango-dev/provider-tron-link": "^0.36.1-next.2",
+    "@rango-dev/provider-tron-link": "^0.36.1-next.3",
     "@rango-dev/provider-trustwallet": "^0.36.1-next.2",
     "@rango-dev/provider-walletconnect-2": "^0.29.1-next.4",
     "@rango-dev/provider-xdefi": "^0.36.1-next.4",
