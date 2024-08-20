@@ -35,6 +35,7 @@ export function createAppStore(initialData?: WidgetConfig) {
         skipHydration: true,
         partialize: (state) => {
           return {
+            _customTokens: state._customTokens,
             theme: state.theme,
             language: state.language,
             affiliatePercent: state.affiliatePercent,

@@ -4,6 +4,8 @@ export const navigationRoutes = {
   toSwap: 'to-swap',
   blockchains: 'blockchains',
   settings: 'settings',
+  customTokens: 'custom-tokens',
+  addCustomTokens: 'add-custom-tokens',
   liquiditySources: 'liquidity-sources',
   bridges: 'bridges',
   exchanges: 'exchanges',

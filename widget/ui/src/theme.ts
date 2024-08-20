@@ -88,6 +88,7 @@ export const theme = {
     24: '24px',
     28: '28px',
     32: '32px',
+    36: '36px',
   },
 
   radii: {
