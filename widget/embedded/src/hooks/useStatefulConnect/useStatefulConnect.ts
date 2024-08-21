@@ -203,7 +203,7 @@ export function useStatefulConnect(): UseStatefulConnect {
 
   const handleDisconnect = async (type: WalletType): Promise<Result> => {
     const wallet = state(type);
-    if (wallet.connected) {
+    if (wallet.connected || wallet.connecting) {
       await disconnect(type);
       return { status: ResultStatus.Disconnected };
     }
