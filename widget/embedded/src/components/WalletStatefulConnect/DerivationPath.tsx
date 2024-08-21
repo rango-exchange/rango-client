@@ -27,6 +27,8 @@ import {
   InputsContainer,
 } from './DerivationPath.styles';
 
+const DEFAULT_DERIVATION_PATH_INDEX = '0';
+
 export function DerivationPath(props: PropTypes) {
   const { onConfirm } = props;
   const {
@@ -38,7 +40,9 @@ export function DerivationPath(props: PropTypes) {
   const [selectedDerivationPathId, setSelectedDerivationPathId] = useState<
     string | null
   >(null);
-  const [derivationPathIndex, setDerivationPathIndex] = useState('0');
+  const [derivationPathIndex, setDerivationPathIndex] = useState(
+    DEFAULT_DERIVATION_PATH_INDEX
+  );
 
   const isCustomOptionSelected =
     selectedDerivationPathId === CUSTOM_DERIVATION_PATH.id;
@@ -50,7 +54,21 @@ export function DerivationPath(props: PropTypes) {
       (derivationPath) => derivationPath.id === value
     );
 
+    console.log({ selectedDerivationPath });
+
     if (selectedDerivationPath) {
+      /*
+       * Custom mode accepts string, but other modes only accepts number,
+       * Here we are checking if user is on custom mode and trying to switch to another mode
+       * if it's an string we will keep it, if not we will reset the value to default
+       */
+      if (
+        selectedDerivationPathId === CUSTOM_DERIVATION_PATH.id &&
+        Number.isNaN(Number(derivationPathIndex))
+      ) {
+        setDerivationPathIndex(DEFAULT_DERIVATION_PATH_INDEX);
+      }
+
       setSelectedDerivationPathId(selectedDerivationPath.id);
     }
   };
@@ -75,6 +93,7 @@ export function DerivationPath(props: PropTypes) {
     );
   }, [selectedNamespace]);
 
+  console.log({ derivationPathIndex });
   return (
     <>
       <Divider size={20} />
