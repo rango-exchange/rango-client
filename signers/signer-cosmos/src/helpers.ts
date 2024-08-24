@@ -2,10 +2,6 @@ import type { AminoSignResponse } from '@cosmjs/launchpad';
 import type { Keplr, KeplrSignOptions } from '@keplr-wallet/types';
 import type { CosmosTransaction } from 'rango-types';
 
-import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
-import { SigningStargateClient } from '@cosmjs/stargate';
-import { cosmos } from '@keplr-wallet/cosmos';
-import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import Long from 'long';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -55,6 +51,8 @@ export const executeCosmosTransaction = async (
     }
 
     if (signType === 'AMINO') {
+      const { makeSignDoc, BroadcastMode } = await import('@cosmjs/launchpad');
+
       const signDoc = makeSignDoc(
         msgsWithoutType as any,
         fee as any,
@@ -81,7 +79,7 @@ export const executeCosmosTransaction = async (
       } catch (err) {
         throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
       }
-      const signedTx = getsignedTx(cosmosTx, signResponse);
+      const signedTx = await getsignedTx(cosmosTx, signResponse);
       const result = await cosmosProvider.sendTx(
         chainId,
         signedTx,
@@ -90,6 +88,11 @@ export const executeCosmosTransaction = async (
       return uint8ArrayToHex(result);
     } else if (signType === 'DIRECT') {
       const sendingSigner = cosmosProvider?.getOfflineSigner(chainId);
+      const { SigningStargateClient } = await import('@cosmjs/stargate');
+      const { MsgExecuteContract } = await import(
+        'cosmjs-types/cosmwasm/wasm/v1/tx.js'
+      );
+
       const sendingStargateClient =
         await SigningStargateClient?.connectWithSigner(
           rpcUrl,
@@ -133,7 +136,7 @@ export const executeCosmosTransaction = async (
   }
 };
 
-export function getsignedTx(
+export async function getsignedTx(
   cosmosTx: CosmosTransaction,
   signResponse: AminoSignResponse
 ) {
@@ -144,6 +147,8 @@ export function getsignedTx(
      * based on this link:
      * https://github.com/chainapsis/keplr-wallet/blob/40211c8dd75ccbdc4c868db9dc22599f4cb952e9/packages/stores/src/account/cosmos.ts#L508
      */
+
+    const { cosmos } = await import('@keplr-wallet/cosmos');
     signedTx = cosmos.tx.v1beta1.TxRaw.encode({
       bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
         messages: cosmosTx.data.protoMsgs.map((m) => ({

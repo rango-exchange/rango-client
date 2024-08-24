@@ -3,7 +3,6 @@ import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
-import { PublicKey } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import {
@@ -62,6 +61,7 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
         }
 
         const addressResult = await solana.getAddress(getDerivationPath());
+        const { PublicKey } = await import('@solana/web3.js');
 
         const publicKey = new PublicKey(addressResult.address);
 

@@ -5,7 +5,6 @@ import type { SessionTypes } from '@walletconnect/types';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
-import { PublicKey } from '@solana/web3.js';
 import base58 from 'bs58';
 import { AccountId, ChainId } from 'caip';
 import { SignerError, SignerErrorCode } from 'rango-types';
@@ -39,6 +38,8 @@ class SOLANASigner implements GenericSigner<SolanaTransaction> {
 
     try {
       const message = base58.encode(new TextEncoder().encode(msg));
+      const { PublicKey } = await import('@solana/web3.js');
+
       const pubkey = new PublicKey(address);
       const { signature } = await this.client.request<{
         signature: string;
@@ -80,7 +81,7 @@ class SOLANASigner implements GenericSigner<SolanaTransaction> {
           params: solanaWeb3Transaction,
         },
       });
-
+      const { PublicKey } = await import('@solana/web3.js');
       const publicKey = new PublicKey(tx.from);
       const sign = base58.decode(response.signature);
 

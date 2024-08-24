@@ -16,10 +16,10 @@ export const generalSolanaTransactionExecutor = async (
   tx: SolanaTransaction,
   DefaultSolanaSigner: SolanaWeb3Signer
 ): Promise<string> => {
-  const connection = getSolanaConnection();
+  const connection = await getSolanaConnection();
   const latestBlock = await connection.getLatestBlockhash('confirmed');
 
-  const finalTx = prepareTransaction(tx, latestBlock.blockhash);
+  const finalTx = await prepareTransaction(tx, latestBlock.blockhash);
   const raw = await DefaultSolanaSigner(finalTx);
 
   // We first simulate whether the transaction would be successful

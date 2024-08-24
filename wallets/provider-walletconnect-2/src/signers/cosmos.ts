@@ -3,12 +3,9 @@ import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
-import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
-import { cosmos } from '@keplr-wallet/cosmos';
 import { getsignedTx } from '@rango-dev/signer-cosmos';
 import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
 import { AccountId, ChainId } from 'caip';
-import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { CosmosRPCMethods, NAMESPACES } from '../constants.js';
@@ -77,6 +74,10 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
       }
 
       if (signType === 'AMINO') {
+        const { makeSignDoc, BroadcastMode } = await import(
+          '@cosmjs/launchpad'
+        );
+
         const signDoc = makeSignDoc(
           msgsWithoutType,
           fee as any,
@@ -134,6 +135,10 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           getAccounts?.find(
             (account) => account.address === tx.fromWalletAddress
           )?.pubkey || '';
+        const { cosmos } = await import('@keplr-wallet/cosmos');
+        const { formatDirectSignDoc, stringifySignDocValues } = await import(
+          'cosmos-wallet'
+        );
 
         const bodyBytes = cosmos.tx.v1beta1.TxBody.encode({
           messages: tx.data.protoMsgs.map((m) => ({
@@ -169,7 +174,6 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
         } catch (err) {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
-        console.log({ signResponse });
         const signedTx = cosmos.tx.v1beta1.TxRaw.encode({
           bodyBytes: new TextEncoder().encode(signResponse.signed.bodyBytes),
           authInfoBytes: new TextEncoder().encode(
@@ -177,7 +181,9 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           ),
           signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
         }).finish();
-        console.log({ signedTx });
+
+        const { BroadcastMode } = await import('@cosmjs/launchpad');
+
         const result = await sendTx(
           chainId,
           signedTx,

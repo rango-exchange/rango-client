@@ -14,7 +14,7 @@ export async function simulateTransaction(
   type: 'VERSIONED' | 'LEGACY'
 ) {
   if (type === 'VERSIONED') {
-    const connection = getSolanaConnection();
+    const connection = await getSolanaConnection();
 
     // We first simulate whether the transaction would be successful
     const { value: simulatedTransactionResponse } =

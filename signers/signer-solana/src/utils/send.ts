@@ -3,7 +3,6 @@ import type {
   TransactionSenderAndConfirmationWaiterResponse,
 } from './types.js';
 
-import { TransactionExpiredBlockheightExceededError } from '@solana/web3.js';
 import promiseRetry from 'promise-retry';
 
 import { wait } from './helpers.js';
@@ -77,6 +76,10 @@ export async function transactionSenderAndConfirmationWaiter({
       }),
     ]);
   } catch (e) {
+    const { TransactionExpiredBlockheightExceededError } = await import(
+      '@solana/web3.js'
+    );
+
     if (e instanceof TransactionExpiredBlockheightExceededError) {
       // we consume this error and getTransaction would return null
       return { txId, txResponse: null };

@@ -1,16 +1,12 @@
+import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { SolanaTransaction } from 'rango-types';
 
-import {
-  PublicKey,
-  Transaction,
-  TransactionInstruction,
-  VersionedTransaction,
-} from '@solana/web3.js';
-
-export const prepareTransaction = (
+export const prepareTransaction = async (
   tx: SolanaTransaction,
   recentBlockhash: string
-): Transaction | VersionedTransaction => {
+): Promise<Transaction | VersionedTransaction> => {
+  const { VersionedTransaction } = await import('@solana/web3.js');
+
   let versionedTransaction: VersionedTransaction | undefined = undefined;
   let legacyTransaction: Transaction | undefined = undefined;
 
@@ -20,7 +16,7 @@ export const prepareTransaction = (
     );
     versionedTransaction.message.recentBlockhash = recentBlockhash;
   } else {
-    legacyTransaction = prepareLegacyTransaction(tx, recentBlockhash);
+    legacyTransaction = await prepareLegacyTransaction(tx, recentBlockhash);
   }
   const finalTx = versionedTransaction || legacyTransaction;
 
@@ -30,10 +26,14 @@ export const prepareTransaction = (
   return finalTx;
 };
 
-export function prepareLegacyTransaction(
+export async function prepareLegacyTransaction(
   tx: SolanaTransaction,
   recentBlockhash: string
-): Transaction {
+): Promise<Transaction> {
+  const { Transaction, TransactionInstruction, PublicKey } = await import(
+    '@solana/web3.js'
+  );
+
   const transaction = new Transaction();
   transaction.feePayer = new PublicKey(tx.from);
   transaction.recentBlockhash =

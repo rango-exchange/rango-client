@@ -3,7 +3,6 @@ import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
-import { PublicKey } from '@solana/web3.js';
 import bs58 from 'bs58';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -37,6 +36,8 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
           method: 'sol_sign',
           params: [solanaWeb3Transaction],
         });
+      const { PublicKey } = await import('@solana/web3.js');
+
       const publicKey = new PublicKey(response.publicKey);
       const sign = bs58.decode(response.signature);
 

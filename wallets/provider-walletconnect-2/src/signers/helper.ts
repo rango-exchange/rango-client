@@ -1,7 +1,5 @@
 import type { BlockchainMeta } from 'rango-types';
 
-import { TendermintTxTracer } from '@keplr-wallet/cosmos';
-import { simpleFetch } from '@keplr-wallet/simple-fetch';
 import { cosmosBlockchains } from 'rango-types';
 
 export async function sendTx(
@@ -10,13 +8,9 @@ export async function sendTx(
   mode: 'async' | 'sync' | 'block',
   supportedChains: BlockchainMeta[]
 ): Promise<Uint8Array> {
-  console.log({ chainId, tx, mode });
-
   const cosmos = cosmosBlockchains(supportedChains);
   const chainInfo = cosmos.find((item) => item.chainId === chainId)?.info;
   const isProtoTx = Buffer.isBuffer(tx) || tx instanceof Uint8Array;
-
-  console.log({ chainInfo, isProtoTx });
 
   if (!chainInfo) {
     throw new Error('Chain info is undefined from server');
@@ -43,6 +37,7 @@ export async function sendTx(
       };
 
   try {
+    const { simpleFetch } = await import('@keplr-wallet/simple-fetch');
     const result = await simpleFetch<any>(
       chainInfo.rest,
       isProtoTx ? '/cosmos/tx/v1beta1/txs' : '/txs',
@@ -62,7 +57,7 @@ export async function sendTx(
     }
 
     const txHash = Buffer.from(txResponse.txhash, 'hex');
-
+    const { TendermintTxTracer } = await import('@keplr-wallet/cosmos');
     const txTracer = new TendermintTxTracer(chainInfo.rpc, '/websocket');
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     txTracer.traceTx(txHash).then(() => {

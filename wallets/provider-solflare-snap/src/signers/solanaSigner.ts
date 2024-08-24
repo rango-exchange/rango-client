@@ -31,10 +31,10 @@ export class SolflareSnapSolanaSigner
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
     try {
-      const connection = getSolanaConnection();
+      const connection = await getSolanaConnection();
       const latestBlock = await connection.getLatestBlockhash('confirmed');
 
-      const finalTx = prepareTransaction(tx, latestBlock.blockhash);
+      const finalTx = await prepareTransaction(tx, latestBlock.blockhash);
 
       await simulateTransaction(finalTx, tx.txType);
 
