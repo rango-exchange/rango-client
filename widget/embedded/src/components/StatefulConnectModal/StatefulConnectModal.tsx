@@ -3,7 +3,7 @@ import type { WalletInfoWithExtra } from '../../types';
 import type { Namespace } from '@rango-dev/wallets-shared';
 
 import { Divider } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   ResultStatus,
@@ -31,6 +31,7 @@ interface PropTypes {
 }
 
 export function StatefulConnectModal(props: PropTypes) {
+  const successModalTimerId = useRef<ReturnType<typeof setTimeout>>();
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string>();
   const catchErrorOnHandle = (error: Error) => {
@@ -70,6 +71,10 @@ export function StatefulConnectModal(props: PropTypes) {
     setError(undefined);
     resetState();
     setIsConnecting(false);
+
+    if (successModalTimerId.current) {
+      clearTimeout(successModalTimerId.current);
+    }
   };
 
   useEffect(() => {
@@ -108,7 +113,10 @@ export function StatefulConnectModal(props: PropTypes) {
         }
 
         if (resultIsConnected && !isImmediatelyConnected) {
-          setTimeout(handleClosingModal, KEEP_SUCCESS_MODAL_FOR);
+          successModalTimerId.current = setTimeout(
+            handleClosingModal,
+            KEEP_SUCCESS_MODAL_FOR
+          );
         } else if (resultIsDisconnected) {
           handleClosingModal();
         }

@@ -54,8 +54,6 @@ export function DerivationPath(props: PropTypes) {
       (derivationPath) => derivationPath.id === value
     );
 
-    console.log({ selectedDerivationPath });
-
     if (selectedDerivationPath) {
       /*
        * Custom mode accepts string, but other modes only accepts number,
@@ -93,7 +91,6 @@ export function DerivationPath(props: PropTypes) {
     );
   }, [selectedNamespace]);
 
-  console.log({ derivationPathIndex });
   return (
     <>
       <Divider size={20} />
