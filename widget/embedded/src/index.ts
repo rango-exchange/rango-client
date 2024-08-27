@@ -57,6 +57,11 @@ import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
+import {
+  isOnDerivationPath,
+  isOnNamespace,
+} from './components/StatefulConnectModal';
+import { DerivationPath, Namespaces } from './components/WalletStatefulConnect';
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
 import { WidgetWallets } from './containers/Wallets';
@@ -75,6 +80,13 @@ import {
   WidgetEvents,
 } from './types';
 import { customizedThemeTokens } from './utils/ui';
+
+export const StatefulConnect = {
+  DerivationPath,
+  Namespaces,
+  isOnDerivationPath,
+  isOnNamespace,
+};
 
 export type {
   WidgetConfig,
