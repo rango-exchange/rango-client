@@ -103,7 +103,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
 
-        const signedTx = getsignedTx(tx, signResponse);
+        const signedTx = await getsignedTx(tx, signResponse);
         const result = await sendTx(
           chainId,
           signedTx,

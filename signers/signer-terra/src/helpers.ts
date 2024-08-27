@@ -1,17 +1,17 @@
 import type { CreateTxOptions, Msg as TerraMsg } from '@terra-money/terra.js';
+import type { Fee } from '@terra-money/terra.js/dist/core/index.js';
 import type { CosmosTransaction } from 'rango-types';
 
-import { Coin } from '@terra-money/terra.js';
-import { Fee } from '@terra-money/terra.js/dist/core/index.js';
 import { JSONSerializable } from '@terra-money/terra.js/dist/util/json.js';
 
 export const executeTerraTransaction = async (
   cosmosTx: CosmosTransaction,
   provider: any
 ): Promise<string> => {
+  const txOptions = await cosmosTxToTerraTx(cosmosTx);
   return new Promise<string>((resolve, reject) => {
     provider
-      .post(cosmosTxToTerraTx(cosmosTx))
+      .post(txOptions)
       .then((result: { result: { txhash: string | PromiseLike<string> } }) =>
         resolve(result?.result?.txhash)
       )
@@ -22,9 +22,14 @@ export const executeTerraTransaction = async (
   });
 };
 
-function cosmosTxToTerraTx(tx: CosmosTransaction): CreateTxOptions {
+async function cosmosTxToTerraTx(
+  tx: CosmosTransaction
+): Promise<CreateTxOptions> {
   let tmpStdFee: Fee | undefined = undefined;
   if (tx.data.fee) {
+    const { Coin } = await import('@terra-money/terra.js');
+    const { Fee } = await import('@terra-money/terra.js/dist/core/index.js');
+
     const tmpCoinsFee = tx.data.fee.amount.map(
       (item) => new Coin(item.denom, item.amount)
     );
