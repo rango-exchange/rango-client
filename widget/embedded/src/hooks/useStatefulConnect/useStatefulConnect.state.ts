@@ -34,11 +34,14 @@ export function reducer(state: State, action: Actions): State {
     case 'reset':
       return initState;
     case 'resetDerivation':
-      return {
-        ...state,
-        derivationPath: null,
-        status: 'namespace',
-      };
+      if (state.namespace) {
+        return {
+          ...state,
+          derivationPath: null,
+          status: 'namespace',
+        };
+      }
+      return initState;
     default:
       throw new Error(`Action hasn't been defined.`);
   }
