@@ -85,7 +85,7 @@ async function run() {
     minify: true,
     keepNames: true,
     sourcemap: true,
-    platform: 'node',
+    platform: 'browser',
     format: 'esm',
     outdir: `${pkgPath}/dist`,
     entryPoints: entryPoints,
