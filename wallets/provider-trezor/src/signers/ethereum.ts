@@ -7,6 +7,7 @@ import { type GenericSigner } from 'rango-types';
 import {
   getTrezorErrorMessage,
   getTrezorModule,
+  trezorErrorMessages,
   valueToHex,
 } from '../helpers.js';
 import { getDerivationPath } from '../state.js';
@@ -69,8 +70,11 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
         path: getDerivationPath(),
         transaction,
       });
+
       if (!success) {
-        throw new Error(payload.error);
+        const errorMessage =
+          trezorErrorMessages[payload?.code || ''] || payload.error;
+        throw new Error(errorMessage);
       }
       const { r, s, v } = payload;
 
