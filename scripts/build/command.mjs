@@ -3,6 +3,7 @@ import * as esbuild from 'esbuild';
 import { $ } from 'execa';
 import { join } from 'path';
 import process from 'process';
+import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import {
   packageJson,
   packageNameWithoutScope,
@@ -90,6 +91,13 @@ async function run() {
     outdir: `${pkgPath}/dist`,
     entryPoints: entryPoints,
     metafile: true,
+    plugins: [
+      nodeModulesPolyfillPlugin({
+        globals: {
+          fs: true,
+        },
+      }),
+    ],
     ...externalPackages,
   });
   const result = await Promise.all([typeCheckingTask, esbuildTask]);
