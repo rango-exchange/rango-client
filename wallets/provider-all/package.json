@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.36.1-next.6",
+  "version": "0.36.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -52,7 +52,7 @@
     "@rango-dev/provider-trezor": "^0.3.1-next.3",
     "@rango-dev/provider-tron-link": "^0.36.1-next.3",
     "@rango-dev/provider-trustwallet": "^0.36.1-next.2",
-    "@rango-dev/provider-walletconnect-2": "^0.29.1-next.4",
+    "@rango-dev/provider-walletconnect-2": "^0.29.1-next.5",
     "@rango-dev/provider-xdefi": "^0.36.1-next.4",
     "@rango-dev/wallets-react": "^0.22.1-next.1",
     "@rango-dev/wallets-shared": "^0.36.1-next.1"
