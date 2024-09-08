@@ -15,7 +15,6 @@ export function TabsComponent(props: TabsPropTypes) {
     container = document.body,
     value,
     type,
-    borderRadius = 'medium',
     className,
   } = props;
   const [tabWidth, setTabWidth] = useState(0);
@@ -25,6 +24,12 @@ export function TabsComponent(props: TabsPropTypes) {
   // State variable to track the initial render
   const [initialRender, setInitialRender] = useState(true);
   const transformPosition = currentIndex * tabWidth;
+  let borderRadius: TabsPropTypes['borderRadius'] = 'medium';
+  if (type === 'bordered') {
+    borderRadius = 'none';
+  } else if (props.borderRadius) {
+    borderRadius = props.borderRadius;
+  }
 
   useEffect(() => {
     const updateTabWidth = () => {
