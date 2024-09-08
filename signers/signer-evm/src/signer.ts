@@ -1,11 +1,13 @@
 import type {
+  AbstractProvider,
+  Eip1193Provider,
   TransactionRequest,
   TransactionResponse,
-} from '@ethersproject/abstract-provider';
+} from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { providers } from 'ethers';
+import { BrowserProvider, isError } from 'ethers';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
@@ -13,12 +15,9 @@ import {
 } from 'rango-types';
 
 import { cleanEvmError, getTenderlyError, waitMs } from './helper.js';
-import { RPCErrorCode } from './types.js';
-
-type ProviderType = ConstructorParameters<typeof providers.Web3Provider>[0];
 
 const waitWithMempoolCheck = async (
-  provider: providers.Web3Provider,
+  provider: AbstractProvider,
   tx: TransactionResponse,
   txHash: string,
   confirmations?: number
@@ -52,12 +51,10 @@ const waitWithMempoolCheck = async (
 };
 
 export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
-  private signer: providers.JsonRpcSigner;
-  private provider: providers.Web3Provider;
+  private provider: BrowserProvider;
 
-  constructor(provider: ProviderType) {
-    this.provider = new providers.Web3Provider(provider);
-    this.signer = this.provider.getSigner();
+  constructor(provider: Eip1193Provider) {
+    this.provider = new BrowserProvider(provider); // provides read-only access to the provider
   }
 
   static buildTx(evmTx: EvmTransaction, disableV2 = false): TransactionRequest {
@@ -80,7 +77,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       tx = { ...tx, value: evmTx.value };
     }
     if (evmTx.nonce) {
-      tx = { ...tx, nonce: evmTx.nonce };
+      tx = { ...tx, nonce: parseInt(evmTx.nonce) };
     }
     if (evmTx.gasLimit) {
       tx = { ...tx, gasLimit: evmTx.gasLimit };
@@ -102,7 +99,8 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
 
   async signMessage(msg: string): Promise<string> {
     try {
-      return await this.signer.signMessage(msg);
+      const signer = await this.provider.getSigner(); // provides access to write operations
+      return await signer.signMessage(msg);
     } catch (error) {
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
     }
@@ -114,13 +112,18 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{ hash: string; response: TransactionResponse }> {
     try {
-      this.signer = this.provider.getSigner(tx.from ?? undefined);
+      const signer = await this.provider.getSigner(tx.from ?? undefined);
 
       const transaction = DefaultEvmSigner.buildTx(tx);
 
-      const signerChainId = await this.signer.getChainId();
-      const signerAddress = await this.signer.getAddress();
-      if (!!chainId && !!signerChainId && signerChainId !== parseInt(chainId)) {
+      const signerChainId = (await this.provider.getNetwork()).chainId;
+      const signerAddress = await signer.getAddress();
+
+      if (
+        !!chainId &&
+        !!signerChainId &&
+        signerChainId.toString() !== Number(chainId).toString()
+      ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
           undefined,
@@ -139,7 +142,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
         );
       }
       try {
-        const response = await this.signer.sendTransaction(transaction);
+        const response = await signer.sendTransaction(transaction);
         return { hash: response.hash, response };
       } catch (error: any) {
         // retrying EIP-1559 without v2 related fields
@@ -150,7 +153,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
         ) {
           console.log('retrying EIP-1559 error without v2 fields ...');
           const transaction = DefaultEvmSigner.buildTx(tx, true);
-          const response = await this.signer.sendTransaction(transaction);
+          const response = await signer.sendTransaction(transaction);
           return { hash: response.hash, response };
         }
         throw error;
@@ -181,7 +184,6 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       if (!this.provider) {
         return { hash: txHash };
       }
-      this.signer = this.provider.getSigner();
 
       /*
        * don't proceed if signer chain changed or chain id is not specified
@@ -190,8 +192,11 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       if (!chainId) {
         return { hash: txHash };
       }
-      const signerChainId = await this.signer.getChainId();
-      if (!signerChainId || parseInt(chainId) != signerChainId) {
+      const signerChainId = (await this.provider.getNetwork()).chainId;
+      if (
+        !signerChainId ||
+        Number(chainId).toString() !== signerChainId.toString()
+      ) {
         return { hash: txHash };
       }
 
@@ -202,14 +207,20 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
 
       await waitWithMempoolCheck(this.provider, tx, txHash, confirmations);
       return { hash: txHash };
-    } catch (err) {
-      const error = err as any; // TODO find a proper type
-      if (
-        error?.code === RPCErrorCode.TRANSACTION_REPLACED &&
-        error?.replacement
-      ) {
-        return { hash: error?.replacement?.hash, response: error?.replacement };
-      } else if (error?.code === RPCErrorCode.CALL_EXCEPTION) {
+    } catch (error) {
+      if (isError(error, 'TRANSACTION_REPLACED')) {
+        const reason = error.reason;
+        if (reason === 'cancelled') {
+          throw new SignerError(
+            SignerErrorCode.SEND_TX_ERROR,
+            undefined,
+            'Transaction replaced and canceled by user',
+            undefined,
+            error
+          );
+        }
+        return { hash: error.replacement.hash, response: error.replacement };
+      } else if (isError(error, 'CALL_EXCEPTION')) {
         const tError = await getTenderlyError(chainId, txHash);
         if (!!tError) {
           throw new SignerError(

@@ -93,7 +93,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "ethereum-waffle": "^4.0.10",
     "execa": "^7.1.1",
     "filesize": "^10.1.2",
     "lint-staged": "^13.2.2",

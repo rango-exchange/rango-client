@@ -37,7 +37,7 @@
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
-    "ethers": "^5.7.2",
+    "ethers": "^6.13.2",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "rango-sdk": "^0.1.49",

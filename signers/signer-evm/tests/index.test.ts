@@ -24,7 +24,7 @@ describe('Test EVM Signer', () => {
       const signed = await signer.signMessage('Hello World');
 
       expect(signed).toEqual(
-        '0x446e62683c4304f8e9ac2f0b930af84fde6930f73aaac2b726e2e90984b4c55f2969ef122788984ae0c83674dc24f6bf351a467c9320818dc8741bc540e2ad321c'
+        '0xc22ee8f90ace365af000af37078743d4e72136a61a4f5838a537f573af45911f1445a2dfae662c79d98ce865cf134e7f4be896f19f59a6ed4dfe34c52c80c8581b'
       );
     });
   });
