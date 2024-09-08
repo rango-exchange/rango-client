@@ -1,4 +1,4 @@
-import { MockProvider } from 'ethereum-waffle';
+import { Wallet } from 'ethers';
 
 type ProviderSetup = {
   address: string;
@@ -69,7 +69,7 @@ export class MockEvmProvider implements IMockProvider {
 
   async request({ method, params }: any): Promise<any> {
     this.log(`request[${method}]`);
-    const [walletFrom] = new MockProvider().getWallets();
+    const walletFrom = new Wallet(this.setup.privateKey);
 
     switch (method) {
       case 'eth_requestAccounts':

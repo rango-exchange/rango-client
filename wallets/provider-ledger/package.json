@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -32,7 +32,7 @@
     "@solana/web3.js": "^1.91.4",
     "@types/w3c-web-hid": "^1.0.2",
     "bs58": "^5.0.0",
-    "ethers": "^6.11.1",
+    "ethers": "^6.13.2",
     "rango-types": "^0.1.69"
   },
   "publishConfig": {

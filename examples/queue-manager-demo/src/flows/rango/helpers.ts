@@ -609,7 +609,7 @@ export function convertRawAccountToFullAccount(
      * Otherwise, we stop executing this function.
      */
     const isUknownAndEvmBased =
-      network === Networks.Unknown && ethers.utils.isAddress(address);
+      network === Networks.Unknown && ethers.isAddress(address);
     if (isUnknown && !isUknownAndEvmBased) {
       return;
     }

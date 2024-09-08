@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@rango-dev/wallets-core": "^0.37.1-next.1",
-    "ethers": "^5.7.2",
+    "ethers": "^6.13.2",
     "rango-types": "^0.1.69"
   },
   "publishConfig": {

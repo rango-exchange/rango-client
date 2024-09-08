@@ -10,7 +10,7 @@ import type { EvmBlockchainMeta } from 'rango-types';
 
 import { Networks } from './rango.js';
 
-export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
+export { isAddress as isEvmAddress } from 'ethers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {
