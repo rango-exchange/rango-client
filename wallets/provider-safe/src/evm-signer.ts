@@ -1,5 +1,5 @@
-import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
+import type { TransactionResponse } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
@@ -28,7 +28,7 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{
     hash: string;
-    response: TransactionResponse & { hashRequiringUpdate: boolean };
+    response: Partial<TransactionResponse> & { hashRequiringUpdate: boolean };
   }> {
     const { hash, response } = await this.signer.signAndSendTx(
       tx,
