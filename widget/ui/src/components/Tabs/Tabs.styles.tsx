@@ -23,6 +23,7 @@ export const Tabs = styled('div', {
         borderStyle: 'solid',
         backgroundColor: '$$color',
       },
+      bordered: { backgroundColor: 'inherit' },
     },
     borderRadius: {
       small: {
@@ -34,12 +35,16 @@ export const Tabs = styled('div', {
       full: {
         borderRadius: '$xm',
       },
+      none: {
+        borderRadius: 'unset',
+      },
     },
   },
 });
 
 export const Tab = styled(Button, {
   color: '$neutral700',
+  flex: 1,
   backgroundColor: 'transparent',
   height: '100%',
   zIndex: 10,
@@ -60,6 +65,9 @@ export const Tab = styled(Button, {
       full: {
         borderRadius: '$xm',
       },
+      none: {
+        borderRadius: 'unset',
+      },
     },
     type: {
       primary: {
@@ -67,6 +75,7 @@ export const Tab = styled(Button, {
         height: '100%',
       },
       secondary: {},
+      bordered: {},
     },
     isActive: {
       true: {
@@ -122,6 +131,24 @@ export const Tab = styled(Button, {
         },
       },
     },
+    {
+      type: 'bordered',
+      isActive: true,
+      css: {
+        color: '$secondary500',
+      },
+    },
+    {
+      type: 'bordered',
+      isActive: false,
+      css: {
+        color: '$neutral600',
+        fontWeight: '$regular',
+        '&:hover': {
+          color: '$secondary550',
+        },
+      },
+    },
   ],
 });
 
@@ -141,6 +168,9 @@ export const BackdropTab = styled('div', {
       primary: {
         backgroundColor: '$background',
       },
+      bordered: {
+        borderBottom: '$secondary500 solid 2px',
+      },
     },
     borderRadius: {
       small: {
@@ -151,6 +181,9 @@ export const BackdropTab = styled('div', {
       },
       full: {
         borderRadius: '$xm',
+      },
+      none: {
+        borderRadius: 'unset',
       },
     },
   },
