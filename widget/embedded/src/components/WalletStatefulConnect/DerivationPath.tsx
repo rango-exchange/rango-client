@@ -97,9 +97,12 @@ export function DerivationPath(props: PropTypes) {
       <MessageBox
         type="info"
         title={i18n.t('Select Derivation Path')}
-        description={i18n.t(
-          `In order to connect to ${type}, you must first select a Derivation Path`
-        )}
+        description={i18n.t({
+          id: 'In order to connect to {type}, you must first select a Derivation Path',
+          values: {
+            type,
+          },
+        })}
         icon={
           <LogoContainer>
             <WalletImageContainer>
