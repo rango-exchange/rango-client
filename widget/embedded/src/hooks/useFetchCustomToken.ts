@@ -51,9 +51,12 @@ export function useFetchCustomToken(): UseFetchCustomToken {
       case 'not-found':
         return {
           title: i18n.t('Token Not Found'),
-          message: i18n.t(
-            `Sorry, no token was found on ${blockchain} blockchain with the provided address. please make sure you have entered the right token address.`
-          ),
+          message: i18n.t({
+            id: 'Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address.',
+            values: {
+              blockchain,
+            },
+          }),
         };
     }
   }
