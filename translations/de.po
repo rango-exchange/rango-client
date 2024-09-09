@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-09 11:51\n"
+"PO-Revision-Date: 2024-09-09 12:31\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,16 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "Um eine Verbindung zu {type}herzustellen, müssen Sie zuerst einen Derivationspfad auswählen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+msgstr "Leider wurde kein Token auf {blockchain} Blockchain mit der angegebenen Adresse gefunden. Bitte stellen Sie sicher, dass Sie die richtige Token-Adresse eingegeben haben."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -74,7 +84,7 @@ msgstr "Derzeit laufen einige Transaktionen und werden von einem anderen Browser
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:348
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:148
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:151
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:32
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:115
 msgid "Confirm"
@@ -641,17 +651,17 @@ msgid "Select Derivation Path"
 msgstr "Ableitungspfad auswählen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
 msgstr "Wählen Sie Derivationspfad Vorlage"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
 msgid "Enter Path"
 msgstr "Pfad eingeben"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 msgid "Enter Index"
 msgstr "Index eingeben"
 
