@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-09 11:51\n"
+"PO-Revision-Date: 2024-09-09 12:31\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,16 @@ msgstr ""
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "{type}に接続するには、先に派生パスを選択する必要があります"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+msgstr "申し訳ありませんが、指定されたアドレスの {blockchain} ブロックチェーン上にトークンが見つかりませんでした。正しいトークンアドレスを入力していることを確認してください。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -74,7 +84,7 @@ msgstr "現在、一部のトランザクションが実行され、他のブラ
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:348
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:148
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:151
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:32
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:115
 msgid "Confirm"
@@ -641,17 +651,17 @@ msgid "Select Derivation Path"
 msgstr "派生パスの選択"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
 msgstr "派生パステンプレートを選択"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
 msgid "Enter Path"
 msgstr "パスを入力"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 msgid "Enter Index"
 msgstr "インデックスを入力"
 
