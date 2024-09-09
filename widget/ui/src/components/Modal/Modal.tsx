@@ -94,6 +94,13 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   }, [open]);
 
   useEffect(() => {
+    return () => {
+      //container might be null
+      container?.style.removeProperty('overflow');
+    };
+  }, []);
+
+  useEffect(() => {
     if (!!container && isMount) {
       if (modalContainerRef.current) {
         forceReflow(modalContainerRef.current);
