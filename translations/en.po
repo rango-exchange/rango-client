@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "In order to connect to {type}, you must first select a Derivation Path"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+msgstr "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:285
 #: widget/embedded/src/pages/HistoryPage.tsx:185
@@ -69,7 +79,7 @@ msgstr "Currently, some transactions are running and being handled by other brow
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:348
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:148
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:151
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:32
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:115
 msgid "Confirm"
@@ -638,17 +648,17 @@ msgid "Select Derivation Path"
 msgstr "Select Derivation Path"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
 msgstr "Choose Derivation Path Template"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
 msgid "Enter Path"
 msgstr "Enter Path"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 msgid "Enter Index"
 msgstr "Enter Index"
 
