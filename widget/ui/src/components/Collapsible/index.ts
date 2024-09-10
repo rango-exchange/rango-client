@@ -1,2 +1,2 @@
-export { CollapsibleComponent as Collapsible } from './Collapsible';
-export type { CollapsiblePropTypes } from './Collapsible.types';
+export { CollapsibleComponent as Collapsible } from './Collapsible.js';
+export type { CollapsiblePropTypes } from './Collapsible.types.js';

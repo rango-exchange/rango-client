@@ -1,4 +1,4 @@
-import type { CSS } from '../../theme';
+import type { CSS } from '../../theme.js';
 import type { ReactNode } from 'react';
 
 export type Ref =

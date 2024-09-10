@@ -30,14 +30,14 @@ import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
-import * as trezor from '@rango-dev/provider-trezor';
+// import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isWalletExcluded } from './helpers';
+import { isWalletExcluded } from './helpers.js';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
@@ -63,16 +63,23 @@ export const allProviders = (options?: Options) => {
     }
   }
 
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.TREZOR,
-      name: 'Trezor',
-    })
-  ) {
-    if (!!options?.trezor?.manifest) {
-      trezor.init(options.trezor);
-    }
-  }
+  /*
+   *  Considering that Trezor was showing unstable behavior in some environments,
+   *  we temporarily removed it, we will return the comments after correction.
+   */
+
+  /*
+   * if (
+   *   !isWalletExcluded(providers, {
+   *     type: WalletTypes.TREZOR,
+   *     name: 'Trezor',
+   *   })
+   * ) {
+   *   if (!!options?.trezor?.manifest) {
+   *     trezor.init(options.trezor);
+   *   }
+   * }
+   */
 
   return [
     safe,
@@ -106,7 +113,7 @@ export const allProviders = (options?: Options) => {
     braavos,
     ledger,
     rabby,
-    trezor,
+    // trezor,
     solflare,
   ];
 };

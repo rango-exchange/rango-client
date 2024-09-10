@@ -1,5 +1,5 @@
-import { styled } from '../../theme';
-import { IconButton } from '../IconButton';
+import { styled } from '../../theme.js';
+import { IconButton } from '../IconButton/index.js';
 
 export const BackDrop = styled('div', {
   position: 'absolute',

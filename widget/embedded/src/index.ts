@@ -35,9 +35,9 @@ import type {
   StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
-  EventHandler as HandleWalletsUpdate,
-  ProviderInterface,
-} from '@rango-dev/wallets-react';
+  LegacyEventHandler as HandleWalletsUpdate,
+  LegacyProviderInterface as ProviderInterface,
+} from '@rango-dev/wallets-core/legacy';
 import type {
   WalletInfo,
   WalletState,
@@ -52,20 +52,23 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import {
-  readAccountAddress,
-  useWallets,
-  Events as WalletEvents,
-} from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
+import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
+import {
+  isOnDerivationPath,
+  isOnNamespace,
+} from './components/StatefulConnectModal';
+import { DerivationPath, Namespaces } from './components/WalletStatefulConnect';
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { useStatefulConnect } from './hooks/useStatefulConnect';
 import { useWalletList } from './hooks/useWalletList';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
 import { widgetEventEmitter } from './services/eventEmitter';
@@ -77,6 +80,13 @@ import {
   WidgetEvents,
 } from './types';
 import { customizedThemeTokens } from './utils/ui';
+
+export const StatefulConnect = {
+  DerivationPath,
+  Namespaces,
+  isOnDerivationPath,
+  isOnNamespace,
+};
 
 export type {
   WidgetConfig,
@@ -122,6 +132,7 @@ export {
   WidgetProvider,
   useWidget,
   useWallets,
+  useStatefulConnect,
   /**
    * @deprecated Use `widgetEventEmitter` instead. This hook will be removed in future versions.
    */

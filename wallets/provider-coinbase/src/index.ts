@@ -25,8 +25,8 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-import { coinbase as coinbase_instance, getSolanaAccounts } from './helpers';
-import signer from './signer';
+import { coinbase as coinbase_instance, getSolanaAccounts } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.COINBASE;
 

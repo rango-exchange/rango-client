@@ -1,9 +1,9 @@
-import type { NumericTooltipPropTypes } from './NumericTooltip.types';
+import type { NumericTooltipPropTypes } from './NumericTooltip.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Tooltip } from './Tooltip';
+import { Tooltip } from './Tooltip.js';
 
 export function NumericTooltip(
   props: PropsWithChildren<NumericTooltipPropTypes>

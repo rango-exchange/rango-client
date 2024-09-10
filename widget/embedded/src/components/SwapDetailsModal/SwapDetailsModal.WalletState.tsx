@@ -1,32 +1,17 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { WalletInfoWithExtra } from '../../types';
 
-import { debug } from '@rango-dev/logging-core';
+import { warn } from '@rango-dev/logging-core';
 import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
+import { useWalletList } from '../../hooks/useWalletList';
 import { getContainer } from '../../utils/common';
 import { mapStatusToWalletState } from '../../utils/wallets';
-import { WalletDerivationPathModal } from '../WalletDerivationPathModal';
-import { WalletNamespacesModal } from '../WalletNamespacesModal';
+import { StatefulConnectModal } from '../StatefulConnectModal';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
-
-interface NamespacesModalState {
-  open: boolean;
-  providerType: string;
-  providerImage: string;
-  availableNamespaces?: Namespace[];
-  singleNamespace?: boolean;
-}
-
-interface DerivationPathModalState {
-  open: boolean;
-  providerType: string;
-  providerImage: string;
-  namespace: Namespace;
-}
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const {
@@ -37,11 +22,9 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
     showWalletButton,
     walletButtonDisabled,
   } = props;
-  const { connect, getWalletInfo, state } = useWallets();
-  const [namespacesModalState, setNamespacesModalState] =
-    useState<NamespacesModalState | null>(null);
-  const [derivationPathModalState, setDerivationPathModalState] =
-    useState<DerivationPathModalState | null>(null);
+  const [selectedWalletToConnect, setSelectedWalletToConnect] =
+    useState<WalletInfoWithExtra>();
+  const { getWalletInfo, state } = useWallets();
   const walletType = currentStepWallet?.walletType;
   const walletState = walletType
     ? mapStatusToWalletState(state(walletType))
@@ -49,85 +32,22 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const walletInfo = walletType ? getWalletInfo(walletType) : null;
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
-
-  const handleCloseNamespaceModal = () => {
-    if (namespacesModalState) {
-      setNamespacesModalState({
-        ...namespacesModalState,
-        open: false,
-      });
-    }
-  };
-
-  const handleCloseDerivationPathModal = () => {
-    if (derivationPathModalState) {
-      setDerivationPathModalState({
-        ...derivationPathModalState,
-        open: false,
-      });
-    }
-  };
+  const { list } = useWalletList();
 
   const handleWalletItemClick = () => {
-    if (!!walletType && !!walletInfo) {
-      if (!!walletInfo.namespaces?.length) {
-        if (walletInfo.namespaces.length > 1) {
-          setNamespacesModalState({
-            open: true,
-            providerType: walletType,
-            providerImage: walletInfo.img,
-            availableNamespaces: walletInfo.namespaces,
-            singleNamespace: walletInfo.singleNamespace,
-          });
-        } else if (walletInfo.needsDerivationPath) {
-          setDerivationPathModalState({
-            open: true,
-            providerType: walletType,
-            providerImage: walletInfo.img,
-            namespace: walletInfo.namespaces[0],
-          });
-        } else {
-          connect(walletType).catch((error) => debug(error));
-        }
+    if (!!walletType) {
+      const wallet = list.find((wallet) => wallet.type === walletType);
+
+      if (wallet) {
+        setSelectedWalletToConnect(wallet);
       } else {
-        connect(walletType).catch((error) => debug(error));
+        warn(
+          new Error(
+            `It seems requested wallet to be connected is not available in the list. requested wallet: ${wallet}`
+          )
+        );
       }
     }
-  };
-
-  const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
-    if (
-      !!walletInfo?.needsDerivationPath &&
-      walletInfo?.singleNamespace &&
-      selectedNamespaces[0] &&
-      walletType
-    ) {
-      setDerivationPathModalState({
-        open: true,
-        providerType: walletType,
-        providerImage: walletInfo.img,
-        namespace: selectedNamespaces[0],
-      });
-    } else {
-      connect(
-        namespacesModalState?.providerType as string,
-        undefined,
-        selectedNamespaces.map((namespace) => ({
-          namespace,
-        }))
-      ).catch((error) => debug(error));
-    }
-    handleCloseNamespaceModal();
-  };
-
-  const handleDerivationPathConfirm = (derivationPath: string) => {
-    if (derivationPath && derivationPathModalState?.namespace) {
-      connect(derivationPathModalState?.providerType, undefined, [
-        { namespace: derivationPathModalState.namespace, derivationPath },
-      ]).catch((error) => debug(error));
-    }
-
-    handleCloseDerivationPathModal();
   };
 
   return (
@@ -148,21 +68,11 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
           />
         </WalletContainer>
       )}
-      <WalletNamespacesModal
-        open={!!namespacesModalState?.open}
-        onClose={handleCloseNamespaceModal}
-        onConfirm={handleConfirmNamespaces}
-        image={namespacesModalState?.providerImage}
-        availableNamespaces={namespacesModalState?.availableNamespaces}
-        singleNamespace={namespacesModalState?.singleNamespace}
-      />
-      <WalletDerivationPathModal
-        open={!!derivationPathModalState?.open}
-        selectedNamespace={derivationPathModalState?.namespace}
-        type={derivationPathModalState?.providerType}
-        image={derivationPathModalState?.providerImage}
-        onClose={handleCloseDerivationPathModal}
-        onConfirm={handleDerivationPathConfirm}
+      <StatefulConnectModal
+        wallet={selectedWalletToConnect}
+        onClose={() => {
+          setSelectedWalletToConnect(undefined);
+        }}
       />
     </>
   );

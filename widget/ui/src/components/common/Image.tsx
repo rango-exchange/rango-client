@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
 export const ImageContainer = styled('div', {
   display: 'flex',

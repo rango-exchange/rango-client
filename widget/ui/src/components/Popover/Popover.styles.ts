@@ -1,6 +1,6 @@
 import * as RadixPopover from '@radix-ui/react-popover';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const PopoverContainer = styled(RadixPopover.Content, {
   borderRadius: '$sm',

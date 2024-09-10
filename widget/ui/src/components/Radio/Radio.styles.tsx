@@ -1,6 +1,6 @@
 import * as Radio from '@radix-ui/react-radio-group';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const StyledItem = styled(Radio.Item, {
   padding: '0',

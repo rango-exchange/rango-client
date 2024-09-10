@@ -1,20 +1,20 @@
-import type { PropTypes } from './TokenAmount.types';
+import type { PropTypes } from './TokenAmount.types.js';
 
 import React from 'react';
 
-import { ChainToken } from '../ChainToken';
-import { Divider } from '../Divider';
-import { PriceImpact } from '../PriceImpact';
-import { ValueTypography } from '../PriceImpact/PriceImpact.styles';
-import { NumericTooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { ChainToken } from '../ChainToken/index.js';
+import { Divider } from '../Divider/index.js';
+import { PriceImpact } from '../PriceImpact/index.js';
+import { ValueTypography } from '../PriceImpact/PriceImpact.styles.js';
+import { NumericTooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   Container,
   tokenAmountStyles,
   tooltipRootStyle,
   usdValueStyles,
-} from './TokenAmount.styles';
+} from './TokenAmount.styles.js';
 
 export function TokenAmount(props: PropTypes) {
   return (

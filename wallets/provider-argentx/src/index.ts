@@ -10,8 +10,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
 
-import { argentx as argentx_instances } from './helpers';
-import signer from './signer';
+import { argentx as argentx_instances } from './helpers.js';
+import signer from './signer.js';
 
 /*
  * https://www.starknetjs.com/docs/API/signer

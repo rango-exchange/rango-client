@@ -1,12 +1,12 @@
-import type { NotFoundPropTypes } from './NotFound.types';
+import type { NotFoundPropTypes } from './NotFound.types.js';
 
 import React from 'react';
 
-import { SearchIcon } from '../../icons';
-import { Divider } from '../Divider';
-import { Typography } from '../Typography';
+import { SearchIcon } from '../../icons/index.js';
+import { Divider } from '../Divider/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { Container } from './NotFound.styles';
+import { Container } from './NotFound.styles.js';
 
 export function NotFound(props: NotFoundPropTypes) {
   const { icon, titleColor, hasIcon = true } = props;

@@ -1,5 +1,5 @@
-import { Button, ListItemButton } from '../../components';
-import { darkTheme, styled } from '../../theme';
+import { Button, ListItemButton } from '../../components/index.js';
+import { darkTheme, styled } from '../../theme.js';
 
 export const Container = styled('div', {
   borderRadius: '$sm',

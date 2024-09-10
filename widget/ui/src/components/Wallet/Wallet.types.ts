@@ -1,5 +1,5 @@
 import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
-import type { TransactionType } from 'rango-sdk';
+import type { TransactionType } from 'rango-types';
 
 export enum WalletState {
   NOT_INSTALLED = 'not_installed',

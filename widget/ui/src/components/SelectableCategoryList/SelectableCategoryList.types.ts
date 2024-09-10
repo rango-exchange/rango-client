@@ -1,4 +1,4 @@
-import type { BlockchainMeta } from 'rango-sdk';
+import type { BlockchainMeta } from 'rango-types';
 
 export interface SelectableCategoryListPropTypes {
   setCategory: (type: string) => void;

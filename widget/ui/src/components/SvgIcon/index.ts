@@ -1,2 +1,5 @@
-export { SvgIcon } from './SvgIcon';
-export type { SvgIconPropsWithChildren, SvgIconProps } from './SvgIcon.types';
+export { SvgIcon } from './SvgIcon.js';
+export type {
+  SvgIconPropsWithChildren,
+  SvgIconProps,
+} from './SvgIcon.types.js';

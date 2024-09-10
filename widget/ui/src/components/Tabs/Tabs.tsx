@@ -1,11 +1,11 @@
-import type { TabsPropTypes } from './Tabs.types';
+import type { TabsPropTypes } from './Tabs.types.js';
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Divider } from '../Divider';
-import { Tooltip } from '../Tooltip';
+import { Divider } from '../Divider/index.js';
+import { Tooltip } from '../Tooltip/index.js';
 
-import { BackdropTab, Tab, Tabs } from './Tabs.styles';
+import { BackdropTab, Tab, Tabs } from './Tabs.styles.js';
 
 const INITIAL_RENDER_DELAY = 100;
 export function TabsComponent(props: TabsPropTypes) {
@@ -15,7 +15,6 @@ export function TabsComponent(props: TabsPropTypes) {
     container = document.body,
     value,
     type,
-    borderRadius = 'medium',
     className,
   } = props;
   const [tabWidth, setTabWidth] = useState(0);
@@ -25,6 +24,12 @@ export function TabsComponent(props: TabsPropTypes) {
   // State variable to track the initial render
   const [initialRender, setInitialRender] = useState(true);
   const transformPosition = currentIndex * tabWidth;
+  let borderRadius: TabsPropTypes['borderRadius'] = 'medium';
+  if (type === 'bordered') {
+    borderRadius = 'none';
+  } else if (props.borderRadius) {
+    borderRadius = props.borderRadius;
+  }
 
   useEffect(() => {
     const updateTabWidth = () => {

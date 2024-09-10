@@ -1,6 +1,6 @@
-import { styled } from '../../theme';
+import { styled } from '../../theme.js';
 
-import { Typography } from './Typography';
+import { Typography } from './Typography.js';
 
 export const NotSelectableTypography = styled(Typography, {
   userSelect: 'none',

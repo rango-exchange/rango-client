@@ -1,17 +1,17 @@
-import type { DataLoadedProps, PropTypes } from './FullExpandedQuote.types';
-import type { Tag } from 'rango-sdk';
+import type { DataLoadedProps, PropTypes } from './FullExpandedQuote.types.js';
+import type { Tag } from 'rango-types/lib/api/main';
 
 import { i18n } from '@lingui/core';
 import React, { useState } from 'react';
 
-import { ErrorIcon, WarningIcon } from '../../icons';
-import { ChainToken } from '../ChainToken';
-import { Image } from '../common';
-import { Divider } from '../Divider';
-import { QuoteCost } from '../QuoteCost';
-import { QuoteTag } from '../QuoteTag';
-import { NumericTooltip, Tooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { ErrorIcon, WarningIcon } from '../../icons/index.js';
+import { ChainToken } from '../ChainToken/index.js';
+import { Image } from '../common/index.js';
+import { Divider } from '../Divider/index.js';
+import { QuoteCost } from '../QuoteCost/index.js';
+import { QuoteTag } from '../QuoteTag/index.js';
+import { NumericTooltip, Tooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   getTagLabel,
@@ -19,13 +19,13 @@ import {
   shortenAmount,
   shortenDisplayName,
   TOOLTIP_SIDE_OFFSET,
-} from './FullExpandedQuote.helpers';
+} from './FullExpandedQuote.helpers.js';
 import {
   SkeletonHeader,
   SkeletonItemLeft,
   SkeletonItemRight,
   SkeletonOutput,
-} from './FullExpandedQuote.Skeletons';
+} from './FullExpandedQuote.Skeletons.js';
 import {
   IconHighlight,
   lastStepStyle,
@@ -43,9 +43,9 @@ import {
   SwapperSection,
   TagsContainer,
   VerticalLine,
-} from './FullExpandedQuote.styles';
-import { TokenSection } from './FullExpandedQuote.TokenSection';
-import { TooltipContent } from './FullExpandedQuote.Tooltip';
+} from './FullExpandedQuote.styles.js';
+import { TokenSection } from './FullExpandedQuote.TokenSection.js';
+import { TooltipContent } from './FullExpandedQuote.Tooltip.js';
 
 export function FullExpandedQuote(props: PropTypes) {
   const {

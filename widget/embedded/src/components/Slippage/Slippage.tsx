@@ -2,6 +2,7 @@ import { i18n } from '@lingui/core';
 import {
   Divider,
   InfoIcon,
+  SlippageIcon,
   TextField,
   Tooltip,
   Typography,
@@ -31,6 +32,8 @@ export function Slippage() {
   return (
     <BaseContainer>
       <Head>
+        <SlippageIcon size={16} color="gray" />
+        <Divider direction="horizontal" size={4} />
         <Typography variant="title" size="xmedium">
           {i18n.t('Slippage tolerance per swap')}
         </Typography>

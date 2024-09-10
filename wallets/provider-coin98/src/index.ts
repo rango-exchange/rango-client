@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import { coin98 as coin98_instances, getSolanaAccounts } from './helpers';
-import signer from './signer';
+import { coin98 as coin98_instances, getSolanaAccounts } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.COIN98;
 

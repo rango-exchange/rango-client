@@ -9,8 +9,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { ConnectType } from '@terra-money/wallet-controller';
 
-import { station as station_instance } from './helpers';
-import signer from './signer';
+import { station as station_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.STATION;
 const STATION_WALLET_ID = 'station';

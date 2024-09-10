@@ -1,4 +1,4 @@
-import { css, keyframes, styled } from '../../theme';
+import { css, keyframes, styled } from '../../theme.js';
 
 export const Container = styled('div', {
   borderRadius: '$xs',

@@ -4,7 +4,7 @@ import { executeCosmosTransaction } from '@rango-dev/signer-cosmos';
 import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { xdefiTransfer } from './helpers';
+import { xdefiTransfer } from './helpers.js';
 
 /*
  * TODO - replace with real type

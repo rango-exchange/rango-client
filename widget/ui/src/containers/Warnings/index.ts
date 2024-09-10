@@ -1,1 +1,1 @@
-export { BalanceErrors } from './BalanceErrors';
+export { BalanceErrors } from './BalanceErrors.js';

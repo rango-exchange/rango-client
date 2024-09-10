@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/legacy",
+  "type": "module",
+  "main": "../dist/legacy/mod.js",
+  "module": "../dist/legacy/mod.js",
+  "types": "../dist/legacy/mod.d.ts",
+  "sideEffects": false
+}

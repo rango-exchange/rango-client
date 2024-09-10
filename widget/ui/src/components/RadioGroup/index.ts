@@ -1,3 +1,3 @@
-export { RadioGroup } from './RadioGroup';
-export { RadioRoot } from './RadioGroup.styles';
-export type { RadioGroupPropTypes } from './RadioGroup.types';
+export { RadioGroup } from './RadioGroup.js';
+export { RadioRoot } from './RadioGroup.styles.js';
+export type { RadioGroupPropTypes } from './RadioGroup.types.js';

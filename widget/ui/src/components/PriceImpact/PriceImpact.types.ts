@@ -1,5 +1,5 @@
-import type { TooltipPropTypes } from '../Tooltip/Tooltip.types';
-import type { TypographyPropTypes } from '../Typography';
+import type { TooltipPropTypes } from '../Tooltip/Tooltip.types.js';
+import type { TypographyPropTypes } from '../Typography/index.js';
 
 export type PriceImpactWarningLevel = 'low' | 'high' | undefined;
 

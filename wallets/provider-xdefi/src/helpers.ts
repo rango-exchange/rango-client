@@ -3,7 +3,7 @@ import type { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { Networks } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
+import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants.js';
 
 type Provider = Map<Network, any>;
 

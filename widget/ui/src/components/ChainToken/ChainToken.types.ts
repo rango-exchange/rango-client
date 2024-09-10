@@ -1,4 +1,4 @@
-import type { ChainImageContainer } from './ChainToken.styles';
+import type { ChainImageContainer } from './ChainToken.styles.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof ChainImageContainer>;

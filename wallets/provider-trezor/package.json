@@ -1,12 +1,15 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.3.0",
+  "version": "0.3.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "typings": "dist/index.d.ts",
   "files": [
@@ -14,17 +17,17 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor --external ethers,@rango-dev/signer-evm,@rango-dev/wallets-shared,rango-types",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.29.0",
-    "@rango-dev/wallets-shared": "^0.36.0",
+    "@rango-dev/signer-evm": "^0.29.1-next.1",
+    "@rango-dev/wallets-shared": "^0.36.1-next.2",
     "@trezor/connect-web": "^9.2.4",
-    "ethers": "^6.11.1",
+    "ethers": "^6.13.2",
     "rango-types": "^0.1.59"
   },
   "publishConfig": {

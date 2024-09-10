@@ -21,8 +21,8 @@ import { evmBlockchains, solanaBlockchain } from 'rango-types';
 import {
   getNonEvmAccounts,
   mathWallet as mathWallet_instance,
-} from './helpers';
-import signer from './signer';
+} from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.MATH;
 

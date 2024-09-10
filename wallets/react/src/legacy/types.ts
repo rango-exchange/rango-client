@@ -1,13 +1,11 @@
 import type {
-  EventHandler as WalletEventHandler,
-  State as WalletState,
-} from '@rango-dev/wallets-core';
-import type {
-  NamespaceData,
-  Network,
-  WalletInfo,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+  LegacyNamespaceData as NamespaceData,
+  LegacyNetwork as Network,
+  LegacyEventHandler as WalletEventHandler,
+  LegacyWalletInfo as WalletInfo,
+  LegacyState as WalletState,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 

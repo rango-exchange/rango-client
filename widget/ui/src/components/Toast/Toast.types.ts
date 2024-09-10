@@ -1,5 +1,5 @@
-import type { ToastContainer } from './Toast.styles';
-import type { Type } from '../Alert/Alert.types';
+import type { ToastContainer } from './Toast.styles.js';
+import type { Type } from '../Alert/Alert.types.js';
 import type * as Stitches from '@stitches/react';
 import type { CSSProperties } from 'react';
 

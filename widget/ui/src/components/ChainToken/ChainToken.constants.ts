@@ -1,4 +1,4 @@
-import type { ChainTokenPropTypes } from './ChainToken.types';
+import type { ChainTokenPropTypes } from './ChainToken.types.js';
 
 export const tokenChainSizeMap: {
   [key in ChainTokenPropTypes['size']]: { token: number; chain: number };

@@ -1,5 +1,5 @@
-import type { CSS } from '../../theme';
-import type { Asset } from 'rango-sdk';
+import type { CSS } from '../../theme.js';
+import type { Asset } from 'rango-types';
 
 type Notification = {
   route: { from: Asset; to: Asset };

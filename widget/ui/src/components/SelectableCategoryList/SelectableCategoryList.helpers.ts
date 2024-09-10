@@ -1,13 +1,13 @@
-import { type BlockchainMeta, TransactionType } from 'rango-sdk';
+import { type BlockchainMeta, TransactionType } from 'rango-types';
 
 import {
   CosmosCategoryIcon,
   EvmCategoryIcon,
   OtherCategoryIcon,
   UtxoCategoryIcon,
-} from '../../icons';
+} from '../../icons/index.js';
 
-import { BlockchainCategories } from './SelectableCategoryList.types';
+import { BlockchainCategories } from './SelectableCategoryList.types.js';
 
 export const blockchainCategoryIcons = {
   [BlockchainCategories.EVM]: EvmCategoryIcon,

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { SelectableCategoryListPropTypes } from './SelectableCategoryList.types';
+import type { SelectableCategoryListPropTypes } from './SelectableCategoryList.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Divider, Skeleton, Typography } from '..';
-import { BlockchainsChip } from '../BlockchainsChip';
+import { BlockchainsChip } from '../BlockchainsChip/index.js';
+import { Divider, Skeleton, Typography } from '../index.js';
 
 import {
   blockchainCategoryIcons,
   blockchainCategoryLabel,
   hasAnyCategory,
-} from './SelectableCategoryList.helpers';
-import { Container } from './SelectableCategoryList.styles';
-import { BlockchainCategories } from './SelectableCategoryList.types';
+} from './SelectableCategoryList.helpers.js';
+import { Container } from './SelectableCategoryList.styles.js';
+import { BlockchainCategories } from './SelectableCategoryList.types.js';
 
 export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
   const { setCategory, category, isLoading, blockchains } = props;

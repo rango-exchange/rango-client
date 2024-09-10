@@ -1,4 +1,4 @@
-import type { Environments } from './types';
+import type { Environments } from './types.js';
 import type {
   Connect,
   ProviderConnectResult,
@@ -13,9 +13,9 @@ import {
   getTrezorInstance,
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
-} from './helpers';
-import signer from './signer';
-import { setDerivationPath } from './state';
+} from './helpers.js';
+import signer from './signer.js';
+import { setDerivationPath } from './state.js';
 
 let trezorManifest: Environments['manifest'] = {
   appUrl: '',

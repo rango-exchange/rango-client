@@ -14,8 +14,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
 
-import { keplr as keplrInstance } from './helpers';
-import signer from './signer';
+import { keplr as keplrInstance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.KEPLR;
 

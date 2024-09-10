@@ -1,14 +1,14 @@
-import type { PropTypes } from './SwapToken.types';
+import type { PropTypes } from './SwapToken.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { NextIcon } from '../../icons';
-import { ChainToken } from '../ChainToken';
-import { Divider } from '../Divider';
-import { Skeleton } from '../Skeleton';
-import { NumericTooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { NextIcon } from '../../icons/index.js';
+import { ChainToken } from '../ChainToken/index.js';
+import { Divider } from '../Divider/index.js';
+import { Skeleton } from '../Skeleton/index.js';
+import { NumericTooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   Icon,
@@ -19,7 +19,7 @@ import {
   TokenContainer,
   TokenInfo,
   TopSection,
-} from './SwapToken.styles';
+} from './SwapToken.styles.js';
 
 export function SwapToken(props: PropTypes) {
   if ('isLoading' in props) {

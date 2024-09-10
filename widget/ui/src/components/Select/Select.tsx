@@ -1,12 +1,12 @@
-import type { SelectPropTypes } from './Select.types';
+import type { SelectPropTypes } from './Select.types.js';
 
 import * as Select from '@radix-ui/react-select';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { ChevronDownIcon, ChevronUpIcon, DoneIcon } from '../../icons';
-import { Typography } from '../Typography';
+import { ChevronDownIcon, ChevronUpIcon, DoneIcon } from '../../icons/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { SelectContent, SelectItem, SelectTrigger } from './Select.styles';
+import { SelectContent, SelectItem, SelectTrigger } from './Select.styles.js';
 
 export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
   const [open, setOpen] = useState(false);

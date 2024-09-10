@@ -1,6 +1,6 @@
 import { Connection } from '@solana/web3.js';
 
-import { getSolanaSignerConfig } from '../config';
+import { getSolanaSignerConfig } from '../config.js';
 
 const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 const SOLANA_RPC_URL = !IS_DEV

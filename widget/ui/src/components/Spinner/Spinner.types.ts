@@ -1,4 +1,4 @@
-import type { SvgIconProps } from '../SvgIcon';
+import type { SvgIconProps } from '../SvgIcon/index.js';
 import type * as Stitches from '@stitches/react';
 
 export interface SpinnerPropTypes {

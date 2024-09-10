@@ -1,8 +1,8 @@
-import type { ListItemButtonProps } from './ListItemButton.types';
+import type { ListItemButtonProps } from './ListItemButton.types.js';
 
 import React from 'react';
 
-import { BaseListItemButton } from './ListItemButton.styles';
+import { BaseListItemButton } from './ListItemButton.styles.js';
 
 function ListItemButton(props: ListItemButtonProps) {
   const { onClick, id, selected, ...restProps } = props;

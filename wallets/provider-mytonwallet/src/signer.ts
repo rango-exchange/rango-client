@@ -1,10 +1,8 @@
-import {
-  DefaultSignerFactory,
-  SignerFactory,
-  TransactionType as TxType,
-} from 'rango-types';
+import type { TonProvider } from './types.js';
+import type { SignerFactory } from 'rango-types';
+
 import { DefaultTonSigner } from '@rango-dev/signer-ton';
-import { TonProvider } from './types';
+import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default function getSigners(provider: TonProvider): SignerFactory {
   const signers = new DefaultSignerFactory();

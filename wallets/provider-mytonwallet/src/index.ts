@@ -1,4 +1,4 @@
-import type { TonProvider } from './types';
+import type { TonProvider } from './types.js';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -11,10 +11,10 @@ import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { toUserFriendlyAddress } from '@tonconnect/sdk/';
 import { tonBlockchain } from 'rango-types';
 
-import { TONCONNECT_MANIFEST_URL } from './constants';
-import { myTonWallet as myTonWallet_instance } from './helpers';
-import signer from './signer';
-import { isTonAddressItemReply } from './types';
+import { TONCONNECT_MANIFEST_URL } from './constants.js';
+import { myTonWallet as myTonWallet_instance } from './helpers.js';
+import signer from './signer.js';
+import { isTonAddressItemReply } from './types.js';
 
 const WALLET = WalletTypes.MY_TON_WALLET;
 

@@ -1,0 +1,15 @@
+diff --git a/node_modules/@walletconnect/modal/dist/_types/src/client.d.ts b/node_modules/@walletconnect/modal/dist/_types/src/client.d.ts
+index fc7c092..258e47f 100644
+--- a/node_modules/@walletconnect/modal/dist/_types/src/client.d.ts
++++ b/node_modules/@walletconnect/modal/dist/_types/src/client.d.ts
+@@ -9,8 +9,8 @@ export type WalletConnectModalConfig = ConfigCtrlState & ThemeCtrlState;
+ export declare class WalletConnectModal {
+     constructor(config: WalletConnectModalConfig);
+     private initUi;
+-    openModal: (options?: import("packages/modal-core/dist/_types/src/controllers/ModalCtrl").OpenOptions | undefined) => Promise<void>;
++    openModal: (options?: import("@walletconnect/modal-core/dist/_types/src/controllers/ModalCtrl").OpenOptions | undefined) => Promise<void>;
+     closeModal: () => void;
+-    subscribeModal: (callback: (newState: import("packages/modal-core/dist/_types/src/types/controllerTypes").ModalCtrlState) => void) => () => void;
++    subscribeModal: (callback: (newState: import("@walletconnect/modal-core/dist/_types/src/types/controllerTypes").ModalCtrlState) => void) => () => void;
+     setTheme: (theme: ThemeCtrlState) => void;
+ }

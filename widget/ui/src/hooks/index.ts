@@ -1,1 +1,1 @@
-export { useCopyToClipboard } from './useCopyToClipboard';
+export { useCopyToClipboard } from './useCopyToClipboard.js';

@@ -1,1 +1,1 @@
-export { Image, ImageContainer } from './Image';
+export { Image, ImageContainer } from './Image.js';

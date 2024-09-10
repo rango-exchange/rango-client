@@ -1,1 +1,1 @@
-export { BlockchainsChip } from './BlockchainsChip';
+export { BlockchainsChip } from './BlockchainsChip.js';

@@ -1,8 +1,8 @@
-import type { Info } from './Wallet.types';
+import type { Info } from './Wallet.types.js';
 
 import { i18n } from '@lingui/core';
 
-import { WalletState } from './Wallet.types';
+import { WalletState } from './Wallet.types.js';
 
 export function makeInfo(state: WalletState): Info {
   switch (state) {

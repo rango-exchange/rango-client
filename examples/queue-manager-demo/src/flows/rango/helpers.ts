@@ -32,7 +32,7 @@ import type {
 } from 'rango-types';
 
 import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   Networks,
   WalletTypes,
@@ -609,7 +609,7 @@ export function convertRawAccountToFullAccount(
      * Otherwise, we stop executing this function.
      */
     const isUknownAndEvmBased =
-      network === Networks.Unknown && ethers.utils.isAddress(address);
+      network === Networks.Unknown && ethers.isAddress(address);
     if (isUnknown && !isUknownAndEvmBased) {
       return;
     }

@@ -1,1 +1,1 @@
-export { TokenAmount } from './TokenAmount';
+export { TokenAmount } from './TokenAmount.js';

@@ -1,2 +1,2 @@
-export { Chip } from './Chip';
-export type { ChipPropTypes } from './Chip.types';
+export { Chip } from './Chip.js';
+export type { ChipPropTypes } from './Chip.types.js';

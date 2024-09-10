@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { enkrypt as enkrypt_instance } from './helpers';
-import signer from './signer';
+import { enkrypt as enkrypt_instance } from './helpers.js';
+import signer from './signer.js';
 
 export const getInstance = enkrypt_instance;
 

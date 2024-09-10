@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const Container = styled('div', {
   display: 'flex',
