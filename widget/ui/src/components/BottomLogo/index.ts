@@ -1,1 +1,1 @@
-export { BottomLogo } from './BottomLogo';
+export { BottomLogo } from './BottomLogo.js';

@@ -1,1 +1,1 @@
-export { QuoteTag } from './QuoteTag';
+export { QuoteTag } from './QuoteTag.js';

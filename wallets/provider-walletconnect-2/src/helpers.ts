@@ -1,3 +1,4 @@
+import type { WalletConnectModal as WalletConnectModalType } from './wc-types.js';
 import type { WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
@@ -17,10 +18,10 @@ import {
   DEFAULT_SOLANA_CHAIN_ID,
   EthereumRPCMethods,
   NAMESPACES,
-} from './constants';
-import { getLastSession } from './session';
+} from './constants.js';
+import { getLastSession } from './session.js';
 
-let web3Modal: WalletConnectModal;
+let web3Modal: WalletConnectModalType;
 export function createModalInstance(projectId: string) {
   if (!web3Modal) {
     web3Modal = new WalletConnectModal({
@@ -29,10 +30,11 @@ export function createModalInstance(projectId: string) {
       themeVariables: {
         '--wcm-z-index': '999999999',
       },
-    });
+    }) as unknown as WalletConnectModalType;
   }
 }
-export function getModal(): WalletConnectModal {
+
+export function getModal(): WalletConnectModalType {
   return web3Modal;
 }
 

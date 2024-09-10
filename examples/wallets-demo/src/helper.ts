@@ -1,7 +1,7 @@
 import type { Network } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { Networks } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 

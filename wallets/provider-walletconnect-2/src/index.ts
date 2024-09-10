@@ -1,4 +1,4 @@
-import type { Environments, WCInstance } from './types';
+import type { Environments, WCInstance } from './types.js';
 import type {
   CanSwitchNetwork,
   Connect,
@@ -25,13 +25,13 @@ import {
   EthereumRPCMethods,
   NAMESPACES,
   RELAY_URL,
-} from './constants';
+} from './constants.js';
 import {
   createModalInstance,
   filterEvmAccounts,
   simulateRequest,
   switchOrAddEvmChain,
-} from './helpers';
+} from './helpers.js';
 import {
   cleanupSingleSession,
   disconnectSessions,
@@ -42,8 +42,8 @@ import {
   persistCurrentChainId,
   tryConnect,
   updateSessionAccounts,
-} from './session';
-import signer from './signer';
+} from './session.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 

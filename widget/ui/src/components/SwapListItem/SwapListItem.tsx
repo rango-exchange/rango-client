@@ -1,12 +1,12 @@
-import type { SwapListItemPropTypes } from './SwapListItem.types';
+import type { SwapListItemPropTypes } from './SwapListItem.types.js';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Skeleton } from '../Skeleton';
-import { Typography } from '../Typography';
+import { Skeleton } from '../Skeleton/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { formattedDateAndTime, getStatus } from './SwapListItem.helpers';
+import { formattedDateAndTime, getStatus } from './SwapListItem.helpers.js';
 import {
   Container,
   Date,
@@ -14,9 +14,9 @@ import {
   LoadingContainer,
   LoadingMain,
   Main,
-} from './SwapListItem.styles';
-import { StatusColors } from './SwapListItem.types';
-import { SwapToken } from './SwapToken';
+} from './SwapListItem.styles.js';
+import { StatusColors } from './SwapListItem.types.js';
+import { SwapToken } from './SwapToken.js';
 
 export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
   if ('isLoading' in props) {

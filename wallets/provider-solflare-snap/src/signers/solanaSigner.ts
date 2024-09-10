@@ -6,6 +6,7 @@ import {
   prepareTransaction,
   simulateTransaction,
 } from '@rango-dev/signer-solana';
+import base58 from 'bs58';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 const REJECTION_CODE = 4001;
@@ -23,7 +24,7 @@ export class SolflareSnapSolanaSigner
     try {
       const encodedMessage = new TextEncoder().encode(msg);
       const signature = await this.provider.signMessage(encodedMessage);
-      return Buffer.from(signature).toString('base64');
+      return base58.encode(signature);
     } catch (error) {
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
     }

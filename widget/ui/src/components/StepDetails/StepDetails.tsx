@@ -1,14 +1,14 @@
-import type { InternalSwap, StepDetailsProps } from './StepDetails.types';
+import type { InternalSwap, StepDetailsProps } from './StepDetails.types.js';
 
 import { i18n } from '@lingui/core';
 import React, { forwardRef, Fragment, memo, useEffect, useRef } from 'react';
 
-import { ChainToken } from '../../components/ChainToken/ChainToken';
-import { NextIcon } from '../../icons';
-import { Image } from '../common';
-import { Divider } from '../Divider';
-import { NumericTooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { ChainToken } from '../../components/ChainToken/index.js';
+import { NextIcon } from '../../icons/index.js';
+import { Image } from '../common/index.js';
+import { Divider } from '../Divider/index.js';
+import { NumericTooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   Alerts,
@@ -22,7 +22,7 @@ import {
   swappersStyles,
   tokensContainerStyles,
   tokensStyles,
-} from './StepDetails.styles';
+} from './StepDetails.styles.js';
 
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
   (props, parentRef) => {

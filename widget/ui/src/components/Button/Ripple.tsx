@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { RippleContainer } from './Button.styles';
+import { RippleContainer } from './Button.styles.js';
 
 const DURATION = 850;
 

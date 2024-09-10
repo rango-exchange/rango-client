@@ -21,8 +21,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain, tronBlockchain } from 'rango-types';
 
-import { bitgetInstances } from './helpers';
-import signer from './signer';
+import { bitgetInstances } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.BITGET;
 

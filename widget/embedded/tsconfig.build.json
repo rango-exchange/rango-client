@@ -8,7 +8,6 @@
     "./global-env.d.ts"
   ],
   "compilerOptions": {
-    "module": "esnext",
     "outDir": "dist",
     "downlevelIteration": true,
     "lib": ["dom", "esnext"],

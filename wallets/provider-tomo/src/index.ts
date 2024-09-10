@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { tomo as tomo_instance } from './helpers';
-import signer from './signer';
+import { tomo as tomo_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.TOMO;
 

@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { defaultInjected } from './helpers';
-import signer from './signer';
+import { defaultInjected } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.DEFAULT;
 

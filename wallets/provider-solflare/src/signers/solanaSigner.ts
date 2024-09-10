@@ -2,6 +2,7 @@ import type Solflare from '@solflare-wallet/sdk';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { executeSolanaTransaction } from '@rango-dev/signer-solana';
+import base58 from 'bs58';
 
 export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
   private provider: any; // Used any instead of Solflare because there is an issue in type of `signTransaction` method of Solflare
@@ -17,7 +18,7 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
       messageBytes,
       'utf8'
     );
-    return messageSignature.toString();
+    return base58.encode(messageSignature);
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {

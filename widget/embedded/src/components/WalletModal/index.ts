@@ -1,1 +1,0 @@
-export { WalletModal } from './WalletModal';

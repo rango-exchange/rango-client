@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { SvgIconPropsWithChildren } from '../SvgIcon';
+import type { SvgIconPropsWithChildren } from '../SvgIcon/index.js';
 
 import React, { createElement } from 'react';
 
-import { SvgIcon } from '../SvgIcon';
+import { SvgIcon } from '../SvgIcon/index.js';
 
-import { StyledEllipse, StyledPath } from './RefreshProgressButton.styles';
+import { StyledEllipse, StyledPath } from './RefreshProgressButton.styles.js';
 
 const DEFAULT_STROKE_DASHOFFSET = 59;
 const MAX_PERCENTAGE = 100;

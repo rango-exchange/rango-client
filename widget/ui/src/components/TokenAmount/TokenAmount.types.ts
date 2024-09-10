@@ -1,5 +1,5 @@
-import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types';
-import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types';
+import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types.js';
+import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types.js';
 
 type BaseProps = Pick<SwapInputPropTypes, 'token' | 'price'> & {
   chain: Pick<SwapInputPropTypes['chain'], 'image'>;

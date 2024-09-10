@@ -1,11 +1,11 @@
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Divider } from '../Divider';
-import { Logo } from '../Logo';
-import { Typography } from '../Typography';
+import { Divider } from '../Divider/index.js';
+import { Logo } from '../Logo/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { Container, StyledAnchor } from './BottomLogo.styles';
+import { Container, StyledAnchor } from './BottomLogo.styles.js';
 
 export function BottomLogo() {
   return (

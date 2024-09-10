@@ -13,9 +13,9 @@ import {
   getLedgerInstance,
   getSolanaAccounts,
   transportDisconnect,
-} from './helpers';
-import signer from './signer';
-import { setDerivationPath } from './state';
+} from './helpers.js';
+import signer from './signer.js';
+import { setDerivationPath } from './state.js';
 
 export const config = {
   type: WalletTypes.LEDGER,

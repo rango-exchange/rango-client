@@ -1,5 +1,5 @@
-import { darkTheme, styled } from '../../theme';
-import { ImageContainer } from '../common';
+import { darkTheme, styled } from '../../theme.js';
+import { ImageContainer } from '../common/index.js';
 
 export const Chip = styled('button', {
   padding: '$10',

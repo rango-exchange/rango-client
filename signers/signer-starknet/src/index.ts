@@ -1,1 +1,1 @@
-export { DefaultStarknetSigner } from './signer';
+export { DefaultStarknetSigner } from './signer.js';

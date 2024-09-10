@@ -1,2 +1,2 @@
-export { DefaultEvmSigner } from './signer';
-export { waitMs, cleanEvmError } from './helper';
+export { DefaultEvmSigner } from './signer.js';
+export { waitMs, cleanEvmError } from './helper.js';

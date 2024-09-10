@@ -1,12 +1,12 @@
-import type { CollapsiblePropTypes } from './Collapsible.types';
+import type { CollapsiblePropTypes } from './Collapsible.types.js';
 import type { PropsWithChildren } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
 import React from 'react';
 
-import { CollapsibleContent } from '../common/styles';
+import { CollapsibleContent } from '../common/styles.js';
 
-import { Trigger } from './Collapsible.styles';
+import { Trigger } from './Collapsible.styles.js';
 
 export function CollapsibleComponent(
   props: PropsWithChildren<CollapsiblePropTypes>

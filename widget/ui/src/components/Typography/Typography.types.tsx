@@ -1,4 +1,4 @@
-import type { TypographyContainer } from './Typography.styles';
+import type { TypographyContainer } from './Typography.styles.js';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof TypographyContainer>;

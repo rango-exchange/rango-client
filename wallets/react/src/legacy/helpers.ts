@@ -4,15 +4,15 @@ import type {
   WalletActions,
   WalletProviders,
 } from './types.js';
-import type Wallet from '@rango-dev/wallets-core';
 import type {
-  Options,
-  EventHandler as WalletEventHandler,
-  State as WalletState,
-} from '@rango-dev/wallets-core';
+  LegacyOptions as Options,
+  LegacyWallet as Wallet,
+  LegacyEventHandler as WalletEventHandler,
+  LegacyState as WalletState,
+} from '@rango-dev/wallets-core/legacy';
 import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
 
-import { Persistor } from '@rango-dev/wallets-core';
+import { Persistor } from '@rango-dev/wallets-core/legacy';
 
 import { LAST_CONNECTED_WALLETS } from './constants.js';
 

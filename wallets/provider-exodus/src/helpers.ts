@@ -1,13 +1,21 @@
-import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
+
+import { Networks } from '@rango-dev/wallets-shared';
 
 export function exodus_instances() {
   const { exodus } = window;
 
-  if (!exodus) return null;
+  if (!exodus) {
+    return null;
+  }
 
   const instances = new Map();
-  if (exodus.ethereum) instances.set(Networks.ETHEREUM, exodus.ethereum);
-  if (exodus.solana) instances.set(Networks.SOLANA, exodus.solana);
+  if (exodus.ethereum) {
+    instances.set(Networks.ETHEREUM, exodus.ethereum);
+  }
+  if (exodus.solana) {
+    instances.set(Networks.SOLANA, exodus.solana);
+  }
   return instances;
 }
 

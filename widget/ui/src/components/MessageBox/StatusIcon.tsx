@@ -1,4 +1,4 @@
-import type { PropTypes } from './MessageBox.types';
+import type { PropTypes } from './MessageBox.types.js';
 
 import React from 'react';
 
@@ -7,8 +7,8 @@ import {
   ErrorIcon,
   InfoErrorIcon,
   WarningIcon,
-} from '../../icons';
-import { Spinner } from '../Spinner';
+} from '../../icons/index.js';
+import { Spinner } from '../Spinner/index.js';
 
 function StatusIcon(props: Pick<PropTypes, 'type'>) {
   switch (props.type) {

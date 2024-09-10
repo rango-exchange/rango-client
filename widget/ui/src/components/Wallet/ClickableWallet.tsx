@@ -1,23 +1,23 @@
-import type { WalletPropTypes } from './Wallet.types';
+import type { WalletPropTypes } from './Wallet.types.js';
 
 import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React, { Fragment } from 'react';
 
-import { Image } from '../common';
-import { Divider } from '../Divider';
-import { Skeleton } from '../Skeleton';
-import { Tooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { Image } from '../common/index.js';
+import { Divider } from '../Divider/index.js';
+import { Skeleton } from '../Skeleton/index.js';
+import { Tooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
-import { makeInfo } from './Wallet.helpers';
+import { makeInfo } from './Wallet.helpers.js';
 import {
   LoadingButton,
   Text,
   Title,
   WalletButton,
   WalletImageContainer,
-} from './Wallet.styles';
-import { WalletState } from './Wallet.types';
+} from './Wallet.styles.js';
+import { WalletState } from './Wallet.types.js';
 
 function Wallet(props: WalletPropTypes) {
   const { title, type, image, onClick, isLoading, disabled = false } = props;

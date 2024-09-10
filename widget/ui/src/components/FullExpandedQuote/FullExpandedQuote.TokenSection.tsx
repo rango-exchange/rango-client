@@ -1,16 +1,16 @@
-import type { TokenSectionPropTypes } from './FullExpandedQuote.types';
+import type { TokenSectionPropTypes } from './FullExpandedQuote.types.js';
 
 import React from 'react';
 
-import { ChainToken } from '../ChainToken';
-import { NumericTooltip } from '../Tooltip';
-import { Typography } from '../Typography';
+import { ChainToken } from '../ChainToken/index.js';
+import { NumericTooltip } from '../Tooltip/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   TokenInfo,
   tokenLabelStyles,
   TokenSectionContainer,
-} from './FullExpandedQuote.styles';
+} from './FullExpandedQuote.styles.js';
 
 export function TokenSection(props: TokenSectionPropTypes) {
   const {

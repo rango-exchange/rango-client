@@ -10,7 +10,7 @@ import base58 from 'bs58';
 import { AccountId, ChainId } from 'caip';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { NAMESPACES, SolanaRPCMethods } from '../constants';
+import { NAMESPACES, SolanaRPCMethods } from '../constants.js';
 
 const NAMESPACE_NAME = NAMESPACES.SOLANA;
 class SOLANASigner implements GenericSigner<SolanaTransaction> {

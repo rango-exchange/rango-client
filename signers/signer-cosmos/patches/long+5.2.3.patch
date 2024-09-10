@@ -1,0 +1,14 @@
+diff --git a/node_modules/long/umd/index.d.ts b/node_modules/long/umd/index.d.ts
+index c623535..e622f98 100644
+--- a/node_modules/long/umd/index.d.ts
++++ b/node_modules/long/umd/index.d.ts
+@@ -1,2 +1,9 @@
++// This library has a build issue which breaks `esnext` and `nodendex` module resolution.
++// Issues:
++// https://github.com/dcodeIO/long.js/issues/125
++// https://github.com/dcodeIO/long.js/issues/131
++// https://github.com/dcodeIO/long.js/issues/109
++// eslint-disable-next-line @typescript-eslint/ban-ts-comment
++// @ts-ignore
+ import Long from "../index.js";
+ export = Long;

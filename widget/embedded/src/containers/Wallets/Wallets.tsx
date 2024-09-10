@@ -4,7 +4,7 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { EventHandler } from '@rango-dev/wallets-react';
+import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
 import { Events, Provider } from '@rango-dev/wallets-react';

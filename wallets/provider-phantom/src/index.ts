@@ -14,8 +14,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
 
-import { phantom as phantom_instance } from './helpers';
-import signer from './signer';
+import { phantom as phantom_instance } from './helpers.js';
+import signer from './signer.js';
 
 const WALLET = WalletTypes.PHANTOM;
 

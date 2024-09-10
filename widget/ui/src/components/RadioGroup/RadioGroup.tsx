@@ -1,16 +1,16 @@
-import type { RadioGroupPropTypes } from './RadioGroup.types';
+import type { RadioGroupPropTypes } from './RadioGroup.types.js';
 
 import React from 'react';
 
-import { Radio } from '../Radio/Radio';
-import { Typography } from '../Typography';
+import { Radio } from '../Radio/index.js';
+import { Typography } from '../Typography/index.js';
 
 import {
   Container,
   ItemContainer,
   Label,
   RadioRoot,
-} from './RadioGroup.styles';
+} from './RadioGroup.styles.js';
 
 export function RadioGroup(props: RadioGroupPropTypes) {
   const { value, onChange, direction = 'vertical', style, options } = props;

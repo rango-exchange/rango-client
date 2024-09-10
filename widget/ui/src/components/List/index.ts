@@ -1,2 +1,2 @@
-export { List } from './List';
-export type { ListPropTypes } from './List.types';
+export { List } from './List.js';
+export type { ListPropTypes } from './List.types.js';

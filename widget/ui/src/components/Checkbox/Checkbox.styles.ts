@@ -1,6 +1,6 @@
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme.js';
 
 export const CheckboxContainer = styled('div', {
   display: 'flex',

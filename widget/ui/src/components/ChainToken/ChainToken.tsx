@@ -1,16 +1,16 @@
-import type { ChainTokenPropTypes } from './ChainToken.types';
+import type { ChainTokenPropTypes } from './ChainToken.types.js';
 
 import React from 'react';
 
-import { Image } from '../common';
-import { Skeleton } from '../Skeleton';
+import { Image } from '../common/index.js';
+import { Skeleton } from '../Skeleton/index.js';
 
-import { tokenChainSizeMap } from './ChainToken.constants';
+import { tokenChainSizeMap } from './ChainToken.constants.js';
 import {
   ChainImageContainer,
   Container,
   TokenImageContainer,
-} from './ChainToken.styles';
+} from './ChainToken.styles.js';
 
 export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
   const {

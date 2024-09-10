@@ -18,8 +18,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { rabby as rabby_instance } from './helpers';
-import signer from './signer';
+import { rabby as rabby_instance } from './helpers.js';
+import signer from './signer.js';
 
 export const config = {
   type: WalletTypes.Rabby,
