@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-09 12:31\n"
+"PO-Revision-Date: 2024-09-10 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,16 +17,6 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
-msgid "In order to connect to {type}, you must first select a Derivation Path"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
-msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
-msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -651,6 +641,11 @@ msgid "Select Derivation Path"
 msgstr "选择派生路径"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
 msgstr "选择派生路径模板"
@@ -918,6 +913,11 @@ msgstr "无需再次添加此令牌，因为它已经存在并得到我们的支
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
 msgstr "未找到令牌"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78

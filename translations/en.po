@@ -14,16 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
-msgid "In order to connect to {type}, you must first select a Derivation Path"
-msgstr "In order to connect to {type}, you must first select a Derivation Path"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
-msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
-msgstr "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:285
 #: widget/embedded/src/pages/HistoryPage.tsx:185
@@ -648,6 +638,11 @@ msgid "Select Derivation Path"
 msgstr "Select Derivation Path"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "In order to connect to {type}, you must first select a Derivation Path"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
 msgstr "Choose Derivation Path Template"
@@ -915,6 +910,11 @@ msgstr "There's no need to add this token again because it already exists and is
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
 msgstr "Token Not Found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
+msgstr "Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
