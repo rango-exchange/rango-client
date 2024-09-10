@@ -1,3 +1,7 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/signer-starknet@0.29.0...signer-starknet@0.30.0) (2024-09-10)
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/signer-starknet@0.28.0...signer-starknet@0.29.0) (2024-08-11)
 
 

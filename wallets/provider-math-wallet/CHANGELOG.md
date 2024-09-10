@@ -1,3 +1,7 @@
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.36.0...provider-math-wallet@0.37.0) (2024-09-10)
+
+
+
 # [0.36.0](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.35.1...provider-math-wallet@0.36.0) (2024-08-11)
 
 
