@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.3.0...provider-trezor@0.4.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* incorrect error message on Trezor wallet transaction rejection ([3998563](https://github.com/rango-exchange/rango-client/commit/3998563fa06c694b34a61730b4f6c13f3323a407))
+
+
+
 # [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.2.1...provider-trezor@0.3.0) (2024-08-11)
 
 
