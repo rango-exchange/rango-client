@@ -1,3 +1,24 @@
+# [0.33.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.32.1...widget-embedded@0.33.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* add slippage icon to setting page ([2e29351](https://github.com/rango-exchange/rango-client/commit/2e29351d957f4e751a25f66b7cb173e5d9956378))
+* clear timeout for success modal to avoid closing upcoming modals unexpectedly ([0d54a60](https://github.com/rango-exchange/rango-client/commit/0d54a6092e6a412b1497b9a3e26af6f669eea181))
+* correct translation bugs ([0107f1d](https://github.com/rango-exchange/rango-client/commit/0107f1df7a587d9910c5376c4f99acd23b95e1a4))
+* fix wallet state issue after retrying to fetch the balance following a failed attempt ([181bac3](https://github.com/rango-exchange/rango-client/commit/181bac3f54727847f8d16ff47164cce80aa64931))
+* if state is on connecting, we should call disconnect in terminateconnectingWallets as well ([ad16056](https://github.com/rango-exchange/rango-client/commit/ad1605631df82e4d692f7e75999b2a5c51216958))
+* improve header component to center the title properly ([a9929bb](https://github.com/rango-exchange/rango-client/commit/a9929bb518ccbb2033b646fbcb5c034852b039b2))
+* reset derivation path if it's string and switching from custom mode ([c94c71a](https://github.com/rango-exchange/rango-client/commit/c94c71a94f3ac910ca13433ea616ce548559dc58))
+
+
+### Features
+
+* export a new hook for handling required data for connect called useStateful ([0d00a45](https://github.com/rango-exchange/rango-client/commit/0d00a45b4434e0e2b53228a1d1c0be4fa579e21b))
+* export StatefulConnect components and helpers ([c28a94b](https://github.com/rango-exchange/rango-client/commit/c28a94bd2721b4dbd16f9471f1cb0ddc45aa8904))
+
+
+
 ## [0.32.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.32.0...widget-embedded@0.32.1) (2024-08-17)
 
 

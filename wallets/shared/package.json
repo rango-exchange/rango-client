@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.36.1-next.2",
+  "version": "0.37.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -27,7 +27,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.37.1-next.1",
+    "@rango-dev/wallets-core": "^0.38.0",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.69"
   },

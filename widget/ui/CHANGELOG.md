@@ -1,3 +1,19 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/ui@0.38.0...ui@0.39.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* add slippage icon to setting page ([2e29351](https://github.com/rango-exchange/rango-client/commit/2e29351d957f4e751a25f66b7cb173e5d9956378))
+* ensure proper cleanup of the modal component after it is removed from the dom ([394e4f0](https://github.com/rango-exchange/rango-client/commit/394e4f017eb09ac99f90a10be94ef8a742632586))
+* improve header component to center the title properly ([a9929bb](https://github.com/rango-exchange/rango-client/commit/a9929bb518ccbb2033b646fbcb5c034852b039b2))
+
+
+### Features
+
+* implement bordered variant for tabs component ([1de8888](https://github.com/rango-exchange/rango-client/commit/1de8888d6d4ae13a765aaee0173eebf0d49f4a11))
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/ui@0.37.0...ui@0.38.0) (2024-08-17)
 
 
