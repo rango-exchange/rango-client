@@ -1,3 +1,12 @@
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.31.0...signer-solana@0.32.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* update signMessage in the default Solana signer to return a base58 string instead of base64 ([b60609b](https://github.com/rango-exchange/rango-client/commit/b60609b71d55ff205324aee87fb440d23cba5c79))
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.30.0...signer-solana@0.31.0) (2024-08-11)
 
 

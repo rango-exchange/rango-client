@@ -1,3 +1,12 @@
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.36.0...provider-all@0.37.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* remove trezor temporarily ([8647cb4](https://github.com/rango-exchange/rango-client/commit/8647cb431dfdae99b82bda2d3fb7eaff7cbbf299))
+
+
+
 # [0.36.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.35.1...provider-all@0.36.0) (2024-08-11)
 
 
