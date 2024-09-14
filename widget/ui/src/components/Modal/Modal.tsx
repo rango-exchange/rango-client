@@ -71,14 +71,12 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
         setStatus('deactivated');
         modalContainerRef.current?.addEventListener('transitionend', () => {
           setStatus('unmounted');
-          container.style.removeProperty('overflow');
         });
       } else {
         setStatus('unmounted');
       }
     } else {
       setStatus('mounted');
-      container.style.overflow = 'hidden';
     }
 
     return () => {
@@ -90,13 +88,6 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
       }
     };
   }, [open]);
-
-  useEffect(() => {
-    return () => {
-      //container might be null
-      container?.style.removeProperty('overflow');
-    };
-  }, []);
 
   useEffect(() => {
     if (!!container && isMount) {
