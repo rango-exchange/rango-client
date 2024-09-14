@@ -1,8 +1,8 @@
 import type { ModalPropTypes } from './Modal.types.js';
 import type { PropsWithChildren } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
 import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '../../icons/index.js';
 import { BottomLogo } from '../BottomLogo/index.js';
@@ -12,11 +12,11 @@ import { Typography } from '../Typography/index.js';
 
 import { forceReflow } from './Modal.helpers.js';
 import {
-  BackDrop,
   Content,
+  DialogContent,
+  DialogOverlay,
   Flex,
   Footer,
-  ModalContainer,
   ModalHeader,
 } from './Modal.styles.js';
 
@@ -48,10 +48,8 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   const modalContainerRef = useRef<HTMLElement | null>(null);
   const exitCallbackRef = useRef<ModalPropTypes['onExit']>();
 
-  const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-
-    if (event.target === event.currentTarget && dismissible) {
+  const handleBackDropClick = (open: boolean) => {
+    if (dismissible && !open) {
       onClose();
     }
   };
@@ -109,50 +107,49 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     }
   }, [isMount, container]);
 
-  if (status === 'unmounted' || !container) {
-    return null;
-  }
-
-  return createPortal(
-    <BackDrop active={active} onClick={handleBackDropClick} css={styles?.root}>
-      <ModalContainer
-        active={active}
-        css={styles?.container}
-        anchor={anchor}
-        ref={(ref) => (modalContainerRef.current = ref)}>
-        {header ?? (
-          <ModalHeader noTitle={!title && dismissible && !prefix}>
-            {prefix}
-            {title && (
-              <Typography variant="title" size="small">
-                {title}
-              </Typography>
-            )}
-            <Flex>
-              {suffix}
-              {dismissible && hasCloseIcon && (
-                <IconButton onClick={onClose} variant="ghost">
-                  <CloseIcon color="gray" size={14} />
-                </IconButton>
+  return (
+    <Dialog.Root
+      open={status !== 'unmounted' && !!container}
+      onOpenChange={handleBackDropClick}>
+      <Dialog.Portal container={container}>
+        <DialogOverlay active={active} />
+        <DialogContent
+          active={active}
+          css={styles?.container}
+          anchor={anchor}
+          ref={(ref) => (modalContainerRef.current = ref)}>
+          {header ?? (
+            <ModalHeader noTitle={!title && dismissible && !prefix}>
+              {prefix}
+              {title && (
+                <Typography variant="title" size="small">
+                  {title}
+                </Typography>
               )}
-            </Flex>
-          </ModalHeader>
-        )}
-        <Content css={styles?.content}>{children}</Content>
+              <Flex>
+                {suffix}
+                {dismissible && hasCloseIcon && (
+                  <IconButton onClick={onClose} variant="ghost">
+                    <CloseIcon color="gray" size={14} />
+                  </IconButton>
+                )}
+              </Flex>
+            </ModalHeader>
+          )}
+          <Content css={styles?.content}>{children}</Content>
+          <Footer css={styles?.footer}>
+            {footer && <div className="footer__content">{footer}</div>}
 
-        <Footer css={styles?.footer}>
-          {footer && <div className="footer__content">{footer}</div>}
-
-          <div
-            className={`footer__logo ${
-              hasWatermark ? 'logo__show' : 'logo__hidden'
-            }`}>
-            <Divider size={12} />
-            <BottomLogo />
-          </div>
-        </Footer>
-      </ModalContainer>
-    </BackDrop>,
-    container
+            <div
+              className={`footer__logo ${
+                hasWatermark ? 'logo__show' : 'logo__hidden'
+              }`}>
+              <Divider size={12} />
+              <BottomLogo />
+            </div>
+          </Footer>
+        </DialogContent>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

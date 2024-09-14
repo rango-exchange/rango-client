@@ -1,7 +1,9 @@
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { styled } from '../../theme.js';
 import { IconButton } from '../IconButton/index.js';
 
-export const BackDrop = styled('div', {
+export const DialogOverlay = styled(Dialog.Overlay, {
   position: 'absolute',
   top: '0',
   left: '0',
@@ -24,7 +26,7 @@ export const BackDrop = styled('div', {
   },
 });
 
-export const ModalContainer = styled('div', {
+export const DialogContent = styled(Dialog.Content, {
   backgroundColor: '$background',
   width: '100%',
   borderRadius: '$primary',
