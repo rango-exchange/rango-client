@@ -1,3 +1,7 @@
+## [0.33.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.33.0...widget-embedded@0.33.1) (2024-09-16)
+
+
+
 # [0.33.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.32.1...widget-embedded@0.33.0) (2024-09-10)
 
 

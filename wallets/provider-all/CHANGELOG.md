@@ -1,3 +1,12 @@
+## [0.37.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.37.0...provider-all@0.37.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* enabling trezor by removing bundling for @trezor/connect-web ([eb0be81](https://github.com/rango-exchange/rango-client/commit/eb0be81dd582a21e4c46b32c68bfd3ddd2a3cfa0))
+
+
+
 # [0.37.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.36.0...provider-all@0.37.0) (2024-09-10)
 
 
