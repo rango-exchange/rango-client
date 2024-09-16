@@ -1,0 +1,11 @@
+{
+  // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
+  "extends": "../../tsconfig.libnext.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "./src",
+    "jsx": "react",
+    "skipLibCheck": true
+  }
+}
