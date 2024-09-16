@@ -29,6 +29,7 @@
   "dependencies": {
     "@rango-dev/ui": "^0.39.0",
     "@rango-dev/wallets-shared": "^0.37.0",
+    "@rango-dev/charts": "^0.1.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^8.0.8",
