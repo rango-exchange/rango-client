@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -17,7 +17,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor --external ethers,@rango-dev/signer-evm,@rango-dev/wallets-shared,rango-types",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
