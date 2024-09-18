@@ -101,7 +101,6 @@ function Item({
         supportedChainsNames
       ).find((a) => a.accounts.find((b) => b.isConnected));
 
-      const signers = getSigners(type);
       const isMatchedNetworkWithAccount = walletState.accounts.find((account) =>
         account?.toLowerCase()?.includes(network?.toLowerCase())
       );
@@ -125,13 +124,16 @@ function Item({
         alert('Error in detecting tx type.');
         return;
       }
-      const result = signers
-        .getSigner(txType)
-        .signMessage('Hello World', address || 'meow', chainId);
-      result
-        .then((signature) => {
-          alert(signature);
-        })
+
+      getSigners(type)
+        .then(async (signers) =>
+          signers
+            .getSigner(txType)
+            .signMessage('Hello World', address || 'meow', chainId)
+            .then((signature) => {
+              alert(signature);
+            })
+        )
         .catch((ex) => {
           alert(
             'Error' + `(${info.name}): ` + (ex.message || 'Failed to sign')

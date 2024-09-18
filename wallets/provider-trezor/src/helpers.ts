@@ -1,6 +1,5 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
-import { cleanEvmError } from '@rango-dev/signer-evm';
 import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
 
 import { getDerivationPath } from './state.js';
@@ -21,17 +20,6 @@ export async function getTrezorModule() {
   }
 
   return mod.default;
-}
-
-export function getTrezorErrorMessage(error: any) {
-  if (error?.shortMessage) {
-    /*
-     * Some error signs have lengthy, challenging-to-read messages.
-     * shortMessage is used because it is shorter and easier to understand.
-     */
-    return new Error(error.shortMessage, { cause: error });
-  }
-  return cleanEvmError(error);
 }
 
 export function getTrezorInstance() {

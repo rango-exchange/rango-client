@@ -63,7 +63,7 @@ export const disconnect: Disconnect = async () => {
   void transportDisconnect();
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

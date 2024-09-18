@@ -70,7 +70,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

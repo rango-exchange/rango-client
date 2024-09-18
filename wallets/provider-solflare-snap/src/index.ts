@@ -46,7 +46,7 @@ export const subscribe: Subscribe = ({ instance, disconnect }) => {
   instance?.on('disconnect', async () => disconnect());
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
