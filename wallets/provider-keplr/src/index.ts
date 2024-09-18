@@ -47,7 +47,7 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 
 export const suggest: Suggest = suggestCosmosChain;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

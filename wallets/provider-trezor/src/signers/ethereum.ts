@@ -1,16 +1,27 @@
 import type { EvmTransaction } from 'rango-types/mainApi';
 
+import { cleanEvmError } from '@rango-dev/signer-evm';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
 
 import {
-  getTrezorErrorMessage,
   getTrezorModule,
   trezorErrorMessages,
   valueToHex,
 } from '../helpers.js';
 import { getDerivationPath } from '../state.js';
+
+export function getTrezorErrorMessage(error: any) {
+  if (error?.shortMessage) {
+    /*
+     * Some error signs have lengthy, challenging-to-read messages.
+     * shortMessage is used because it is shorter and easier to understand.
+     */
+    return new Error(error.shortMessage, { cause: error });
+  }
+  return cleanEvmError(error);
+}
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
