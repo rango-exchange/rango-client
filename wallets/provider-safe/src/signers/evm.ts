@@ -3,9 +3,35 @@ import type { TransactionResponse } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { DefaultEvmSigner } from '@rango-dev/signer-evm';
+import { DefaultEvmSigner, waitMs } from '@rango-dev/signer-evm';
+import { TransactionStatus } from '@safe-global/safe-apps-sdk';
 
-import { getTxHash, sdk } from './helpers.js';
+import { sdk } from '../helpers.js';
+
+export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
+  let txHash;
+  const timeout = 5_000;
+
+  while (!txHash) {
+    try {
+      /** The SDK will be pinged until a txHash is available and the txStatus is in an end-state */
+      const queued = await sdk.txs.getBySafeTxHash(safeHash);
+      if (
+        queued.txStatus === TransactionStatus.AWAITING_CONFIRMATIONS ||
+        queued.txStatus === TransactionStatus.AWAITING_EXECUTION
+      ) {
+        /** Mimic a status watcher by checking once every 5 seconds */
+        await waitMs(timeout);
+      } else if (queued.txHash) {
+        /** The txStatus is in an end-state (e.g. success) so we probably have a valid, on chain txHash*/
+        txHash = queued.txHash;
+      }
+    } catch {
+      txHash = safeHash;
+    }
+  }
+  return { txHash };
+}
 
 export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   private signer;

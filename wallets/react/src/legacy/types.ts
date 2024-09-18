@@ -39,7 +39,7 @@ export type ProviderContext = {
    *         before doing that, it's a key (wallet name or we call it `type` to be more specific) with null value. (e.g. {metamask: null})
    */
   providers(): Providers;
-  getSigners(type: WalletType): SignerFactory;
+  getSigners(type: WalletType): Promise<SignerFactory>;
   getWalletInfo(type: WalletType): WalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
 };
@@ -145,7 +145,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => SignerFactory;
+  getSigners: (provider: any) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;

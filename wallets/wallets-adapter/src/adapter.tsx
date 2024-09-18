@@ -44,7 +44,7 @@ function Adapter({
       getWalletInfo(type: string) {
         return getWalletInfo(type);
       },
-      getSigners(type: string) {
+      async getSigners(type: string) {
         return getSigners(type);
       },
     };
