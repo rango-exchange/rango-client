@@ -1,5 +1,6 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet, WalletInfoWithExtra } from '../../types';
+import type { Wallet } from '../../types';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import { i18n } from '@lingui/core';
 import { warn } from '@rango-dev/logging-core';
@@ -20,7 +21,6 @@ import {
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
   getAddress,
@@ -41,10 +41,9 @@ export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const connectedWallets = useWalletsStore.use.connectedWallets();
-  const { blockchains } = useAppStore();
+  const { blockchains, connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
-    useState<WalletInfoWithExtra>();
+    useState<ExtendedModalWalletInfo>();
   const [experimentalChainWallet, setExperimentalChainWallet] =
     useState<Wallet | null>(null);
   const [showExperimentalChainModal, setShowExperimentalChainModal] =
@@ -57,7 +56,7 @@ export function WalletList(props: PropTypes) {
     chain,
   });
 
-  const [sortedList, setSortedList] = useState<WalletInfoWithExtra[]>(list);
+  const [sortedList, setSortedList] = useState<ExtendedModalWalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -148,9 +147,13 @@ export function WalletList(props: PropTypes) {
 
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
+          const isConnectedButDifferentThanTargetNamespace = wallet.isHub
+            ? !conciseAddress
+            : !!wallet.namespaces && !conciseAddress;
+
           if (isDisconnected) {
             setSelectedWalletToConnect(wallet);
-          } else if (!!wallet.namespaces && !conciseAddress) {
+          } else if (isConnectedButDifferentThanTargetNamespace) {
             // wallet is connected on a different namespace
             await handleDisconnect(wallet.type);
 

@@ -72,6 +72,10 @@ export function isFeatureHidden(feature: keyof Features, features?: Features) {
   return features?.[feature] === 'hidden';
 }
 
+export function isFeatureEnabled(feature: keyof Features, features?: Features) {
+  return features?.[feature] === 'enabled';
+}
+
 export function isRoutingEnabled(item: keyof Routing, routing?: Routing) {
   return routing?.[item] === 'enabled';
 }

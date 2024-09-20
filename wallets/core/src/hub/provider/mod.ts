@@ -1,6 +1,7 @@
 export type {
   ExtendableInternalActions,
   CommonNamespaces,
+  CommonNamespaceKeys,
   State,
   Context,
   ProviderBuilderOptions,

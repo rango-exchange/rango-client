@@ -23,7 +23,7 @@ import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
-import * as phantom from '@rango-dev/provider-phantom';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
@@ -38,6 +38,10 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import {
+  legacyProviderImportsToVersionsInterface,
+  type VersionedProviders,
+} from '@rango-dev/wallets-core/utils';
 import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
 import { isWalletExcluded } from './helpers.js';
@@ -49,7 +53,7 @@ interface Options {
   tonConnect?: TonConnectEnvironments;
 }
 
-export const allProviders = (options?: Options) => {
+export const allProviders = (options?: Options): VersionedProviders[] => {
   const providers = options?.selectedProviders || [];
 
   if (
@@ -101,40 +105,40 @@ export const allProviders = (options?: Options) => {
   }
 
   return [
-    safe,
-    defaultInjected,
-    metamask,
-    solflareSnap,
-    walletconnect2,
-    tonconnect,
-    keplr,
+    legacyProviderImportsToVersionsInterface(safe),
+    legacyProviderImportsToVersionsInterface(defaultInjected),
+    legacyProviderImportsToVersionsInterface(metamask),
+    legacyProviderImportsToVersionsInterface(solflareSnap),
+    legacyProviderImportsToVersionsInterface(walletconnect2),
+    legacyProviderImportsToVersionsInterface(tonconnect),
+    legacyProviderImportsToVersionsInterface(keplr),
     phantom,
-    argentx,
-    tronLink,
-    trustwallet,
-    bitget,
-    enkrypt,
-    xdefi,
-    clover,
-    safepal,
-    brave,
-    coin98,
-    coinbase,
-    cosmostation,
-    exodus,
-    mathwallet,
-    okx,
-    tokenpocket,
-    tomo,
-    halo,
-    leapCosmos,
-    frontier,
-    taho,
-    braavos,
-    ledger,
-    rabby,
-    trezor,
-    solflare,
-    mytonwallet,
+    legacyProviderImportsToVersionsInterface(argentx),
+    legacyProviderImportsToVersionsInterface(tronLink),
+    legacyProviderImportsToVersionsInterface(trustwallet),
+    legacyProviderImportsToVersionsInterface(bitget),
+    legacyProviderImportsToVersionsInterface(enkrypt),
+    legacyProviderImportsToVersionsInterface(xdefi),
+    legacyProviderImportsToVersionsInterface(clover),
+    legacyProviderImportsToVersionsInterface(safepal),
+    legacyProviderImportsToVersionsInterface(brave),
+    legacyProviderImportsToVersionsInterface(coin98),
+    legacyProviderImportsToVersionsInterface(coinbase),
+    legacyProviderImportsToVersionsInterface(cosmostation),
+    legacyProviderImportsToVersionsInterface(exodus),
+    legacyProviderImportsToVersionsInterface(mathwallet),
+    legacyProviderImportsToVersionsInterface(okx),
+    legacyProviderImportsToVersionsInterface(tokenpocket),
+    legacyProviderImportsToVersionsInterface(tomo),
+    legacyProviderImportsToVersionsInterface(halo),
+    legacyProviderImportsToVersionsInterface(leapCosmos),
+    legacyProviderImportsToVersionsInterface(frontier),
+    legacyProviderImportsToVersionsInterface(taho),
+    legacyProviderImportsToVersionsInterface(braavos),
+    legacyProviderImportsToVersionsInterface(ledger),
+    legacyProviderImportsToVersionsInterface(rabby),
+    legacyProviderImportsToVersionsInterface(trezor),
+    legacyProviderImportsToVersionsInterface(solflare),
+    legacyProviderImportsToVersionsInterface(mytonwallet),
   ];
 };
