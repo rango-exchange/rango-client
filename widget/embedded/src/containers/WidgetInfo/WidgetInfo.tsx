@@ -9,7 +9,6 @@ import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
 import { tabManager, useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
 import { calculateWalletUsdValue } from '../../utils/wallets';
 
 import { WidgetHistory } from './WidgetInfo.helpers';
@@ -22,13 +21,16 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
   const isActiveTab = useUiStore.use.isActiveTab();
   const retrySwap = useQuoteStore.use.retry();
-  const { findToken } = useAppStore();
+  const {
+    findToken,
+    connectedWallets,
+    getBalances,
+    fetchBalances: refetch,
+  } = useAppStore();
 
   const history = new WidgetHistory(manager, { retrySwap, findToken });
-  const details = useWalletsStore.use.connectedWallets();
-  const isLoading = useWalletsStore.use.loading();
-  const totalBalance = calculateWalletUsdValue(details);
-  const refetch = useWalletsStore.use.getWalletsDetails();
+  const { fetchingWallets: isLoading } = useAppStore();
+  const totalBalance = calculateWalletUsdValue(getBalances());
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const swappers = useAppStore().swappers();
@@ -47,9 +49,9 @@ export function WidgetInfo(props: React.PropsWithChildren) {
     history,
     wallets: {
       isLoading,
-      details,
+      details: connectedWallets,
       totalBalance,
-      refetch: (accounts) => refetch(accounts, findToken),
+      refetch: async (accounts) => refetch(accounts),
     },
     meta: {
       blockchains,

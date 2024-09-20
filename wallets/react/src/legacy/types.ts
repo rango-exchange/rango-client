@@ -1,5 +1,6 @@
+import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceData as NamespaceData,
+  LegacyNamespaceInputForConnect,
   LegacyNetwork as Network,
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletInfo as WalletInfo,
@@ -21,12 +22,16 @@ export type ConnectResult = {
 
 export type Providers = { [type in WalletType]?: any };
 
+export type ExtendedWalletInfo = WalletInfo & {
+  properties?: ProviderInfo['properties'];
+  isHub?: boolean;
+};
+
 export type ProviderContext = {
   connect(
     type: WalletType,
-    network?: Network,
-    namespaces?: NamespaceData[]
-  ): Promise<ConnectResult>;
+    namespaces?: LegacyNamespaceInputForConnect[]
+  ): Promise<ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;
@@ -40,7 +45,7 @@ export type ProviderContext = {
    */
   providers(): Providers;
   getSigners(type: WalletType): Promise<SignerFactory>;
-  getWalletInfo(type: WalletType): WalletInfo;
+  getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
 };
 
@@ -48,7 +53,10 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: ProviderInterface[];
+  providers: VersionedProviders[];
+  configs?: {
+    isExperimentalEnabled?: boolean;
+  };
 }>;
 
 export enum Events {

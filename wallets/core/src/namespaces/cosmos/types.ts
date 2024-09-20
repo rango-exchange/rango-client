@@ -7,4 +7,5 @@ export interface CosmosActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   // TODO
+  connect: () => Promise<string>;
 }
