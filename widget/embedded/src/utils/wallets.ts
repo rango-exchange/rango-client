@@ -6,11 +6,12 @@ import type {
   TokensBalance,
   Wallet,
   WalletInfoWithExtra,
+  WithNamespacesInfo,
 } from '../types';
-import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
+import type { ProviderInfo } from '@rango-dev/wallets-core';
+import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Network,
-  WalletInfo,
   WalletState,
   WalletType,
   WalletTypes,
@@ -50,6 +51,11 @@ import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
 import { createTokenHash } from './meta';
 import { numberToString } from './numbers';
 
+export type ExtendedModalWalletInfo = WalletInfoWithExtra &
+  WithNamespacesInfo & {
+    properties?: ProviderInfo['properties'];
+  };
+
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
@@ -65,10 +71,10 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
-  getWalletInfo: (type: WalletType) => WalletInfo,
+  getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
   list: WalletType[],
   chain?: string
-): WalletInfoWithExtra[] {
+): ExtendedModalWalletInfo[] {
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
@@ -97,6 +103,7 @@ export function mapWalletTypesToWalletInfo(
         singleNamespace,
         supportedChains,
         needsDerivationPath,
+        properties,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -114,6 +121,7 @@ export function mapWalletTypesToWalletInfo(
         singleNamespace,
         blockchainTypes,
         needsDerivationPath,
+        properties,
       };
     });
 }
@@ -436,8 +444,8 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: WalletInfoWithExtra[]
-): WalletInfoWithExtra[] {
+  wallets: ExtendedModalWalletInfo[]
+): ExtendedModalWalletInfo[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
@@ -529,12 +537,12 @@ export const isFetchingBalance = (
     (wallet) => wallet.chain === blockchain && wallet.loading
   );
 
-export function hashWalletsState(walletsInfo: ModalWalletInfo[]) {
+export function hashWalletsState(walletsInfo: WalletInfoWithExtra[]) {
   return walletsInfo.map((w) => w.state).join('-');
 }
 
 export function filterBlockchainsByWalletTypes(
-  wallets: ModalWalletInfo[],
+  wallets: WalletInfoWithExtra[],
   blockchains: BlockchainMeta[]
 ) {
   const uniqueBlockchainTypes = new Set<TransactionType>();
@@ -551,7 +559,7 @@ export function filterBlockchainsByWalletTypes(
 }
 
 export function filterWalletsByCategory(
-  wallets: WalletInfoWithExtra[],
+  wallets: ExtendedModalWalletInfo[],
   category: string
 ) {
   if (category === BlockchainCategories.ALL) {

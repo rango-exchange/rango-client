@@ -73,6 +73,7 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
+// TODO: Deprecate this.
 export type NamespaceData = {
   namespace: Namespace;
   derivationPath?: string;
@@ -235,3 +236,43 @@ export type WalletProviders = Map<
 >;
 
 export type ProviderInterface = { config: WalletConfig } & WalletActions;
+
+// TODO: Should we keep this? it should be derived from hub somehow.
+interface NamespaceNetworkType {
+  [Namespace.Evm]: string;
+  [Namespace.Solana]: undefined;
+  [Namespace.Cosmos]: string;
+  [Namespace.Utxo]: string;
+  [Namespace.Starknet]: string;
+  [Namespace.Tron]: string;
+}
+
+export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
+  T extends 'DISCOVER_MODE'
+    ? string
+    : T extends Namespace
+    ? NamespaceNetworkType[T]
+    : never;
+
+export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
+
+export type NamespaceInputWithDiscoverMode = {
+  namespace: 'DISCOVER_MODE';
+  network: string;
+  derivationPath?: string;
+};
+
+export type NamespaceInput<T extends Namespace = Namespace> =
+  | {
+      /**
+       * By default, you should specify namespace (e.g. evm).
+       * For backward compatibility with legacy implementation, DISCOVER_MODE will try to map a list of known (and hardcoded) networks to a namespace.
+       */
+      namespace: T;
+      /**
+       * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+       */
+      network: NetworkTypeForNamespace<T>;
+      derivationPath?: string;
+    }
+  | NamespaceInputWithDiscoverMode;

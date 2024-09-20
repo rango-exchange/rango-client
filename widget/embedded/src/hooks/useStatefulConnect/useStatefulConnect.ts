@@ -1,5 +1,6 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type {
   Namespace,
   NamespaceData,
@@ -61,7 +62,10 @@ export function useStatefulConnect(): UseStatefulConnect {
     });
 
     try {
-      await connect(type, undefined, namespaces);
+      await connect(
+        type,
+        namespaces?.map((ns) => ({ ...ns, network: undefined }))
+      );
 
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,7 +79,7 @@ export function useStatefulConnect(): UseStatefulConnect {
   };
 
   const handleConnect = async (
-    wallet: WalletInfoWithExtra,
+    wallet: ExtendedModalWalletInfo,
     options?: HandleConnectOptions
   ): Promise<{
     status: ResultStatus;
@@ -83,6 +87,25 @@ export function useStatefulConnect(): UseStatefulConnect {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
     if (isDisconnected) {
+      const detachedInstances = wallet.properties?.find(
+        (item) => item.name === 'detached'
+      );
+      const hubCondition = detachedInstances && wallet.state !== 'connected';
+      if (hubCondition) {
+        dispatch({
+          type: 'needsNamespace',
+          payload: {
+            providerType: wallet.type,
+            providerImage: wallet.image,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            availableNamespaces: detachedInstances.value,
+            singleNamespace: false,
+          },
+        });
+        return { status: ResultStatus.Namespace };
+      }
+
       if (!wallet.namespaces) {
         return await runConnect(wallet.type, undefined, options);
       }

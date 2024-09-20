@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -12,7 +13,9 @@ import {
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { solanaBlockchain } from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
+
+import { EVM_SUPPORTED_CHAINS } from '../constants.js';
 
 import { phantom as phantom_instance } from './helpers.js';
 import signer from './signer.js';
@@ -60,6 +63,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
+  const evms = evmBlockchains(allBlockChains);
+
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/phantom/icon.svg',
@@ -70,6 +75,24 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: solana,
+    supportedChains: [
+      ...solana,
+      ...evms.filter((chain) =>
+        EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+      ),
+    ],
   };
 };
+
+const legacyProvider: LegacyProviderInterface = {
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+};
+
+export { legacyProvider };

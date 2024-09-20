@@ -23,6 +23,8 @@ export type {
   InstallObjects as LegacyInstallObjects,
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,
+  NamespaceInput as LegacyNamespaceInput,
+  NamespaceInputWithDiscoverMode as LegacyNamespaceInputWithDiscoverMode,
 } from './types.js';
 
 export {
@@ -35,5 +37,10 @@ export { Persistor } from './persistor.js';
 export {
   readAccountAddress as legacyReadAccountAddress,
   getBlockChainNameFromId as legacyGetBlockChainNameFromId,
+  formatAddressWithNetwork as legacyFormatAddressWithNetwork,
+  isDiscoverMode,
+  isEvmNamespace,
 } from './helpers.js';
 export { default as LegacyWallet } from './wallet.js';
+
+export { eagerConnectHandler as legacyEagerConnectHandler } from './utils.js';

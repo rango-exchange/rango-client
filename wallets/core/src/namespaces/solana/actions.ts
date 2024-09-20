@@ -19,6 +19,7 @@ export function changeAccountSubscriber(
   // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
   return [
     (context, err) => {
+      console.log('changeAccountSubscriber....');
       const solanaInstance = instance();
 
       if (!solanaInstance) {

@@ -14,6 +14,7 @@ import {
   needsCheckInstallation,
 } from './helpers.js';
 import { Events, Networks } from './types.js';
+import { eagerConnectHandler } from './utils.js';
 
 export type EventHandler = (
   type: WalletType,
@@ -26,11 +27,16 @@ export type EventHandler = (
 export type EventInfo = {
   supportedBlockchains: BlockchainMeta[];
   isContractWallet: boolean;
+  // This is for Hub and be able to make it compatible with legacy behavior.
+  isHub: boolean;
 };
 
 export interface State {
   connected: boolean;
   connecting: boolean;
+  /**
+   * @depreacted it always returns `false`. don't use it.
+   */
   reachable: boolean;
   installed: boolean;
   accounts: string[] | null;
@@ -57,6 +63,7 @@ class Wallet<InstanceType = any> {
     this.info = {
       supportedBlockchains: [],
       isContractWallet: false,
+      isHub: false,
     };
     this.state = {
       connected: false,
@@ -267,23 +274,27 @@ class Wallet<InstanceType = any> {
   async eagerConnect() {
     const instance = await this.tryGetInstance({ network: undefined });
     const { canEagerConnect } = this.actions;
-    const error_message = `can't restore connection for ${this.options.config.type} .`;
+    const providerName = this.options.config.type;
 
-    if (canEagerConnect) {
-      // Check if we can eagerly connect to the wallet
-      const eagerConnection = await canEagerConnect({
-        instance: instance,
-        meta: this.info.supportedBlockchains,
-      });
+    return await eagerConnectHandler({
+      canEagerConnect: async () => {
+        if (!canEagerConnect) {
+          throw new Error(
+            `${providerName} provider hasn't implemented canEagerConnect.`
+          );
+        }
 
-      if (eagerConnection) {
-        // Connect to wallet as usual
-        return this.connect();
-      }
-      throw new Error(error_message);
-    } else {
-      throw new Error(error_message);
-    }
+        return await canEagerConnect({
+          instance: instance,
+          meta: this.info.supportedBlockchains,
+        });
+      },
+      connectHandler: async () => {
+        const result = await this.connect();
+        return result;
+      },
+      providerName,
+    });
   }
 
   async getSigners(provider: any) {
@@ -408,6 +419,7 @@ class Wallet<InstanceType = any> {
       const eventInfo: EventInfo = {
         supportedBlockchains: this.info.supportedBlockchains,
         isContractWallet: this.info.isContractWallet,
+        isHub: false,
       };
       this.options.handler(
         this.options.config.type,

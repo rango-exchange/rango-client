@@ -1,5 +1,6 @@
+import type { FindProxiedNamespace } from '../../builders/mod.js';
+import type { Store } from '../../hub/mod.js';
 import type { LegacyState } from '../../legacy/mod.js';
-import type { NamespaceInterface, Store } from '../../mod.js';
 import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
@@ -31,7 +32,7 @@ export interface ExtendableInternalActions {
 
 export type RegisteredNamespaces<K extends keyof T, T> = Map<
   K,
-  NamespaceInterface<K, T>
+  FindProxiedNamespace<K, T>
 >;
 
 export type ProviderBuilderOptions = { store?: Store };
