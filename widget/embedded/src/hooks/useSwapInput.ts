@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useWalletsStore } from '../store/wallets';
 import { QuoteErrorType } from '../types';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
@@ -50,7 +49,7 @@ export function useSwapInput({
   const { fetch: fetchQuote, cancelFetch } = useFetchAllQuotes();
   const { excludeLiquiditySources: configExcludeLiquiditySources, routing } =
     useAppStore().config;
-  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const { connectedWallets } = useAppStore();
 
   const {
     fromToken,

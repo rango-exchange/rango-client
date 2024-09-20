@@ -19,7 +19,6 @@ import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { useWalletsStore } from '../store/wallets';
 import { UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
 import { emitPreventableEvent } from '../utils/events';
@@ -55,9 +54,12 @@ export function Home() {
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
   const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
-  const { config, fetchStatus: fetchMetaStatus } = useAppStore();
+  const {
+    config,
+    fetchStatus: fetchMetaStatus,
+    connectedWallets,
+  } = useAppStore();
 
-  const { connectedWallets } = useWalletsStore();
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
 

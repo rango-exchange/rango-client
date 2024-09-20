@@ -26,6 +26,7 @@ export function App() {
     apiKey: RANGO_PUBLIC_API_KEY,
     features: {
       theme: 'hidden',
+      experimentalWallet: 'enabled',
     },
     __UNSTABLE_OR_INTERNAL__: {
       autoUpdateSettings: true,
