@@ -1,6 +1,6 @@
 import type { WidgetHistory } from './WidgetInfo.helpers';
 import type { FetchStatus, FindToken } from '../../store/slices/data';
-import type { ConnectedWallet } from '../../store/wallets';
+import type { ConnectedWallet } from '../../store/slices/wallets';
 import type { QuoteInputs, UpdateQuoteInputs, Wallet } from '../../types';
 import type { Notification } from '../../types/notification';
 import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
@@ -13,7 +13,7 @@ export interface WidgetInfoContextInterface {
     details: ConnectedWallet[];
     totalBalance: string;
     isLoading: boolean;
-    refetch: (accounts: Wallet[], tokens: Token[]) => void;
+    refetch: (accounts: Wallet[]) => void;
   };
   meta: {
     blockchains: BlockchainMeta[];

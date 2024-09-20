@@ -1,20 +1,14 @@
-import type {
-  CommonNamespaces,
-  State as InternalProviderState,
-} from '../provider/mod.js';
+import type { State as InternalProviderState } from '../provider/mod.js';
+import type { CommonNamespaceKeys } from '../provider/types.js';
 import type { StateCreator } from 'zustand';
 
 import { produce } from 'immer';
 
 import { guessProviderStateSelector, type State } from './mod.js';
 
-type NamespaceName =
-  | keyof CommonNamespaces
-  | Omit<string, keyof CommonNamespaces>;
-
 type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
 type Property<N extends string, V> = { name: N; value: V };
-type DetachedInstances = Property<'detached', NamespaceName[]>;
+type DetachedInstances = Property<'detached', CommonNamespaceKeys[]>;
 
 export type ProviderInfo = {
   name: string;

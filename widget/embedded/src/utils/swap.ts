@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { FeesGroup, NameOfFees } from '../constants/quote';
 import type { FetchStatus, FindToken } from '../store/slices/data';
-import type { ConnectedWallet } from '../store/wallets';
+import type { ConnectedWallet } from '../store/slices/wallets';
 import type {
   ConvertedToken,
   QuoteError,
