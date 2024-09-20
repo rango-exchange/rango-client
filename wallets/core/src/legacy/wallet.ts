@@ -1,4 +1,5 @@
 import type {
+  EagerConnectResult,
   GetInstanceOptions,
   NamespaceData,
   Network,
@@ -271,7 +272,7 @@ class Wallet<InstanceType = any> {
   }
 
   // This method is only used for auto connection
-  async eagerConnect() {
+  async eagerConnect(): Promise<EagerConnectResult<InstanceType>> {
     const instance = await this.tryGetInstance({ network: undefined });
     const { canEagerConnect } = this.actions;
     const providerName = this.options.config.type;

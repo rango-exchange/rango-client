@@ -87,7 +87,7 @@ export class LastConnectedWalletsFromStorage {
     } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
       const persistor = new Persistor<LegacyLastConnectedWalletsStorage>();
       const lastConnectedWallets =
-        persistor.getItem(HUB_LAST_CONNECTED_WALLETS) || [];
+        persistor.getItem(LEGACY_LAST_CONNECTED_WALLETS) || [];
       const output: LastConnectedWalletsStorage = {};
       lastConnectedWallets.forEach((provider) => {
         // Setting empty namespaces

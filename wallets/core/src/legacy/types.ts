@@ -203,6 +203,12 @@ export type CanEagerConnect = (options: {
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
+export type EagerConnectResult<I = unknown> = {
+  accounts: string[] | null;
+  network: string | null;
+  provider: I | null;
+};
+
 export interface WalletActions {
   connect: Connect;
   getInstance: any;

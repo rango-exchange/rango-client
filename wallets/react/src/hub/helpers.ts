@@ -1,28 +1,14 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub, Provider } from '@rango-dev/wallets-core';
-import type {
-  LegacyNamespaceInput,
-  LegacyProviderInterface,
-  LegacyNamespace as Namespace,
-} from '@rango-dev/wallets-core/legacy';
+import type { Provider } from '@rango-dev/wallets-core';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   Accounts,
   AccountsWithActiveChain,
 } from '@rango-dev/wallets-core/namespaces/common';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
-import {
-  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
-  isDiscoverMode,
-  isEvmNamespace,
-} from '@rango-dev/wallets-core/legacy';
+import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
 import { CAIP, pickVersion } from '@rango-dev/wallets-core/utils';
-
-import {
-  convertNamespaceNetworkToEvmChainId,
-  discoverNamespace,
-} from './utils.js';
 
 /* Gets a list of hub and legacy providers and returns a tuple which separates them. */
 export function separateLegacyAndHubProviders(
@@ -88,67 +74,20 @@ export function fromAccountIdToLegacyAddressFormat(account: string): string {
   return formatAddressWithNetwork(address, network);
 }
 
-export function connect(
-  type: string,
-  namespaces: LegacyNamespaceInput[] | undefined,
-  deps: {
-    getHub: () => Hub;
-    allBlockChains: UseAdapterParams['allBlockChains'];
-  }
-) {
-  const { getHub, allBlockChains } = deps;
-  const wallet = getHub().get(type);
-  if (!wallet) {
-    throw new Error(
-      `You should add ${type} to provider first then call 'connect'.`
-    );
-  }
+/**
+ * Getting a list of (lazy) promises and run them one after another.
+ * Original code: scripts/publish/utils.mjs
+ */
+export async function sequentiallyRun<T extends () => Promise<unknown>>(
+  promises: Array<T>
+): Promise<Array<T extends () => Promise<infer R> ? R : never>> {
+  const result = await promises.reduce(async (prev, task) => {
+    const previousResults = await prev;
+    const taskResult = await task();
 
-  if (!namespaces) {
-    /*
-     * TODO: I think this should be wallet.connect()
-     * TODO: This isn't needed anymore since we can add a discovery namespace.
-     * TODO: if the next line uncomnented, make sure we are handling autoconnect persist as well.
-     * return getHub().runAll('connect');
-     */
-    throw new Error(
-      'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
-    );
-  }
-
-  // TODO: CommonNamespaces somehow.
-  const targetNamespaces: [LegacyNamespaceInput, object][] = [];
-  namespaces.forEach((namespace) => {
-    let targetNamespace: Namespace;
-    if (isDiscoverMode(namespace)) {
-      targetNamespace = discoverNamespace(namespace.network);
-    } else {
-      targetNamespace = namespace.namespace;
-    }
-
-    const result = wallet.findByNamespace(targetNamespace);
-
-    if (!result) {
-      throw new Error(
-        `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
-      );
-    }
-
-    targetNamespaces.push([namespace, result]);
-  });
-
-  const finalResult = targetNamespaces.map(([info, namespace]) => {
-    const evmChain = isEvmNamespace(info)
-      ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
-      : undefined;
-    const chain = evmChain || info.network;
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore-next-line
-    return namespace.connect(chain);
-  });
-
-  return finalResult;
+    return [...previousResults, taskResult];
+  }, Promise.resolve([]) as Promise<any>);
+  return result;
 }
 
 export function isConnectResultEvm(

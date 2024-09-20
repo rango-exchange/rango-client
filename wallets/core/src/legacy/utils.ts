@@ -1,6 +1,6 @@
-export async function eagerConnectHandler(params: {
+export async function eagerConnectHandler<R = unknown>(params: {
   canEagerConnect: () => Promise<boolean>;
-  connectHandler: () => Promise<unknown>;
+  connectHandler: () => Promise<R>;
   providerName: string;
 }) {
   // Check if we can eagerly connect to the wallet
