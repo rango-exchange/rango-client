@@ -8,13 +8,13 @@ const DialogOverlayAnimateIn = keyframes({
     backgroundColor: 'transparent',
   },
   '100%': {
-    backgroundColor: 'color-mix(in srgb, $neutral500 70%, transparent)',
+    backgroundColor: '$overlay',
   },
 });
 
 const DialogOverlayAnimateOut = keyframes({
   '0%': {
-    backgroundColor: 'color-mix(in srgb, $neutral500 70%, transparent)',
+    backgroundColor: '$overlay',
   },
   '100%': {
     backgroundColor: 'transparent',
@@ -35,7 +35,7 @@ export const DialogOverlay = styled(Dialog.Overlay, {
   backgroundColor: 'transparent',
 
   "&[data-state='open']": {
-    backgroundColor: 'color-mix(in srgb, $neutral500 70%, transparent)',
+    backgroundColor: '$overlay',
     animation: `${DialogOverlayAnimateIn} .45s ease-in-out`,
   },
   "&[data-state='closed']": {

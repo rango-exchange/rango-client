@@ -171,12 +171,19 @@ export function expandToGenerateThemeColors(
      */
     const isSingleColor = ['background', 'foreground'].includes(colorKey);
 
+    const expandedHexColor = expandShortHexColor(expandColor);
     if (!isSingleColor && !isOverridingColor(colorKey)) {
-      const expandedHexColor = expandShortHexColor(expandColor);
       Object.assign(
         output,
         createTintsAndShades(expandedHexColor, colorKey, isNeutralReversed)
       );
+    }
+
+    if (colorKey === 'neutral') {
+      // add alpha to have 70 percent opacity
+      Object.assign(output, {
+        overlay: expandedHexColor + 'b3',
+      });
     }
   }
 
