@@ -1,5 +1,6 @@
 import type { FindToken } from '../store/slices/data';
-import type { ConnectedWallet, TokenBalance } from '../store/wallets';
+import type { ConnectedWallet } from '../store/slices/wallets';
+import type { TokenBalance } from '../store/wallets';
 import type {
   Balance,
   SelectedQuote,

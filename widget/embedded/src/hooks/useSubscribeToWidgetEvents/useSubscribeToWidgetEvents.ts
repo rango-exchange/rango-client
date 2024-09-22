@@ -15,10 +15,9 @@ import { useNotificationStore } from '../../store/notification';
 import { useWalletsStore } from '../../store/wallets';
 
 export function useSubscribeToWidgetEvents() {
-  const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
-  const { findToken } = useAppStore();
+  const { findToken, connectedWallets } = useAppStore();
 
   useEffect(() => {
     const handleStepEvent = (widgetEvent: StepEventData) => {

@@ -20,7 +20,6 @@ import {
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
   getAddress,
@@ -41,8 +40,7 @@ export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const connectedWallets = useWalletsStore.use.connectedWallets();
-  const { blockchains } = useAppStore();
+  const { blockchains, connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<WalletInfoWithExtra>();
   const [experimentalChainWallet, setExperimentalChainWallet] =

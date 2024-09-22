@@ -22,12 +22,11 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
   const isActiveTab = useUiStore.use.isActiveTab();
   const retrySwap = useQuoteStore.use.retry();
-  const { findToken } = useAppStore();
+  const { findToken, connectedWallets } = useAppStore();
 
   const history = new WidgetHistory(manager, { retrySwap, findToken });
-  const details = useWalletsStore.use.connectedWallets();
   const isLoading = useWalletsStore.use.loading();
-  const totalBalance = calculateWalletUsdValue(details);
+  const totalBalance = calculateWalletUsdValue(connectedWallets);
   const refetch = useWalletsStore.use.getWalletsDetails();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
@@ -47,7 +46,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
     history,
     wallets: {
       isLoading,
-      details,
+      details: connectedWallets,
       totalBalance,
       refetch: (accounts) => refetch(accounts, findToken),
     },

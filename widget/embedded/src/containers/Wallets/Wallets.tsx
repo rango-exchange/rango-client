@@ -15,7 +15,6 @@ import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -38,7 +37,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
     fetchStatus,
   } = useAppStore();
   const blockchains = useAppStore().blockchains();
-  const { findToken } = useAppStore();
+  const { newWalletConnected, disconnectWallet } = useAppStore();
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
@@ -50,7 +49,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     experimentalWallet: props.config.features?.experimentalWallet,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
-  const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
   const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();
 
@@ -92,9 +90,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
           event,
           value,
           state,
+          meta,
         });
         if (data.length) {
-          connectWallet(data, findToken);
+          void newWalletConnected(data);
         }
       } else {
         disconnectWallet(type);
@@ -113,6 +112,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
       (event === Events.ACCOUNTS && meta.isHub)
     ) {
       const key = `${type}-${state.network}-${value}`;
+      console.log({ key });
 
       if (!!onConnectWalletHandler.current) {
         onConnectWalletHandler.current(key);
