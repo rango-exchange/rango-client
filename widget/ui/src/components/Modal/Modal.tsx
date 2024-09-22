@@ -2,7 +2,7 @@ import type { ModalPropTypes } from './Modal.types.js';
 import type { PropsWithChildren } from 'react';
 
 import * as Dialog from '@radix-ui/react-dialog';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { CloseIcon } from '../../icons/index.js';
 import { BottomLogo } from '../BottomLogo/index.js';
@@ -24,6 +24,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     title,
     open,
     onClose,
+    onExit,
     styles,
     anchor = 'bottom',
     container = document.body,
@@ -36,6 +37,8 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     hasWatermark = true,
     hasCloseIcon = true,
   } = props;
+  const exitCallbackRef = useRef<ModalPropTypes['onExit']>();
+  const modalContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleBackDropClick = (open: boolean) => {
     if (dismissible && !open) {
@@ -43,11 +46,36 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     }
   };
 
+  useEffect(() => {
+    exitCallbackRef.current = onExit;
+  }, [onExit]);
+
+  useEffect(() => {
+    if (exitCallbackRef.current) {
+      modalContainerRef.current?.addEventListener(
+        'transitionend',
+        exitCallbackRef.current
+      );
+    }
+
+    return () => {
+      if (exitCallbackRef.current) {
+        modalContainerRef.current?.removeEventListener(
+          'transitionend',
+          exitCallbackRef.current
+        );
+      }
+    };
+  }, [open]);
+
   return (
     <Dialog.Root open={open} onOpenChange={handleBackDropClick}>
       <Dialog.Portal container={container}>
         <DialogOverlay>
-          <DialogContent css={styles?.container} anchor={anchor}>
+          <DialogContent
+            ref={modalContainerRef}
+            css={styles?.container}
+            anchor={anchor}>
             {header ?? (
               <ModalHeader noTitle={!title && dismissible && !prefix}>
                 {prefix}
