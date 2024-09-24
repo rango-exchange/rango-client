@@ -60,6 +60,7 @@ export const BarChart = (props: BarChartPropTypes) => {
     buckets,
     margin = DEFAULT_MARGIN,
     getLabel,
+    isDarkTheme = false,
   } = props;
 
   const isMobile = useIsMobile();
@@ -134,9 +135,9 @@ export const BarChart = (props: BarChartPropTypes) => {
         hideTooltip();
       }
     }
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('click', handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, [tooltipRef]);
 
@@ -234,6 +235,9 @@ export const BarChart = (props: BarChartPropTypes) => {
           numTicksRows={5}
           numTicksColumns={0}
           columnLineStyle={{ display: 'none' }}
+          rowLineStyle={{
+            stroke: '#B8B8B8',
+          }}
         />
 
         <Group top={margin.top} left={margin.left + 10}>
@@ -307,7 +311,7 @@ export const BarChart = (props: BarChartPropTypes) => {
           tickFormat={(d) => getDayOfMonth(d)}
           tickLabelProps={() => ({
             fontSize: isMobile ? 10 : 12,
-            fill: '#727272',
+            fill: isDarkTheme ? '#B8B8B8' : '#A2A2A2',
             textAnchor: 'middle',
           })}
         />
@@ -322,7 +326,7 @@ export const BarChart = (props: BarChartPropTypes) => {
           tickFormat={(d) => compactNumberFormat(Number(d))}
           tickLabelProps={() => ({
             fontSize: isMobile ? 10 : 12,
-            fill: '#727272',
+            fill: isDarkTheme ? '#B8B8B8' : '#A2A2A2',
             textAnchor: 'middle',
           })}
         />
@@ -336,6 +340,7 @@ export const BarChart = (props: BarChartPropTypes) => {
             backgroundColor: 'transparent',
             boxShadow: 'none',
             position: 'absolute',
+            zIndex: '99999999',
           }}>
           <TooltipContainer
             ref={tooltipRef}
