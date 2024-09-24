@@ -87,6 +87,7 @@ export { default as WidgetIcon } from './Widget.js';
 export { default as WidthIcon } from './Width.js';
 export { default as BullhornIcon } from './Bullhorn.js';
 export { default as ChainsIcon } from './Chains.js';
+export { default as ChartIcon } from './Chart.js';
 export { default as ColorsIcon } from './Colors.js';
 export { default as DiscordIcon } from './Discord.js';
 export { default as InfinityIcon } from './Infinity.js';

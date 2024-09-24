@@ -8,6 +8,7 @@ export interface BarChartPropTypes {
   buckets: string[];
   margin?: { top: number; right: number; bottom: number; left: number };
   getLabel?: (value: string) => string;
+  isDarkTheme?: boolean;
 }
 
 export type BarStackDataType = {
