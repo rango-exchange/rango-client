@@ -1,11 +1,18 @@
 import type { Balance } from '../../types';
 import type { AppStoreState } from '../app';
 import type { BalanceKey, BalanceState } from '../slices/wallets';
-import type { WalletDetail } from 'rango-types';
+import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 
 import { ZERO } from '../../constants/numbers';
+
+export function createBalanceKey(
+  accountAddress: string,
+  asset: Asset
+): BalanceKey {
+  return `${asset.blockchain}-${asset.address}-${accountAddress}`;
+}
 
 export function createBalanceStateForNewAccount(
   account: WalletDetail,
@@ -14,7 +21,7 @@ export function createBalanceStateForNewAccount(
   const state: BalanceState = {};
 
   account.balances?.forEach((accountBalance) => {
-    const key: BalanceKey = `${account.blockChain}-${accountBalance.asset.symbol}-${account.address}`;
+    const key = createBalanceKey(account.address, accountBalance.asset);
     const amount = accountBalance.amount.amount;
     const decimals = accountBalance.amount.decimals;
 

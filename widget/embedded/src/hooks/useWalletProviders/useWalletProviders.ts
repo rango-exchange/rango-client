@@ -3,7 +3,7 @@ import type { ProvidersOptions } from '../../utils/providers';
 
 import { useEffect } from 'react';
 
-import { useWalletsStore } from '../../store/wallets';
+import { useAppStore } from '../../store/AppStore';
 import { matchAndGenerateProviders } from '../../utils/providers';
 
 import { hashProviders } from './useWalletProviders.helpers';
@@ -12,7 +12,7 @@ export function useWalletProviders(
   providers: WidgetConfig['wallets'],
   options?: ProvidersOptions
 ) {
-  const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
+  const { clearConnectedWallet } = useAppStore();
   let generateProviders = matchAndGenerateProviders(providers, options);
 
   useEffect(() => {

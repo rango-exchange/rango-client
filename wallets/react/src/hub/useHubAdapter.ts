@@ -236,7 +236,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     disconnectAll() {
       throw new Error('`disconnectAll` not implemented');
     },
-    getSigners(type) {
+    async getSigners(type) {
       const provider = getLegacyProvider(params.allVersionedProviders, type);
       return provider.getSigners(provider.getInstance());
     },

@@ -15,11 +15,10 @@ import {
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useObserveBalanceChanges } from '../../hooks/useObserveBalanceChanges';
 import { useAppStore } from '../../store/AppStore';
-import { useWalletsStore } from '../../store/wallets';
 import { createTintsAndShades } from '../../utils/colors';
 import { formatBalance } from '../../utils/wallets';
 
@@ -93,7 +92,7 @@ const renderDesc = (props: RenderDescProps) => {
 
 export function TokenList(props: PropTypes) {
   const {
-    list,
+    list: tokens,
     searchedFor = '',
     onChange,
     selectedBlockchain,
@@ -101,29 +100,15 @@ export function TokenList(props: PropTypes) {
     action,
   } = props;
 
-  const [tokens, setTokens] = useState<Token[]>(list);
   const fetchStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
-  const { getBalanceFor, loading: loadingWallet } = useWalletsStore();
+  const { getBalanceFor, fetchingWallets: loadingWallet } = useAppStore();
   const { isTokenPinned } = useAppStore();
   /**
    * We can create the key by hashing the list of tokens,
    * but if the list is large, the memory usage and cost of comparisons may be high.
    */
   const { balanceKey } = useObserveBalanceChanges(selectedBlockchain);
-
-  const loadNextPage = () => {
-    setTokens(list.slice(0, tokens.length + PAGE_SIZE));
-  };
-
-  useEffect(() => {
-    setHasNextPage(list.length > tokens.length);
-  }, [tokens.length]);
-
-  useEffect(() => {
-    setTokens(list.slice(0, PAGE_SIZE));
-  }, [list.length, selectedBlockchain, balanceKey]);
 
   const endRenderer = (token: Token) => {
     const tokenBalance = formatBalance(getBalanceFor(token));
@@ -164,7 +149,6 @@ export function TokenList(props: PropTypes) {
   const renderList = () => {
     return (
       <VirtualizedList
-        endReached={hasNextPage ? loadNextPage : undefined}
         itemContent={(index) => {
           const token = tokens[index];
           const address = token.address || '';

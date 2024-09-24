@@ -1,10 +1,11 @@
-import type { FindToken } from '../store/slices/data';
-import type { ConnectedWallet } from '../store/slices/wallets';
-import type { TokenBalance } from '../store/wallets';
+import type {
+  BalanceKey,
+  BalanceState,
+  ConnectedWallet,
+} from '../store/slices/wallets';
 import type {
   Balance,
   SelectedQuote,
-  TokensBalance,
   Wallet,
   WalletInfoWithExtra,
   WithNamespacesInfo,
@@ -17,12 +18,7 @@ import type {
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import type {
-  BlockchainMeta,
-  Token,
-  TransactionType,
-  WalletDetail,
-} from 'rango-sdk';
+import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
   BlockchainCategories,
@@ -49,7 +45,6 @@ import {
 import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
-import { createTokenHash } from './meta';
 import { numberToString } from './numbers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
@@ -274,8 +269,6 @@ export function getQuoteWallets(params: {
   return Array.from(wallets);
 }
 
-type Blockchain = { name: string; accounts: ConnectedWallet[] };
-
 export function isAccountAndWalletMatched(
   account: Wallet,
   connectedWallet: ConnectedWallet
@@ -287,74 +280,36 @@ export function isAccountAndWalletMatched(
   );
 }
 
-export function makeBalanceFor(
-  retrievedBalance: WalletDetail,
-  findToken: FindToken
-): TokenBalance[] {
-  const { blockChain: chain, balances = [] } = retrievedBalance;
-  return (
-    balances?.map((tokenBalance) => ({
-      chain,
-      symbol: tokenBalance.asset.symbol,
-      ticker: tokenBalance.asset.symbol,
-      address: tokenBalance.asset.address || null,
-      rawAmount: tokenBalance.amount.amount,
-      decimal: tokenBalance.amount.decimals,
-      amount: new BigNumber(tokenBalance.amount.amount)
-        .shiftedBy(-tokenBalance.amount.decimals)
-        .toFixed(),
-      logo: '',
-      usdPrice: findToken(tokenBalance.asset)?.usdPrice || null,
-    })) || []
-  );
-}
-
 export function resetConnectedWalletState(
   connectedWallet: ConnectedWallet
 ): ConnectedWallet {
   return { ...connectedWallet, loading: false, error: true };
 }
 
-export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
-  const uniqueAccountAddresses = new Set<string | null>();
-  const uniqueBalance: ConnectedWallet[] = connectedWallet?.reduce(
-    (acc: ConnectedWallet[], current: ConnectedWallet) => {
-      return acc.findIndex(
-        (i) => i.address === current.address && i.chain === current.chain
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      ) === -1
-        ? [...acc, current]
-        : acc;
-    },
-    []
-  );
+export const calculateWalletUsdValue = (
+  connectedWallets: ConnectedWallet[],
+  balances: BalanceState
+) => {
+  /**
+   * NOTE:
+   * We are iterating over connected wallets and make a list from address
+   * we need that because `balances` currently don't have a clean up mechanism
+   * which means if a wallet disconnect, balances are exists in store and only the wallet will be removed from `connectedWallets`.
+   *
+   * If we introduce a cleanup feature in future, we can remove this and only iterating over balances would be enough.
+   */
+  const uniqueAccountAddresses = new Set<string>();
+  connectedWallets.forEach((connectedWallet) => connectedWallet.address);
 
-  const modifiedWalletBlockchains = uniqueBalance?.map((chain) => {
-    const modifiedWalletBlockchain: Blockchain = {
-      name: chain.chain,
-      accounts: [],
-    };
-    if (!uniqueAccountAddresses.has(chain.address)) {
-      uniqueAccountAddresses.add(chain.address);
+  let total = new BigNumber(ZERO);
+  for (const balanceKey of Object.keys(balances)) {
+    const [, , address] = balanceKey.split('-');
+    if (uniqueAccountAddresses.has(address)) {
+      total = total.plus(balances[balanceKey as BalanceKey].usdValue);
     }
-    uniqueAccountAddresses.forEach((accountAddress) => {
-      if (chain.address === accountAddress) {
-        modifiedWalletBlockchain.accounts.push(chain);
-      }
-    });
-    return modifiedWalletBlockchain;
-  });
-  const total = numberToString(
-    modifiedWalletBlockchains
-      ?.flatMap((b) => b.accounts)
-      ?.flatMap((a) => a?.balances)
-      ?.map((b) =>
-        new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0)
-      )
-      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO
-  ).toString();
+  }
 
-  return numberWithThousandSeparator(total);
+  return numberWithThousandSeparator(total.toString());
 };
 
 function numberWithThousandSeparator(number: string | number): string {
@@ -393,16 +348,27 @@ export const getKeplrCompatibleConnectedWallets = (
 };
 
 export function formatBalance(balance: Balance | null): Balance | null {
+  if (!balance) {
+    return null;
+  }
+
+  const amount = new BigNumber(balance.amount)
+    .shiftedBy(-balance.decimals)
+    .toFixed();
+  const usdValue = new BigNumber(balance.usdValue)
+    .shiftedBy(-balance.decimals)
+    .toFixed();
+
   const formattedBalance: Balance | null = balance
     ? {
         ...balance,
         amount: numberToString(
-          balance.amount,
+          amount,
           BALANCE_MIN_DECIMALS,
           BALANCE_MAX_DECIMALS
         ),
         usdValue: numberToString(
-          balance.usdValue,
+          usdValue,
           USD_VALUE_MIN_DECIMALS,
           USD_VALUE_MAX_DECIMALS
         ),
@@ -417,17 +383,39 @@ export function compareTokenBalance(
   token2Balance: Balance | null
 ): number {
   if (token1Balance?.usdValue || token2Balance?.usdValue) {
-    return (
-      parseFloat(token2Balance?.usdValue || '0') -
-      parseFloat(token1Balance?.usdValue || '0')
-    );
+    const token1UsdValue =
+      !!token1Balance && !!token1Balance.usdValue
+        ? new BigNumber(token1Balance.usdValue).shiftedBy(
+            -token1Balance.decimals
+          )
+        : ZERO;
+    const token2UsdValue =
+      !!token2Balance && !!token2Balance.usdValue
+        ? new BigNumber(token2Balance.usdValue).shiftedBy(
+            -token2Balance.decimals
+          )
+        : ZERO;
+
+    if (token1UsdValue.isEqualTo(token2UsdValue)) {
+      return 0;
+    }
+    return token1UsdValue.isGreaterThan(token2UsdValue) ? -1 : 1;
   }
 
   if (token1Balance?.amount || token2Balance?.amount) {
-    return (
-      parseFloat(token2Balance?.amount || '0') -
-      parseFloat(token1Balance?.amount || '0')
-    );
+    const token1Amount =
+      !!token1Balance && !!token1Balance.amount
+        ? new BigNumber(token1Balance.amount).shiftedBy(-token1Balance.decimals)
+        : ZERO;
+    const token2Amount =
+      !!token2Balance && !!token2Balance.amount
+        ? new BigNumber(token2Balance.amount).shiftedBy(-token2Balance.decimals)
+        : ZERO;
+
+    if (token1Amount.isEqualTo(token2Amount)) {
+      return 0;
+    }
+    return token1Amount.isGreaterThan(token2Amount) ? -1 : 1;
   }
 
   return 0;
@@ -491,43 +479,6 @@ export function getAddress({
       connectedWallet.walletType === walletType &&
       connectedWallet.chain === chain
   )?.address;
-}
-
-export function makeTokensBalance(connectedWallets: ConnectedWallet[]) {
-  return connectedWallets
-    .flatMap((wallet) => wallet.balances)
-    .reduce((balances: TokensBalance, balance) => {
-      const currentBalance = {
-        amount: balance?.amount ?? '',
-        decimals: balance?.decimal ?? 0,
-        usdValue: balance?.usdPrice
-          ? new BigNumber(balance?.usdPrice ?? ZERO)
-              .multipliedBy(balance?.amount)
-              .toString()
-          : '',
-      };
-
-      const tokenHash = balance
-        ? createTokenHash({
-            symbol: balance.symbol,
-            blockchain: balance.chain,
-            address: balance.address,
-          })
-        : null;
-
-      const prevBalance = tokenHash ? balances[tokenHash] : null;
-
-      const shouldUpdateBalance =
-        tokenHash &&
-        (!prevBalance ||
-          (prevBalance && prevBalance.amount < currentBalance.amount));
-
-      if (shouldUpdateBalance) {
-        balances[tokenHash] = currentBalance;
-      }
-
-      return balances;
-    }, {});
 }
 
 export const isFetchingBalance = (

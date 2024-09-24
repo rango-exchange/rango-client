@@ -1,6 +1,8 @@
 import type { AppStoreState } from './types';
-import type { RangoClient } from 'rango-sdk';
+import type { Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
+
+import BigNumber from 'bignumber.js';
 
 import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
@@ -10,13 +12,17 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from '../../types';
-import { createBalanceStateForNewAccount } from '../utils/wallets';
+import { isAccountAndWalletMatched } from '../../utils/wallets';
+import {
+  createBalanceKey,
+  createBalanceStateForNewAccount,
+} from '../utils/wallets';
 
 type WalletAddress = string;
 type TokenAddress = string;
 type BlockchainId = string;
 /** `walletAddress-Blockchain-tokenAddress` */
-export type BalanceKey = `${WalletAddress}-${BlockchainId}-${TokenAddress}`;
+export type BalanceKey = `${BlockchainId}-${TokenAddress}-${WalletAddress}`;
 export type BalanceState = {
   [key: BalanceKey]: Balance;
 };
@@ -29,13 +35,14 @@ export interface ConnectedWallet extends Wallet {
 }
 
 export interface WalletsSlice {
-  balances: BalanceState;
+  _balances: BalanceState;
   connectedWallets: ConnectedWallet[];
-  loading: boolean;
+  fetchingWallets: boolean;
 
   setConnectedWalletAsRefetching: (walletType: string) => void;
   setConnectedWalletHasError: (walletType: string) => void;
-  setNewConnectedWalletAsLoading: (accounts: Wallet[]) => void;
+  setConnectedWalletRetrievedData: (walletType: string) => void;
+  addConnectedWallet: (accounts: Wallet[]) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
   ) => void;
@@ -44,10 +51,10 @@ export interface WalletsSlice {
    */
   newWalletConnected: (accounts: Wallet[]) => Promise<void>;
   disconnectWallet: (walletType: string) => void;
-  fetchBalances: (
-    walletAddresses: Parameters<RangoClient['getWalletsDetails']>[0],
-    options?: Parameters<RangoClient['getWalletsDetails']>[1]
-  ) => Promise<void>;
+  clearConnectedWallet: () => void;
+  fetchBalances: (accounts: Wallet[]) => Promise<void>;
+  getBalanceFor: (token: Token) => Balance | null;
+  getBalances: () => BalanceState;
 }
 
 export const createWalletsSlice: StateCreator<
@@ -56,45 +63,15 @@ export const createWalletsSlice: StateCreator<
   [],
   WalletsSlice
 > = (set, get) => ({
-  balances: {},
+  _balances: {},
   connectedWallets: [],
-  loading: false,
+  fetchingWallets: false,
 
   // Actions
-  fetchBalances: async (walletAddresses, options) => {
-    const response = await httpService().getWalletsDetails(
-      walletAddresses,
-      options
-    );
-
-    const listWalletsWithBalances = response.wallets;
-    if (listWalletsWithBalances) {
-      let nextBalances: BalanceState = {};
-      listWalletsWithBalances.forEach((wallet) => {
-        const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
-
-        nextBalances = {
-          ...nextBalances,
-          ...balancesForWallet,
-        };
-      });
-
-      set({
-        balances: {
-          ...get().balances,
-          ...nextBalances,
-        },
-      });
-    } else {
-      throw new Error(
-        `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
-      );
-    }
-  },
   setConnectedWalletAsRefetching: (walletType: string) => {
     set((state) => {
       return {
-        loading: true,
+        fetchingWallets: true,
         connectedWallets: state.connectedWallets.map((connectedWallet) => {
           if (connectedWallet.walletType === walletType) {
             return {
@@ -109,10 +86,28 @@ export const createWalletsSlice: StateCreator<
       };
     });
   },
+  setConnectedWalletRetrievedData: (walletType: string) => {
+    set((state) => {
+      return {
+        fetchingWallets: false,
+        connectedWallets: state.connectedWallets.map((connectedWallet) => {
+          if (connectedWallet.walletType === walletType) {
+            return {
+              ...connectedWallet,
+              loading: false,
+              error: false,
+            };
+          }
+
+          return connectedWallet;
+        }),
+      };
+    });
+  },
   setConnectedWalletHasError: (walletType: string) => {
     set((state) => {
       return {
-        loading: false,
+        fetchingWallets: false,
         connectedWallets: state.connectedWallets.map((connectedWallet) => {
           if (connectedWallet.walletType === walletType) {
             return {
@@ -127,9 +122,24 @@ export const createWalletsSlice: StateCreator<
       };
     });
   },
-  setNewConnectedWalletAsLoading: (accounts: Wallet[]) => {
-    set((state) => {
-      const newConnectedWallets = accounts.map((account) => {
+  addConnectedWallet: (accounts: Wallet[]) => {
+    /*
+     * When we are going to add a new account, there are two thing that can be haapens:
+     * 1. Wallet hasn't add yet.
+     * 2. Wallet has added, and there are some more account that needs to added to connected wallet. consider we've added an ETH and Pol account, then we need to add Arb account later as well.
+     *
+     * For handling this, we need to only keep not added account, then only add those.
+     */
+    const connectedWallets = get().connectedWallets;
+    const walletsNeedToBeAdded = accounts.filter(
+      (account) =>
+        !connectedWallets.some((connectedWallet) =>
+          isAccountAndWalletMatched(account, connectedWallet)
+        )
+    );
+
+    if (walletsNeedToBeAdded.length > 0) {
+      const newConnectedWallets = walletsNeedToBeAdded.map((account) => {
         return {
           address: account.address,
           chain: account.chain,
@@ -137,15 +147,17 @@ export const createWalletsSlice: StateCreator<
           walletType: account.walletType,
           selected: false,
 
-          loading: true,
+          loading: false,
           error: false,
         };
       });
-      return {
-        loading: true,
-        connectedWallets: [...state.connectedWallets, ...newConnectedWallets],
-      };
-    });
+
+      set((state) => {
+        return {
+          connectedWallets: [...state.connectedWallets, ...newConnectedWallets],
+        };
+      });
+    }
   },
   setWalletsAsSelected: (wallets) => {
     const nextConnectedWalletsWithUpdatedSelectedStatus =
@@ -181,28 +193,9 @@ export const createWalletsSlice: StateCreator<
       payload: { walletType: accounts[0].walletType, accounts },
     });
 
-    // All the `accounts` have same `walletType` so we can pick the first one.
-    const walletType = accounts[0].walletType;
-    const isWalletConnectedBefore = get().connectedWallets.find(
-      (connectedWallet) => connectedWallet.walletType === walletType
-    );
+    get().addConnectedWallet(accounts);
 
-    if (isWalletConnectedBefore) {
-      get().setConnectedWalletAsRefetching(walletType);
-    } else {
-      get().setNewConnectedWalletAsLoading(accounts);
-    }
-
-    const addressesToFetch = accounts.map((account) => ({
-      address: account.address,
-      blockchain: account.chain,
-    }));
-
-    get()
-      .fetchBalances(addressesToFetch)
-      .catch(() => {
-        get().setConnectedWalletHasError(walletType);
-      });
+    void get().fetchBalances(accounts);
   },
   disconnectWallet: (walletType) => {
     const isTargetWalletExistsInConnectedWallets = get().connectedWallets.find(
@@ -257,5 +250,132 @@ export const createWalletsSlice: StateCreator<
         connectedWallets: nextConnectedWallets,
       });
     }
+  },
+  clearConnectedWallet: () => set({ connectedWallets: [] }),
+  fetchBalances: async (accounts) => {
+    // All the `accounts` have same `walletType` so we can pick the first one.
+    const walletType = accounts[0].walletType;
+
+    get().setConnectedWalletAsRefetching(walletType);
+
+    const addressesToFetch = accounts.map((account) => ({
+      address: account.address,
+      blockchain: account.chain,
+    }));
+    const response = await httpService().getWalletsDetails(addressesToFetch);
+
+    const listWalletsWithBalances = response.wallets;
+
+    if (listWalletsWithBalances) {
+      let nextBalances: BalanceState = {};
+      listWalletsWithBalances.forEach((wallet) => {
+        const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
+
+        nextBalances = {
+          ...nextBalances,
+          ...balancesForWallet,
+        };
+      });
+
+      console.log({ nextBalances, aaa: get().connectedWallets });
+
+      set((state) => ({
+        _balances: {
+          ...state._balances,
+          ...nextBalances,
+        },
+      }));
+
+      get().setConnectedWalletRetrievedData(walletType);
+    } else {
+      get().setConnectedWalletHasError(walletType);
+      throw new Error(
+        `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
+      );
+    }
+  },
+  getBalances: () => {
+    /**
+     * NOTE:
+     * We are iterating over connected wallets and make a list from address
+     * we need that because `balances` currently don't have a clean up mechanism
+     * which means if a wallet disconnect, balances are exists in store and only the wallet will be removed from `connectedWallets`.
+     *
+     * If we introduce a cleanup feature in future, we can remove this and only iterating over balances would be enough.
+     */
+
+    const addresses = get().connectedWallets.map(
+      (connectedWallet) => connectedWallet.address
+    );
+
+    const handler = {
+      ownKeys(target: BalanceState) {
+        const keys: BalanceKey[] = [];
+
+        for (const balanceKey of Object.keys(target)) {
+          if (addresses.find((address) => balanceKey.endsWith(address))) {
+            keys.push(balanceKey as BalanceKey);
+          }
+        }
+
+        if (Object.keys(target).length && 0 == 1) {
+          console.log({
+            keys,
+            target,
+            addresses,
+            aaaa: get().connectedWallets,
+          });
+        }
+
+        return keys;
+      },
+    };
+
+    return new Proxy(get()._balances, handler);
+  },
+  getBalanceFor: (token) => {
+    const balances = get().getBalances();
+
+    /*
+     * The old implementation wasn't considering user's address.
+     * it can be problematic when two separate address has same token, both of them will override on same key.
+     *
+     * For keeping the same behavior, here we pick the most amount and also will not consider user's address in key.
+     */
+
+    const key = createBalanceKey('unknown', token);
+    const keyParts = key.split('-');
+    keyParts.pop();
+    const keyWithoutAccountAddress = keyParts.join('-');
+    // console.log({ keyWithoutAccountAddress, balances });
+
+    const targetBalanceKeys: BalanceKey[] = [];
+    for (const balanceKey of Object.keys(balances)) {
+      if (balanceKey.startsWith(keyWithoutAccountAddress)) {
+        targetBalanceKeys.push(balanceKey as BalanceKey);
+      }
+    }
+
+    if (targetBalanceKeys.length === 0) {
+      return null;
+    } else if (targetBalanceKeys.length === 1) {
+      const targetKey = targetBalanceKeys[0];
+      return balances[targetKey];
+    }
+
+    // If there are multiple balances for an specific token, we pick the maximum.
+    const firstTargetBalance = balances[targetBalanceKeys[0]];
+    let maxBalance: Balance = firstTargetBalance;
+    targetBalanceKeys.forEach((targetBalanceKey) => {
+      const currentBalance = balances[targetBalanceKey];
+      const currentBalanceAmount = new BigNumber(currentBalance.amount);
+      const prevBalanceAmount = new BigNumber(maxBalance.amount);
+
+      if (currentBalanceAmount.isGreaterThan(prevBalanceAmount)) {
+        maxBalance = currentBalance;
+      }
+    });
+
+    return maxBalance;
   },
 });

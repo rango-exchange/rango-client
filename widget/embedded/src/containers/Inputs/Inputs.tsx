@@ -14,8 +14,8 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
 import { numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
@@ -38,7 +38,7 @@ export function Inputs(props: PropTypes) {
     outputUsdValue,
     selectedQuote,
   } = useQuoteStore();
-  const { connectedWallets, getBalanceFor } = useWalletsStore();
+  const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';

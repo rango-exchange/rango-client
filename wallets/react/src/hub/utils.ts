@@ -31,36 +31,43 @@ import {
 
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
-  current: State,
-  previous: State,
+  currentState: State,
+  previousState: State,
   onUpdateState: WalletEventHandler,
   allProviders: VersionedProviders[],
   allBlockChains: ProviderProps['allBlockChains']
 ) {
   hub.getAll().forEach((provider, providerId) => {
     const currentProviderState = guessProviderStateSelector(
-      current,
+      currentState,
       providerId
     );
     const previousProviderState = guessProviderStateSelector(
-      previous,
+      previousState,
       providerId
     );
 
-    let accounts: string[] = [];
+    let accounts: string[] | null = [];
     /*
-     * We don't rely `accounts` to make sure we will triger proper event on this case:
+     * We don't rely `accounts` to make sure we will trigger proper event on this case:
      * previous value: [0x...]
      * current value: []
      */
     let hasAccountChanged = false;
     let hasNetworkChanged = false;
+    let hasProviderDisconnected = false;
     // It will pick the last network from namespaces.
     let maybeNetwork = null;
     provider.getAll().forEach((namespace) => {
       const storeId = generateStoreId(providerId, namespace.namespaceId);
-      const currentNamespaceState = namespaceStateSelector(current, storeId);
-      const previousNamespaceState = namespaceStateSelector(previous, storeId);
+      const currentNamespaceState = namespaceStateSelector(
+        currentState,
+        storeId
+      );
+      const previousNamespaceState = namespaceStateSelector(
+        previousState,
+        storeId
+      );
 
       if (currentNamespaceState.network !== null) {
         maybeNetwork = currentNamespaceState.network;
@@ -81,8 +88,16 @@ export function checkHubStateAndTriggerEvents(
             fromAccountIdToLegacyAddressFormat
           );
 
-          accounts = [...accounts, ...formattedAddresses];
+          if (accounts) {
+            accounts = [...accounts, ...formattedAddresses];
+          } else {
+            accounts = [...formattedAddresses];
+          }
+
           hasAccountChanged = true;
+        } else {
+          accounts = null;
+          hasProviderDisconnected = true;
         }
       }
     });
@@ -149,6 +164,9 @@ export function checkHubStateAndTriggerEvents(
         coreState,
         eventInfo
       );
+    }
+    if (hasProviderDisconnected) {
+      onUpdateState(providerId, Events.ACCOUNTS, null, coreState, eventInfo);
     }
     if (hasNetworkChanged) {
       onUpdateState(

@@ -12,12 +12,10 @@ import { useEffect } from 'react';
 import { eventEmitter } from '../../services/eventEmitter';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
-import { useWalletsStore } from '../../store/wallets';
 
 export function useSubscribeToWidgetEvents() {
-  const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
-  const { findToken, connectedWallets } = useAppStore();
+  const { connectedWallets, fetchBalances } = useAppStore();
 
   useEffect(() => {
     const handleStepEvent = (widgetEvent: StepEventData) => {
@@ -38,8 +36,8 @@ export function useSubscribeToWidgetEvents() {
             (wallet) => wallet.chain === step?.toBlockchain
           );
 
-        fromAccount && getWalletsDetails([fromAccount], findToken);
-        toAccount && getWalletsDetails([toAccount], findToken);
+        fromAccount && void fetchBalances([fromAccount]);
+        toAccount && void fetchBalances([toAccount]);
       }
 
       setNotification(event, route);
