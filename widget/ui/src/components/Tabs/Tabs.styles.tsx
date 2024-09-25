@@ -1,5 +1,39 @@
 import { darkTheme, styled } from '../../theme.js';
 import { Button } from '../Button/index.js';
+import { IconButton } from '../IconButton/IconButton.js';
+
+export const Container = styled('div', {
+  position: 'relative',
+  variants: {
+    hasPadding: {
+      true: {
+        padding: '0 $32',
+      },
+    },
+  },
+});
+
+export const Arrow = styled(IconButton, {
+  position: 'absolute',
+  height: '100%',
+  zIndex: 20,
+  borderRadius: '$xs !important',
+  variants: {
+    hidden: {
+      true: {
+        visibility: 'hidden',
+      },
+    },
+  },
+});
+
+export const ArrowRight = styled(Arrow, {
+  right: 0,
+});
+
+export const ArrowLeft = styled(Arrow, {
+  left: 0,
+});
 
 export const Tabs = styled('div', {
   display: 'flex',
@@ -23,7 +57,7 @@ export const Tabs = styled('div', {
         borderStyle: 'solid',
         backgroundColor: '$$color',
       },
-      bordered: { backgroundColor: 'inherit' },
+      bordered: {},
     },
     borderRadius: {
       small: {
@@ -37,6 +71,16 @@ export const Tabs = styled('div', {
       },
       none: {
         borderRadius: 'unset',
+      },
+    },
+    scrollable: {
+      true: {
+        overflowX: 'auto',
+        scrollBehavior: 'smooth',
+        scrollbarWidth: 'none',
+        '&::webkit-scrollbar': {
+          display: 'none',
+        },
       },
     },
   },
@@ -75,7 +119,9 @@ export const Tab = styled(Button, {
         height: '100%',
       },
       secondary: {},
-      bordered: {},
+      bordered: {
+        padding: '$10 $20',
+      },
     },
     isActive: {
       true: {
@@ -154,6 +200,7 @@ export const Tab = styled(Button, {
 
 export const BackdropTab = styled('div', {
   padding: '$4',
+  boxSizing: 'border-box',
   position: 'absolute',
   inset: 0,
   transition: 'transform 0.2s cubic-bezier(0, 0, 0.86, 1.2)',
@@ -169,6 +216,7 @@ export const BackdropTab = styled('div', {
         backgroundColor: '$background',
       },
       bordered: {
+        borderRadius: '0 !important',
         borderBottom: '$secondary500 solid 2px',
       },
     },
