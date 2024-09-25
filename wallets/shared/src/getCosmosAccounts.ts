@@ -23,7 +23,7 @@ interface CosmosBlockchainMetaWithChainId
 
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
-    .filter((blockchain) => !blockchain.info?.experimental)
+    .filter((blockchain) => blockchain.info && !blockchain.info.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
@@ -159,7 +159,6 @@ export const getCosmosAccounts: Connect = async ({
   const chainInfo = network
     ? getCosmosExperimentalChainInfo(meta as CosmosBlockchainMeta[])[network]
     : null;
-
   if (!!network && !chainInfo) {
     throw new Error(
       `You need to add ${network} to "COSMOS_EXPERIMENTAL_CHAINS_INFO" first.`
