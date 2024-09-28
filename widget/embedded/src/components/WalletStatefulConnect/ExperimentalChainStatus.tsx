@@ -1,10 +1,11 @@
 import type { PropTypes } from './ExperimentalChainStatus.types';
 
-import { Image, MessageBox, Spinner } from '@rango-dev/ui';
+import { Image, MessageBox } from '@rango-dev/ui';
 import React from 'react';
 
 import {
   LogoContainer,
+  Spinner,
   WalletImageContainer,
 } from '../ConfirmWalletsModal/WalletList.styles';
 
