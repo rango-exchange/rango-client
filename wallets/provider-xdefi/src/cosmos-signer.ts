@@ -4,8 +4,6 @@ import { executeCosmosTransaction } from '@rango-dev/signer-cosmos';
 import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { xdefiTransfer } from './helpers.js';
-
 /*
  * TODO - replace with real type
  * tslint:disable-next-line: no-any
@@ -43,23 +41,6 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
       const hash = await executeCosmosTransaction(tx, cosmosProvider);
       return { hash };
     }
-
-    const binanceProvider = getNetworkInstance(this.provider, Networks.BINANCE);
-
-    const from = tx.fromWalletAddress;
-    const { method, memo, recipient, decimals, amount, asset } = tx.rawTransfer;
-    const blockchain = tx.blockChain;
-    const hash = await xdefiTransfer(
-      blockchain,
-      asset.ticker,
-      from,
-      amount,
-      decimals,
-      recipient,
-      binanceProvider,
-      method,
-      memo
-    );
-    return { hash };
+    throw Error('raw transfer is not null for cosmos transactions');
   }
 }
