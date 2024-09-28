@@ -2,6 +2,7 @@ import type { ModalPropTypes } from './Modal.types.js';
 import type { PropsWithChildren } from 'react';
 
 import * as Dialog from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import React, { useEffect, useRef } from 'react';
 
 import { CloseIcon } from '../../icons/index.js';
@@ -68,6 +69,18 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     };
   }, [open]);
 
+  const renderTitle = () => {
+    const result = (
+      <Dialog.DialogTitle>
+        <Typography variant="title" size="small">
+          {title}
+        </Typography>
+      </Dialog.DialogTitle>
+    );
+    // This is added to prevent error "`DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users."
+    return title ? result : <VisuallyHidden>{result}</VisuallyHidden>;
+  };
+
   return (
     <Dialog.Root open={open} onOpenChange={handleBackDropClick}>
       <Dialog.Portal container={container}>
@@ -79,11 +92,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             {header ?? (
               <ModalHeader noTitle={!title && dismissible && !prefix}>
                 {prefix}
-                {title && (
-                  <Typography variant="title" size="small">
-                    {title}
-                  </Typography>
-                )}
+                {renderTitle()}
                 <Flex>
                   {suffix}
                   {dismissible && hasCloseIcon && (
