@@ -147,7 +147,6 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.LTC,
   Networks.THORCHAIN,
   Networks.BCH,
-  Networks.BINANCE,
   Networks.MAYA,
   Networks.DOGE,
 ];
