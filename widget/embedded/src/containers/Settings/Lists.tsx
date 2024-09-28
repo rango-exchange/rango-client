@@ -242,8 +242,9 @@ export function SettingsLists() {
           content={
             <TooltipContainer>
               <Typography variant="label" size="medium" color="neutral700">
+                <b>{i18n.t('Warning')}</b>:&nbsp;
                 {i18n.t(
-                  "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+                  "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
                 )}
               </Typography>
             </TooltipContainer>
