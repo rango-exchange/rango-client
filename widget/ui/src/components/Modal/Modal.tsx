@@ -53,7 +53,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   useEffect(() => {
     if (exitCallbackRef.current) {
       modalContainerRef.current?.addEventListener(
-        'transitionend',
+        'animationend',
         exitCallbackRef.current
       );
     }
@@ -61,7 +61,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     return () => {
       if (exitCallbackRef.current) {
         modalContainerRef.current?.removeEventListener(
-          'transitionend',
+          'animationend',
           exitCallbackRef.current
         );
       }
