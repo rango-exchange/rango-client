@@ -79,14 +79,14 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
       <ItemPicker
         onClick={() => setModalState(ModalState.DEFAULT_BLOCKCHAIN)}
         value={{ label: chainValue?.displayName, logo: chainValue?.logo }}
-        title="Default Blockchain"
+        title="Default Chain"
         hasLogo={true}
         placeholder="Chain"
         disabled={!blockchains?.length}
       />
       <Divider size={10} />
       <Tooltip
-        content="Choose the default blockchain first"
+        content="Choose the default chain first"
         open={!chainValue ? undefined : false}
         side="bottom">
         <ItemPicker
@@ -107,10 +107,10 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
               image: chain.logo,
               value: chain.name,
             }))}
-            title="Default Blockchain"
+            title="Default Chain"
             defaultValue={selectedType?.blockchain}
             icon={<ChainsIcon size={24} />}
-            searchPlaceholder="Search Blockchain"
+            searchPlaceholder="Search Chain"
           />
         </OverlayPanel>
       )}

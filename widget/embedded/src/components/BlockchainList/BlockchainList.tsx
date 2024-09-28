@@ -68,7 +68,7 @@ export function BlockchainList(props: PropTypes) {
       {showTitle && (
         <>
           <Typography variant="label" size="large">
-            {i18n.t('Select Blockchain')}
+            {i18n.t('Select Chain')}
           </Typography>
           <Divider size={4} />
         </>

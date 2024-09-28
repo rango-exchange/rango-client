@@ -51,9 +51,9 @@ export function SupportedBlockchains({ type }: { type: Type }) {
 
   return (
     <MultiSelect
-      label="Supported Blockchains"
+      label="Supported Chains"
       icon={<ChainsIcon size={24} />}
-      type="Blockchains"
+      type="Chains"
       value={
         configBlockchains?.length === allBlockchains.length
           ? undefined
