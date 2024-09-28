@@ -3,7 +3,9 @@ import { Networks } from '@rango-dev/wallets-shared';
 export function taho() {
   const { tally } = window;
 
-  if (!tally) return null;
+  if (!tally) {
+    return null;
+  }
 
   return tally;
 }
@@ -14,5 +16,5 @@ export const TAHO_WALLET_SUPPORTED_CHAINS = [
   Networks.OPTIMISM,
   Networks.ARBITRUM,
   Networks.AVAX_CCHAIN,
-  Networks.BINANCE,
+  Networks.BSC,
 ];
