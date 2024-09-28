@@ -18,7 +18,7 @@ export function ExperimentalChain(props: PropTypes) {
       })}
       type="warning"
       description={i18n.t({
-        id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+        id: 'Would you like to add the {blockchainDisplayName} experimental chain to your wallet?',
         values: { blockchainDisplayName: displayName },
       })}>
       <Divider size={18} />

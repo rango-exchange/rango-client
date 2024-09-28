@@ -30,7 +30,7 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
           <HeaderDetails>
             <div className={rowStyles()}>
               <Typography variant="label" size="large" color="neutral700">
-                {`${i18n.t('Request ID')}:`}
+                {`${i18n.t('Request ID')}`}
               </Typography>
               <div className={requestIdStyles()}>
                 <Typography variant="label" size="small" color="neutral700">

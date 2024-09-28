@@ -46,7 +46,7 @@ export function LanguagePage() {
         <Alert
           type="warning"
           variant="alarm"
-          title="Important Notice: Machine translations are in use"
+          title="Warning: We are using machine translation, so the translations may be inaccurate."
         />
         <Divider size={'8'} />
         <RadioRoot value={activeLanguage}>

@@ -83,7 +83,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
         <Tooltip
           container={getContainer()}
           side="top"
-          content={i18n.t('Transactions History')}>
+          content={i18n.t('History')}>
           <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
             <TransactionIcon size={18} color="black" />
             <InProgressTransactionBadge />

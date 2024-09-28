@@ -242,7 +242,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           {!stepDetailMessage ? i18n.t('Transaction was not sent.') : ''}
           {lastConvertedTokenInFailedSwap
             ? `${i18n.t({
-                id: '{amount} {symbol} on {blockchain} remain in your wallet',
+                id: '{amount} {symbol} on {blockchain} remains in your wallet.',
                 values: {
                   amount: lastConvertedTokenInFailedSwap.outputAmount,
                   symbol: lastConvertedTokenInFailedSwap.symbol,
@@ -307,7 +307,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         <HeaderDetails>
           <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
-              {`${i18n.t('Request ID')}:`}
+              {`${i18n.t('Request ID')}`}
             </Typography>
             <div className={requestIdStyles()}>
               <Typography variant="label" size="small" color="neutral700">
