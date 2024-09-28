@@ -3,6 +3,7 @@ export type {
   State,
   ProviderInfo,
   CommonNamespaces,
+  CommonNamespaceKeys,
 } from './hub/mod.js';
 export {
   Hub,

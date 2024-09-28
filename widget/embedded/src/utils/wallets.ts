@@ -8,9 +8,7 @@ import type {
   SelectedQuote,
   Wallet,
   WalletInfoWithExtra,
-  WithNamespacesInfo,
 } from '../types';
-import type { ProviderInfo } from '@rango-dev/wallets-core';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Network,
@@ -48,9 +46,7 @@ import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
-  WithNamespacesInfo & {
-    properties?: ProviderInfo['properties'];
-  };
+  Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {

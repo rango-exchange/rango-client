@@ -6,9 +6,9 @@ import type {
   LegacyNamespace as Namespace,
 } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
-import type { WalletInfo } from '@rango-dev/wallets-shared';
 
-import { isDiscoverMode, isEvmNamespace } from '@rango-dev/wallets-core/legacy';
+import { isDiscoverMode } from '@rango-dev/wallets-core/legacy';
+import { type WalletInfo } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 
 import {
@@ -20,18 +20,15 @@ import {
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
-import {
-  fromAccountIdToLegacyAddressFormat,
-  isConnectResultEvm,
-  isConnectResultSolana,
-} from './helpers.js';
+import { fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   checkHubStateAndTriggerEvents,
-  convertNamespaceNetworkToEvmChainId,
   discoverNamespace,
   getLegacyProvider,
+  transformHubResultToLegacyResult,
+  tryConvertNamespaceNetworkToChainInfo,
 } from './utils.js';
 
 export type UseAdapterParams = Omit<ProviderProps, 'providers'> & {
@@ -136,17 +133,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       if (!namespaces) {
-        /*
-         * TODO: I think this should be wallet.connect()
-         * TODO: This isn't needed anymore since we can add a discovery namespace.
-         * TODO: if the next line uncommented, make sure we are handling autoconnect persist as well.
-         * return getHub().runAll('connect');
-         */
         throw new Error(
           'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
         );
       }
 
+      // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
       const targetNamespaces: [LegacyNamespaceInput, AllProxiedNamespaces][] =
         [];
       namespaces.forEach((namespace) => {
@@ -168,42 +160,24 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         targetNamespaces.push([namespace, result]);
       });
 
-      const finalResult = await Promise.all(
-        targetNamespaces.map(async ([info, namespace]) => {
-          const evmChain = isEvmNamespace(info)
-            ? convertNamespaceNetworkToEvmChainId(
-                info,
-                params.allBlockChains || []
-              )
-            : undefined;
-          const chain = evmChain || info.network;
+      // Try to run `connect` on matched namespaces
+      const connectResultFromTargetNamespaces = targetNamespaces.map(
+        async ([info, namespace]) => {
+          const network = tryConvertNamespaceNetworkToChainInfo(
+            info,
+            params.allBlockChains || []
+          );
 
           // `connect` can have different interfaces (e.g. Solana -> .connect(), EVM -> .connect("0x1") ), our assumption here all the `connect` hasn't chain or if they have, they will accept it in first argument. By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
-          const result = namespace.connect(chain);
-          return result.then<ConnectResult>((res) => {
-            if (isConnectResultEvm(res)) {
-              return {
-                accounts: res.accounts,
-                network: res.network,
-                provider: undefined,
-              };
-            } else if (isConnectResultSolana(res)) {
-              return {
-                accounts: res,
-                network: null,
-                provider: undefined,
-              };
-            }
-
-            return {
-              accounts: [res],
-              network: null,
-              provider: undefined,
-            };
-          });
-        })
+          const result = namespace.connect(network);
+          return result.then<ConnectResult>(transformHubResultToLegacyResult);
+        }
+      );
+      const connectResultWithLegacyFormat = await Promise.all(
+        connectResultFromTargetNamespaces
       );
 
+      // If Provider has support for auto connect, we will add the wallet to storage.
       const legacyProvider = getLegacyProvider(
         params.allVersionedProviders,
         type
@@ -215,7 +189,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         lastConnectedWalletsFromStorage.addWallet(type, namespaces);
       }
 
-      return finalResult;
+      return connectResultWithLegacyFormat;
     },
     async disconnect(type) {
       const wallet = getHub().get(type);
@@ -284,7 +258,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         isContractWallet: false,
         mobileWallet: false,
         showOnMobile: false,
+
         properties: wallet.info()?.properties,
+        isHub: true,
       };
     },
     providers() {

@@ -83,15 +83,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
           supportedChainNames,
           meta.isContractWallet
         );
-        console.log('EventHandler', {
-          data,
-          supportedChainNames,
-          type,
-          event,
-          value,
-          state,
-          meta,
-        });
         if (data.length) {
           void newWalletConnected(data);
         }
@@ -112,7 +103,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
       (event === Events.ACCOUNTS && meta.isHub)
     ) {
       const key = `${type}-${state.network}-${value}`;
-      console.log({ key });
 
       if (!!onConnectWalletHandler.current) {
         onConnectWalletHandler.current(key);
@@ -148,6 +138,8 @@ function Main(props: PropsWithChildren<PropTypes>) {
     }),
     []
   );
+  const isExperimentalEnabled =
+    props.config.features?.experimentalWallet === 'enabled' ? true : false;
 
   return (
     <WidgetContext.Provider value={handlers}>
@@ -157,10 +149,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         onUpdateState={onUpdateState}
         autoConnect={!!isActiveTab}
         configs={{
-          isExperimentalEnabled:
-            props.config.features?.experimentalWallet === 'enabled'
-              ? true
-              : false,
+          isExperimentalEnabled,
         }}>
         {props.children}
       </Provider>

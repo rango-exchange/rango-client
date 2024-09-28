@@ -29,8 +29,3 @@ export type WalletInfoWithExtra = WalletInfo & {
   singleNamespace?: boolean;
   needsDerivationPath?: boolean;
 };
-
-export type WithNamespacesInfo = {
-  namespaces?: Namespace[];
-  singleNamespace?: boolean;
-};

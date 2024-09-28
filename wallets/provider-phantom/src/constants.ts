@@ -1,8 +1,5 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
-import {
-  LegacyNamespace,
-  LegacyNetworks,
-} from '@rango-dev/wallets-core/legacy';
+import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
@@ -22,7 +19,7 @@ export const info: ProviderInfo = {
   properties: [
     {
       name: 'detached',
-      value: [LegacyNamespace.Solana, LegacyNamespace.Evm],
+      value: ['solana', 'evm'],
     },
   ],
 };

@@ -11,6 +11,8 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
+import { convertCommonNamespacesKeysToLegacyNamespace } from '../../utils/hub';
+
 import {
   isStateOnDerivationPathStep,
   isStateOnNamespace,
@@ -62,10 +64,11 @@ export function useStatefulConnect(): UseStatefulConnect {
     });
 
     try {
-      await connect(
-        type,
-        namespaces?.map((ns) => ({ ...ns, network: undefined }))
-      );
+      const legacyNamespacesInput = namespaces?.map((ns) => ({
+        ...ns,
+        network: undefined,
+      }));
+      await connect(type, legacyNamespacesInput);
 
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,25 +90,37 @@ export function useStatefulConnect(): UseStatefulConnect {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
     if (isDisconnected) {
-      const detachedInstances = wallet.properties?.find(
-        (item) => item.name === 'detached'
-      );
-      const hubCondition = detachedInstances && wallet.state !== 'connected';
-      if (hubCondition) {
-        dispatch({
-          type: 'needsNamespace',
-          payload: {
-            providerType: wallet.type,
-            providerImage: wallet.image,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            availableNamespaces: detachedInstances.value,
-            singleNamespace: false,
-          },
-        });
-        return { status: ResultStatus.Namespace };
+      // Legacy and hub have different structure to check wether we need to show namespace or not.
+
+      // Hub
+      const isHub = !!wallet.isHub;
+      if (isHub) {
+        const detachedInstances = wallet.properties?.find(
+          (item) => item.name === 'detached'
+        );
+        const needsNamespace =
+          detachedInstances && wallet.state !== 'connected';
+
+        if (needsNamespace) {
+          const availableNamespaces =
+            convertCommonNamespacesKeysToLegacyNamespace(
+              detachedInstances.value
+            );
+
+          dispatch({
+            type: 'needsNamespace',
+            payload: {
+              providerType: wallet.type,
+              providerImage: wallet.image,
+              availableNamespaces,
+              singleNamespace: false,
+            },
+          });
+          return { status: ResultStatus.Namespace };
+        }
       }
 
+      // Legacy
       if (!wallet.namespaces) {
         return await runConnect(wallet.type, undefined, options);
       }

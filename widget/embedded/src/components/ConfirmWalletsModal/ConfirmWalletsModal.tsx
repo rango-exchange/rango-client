@@ -53,11 +53,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     customDestination,
     setCustomDestination,
   } = useQuoteStore();
-  const {
-    config,
-    connectedWallets,
-    setWalletsAsSelected: selectWallets,
-  } = useAppStore();
+  const { config, connectedWallets, setWalletsAsSelected } = useAppStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
@@ -219,7 +215,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     const lastSelectedWallets = selectableWallets.filter(
       (wallet) => wallet.selected
     );
-    selectWallets(lastSelectedWallets);
+    setWalletsAsSelected(lastSelectedWallets);
     selectQuoteWallets(lastSelectedWallets);
     setQuoteWalletConfirmed(true);
     onClose();

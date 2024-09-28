@@ -24,6 +24,7 @@ export type Providers = { [type in WalletType]?: any };
 
 export type ExtendedWalletInfo = WalletInfo & {
   properties?: ProviderInfo['properties'];
+  isHub?: boolean;
 };
 
 export type ProviderContext = {

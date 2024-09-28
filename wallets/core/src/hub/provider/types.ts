@@ -5,6 +5,7 @@ import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
+import type { Prettify } from '../../types/utils.js';
 
 export type Context = {
   state: () => [GetState, SetState];
@@ -25,6 +26,8 @@ export interface CommonNamespaces {
   solana: SolanaActions;
   cosmos: CosmosActions;
 }
+
+export type CommonNamespaceKeys = Prettify<keyof CommonNamespaces>;
 
 export interface ExtendableInternalActions {
   init?: FunctionWithContext<AnyFunction, Context>;

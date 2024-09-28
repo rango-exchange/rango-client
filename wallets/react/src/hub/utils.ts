@@ -1,4 +1,5 @@
-import type { ProviderProps } from '../legacy/mod.js';
+import type { AllProxiedNamespaces } from './types.js';
+import type { ConnectResult, ProviderProps } from '../legacy/mod.js';
 import type { Hub, State } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInput,
@@ -19,6 +20,7 @@ import {
   type VersionedProviders,
 } from '@rango-dev/wallets-core/utils';
 import {
+  type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
   Networks,
 } from '@rango-dev/wallets-shared';
@@ -26,6 +28,8 @@ import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 import {
   fromAccountIdToLegacyAddressFormat,
+  isConnectResultEvm,
+  isConnectResultSolana,
   separateLegacyAndHubProviders,
 } from './helpers.js';
 
@@ -271,11 +275,55 @@ export function getLegacyProvider(
 }
 
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: LegacyNamespaceInput<Namespace.Evm>,
+  namespace: LegacyNamespaceInput,
   meta: BlockchainMeta[]
 ) {
+  if (!namespace.network) {
+    return undefined;
+  }
+
   const evmBlockchainsList = meta.filter(isEvmBlockchain);
   const evmChains = convertEvmBlockchainMetaToEvmChainInfo(evmBlockchainsList);
 
-  return evmChains[namespace.network] || undefined;
+  return evmChains[namespace.network];
+}
+
+/**
+ * We are passing an string for chain id (e.g. ETH, POLYGON), but wallet's instances (e.g. window.ethereum) needs chainId (e.g. 0x1).
+ * This function will help us to map these strings to proper hex ids.
+ *
+ * If you need same functionality for other blockchain types (e.g. Cosmos), You can make a separate function and add it here.
+ */
+export function tryConvertNamespaceNetworkToChainInfo(
+  namespace: LegacyNamespaceInput,
+  meta: BlockchainMeta[]
+): string | AddEthereumChainParameter | undefined {
+  const evmChain = convertNamespaceNetworkToEvmChainId(namespace, meta);
+  const network = evmChain || namespace.network;
+
+  return network;
+}
+
+export function transformHubResultToLegacyResult(
+  res: Awaited<ReturnType<AllProxiedNamespaces['connect']>>
+): ConnectResult {
+  if (isConnectResultEvm(res)) {
+    return {
+      accounts: res.accounts,
+      network: res.network,
+      provider: undefined,
+    };
+  } else if (isConnectResultSolana(res)) {
+    return {
+      accounts: res,
+      network: null,
+      provider: undefined,
+    };
+  }
+
+  return {
+    accounts: [res],
+    network: null,
+    provider: undefined,
+  };
 }

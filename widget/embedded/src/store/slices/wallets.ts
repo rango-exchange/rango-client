@@ -318,15 +318,6 @@ export const createWalletsSlice: StateCreator<
           }
         }
 
-        if (Object.keys(target).length && 0 == 1) {
-          console.log({
-            keys,
-            target,
-            addresses,
-            aaaa: get().connectedWallets,
-          });
-        }
-
         return keys;
       },
     };

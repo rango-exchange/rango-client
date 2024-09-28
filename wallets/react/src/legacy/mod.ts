@@ -1,4 +1,9 @@
-export type { ProviderProps, ProviderContext, ConnectResult } from './types.js';
+export type {
+  ProviderProps,
+  ProviderContext,
+  ConnectResult,
+  ExtendedWalletInfo,
+} from './types.js';
 export {
   LEGACY_LAST_CONNECTED_WALLETS,
   HUB_LAST_CONNECTED_WALLETS,
