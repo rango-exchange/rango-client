@@ -15,6 +15,7 @@ import {
   Content,
   DialogContent,
   DialogOverlay,
+  DialogTitle,
   Flex,
   Footer,
   ModalHeader,
@@ -71,14 +72,14 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
 
   const renderTitle = () => {
     const result = (
-      <Dialog.DialogTitle>
+      <DialogTitle>
         <Typography variant="title" size="small">
           {title}
         </Typography>
-      </Dialog.DialogTitle>
+      </DialogTitle>
     );
     // This is added to prevent error "`DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users."
-    return title ? result : <VisuallyHidden>{result}</VisuallyHidden>;
+    return title ? result : <VisuallyHidden asChild>{result}</VisuallyHidden>;
   };
 
   return (
@@ -89,7 +90,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             ref={modalContainerRef}
             css={styles?.container}
             anchor={anchor}>
-            {header ?? (
+            {header ?? ( // TODO: error related to required `DialogTitle` should be handled for custom headers
               <ModalHeader noTitle={!title && dismissible && !prefix}>
                 {prefix}
                 {renderTitle()}

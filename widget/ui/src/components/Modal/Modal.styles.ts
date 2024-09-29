@@ -179,6 +179,10 @@ export const Content = styled('div', {
   overflowX: 'hidden',
 });
 
+export const DialogTitle = styled(Dialog.DialogTitle, {
+  margin: 0,
+});
+
 export const Footer = styled('div', {
   padding: '0 $20 $10',
   '& .footer__logo': {
