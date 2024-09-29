@@ -60,6 +60,8 @@ export const theme = {
 
     background: '#FDFDFD',
     foreground: '#010101',
+
+    overlay: '#E6E6E6b3',
   },
   space: {
     0: '0rem',
@@ -205,6 +207,8 @@ export const darkColors = {
 
   background: '#010101',
   foreground: '#FDFDFD',
+
+  overlay: '#222222b3',
 };
 
 /* ----------------------- End of Values ----------------------- */
@@ -237,4 +241,6 @@ export const rangoDarkColors = {
   neutral900: '#E9E9E9',
   background: '#070917',
   foreground: '#FDFDFD',
+
+  overlay: '#161C38b3',
 };

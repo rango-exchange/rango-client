@@ -1,8 +1,8 @@
-import type { ModalContainer } from './Modal.styles.js';
+import type { DialogContent } from './Modal.styles.js';
 import type { config } from '../../theme.js';
 import type * as Stitches from '@stitches/react';
 
-type BaseProps = Stitches.VariantProps<typeof ModalContainer>;
+type BaseProps = Stitches.VariantProps<typeof DialogContent>;
 type BaseAnchor = Exclude<BaseProps['anchor'], object>;
 
 export interface ModalPropTypes {

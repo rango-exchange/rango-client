@@ -2,7 +2,7 @@ import type { ModalPropTypes } from '@rango-dev/ui';
 import type { Meta } from '@storybook/react';
 
 import { MessageBox, Modal } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 export default {
   name: 'Modal',
@@ -51,12 +51,14 @@ export default {
 
 export const Main = (args: ModalPropTypes) => {
   const [open, setOpen] = useState<boolean>(false);
+  const modalContainerRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <div>
+    <div ref={modalContainerRef}>
       <button onClick={() => setOpen(true)}>Open Modal</button>
       <Modal
         {...args}
-        container={document.getElementById('storybook-root')}
+        container={modalContainerRef.current as HTMLElement}
         open={open}
         onClose={() => setOpen(false)}>
         <MessageBox

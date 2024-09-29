@@ -1,8 +1,9 @@
 import type { ModalPropTypes } from './Modal.types.js';
 import type { PropsWithChildren } from 'react';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import * as Dialog from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import React, { useEffect, useRef } from 'react';
 
 import { CloseIcon } from '../../icons/index.js';
 import { BottomLogo } from '../BottomLogo/index.js';
@@ -10,13 +11,13 @@ import { Divider } from '../Divider/index.js';
 import { IconButton } from '../IconButton/index.js';
 import { Typography } from '../Typography/index.js';
 
-import { forceReflow } from './Modal.helpers.js';
 import {
-  BackDrop,
   Content,
+  DialogContent,
+  DialogOverlay,
+  DialogTitle,
   Flex,
   Footer,
-  ModalContainer,
   ModalHeader,
 } from './Modal.styles.js';
 
@@ -38,20 +39,11 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     hasWatermark = true,
     hasCloseIcon = true,
   } = props;
-
-  const [status, setStatus] = useState<
-    'unmounted' | 'mounted' | 'activated' | 'deactivated'
-  >('unmounted');
-  const active = status === 'activated';
-  const isMount =
-    status == 'mounted' || status === 'activated' || status === 'deactivated';
-  const modalContainerRef = useRef<HTMLElement | null>(null);
   const exitCallbackRef = useRef<ModalPropTypes['onExit']>();
+  const modalContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-
-    if (event.target === event.currentTarget && dismissible) {
+  const handleBackDropClick = (open: boolean) => {
+    if (dismissible && !open) {
       onClose();
     }
   };
@@ -63,96 +55,70 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   useEffect(() => {
     if (exitCallbackRef.current) {
       modalContainerRef.current?.addEventListener(
-        'transitionend',
+        'animationend',
         exitCallbackRef.current
       );
-    }
-
-    if (!open) {
-      if (status === 'activated') {
-        setStatus('deactivated');
-        modalContainerRef.current?.addEventListener('transitionend', () => {
-          setStatus('unmounted');
-          container.style.removeProperty('overflow');
-        });
-      } else {
-        setStatus('unmounted');
-      }
-    } else {
-      setStatus('mounted');
-      container.style.overflow = 'hidden';
     }
 
     return () => {
       if (exitCallbackRef.current) {
         modalContainerRef.current?.removeEventListener(
-          'transitionend',
+          'animationend',
           exitCallbackRef.current
         );
       }
     };
   }, [open]);
 
-  useEffect(() => {
-    return () => {
-      //container might be null
-      container?.style.removeProperty('overflow');
-    };
-  }, []);
+  const renderTitle = () => {
+    const result = (
+      <DialogTitle>
+        <Typography variant="title" size="small">
+          {title}
+        </Typography>
+      </DialogTitle>
+    );
+    // This is added to prevent error "`DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users."
+    return title ? result : <VisuallyHidden asChild>{result}</VisuallyHidden>;
+  };
 
-  useEffect(() => {
-    if (!!container && isMount) {
-      if (modalContainerRef.current) {
-        forceReflow(modalContainerRef.current);
-      }
-      setStatus('activated');
-    }
-  }, [isMount, container]);
-
-  if (status === 'unmounted' || !container) {
-    return null;
-  }
-
-  return createPortal(
-    <BackDrop active={active} onClick={handleBackDropClick} css={styles?.root}>
-      <ModalContainer
-        active={active}
-        css={styles?.container}
-        anchor={anchor}
-        ref={(ref) => (modalContainerRef.current = ref)}>
-        {header ?? (
-          <ModalHeader noTitle={!title && dismissible && !prefix}>
-            {prefix}
-            {title && (
-              <Typography variant="title" size="small">
-                {title}
-              </Typography>
+  return (
+    <Dialog.Root open={open} onOpenChange={handleBackDropClick}>
+      <Dialog.Portal container={container}>
+        <DialogOverlay>
+          <DialogContent
+            ref={modalContainerRef}
+            css={styles?.container}
+            anchor={anchor}>
+            {header ?? ( // TODO: error related to required `DialogTitle` should be handled for custom headers
+              <ModalHeader noTitle={!title && dismissible && !prefix}>
+                {prefix}
+                {renderTitle()}
+                <Flex>
+                  {suffix}
+                  {dismissible && hasCloseIcon && (
+                    <IconButton onClick={onClose} variant="ghost">
+                      <CloseIcon color="gray" size={14} />
+                    </IconButton>
+                  )}
+                </Flex>
+              </ModalHeader>
             )}
-            <Flex>
-              {suffix}
-              {dismissible && hasCloseIcon && (
-                <IconButton onClick={onClose} variant="ghost">
-                  <CloseIcon color="gray" size={14} />
-                </IconButton>
-              )}
-            </Flex>
-          </ModalHeader>
-        )}
-        <Content css={styles?.content}>{children}</Content>
+            <Content css={styles?.content}>{children}</Content>
+            <Footer css={styles?.footer}>
+              {footer && <div className="footer__content">{footer}</div>}
 
-        <Footer css={styles?.footer}>
-          {footer && <div className="footer__content">{footer}</div>}
-
-          <div
-            className={`footer__logo ${
-              hasWatermark ? 'logo__show' : 'logo__hidden'
-            }`}>
-            <Divider size={12} />
-            <BottomLogo />
-          </div>
-        </Footer>
-      </ModalContainer>
-    </BackDrop>,
-    container
+              <div
+                className={`footer__logo ${
+                  hasWatermark ? 'logo__show' : 'logo__hidden'
+                }`}>
+                <Divider size={12} />
+                <BottomLogo />
+              </div>
+            </Footer>
+          </DialogContent>
+        </DialogOverlay>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
