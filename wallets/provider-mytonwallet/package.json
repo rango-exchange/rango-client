@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-mytonwallet",
-  "version": "0.22.1-next.1",
+  "version": "0.22.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-ton": "^0.15.0",
-    "@rango-dev/wallets-shared": "^0.37.1-next.1",
+    "@rango-dev/wallets-shared": "^0.37.1-next.2",
     "@tonconnect/sdk": "^2.1.0",
     "rango-types": "^0.1.69"
   },
