@@ -16,12 +16,13 @@ import { isAccountAndWalletMatched } from '../../utils/wallets';
 import {
   createBalanceKey,
   createBalanceStateForNewAccount,
+  extractAssetFromBalanceKey,
 } from '../utils/wallets';
 
 type WalletAddress = string;
 type TokenAddress = string;
 type BlockchainId = string;
-/** `walletAddress-Blockchain-tokenAddress` */
+/** format: `BlockchainId-TokenAddress-WalletAddress` */
 export type BalanceKey = `${BlockchainId}-${TokenAddress}-${WalletAddress}`;
 export type BalanceState = {
   [key: BalanceKey]: Balance;
@@ -42,6 +43,7 @@ export interface WalletsSlice {
   setConnectedWalletAsRefetching: (walletType: string) => void;
   setConnectedWalletHasError: (walletType: string) => void;
   setConnectedWalletRetrievedData: (walletType: string) => void;
+  removeBalancesForWallet: (walletType: string) => void;
   addConnectedWallet: (accounts: Wallet[]) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
@@ -197,6 +199,45 @@ export const createWalletsSlice: StateCreator<
 
     void get().fetchBalances(accounts);
   },
+  removeBalancesForWallet: (walletType) => {
+    let walletsNeedsToBeRemoved = get().connectedWallets.filter(
+      (connectedWallet) => connectedWallet.walletType === walletType
+    );
+    get().connectedWallets.forEach((connectedWallet) => {
+      if (connectedWallet.walletType !== walletType) {
+        walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+          const isAnotherWalletHasSameAddressAndChain =
+            wallet.chain === connectedWallet.chain &&
+            wallet.chain === connectedWallet.address;
+
+          return !isAnotherWalletHasSameAddressAndChain;
+        });
+      }
+    });
+
+    const nextBalancesState: BalanceState = {};
+    const currentBalancesState = get()._balances;
+    const balanceKeys = Object.keys(currentBalancesState) as BalanceKey[];
+
+    balanceKeys.forEach((key) => {
+      const { address: assetAddress } = extractAssetFromBalanceKey(key);
+      const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
+        (wallet) =>
+          createBalanceKey(wallet.address, {
+            address: assetAddress,
+            blockchain: wallet.chain,
+          }) === key
+      );
+
+      if (!shouldBalanceBeRemoved) {
+        nextBalancesState[key] = currentBalancesState[key];
+      }
+    });
+
+    set({
+      _balances: nextBalancesState,
+    });
+  },
   disconnectWallet: (walletType) => {
     const isTargetWalletExistsInConnectedWallets = get().connectedWallets.find(
       (wallet) => wallet.walletType === walletType
@@ -206,6 +247,9 @@ export const createWalletsSlice: StateCreator<
         type: WalletEventTypes.DISCONNECT,
         payload: { walletType },
       });
+
+      // This should be called before updating connectedWallets since we need the old state to remove balances.
+      get().removeBalancesForWallet(walletType);
 
       let targetWalletWasSelectedForBlockchains = get()
         .connectedWallets.filter(
@@ -277,8 +321,6 @@ export const createWalletsSlice: StateCreator<
         };
       });
 
-      console.log({ nextBalances, aaa: get().connectedWallets });
-
       set((state) => ({
         _balances: {
           ...state._balances,
@@ -295,34 +337,7 @@ export const createWalletsSlice: StateCreator<
     }
   },
   getBalances: () => {
-    /**
-     * NOTE:
-     * We are iterating over connected wallets and make a list from address
-     * we need that because `balances` currently don't have a clean up mechanism
-     * which means if a wallet disconnect, balances are exists in store and only the wallet will be removed from `connectedWallets`.
-     *
-     * If we introduce a cleanup feature in future, we can remove this and only iterating over balances would be enough.
-     */
-
-    const addresses = get().connectedWallets.map(
-      (connectedWallet) => connectedWallet.address
-    );
-
-    const handler = {
-      ownKeys(target: BalanceState) {
-        const keys: BalanceKey[] = [];
-
-        for (const balanceKey of Object.keys(target)) {
-          if (addresses.find((address) => balanceKey.endsWith(address))) {
-            keys.push(balanceKey as BalanceKey);
-          }
-        }
-
-        return keys;
-      },
-    };
-
-    return new Proxy(get()._balances, handler);
+    return get()._balances;
   },
   getBalanceFor: (token) => {
     const balances = get().getBalances();

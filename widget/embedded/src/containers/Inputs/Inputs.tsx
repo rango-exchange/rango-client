@@ -2,10 +2,12 @@ import type { PropTypes } from './Inputs.types';
 
 import { i18n } from '@lingui/core';
 import { SwapInput } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import { SwitchFromAndToButton } from '../../components/SwitchFromAndTo';
 import { errorMessages } from '../../constants/errors';
+import { ZERO } from '../../constants/numbers';
 import {
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
@@ -43,10 +45,12 @@ export function Inputs(props: PropTypes) {
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
-  const tokenBalanceReal =
-    !!fromBlockchain && !!fromToken
-      ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
-      : '0';
+  const fromBalanceAmount = fromTokenBalance
+    ? new BigNumber(fromTokenBalance.amount).shiftedBy(
+        -fromTokenBalance.decimals
+      )
+    : ZERO;
+  const tokenBalanceReal = numberToString(fromBalanceAmount);
 
   const fetchingBalance =
     !!fromBlockchain &&
@@ -107,7 +111,12 @@ export function Inputs(props: PropTypes) {
           loadingBalance={fetchingBalance}
           tooltipContainer={getContainer()}
           onSelectMaxBalance={() => {
-            setInputAmount(tokenBalanceReal.split(',').join(''));
+            // if a token hasn't any value, we will reset the input by setting an empty string.
+            const nextInputAmount = !!fromTokenBalance?.amount
+              ? tokenBalanceReal
+              : '';
+
+            setInputAmount(nextInputAmount);
           }}
           anyWalletConnected={connectedWallets.length > 0}
         />

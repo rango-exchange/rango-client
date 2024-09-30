@@ -1,8 +1,4 @@
-import type {
-  BalanceKey,
-  BalanceState,
-  ConnectedWallet,
-} from '../store/slices/wallets';
+import type { BalanceState, ConnectedWallet } from '../store/slices/wallets';
 import type {
   Balance,
   SelectedQuote,
@@ -96,6 +92,7 @@ export function mapWalletTypesToWalletInfo(
         supportedChains,
         needsDerivationPath,
         properties,
+        isHub,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -114,6 +111,7 @@ export function mapWalletTypesToWalletInfo(
         blockchainTypes,
         needsDerivationPath,
         properties,
+        isHub,
       };
     });
 }
@@ -282,28 +280,10 @@ export function resetConnectedWalletState(
   return { ...connectedWallet, loading: false, error: true };
 }
 
-export const calculateWalletUsdValue = (
-  connectedWallets: ConnectedWallet[],
-  balances: BalanceState
-) => {
-  /**
-   * NOTE:
-   * We are iterating over connected wallets and make a list from address
-   * we need that because `balances` currently don't have a clean up mechanism
-   * which means if a wallet disconnect, balances are exists in store and only the wallet will be removed from `connectedWallets`.
-   *
-   * If we introduce a cleanup feature in future, we can remove this and only iterating over balances would be enough.
-   */
-  const uniqueAccountAddresses = new Set<string>();
-  connectedWallets.forEach((connectedWallet) => connectedWallet.address);
-
-  let total = new BigNumber(ZERO);
-  for (const balanceKey of Object.keys(balances)) {
-    const [, , address] = balanceKey.split('-');
-    if (uniqueAccountAddresses.has(address)) {
-      total = total.plus(balances[balanceKey as BalanceKey].usdValue);
-    }
-  }
+export const calculateWalletUsdValue = (balances: BalanceState) => {
+  const total = Object.values(balances).reduce((prev, balance) => {
+    return prev.plus(balance.usdValue);
+  }, new BigNumber(ZERO));
 
   return numberWithThousandSeparator(total.toString());
 };

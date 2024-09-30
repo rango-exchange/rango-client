@@ -24,13 +24,13 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const {
     findToken,
     connectedWallets,
-    _balances: balances,
+    getBalances,
     fetchBalances: refetch,
   } = useAppStore();
 
   const history = new WidgetHistory(manager, { retrySwap, findToken });
   const { fetchingWallets: isLoading } = useAppStore();
-  const totalBalance = calculateWalletUsdValue(connectedWallets, balances);
+  const totalBalance = calculateWalletUsdValue(getBalances());
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const swappers = useAppStore().swappers();

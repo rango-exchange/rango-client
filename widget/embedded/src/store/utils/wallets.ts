@@ -9,9 +9,20 @@ import { ZERO } from '../../constants/numbers';
 
 export function createBalanceKey(
   accountAddress: string,
-  asset: Asset
+  asset: Pick<Asset, 'address' | 'blockchain'>
 ): BalanceKey {
   return `${asset.blockchain}-${asset.address}-${accountAddress}`;
+}
+
+export function extractAssetFromBalanceKey(
+  key: BalanceKey
+): Pick<Asset, 'address' | 'blockchain'> {
+  const [assetChain, assetAddress] = key.split('-');
+
+  return {
+    address: assetAddress,
+    blockchain: assetChain,
+  };
 }
 
 export function createBalanceStateForNewAccount(
