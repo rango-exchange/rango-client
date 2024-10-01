@@ -11,50 +11,64 @@ export const prepareTransaction = (
   tx: SolanaTransaction,
   recentBlockhash: string
 ): Transaction | VersionedTransaction => {
-  let versionedTransaction: VersionedTransaction | undefined = undefined;
-  let legacyTransaction: Transaction | undefined = undefined;
-
-  if (tx.txType === 'VERSIONED' && !!tx.serializedMessage) {
-    versionedTransaction = VersionedTransaction.deserialize(
-      new Uint8Array(tx.serializedMessage)
-    );
-    versionedTransaction.message.recentBlockhash = recentBlockhash;
-  } else {
-    legacyTransaction = prepareLegacyTransaction(tx, recentBlockhash);
+  if (tx.txType === 'VERSIONED') {
+    return prepareVersionedTransaction(tx, recentBlockhash);
   }
-  const finalTx = versionedTransaction || legacyTransaction;
 
-  if (!finalTx) {
-    throw new Error('Error building transaction');
-  }
-  return finalTx;
+  return prepareLegacyTransaction(tx, recentBlockhash);
 };
+
+export function prepareVersionedTransaction(
+  tx: SolanaTransaction,
+  recentBlockhash: string
+): VersionedTransaction {
+  const versionedTransaction = VersionedTransaction.deserialize(
+    new Uint8Array(tx.serializedMessage || [])
+  );
+  /*
+   * We shouldn't override the recent blockhash provided by the API
+   * Otherwise, the transaction will become invalid if partially signed by the API
+   */
+  versionedTransaction.message.recentBlockhash =
+    tx.recentBlockhash || recentBlockhash;
+
+  tx.signatures.forEach(({ publicKey, signature }) => {
+    versionedTransaction.addSignature(
+      new PublicKey(publicKey),
+      new Uint8Array(signature)
+    );
+  });
+
+  return versionedTransaction;
+}
 
 export function prepareLegacyTransaction(
   tx: SolanaTransaction,
   recentBlockhash: string
 ): Transaction {
-  const transaction = new Transaction();
-  transaction.feePayer = new PublicKey(tx.from);
-  transaction.recentBlockhash =
-    tx.recentBlockhash || recentBlockhash || undefined;
-  tx.instructions.forEach((instruction) => {
-    transaction?.add(
-      new TransactionInstruction({
-        keys: instruction.keys.map((accountMeta) => ({
-          pubkey: new PublicKey(accountMeta.pubkey),
-          isSigner: accountMeta.isSigner,
-          isWritable: accountMeta.isWritable,
-        })),
-        programId: new PublicKey(instruction.programId),
-        data: Buffer.from(instruction.data),
-      })
-    );
+  const transaction = new Transaction({
+    feePayer: new PublicKey(tx.from),
+    recentBlockhash: tx.recentBlockhash || recentBlockhash,
   });
-  tx.signatures.forEach(function (signatureItem) {
-    const signature = Buffer.from(new Uint8Array(signatureItem.signature));
-    const publicKey = new PublicKey(signatureItem.publicKey);
-    transaction?.addSignature(publicKey, signature);
+
+  tx.instructions.forEach(({ keys, programId, data }) => {
+    const instruction = new TransactionInstruction({
+      keys: keys.map(({ pubkey, isSigner, isWritable }) => ({
+        pubkey: new PublicKey(pubkey),
+        isSigner,
+        isWritable,
+      })),
+      programId: new PublicKey(programId),
+      data: Buffer.from(data),
+    });
+    transaction.add(instruction);
+  });
+
+  tx.signatures.forEach(({ publicKey, signature }) => {
+    transaction.addSignature(
+      new PublicKey(publicKey),
+      Buffer.from(new Uint8Array(signature))
+    );
   });
 
   return transaction;
