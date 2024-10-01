@@ -1,6 +1,6 @@
 import type { ProviderContext, ProviderProps } from './types.js';
 import type {
-  LegacyNamespaceInput,
+  LegacyNamespaceInputForConnect,
   LegacyNamespaceInputWithDiscoverMode,
   LegacyProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
@@ -63,7 +63,7 @@ export function useLegacyProviders(
         (
           ns
         ): ns is Exclude<
-          LegacyNamespaceInput,
+          LegacyNamespaceInputForConnect,
           LegacyNamespaceInputWithDiscoverMode
         > => {
           return ns.namespace !== 'DISCOVER_MODE';

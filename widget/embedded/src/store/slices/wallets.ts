@@ -14,6 +14,7 @@ import {
 } from '../../types';
 import { isAccountAndWalletMatched } from '../../utils/wallets';
 import {
+  createAssetKey,
   createBalanceKey,
   createBalanceStateForNewAccount,
   extractAssetFromBalanceKey,
@@ -22,6 +23,8 @@ import {
 type WalletAddress = string;
 type TokenAddress = string;
 type BlockchainId = string;
+/** format: `BlockchainId-TokenAddress` */
+export type AssetKey = `${BlockchainId}-${TokenAddress}`;
 /** format: `BlockchainId-TokenAddress-WalletAddress` */
 export type BalanceKey = `${BlockchainId}-${TokenAddress}-${WalletAddress}`;
 export type BalanceState = {
@@ -52,6 +55,9 @@ export interface WalletsSlice {
    * Add new accounts to store and fetch balances for them.
    */
   newWalletConnected: (accounts: Wallet[]) => Promise<void>;
+  /**
+   * Disconnect a wallet and clean up balances after that.
+   */
   disconnectWallet: (walletType: string) => void;
   clearConnectedWallet: () => void;
   fetchBalances: (accounts: Wallet[]) => Promise<void>;
@@ -126,11 +132,14 @@ export const createWalletsSlice: StateCreator<
   },
   addConnectedWallet: (accounts: Wallet[]) => {
     /*
-     * When we are going to add a new account, there are two thing that can be haapens:
+     * When we are going to add a new account, there are two thing that can be happens:
      * 1. Wallet hasn't add yet.
      * 2. Wallet has added, and there are some more account that needs to added to connected wallet. consider we've added an ETH and Pol account, then we need to add Arb account later as well.
      *
-     * For handling this, we need to only keep not added account, then only add those.
+     * For handling this, we need to only keep not-added-account, then only add those.
+     *
+     * Note:
+     * The second option would be useful for hub particularly.
      */
     const connectedWallets = get().connectedWallets;
     const walletsNeedToBeAdded = accounts.filter(
@@ -349,15 +358,11 @@ export const createWalletsSlice: StateCreator<
      * For keeping the same behavior, here we pick the most amount and also will not consider user's address in key.
      */
 
-    const key = createBalanceKey('unknown', token);
-    const keyParts = key.split('-');
-    keyParts.pop();
-    const keyWithoutAccountAddress = keyParts.join('-');
-    // console.log({ keyWithoutAccountAddress, balances });
-
+    // Note: balance key is created using asset key + wallet address
+    const assetKey = createAssetKey(token);
     const targetBalanceKeys: BalanceKey[] = [];
     for (const balanceKey of Object.keys(balances)) {
-      if (balanceKey.startsWith(keyWithoutAccountAddress)) {
+      if (balanceKey.startsWith(assetKey)) {
         targetBalanceKeys.push(balanceKey as BalanceKey);
       }
     }

@@ -64,8 +64,8 @@ export function useStatefulConnect(): UseStatefulConnect {
     });
 
     try {
-      const legacyNamespacesInput = namespaces?.map((ns) => ({
-        ...ns,
+      const legacyNamespacesInput = namespaces?.map((namespaceInput) => ({
+        ...namespaceInput,
         network: undefined,
       }));
       await connect(type, legacyNamespacesInput);

@@ -58,7 +58,6 @@ export function matchAndGenerateProviders(
             return provider.config.type === requestedProvider;
           });
 
-        // TODO: refactor these conditions.
         if (result) {
           if (result instanceof Provider) {
             selectedProviders.push(

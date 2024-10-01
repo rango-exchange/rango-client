@@ -139,7 +139,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
     []
   );
   const isExperimentalEnabled =
-    props.config.features?.experimentalWallet === 'enabled' ? true : false;
+    props.config.features?.experimentalWallet === 'enabled';
 
   return (
     <WidgetContext.Provider value={handlers}>

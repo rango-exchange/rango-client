@@ -73,7 +73,6 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
-// TODO: Deprecate this.
 export type NamespaceData = {
   namespace: Namespace;
   derivationPath?: string;
@@ -94,6 +93,9 @@ export type WalletInfo = {
   name: string;
   img: string;
   installLink: InstallObjects | string;
+  /**
+   * @deprecated we don't use this value anymore.
+   */
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
@@ -243,21 +245,14 @@ export type WalletProviders = Map<
 
 export type ProviderInterface = { config: WalletConfig } & WalletActions;
 
-// TODO: Should we keep this? it should be derived from hub somehow.
-interface NamespaceNetworkType {
-  [Namespace.Evm]: string;
-  [Namespace.Solana]: undefined;
-  [Namespace.Cosmos]: string;
-  [Namespace.Utxo]: string;
-  [Namespace.Starknet]: string;
-  [Namespace.Tron]: string;
-}
+// it comes from wallets.ts and `connect`
+type NetworkTypeFromLegacyConnect = Network | undefined;
 
 export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
   T extends 'DISCOVER_MODE'
     ? string
     : T extends Namespace
-    ? NamespaceNetworkType[T]
+    ? NetworkTypeFromLegacyConnect
     : never;
 
 export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
@@ -268,7 +263,7 @@ export type NamespaceInputWithDiscoverMode = {
   derivationPath?: string;
 };
 
-export type NamespaceInput<T extends Namespace = Namespace> =
+export type NamespaceInputForConnect<T extends Namespace = Namespace> =
   | {
       /**
        * By default, you should specify namespace (e.g. evm).

@@ -1,12 +1,8 @@
-import type {
-  NamespaceInput,
-  NamespaceInputWithDiscoverMode,
-  Network,
-} from './types.js';
+import type { Network } from './types.js';
 import type { Options } from './wallet.js';
 import type { BlockchainMeta } from 'rango-types';
 
-import { Namespace, Networks } from './types.js';
+import { Networks } from './types.js';
 
 export function formatAddressWithNetwork(
   address: string,
@@ -77,15 +73,3 @@ export const getBlockChainNameFromId = (
       })?.name || null
   );
 };
-
-export function isDiscoverMode(
-  namespace: NamespaceInput
-): namespace is NamespaceInputWithDiscoverMode {
-  return namespace.namespace === 'DISCOVER_MODE';
-}
-
-export function isEvmNamespace(
-  namespace: NamespaceInput
-): namespace is NamespaceInput<Namespace.Evm> {
-  return namespace.namespace === Namespace.Evm;
-}

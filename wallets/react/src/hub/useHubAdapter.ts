@@ -1,13 +1,13 @@
-import type { AllProxiedNamespaces } from './types.js';
+import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceInput,
+  LegacyNamespaceInputForConnect,
   LegacyNamespace as Namespace,
 } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
-import { isDiscoverMode } from '@rango-dev/wallets-core/legacy';
+import { legacyIsNamespaceDiscoverMode } from '@rango-dev/wallets-core/legacy';
 import { type WalletInfo } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 
@@ -139,11 +139,13 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
-      const targetNamespaces: [LegacyNamespaceInput, AllProxiedNamespaces][] =
-        [];
+      const targetNamespaces: [
+        LegacyNamespaceInputForConnect,
+        AllProxiedNamespaces
+      ][] = [];
       namespaces.forEach((namespace) => {
         let targetNamespace: Namespace;
-        if (isDiscoverMode(namespace)) {
+        if (legacyIsNamespaceDiscoverMode(namespace)) {
           targetNamespace = discoverNamespace(namespace.network);
         } else {
           targetNamespace = namespace.namespace;
@@ -162,13 +164,17 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
-        async ([info, namespace]) => {
+        async ([namespaceInput, namespace]) => {
           const network = tryConvertNamespaceNetworkToChainInfo(
-            info,
+            namespaceInput,
             params.allBlockChains || []
           );
 
-          // `connect` can have different interfaces (e.g. Solana -> .connect(), EVM -> .connect("0x1") ), our assumption here all the `connect` hasn't chain or if they have, they will accept it in first argument. By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
+          /*
+           * `connect` can have different interfaces (e.g. Solana -> .connect(), EVM -> .connect("0x1") ),
+           * our assumption here is all the `connect` hasn't chain or if they have, they will accept it in first argument.
+           * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
+           */
           const result = namespace.connect(network);
           return result.then<ConnectResult>(transformHubResultToLegacyResult);
         }
@@ -231,19 +237,26 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         DEFAULT: '',
       };
 
-      Object.keys(info.extensions).forEach((key) => {
-        if (key === 'homepage') {
-          installLink.DEFAULT = info.extensions[key]!;
+      // `extensions` in legacy format was uppercase and also `DEFAULT` was used instead of `homepage`
+      Object.keys(info.extensions).forEach((k) => {
+        const key = k as ExtensionLink;
+
+        if (info.extensions[key] === 'homepage') {
+          installLink.DEFAULT = info.extensions[key] || '';
         }
-        const allowedKeys = ['firefox', 'chrome', 'brave', 'edge'];
+
+        const allowedKeys: ExtensionLink[] = [
+          'firefox',
+          'chrome',
+          'brave',
+          'edge',
+        ];
         if (allowedKeys.includes(key)) {
-          const keyUppercase = key.toUpperCase() as keyof Exclude<
+          const upperCasedKey = key.toUpperCase() as keyof Exclude<
             WalletInfo['installLink'],
             string
           >;
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore-next-line
-          installLink[keyUppercase] = info.extensions[key];
+          installLink[upperCasedKey] = info.extensions[key] || '';
         }
       });
 
@@ -259,8 +272,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         mobileWallet: false,
         showOnMobile: false,
 
-        properties: wallet.info()?.properties,
         isHub: true,
+        properties: wallet.info()?.properties,
       };
     },
     providers() {

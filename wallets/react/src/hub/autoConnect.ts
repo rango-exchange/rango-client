@@ -2,15 +2,15 @@ import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
 import type { Hub } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceInput,
+  LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyNamespace as Namespace,
 } from '@rango-dev/wallets-core/legacy';
 
 import {
-  isDiscoverMode,
-  isEvmNamespace,
   legacyEagerConnectHandler,
+  legacyIsEvmNamespace,
+  legacyIsNamespaceDiscoverMode,
 } from '@rango-dev/wallets-core/legacy';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
@@ -27,13 +27,13 @@ import {
  */
 async function eagerConnect(
   type: string,
-  namespaces: LegacyNamespaceInput[] | undefined,
-  deps: {
+  namespacesInput: LegacyNamespaceInputForConnect[] | undefined,
+  params: {
     getHub: () => Hub;
     allBlockChains: UseAdapterParams['allBlockChains'];
   }
 ) {
-  const { getHub, allBlockChains } = deps;
+  const { getHub, allBlockChains } = params;
   const wallet = getHub().get(type);
   if (!wallet) {
     throw new Error(
@@ -41,34 +41,37 @@ async function eagerConnect(
     );
   }
 
-  if (!namespaces) {
+  if (!namespacesInput) {
     throw new Error(
       'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
     );
   }
 
-  const targetNamespaces: [LegacyNamespaceInput, AllProxiedNamespaces][] = [];
-  namespaces.forEach((namespace) => {
+  const targetNamespaces: [
+    LegacyNamespaceInputForConnect,
+    AllProxiedNamespaces
+  ][] = [];
+  namespacesInput.forEach((namespaceInput) => {
     let targetNamespace: Namespace;
-    if (isDiscoverMode(namespace)) {
-      targetNamespace = discoverNamespace(namespace.network);
+    if (legacyIsNamespaceDiscoverMode(namespaceInput)) {
+      targetNamespace = discoverNamespace(namespaceInput.network);
     } else {
-      targetNamespace = namespace.namespace;
+      targetNamespace = namespaceInput.namespace;
     }
 
     const result = wallet.findByNamespace(targetNamespace);
 
     if (!result) {
       throw new Error(
-        `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
+        `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespaceInput.namespace})`
       );
     }
 
-    targetNamespaces.push([namespace, result]);
+    targetNamespaces.push([namespaceInput, result]);
   });
 
   const finalResult = targetNamespaces.map(([info, namespace]) => {
-    const evmChain = isEvmNamespace(info)
+    const evmChain = legacyIsEvmNamespace(info)
       ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
       : undefined;
     const chain = evmChain || info.network;
@@ -125,7 +128,7 @@ export async function autoConnect(deps: {
         return;
       }
 
-      const namespaces: LegacyNamespaceInput[] = lastConnectedWallets[
+      const namespaces: LegacyNamespaceInputForConnect[] = lastConnectedWallets[
         providerName
       ].map((namespace) => ({
         namespace: namespace as Namespace,

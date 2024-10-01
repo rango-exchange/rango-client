@@ -36,8 +36,12 @@ export function useSubscribeToWidgetEvents() {
             (wallet) => wallet.chain === step?.toBlockchain
           );
 
-        fromAccount && void fetchBalances([fromAccount]);
-        toAccount && void fetchBalances([toAccount]);
+        if (fromAccount) {
+          void fetchBalances([fromAccount]);
+        }
+        if (toAccount) {
+          void fetchBalances([toAccount]);
+        }
       }
 
       setNotification(event, route);

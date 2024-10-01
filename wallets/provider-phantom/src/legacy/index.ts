@@ -86,6 +86,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
+    // if you are adding a new namespace, don't forget to also update `properties`
     supportedChains: [
       ...solana,
       ...evms.filter((chain) =>

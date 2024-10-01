@@ -103,13 +103,11 @@ function useProviders(props: ProviderProps) {
 
       return legacyApi.state(type);
     },
-    async suggestAndConnect(type, network) {
+    async suggestAndConnect(type, network): Promise<ConnectResult> {
       const hubProvider = findProviderByType(hubProviders, type);
 
       if (hubProvider) {
-        throw new Error(
-          "New version doesn't have support for this method yet."
-        );
+        return hubApi.suggestAndConnect(type, network);
       }
 
       return await legacyApi.suggestAndConnect(type, network);

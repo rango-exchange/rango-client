@@ -1,53 +1,11 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { Provider } from '@rango-dev/wallets-core';
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   Accounts,
   AccountsWithActiveChain,
 } from '@rango-dev/wallets-core/namespaces/common';
-import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
-import { CAIP, pickVersion } from '@rango-dev/wallets-core/utils';
-
-/* Gets a list of hub and legacy providers and returns a tuple which separates them. */
-export function separateLegacyAndHubProviders(
-  providers: VersionedProviders[],
-  options?: { isExperimentalEnabled?: boolean }
-): [LegacyProviderInterface[], Provider[]] {
-  const LEGACY_VERSION = '0.0.0';
-  const HUB_VERSION = '1.0.0';
-  const { isExperimentalEnabled = false } = options || {};
-
-  if (isExperimentalEnabled) {
-    const legacyProviders: LegacyProviderInterface[] = [];
-    const hubProviders: Provider[] = [];
-
-    providers.forEach((provider) => {
-      try {
-        const target = pickVersion(provider, HUB_VERSION);
-        hubProviders.push(target[1]);
-      } catch {
-        const target = pickVersion(provider, LEGACY_VERSION);
-        legacyProviders.push(target[1]);
-      }
-    });
-
-    return [legacyProviders, hubProviders];
-  }
-
-  const legacyProviders = providers.map(
-    (provider) => pickVersion(provider, LEGACY_VERSION)[1]
-  );
-  return [legacyProviders, []];
-}
-
-export function findProviderByType(
-  providers: Provider[],
-  type: string
-): Provider | undefined {
-  return providers.find((provider) => provider.id === type);
-}
+import { CAIP } from '@rango-dev/wallets-core/utils';
 
 export function mapCaipNamespaceToLegacyNetworkName(
   chainId: CAIP.ChainIdParams | string
@@ -68,6 +26,13 @@ export function mapCaipNamespaceToLegacyNetworkName(
   return chainId.reference;
 }
 
+/**
+ * CAIP's accountId has a format like this: eip155:1:0xab16a96D359eC26a11e2C2b3d8f8B8942d5Bfcdb
+ * Legacy format is something like this: ETH:0xab16a96D359eC26a11e2C2b3d8f8B8942d5Bfcdb
+ * This function will try to convert this two format.
+ *
+ * @see https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md
+ */
 export function fromAccountIdToLegacyAddressFormat(account: string): string {
   const { chainId, address } = CAIP.AccountId.parse(account);
   const network = mapCaipNamespaceToLegacyNetworkName(chainId);
@@ -76,7 +41,6 @@ export function fromAccountIdToLegacyAddressFormat(account: string): string {
 
 /**
  * Getting a list of (lazy) promises and run them one after another.
- * Original code: scripts/publish/utils.mjs
  */
 export async function sequentiallyRun<T extends () => Promise<unknown>>(
   promises: Array<T>

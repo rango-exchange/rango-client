@@ -1,6 +1,6 @@
 import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceInput,
+  LegacyNamespaceInputForConnect,
   LegacyNetwork as Network,
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletInfo as WalletInfo,
@@ -30,7 +30,7 @@ export type ExtendedWalletInfo = WalletInfo & {
 export type ProviderContext = {
   connect(
     type: WalletType,
-    namespaces?: LegacyNamespaceInput[]
+    namespaces?: LegacyNamespaceInputForConnect[]
   ): Promise<ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;

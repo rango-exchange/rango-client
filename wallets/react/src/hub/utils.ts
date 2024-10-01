@@ -1,8 +1,8 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { ConnectResult, ProviderProps } from '../legacy/mod.js';
-import type { Hub, State } from '@rango-dev/wallets-core';
+import type { Hub, Provider, State } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceInput,
+  LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
@@ -19,6 +19,7 @@ import {
   generateStoreId,
   type VersionedProviders,
 } from '@rango-dev/wallets-core/utils';
+import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
@@ -30,9 +31,51 @@ import {
   fromAccountIdToLegacyAddressFormat,
   isConnectResultEvm,
   isConnectResultSolana,
-  separateLegacyAndHubProviders,
 } from './helpers.js';
 
+/* Gets a list of hub and legacy providers and returns a tuple which separates them. */
+export function separateLegacyAndHubProviders(
+  providers: VersionedProviders[],
+  options?: { isExperimentalEnabled?: boolean }
+): [LegacyProviderInterface[], Provider[]] {
+  const LEGACY_VERSION = '0.0.0';
+  const HUB_VERSION = '1.0.0';
+  const { isExperimentalEnabled = false } = options || {};
+
+  if (isExperimentalEnabled) {
+    const legacyProviders: LegacyProviderInterface[] = [];
+    const hubProviders: Provider[] = [];
+
+    providers.forEach((provider) => {
+      try {
+        const target = pickVersion(provider, HUB_VERSION);
+        hubProviders.push(target[1]);
+      } catch {
+        const target = pickVersion(provider, LEGACY_VERSION);
+        legacyProviders.push(target[1]);
+      }
+    });
+
+    return [legacyProviders, hubProviders];
+  }
+
+  const legacyProviders = providers.map(
+    (provider) => pickVersion(provider, LEGACY_VERSION)[1]
+  );
+  return [legacyProviders, []];
+}
+
+export function findProviderByType(
+  providers: Provider[],
+  type: string
+): Provider | undefined {
+  return providers.find((provider) => provider.id === type);
+}
+
+/**
+ * We will call this function on hub's `subscribe`.
+ * it will check states and will emit legacy events for backward compatibility.
+ */
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
   currentState: State,
@@ -40,7 +83,7 @@ export function checkHubStateAndTriggerEvents(
   onUpdateState: WalletEventHandler,
   allProviders: VersionedProviders[],
   allBlockChains: ProviderProps['allBlockChains']
-) {
+): void {
   hub.getAll().forEach((provider, providerId) => {
     const currentProviderState = guessProviderStateSelector(
       currentState,
@@ -184,7 +227,14 @@ export function checkHubStateAndTriggerEvents(
   });
 }
 
+/**
+ * For backward compatibility, there is an special namespace called DISCOVER_MODE.
+ * Alongside `DISCOVER_MODE`, `network` will be set as well. here we are manually matching networks to namespaces.
+ * This will help us keep the legacy interface and have what hub needs as well.
+ */
 export function discoverNamespace(network: string): Namespace {
+  // This trick is using for enforcing exhaustiveness check.
+  network = network as unknown as Networks;
   switch (network) {
     case Networks.AKASH:
     case Networks.BANDCHAIN:
@@ -243,14 +293,18 @@ export function discoverNamespace(network: string): Namespace {
       return Namespace.Utxo;
     case Networks.POLKADOT:
     case Networks.TON:
+    case Networks.AXELAR:
+    case Networks.MARS:
+    case Networks.MAYA:
+    case Networks.STRIDE:
     case Networks.Unknown:
       throw new Error("Namespace isn't supported. network: " + network);
-    default:
-      throw new Error(
-        "Couldn't matched network with any namespace. it's not discoverable. network: " +
-          network
-      );
   }
+
+  throw new Error(
+    "Couldn't matched network with any namespace. it's not discoverable. network: " +
+      network
+  );
 }
 
 export function getLegacyProvider(
@@ -274,8 +328,12 @@ export function getLegacyProvider(
   return provider;
 }
 
+/**
+ * In legacy mode, for those who have switch network functionality (like evm), we are using an enum for network names
+ * this enum only has meaning for us, and when we are going to connect an instance (e.g. window.ethereum) we should pass chain id.
+ */
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: LegacyNamespaceInput,
+  namespace: LegacyNamespaceInputForConnect,
   meta: BlockchainMeta[]
 ) {
   if (!namespace.network) {
@@ -295,9 +353,10 @@ export function convertNamespaceNetworkToEvmChainId(
  * If you need same functionality for other blockchain types (e.g. Cosmos), You can make a separate function and add it here.
  */
 export function tryConvertNamespaceNetworkToChainInfo(
-  namespace: LegacyNamespaceInput,
+  namespace: LegacyNamespaceInputForConnect,
   meta: BlockchainMeta[]
 ): string | AddEthereumChainParameter | undefined {
+  // `undefined` means it's not evm or we couldn't find it in meta.
   const evmChain = convertNamespaceNetworkToEvmChainId(namespace, meta);
   const network = evmChain || namespace.network;
 

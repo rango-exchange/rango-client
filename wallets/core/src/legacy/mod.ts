@@ -23,7 +23,7 @@ export type {
   InstallObjects as LegacyInstallObjects,
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,
-  NamespaceInput as LegacyNamespaceInput,
+  NamespaceInputForConnect as LegacyNamespaceInputForConnect,
   NamespaceInputWithDiscoverMode as LegacyNamespaceInputWithDiscoverMode,
 } from './types.js';
 
@@ -38,9 +38,11 @@ export {
   readAccountAddress as legacyReadAccountAddress,
   getBlockChainNameFromId as legacyGetBlockChainNameFromId,
   formatAddressWithNetwork as legacyFormatAddressWithNetwork,
-  isDiscoverMode,
-  isEvmNamespace,
 } from './helpers.js';
 export { default as LegacyWallet } from './wallet.js';
 
-export { eagerConnectHandler as legacyEagerConnectHandler } from './utils.js';
+export {
+  eagerConnectHandler as legacyEagerConnectHandler,
+  isNamespaceDiscoverMode as legacyIsNamespaceDiscoverMode,
+  isEvmNamespace as legacyIsEvmNamespace,
+} from './utils.js';
