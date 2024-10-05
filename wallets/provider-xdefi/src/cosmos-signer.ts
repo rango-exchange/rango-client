@@ -58,7 +58,7 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
       recipient,
       binanceProvider,
       method,
-      memo
+      memo ?? undefined
     );
     return { hash };
   }
