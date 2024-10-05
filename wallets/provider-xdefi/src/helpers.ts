@@ -105,7 +105,7 @@ export async function xdefiTransfer(
   recipientAddress: string | null,
   provider: any,
   method: string,
-  memo: string | null
+  memo?: string
 ): Promise<string> {
   return new Promise(function (resolve, reject) {
     const params = {
