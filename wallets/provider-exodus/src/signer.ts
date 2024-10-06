@@ -10,8 +10,8 @@ export default async function getSigners(
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
-  const { DefaultSolanaSigner } = await import('@rango-dev/signer-solana');
+  const { CustomSolanaSigner } = await import('./solana-signer.js');
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
-  signers.registerSigner(TxType.COSMOS, new DefaultSolanaSigner(solProvider));
+  signers.registerSigner(TxType.SOLANA, new CustomSolanaSigner(solProvider));
   return signers;
 }

@@ -30,7 +30,7 @@ export interface SolanaExternalProvider {
     transaction: T,
     options?: SendOptions
   ): Promise<{ signature: TransactionSignature }>;
-  signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
+  signMessage(message: Uint8Array | string): Promise<{ signature: Uint8Array }>;
   request(...args: any[]): Promise<any>;
   connect(...args: any[]): Promise<any>;
   disconnect(): Promise<void>;
