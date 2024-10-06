@@ -19,6 +19,9 @@ jobs:
         env:
           REF: ${{ github.ref }}
 
+      - name: Extract new translations
+        run: yarn run i18n:extract
+
       - name: Test
         run: |
           node ./scripts/build-libs/command.mjs
