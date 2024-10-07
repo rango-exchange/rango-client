@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-coin98",
-  "version": "0.38.1-next.5",
+  "version": "0.38.1-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
