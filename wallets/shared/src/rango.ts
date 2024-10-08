@@ -124,7 +124,7 @@ export const namespaces: Record<
   },
   [Namespace.Utxo]: {
     mainBlockchain: 'BTC',
-    title: 'Utxo',
+    title: 'BTC',
   },
   [Namespace.Starknet]: {
     title: 'Starknet',
