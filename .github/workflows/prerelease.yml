@@ -1,0 +1,40 @@
+name: Prerelease
+on:
+  workflow_dispatch:
+
+jobs:
+  localization:
+    uses: ./.github/workflows/crowdin.yml
+    secrets:
+      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      PAT: ${{ secrets.PAT }}
+
+  prerelease:
+    runs-on: ubuntu-latest
+    needs:
+      - localization
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Deploy packages
+        run: |
+          yarn global add vercel
+          yarn run deploy
+        env:
+          REF: ${{ github.ref }}
+          GH_TOKEN: ${{ github.token }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
+          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
+          VERCEL_PROJECT_WALLETS: ${{ secrets.VERCEL_PROJECT_WALLETS }}
+          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
+          VERCEL_PROJECT_WALLET_ADAPTER: ${{ secrets.VERCEL_PROJECT_WALLET_ADAPTER }}

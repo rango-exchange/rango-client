@@ -4,7 +4,11 @@
 
 Before release, please ensure the following steps are taken.
 
-First, Send a notice to your team to let them know `next` should be locked until release. After releasing, inform them of the result and unlock the `next` branch.
+First, Send a notice to your team to let them know `next` should be locked until release process is done. Also, inform them of the result and unlock the `next` branch after the release process is done.
+
+After sending a notice to start release process, you should manually run `Prerelease` workflow. It will run `crowdin` workflow to extract translation keys and push them to crowdin server and pull new translations to update current translations. After that, `Prerelease` workflow will deploy the `next` branch so the latest changes can be tested along side with latest translations.
+
+_Note 1_: Syncing translations (crowding workflow) is an optional step which means if it fails we will deploy anyway.
 
 Second, To identify changes since the last release, use the following commands:
 
