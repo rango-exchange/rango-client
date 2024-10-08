@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   position: 'relative',
@@ -6,18 +6,25 @@ export const Container = styled('div', {
 
 export const TooltipContainer = styled('div', {
   width: 165,
-  backgroundColor: '$background',
   borderRadius: '$sm',
+  backgroundColor: '$background',
+
+  $$color: '$colors$neutral500',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral100',
+  },
+
+  boxShadow: '0px 5px 20px 0px $$color',
 });
 
 export const TooltipInfoRow = styled('div', {
   display: 'flex',
   alignItems: 'center',
   fontSize: '$12',
-  color: '$foreground',
   justifyContent: 'space-between',
   padding: '$8 $10',
   fontWeight: '$medium',
+  color: '$foreground',
 });
 
 export const Line = styled('div', {
@@ -31,8 +38,8 @@ export const InfoContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   fontSize: '$10',
-  color: '$foreground',
   padding: '$5 $10',
+  color: '$foreground',
 });
 
 export const Circle = styled('div', {

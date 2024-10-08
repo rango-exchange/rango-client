@@ -1,4 +1,4 @@
-import type { SeriesPoint } from '@visx/shape/lib/types';
+import type { SeriesPoint } from '@visx/shape/lib/types/barStack.js';
 
 export interface BarChartPropTypes {
   data: BarStackDataType[];
@@ -29,4 +29,16 @@ export type TooltipDataType = {
     color: string;
   };
   hoveredIndex: number;
+};
+
+export type DailyDataType = {
+  date: string;
+  bucket: string;
+  value: number;
+};
+
+export type ChartOptionsType = {
+  dailyData: DailyDataType[];
+  barChartColors: string[];
+  label?: string;
 };
