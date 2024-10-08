@@ -2,7 +2,6 @@ export const DEFAULT_MARGIN = { top: 40, right: 0, bottom: 0, left: 20 };
 
 export const TOOLTIP_DELAY_MS = 100;
 export const TOOLTIP_HIDE_DELAY_MS = 300;
-export const TOOLTIP_SHADOW = '0px 5px 20px 0px rgba(130, 130, 130, 0.20)';
 
 export const DEFAULT_CHART_COLORS: string[] = [
   '#469BF5',
@@ -31,3 +30,5 @@ export const bottomAxisData = {
     90: { numBottomAxis: 3, startBottomAxis: 10, intervalBottomAxis: 30 },
   },
 };
+
+export const MAX_BAR_BUCKETS = 10;

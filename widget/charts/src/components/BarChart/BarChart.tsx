@@ -13,7 +13,7 @@ import { Grid } from '@visx/grid';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarStack } from '@visx/shape';
-import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
+import { TooltipWithBounds, useTooltip } from '@visx/tooltip';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import React, { Fragment, useEffect, useRef } from 'react';
@@ -31,7 +31,6 @@ import {
   DEFAULT_MARGIN,
   TOOLTIP_DELAY_MS,
   TOOLTIP_HIDE_DELAY_MS,
-  TOOLTIP_SHADOW,
 } from './BarChart.constants.js';
 import {
   generateTickValues,
@@ -65,18 +64,15 @@ export const BarChart = (props: BarChartPropTypes) => {
 
   const isMobile = useIsMobile();
   const daysRange = getDaysRange(data.length);
-  const bottomAxis = isMobile
-    ? bottomAxisData.mobile[daysRange]
-    : bottomAxisData.desktop[daysRange];
+  const bottomAxis =
+    width < 700
+      ? bottomAxisData.mobile[daysRange]
+      : bottomAxisData.desktop[daysRange];
 
   const { intervalBottomAxis, numBottomAxis, startBottomAxis } = bottomAxis;
 
   let tooltipTimeout: number;
   const tooltipRef = useRef<HTMLInputElement>(null);
-  const { containerRef, TooltipInPortal } = useTooltipInPortal({
-    // TooltipInPortal is rendered in a separate child of <body />
-    scroll: true,
-  });
 
   // bounds
   const xMax = width - margin.left - 20;
@@ -139,7 +135,7 @@ export const BarChart = (props: BarChartPropTypes) => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [tooltipRef]);
+  }, [tooltipRef, isMobile]);
 
   dateScale.range([0, xMax]);
   valueScale.range([yMax, 0]);
@@ -214,7 +210,7 @@ export const BarChart = (props: BarChartPropTypes) => {
 
   return (
     <Container>
-      <svg ref={containerRef} width={width} height={height}>
+      <svg width={width} height={height}>
         <rect
           x={0}
           y={0}
@@ -332,8 +328,8 @@ export const BarChart = (props: BarChartPropTypes) => {
         />
       </svg>
 
-      {tooltipOpen && tooltipData && (
-        <TooltipInPortal
+      {tooltipData && tooltipOpen && (
+        <TooltipWithBounds
           top={tooltipTop}
           left={tooltipLeft}
           style={{
@@ -342,10 +338,8 @@ export const BarChart = (props: BarChartPropTypes) => {
             position: 'absolute',
             zIndex: '99999999',
           }}>
-          <TooltipContainer
-            ref={tooltipRef}
-            style={{ boxShadow: TOOLTIP_SHADOW }}>
-            {tooltipData.bar.bar.data.date && (
+          <TooltipContainer ref={tooltipRef}>
+            {tooltipData?.bar.bar.data.date && (
               <TooltipInfoRow>
                 <div>
                   {dayjs
@@ -363,7 +357,7 @@ export const BarChart = (props: BarChartPropTypes) => {
             )}
             {Array.from(colorBucketMap).map((mapItem) => {
               const [bucketItem, bucketColor] = mapItem;
-              const value = tooltipData.bar.bar.data[bucketItem];
+              const value = tooltipData?.bar.bar.data[bucketItem];
               const formattedValue = !isNaN(Number(value))
                 ? AmountConverter(Number(Number(value).toFixed(2)))
                 : '0';
@@ -386,7 +380,7 @@ export const BarChart = (props: BarChartPropTypes) => {
               );
             })}
           </TooltipContainer>
-        </TooltipInPortal>
+        </TooltipWithBounds>
       )}
     </Container>
   );
