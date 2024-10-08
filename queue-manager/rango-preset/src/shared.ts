@@ -1,7 +1,7 @@
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
-  BestRouteResponse,
   BlockchainMeta,
+  ConfirmRouteResponse,
   MetaResponse,
   SwapResult,
   Token,
@@ -15,13 +15,6 @@ import type {
 } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
-import {
-  isCosmosBlockchain,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  isStarknetBlockchain,
-  isTronBlockchain,
-} from 'rango-types';
 
 import { numberToString } from './numbers';
 import { PrettyError } from './shared-errors';
@@ -139,31 +132,13 @@ export const getCurrentBlockchainOf = (
   return blockchain;
 };
 
-const getBlockchainMetaExplorerBaseUrl = (
-  blockchainMeta: BlockchainMeta
-): string | undefined => {
-  if (isCosmosBlockchain(blockchainMeta)) {
-    return blockchainMeta.info?.explorerUrlToTx;
-  } else if (
-    isEvmBlockchain(blockchainMeta) ||
-    isStarknetBlockchain(blockchainMeta) ||
-    isTronBlockchain(blockchainMeta)
-  ) {
-    return blockchainMeta.info.transactionUrl;
-  } else if (isSolanaBlockchain(blockchainMeta)) {
-    const SOLANA_EXPLORER_URL = 'https://solscan.io/tx/{txHash}';
-    return SOLANA_EXPLORER_URL;
-  }
-  return;
-};
-
 export const getScannerUrl = (
   txHash: string,
   network: Network,
   blockchainMetaMap: { [key: string]: BlockchainMeta }
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
-  const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
+  const baseUrl = blockchainMeta.info?.transactionUrl;
   if (!baseUrl) {
     return;
   }
@@ -334,7 +309,7 @@ function mapSwapStepToPendingSwapStep(
 
 export function calculatePendingSwap(
   inputAmount: string,
-  bestRoute: BestRouteResponse,
+  bestRoute: NonNullable<ConfirmRouteResponse['result']>,
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
