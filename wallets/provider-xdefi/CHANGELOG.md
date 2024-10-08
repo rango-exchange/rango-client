@@ -1,3 +1,12 @@
+## [0.37.1](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.37.0...provider-xdefi@0.37.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* remove null memo from utxo transactions ([89d1a5b](https://github.com/rango-exchange/rango-client/commit/89d1a5b4a4bce700da48ad2089edf700de188f9c))
+
+
+
 # [0.37.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.36.0...provider-xdefi@0.37.0) (2024-09-10)
 
 

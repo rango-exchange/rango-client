@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-ledger",
-  "version": "0.7.1-next.6",
+  "version": "0.7.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
