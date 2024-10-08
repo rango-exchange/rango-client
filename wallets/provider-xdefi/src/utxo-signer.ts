@@ -57,7 +57,7 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
       recipientAddress,
       transferProvider,
       method,
-      memo
+      memo ?? undefined
     );
     return { hash };
   }
