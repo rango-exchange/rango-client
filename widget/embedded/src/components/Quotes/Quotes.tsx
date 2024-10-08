@@ -49,6 +49,7 @@ export function Quotes(props: PropTypes) {
     }
     const mergedQuote: SelectedQuote = {
       requestAmount: quotes.requestAmount, // Assuming quotes is an array
+      validationStatus: null,
       ...quote,
     };
 
@@ -112,7 +113,11 @@ export function Quotes(props: PropTypes) {
                       container={container}
                       selected={selectedQuote?.requestId === quote.requestId}
                       tagHidden={false}
-                      quote={{ ...quote, requestAmount: quotes.requestAmount }}
+                      quote={{
+                        ...quote,
+                        requestAmount: quotes.requestAmount,
+                        validationStatus: null,
+                      }}
                       loading={loading}
                       error={quoteError?.options || null}
                       warning={quoteWarning}
