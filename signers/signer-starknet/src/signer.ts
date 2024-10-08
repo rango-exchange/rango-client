@@ -1,4 +1,5 @@
-import type { GenericSigner, StarknetTransaction } from 'rango-types';
+import type { GenericSigner } from 'rango-types';
+import type { StarknetTransaction } from 'rango-types/mainApi';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 

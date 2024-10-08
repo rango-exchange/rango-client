@@ -14,7 +14,7 @@ export function useFetchConfirmQuote(): UseFetchResult<
     ConfirmRouteResponse
   >({
     request: async (requestBody, options) =>
-      await httpService().confirmRouteRequest(requestBody, options),
+      await httpService().confirmRoute(requestBody, options),
   });
 
   return { fetch, loading, cancelFetch };

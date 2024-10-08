@@ -331,6 +331,7 @@ export const getDefaultQuote = (
     // Handle the case where currentQuote is null
     return {
       requestAmount: requestAmount,
+      validationStatus: null,
       ...quotes[0], // Return the first quote from the quotes array
     };
   }
@@ -353,6 +354,7 @@ export const getDefaultQuote = (
   // Return the matchedQuote if found, otherwise return the first quote from the quotes array
   return {
     requestAmount: requestAmount,
+    validationStatus: null,
     ...(matchedQuote || quotes[0]),
   };
 };
