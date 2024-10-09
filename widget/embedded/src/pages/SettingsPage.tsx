@@ -47,7 +47,11 @@ export function SettingsPage() {
             )}
             action={
               <ResetAction>
-                <Button type="secondary" size="small" onClick={onClick}>
+                <Button
+                  id="widget-setting-exit-campaign-mode-btn"
+                  type="secondary"
+                  size="small"
+                  onClick={onClick}>
                   {i18n.t('Reset')}
                 </Button>
               </ResetAction>

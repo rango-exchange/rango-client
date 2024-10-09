@@ -91,7 +91,10 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
               {i18n.t('Gas & Fee Explanation')}
             </Typography>
 
-            <IconButton onClick={() => setOpen(false)} variant="ghost">
+            <IconButton
+              id="widget-quote-cost-details-modal-close-icon-btn"
+              onClick={() => setOpen(false)}
+              variant="ghost">
               <CloseIcon color="gray" size={14} />
             </IconButton>
           </ModalHeader>

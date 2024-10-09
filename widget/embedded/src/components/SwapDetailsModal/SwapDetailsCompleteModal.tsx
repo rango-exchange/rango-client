@@ -75,6 +75,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
       <Divider size={32} />
       {status === 'success' && (
         <Button
+          id="widget-swap-details-modal-done-btn"
           variant="contained"
           type="primary"
           size="large"
@@ -92,6 +93,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
         <>
           <Button
             variant="contained"
+            id="widget-swap-detail-modal-diagnosis-btn"
             type="primary"
             size="large"
             onClick={() => window.open(diagnosisUrl, '_blank')}>
@@ -100,7 +102,12 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           <Divider size={12} />
         </>
       )}
-      <Button variant="outlined" type="primary" size="large" onClick={onClose}>
+      <Button
+        id="widget-swap-details-modal-see-details-btn"
+        variant="outlined"
+        type="primary"
+        size="large"
+        onClick={onClose}>
         <Typography variant="title" size="medium" color="primary">
           {i18n.t('See Details')}
         </Typography>

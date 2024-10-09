@@ -140,6 +140,7 @@ export function HistoryPage() {
         suffix: (
           <SuffixContainer>
             <Button
+              id="widget-history-clear-btn"
               disabled={isClearButtonDisabled}
               variant="ghost"
               size="xsmall"
@@ -234,6 +235,7 @@ export function HistoryPage() {
         />
         <Divider size={30} />
         <Button
+          id="widget-history-clear-modal-yes-btn"
           variant="contained"
           type="primary"
           size="large"
@@ -242,6 +244,7 @@ export function HistoryPage() {
         </Button>
         <Divider size={10} />
         <Button
+          id="widget-history-clear-modal-no-btn"
           variant="outlined"
           type="primary"
           size="large"

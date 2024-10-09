@@ -9,7 +9,8 @@
     "import",
     "react",
     "react-hooks",
-    "destructuring"
+    "destructuring",
+    "jsx-id-attribute-enforcement"
   ],
   "extends": [
     "eslint:recommended",
@@ -107,7 +108,14 @@
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-enum-initializers": "error",
     "@typescript-eslint/promise-function-async": "error",
-    "@typescript-eslint/switch-exhaustiveness-check": "error"
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
+    "jsx-id-attribute-enforcement/missing-ids": [
+      "error",
+      {
+        "targetCustom": ["Button", "IconButton"]
+      }
+    ]
+
     // "@typescript-eslint/explicit-function-return-type": "error",
     // "@typescript-eslint/naming-convention": [
     //   "error",

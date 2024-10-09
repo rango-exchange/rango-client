@@ -25,7 +25,11 @@ export function FilterSelectorContent(props: PropTypes) {
         <Typography size="small" variant="body">
           {i18n.t('Status')}
         </Typography>
-        <Button variant="ghost" size="xxsmall" onClick={() => onClickItem('')}>
+        <Button
+          id="widget-filter-selector-reset-btn"
+          variant="ghost"
+          size="xxsmall"
+          onClick={() => onClickItem('')}>
           {i18n.t('Reset')}
         </Button>
       </div>

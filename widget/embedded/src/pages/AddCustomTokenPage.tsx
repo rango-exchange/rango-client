@@ -154,6 +154,7 @@ export function AddCustomTokenPage() {
           </div>
 
           <Button
+            id="widget-add-custom-token-import-btn"
             disabled={isImportDisabled}
             type="primary"
             variant="contained"
@@ -176,8 +177,11 @@ export function AddCustomTokenPage() {
             }>
             <Divider size={40} />
             <Divider size={10} />
-
+            {/* eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids */}
             <Button
+              id={`widget-add-custom-token-${
+                networkError ? 'retry' : 'add-another'
+              }-btn`}
               variant="contained"
               size="large"
               type="primary"

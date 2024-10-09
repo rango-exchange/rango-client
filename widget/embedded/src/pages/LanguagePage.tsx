@@ -21,7 +21,7 @@ export function LanguagePage() {
   const languageList = languages.map((languageItem) => {
     const { local, label, SVGFlag } = languageItem;
     return {
-      id: local,
+      id: `widget-setting-languages-${local}-item-btn`,
       value: local,
       title: (
         <Typography variant="title" size="xmedium">

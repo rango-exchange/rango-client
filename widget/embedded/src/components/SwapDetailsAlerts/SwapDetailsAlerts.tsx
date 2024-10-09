@@ -53,6 +53,7 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
               action={
                 explorerUrl.url && (
                   <IconButton
+                    id="widget-swap-details-tx-link-icon-btn"
                     variant="ghost"
                     size="xsmall"
                     onClick={() => window.open(explorerUrl.url, '_blank')}>

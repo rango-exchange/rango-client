@@ -150,7 +150,7 @@ export function SettingsLists() {
   };
 
   const bridgeItem = {
-    id: 'bridge-item',
+    id: 'widget-setting-bridge-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Bridges')}
@@ -168,7 +168,7 @@ export function SettingsLists() {
   };
 
   const exchangeItem = {
-    id: 'exchange-item',
+    id: 'widget-setting-exchange-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Exchanges')}
@@ -189,7 +189,7 @@ export function SettingsLists() {
   };
 
   const customTokensItem = {
-    id: 'custom-tokens-item',
+    id: 'widget-setting-custom-tokens-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Custom Tokens')}
@@ -208,7 +208,7 @@ export function SettingsLists() {
     onClick: () => navigate(navigationRoutes.customTokens),
   };
   const languageItem = {
-    id: 'language-item',
+    id: 'widget-setting-language-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Language')}
@@ -228,7 +228,7 @@ export function SettingsLists() {
   };
 
   const infiniteApprovalItem = {
-    id: 'infinite-approval-item',
+    id: 'widget-setting-infinite-approval-item-btn',
     title: (
       <>
         <Typography variant="title" size="xmedium">
@@ -259,7 +259,7 @@ export function SettingsLists() {
   };
 
   const themeItem = {
-    id: 'theme-item',
+    id: 'widget-setting-theme-item-btn',
     type: <ListItem />,
     title: (
       <Typography variant="title" size="xmedium">

@@ -61,7 +61,10 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
               container={getContainer()}
               side="top"
               content={i18n.t('Notifications')}>
-              <HeaderButton size="small" variant="ghost">
+              <HeaderButton
+                id="widget-header-notification-icon-btn"
+                size="small"
+                variant="ghost">
                 <NotificationsIcon size={18} color="black" />
                 <NotificationsBadge />
               </HeaderButton>
@@ -74,7 +77,11 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
           container={getContainer()}
           side="top"
           content={i18n.t('Settings')}>
-          <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>
+          <HeaderButton
+            id="widget-header-setting-icon-btn"
+            size="small"
+            variant="ghost"
+            onClick={onClickSettings}>
             <SettingsIcon size={18} color="black" />
           </HeaderButton>
         </Tooltip>
@@ -84,7 +91,11 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
           container={getContainer()}
           side="top"
           content={i18n.t('History')}>
-          <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
+          <HeaderButton
+            id="widget-header-history-icon-btn"
+            size="small"
+            variant="ghost"
+            onClick={onClickHistory}>
             <TransactionIcon size={18} color="black" />
             <InProgressTransactionBadge />
           </HeaderButton>

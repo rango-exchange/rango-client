@@ -68,6 +68,7 @@ export function NoResult(props: PropTypes) {
               info.alert.action && (
                 <Button
                   size="xsmall"
+                  id="widget-no-result-alert-btn"
                   type={info.alert.type}
                   prefix={
                     <PrefixIcon>
