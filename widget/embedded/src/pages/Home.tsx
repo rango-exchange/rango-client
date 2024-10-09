@@ -158,7 +158,7 @@ export function Home() {
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,
-          title: config.title || i18n.t('Swap'),
+          title: i18n.t('Test sentence to be tested'),
           suffix: (
             <HeaderButtons
               hidden={isExpandable ? ['refresh'] : undefined}
