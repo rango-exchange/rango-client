@@ -4,6 +4,13 @@ on:
     types: [opened, reopened, synchronize, labeled]
 
 jobs:
+  localization:
+    uses: ./.github/workflows/crowdin.yml
+    secrets:
+      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      PAT: ${{ secrets.PAT }}
+
   check:
     runs-on: ubuntu-latest
     steps:
@@ -11,13 +18,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fetch the latest next branch with Crowdin changes
+        run: |
+          git fetch origin chore/test-crowdin
+          git checkout chore/test-crowdin
+          git pull origin chore/test-crowdin
+
       - name: Prepare
         uses: ./.github/actions/prepare
-
-      - name: Checking Conventional Commits
-        run: node ./scripts/check-conventional-commits/command.mjs
-        env:
-          REF: ${{ github.ref }}
 
       - name: Test
         run: |
@@ -92,34 +100,3 @@ jobs:
         run: |
           echo "url=${{ needs.check.outputs.storybook_url }}">> $GITHUB_OUTPUT
           echo "Preview URL: ${{ needs.check.outputs.storybook_url}}"
-
-  analyze-bundle:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref }}
-
-      - name: Prepare
-        uses: ./.github/actions/prepare
-
-      - name: Download Build Information For Current Branch
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: ${{steps.upload_artifacts.outputs.hashed}}
-          path: 'current-branch'
-
-      - name: Hash Target Branch Name
-        id: hash_target_branch_name
-        run: |
-          hashed_name=$(printf "%s" "${{ github.base_ref }}" | base64 -w 0)
-          echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
-
-      - name: Analyze Bundles And Create Report
-        run: node ./scripts/analyze-bundle/command.mjs --currentBranchDirectory current-branch --targetBranchDirectory target-branch --targetBranchArtifactName ${{steps.hash_target_branch_name.outputs.hashed}}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPOSITORY: ${{ github.repository }}
