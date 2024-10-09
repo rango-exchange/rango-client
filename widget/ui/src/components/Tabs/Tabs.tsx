@@ -61,14 +61,12 @@ export function TabsComponent(props: TabsPropTypes) {
     }
   };
 
-  const updateIndicator = (currentIndex: number) => {
+  const updateIndicator = () => {
     if (tabRef.current && containerRef.current) {
       const tabRect = tabRef.current.getBoundingClientRect();
       const containerRect = containerRef.current.getBoundingClientRect();
       setTabWidth(tabRect.width);
-      setTransformPosition(
-        scrollable ? tabRef.current.offsetLeft : currentIndex * tabWidth
-      );
+      setTransformPosition(tabRef.current.offsetLeft);
       const itemPartiallyVisibleOnLeft = tabRect.left < containerRect.left;
       const itemPartiallyVisibleOnRight = tabRect.right > containerRect.right;
 
@@ -96,7 +94,7 @@ export function TabsComponent(props: TabsPropTypes) {
   }, []);
 
   useEffect(() => {
-    updateIndicator(currentIndex);
+    updateIndicator();
 
     const updateArrowsVisibility = () => {
       if (scrollable && containerRef.current) {
@@ -119,20 +117,23 @@ export function TabsComponent(props: TabsPropTypes) {
     };
 
     const resizeHandler: ResizeObserverCallback = (event) => {
-      if (scrollable && containerRef.current) {
-        const TOTAL_WIDTH_OF_ARROWS = 64;
-        updateIndicator(currentIndex);
-        updateArrowsVisibility();
-        const element = event[0].target;
-        if (showArrows) {
-          const tabsContainerOverflown =
-            element.scrollWidth - TOTAL_WIDTH_OF_ARROWS > element.clientWidth;
-          if (!tabsContainerOverflown) {
-            setShowArrows(false);
-          }
-        } else if (element.scrollWidth > element.clientWidth) {
-          setShowArrows(true);
-        }
+      updateIndicator();
+
+      if (!containerRef.current || !scrollable || !scrollButtons) {
+        return;
+      }
+
+      updateArrowsVisibility();
+
+      const TOTAL_WIDTH_OF_ARROWS = 64;
+      const element = event[0].target;
+      const tabsContainerOverflown =
+        element.scrollWidth - TOTAL_WIDTH_OF_ARROWS > element.clientWidth;
+
+      if (showArrows && !tabsContainerOverflown) {
+        setShowArrows(false);
+      } else if (element.scrollWidth > element.clientWidth) {
+        setShowArrows(true);
       }
     };
 
@@ -177,34 +178,38 @@ export function TabsComponent(props: TabsPropTypes) {
         type={type}
         borderRadius={borderRadius}
         scrollable={scrollable}>
-        {tabItems.map((item, index) => (
-          <Tooltip
-            key={item.id}
-            styles={{ root: { width: '100%' } }}
-            container={container}
-            side="bottom"
-            sideOffset={2}
-            content={item.tooltip}
-            open={!item.tooltip ? false : undefined}>
-            <Tab
-              className="_tab"
-              ref={index === currentIndex ? tabRef : null}
-              type={type}
-              fullWidth={scrollable ? false : true}
-              disableRipple={true}
-              borderRadius={borderRadius}
-              onClick={() => onChange(item)}
-              size="small"
-              isActive={item.id === value}
-              variant="default">
-              {item.icon}
-              {!!item.icon && !!item.title && (
-                <Divider direction="horizontal" size="2" />
-              )}
-              {item.title}
-            </Tab>
-          </Tooltip>
-        ))}
+        {tabItems.map((item, index) => {
+          const isActive = item.id === value;
+          return (
+            <Tooltip
+              key={item.id}
+              styles={{ root: { width: '100%' } }}
+              container={container}
+              side="bottom"
+              sideOffset={2}
+              content={item.tooltip}
+              open={!item.tooltip ? false : undefined}>
+              <Tab
+                className="_tab"
+                ref={index === currentIndex ? tabRef : null}
+                type={type}
+                fullWidth={scrollable ? false : true}
+                disableRipple={true}
+                borderRadius={borderRadius}
+                onClick={() => onChange(item)}
+                size="small"
+                isActive={isActive}
+                data-active={isActive}
+                variant="default">
+                {item.icon}
+                {!!item.icon && !!item.title && (
+                  <Divider direction="horizontal" size="2" />
+                )}
+                {item.title}
+              </Tab>
+            </Tooltip>
+          );
+        })}
         <BackdropTab
           type={type}
           borderRadius={borderRadius}
