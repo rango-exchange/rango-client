@@ -7,7 +7,11 @@ import { HeaderButton } from './HeaderButtons.styles';
 
 function BackButton(props: PropTypes) {
   return (
-    <HeaderButton variant="ghost" size="small" onClick={props.onClick}>
+    <HeaderButton
+      id="widget-header-back-icon-btn"
+      variant="ghost"
+      size="small"
+      onClick={props.onClick}>
       <ChevronLeftIcon color="black" size={16} />
     </HeaderButton>
   );

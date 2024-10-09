@@ -272,6 +272,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         suffix: swap.status !== 'running' && (
           <SuffixContainer>
             <Button
+              id="widget-swap-details-delete-btn"
               variant="ghost"
               type="error"
               size="xsmall"
@@ -288,6 +289,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         !showCompletedModal && (
           <Button
             fullWidth
+            id="widget-swap-details-try-again-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -325,6 +327,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 alignOffset={-16}
                 align="end">
                 <IconButton
+                  id="widget-swap-details-done-copy-icon-btn"
                   variant="ghost"
                   onClick={handleCopy.bind(null, requestId || '')}>
                   {isCopied ? (

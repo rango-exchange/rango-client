@@ -61,6 +61,7 @@ function RefreshButton({ onClick }: { onClick: (() => void) | undefined }) {
 
   return (
     <HeaderButton
+      id="widget-header-refresh-icon-btn"
       variant="ghost"
       size="small"
       style={{ paddingTop: 0, paddingBottom: 0 }}

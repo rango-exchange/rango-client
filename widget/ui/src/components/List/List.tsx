@@ -20,7 +20,7 @@ function List(props: ListPropTypes) {
             id,
           });
         }
-        return <ListItem key={id} {...itemProps} />;
+        return <ListItem key={id} id={id} {...itemProps} />;
       })}
     </BaseList>
   );

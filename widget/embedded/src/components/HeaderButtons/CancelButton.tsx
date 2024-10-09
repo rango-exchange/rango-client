@@ -9,7 +9,11 @@ import { SuffixContainer } from './HeaderButtons.styles';
 function CancelButton(props: PropTypes) {
   return (
     <SuffixContainer>
-      <Button variant="ghost" onClick={props.onClick} size="xsmall">
+      <Button
+        id="widget-header-cancel-btn"
+        variant="ghost"
+        onClick={props.onClick}
+        size="xsmall">
         <Typography variant="label" size="medium" color="error500">
           {i18n.t('Cancel')}
         </Typography>

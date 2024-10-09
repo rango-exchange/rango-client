@@ -243,6 +243,7 @@ export function ConfirmSwapPage() {
         <Buttons>
           <div className={confirmBtnStyles()}>
             <Button
+              id="widget-confirm-swap-start-btn"
               variant="contained"
               type="primary"
               size="large"
@@ -254,6 +255,7 @@ export function ConfirmSwapPage() {
             </Button>
           </div>
           <IconButton
+            id="widget-confirm-swap-wallet-icon-btn"
             variant="contained"
             type="primary"
             size="large"
