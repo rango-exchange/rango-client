@@ -14,76 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
-msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
-msgstr "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
-msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
-msgstr "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
-msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr "{amount} {symbol} on {blockchain} remains in your wallet."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Please approve the experimental chain pop-up in your wallet."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "The {blockchainDisplayName} chain has been successfully added to your wallet."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:246
-msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
-msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
-msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-msgstr "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
-msgid "Clear"
-msgstr "Clear"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:218
-msgid "Clear Transaction History"
-msgstr "Clear Transaction History"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:222
-msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
-msgstr "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:229
-msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
-msgstr "Note: This does not erase your transaction history on the chain; it only removes them here."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:243
-msgid "Yes, Clear the history"
-msgstr "Yes, Clear the history"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-msgid "Search Chain"
-msgstr "Search Chain"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:286
 #: widget/embedded/src/pages/HistoryPage.tsx:186
@@ -493,10 +423,20 @@ msgid "Custom"
 msgstr "Custom"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
+msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
+msgstr "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
 #: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Warning"
 msgstr "Warning"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
+msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
+msgstr "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
@@ -529,6 +469,11 @@ msgstr "You have received {amount} {token} in {conciseAddress} wallet on {chain}
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 msgid "Transaction was not sent."
 msgstr "Transaction was not sent."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+msgid "{amount} {symbol} on {blockchain} remains in your wallet."
+msgstr "{amount} {symbol} on {blockchain} remains in your wallet."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
@@ -722,9 +667,24 @@ msgid "Add {blockchainDisplayName} Chain"
 msgstr "Add {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
+msgstr "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
+msgid "Please approve the experimental chain pop-up in your wallet."
+msgstr "Please approve the experimental chain pop-up in your wallet."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} Chain Added"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
+msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
+msgstr "The {blockchainDisplayName} chain has been successfully added to your wallet."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
@@ -928,6 +888,11 @@ msgid "Infinite approval"
 msgstr "Infinite approval"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:246
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
+msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:266
 msgid "Theme"
 msgstr "Theme"
@@ -956,6 +921,11 @@ msgstr "There's no need to add this token again because it already exists and is
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
 msgstr "Token Not Found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
+msgstr "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
@@ -1052,6 +1022,11 @@ msgid "Failed"
 msgstr "Failed"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:149
+msgid "Clear"
+msgstr "Clear"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:161
 msgid "Search Transaction"
 msgstr "Search Transaction"
@@ -1065,6 +1040,26 @@ msgstr "No transactions"
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Your transaction history is stored locally and will appear here after you start a swap"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:218
+msgid "Clear Transaction History"
+msgstr "Clear Transaction History"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:222
+msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
+msgstr "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:229
+msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
+msgstr "Note: This does not erase your transaction history on the chain; it only removes them here."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:243
+msgid "Yes, Clear the history"
+msgstr "Yes, Clear the history"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:56
@@ -1085,6 +1080,11 @@ msgstr "Select all"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+msgid "Search Chain"
+msgstr "Search Chain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67

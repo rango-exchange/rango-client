@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 08:39\n"
+"PO-Revision-Date: 2024-10-09 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,76 +17,6 @@ msgstr ""
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
-msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
-msgstr "Uw transactie zal worden teruggedraaid als de prijs onvoordelig verandert met meer dan dit percentage."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
-msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
-msgstr "Deze instelling wordt toegepast op elke stap (bijvoorbeeld 1Inch, Thorchain, etc.), wat betekent dat alleen de specifieke stap wordt teruggedraaid, niet de hele route."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
-msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr "{amount} {symbol} op {blockchain} blijft in jouw portemonnee."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Wilt u de {blockchainDisplayName} experimentele keten aan uw portemonnee toevoegen?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Gelieve de experimentele keten pop-up in uw portemonnee goed te keuren."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "De {blockchainDisplayName} keten is met succes aan uw portemonnee toegevoegd."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:246
-msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
-msgstr "Het inschakelen van de 'Oneindige goedkeuring' modus verleent onbeperkte toegang tot onderliggende slimme contracten, waardoor ze het goedgekeurde token bedrag zonder beperkingen kunnen gebruiken."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
-msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-msgstr "Sorry, er is geen token gevonden op {blockchain} keten met het opgegeven adres. Zorg ervoor dat u het juiste token adres hebt ingevoerd."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
-msgid "Clear"
-msgstr "Verwijderen"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:218
-msgid "Clear Transaction History"
-msgstr "Wis transactiegeschiedenis"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:222
-msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
-msgstr "Doorgaan zal alle succesvolle en mislukte transacties van de widget verwijderen. Wilt u doorgaan?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:229
-msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
-msgstr "Opmerking: Dit wist uw transactiegeschiedenis op de keten niet; het verwijdert ze alleen hier."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:243
-msgid "Yes, Clear the history"
-msgstr "Ja, de geschiedenis wissen"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-msgid "Search Chain"
-msgstr "Zoek ketting"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -496,10 +426,20 @@ msgid "Custom"
 msgstr "Aangepaste"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
+msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
+msgstr "Uw transactie zal worden teruggedraaid als de prijs onvoordelig verandert met meer dan dit percentage."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
 #: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Warning"
 msgstr "Waarschuwing"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
+msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
+msgstr "Deze instelling wordt toegepast op elke stap (bijvoorbeeld 1Inch, Thorchain, etc.), wat betekent dat alleen de specifieke stap wordt teruggedraaid, niet de hele route."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
@@ -532,6 +472,11 @@ msgstr "Je hebt {amount} {token} ontvangen in de {conciseAddress} portemonnee in
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 msgid "Transaction was not sent."
 msgstr "Transactie is niet verzonden."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+msgid "{amount} {symbol} on {blockchain} remains in your wallet."
+msgstr "{amount} {symbol} op {blockchain} blijft in jouw portemonnee."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
@@ -725,9 +670,24 @@ msgid "Add {blockchainDisplayName} Chain"
 msgstr "{blockchainDisplayName} Ketting toevoegen"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
+msgstr "Wilt u de {blockchainDisplayName} experimentele keten aan uw portemonnee toevoegen?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
+msgid "Please approve the experimental chain pop-up in your wallet."
+msgstr "Gelieve de experimentele keten pop-up in uw portemonnee goed te keuren."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} Ketting toegevoegd"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
+msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
+msgstr "De {blockchainDisplayName} keten is met succes aan uw portemonnee toegevoegd."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
@@ -931,6 +891,11 @@ msgid "Infinite approval"
 msgstr "Oneindige goedkeuring"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:246
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
+msgstr "Het inschakelen van de 'Oneindige goedkeuring' modus verleent onbeperkte toegang tot onderliggende slimme contracten, waardoor ze het goedgekeurde token bedrag zonder beperkingen kunnen gebruiken."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:266
 msgid "Theme"
 msgstr "Thema"
@@ -959,6 +924,11 @@ msgstr "Het is niet nodig om dit token opnieuw toe te voegen omdat het al bestaa
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
 msgstr "Token niet gevonden"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
+msgstr "Sorry, er is geen token gevonden op {blockchain} keten met het opgegeven adres. Zorg ervoor dat u het juiste token adres hebt ingevoerd."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
@@ -1055,6 +1025,11 @@ msgid "Failed"
 msgstr "Mislukt"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:149
+msgid "Clear"
+msgstr "Verwijderen"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:161
 msgid "Search Transaction"
 msgstr "Zoek transactie"
@@ -1068,6 +1043,26 @@ msgstr "Geen transacties"
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Uw transactiegeschiedenis is lokaal opgeslagen en zal hier verschijnen nadat u een swap heeft gestart"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:218
+msgid "Clear Transaction History"
+msgstr "Wis transactiegeschiedenis"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:222
+msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
+msgstr "Doorgaan zal alle succesvolle en mislukte transacties van de widget verwijderen. Wilt u doorgaan?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:229
+msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
+msgstr "Opmerking: Dit wist uw transactiegeschiedenis op de keten niet; het verwijdert ze alleen hier."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:243
+msgid "Yes, Clear the history"
+msgstr "Ja, de geschiedenis wissen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:56
@@ -1088,6 +1083,11 @@ msgstr "Alles selecteren"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Zoek {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+msgid "Search Chain"
+msgstr "Zoek ketting"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
