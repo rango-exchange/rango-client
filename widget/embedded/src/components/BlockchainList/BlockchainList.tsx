@@ -48,6 +48,7 @@ export function BlockchainList(props: PropTypes) {
         {blockchains.map((item) => (
           <ListItemButton
             key={`${item.name}-${item.chainId}`}
+            className={`widget-blockchain-list-item-btn`}
             hasDivider
             onClick={() => onChange(item)}
             start={<Image src={item.logo} size={30} />}
@@ -56,7 +57,7 @@ export function BlockchainList(props: PropTypes) {
                 {item.displayName}
               </Typography>
             }
-            id={item.chainId as string}
+            id={item.name}
           />
         ))}
       </List>

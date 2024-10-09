@@ -68,8 +68,11 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
   };
 
   const list = liquiditySources.map((sourceItem) => {
-    const { selected, groupTitle, logo } = sourceItem;
+    const { selected, groupTitle, logo, id, ...restSourceItem } = sourceItem;
     return {
+      id: `widget-setting-liquidity-source-${id
+        .toLowerCase()
+        .replace(/\s+/g, '-')}-item-btn`,
       start: <Image src={logo} size={22} type="circular" />,
       onClick: () => {
         if (!campaignMode) {
@@ -82,7 +85,10 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           {i18n.t(groupTitle)}
         </Typography>
       ),
-      ...sourceItem,
+      selected,
+      groupTitle,
+      logo,
+      ...restSourceItem,
     };
   });
 
@@ -104,7 +110,14 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
         title: i18n.t(sourceType),
         suffix: (
           <LiquiditySourceSuffix>
-            <Button variant="ghost" size="xsmall" onClick={toggleAllSources}>
+            {/* eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids */}
+            <Button
+              id={`widget-liquidity-source-${
+                hasSelectAll ? 'deselect-all' : 'select-all'
+              }-btn`}
+              variant="ghost"
+              size="xsmall"
+              onClick={toggleAllSources}>
               {hasSelectAll ? i18n.t('Deselect all') : i18n.t('Select all')}
             </Button>
           </LiquiditySourceSuffix>

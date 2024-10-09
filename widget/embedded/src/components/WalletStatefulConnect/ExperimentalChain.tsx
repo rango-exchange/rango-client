@@ -24,6 +24,7 @@ export function ExperimentalChain(props: PropTypes) {
       <Divider size={18} />
       <Divider size={32} />
       <Button
+        id="widget-experimental-chain-confirm-btn"
         onClick={onConfirm}
         variant="outlined"
         type="primary"

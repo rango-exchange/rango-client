@@ -78,6 +78,7 @@ export function HighValueLossWarningModal(props: Props) {
     <WatermarkedModal
       footer={
         <Button
+          id="widget-high-value-loss-warning-modal-confirm-btn"
           type="primary"
           size="large"
           prefix={<WarningIcon />}

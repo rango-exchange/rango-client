@@ -32,7 +32,11 @@ function WalletButton(props: PropTypes) {
 
   return (
     <Tooltip container={props.container} side="bottom" content={content}>
-      <HeaderButton variant="ghost" size="small" onClick={props.onClick}>
+      <HeaderButton
+        id="widget-header-wallet-icon-btn"
+        variant="ghost"
+        size="small"
+        onClick={props.onClick}>
         {props.isConnected && <ConnectedIcon />}
         <WalletIcon size={18} color="black" />
       </HeaderButton>

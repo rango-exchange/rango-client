@@ -110,6 +110,7 @@ export function CustomTokensPage() {
                 showTitle={false}
                 action={(token) => (
                   <DeleteIconButton
+                    id="widget-custom-token-delete-icon-btn"
                     variant="ghost"
                     onClick={() => {
                       setIsDeleteModalOpen(true);
@@ -140,6 +141,7 @@ export function CustomTokensPage() {
           <Divider size={20} />
 
           <Button
+            id="widget-custom-token-add-btn"
             type="primary"
             variant="contained"
             size="large"
@@ -161,6 +163,7 @@ export function CustomTokensPage() {
 
             <Button
               fullWidth
+              id="widget-custom-token-delete-modal-yes-btn"
               variant="contained"
               type="primary"
               size="large"
@@ -169,6 +172,7 @@ export function CustomTokensPage() {
             </Button>
             <Divider size={12} />
             <Button
+              id="widget-custom-token-delete-modal-no-btn"
               fullWidth
               variant="outlined"
               type="primary"
