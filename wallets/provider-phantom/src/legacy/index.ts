@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -7,14 +8,17 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 import {
+  chooseInstance,
   getSolanaAccounts,
-  Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { solanaBlockchain } from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import { phantom as phantom_instance } from './helpers.js';
+import { EVM_SUPPORTED_CHAINS } from '../constants.js';
+import { phantom as phantom_instance } from '../utils.js';
+
 import signer from './signer.js';
 
 const WALLET = WalletTypes.PHANTOM;
@@ -24,7 +28,15 @@ export const config = {
 };
 
 export const getInstance = phantom_instance;
-export const connect: Connect = getSolanaAccounts;
+const connect: Connect = async ({ instance, meta }) => {
+  const solanaInstance = instance.get(Networks.SOLANA);
+  const result = await getSolanaAccounts({
+    instance: solanaInstance,
+    meta,
+  });
+
+  return result;
+};
 
 export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   const handleAccountsChanged = async (publicKey: string) => {
@@ -43,23 +55,27 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   };
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
+const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
+  return EVM_SUPPORTED_CHAINS.includes(network as Networks);
+};
 
 export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
-export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
+const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   try {
-    const result = await instance.connect({ onlyIfTrusted: true });
+    const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
   } catch (error) {
     return false;
   }
 };
-
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
+  const evms = evmBlockchains(allBlockChains);
+
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/phantom/icon.svg',
@@ -70,6 +86,25 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: solana,
+    // if you are adding a new namespace, don't forget to also update `properties`
+    supportedChains: [
+      ...solana,
+      ...evms.filter((chain) =>
+        EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+      ),
+    ],
   };
 };
+
+const legacyProvider: LegacyProviderInterface = {
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+};
+
+export { legacyProvider };

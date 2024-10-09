@@ -15,7 +15,6 @@ import React, { useMemo } from 'react';
 import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
-import { useWalletsStore } from './store/wallets';
 import { getConfig } from './utils/configs';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
@@ -39,8 +38,8 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     });
   }, [props.apiKey]);
 
-  const blockchains = useAppStore().blockchains();
-  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const { blockchains, connectedWallets } = useAppStore();
+  const blockchainsList = blockchains();
 
   const wallets = {
     blockchains: connectedWallets.map((wallet) => ({
@@ -53,14 +52,21 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
     }
-    return connect(wallet, network);
+    const result = await connect(wallet, [
+      {
+        namespace: 'DISCOVER_MODE',
+        network,
+      },
+    ]);
+
+    return result;
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>
     !!getWalletInfo(walletType).mobileWallet;
 
   // TODO: this code copy & pasted from rango, should be refactored.
-  const allBlockchains = blockchains
+  const allBlockchains = blockchainsList
     .filter((blockchain) => blockchain.enabled)
     .reduce(
       (blockchainsObj: any, blockchain) => (
@@ -68,7 +74,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
       ),
       {}
     );
-  const evmBasedChains = blockchains.filter(isEvmBlockchain);
+  const evmBasedChains = blockchainsList.filter(isEvmBlockchain);
   const getSupportedChainNames = (type: WalletType) => {
     const { supportedChains } = getWalletInfo(type);
     return walletAndSupportedChainsNames(supportedChains);
@@ -88,7 +94,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     providers: allProviders,
     switchNetwork,
     canSwitchNetworkTo,
-    connect,
     state,
     isMobileWallet,
   };

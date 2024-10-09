@@ -1,4 +1,10 @@
-export type { Store, State, ProviderInfo } from './hub/mod.js';
+export type {
+  Store,
+  State,
+  ProviderInfo,
+  CommonNamespaces,
+  CommonNamespaceKeys,
+} from './hub/mod.js';
 export {
   Hub,
   Provider,
@@ -7,10 +13,8 @@ export {
   guessProviderStateSelector,
   namespaceStateSelector,
 } from './hub/mod.js';
-export type {
-  ProxiedNamespace,
-  FindProxiedNamespace as NamespaceInterface,
-} from './builders/mod.js';
+
+export type { ProxiedNamespace, FindProxiedNamespace } from './builders/mod.js';
 export {
   NamespaceBuilder,
   ProviderBuilder,
@@ -31,5 +35,5 @@ export {
  * To make it work for Parcel, we should go with second mentioned option.
  *
  */
-export type { Versions } from './utils/mod.js';
+export type { VersionedProviders } from './utils/mod.js';
 export { defineVersions, pickVersion } from './utils/mod.js';

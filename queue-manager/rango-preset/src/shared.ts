@@ -37,7 +37,6 @@ export type WalletBalance = {
 };
 
 export type Account = {
-  balances: WalletBalance[] | null;
   address: string;
   loading: boolean;
   walletType: WalletType;

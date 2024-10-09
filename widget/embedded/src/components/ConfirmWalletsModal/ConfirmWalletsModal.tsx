@@ -1,5 +1,5 @@
 import type { PropTypes } from './ConfirmWalletsModal.types';
-import type { ConnectedWallet } from '../../store/wallets';
+import type { ConnectedWallet } from '../../store/slices/wallets';
 import type { ConfirmSwapWarnings, Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
@@ -20,7 +20,6 @@ import { getQuoteErrorMessage } from '../../constants/errors';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
 import { getQuoteWallets } from '../../utils/wallets';
@@ -54,8 +53,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     customDestination,
     setCustomDestination,
   } = useQuoteStore();
-  const { connectedWallets, selectWallets } = useWalletsStore();
-  const { config } = useAppStore();
+  const { config, connectedWallets, setWalletsAsSelected } = useAppStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
@@ -217,7 +215,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     const lastSelectedWallets = selectableWallets.filter(
       (wallet) => wallet.selected
     );
-    selectWallets(lastSelectedWallets);
+    setWalletsAsSelected(lastSelectedWallets);
     selectQuoteWallets(lastSelectedWallets);
     setQuoteWalletConfirmed(true);
     onClose();
