@@ -1,3 +1,21 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/ui@0.39.0...ui@0.40.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* add chart icon and handle dark theme in BarChart component ([fd4f246](https://github.com/rango-exchange/rango-client/commit/fd4f24684e42deb1b47fb9a6584ac4f9a1519599))
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+* fix issues in the tabs component ([497c387](https://github.com/rango-exchange/rango-client/commit/497c3871241f3e067682526c156014dcd8189395))
+
+
+### Features
+
+* add id property to buttons ([39824e3](https://github.com/rango-exchange/rango-client/commit/39824e3ce8b1804b9944eb0faf71da7cdccf59ea))
+* add mobile menu icons ([d4358bc](https://github.com/rango-exchange/rango-client/commit/d4358bc189a61c49c508c517b2cd674d435aa3b7))
+* implement scrollable variant for tabs component ([0635f77](https://github.com/rango-exchange/rango-client/commit/0635f774af9dfd03fcc8f7adfcd32591c86efa25))
+
+
+
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/ui@0.38.0...ui@0.39.0) (2024-09-10)
 
 

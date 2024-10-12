@@ -1,3 +1,13 @@
+# [0.38.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.37.0...wallets-shared@0.38.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+* cosmostation wallet connection error ([b3747ba](https://github.com/rango-exchange/rango-client/commit/b3747ba77d06a5c02ce670affb337771e606434b))
+
+
+
 # [0.37.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.36.0...wallets-shared@0.37.0) (2024-09-10)
 
 

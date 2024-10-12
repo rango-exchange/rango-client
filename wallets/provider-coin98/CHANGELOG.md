@@ -1,3 +1,18 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.38.0...provider-coin98@0.39.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+
+
+### Performance Improvements
+
+* enable code splitting in build process ([fe5a41e](https://github.com/rango-exchange/rango-client/commit/fe5a41e0e297298de11cd74ca5825544742aa03a))
+* lazy load signer packages ([7b88f18](https://github.com/rango-exchange/rango-client/commit/7b88f1834f7b29b4b81ab6c81a07bb88e8ccf55c))
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.37.0...provider-coin98@0.38.0) (2024-09-10)
 
 
