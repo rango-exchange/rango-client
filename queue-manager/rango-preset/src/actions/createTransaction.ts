@@ -1,23 +1,23 @@
-import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import {
-  StepEventType,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-  StepExecutionEventStatus,
-} from '../types';
+import type { SwapQueueContext, SwapStorage } from '../types';
+import type { ExecuterActions } from '@rango-dev/queue-manager-core';
+import type { CreateTransactionRequest } from 'rango-sdk';
+
+import { DEFAULT_ERROR_CODE } from '../constants';
 import {
   getCurrentStep,
-  updateSwapStatus,
-  throwOnOK,
   getCurrentStepTx,
   setCurrentStepTx,
+  throwOnOK,
+  updateSwapStatus,
 } from '../helpers';
-import { prettifyErrorMessage } from '../shared-errors';
-import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
 import { notifier } from '../services/eventEmitter';
-import { DEFAULT_ERROR_CODE } from '../constants';
+import { prettifyErrorMessage } from '../shared-errors';
+import {
+  StepEventType,
+  StepExecutionEventStatus,
+  SwapActionTypes,
+} from '../types';
 
 /**
  *
@@ -54,6 +54,7 @@ export async function createTransaction(
       validations: {
         balance: swap.validateBalanceOrFee,
         fee: swap.validateBalanceOrFee,
+        approve: true,
       },
     };
     try {
@@ -63,7 +64,9 @@ export async function createTransaction(
         httpService().createTransaction(request)
       );
 
-      if (transaction) setCurrentStepTx(currentStep, transaction);
+      if (transaction) {
+        setCurrentStepTx(currentStep, transaction);
+      }
 
       setStorage({ ...getStorage(), swapDetails: swap });
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);

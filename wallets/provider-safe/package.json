@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.30.0",
+  "version": "0.30.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,19 +14,19 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-safe",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-safe --splitting",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.30.0",
-    "@rango-dev/wallets-shared": "^0.37.0",
+    "@rango-dev/signer-evm": "^0.30.1-next.0",
+    "@rango-dev/wallets-shared": "^0.37.1-next.4",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.69"
+    "rango-types": "^0.1.74"
   },
   "publishConfig": {
     "access": "public"

@@ -3,8 +3,8 @@ import type { Token } from 'rango-sdk';
 import { i18n } from '@lingui/core';
 import { useState } from 'react';
 
+import { httpService } from '../services/httpService';
 import { useAppStore } from '../store/AppStore';
-import { getConfig } from '../utils/configs';
 
 type ErrorType = {
   title: string;
@@ -18,7 +18,7 @@ interface UseFetchCustomToken {
   }: {
     blockchain: string;
     tokenAddress: string;
-  }) => Promise<Token>;
+  }) => Promise<Token | undefined>;
   loading: boolean;
   error?: ErrorType;
 }
@@ -52,7 +52,7 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         return {
           title: i18n.t('Token Not Found'),
           message: i18n.t({
-            id: 'Sorry, no token was found on {blockchain} blockchain with the provided address. please make sure you have entered the right token address.',
+            id: 'Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address.',
             values: {
               blockchain,
             },
@@ -77,27 +77,23 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         return undefined;
       }
 
-      const res = await fetch(
-        `${getConfig('BASE_URL')}/meta/token?apiKey=${getConfig(
-          'API_KEY'
-        )}&blockchain=${blockchain}&address=${tokenAddress}`
-      );
-      const contentType = res.headers.get('content-type');
-      const response =
-        contentType &&
-        contentType.includes('application/json') &&
-        (await res.json());
-      if (!response || response.error) {
+      const response = await httpService().getCustomToken({
+        blockchain,
+        address: tokenAddress,
+      });
+
+      if (!response || !response.token || response.error) {
         const errorMessage = produceErrorMessage('not-found', blockchain);
         setError(errorMessage);
         return undefined;
       }
 
       // Check if token is already in the system
+      const token = response.token;
       const isTokenFound = findToken({
-        blockchain: response.blockchain,
-        address: response.address,
-        symbol: response.symbol,
+        blockchain: token.blockchain,
+        address: token.address,
+        symbol: token.symbol,
       });
       if (isTokenFound) {
         const errorMessage = produceErrorMessage('token-exist');
@@ -105,7 +101,7 @@ export function useFetchCustomToken(): UseFetchCustomToken {
         return undefined;
       }
 
-      return response;
+      return token;
     } catch (error: any) {
       setError(undefined);
       throw new Error(error.message);

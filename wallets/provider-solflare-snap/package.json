@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-solflare-snap",
-  "version": "0.8.0",
+  "version": "0.8.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,19 +14,19 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-solflare-snap",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-solflare-snap --splitting",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-metamask": "^0.37.0",
-    "@rango-dev/signer-solana": "^0.32.0",
-    "@rango-dev/wallets-shared": "^0.37.0",
+    "@rango-dev/provider-metamask": "^0.37.1-next.4",
+    "@rango-dev/signer-solana": "^0.32.1-next.2",
+    "@rango-dev/wallets-shared": "^0.37.1-next.4",
     "@solflare-wallet/metamask-sdk": "^1.0.3",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.69"
+    "rango-types": "^0.1.74"
   },
   "publishConfig": {
     "access": "public"

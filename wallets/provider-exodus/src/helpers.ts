@@ -44,5 +44,4 @@ export const EXODUS_WALLET_SUPPORTED_CHAINS = [
   Networks.BSC,
   Networks.POLYGON,
   Networks.AVAX_CCHAIN,
-  Networks.BINANCE,
 ];

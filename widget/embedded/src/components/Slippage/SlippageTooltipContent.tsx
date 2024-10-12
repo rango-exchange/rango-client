@@ -9,13 +9,13 @@ export function SlippageTooltipContent() {
     <SlippageTooltipContainer>
       <Typography variant="label" size="medium" color="neutral700">
         {i18n.t(
-          'Your transaction will be reverted if the price changes unfavorably by more than this percentage'
+          'Your transaction will be reverted if the price changes unfavorably by more than this percentage.'
         )}
         <br />
         <br />
-        <b>{i18n.t('Warning')}</b>:
+        <b>{i18n.t('Warning')}</b>:&nbsp;
         {i18n.t(
-          'This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means only the step will be reverted, not the whole transaction.'
+          'This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route.'
         )}
       </Typography>
     </SlippageTooltipContainer>

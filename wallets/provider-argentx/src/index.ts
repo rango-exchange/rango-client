@@ -61,7 +61,7 @@ export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const canEagerConnect: CanEagerConnect = ({ instance }) =>
   instance.isPreauthorized();

@@ -66,7 +66,9 @@ async function checkTransactionStatus({
     const txType = getCurrentStepTxType(currentStep);
     const sourceWallet = getRelatedWallet(swap, currentStep);
     if (txType && sourceWallet) {
-      signer = context.getSigners(sourceWallet.walletType).getSigner(txType);
+      signer = (await context.getSigners(sourceWallet.walletType)).getSigner(
+        txType
+      );
     }
   } catch (error) {
     /*
@@ -289,7 +291,8 @@ async function checkApprovalStatus({
     const txType = getCurrentStepTxType(currentStep);
     const sourceWallet = getRelatedWallet(swap, currentStep);
     if (txType && sourceWallet) {
-      signer = context.getSigners(sourceWallet.walletType).getSigner(txType);
+      const walletSigners = await context.getSigners(sourceWallet.walletType);
+      signer = walletSigners.getSigner(txType);
     }
   } catch (error) {
     /*

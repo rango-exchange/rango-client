@@ -24,6 +24,8 @@ async function run() {
     // When you want to make all the packages external, and only include some specific packages as your library bundle, this will be usefull.
     // Comma separated.
     { name: 'external-all-except', type: String },
+    // Enable code splitting
+    { name: 'splitting', type: Boolean },
   ];
 
   const {
@@ -31,6 +33,7 @@ async function run() {
     inputs,
     external,
     'external-all-except': externalAllExcept,
+    splitting,
   } = commandLineArgs(optionDefinitions);
 
   if (!path) {
@@ -84,6 +87,7 @@ async function run() {
   const esbuildTask = esbuild.build({
     bundle: true,
     minify: true,
+    splitting: !!splitting,
     keepNames: true,
     sourcemap: true,
     platform: 'browser',

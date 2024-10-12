@@ -4,7 +4,7 @@ import type { Meta } from '@storybook/react';
 import { Tabs } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { themes } from './mock';
+import { numbers, themes } from './mock';
 
 export default {
   title: 'Components/Tabs',
@@ -19,9 +19,9 @@ export default {
   argTypes: {
     type: {
       control: { type: 'select' },
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'bordered'],
       defaultValue: 'primary',
-      description: 'primary | secondary | undefined',
+      description: 'primary | secondary | bordered | undefined',
     },
     className: {
       control: { type: 'text' },
@@ -35,6 +35,14 @@ export default {
     },
     onChange: {
       type: 'function',
+    },
+    scrollable: {
+      defaultValue: false,
+      type: 'boolean',
+    },
+    scrollButtons: {
+      defaultValue: true,
+      type: 'boolean',
     },
   },
 } as Meta<typeof Tabs>;
@@ -51,6 +59,27 @@ export const Main = (args: TabsPropTypes) => {
       <Tabs
         {...args}
         value={value}
+        onChange={(item) => setValue(item.id as string)}
+      />
+    </div>
+  );
+};
+
+export const Scrollable = (args: TabsPropTypes) => {
+  const [value, setValue] = useState(numbers[0].id);
+
+  return (
+    <div
+      style={{
+        width: '250px',
+        height: '40px',
+      }}>
+      <Tabs
+        {...args}
+        items={numbers}
+        scrollable={true}
+        type="bordered"
+        value={value as string}
         onChange={(item) => setValue(item.id as string)}
       />
     </div>

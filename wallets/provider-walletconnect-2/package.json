@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.30.0",
+  "version": "0.30.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2 --external-all-except @walletconnect/modal",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2 --splitting --external-all-except @walletconnect/modal",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -25,10 +25,10 @@
     "@keplr-wallet/cosmos": "^0.9.12",
     "@keplr-wallet/simple-fetch": "^0.12.14",
     "@rango-dev/logging-core": "^0.6.0",
-    "@rango-dev/signer-cosmos": "^0.29.0",
-    "@rango-dev/signer-evm": "^0.30.0",
-    "@rango-dev/signer-solana": "^0.32.0",
-    "@rango-dev/wallets-shared": "^0.37.0",
+    "@rango-dev/signer-cosmos": "^0.29.1-next.0",
+    "@rango-dev/signer-evm": "^0.30.1-next.0",
+    "@rango-dev/signer-solana": "^0.32.1-next.2",
+    "@rango-dev/wallets-shared": "^0.37.1-next.4",
     "@solana/web3.js": "^1.91.4",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "^2.11.2",
@@ -36,7 +36,7 @@
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "cosmos-wallet": "^1.2.0",
-    "rango-types": "^0.1.69"
+    "rango-types": "^0.1.74"
   },
   "devDependencies": {
     "@walletconnect/modal": "^2.6.2",

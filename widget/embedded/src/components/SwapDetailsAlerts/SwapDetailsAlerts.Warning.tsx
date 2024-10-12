@@ -14,6 +14,7 @@ export function WarningAlert(props: WaningAlertsProps) {
         title={message.shortMessage}
         action={
           <Button
+            id="widget-swap-details-warning-alert-change-network-btn"
             size="xxsmall"
             type="warning"
             onClick={() => {
@@ -37,6 +38,7 @@ export function WarningAlert(props: WaningAlertsProps) {
         title={message.shortMessage}
         action={
           <Button
+            id="widget-swap-details-warning-alert-connect-wallet-btn"
             size="xxsmall"
             type="warning"
             onClick={() => {

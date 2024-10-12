@@ -16,13 +16,19 @@ export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
       <Divider size={32} />
       <Button
         variant="contained"
+        id="widget-swap-details-modal-cancel-swap-yes-btn"
         type="primary"
         size="large"
         onClick={onCancel}>
         {i18n.t('Yes, Cancel it')}
       </Button>
       <Divider size={12} />
-      <Button variant="outlined" type="primary" size="large" onClick={onClose}>
+      <Button
+        id="widget-swap-details-modal-cancel-swap-no-btn"
+        variant="outlined"
+        type="primary"
+        size="large"
+        onClick={onClose}>
         {i18n.t('No, Continue')}
       </Button>
     </>

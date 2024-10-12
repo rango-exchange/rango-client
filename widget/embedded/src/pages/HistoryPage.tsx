@@ -140,12 +140,13 @@ export function HistoryPage() {
         suffix: (
           <SuffixContainer>
             <Button
+              id="widget-history-clear-btn"
               disabled={isClearButtonDisabled}
               variant="ghost"
               size="xsmall"
               onClick={() => setOpenClearModal(true)}>
               <Typography size="medium" variant="label" color="error">
-                {i18n.t('Clear all Txs')}
+                {i18n.t('Clear')}
               </Typography>
             </Button>
           </SuffixContainer>
@@ -214,36 +215,36 @@ export function HistoryPage() {
         <Divider size={20} />
         <MessageBox
           type="warning"
-          title={i18n.t('Clear History')}
+          title={i18n.t('Clear Transaction History')}
           description={
             <Description>
               <Typography variant="body" size="medium">
                 {i18n.t(
-                  'This would clear all succeeded/failed transactions from widget. Do you wish to proceed?'
+                  'Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?'
                 )}
               </Typography>
               <Divider size={'24'} />
 
               <Typography variant="body" size="small">
                 {i18n.t(
-                  'Hint: This does not clear your transaction history on blockchain. Only hides them in this page.'
+                  'Note: This does not erase your transaction history on the chain; it only removes them here.'
                 )}
               </Typography>
             </Description>
           }
         />
-        <Divider size={40} />
-
-        <Divider size={10} />
+        <Divider size={30} />
         <Button
+          id="widget-history-clear-modal-yes-btn"
           variant="contained"
           type="primary"
           size="large"
           onClick={onClear}>
-          {i18n.t('Yes, Clear history')}
+          {i18n.t('Yes, Clear the history')}
         </Button>
         <Divider size={10} />
         <Button
+          id="widget-history-clear-modal-no-btn"
           variant="outlined"
           type="primary"
           size="large"

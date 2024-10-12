@@ -21,7 +21,7 @@ export function LanguagePage() {
   const languageList = languages.map((languageItem) => {
     const { local, label, SVGFlag } = languageItem;
     return {
-      id: local,
+      id: `widget-setting-languages-${local}-item-btn`,
       value: local,
       title: (
         <Typography variant="title" size="xmedium">
@@ -46,7 +46,7 @@ export function LanguagePage() {
         <Alert
           type="warning"
           variant="alarm"
-          title="Important Notice: Machine translations are in use"
+          title="Warning: We are using machine translation, so the translations may be inaccurate."
         />
         <Divider size={'8'} />
         <RadioRoot value={activeLanguage}>

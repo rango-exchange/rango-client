@@ -9,6 +9,7 @@ export function ActivateTabAlert(props: PropTypes) {
     <Alert
       action={
         <Button
+          id="widget-active-tab-btn"
           onClick={props.onActivateTab}
           variant="contained"
           size="xxsmall"

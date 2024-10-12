@@ -331,6 +331,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         footer: (
           <ConfirmButton>
             <Button
+              id="widget-confirm-wallet-modal-confirm-btn"
               loading={loading}
               disabled={isConfirmSwapDisabled(
                 loading,
@@ -355,6 +356,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         header: (
           <ShowMoreHeader>
             <NavigateBack
+              id="widget-confirm-wallet-modal-navigate-back-icon-btn"
               variant="ghost"
               onClick={setShowMoreWalletFor.bind(null, '')}>
               <ChevronLeftIcon size={16} />
@@ -383,6 +385,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           type="error"
           description={<BalanceErrors messages={balanceWarnings ?? []} />}>
           <Button
+            id="widget-confirm-wallet-modal-proceed-anyway-btn"
             variant="outlined"
             size="large"
             type="primary"

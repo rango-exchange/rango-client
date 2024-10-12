@@ -1,4 +1,5 @@
 export type ListItemPropTypes = {
+  id?: string;
   title?: string | React.ReactElement;
   description?: string | React.ReactElement;
   start?: React.ReactNode;
@@ -8,4 +9,5 @@ export type ListItemPropTypes = {
   onKeyUp?: React.KeyboardEventHandler<HTMLLIElement>;
   hasDivider?: boolean;
   tabIndex?: number;
+  className?: string;
 };

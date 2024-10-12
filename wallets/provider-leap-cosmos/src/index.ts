@@ -91,7 +91,7 @@ export const suggest: Suggest = async (options) => {
   });
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

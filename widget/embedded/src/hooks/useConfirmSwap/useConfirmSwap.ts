@@ -71,6 +71,10 @@ export function useConfirmSwap(): ConfirmSwap {
       return await fetchQuote(requestBody, true).then((response) => {
         const { result } = response;
 
+        if (!result) {
+          throw new Error('Error fetching updated route');
+        }
+
         throwErrorIfResponseIsNotValid({
           diagnosisMessages: result.diagnosisMessages,
           requestId: result.requestId,

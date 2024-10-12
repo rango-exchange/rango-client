@@ -63,13 +63,19 @@ export function CustomDestination(props: PropTypes) {
   const renderSuffix = () => {
     if (customDestination) {
       return (
-        <IconButton onClick={handleClear} variant="ghost">
+        <IconButton
+          id="widget-custom-destination-close-icon-btn"
+          onClick={handleClear}
+          variant="ghost">
           <CloseIcon size={12} color="gray" />
         </IconButton>
       );
     } else if (!isFirefox) {
       return (
-        <IconButton onClick={handlePaste} variant="ghost">
+        <IconButton
+          id="widget-custom-destination-paste-icon-btn"
+          onClick={handlePaste}
+          variant="ghost">
           <PasteIcon size={16} />
         </IconButton>
       );

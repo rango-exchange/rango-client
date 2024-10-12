@@ -128,7 +128,9 @@ export function Home() {
       <Layout
         height="auto"
         footer={
+          // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
           <Button
+            id={`widget-swap-${swapButtonState.action}-btn`}
             type="primary"
             size="large"
             disabled={swapButtonState.disabled || !isActiveTab}

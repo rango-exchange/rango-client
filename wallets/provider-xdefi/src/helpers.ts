@@ -27,9 +27,6 @@ export function xdefi() {
   if (xfi.bitcoincash) {
     instances.set(Networks.BCH, xfi.bitcoincash);
   }
-  if (xfi.binance) {
-    instances.set(Networks.BINANCE, xfi.binance);
-  }
   if (xfi.ethereum) {
     instances.set(Networks.ETHEREUM, xfi.ethereum);
   }
@@ -64,8 +61,13 @@ export async function getNonEvmAccounts(
   const nonEvmNetworks = SUPPORTED_NETWORKS.filter(
     (net: Network) => net !== Networks.ETHEREUM
   );
-  const promises: Promise<ProviderConnectResult>[] = nonEvmNetworks.map(
-    async (network: Network) => {
+  const promises: Promise<ProviderConnectResult>[] = nonEvmNetworks
+    .filter(
+      (network: Network) =>
+        // Ensure the instance is defined
+        instances.get(network) !== undefined
+    )
+    .map(async (network: Network) => {
       return new Promise((resolve, reject) => {
         const instance = instances.get(network);
         instance.request(
@@ -88,8 +90,7 @@ export async function getNonEvmAccounts(
           }
         );
       });
-    }
-  );
+    });
 
   const results = await Promise.all(promises);
 
@@ -113,7 +114,6 @@ export async function xdefiTransfer(
       from: from,
       amount: { amount: amount, decimals: decimals },
       memo: memo,
-      // recipient: to,
     } as any;
     if (recipientAddress) {
       params.recipient = recipientAddress;

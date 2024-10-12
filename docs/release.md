@@ -13,7 +13,7 @@ There are main commands:
 
 ### Publish flow
 
-#### Prerelease
+#### Publish
 
 Our publish script will do these steps:
 
@@ -45,9 +45,6 @@ All the apps published by `prerelease` workflow will be published under the Verc
 
 A publish will be triggered when a **Pull Request** has been merged.
 
-First it tries to extracting translations (if any) and push them onto Crowdin, then releasing libraries will be started.
-_Note 1_: Syncing translations (first workflow) is an optional step which means if it fails we will do the publish anyway.
-
 ### Production
 
 Follow these steps for the release:
@@ -55,8 +52,6 @@ Follow these steps for the release:
 #### 1. Run the `Production Release` workflow manually.
 
 For releasing production, you need to run `Production Release` workflow, it will pull the latest translation changes on `next` branch and checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
-
-We are running `crowdin` workflow inside `release` workflow which means before any release we will extract and push strings to Crowdin then pull all the strings from Crowdin to make sure we have latest changes on releases.
 
 #### 2. When workflow finished running, increase `widget/app` and `widget/playground` version and update changelog.
 
