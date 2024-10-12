@@ -318,7 +318,7 @@ export function getLegacyProvider(
 
   if (!provider) {
     console.warn(
-      `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Provider Id: ${type}`
+      `You have a provider that doesn't have legacy provider. It causes some problems since we need some legacy functionality. Provider Id: ${type}`
     );
     throw new Error(
       `You need to have legacy implementation to use some methods. Provider Id: ${type}`

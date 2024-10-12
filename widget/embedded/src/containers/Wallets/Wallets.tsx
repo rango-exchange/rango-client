@@ -15,6 +15,7 @@ import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
+import { isFeatureEnabled } from '../../utils/settings';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -138,8 +139,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     }),
     []
   );
-  const isExperimentalEnabled =
-    props.config.features?.experimentalWallet === 'enabled';
 
   return (
     <WidgetContext.Provider value={handlers}>
@@ -149,7 +148,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
         onUpdateState={onUpdateState}
         autoConnect={!!isActiveTab}
         configs={{
-          isExperimentalEnabled,
+          isExperimentalEnabled: isFeatureEnabled(
+            'experimentalWallet',
+            props.config.features
+          ),
         }}>
         {props.children}
       </Provider>

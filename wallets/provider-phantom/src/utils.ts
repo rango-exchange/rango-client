@@ -32,7 +32,7 @@ export function evmPhantom(): EvmProviderApi {
 
   const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
 
-  if (!instances || !evmInstance) {
+  if (!evmInstance) {
     throw new Error(
       'Are you sure Phantom injected and you have enabled EVM correctly?'
     );
@@ -45,7 +45,7 @@ export function solanaPhantom(): SolanaProviderApi {
   const instance = phantom();
   const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
 
-  if (!instance || !solanaInstance) {
+  if (!solanaInstance) {
     throw new Error(
       'Are you sure Phantom injected and you have enabled Solana correctly?'
     );

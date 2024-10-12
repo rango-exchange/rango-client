@@ -6,7 +6,11 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  SignerFactory,
+} from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 import {
@@ -14,7 +18,7 @@ import {
   getSolanaAccounts,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains, solanaBlockchain } from 'rango-types';
+import { isEvmBlockchain, solanaBlockchain } from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
 import { phantom as phantom_instance } from '../utils.js';
@@ -28,6 +32,12 @@ export const config = {
 };
 
 export const getInstance = phantom_instance;
+
+/*
+ * NOTE: Phantom's Hub version has support for EVM as well since we are deprecating the legacy,
+ * we just want to keep the implementation for some time and then legacy provider will be removed soon.
+ * So we don't add new namespaces (like EVM) to legacy.
+ */
 const connect: Connect = async ({ instance, meta }) => {
   const solanaInstance = instance.get(Networks.SOLANA);
   const result = await getSolanaAccounts({
@@ -74,7 +84,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
-  const evms = evmBlockchains(allBlockChains);
+  const evms = allBlockChains.filter(
+    (chain): chain is EvmBlockchainMeta =>
+      isEvmBlockchain(chain) &&
+      EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+  );
 
   return {
     name: 'Phantom',
