@@ -1,3 +1,17 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.33.3...widget-embedded@0.34.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+
+
+### Features
+
+* add id property to buttons ([39824e3](https://github.com/rango-exchange/rango-client/commit/39824e3ce8b1804b9944eb0faf71da7cdccf59ea))
+
+
+
 ## [0.33.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.33.2...widget-embedded@0.33.3) (2024-10-05)
 
 
