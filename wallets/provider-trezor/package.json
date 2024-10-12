@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.4.1",
+  "version": "0.4.2-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -17,18 +17,18 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trezor --splitting",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.30.0",
-    "@rango-dev/wallets-shared": "^0.37.0",
+    "@rango-dev/signer-evm": "^0.30.1-next.0",
+    "@rango-dev/wallets-shared": "^0.37.1-next.4",
     "@trezor/connect-web": "^9.2.4",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.59"
+    "rango-types": "^0.1.74"
   },
   "publishConfig": {
     "access": "public"

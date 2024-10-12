@@ -109,6 +109,7 @@ export function Namespaces(props: PropTypes) {
         )}
       </NamespaceList>
       <Button
+        id="widget-name-space-confirm-btn"
         type="primary"
         disabled={!selectedNamespaces.length}
         onClick={() => props.onConfirm(selectedNamespaces)}>

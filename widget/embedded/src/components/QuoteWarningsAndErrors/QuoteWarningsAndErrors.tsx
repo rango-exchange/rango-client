@@ -71,6 +71,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
             {...(alertInfo.action === 'change-settings' && {
               action: (
                 <Button
+                  id="widget-quote-warning-error-change-settings-btn"
                   size="xxsmall"
                   type={alertInfo.alertType}
                   onClick={onChangeSettings}>

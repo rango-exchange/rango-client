@@ -67,7 +67,7 @@ export interface SwapQueueContext extends QueueContext {
   meta: Meta;
   wallets: Wallet | null;
   providers: Providers;
-  getSigners: (type: WalletType) => SignerFactory;
+  getSigners: (type: WalletType) => Promise<SignerFactory>;
   switchNetwork: (
     wallet: WalletType,
     network: Network

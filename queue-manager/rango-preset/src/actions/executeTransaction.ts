@@ -129,5 +129,5 @@ export async function executeTransaction(
   }
 
   // All the conditions are met. We can safely send the tx to wallet for sign.
-  signTransaction(actions);
+  await signTransaction(actions);
 }

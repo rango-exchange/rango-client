@@ -118,7 +118,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

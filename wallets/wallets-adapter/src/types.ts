@@ -21,7 +21,7 @@ export type ProviderContext = {
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
-  getSigners(type: WalletType): SignerFactory;
+  getSigners(type: WalletType): Promise<SignerFactory>;
   getWalletInfo(type: WalletType): WalletInfo;
 };
 

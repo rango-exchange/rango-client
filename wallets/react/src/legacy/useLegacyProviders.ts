@@ -141,7 +141,7 @@ export function useLegacyProviders(props: ProviderProps): ProviderContext {
 
       return wallet.actions.getWalletInfo(props.allBlockChains || []);
     },
-    getSigners(type) {
+    async getSigners(type) {
       const wallet = wallets.get(type);
 
       if (!wallet) {

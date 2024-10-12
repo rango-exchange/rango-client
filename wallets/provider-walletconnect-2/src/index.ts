@@ -214,7 +214,8 @@ export const disconnect: Disconnect = async ({ instance }) => {
   }
 };
 
-export const getSigners: (provider: WCInstance) => SignerFactory = signer;
+export const getSigners: (provider: WCInstance) => Promise<SignerFactory> =
+  signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

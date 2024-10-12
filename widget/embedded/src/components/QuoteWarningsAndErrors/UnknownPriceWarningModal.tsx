@@ -21,6 +21,7 @@ export function UnknownPriceWarningModal(props: Props) {
     <WatermarkedModal
       footer={
         <Button
+          id="widget-unknown-price-warning-modal-confirm-btn"
           type="primary"
           size="large"
           prefix={<WarningIcon />}

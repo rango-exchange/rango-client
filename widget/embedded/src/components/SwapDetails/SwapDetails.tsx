@@ -242,7 +242,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           {!stepDetailMessage ? i18n.t('Transaction was not sent.') : ''}
           {lastConvertedTokenInFailedSwap
             ? `${i18n.t({
-                id: '{amount} {symbol} on {blockchain} remain in your wallet',
+                id: '{amount} {symbol} on {blockchain} remains in your wallet.',
                 values: {
                   amount: lastConvertedTokenInFailedSwap.outputAmount,
                   symbol: lastConvertedTokenInFailedSwap.symbol,
@@ -272,6 +272,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         suffix: swap.status !== 'running' && (
           <SuffixContainer>
             <Button
+              id="widget-swap-details-delete-btn"
               variant="ghost"
               type="error"
               size="xsmall"
@@ -288,6 +289,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         !showCompletedModal && (
           <Button
             fullWidth
+            id="widget-swap-details-try-again-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -307,7 +309,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         <HeaderDetails>
           <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
-              {`${i18n.t('Request ID')}:`}
+              {`${i18n.t('Request ID')}`}
             </Typography>
             <div className={requestIdStyles()}>
               <Typography variant="label" size="small" color="neutral700">
@@ -325,6 +327,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 alignOffset={-16}
                 align="end">
                 <IconButton
+                  id="widget-swap-details-done-copy-icon-btn"
                   variant="ghost"
                   onClick={handleCopy.bind(null, requestId || '')}>
                   {isCopied ? (

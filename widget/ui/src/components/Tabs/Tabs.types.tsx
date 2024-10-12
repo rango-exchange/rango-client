@@ -29,4 +29,6 @@ export interface TabsPropTypes {
   type: BaseType;
   borderRadius?: BaseBorderRadius;
   className?: string;
+  scrollable?: boolean;
+  scrollButtons?: boolean;
 }

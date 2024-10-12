@@ -143,6 +143,7 @@ export function DerivationPath(props: PropTypes) {
       </InputsContainer>
 
       <Button
+        id="widget-derivation-path-confirm-btn"
         type="primary"
         onClick={handleConfirm}
         disabled={

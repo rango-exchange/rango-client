@@ -991,9 +991,9 @@ export function isRequiredWalletConnected(
   return { ok: matched, reason: 'account_miss_match' };
 }
 
-export function signTransaction(
+export async function signTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
-): void {
+): Promise<void> {
   const { setTransactionDataByHash } = inMemoryTransactionsData();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, isMobileWallet } = context;
@@ -1004,7 +1004,6 @@ export function signTransaction(
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const mobileWallet = isMobileWallet(sourceWallet?.walletType);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const walletSigners = getSigners(sourceWallet.walletType);
   const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
 
   const onFinish = () => {
@@ -1109,6 +1108,9 @@ export function signTransaction(
     onFinish();
     return;
   }
+
+  const walletSigners = await getSigners(sourceWallet.walletType);
+
   const signer = walletSigners.getSigner(txType);
   signer.signAndSendTx(tx, walletAddress, chainId).then(
     ({ hash, response }) => {
@@ -1122,7 +1124,10 @@ export function signTransaction(
         hash,
         explorerUrl &&
           (!response || (response && !response.hashRequiringUpdate))
-          ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
+          ? {
+              url: explorerUrl,
+              description: isApproval ? 'Approve' : 'Swap',
+            }
           : undefined
       );
       // response used for evm transactions to get receipt and track replaced

@@ -20,7 +20,7 @@ export function generateMessageByStatus(
           values: { blockchainDisplayName },
         }),
         description: i18n.t({
-          id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+          id: 'Please approve the experimental chain pop-up in your wallet.',
           values: { blockchainDisplayName },
         }),
       };
@@ -32,7 +32,7 @@ export function generateMessageByStatus(
           values: { blockchainDisplayName },
         }),
         description: i18n.t({
-          id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+          id: 'The {blockchainDisplayName} chain has been successfully added to your wallet.',
           values: { blockchainDisplayName },
         }),
       };

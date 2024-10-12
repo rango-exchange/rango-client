@@ -202,6 +202,7 @@ export function TokenList(props: PropTypes) {
                 tab-index={index}
                 key={`${token.symbol}${token.address}`}
                 id={`${token.symbol}${token.address}`}
+                className={`widget-token-list-item-btn`}
                 hasDivider
                 onClick={() => onChange && onChange(tokens[index])}
                 start={

@@ -94,6 +94,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://etherscan.io'],
       addressUrl: 'https://etherscan.io/address/{wallet}',
       transactionUrl: 'https://etherscan.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -127,6 +128,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://bscscan.com'],
       addressUrl: 'https://bscscan.com/address/{wallet}',
       transactionUrl: 'https://bscscan.com/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -160,6 +162,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://arbiscan.io'],
       addressUrl: 'https://arbiscan.io/address/{wallet}',
       transactionUrl: 'https://arbiscan.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -193,6 +196,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://polygonscan.com'],
       addressUrl: 'https://polygonscan.com/address/{wallet}',
       transactionUrl: 'https://polygonscan.com/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -226,6 +230,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://explorer.zksync.io'],
       addressUrl: 'https://explorer.zksync.io/address/{wallet}',
       transactionUrl: 'https://explorer.zksync.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -292,6 +297,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://optimistic.etherscan.io'],
       addressUrl: 'https://optimistic.etherscan.io/address/{wallet}',
       transactionUrl: 'https://optimistic.etherscan.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -325,6 +331,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://snowtrace.io'],
       addressUrl: 'https://snowtrace.io/address/{wallet}',
       transactionUrl: 'https://snowtrace.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -358,6 +365,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://zkevm.polygonscan.com'],
       addressUrl: 'https://zkevm.polygonscan.com/address/{wallet}',
       transactionUrl: 'https://zkevm.polygonscan.com/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -391,6 +399,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://explorer.linea.build'],
       addressUrl: 'https://explorer.linea.build/address/{wallet}',
       transactionUrl: 'https://explorer.linea.build/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -424,6 +433,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://tronscan.org/#'],
       addressUrl: 'https://tronscan.org/#/address/{wallet}',
       transactionUrl: 'https://tronscan.org/#/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -447,7 +457,12 @@ export const sampleBlockchains: BlockchainMeta[] = [
     enabled: true,
     type: TransactionType.TRANSFER,
     chainId: null,
-    info: null,
+    info: {
+      infoType: 'TransferMetaInfo',
+      blockExplorerUrls: ['https://www.blockchain.com/btc/'],
+      addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
+      transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+    },
   },
   {
     name: 'COSMOS',
@@ -470,6 +485,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'cosmoshub-4',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://cosmos-rpc.polkachu.com',
       rest: 'https://lcd-cosmoshub.blockapsis.com',
@@ -544,6 +562,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'osmosis-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://osmosis-rpc.polkachu.com',
       rest: 'https://lcd.osmosis.zone',
@@ -625,6 +646,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'neutron-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc-kralum.neutron-1.neutron.org',
       rest: 'https://rest-kralum.neutron-1.neutron.org',
@@ -699,6 +723,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'noble-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://noble-rpc.polkachu.com',
       rest: 'https://noble-api.polkachu.com',
@@ -771,7 +798,12 @@ export const sampleBlockchains: BlockchainMeta[] = [
     enabled: true,
     type: TransactionType.SOLANA,
     chainId: 'mainnet-beta',
-    info: null,
+    info: {
+      infoType: 'SolanaMetaInfo',
+      blockExplorerUrls: ['https://www.blockchain.com/btc/'],
+      addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
+      transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+    },
   },
   {
     name: 'CRONOS',
@@ -804,6 +836,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://cronoscan.com'],
       addressUrl: 'https://cronoscan.com/address/{wallet}',
       transactionUrl: 'https://cronoscan.com/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -858,6 +891,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://explorer.mainnet.aurora.dev'],
       addressUrl: 'https://explorer.mainnet.aurora.dev/address/{wallet}',
       transactionUrl: 'https://explorer.mainnet.aurora.dev/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -933,6 +967,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://bobascan.com/'],
       addressUrl: 'https://bobascan.com//address/{wallet}',
       transactionUrl: 'https://bobascan.com//tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -966,6 +1001,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://moonbeam.moonscan.io'],
       addressUrl: 'https://moonbeam.moonscan.io/address/{wallet}',
       transactionUrl: 'https://moonbeam.moonscan.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -999,6 +1035,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://moonriver.moonscan.io'],
       addressUrl: 'https://moonriver.moonscan.io/address/{wallet}',
       transactionUrl: 'https://moonriver.moonscan.io/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -1032,6 +1069,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.oklink.com/en/okc'],
       addressUrl: 'https://www.oklink.com/en/okc/address/{wallet}',
       transactionUrl: 'https://www.oklink.com/en/okc/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -1065,6 +1103,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://blockexplorer.avax.boba.network'],
       addressUrl: 'https://blockexplorer.avax.boba.network/address/{wallet}',
       transactionUrl: 'https://blockexplorer.avax.boba.network/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -1086,7 +1125,12 @@ export const sampleBlockchains: BlockchainMeta[] = [
     enabled: true,
     type: TransactionType.TRANSFER,
     chainId: null,
-    info: null,
+    info: {
+      infoType: 'TransferMetaInfo',
+      blockExplorerUrls: ['https://www.blockchain.com/btc/'],
+      addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
+      transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+    },
   },
   {
     name: 'BCH',
@@ -1107,7 +1151,12 @@ export const sampleBlockchains: BlockchainMeta[] = [
     enabled: true,
     type: TransactionType.TRANSFER,
     chainId: null,
-    info: null,
+    info: {
+      infoType: 'TransferMetaInfo',
+      blockExplorerUrls: ['https://www.blockchain.com/btc/'],
+      addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
+      transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+    },
   },
   {
     name: 'HECO',
@@ -1140,6 +1189,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://hecoinfo.com'],
       addressUrl: 'https://hecoinfo.com/address/{wallet}',
       transactionUrl: 'https://hecoinfo.com/tx/{txHash}',
+      enableGasV2: true,
     },
   },
   {
@@ -1163,6 +1213,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'stargaze-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.stargaze-apis.com',
       rest: 'https://rest.stargaze-apis.com',
@@ -1237,6 +1290,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'crypto-org-chain-mainnet-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.mainnet.crypto.org',
       rest: 'https://rest.mainnet.crypto.org',
@@ -1311,6 +1367,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'chihuahua-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.chihuahua.wtf',
       rest: 'https://api.chihuahua.wtf',
@@ -1385,6 +1444,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'laozi-mainnet',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.laozi3.bandchain.org/',
       rest: 'https://laozi1.bandchain.org/api',
@@ -1455,6 +1517,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'comdex-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.comdex.one',
       rest: 'https://rest.comdex.one',
@@ -1525,6 +1590,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'regen-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc-regen.ecostake.com',
       rest: 'https://regen.stakesystems.io',
@@ -1599,6 +1667,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'irishub-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.nyancat.irisnet.org',
       rest: 'https://lcd.nyancat.irisnet.org',
@@ -1673,6 +1744,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'emoney-3',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://emoney.validator.network/',
       rest: 'https://emoney.validator.network/api',
@@ -1755,6 +1829,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'juno-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc-juno.itastakers.com:443/',
       rest: 'https://lcd-juno.itastakers.com',
@@ -1829,6 +1906,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'stride-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://stride-rpc.polkachu.com',
       rest: 'https://stride-api.polkachu.com',
@@ -1945,6 +2025,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'mars-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.marsprotocol.io',
       rest: 'https://rest.marsprotocol.io',
@@ -2019,6 +2102,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'phoenix-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://phoenix-rpc.terra.dev',
       rest: 'https://phoenix-lcd.terra.dev',
@@ -2093,6 +2179,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'bitsong-2b',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.explorebitsong.com',
       rest: 'https://lcd.explorebitsong.com',
@@ -2163,6 +2252,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'akashnet-2',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.akashnet.net',
       rest: 'https://api.akashnet.net',
@@ -2237,6 +2329,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'kichain-2',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc-mainnet.blockchain.ki',
       rest: 'https://api-mainnet.blockchain.ki',
@@ -2307,6 +2402,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'core-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc.core.persistence.one',
       rest: 'https://rest.core.persistence.one',
@@ -2381,6 +2479,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'panacea-3',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.gopanacea.org',
       rest: 'https://api.gopanacea.org',
@@ -2455,6 +2556,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'kaiyo-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://kujira-rpc.lavenderfive.com',
       rest: 'https://kujira-api.lavenderfive.com',
@@ -2529,6 +2633,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'sentinelhub-2',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://sentinel-rpc.publicnode.com',
       rest: 'https://sentinel-rest.publicnode.com',
@@ -2603,6 +2710,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'injective-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://tm.injective.network',
       rest: 'https://lcd.injective.network',
@@ -2678,6 +2788,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     info: {
       infoType: 'CosmosMetaInfo',
       experimental: false,
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       rpc: 'https://rpc.secret.express',
       rest: 'https://lcd.secret.express',
       cosmostationLcdUrl: 'https://lcd.secret.express',
@@ -2751,6 +2864,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'darchub',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://node1.konstellation.tech:26657',
       rest: 'https://node1.konstellation.tech:1318',
@@ -2821,6 +2937,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'iov-mainnet-ibc',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://rpc-starname-ia.cosmosia.notional.ventures',
       rest: 'https://api-starname-ia.cosmosia.notional.ventures',
@@ -2895,6 +3014,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'bitcanna-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.bitcanna.io',
       rest: 'https://lcd.bitcanna.io',
@@ -2965,6 +3087,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'umee-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: false,
       rpc: 'https://umee-rpc.polkachu.com',
       rest: 'https://api.mainnet.network.umee.cc',
@@ -3039,6 +3164,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'desmos-mainnet',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://rpc.mainnet.desmos.network',
       rest: 'https://api.mainnet.desmos.network',
@@ -3109,6 +3237,9 @@ export const sampleBlockchains: BlockchainMeta[] = [
     chainId: 'lum-network-1',
     info: {
       infoType: 'CosmosMetaInfo',
+      blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
+      addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
+      transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
       experimental: true,
       rpc: 'https://node0.mainnet.lum.network/rpc',
       rest: 'https://node0.mainnet.lum.network/rest',

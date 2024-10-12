@@ -39,7 +39,7 @@ export function SelectBlockchainPage(props: PropTypes) {
   return (
     <Layout
       header={{
-        title: i18n.t(`Select Blockchain`),
+        title: i18n.t(`Select Chain`),
       }}>
       <PageContainer view>
         {showCategory && (
@@ -57,7 +57,7 @@ export function SelectBlockchainPage(props: PropTypes) {
         <SearchInput
           value={searchedFor}
           autoFocus
-          placeholder={i18n.t('Search Blockchain')}
+          placeholder={i18n.t('Search Chain')}
           color="light"
           variant="contained"
           size="large"

@@ -80,6 +80,7 @@ export function CustomTokenModal(props: PropTypes) {
       <Divider size={10} />
 
       <Button
+        id="widget-custom-token-modal-import-btn"
         variant="contained"
         size="large"
         type="primary"

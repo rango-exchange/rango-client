@@ -7,16 +7,20 @@ import { SignerError, SignerErrorCode } from 'rango-types';
 import { executeSolanaTransaction } from './utils/main.js';
 
 export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
-  private provider: SolanaExternalProvider;
+  private _provider: SolanaExternalProvider;
 
   constructor(provider: SolanaExternalProvider) {
-    this.provider = provider;
+    this._provider = provider;
+  }
+
+  get provider(): SolanaExternalProvider {
+    return this._provider;
   }
 
   async signMessage(msg: string): Promise<string> {
     try {
       const encodedMessage = new TextEncoder().encode(msg);
-      const { signature } = await this.provider.request({
+      const { signature } = await this._provider.request({
         method: 'signMessage',
         params: {
           message: encodedMessage,
@@ -29,7 +33,7 @@ export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
-    const hash = await executeSolanaTransaction(tx, this.provider);
+    const hash = await executeSolanaTransaction(tx, this._provider);
     return { hash };
   }
 }

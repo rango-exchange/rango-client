@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.38.0",
+  "version": "0.38.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -14,6 +14,22 @@
     "./legacy": {
       "types": "./dist/legacy/mod.d.ts",
       "default": "./dist/legacy/mod.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/mod.d.ts",
+      "default": "./dist/utils/mod.js"
+    },
+    "./namespaces/common": {
+      "types": "./dist/namespaces/common/mod.d.ts",
+      "default": "./dist/namespaces/common/mod.js"
+    },
+    "./namespaces/evm": {
+      "types": "./dist/namespaces/evm/mod.d.ts",
+      "default": "./dist/namespaces/evm/mod.js"
+    },
+    "./namespaces/solana": {
+      "types": "./dist/namespaces/solana/mod.d.ts",
+      "default": "./dist/namespaces/solana/mod.js"
     }
   },
   "files": [
@@ -22,11 +38,13 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/legacy/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",
@@ -34,7 +52,10 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "rango-types": "^0.1.69"
+    "caip": "^1.1.1",
+    "immer": "^10.0.4",
+    "rango-types": "^0.1.74",
+    "zustand": "^4.5.2"
   },
   "publishConfig": {
     "access": "public"
