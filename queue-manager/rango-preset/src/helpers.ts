@@ -991,6 +991,30 @@ export function isRequiredWalletConnected(
   return { ok: matched, reason: 'account_miss_match' };
 }
 
+// Define the function to perform the POST request
+async function requestERC20Paymaster(payload: {
+  chainId: 324;
+  feeTokenAddress: string;
+  txData: { from: string; to: string; data: string };
+}) {
+  const response = await fetch('https://api.zyfi.org/api/erc20_paymaster/v1', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  console.log(data); // Process the response data
+
+  return data;
+}
+
 export async function signTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
@@ -1109,10 +1133,65 @@ export async function signTransaction(
     return;
   }
 
+  let txForSign = tx;
+  const isZksync = tx.type === 'EVM' && tx.blockChain === 'ZKSYNC';
+  if (isZksync) {
+    if (!tx.from || !tx.data) {
+      throw new Error("Probably shouldn't happen.");
+    }
+
+    // DAI
+    const FEE_TOKEN = '0x4b9eb6c0b6ea15176bbf62841c6b2a8a398cb656';
+    const updatedTransactionWithPaymaster = await requestERC20Paymaster({
+      chainId: 324,
+      feeTokenAddress: FEE_TOKEN,
+      txData: {
+        from: tx.from,
+        to: tx.to,
+        data: tx.data,
+      },
+    });
+
+    /*
+     * const {
+     *   customData,
+     *   data,
+     *   from,
+     *   gasLimit,
+     *   maxFeePerGas,
+     *   to,
+     *   value,
+     *   chainId,
+     * } = updatedTransactionWithPaymaster.txData;
+     */
+
+    /*
+     * txForSign = {
+     *   ...tx,
+     *   // @ts-expect-error type should be added to `EvmTransaction` first
+     *   customData,
+     *   data,
+     *   from,
+     *   gasLimit,
+     *   maxFeePerGas,
+     *   to,
+     *   value,
+     *   chainId,
+     * };
+     */
+
+    txForSign = {
+      ...updatedTransactionWithPaymaster.txData,
+    };
+    console.log({ updatedTransactionWithPaymaster });
+  }
+
+  console.log({ isZksync, tx, txForSign });
+
   const walletSigners = await getSigners(sourceWallet.walletType);
 
   const signer = walletSigners.getSigner(txType);
-  signer.signAndSendTx(tx, walletAddress, chainId).then(
+  signer.signAndSendTx(txForSign, walletAddress, chainId).then(
     ({ hash, response }) => {
       const explorerUrl = getScannerUrl(
         hash,

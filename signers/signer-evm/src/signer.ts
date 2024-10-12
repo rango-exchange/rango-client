@@ -7,12 +7,14 @@ import type {
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { BrowserProvider, isError } from 'ethers';
+// import { BrowserProvider, isError } from 'ethers';
+import { isError } from 'ethers';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
+import { BrowserProvider } from 'zksync-ethers';
 
 import { cleanEvmError, getTenderlyError, waitMs } from './helper.js';
 
@@ -82,6 +84,11 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
     if (evmTx.gasLimit) {
       tx = { ...tx, gasLimit: evmTx.gasLimit };
     }
+    // @ts-expect-error type should be added to `EvmTransaction` first
+    if (evmTx.customData) {
+      // @ts-expect-error type should be added to `EvmTransaction` first
+      tx = { ...tx, customData: evmTx.customData };
+    }
     if (!disableV2 && evmTx.maxFeePerGas && evmTx.maxPriorityFeePerGas) {
       tx = {
         ...tx,
@@ -115,6 +122,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       const signer = await this.provider.getSigner(tx.from ?? undefined);
 
       const transaction = DefaultEvmSigner.buildTx(tx);
+      console.log({ transaction });
 
       const signerChainId = (await this.provider.getNetwork()).chainId;
       const signerAddress = await signer.getAddress();
@@ -143,6 +151,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       }
       try {
         const response = await signer.sendTransaction(transaction);
+        // @ts-expect-error it should be updated to use zksync-ethers maybe.
         return { hash: response.hash, response };
       } catch (error: any) {
         // retrying EIP-1559 without v2 related fields
@@ -154,6 +163,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
           console.log('retrying EIP-1559 error without v2 fields ...');
           const transaction = DefaultEvmSigner.buildTx(tx, true);
           const response = await signer.sendTransaction(transaction);
+          // @ts-expect-error it should be updated to use zksync-ethers maybe.
           return { hash: response.hash, response };
         }
         throw error;
@@ -205,6 +215,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
         throw Error(`Transaction hash '${txHash}' not found in blockchain.`);
       }
 
+      // @ts-expect-error it should be updated to use zksync-ethers maybe.
       await waitWithMempoolCheck(this.provider, tx, txHash, confirmations);
       return { hash: txHash };
     } catch (error) {
