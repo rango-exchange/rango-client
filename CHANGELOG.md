@@ -1,3 +1,30 @@
+## Widget [0.22.0] (2024-10-12)
+
+_includes `@rango-dev/widget-embedded@0.34.0`_
+
+### Bug Fixes
+
+- bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+- resolve issues with the sign message method for certain solana providers ([cbe83a3](https://github.com/rango-exchange/rango-client/commit/cbe83a3da8b48560b206fc2a7fa7cf062cdeaa23))
+- cosmostation wallet connection error ([b3747ba](https://github.com/rango-exchange/rango-client/commit/b3747ba77d06a5c02ce670affb337771e606434b))
+- add chart icon and handle dark theme in BarChart component ([fd4f246](https://github.com/rango-exchange/rango-client/commit/fd4f24684e42deb1b47fb9a6584ac4f9a1519599))
+- add prepare data function for chart package ([a9f8c6b](https://github.com/rango-exchange/rango-client/commit/a9f8c6b092ca5343756e220238c943dbc369a62b))
+- fix issues in the tabs component ([497c387](https://github.com/rango-exchange/rango-client/commit/497c3871241f3e067682526c156014dcd8189395))
+
+### Features
+
+- add signature to versioned transactions ([d7f374b](https://github.com/rango-exchange/rango-client/commit/d7f374b460dc6a51e761614235575eb924f8d71a))
+- introducing hub, our new wallet management ([92692fe](https://github.com/rango-exchange/rango-client/commit/92692fe7a05be72caea8b99bcc4ac5e2326f2f5a))
+- add chart package ([f5ae7e4](https://github.com/rango-exchange/rango-client/commit/f5ae7e449ec1e385188ff904e9d59862fa8ef1d2))
+- add id property to buttons ([39824e3](https://github.com/rango-exchange/rango-client/commit/39824e3ce8b1804b9944eb0faf71da7cdccf59ea))
+- add mobile menu icons ([d4358bc](https://github.com/rango-exchange/rango-client/commit/d4358bc189a61c49c508c517b2cd674d435aa3b7))
+- implement scrollable variant for tabs component ([0635f77](https://github.com/rango-exchange/rango-client/commit/0635f774af9dfd03fcc8f7adfcd32591c86efa25))
+
+### Performance Improvements
+
+- lazy load signer packages ([7b88f18](https://github.com/rango-exchange/rango-client/commit/7b88f1834f7b29b4b81ab6c81a07bb88e8ccf55c))
+- enable code splitting in build process ([fe5a41e](https://github.com/rango-exchange/rango-client/commit/fe5a41e0e297298de11cd74ca5825544742aa03a))
+
 ## Widget [0.20.0] (2024-09-10)
 
 _includes `@rango-dev/widget-embedded@0.33.0`_
@@ -16,17 +43,11 @@ _includes `@rango-dev/widget-embedded@0.33.0`_
 - fix solfare and solfare-snap signers ([896c70b](https://github.com/rango-exchange/rango-client/commit/896c70b8cc8b5e29ec6dfcd98378ef0b3f05698f))
 - update signMessage in the default Solana signer to return a base58 string instead of base64 ([b60609b](https://github.com/rango-exchange/rango-client/commit/b60609b71d55ff205324aee87fb440d23cba5c79))
 
-
-
 ### Features
 
 - export a new hook for handling required data for connect called useStateful ([0d00a45](https://github.com/rango-exchange/rango-client/commit/0d00a45b4434e0e2b53228a1d1c0be4fa579e21b))
 - export StatefulConnect components and helpers ([c28a94b](https://github.com/rango-exchange/rango-client/commit/c28a94bd2721b4dbd16f9471f1cb0ddc45aa8904))
 - implement bordered variant for tabs component ([1de8888](https://github.com/rango-exchange/rango-client/commit/1de8888d6d4ae13a765aaee0173eebf0d49f4a11))
-
-
-
-
 
 ## Widget [0.19.0] (2024-08-17)
 
@@ -35,8 +56,6 @@ _includes `@rango-dev/widget-embedded@0.32.1`_
 ### Features
 
 - add functionality to support custom tokens ([a1aa0af](https://github.com/rango-exchange/rango-client/commit/a1aa0afed98f164488a3caffaaff2fd060ab8b3d))
-
-
 
 ## Widget [0.18.0] (2024-08-11)
 
@@ -52,7 +71,6 @@ _includes `@rango-dev/widget-embedded@0.31.0`_
 - fix wallet modal closing bug ([146f7e2](https://github.com/rango-exchange/rango-client/commit/146f7e24450be278aee53b03319399934cf84f17))
 - recalculate supported tokens even if it's empty list ([8ccda6b](https://github.com/rango-exchange/rango-client/commit/8ccda6b2e246425102e6f6ab5f0d1edd131c6794))
 
-
 ### Features
 
 - add derivation path modal for trezor wallet ([364422f](https://github.com/rango-exchange/rango-client/commit/364422f099b202a27a529591c5e3628bbb35508d))
@@ -63,12 +81,9 @@ _includes `@rango-dev/widget-embedded@0.31.0`_
 - changing the request ID copy process ([490cdfa](https://github.com/rango-exchange/rango-client/commit/490cdfa41131eea20d8a552f8f0714b77d21ac71))
 - hide balance and max button when no wallet connected ([80b2754](https://github.com/rango-exchange/rango-client/commit/80b27547376394a3070aea7065d4bb9652f454e4))
 
-
 ### Performance Improvements
 
 - improve token list performance by caching target tokens on load and config change ([3cc55ff](https://github.com/rango-exchange/rango-client/commit/3cc55ff95dde1f87f53efb2496e995beeb943b00))
-
-
 
 ## Widget [0.17.0] (2024-07-09)
 
@@ -106,7 +121,7 @@ _includes `@rango-dev/widget-embedded@0.30.0`_
 
 ## Playground [0.17.0] (2024-07-09)
 
-### Bug Fixes 
+### Bug Fixes
 
 - fix playground exported config bugs and slider color bug ([9505b63](https://github.com/rango-exchange/rango-client/commit/9505b6330363839aa5acc7abfdb6cd7288f946d6))
 - fix state of custom destination in playground ([ae9cd78](https://github.com/rango-exchange/rango-client/commit/ae9cd783aebc797ffa98e2cd0fb87744ae92caf8))
