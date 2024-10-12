@@ -1,3 +1,18 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.38.0...provider-clover@0.39.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+* resolve issues with the sign message method for certain solana providers ([cbe83a3](https://github.com/rango-exchange/rango-client/commit/cbe83a3da8b48560b206fc2a7fa7cf062cdeaa23))
+
+
+### Performance Improvements
+
+* lazy load signer packages ([7b88f18](https://github.com/rango-exchange/rango-client/commit/7b88f1834f7b29b4b81ab6c81a07bb88e8ccf55c))
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.37.0...provider-clover@0.38.0) (2024-09-10)
 
 

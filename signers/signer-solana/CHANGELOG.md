@@ -1,3 +1,18 @@
+# [0.33.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.32.0...signer-solana@0.33.0) (2024-10-12)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([d442208](https://github.com/rango-exchange/rango-client/commit/d4422083bf5dd27d5f509ce1db7f9560d05428c8))
+* resolve issues with the sign message method for certain solana providers ([cbe83a3](https://github.com/rango-exchange/rango-client/commit/cbe83a3da8b48560b206fc2a7fa7cf062cdeaa23))
+
+
+### Features
+
+* add signature to versioned transactions ([d7f374b](https://github.com/rango-exchange/rango-client/commit/d7f374b460dc6a51e761614235575eb924f8d71a))
+
+
+
 # [0.32.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.31.0...signer-solana@0.32.0) (2024-09-10)
 
 
