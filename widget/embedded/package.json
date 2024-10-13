@@ -35,6 +35,8 @@
     "@rango-dev/wallets-react": "^0.23.1-next.4",
     "@rango-dev/wallets-shared": "^0.37.1-next.4",
     "bignumber.js": "^9.1.1",
+    "@web3inbox/core": "^1.4.0",
+    "@web3inbox/react": "^1.4.0",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
     "ethers": "^6.13.2",
