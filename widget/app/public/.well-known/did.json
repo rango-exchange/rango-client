@@ -1,0 +1,35 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app",
+  "verificationMethod": [
+    {
+      "id": "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app#wc-notify-subscribe-key",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "x": "I01rhHmBGsUtueLMXSc8_ZsiqCkxZNhBLGIDBK0AIRc"
+      }
+    },
+    {
+      "id": "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app#wc-notify-authentication-key",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "XTsxP4v0PBUiwXc6u-RF4AAcFeVGq52tzGwPCOSLjgU"
+      }
+    }
+  ],
+  "keyAgreement": [
+    "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app#wc-notify-subscribe-key"
+  ],
+  "authentication": [
+    "did:web:rango-widget-iframe-h3bulraek-rango-exchange.vercel.app#wc-notify-authentication-key"
+  ]
+}
