@@ -19,8 +19,8 @@ jobs:
   crowdin:
     runs-on: ubuntu-latest
     env:
-      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      CROWDIN_PROJECT_ID: "727537"
+      CROWDIN_PERSONAL_TOKEN: "78cba788b8bb8c85103a923d58682754700acdd333eaa72aa952f01692ffa88c5d35bd92df70710a"
       GITHUB_TOKEN: ${{ secrets.PAT }}
     steps:
       - uses: actions/checkout@v4
@@ -43,8 +43,8 @@ jobs:
           push_sources: true
           source: translations/en.po
           translation: translations/%two_letters_code%.po
-          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
-          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          project_id: "727537"
+          token: "78cba788b8bb8c85103a923d58682754700acdd333eaa72aa952f01692ffa88c5d35bd92df70710a"
 
       - name: Crowdin pre-translation
         run: node ./scripts/crowdin/command.mjs
@@ -58,20 +58,15 @@ jobs:
           download_translations: true
           source: translations/en.po
           translation: translations/%two_letters_code%.po
-          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
-          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          project_id: "727537"
+          token: "78cba788b8bb8c85103a923d58682754700acdd333eaa72aa952f01692ffa88c5d35bd92df70710a"
           commit_message: 'chore(translation): update translations [skip ci]'
 
           localization_branch_name: 'l10n_crowdin_translations'
           create_pull_request: true
           pull_request_title: '🤖chore(translation): update translations'
           pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_base_branch_name: 'next'
+          pull_request_base_branch_name: 'feat/rf-1864-change-translation'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-      - name: Enable auto-merge for the PR
-        if: steps.crowdin-download.outputs.pull_request_url
-        run: gh pr --repo $GITHUB_REPOSITORY merge ${{ steps.crowdin-download.outputs.pull_request_url }} --admin --rebase
-        env:
-          GITHUB_TOKEN: ${{secrets.PAT}}
