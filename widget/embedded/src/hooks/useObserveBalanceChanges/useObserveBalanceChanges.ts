@@ -4,12 +4,12 @@ import { useWallets } from '@rango-dev/wallets-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { widgetEventEmitter } from '../../services/eventEmitter';
-import { useWalletsStore } from '../../store/wallets';
+import { useAppStore } from '../../store/AppStore';
 import { WalletEventTypes, WidgetEvents } from '../../types';
 
 // A hook to listen for and detect changes in balances on a specific blockchain.
 export function useObserveBalanceChanges(selectedBlockchain?: string) {
-  const { connectedWallets } = useWalletsStore();
+  const { connectedWallets } = useAppStore();
   const { getWalletInfo } = useWallets();
   const prevFetchingBalanceWallets = useRef<string[]>([]);
   // The "balanceKey" will be updated and incremented after each change in the balance for a blockchain.

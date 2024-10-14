@@ -15,7 +15,7 @@ import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
+import { isFeatureEnabled } from '../../utils/settings';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -38,7 +38,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
     fetchStatus,
   } = useAppStore();
   const blockchains = useAppStore().blockchains();
-  const { findToken } = useAppStore();
+  const { newWalletConnected, disconnectWallet } = useAppStore();
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
@@ -47,9 +47,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,
+    experimentalWallet: props.config.features?.experimentalWallet,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
-  const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
   const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();
 
@@ -85,7 +85,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
           meta.isContractWallet
         );
         if (data.length) {
-          connectWallet(data, findToken);
+          void newWalletConnected(data);
         }
       } else {
         disconnectWallet(type);
@@ -98,17 +98,17 @@ function Main(props: PropsWithChildren<PropTypes>) {
         }
       }
     }
-    if (event === Events.ACCOUNTS && state.connected) {
+    if (
+      (event === Events.ACCOUNTS && state.connected) ||
+      // Hub works differently, and this check should be enough.
+      (event === Events.ACCOUNTS && meta.isHub)
+    ) {
       const key = `${type}-${state.network}-${value}`;
 
-      if (state.connected) {
-        if (!!onConnectWalletHandler.current) {
-          onConnectWalletHandler.current(key);
-        } else {
-          console.warn(
-            `onConnectWallet handler hasn't been set. Are you sure?`
-          );
-        }
+      if (!!onConnectWalletHandler.current) {
+        onConnectWalletHandler.current(key);
+      } else {
+        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
       }
     }
 
@@ -146,7 +146,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={onUpdateState}
-        autoConnect={!!isActiveTab}>
+        autoConnect={!!isActiveTab}
+        configs={{
+          isExperimentalEnabled: isFeatureEnabled(
+            'experimentalWallet',
+            props.config.features
+          ),
+        }}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

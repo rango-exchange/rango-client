@@ -93,6 +93,9 @@ export type WalletInfo = {
   name: string;
   img: string;
   installLink: InstallObjects | string;
+  /**
+   * @deprecated we don't use this value anymore.
+   */
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
@@ -202,6 +205,12 @@ export type CanEagerConnect = (options: {
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
+export type EagerConnectResult<I = unknown> = {
+  accounts: string[] | null;
+  network: string | null;
+  provider: I | null;
+};
+
 export interface WalletActions {
   connect: Connect;
   getInstance: any;
@@ -235,3 +244,36 @@ export type WalletProviders = Map<
 >;
 
 export type ProviderInterface = { config: WalletConfig } & WalletActions;
+
+// it comes from wallets.ts and `connect`
+type NetworkTypeFromLegacyConnect = Network | undefined;
+
+export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
+  T extends 'DISCOVER_MODE'
+    ? string
+    : T extends Namespace
+    ? NetworkTypeFromLegacyConnect
+    : never;
+
+export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
+
+export type NamespaceInputWithDiscoverMode = {
+  namespace: 'DISCOVER_MODE';
+  network: string;
+  derivationPath?: string;
+};
+
+export type NamespaceInputForConnect<T extends Namespace = Namespace> =
+  | {
+      /**
+       * By default, you should specify namespace (e.g. evm).
+       * For backward compatibility with legacy implementation, DISCOVER_MODE will try to map a list of known (and hardcoded) networks to a namespace.
+       */
+      namespace: T;
+      /**
+       * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+       */
+      network: NetworkTypeForNamespace<T>;
+      derivationPath?: string;
+    }
+  | NamespaceInputWithDiscoverMode;

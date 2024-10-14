@@ -13,7 +13,6 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useWalletsStore } from '../store/wallets';
 
 interface PropTypes {
   type: 'source' | 'destination';
@@ -31,7 +30,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setFromBlockchain,
     setToBlockchain,
   } = useQuoteStore();
-  const getBalanceFor = useWalletsStore.use.getBalanceFor();
+  const { getBalanceFor } = useAppStore();
   const [searchedFor, setSearchedFor] = useState<string>('');
 
   const selectedBlockchain = type === 'source' ? fromBlockchain : toBlockchain;

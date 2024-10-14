@@ -36,6 +36,9 @@ export function App() {
         apiKey: '',
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
+        features: {
+          experimentalWallet: 'enabled',
+        },
       };
     }
     if (!!config) {
