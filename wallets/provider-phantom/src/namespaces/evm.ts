@@ -10,6 +10,12 @@ import { evmPhantom } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(evmPhantom);
 
+/*
+ * TODO: If user imported a private key for EVM, it hasn't solana.
+ * when trying to connect to solana for this user we go through `-32603` which is an internal error.
+ * If phantom added an specific error code for this situation, we can consider handling the error here.
+ * @see https://docs.phantom.app/solana/errors
+ */
 const connect = builders
   .connect()
   .action(actions.connect(evmPhantom))
@@ -23,9 +29,6 @@ const disconnect = commonBuilders
   .build();
 
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
-  .action('init', () => {
-    console.log('[phantom]init called from evm cb');
-  })
   .action(connect)
   .action(disconnect)
   .build();

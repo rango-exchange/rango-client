@@ -34,7 +34,7 @@ export function evmPhantom(): EvmProviderApi {
 
   if (!evmInstance) {
     throw new Error(
-      'Are you sure Phantom injected and you have enabled EVM correctly?'
+      'Phantom not injected or EVM not enabled. Please check your wallet.'
     );
   }
 
@@ -47,7 +47,7 @@ export function solanaPhantom(): SolanaProviderApi {
 
   if (!solanaInstance) {
     throw new Error(
-      'Are you sure Phantom injected and you have enabled Solana correctly?'
+      'Phantom not injected or Solana not enabled. Please check your wallet.'
     );
   }
 

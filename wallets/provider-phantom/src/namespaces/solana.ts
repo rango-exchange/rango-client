@@ -18,12 +18,16 @@ import { solanaPhantom } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaPhantom);
 
+/*
+ * TODO: If user imported a private key for EVM, it hasn't solana.
+ * when trying to connect to solana for this user we go through `-32603` which is an internal error.
+ * If phantom added an specific error code for this situation, we can consider handling the error here.
+ * @see https://docs.phantom.app/solana/errors
+ */
 const connect = builders
   .connect()
   .action(async function () {
-    console.log('connecting to solana...');
     const solanaInstance = solanaPhantom();
-
     const result = await getSolanaAccounts({
       instance: solanaInstance,
       meta: [],
@@ -45,7 +49,6 @@ const connect = builders
         }) as CaipAccount
     );
 
-    console.log('you are a trader?', formatAccounts);
     return formatAccounts;
   })
   .before(changeAccountSubscriber)
@@ -58,9 +61,6 @@ const disconnect = commonBuilders
   .build();
 
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
-  .action('init', () => {
-    console.log('[phantom]init called from solana cb');
-  })
   .action(connect)
   .action(disconnect)
   .build();

@@ -308,7 +308,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         .filter((account): account is string => !!account);
 
       const coreState = {
-        // TODO: When only one namespaces is selected, what will happens?
         connected: provider.connected,
         connecting: provider.connecting,
         installed: provider.installed,

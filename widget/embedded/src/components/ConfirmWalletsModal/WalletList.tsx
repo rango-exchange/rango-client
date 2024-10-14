@@ -1,5 +1,6 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet, WalletInfoWithExtra } from '../../types';
+import type { Wallet } from '../../types';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import { i18n } from '@lingui/core';
 import { warn } from '@rango-dev/logging-core';
@@ -42,7 +43,7 @@ export function WalletList(props: PropTypes) {
 
   const { blockchains, connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
-    useState<WalletInfoWithExtra>();
+    useState<ExtendedModalWalletInfo>();
   const [experimentalChainWallet, setExperimentalChainWallet] =
     useState<Wallet | null>(null);
   const [showExperimentalChainModal, setShowExperimentalChainModal] =
@@ -55,7 +56,7 @@ export function WalletList(props: PropTypes) {
     chain,
   });
 
-  const [sortedList, setSortedList] = useState<WalletInfoWithExtra[]>(list);
+  const [sortedList, setSortedList] = useState<ExtendedModalWalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -146,9 +147,13 @@ export function WalletList(props: PropTypes) {
 
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
+          const isConnectedButDifferentThanTargetNamespace = wallet.isHub
+            ? !conciseAddress
+            : !!wallet.namespaces && !conciseAddress;
+
           if (isDisconnected) {
             setSelectedWalletToConnect(wallet);
-          } else if (!!wallet.namespaces && !conciseAddress) {
+          } else if (isConnectedButDifferentThanTargetNamespace) {
             // wallet is connected on a different namespace
             await handleDisconnect(wallet.type);
 
