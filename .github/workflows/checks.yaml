@@ -19,6 +19,9 @@ jobs:
         env:
           REF: ${{ github.ref }}
 
+      - name: Extract new translations to check if any error exists
+        run: node ./scripts/lingui/command.js extract --clean
+
       - name: Test
         run: |
           node ./scripts/build-libs/command.mjs
