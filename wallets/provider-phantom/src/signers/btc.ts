@@ -1,11 +1,13 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
 import { Networks } from '@rango-dev/wallets-shared';
+import axios from 'axios';
 import * as Bitcoin from 'bitcoinjs-lib';
 import { SignerError } from 'rango-types';
 
 type TransferExternalProvider = any;
 
+const BTC_RPC_URL = 'https://rpc.ankr.com/btc';
 const MAX_MEMO_LENGTH = 80;
 
 const fromHexString = (hexString: string) =>
@@ -118,10 +120,24 @@ export class BTCSigner implements GenericSigner<Transfer> {
         ],
       }
     );
+
+    // Finalize PSBT
     const finalPsbt = Bitcoin.Psbt.fromBuffer(Buffer.from(signedPSBTBytes));
     finalPsbt.finalizeAllInputs();
+    console.log('finalPsbt', finalPsbt);
 
-    console.log('finalPsbt', finalPsbt.toBase64());
+    const finalPsbtBaseHex = finalPsbt.toHex();
+
+    console.log('finalPsbtBaseHex', finalPsbtBaseHex);
+
+    // Broadcast PSBT to rpc node
+    const hash = await axios.post(BTC_RPC_URL, {
+      id: 'test',
+      method: 'sendrawtransaction',
+      params: [finalPsbtBaseHex],
+    });
+
+    console.log(hash);
 
     return { hash: '' };
   }
