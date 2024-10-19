@@ -15,6 +15,7 @@ const handleLinguiCommand = function (error, stdout, stderr) {
   // Display command standard error
   console.log(`stderr: ${stderr}`);
   const errorExists = stderr?.trim() !== '✔';
+  console.error('There is a problem in extracting text by Lingui')
   process.exit(errorExists ? 1 : 0);
 };
 exec(command, handleLinguiCommand);
