@@ -14,6 +14,7 @@ const handleLinguiCommand = function (error, stdout, stderr) {
   console.log(`stdout: ${stdout}`);
   // Display command standard error
   console.log(`stderr: ${stderr}`);
-  process.exit(!!stderr ? 1 : 0);
+  const errorExists = stderr?.trim() !== '✔';
+  process.exit(errorExists ? 1 : 0);
 };
 exec(command, handleLinguiCommand);
