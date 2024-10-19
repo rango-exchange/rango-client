@@ -156,7 +156,7 @@ export function Home() {
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,
-          title: config.title || i18n.t('Swap'),
+          title: config.title || i18n.t(`Swap ${config.title}`),
           suffix: (
             <HeaderButtons
               hidden={isExpandable ? ['refresh'] : undefined}
