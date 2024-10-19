@@ -131,14 +131,17 @@ export class BTCSigner implements GenericSigner<Transfer> {
     console.log('finalPsbtBaseHex', finalPsbtBaseHex);
 
     // Broadcast PSBT to rpc node
-    const hash = await axios.post(BTC_RPC_URL, {
+    const hash = await axios.post<
+      { id: string; method: string; params: string[] },
+      string
+    >(BTC_RPC_URL, {
       id: 'test',
       method: 'sendrawtransaction',
       params: [finalPsbtBaseHex],
     });
 
-    console.log(hash);
+    console.log('hash', hash);
 
-    return { hash: '' };
+    return { hash };
   }
 }
