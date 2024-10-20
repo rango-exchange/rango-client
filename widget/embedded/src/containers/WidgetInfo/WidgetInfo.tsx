@@ -51,7 +51,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       isLoading,
       details: connectedWallets,
       totalBalance,
-      refetch,
+      refetch: async (accounts) => refetch(accounts),
     },
     meta: {
       blockchains,

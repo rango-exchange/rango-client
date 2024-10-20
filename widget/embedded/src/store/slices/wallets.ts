@@ -60,7 +60,10 @@ export interface WalletsSlice {
    */
   disconnectWallet: (walletType: string) => void;
   clearConnectedWallet: () => void;
-  fetchBalances: (accounts: Wallet[]) => Promise<void>;
+  fetchBalances: (
+    accounts: Wallet[],
+    options?: { retryOnFailedBalances?: boolean }
+  ) => Promise<void>;
   getBalanceFor: (token: Token) => Balance | null;
   getBalances: () => BalanceState;
 }
@@ -305,7 +308,7 @@ export const createWalletsSlice: StateCreator<
     }
   },
   clearConnectedWallet: () => set({ connectedWallets: [] }),
-  fetchBalances: async (accounts) => {
+  fetchBalances: async (accounts, options) => {
     // All the `accounts` have same `walletType` so we can pick the first one.
     const walletType = accounts[0].walletType;
 
@@ -320,6 +323,20 @@ export const createWalletsSlice: StateCreator<
     const listWalletsWithBalances = response.wallets;
 
     if (listWalletsWithBalances) {
+      const { retryOnFailedBalances = true } = options || {};
+      if (retryOnFailedBalances) {
+        const failedWallets: Wallet[] = listWalletsWithBalances
+          .filter((wallet) => wallet.failed)
+          .map((wallet) => ({
+            chain: wallet.blockChain,
+            walletType: walletType,
+            address: wallet.address,
+          }));
+        void get().fetchBalances(failedWallets, {
+          retryOnFailedBalances: false,
+        });
+      }
+
       let nextBalances: BalanceState = {};
       listWalletsWithBalances.forEach((wallet) => {
         const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
