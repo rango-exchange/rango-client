@@ -13,7 +13,7 @@ export interface WidgetInfoContextInterface {
     details: ConnectedWallet[];
     totalBalance: string;
     isLoading: boolean;
-    refetch: (accounts: Wallet[], tokens: Token[]) => void;
+    refetch: (accounts: Wallet[]) => void;
   };
   meta: {
     blockchains: BlockchainMeta[];
