@@ -8,11 +8,13 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { toUserFriendlyAddress } from '@tonconnect/sdk/';
 import { tonBlockchain } from 'rango-types';
 
 import { TONCONNECT_MANIFEST_URL } from './constants.js';
-import { myTonWallet as myTonWallet_instance } from './helpers.js';
+import {
+  myTonWallet as myTonWallet_instance,
+  parseAddress,
+} from './helpers.js';
 import signer from './signer.js';
 import { isTonAddressItemReply } from './types.js';
 
@@ -31,7 +33,7 @@ export const connect: Connect = async ({ instance }) => {
   if ('items' in result.payload) {
     const accounts = result.payload?.items
       ?.filter(isTonAddressItemReply)
-      .map((item) => toUserFriendlyAddress(item.address));
+      .map((item) => parseAddress(item.address));
 
     return { accounts, chainId: Networks.TON };
     // eslint-disable-next-line no-else-return
@@ -44,7 +46,7 @@ export const connect: Connect = async ({ instance }) => {
     if ('items' in result.payload) {
       const accounts = result.payload?.items
         ?.filter(isTonAddressItemReply)
-        .map((item) => toUserFriendlyAddress(item.address));
+        .map((item) => parseAddress(item.address));
       return { accounts: accounts, chainId: Networks.TON };
     }
     throw new Error(

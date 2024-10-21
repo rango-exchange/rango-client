@@ -21,7 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.74",
+    "@ton/core": "^0.59.0",
+    "@ton/crypto": "3.3.0"
   },
   "publishConfig": {
     "access": "public"

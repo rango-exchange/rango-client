@@ -20,6 +20,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as ledger from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
+import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
 import * as phantom from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
@@ -108,5 +109,6 @@ export const allProviders = (options?: Options) => {
     rabby,
     trezor,
     solflare,
+    mytonwallet,
   ];
 };
