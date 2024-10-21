@@ -1,6 +1,4 @@
-import type { ConfigSlice } from './slices/config';
-import type { DataSlice } from './slices/data';
-import type { SettingsSlice } from './slices/settings';
+import type { AppStoreState } from './slices/types';
 import type { WidgetConfig } from '../types';
 import type { StateCreator } from 'zustand';
 
@@ -10,6 +8,7 @@ import { persist } from 'zustand/middleware';
 import { createConfigSlice } from './slices/config';
 import { createDataSlice } from './slices/data';
 import { createSettingsSlice } from './slices/settings';
+import { createWalletsSlice } from './slices/wallets';
 
 export type StateCreatorWithInitialData<
   T extends Partial<WidgetConfig>,
@@ -20,12 +19,13 @@ export type StateCreatorWithInitialData<
   ...rest: Parameters<StateCreator<R, [], [], V>>
 ) => ReturnType<StateCreator<R, [], [], V>>;
 
-export type AppStoreState = DataSlice & ConfigSlice & SettingsSlice;
+export type { AppStoreState };
 
 export function createAppStore(initialData?: WidgetConfig) {
   return create<AppStoreState>()(
     persist(
       (...a) => ({
+        ...createWalletsSlice(...a),
         ...createDataSlice(...a),
         ...createSettingsSlice(...a),
         ...createConfigSlice(initialData, ...a),

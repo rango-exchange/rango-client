@@ -1,5 +1,5 @@
 import type { WidgetProps } from './containers/Widget';
-import type { ConnectedWallet } from './store/wallets';
+import type { ConnectedWallet } from './store/slices/wallets';
 import type {
   BlockchainAndTokenConfig,
   QuoteEventData,

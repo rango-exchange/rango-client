@@ -406,7 +406,10 @@ class Namespace<T extends Actions<T>> {
           return orAction(context, prev);
         }, actionError);
       } catch (orError) {
-        throw new Error(OR_ELSE_ACTION_FAILED_ERROR(actionName.toString()), {
+        const errorMessage = OR_ELSE_ACTION_FAILED_ERROR(
+          `${actionName.toString()} for ${this.namespaceId} namespace.`
+        );
+        throw new Error(errorMessage, {
           cause: actionError,
         });
       }

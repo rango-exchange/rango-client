@@ -13,7 +13,6 @@ import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
 import { tabManager, useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
 import { getPendingSwaps } from '../../utils/queue';
 import { isFeatureHidden } from '../../utils/settings';
@@ -28,9 +27,8 @@ import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
 function Layout(props: PropsWithChildren<PropTypes>) {
   const { connectHeightObserver, disconnectHeightObserver } = useIframe();
   const { children, header, footer, height = 'fixed' } = props;
-  const { fetchStatus } = useAppStore();
+  const { fetchStatus, connectedWallets } = useAppStore();
   const [openRefreshModal, setOpenRefreshModal] = useState(false);
-  const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
     config: { features, theme },
   } = useAppStore();

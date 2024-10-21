@@ -12,7 +12,6 @@ import {
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
-import { useWalletsStore } from '../store/wallets';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -43,9 +42,8 @@ interface API {
  */
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
-  const { config } = useAppStore();
+  const { config, connectedWallets } = useAppStore();
   const { state, getWalletInfo } = useWallets();
-  const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
 

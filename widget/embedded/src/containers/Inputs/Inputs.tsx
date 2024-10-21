@@ -2,10 +2,12 @@ import type { PropTypes } from './Inputs.types';
 
 import { i18n } from '@lingui/core';
 import { SwapInput } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import { SwitchFromAndToButton } from '../../components/SwitchFromAndTo';
 import { errorMessages } from '../../constants/errors';
+import { ZERO } from '../../constants/numbers';
 import {
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
@@ -14,8 +16,8 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
 import { numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
@@ -38,15 +40,16 @@ export function Inputs(props: PropTypes) {
     outputUsdValue,
     selectedQuote,
   } = useQuoteStore();
-  const { connectedWallets, getBalanceFor } = useWalletsStore();
+  const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
-  const tokenBalanceReal =
-    !!fromBlockchain && !!fromToken
-      ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
-      : '0';
+  const fromBalanceAmount = fromTokenBalance
+    ? new BigNumber(fromTokenBalance.amount).shiftedBy(
+        -fromTokenBalance.decimals
+      )
+    : ZERO;
 
   const fetchingBalance =
     !!fromBlockchain &&
@@ -107,7 +110,17 @@ export function Inputs(props: PropTypes) {
           loadingBalance={fetchingBalance}
           tooltipContainer={getContainer()}
           onSelectMaxBalance={() => {
-            setInputAmount(tokenBalanceReal.split(',').join(''));
+            const tokenBalanceReal = numberToString(
+              fromBalanceAmount,
+              fromTokenBalance?.decimals
+            );
+
+            // if a token hasn't any value, we will reset the input by setting an empty string.
+            const nextInputAmount = !!fromTokenBalance?.amount
+              ? tokenBalanceReal
+              : '';
+
+            setInputAmount(nextInputAmount);
           }}
           anyWalletConnected={connectedWallets.length > 0}
         />
