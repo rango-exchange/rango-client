@@ -18,7 +18,7 @@ export interface LoadingTokenListProps {
 export interface RenderDescProps {
   name?: string | null;
   address: string;
-  url: string;
+  url?: string;
   token: Token;
   customCssForTag: TagCSS;
   customCssForTagTitle: TitleCSS;

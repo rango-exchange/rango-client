@@ -237,16 +237,14 @@ export function TokenList(props: PropTypes) {
                   ) : undefined
                 }
                 description={
-                  !!blockchain?.info &&
-                  !!address &&
-                  blockchain.type !== 'COSMOS'
+                  !!address && blockchain.type !== 'COSMOS'
                     ? renderDesc({
                         address,
                         token: tokens[index],
                         customCssForTag,
                         customCssForTagTitle,
                         name: token.name,
-                        url: blockchain.info.addressUrl
+                        url: blockchain.info?.addressUrl
                           .split('{wallet}')
                           .join(address),
                       })
