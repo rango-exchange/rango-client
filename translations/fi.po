@@ -6,17 +6,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: fi\n"
-"Project-Id-Version: rango\n"
+"Project-Id-Version: rango-client\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-10-23 14:04\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: rango\n"
-"X-Crowdin-Project-ID: 622238\n"
+"X-Crowdin-Project: rango-client\n"
+"X-Crowdin-Project-ID: 727537\n"
 "X-Crowdin-Language: fi\n"
 "X-Crowdin-File: en.po\n"
-"X-Crowdin-File-ID: 30\n"
+"X-Crowdin-File-ID: 2\n"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -228,7 +228,7 @@ msgstr "Sillan Rajoitus Virhe"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:240
 msgid "Yours: {amount} {symbol}"
-msgstr ""
+msgstr "Sinun: {amount} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:261
@@ -466,7 +466,7 @@ msgstr "Vaihda pyynnön ID = {requestId} ei löytynyt."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
-msgstr ""
+msgstr "Olet saanut {amount} {token} {conciseAddress} -lompakossa {chain} -ketjussa."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
@@ -476,7 +476,7 @@ msgstr "Tapahtumaa ei lähetetty."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr ""
+msgstr "{amount} {symbol} {blockchain} jää lompakkoosi."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
@@ -813,7 +813,7 @@ msgstr "Reitti on päivitetty."
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr ""
+msgstr "Lähtömääräksi muutettiin {newOutputAmount} ({percentageChange}% muutos)."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
@@ -1143,12 +1143,12 @@ msgstr "Tänä vuonna"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
-msgstr ""
+msgstr "Pakollinen: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
-msgstr ""
+msgstr "Pakollinen: > {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:157
@@ -1158,7 +1158,7 @@ msgstr "Pakollinen: <= {max} {symbol}"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
-msgstr ""
+msgstr "Pakollinen: < {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:604
@@ -1178,7 +1178,7 @@ msgstr " syöttö- ja verkkomaksu"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "Tarvitsee ≈ {requiredAmount} {symbol}{reason}, mutta sinulla on {currentAmount} {symbol} lompakossasi {blockchain} ."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
@@ -1249,12 +1249,12 @@ msgstr "{blockchainCategory}"
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
-msgstr ""
+msgstr "Vaihda kohtaan {fromChain} kautta {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
-msgstr ""
+msgstr "Silta {toChain} :n kautta {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
