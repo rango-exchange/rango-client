@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: rango-client\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-23 14:04\n"
+"PO-Revision-Date: 2024-10-23 14:12\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 2\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Home.tsx:161
+msgid "Swap Hello"
+msgstr "Scambia Ciao"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -791,7 +796,6 @@ msgstr "Conferma Il Prezzo Usd Sconosciuto"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
 msgid "Swap"
 msgstr "Scambia"
 
