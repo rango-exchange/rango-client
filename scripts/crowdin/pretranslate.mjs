@@ -1,22 +1,27 @@
 import { CrowdinError } from "../common/errors.mjs";
 import { fetchDataWithAuthorization } from "./utils.mjs";
 
-import { 
+import {
   MAXIMUM_PRETRANSLATION_STATUS_CHECK,
-  PRETRANSLATE_API, 
-  REQUEST_INTERVAL_TIMEOUT, 
+  PRETRANSLATE_API,
+  REQUEST_INTERVAL_TIMEOUT,
   FILE_API,
   MACHINE_TRANSLATE_API,
   PROJECT_API,
 } from "./constants.mjs";
 
 
-export const getMachineTranslationEngineID = async () =>{
+export const getMachineTranslationEngineID = async () => {
   const responseData = await fetchDataWithAuthorization(MACHINE_TRANSLATE_API);
-  if(!responseData.data || !responseData.data.length){
+
+  if (!responseData.data || !responseData.data.length) {
     throw new CrowdinError('No data received for machine translation');
   }
-  return responseData.data[0].data.id;
+  const data = responseData.data;
+  const googleMachine = data.find(item => item.data.type === 'google');
+
+  return googleMachine ? googleMachine.data.id : data[0].data.id;
+
 }
 
 export const getLanguageIds = async () => {
