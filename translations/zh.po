@@ -6,17 +6,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh\n"
-"Project-Id-Version: rango\n"
+"Project-Id-Version: rango-client\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-10-23 14:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: rango\n"
-"X-Crowdin-Project-ID: 622238\n"
+"X-Crowdin-Project: rango-client\n"
+"X-Crowdin-Project-ID: 727537\n"
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: en.po\n"
-"X-Crowdin-File-ID: 30\n"
+"X-Crowdin-File-ID: 2\n"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -50,7 +50,7 @@ msgstr "所有的"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
-msgstr ""
+msgstr "更多 +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
@@ -85,7 +85,7 @@ msgstr "确认"
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
 msgid "Your {blockchainName} wallets"
-msgstr ""
+msgstr "您的 {blockchainName} 钱包"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
@@ -100,12 +100,12 @@ msgstr "仍然继续"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
 msgid "You need to connect a {blockchainName} wallet."
-msgstr ""
+msgstr "您需要连接一个 {blockchainName} 钱包。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
 msgid "Add {chain} chain"
-msgstr ""
+msgstr "添加 {chain} 链"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
@@ -120,12 +120,12 @@ msgstr "发送到另一个地址"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
 msgid "Enter {blockchainName} address"
-msgstr ""
+msgstr "输入 {blockchainName} 地址"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
 msgid "Address {destination} doesn't match the blockchain address pattern."
-msgstr ""
+msgstr "地址 {destination} 与区块链地址模式不匹配。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
@@ -228,17 +228,17 @@ msgstr "桥接限制错误"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:240
 msgid "Yours: {amount} {symbol}"
-msgstr ""
+msgstr "你的： {amount} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:261
 msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr ""
+msgstr "最低要求滑点： {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:282
 msgid "Yours: {userSlippage}"
-msgstr ""
+msgstr "你的： {userSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:395
@@ -361,13 +361,13 @@ msgstr "价格影响"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr ""
+msgstr "您需要将此路线的滑移量至少增加到 {minRequiredSlippage} 。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr ""
+msgstr "我们建议您将此路线的滑移量至少增加到 {minRequiredSlippage} 。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
@@ -398,7 +398,7 @@ msgstr "低滑块"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
 msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr ""
+msgstr " 小心，您的滑点很高 (={userSlippage})。您的交易可能被抢先执行。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
@@ -461,12 +461,12 @@ msgstr "找不到"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 msgid "Swap with request ID = {requestId} not found."
-msgstr ""
+msgstr "未找到请求 ID = {requestId} 的交换。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
-msgstr ""
+msgstr "您已在 {chain} 链上的 {conciseAddress} 钱包中收到 {amount} {token} 。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
@@ -476,7 +476,7 @@ msgstr "交易未发送。"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr ""
+msgstr "{amount} {symbol} 和 {blockchain} 仍留在您的钱包中。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
@@ -646,7 +646,7 @@ msgstr "选择派生路径"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "In order to connect to {type}, you must first select a Derivation Path"
-msgstr ""
+msgstr "为了连接到 {type}，你必须首先选择一个派生路径"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
@@ -667,12 +667,12 @@ msgstr "输入索引"
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
-msgstr ""
+msgstr "添加 {blockchainDisplayName} 链"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr ""
+msgstr "您想将 {blockchainDisplayName} 实验链添加到您的钱包吗？"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
@@ -682,12 +682,12 @@ msgstr "请批准您钱包中的实验性链弹出窗口。"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
 msgid "{blockchainDisplayName} Chain Added"
-msgstr ""
+msgstr "{blockchainDisplayName} 已添加链"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
 msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr ""
+msgstr "{blockchainDisplayName} 链已成功添加到您的钱包。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
@@ -697,7 +697,7 @@ msgstr "请求被拒绝"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr ""
+msgstr "您拒绝将 {blockchainDisplayName} 链添加到您的钱包。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
@@ -813,7 +813,7 @@ msgstr "路由已更新。"
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr ""
+msgstr "输出量变为 {newOutputAmount} ({percentageChange}% 变化)。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
@@ -928,7 +928,7 @@ msgstr "未找到令牌"
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-msgstr ""
+msgstr "抱歉，在 {blockchain} 链上未找到具有所提供地址的代币。请确保您输入了正确的代币地址。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
@@ -1082,7 +1082,7 @@ msgstr "选择所有"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
-msgstr ""
+msgstr "搜索 {sourceType}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
@@ -1102,7 +1102,7 @@ msgstr "目标"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
 msgid "Swap {type}"
-msgstr ""
+msgstr "交换 {type}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:45
@@ -1143,22 +1143,22 @@ msgstr "今年："
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
-msgstr ""
+msgstr "必需：>= {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
-msgstr ""
+msgstr "必需：> {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:157
 msgid "Required: <= {max} {symbol}"
-msgstr ""
+msgstr "必需：<= {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
-msgstr ""
+msgstr "必填：< {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:604
@@ -1178,7 +1178,7 @@ msgstr " 输入和网络费用"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "需要 ≈ {requiredAmount} {symbol}{reason}，但是你的 {blockchain} 钱包里有 {currentAmount} {symbol}。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
@@ -1243,18 +1243,18 @@ msgstr "合计交易"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
-msgstr ""
+msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
-msgstr ""
+msgstr "通过 {swapper}在 {fromChain} 上交换"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
-msgstr ""
+msgstr "通过 {swapper}桥接到 {toChain}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
