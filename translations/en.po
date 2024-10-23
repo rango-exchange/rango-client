@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/Home.tsx:161
+msgid "Swap Hello"
+msgstr "Swap Hello"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:286
 #: widget/embedded/src/pages/HistoryPage.tsx:186
@@ -788,7 +793,6 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
 msgid "Swap"
 msgstr "Swap"
 
