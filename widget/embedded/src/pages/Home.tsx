@@ -1,8 +1,20 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { SelectedQuote } from '../types';
 
 import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-react';
+import {
+  useNotifications,
+  usePrepareRegistration,
+  useRegister,
+  useSubscribe,
+  useSubscription,
+  useUnsubscribe,
+  useWeb3InboxAccount,
+} from '@web3inbox/react';
 import BigNumber from 'bignumber.js';
+import { TransactionType } from 'rango-types';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -123,6 +135,52 @@ export function Home() {
       setSelectedQuote(quote);
     }
   };
+
+  // W3I Hooks
+  const { prepareRegistration } = usePrepareRegistration();
+  const { register } = useRegister();
+  const metamaskWallet = connectedWallets.find(
+    (wallet) => wallet.walletType === 'metamask'
+  );
+  const { isRegistered } = useWeb3InboxAccount(
+    `eip155:1:${metamaskWallet?.address}`
+  );
+  const { getSigners } = useWallets();
+
+  /*
+   * Registration of your address to allow notifications
+   * This is done via a signature of a message (SIWE) and the
+   * signMessageAsync function from wagmi
+   */
+  const handleRegistration = async () => {
+    if (metamaskWallet?.walletType) {
+      const signers = await getSigners(metamaskWallet?.walletType);
+      try {
+        const { message, registerParams } = await prepareRegistration();
+        const signature = await signers
+          .getSigner(TransactionType.EVM)
+          .signMessage(message, metamaskWallet.address, metamaskWallet.chain);
+        await register({ registerParams, signature });
+      } catch (registerIdentityError: any) {
+        console.error(registerIdentityError);
+      }
+    }
+  };
+
+  /*
+   * Subscription to dapp notifications
+   * Subscribe can be called as a function post registration
+   * Can be moved above but shown for example clarity
+   */
+  const { subscribe, isLoading: isSubscribing } = useSubscribe();
+  const { unsubscribe, isLoading: isUnsubscribing } = useUnsubscribe();
+  const { data: subscription } = useSubscription();
+  const isSubscribed = Boolean(subscription);
+
+  const { data: notifications } = useNotifications(5);
+
+  console.log({ subscription, notifications });
+
   return (
     <MainContainer>
       <Layout
@@ -171,6 +229,18 @@ export function Home() {
           ),
         }}>
         <PageContainer>
+          <Button
+            id="Registration"
+            onClick={handleRegistration}
+            disabled={isRegistered}>
+            {isRegistered ? 'Registered' : 'Register'}
+          </Button>
+          <Button
+            id="subscribe"
+            onClick={() => (isSubscribed ? unsubscribe : subscribe)}
+            disabled={isSubscribing || isUnsubscribing}>
+            {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </Button>
           <Inputs
             fetchingQuote={fetchingQuote}
             fetchMetaStatus={fetchMetaStatus}
