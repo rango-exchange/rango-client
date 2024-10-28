@@ -1,6 +1,11 @@
 import type { Balance } from '../../types';
 import type { AppStoreState } from '../app';
-import type { AssetKey, BalanceKey, BalanceState } from '../slices/wallets';
+import type {
+  AggregatedBalanceState,
+  AssetKey,
+  BalanceKey,
+  BalanceState,
+} from '../slices/wallets';
 import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
@@ -64,4 +69,43 @@ export function createBalanceStateForNewAccount(
   });
 
   return state;
+}
+
+export function updateAggregatedBalanceStateForNewAccount(
+  aggregatedBalances: AggregatedBalanceState,
+  balanceState: BalanceState
+) {
+  for (const balanceKey in balanceState) {
+    const asset = extractAssetFromBalanceKey(balanceKey as BalanceKey);
+    const assetKey = createAssetKey(asset);
+
+    if (!aggregatedBalances[assetKey]) {
+      aggregatedBalances[assetKey] = [];
+    }
+
+    if (!aggregatedBalances[assetKey].includes(balanceKey as BalanceKey)) {
+      aggregatedBalances[assetKey] = [
+        ...aggregatedBalances[assetKey],
+        balanceKey as BalanceKey,
+      ];
+    }
+  }
+
+  return aggregatedBalances;
+}
+
+export function removeBalanceFromAggregatedBalance(
+  aggregatedBalances: AggregatedBalanceState,
+  balanceKey: BalanceKey
+) {
+  const asset = extractAssetFromBalanceKey(balanceKey);
+  const assetKey = createAssetKey(asset);
+
+  if (aggregatedBalances[assetKey]) {
+    aggregatedBalances[assetKey] = aggregatedBalances[assetKey].filter(
+      (aggregatedBalance) => aggregatedBalance !== balanceKey
+    );
+  }
+
+  return aggregatedBalances;
 }

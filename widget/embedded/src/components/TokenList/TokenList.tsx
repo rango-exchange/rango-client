@@ -17,7 +17,6 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { useObserveBalanceChanges } from '../../hooks/useObserveBalanceChanges';
 import { useAppStore } from '../../store/AppStore';
 import { createTintsAndShades } from '../../utils/colors';
 import { formatBalance } from '../../utils/wallets';
@@ -104,11 +103,6 @@ export function TokenList(props: PropTypes) {
   const blockchains = useAppStore().blockchains();
   const { getBalanceFor, fetchingWallets: loadingWallet } = useAppStore();
   const { isTokenPinned } = useAppStore();
-  /**
-   * We can create the key by hashing the list of tokens,
-   * but if the list is large, the memory usage and cost of comparisons may be high.
-   */
-  const { balanceKey } = useObserveBalanceChanges(selectedBlockchain);
 
   const endRenderer = (token: Token) => {
     const tokenBalance = formatBalance(getBalanceFor(token));
@@ -241,7 +235,7 @@ export function TokenList(props: PropTypes) {
           );
         }}
         totalCount={tokens.length}
-        key={`${selectedBlockchain}-${searchedFor}-${balanceKey}`}
+        key={`${selectedBlockchain}-${searchedFor}`}
       />
     );
   };

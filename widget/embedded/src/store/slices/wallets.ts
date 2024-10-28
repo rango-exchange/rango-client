@@ -18,6 +18,8 @@ import {
   createBalanceKey,
   createBalanceStateForNewAccount,
   extractAssetFromBalanceKey,
+  removeBalanceFromAggregatedBalance,
+  updateAggregatedBalanceStateForNewAccount,
 } from '../utils/wallets';
 
 type WalletAddress = string;
@@ -30,6 +32,9 @@ export type BalanceKey = `${BlockchainId}-${TokenAddress}-${WalletAddress}`;
 export type BalanceState = {
   [key: BalanceKey]: Balance;
 };
+export type AggregatedBalanceState = {
+  [key: AssetKey]: BalanceKey[];
+};
 
 export interface ConnectedWallet extends Wallet {
   explorerUrl: string | null;
@@ -40,6 +45,7 @@ export interface ConnectedWallet extends Wallet {
 
 export interface WalletsSlice {
   _balances: BalanceState;
+  _aggregatedBalances: AggregatedBalanceState;
   connectedWallets: ConnectedWallet[];
   fetchingWallets: boolean;
 
@@ -75,6 +81,7 @@ export const createWalletsSlice: StateCreator<
   WalletsSlice
 > = (set, get) => ({
   _balances: {},
+  _aggregatedBalances: {},
   connectedWallets: [],
   fetchingWallets: false,
 
@@ -215,28 +222,36 @@ export const createWalletsSlice: StateCreator<
     let walletsNeedsToBeRemoved = get().connectedWallets.filter(
       (connectedWallet) => connectedWallet.walletType === walletType
     );
+    /*
+     * We only need to delete balances where there is no connected wallets with same chain and address for that balance.
+     * Consider both Metamask and Solana having support for `0xblahblahblahblah` for Ethereum.
+     * If Phantom is disconnecting, we should keep the balance since Metamask has access to same address yet.
+     * So we only delete balance when there is no connected wallet that has access to that specific chain and address.
+     */
     get().connectedWallets.forEach((connectedWallet) => {
       if (connectedWallet.walletType !== walletType) {
         walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
           const isAnotherWalletHasSameAddressAndChain =
             wallet.chain === connectedWallet.chain &&
-            wallet.chain === connectedWallet.address;
-
+            wallet.address === connectedWallet.address;
           return !isAnotherWalletHasSameAddressAndChain;
         });
       }
     });
 
     const nextBalancesState: BalanceState = {};
+    let nextAggregatedBalanceState: AggregatedBalanceState =
+      get()._aggregatedBalances;
     const currentBalancesState = get()._balances;
     const balanceKeys = Object.keys(currentBalancesState) as BalanceKey[];
 
     balanceKeys.forEach((key) => {
-      const { address: assetAddress } = extractAssetFromBalanceKey(key);
+      const asset = extractAssetFromBalanceKey(key);
+
       const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
         (wallet) =>
           createBalanceKey(wallet.address, {
-            address: assetAddress,
+            address: asset.address,
             blockchain: wallet.chain,
           }) === key
       );
@@ -244,10 +259,19 @@ export const createWalletsSlice: StateCreator<
       if (!shouldBalanceBeRemoved) {
         nextBalancesState[key] = currentBalancesState[key];
       }
+
+      // if a balance should be removed, we need to remove its caches in _aggregatedBalances as wel.
+      if (shouldBalanceBeRemoved) {
+        nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
+          nextAggregatedBalanceState,
+          key
+        );
+      }
     });
 
     set({
       _balances: nextBalancesState,
+      _aggregatedBalances: nextAggregatedBalanceState,
     });
   },
   disconnectWallet: (walletType) => {
@@ -341,8 +365,19 @@ export const createWalletsSlice: StateCreator<
       }
 
       let nextBalances: BalanceState = {};
+      let nextAggregatedBalances: AggregatedBalanceState =
+        get()._aggregatedBalances;
       listWalletsWithBalances.forEach((wallet) => {
+        if (wallet.failed) {
+          return;
+        }
+
         const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
+
+        nextAggregatedBalances = updateAggregatedBalanceStateForNewAccount(
+          nextAggregatedBalances,
+          balancesForWallet
+        );
 
         nextBalances = {
           ...nextBalances,
@@ -355,6 +390,7 @@ export const createWalletsSlice: StateCreator<
           ...state._balances,
           ...nextBalances,
         },
+        _aggregatedBalances: nextAggregatedBalances,
       }));
 
       get().setConnectedWalletRetrievedData(walletType);
@@ -380,12 +416,7 @@ export const createWalletsSlice: StateCreator<
 
     // Note: balance key is created using asset key + wallet address
     const assetKey = createAssetKey(token);
-    const targetBalanceKeys: BalanceKey[] = [];
-    for (const balanceKey of Object.keys(balances)) {
-      if (balanceKey.startsWith(assetKey)) {
-        targetBalanceKeys.push(balanceKey as BalanceKey);
-      }
-    }
+    const targetBalanceKeys = get()._aggregatedBalances[assetKey] || [];
 
     if (targetBalanceKeys.length === 0) {
       return null;
@@ -406,7 +437,6 @@ export const createWalletsSlice: StateCreator<
         maxBalance = currentBalance;
       }
     });
-
     return maxBalance;
   },
 });
