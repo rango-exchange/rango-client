@@ -1,3 +1,4 @@
+import { CrowdinError } from "../common/errors.mjs";
 import {TOKEN } from "./constants.mjs";
 
 // Reusable function to handle fetch requests with authorization headers

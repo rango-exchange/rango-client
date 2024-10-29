@@ -45,8 +45,8 @@ import { messages as trMessages } from '../../../../../translations/tr.js';
 import { messages as ukMessages } from '../../../../../translations/uk.js';
 import { messages as urMessages } from '../../../../../translations/ur.js';
 import { messages as viMessages } from '../../../../../translations/vi.js';
+import { messages as zh_CNMessages } from '../../../../../translations/zh-CN.js';
 import { messages as zh_TWMessages } from '../../../../../translations/zh-TW.js';
-import { messages as zhMessages } from '../../../../../translations/zh.js';
 
 const messages = {
   en: enMessages,
@@ -54,7 +54,6 @@ const messages = {
   ja: jaMessages,
   fr: frMessages,
   pt: ptMessages,
-  zh: zhMessages,
   ru: ruMessages,
   de: deMessages,
   uk: ukMessages,
@@ -85,6 +84,7 @@ const messages = {
   vi: viMessages,
   'el-CY': el_CYMessages,
   'zh-TW': zh_TWMessages,
+  'zh-CN': zh_CNMessages,
 };
 
 i18n.load(messages);

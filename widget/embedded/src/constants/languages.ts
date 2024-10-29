@@ -53,7 +53,7 @@ export const LANGUAGES: LanguageItem[] = [
   {
     title: 'Chinese (Simplified)',
     label: '简体中文',
-    local: 'zh',
+    local: 'zh-CN',
     SVGFlag: Chinese,
   },
   {

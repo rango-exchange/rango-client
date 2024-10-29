@@ -41,7 +41,7 @@ export const LANGUAGES = [
   { name: 'Arabic', value: 'ar', Icon: SaudiArabia },
   { name: 'Bengali', value: 'bn', Icon: Bengali },
   { name: 'Catalan', value: 'ca', Icon: Catalonia },
-  { name: 'Chinese (Simplified)', value: 'zh', Icon: Chinese },
+  { name: 'Chinese (Simplified)', value: 'zh-CN', Icon: Chinese },
   { name: 'Chinese (Traditional)', value: 'zh-TW', Icon: Chinese },
   { name: 'Danish', value: 'da', Icon: Denmark },
   { name: 'Dutch', value: 'nl', Icon: Netherlands },
