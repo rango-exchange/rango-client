@@ -161,12 +161,27 @@ export const createWalletsSlice: StateCreator<
 
     if (walletsNeedToBeAdded.length > 0) {
       const newConnectedWallets = walletsNeedToBeAdded.map((account) => {
+        /*
+         * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
+         * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
+         */
+        const shouldMarkWalletAsSelected = !connectedWallets.some(
+          (connectedWallet) =>
+            connectedWallet.chain === account.chain &&
+            connectedWallet.selected &&
+            /**
+             * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
+             * This check is there to make sure the chosen wallet doesn't end up unselected.
+             */
+            connectedWallet.walletType !== account.walletType
+        );
+
         return {
           address: account.address,
           chain: account.chain,
           explorerUrl: null,
           walletType: account.walletType,
-          selected: false,
+          selected: shouldMarkWalletAsSelected,
 
           loading: false,
           error: false,
@@ -291,7 +306,7 @@ export const createWalletsSlice: StateCreator<
         .connectedWallets.filter(
           (connectedWallet) =>
             connectedWallet.selected &&
-            connectedWallet.walletType !== walletType
+            connectedWallet.walletType === walletType
         )
         .map((connectedWallet) => connectedWallet.chain);
 
@@ -333,7 +348,6 @@ export const createWalletsSlice: StateCreator<
   },
   clearConnectedWallet: () => set({ connectedWallets: [] }),
   fetchBalances: async (accounts, options) => {
-    console.log(accounts, options);
     // All the `accounts` have same `walletType` so we can pick the first one.
     const walletType = accounts[0].walletType;
 
