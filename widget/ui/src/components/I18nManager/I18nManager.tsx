@@ -17,7 +17,6 @@ import { messages as bnMessages } from '../../../../../translations/bn.js';
 import { messages as caMessages } from '../../../../../translations/ca.js';
 import { messages as daMessages } from '../../../../../translations/da.js';
 import { messages as deMessages } from '../../../../../translations/de.js';
-import { messages as el_CYMessages } from '../../../../../translations/el-CY.js';
 import { messages as elMessages } from '../../../../../translations/el.js';
 import { messages as enMessages } from '../../../../../translations/en.js';
 import { messages as esMessages } from '../../../../../translations/es.js';
@@ -82,7 +81,6 @@ const messages = {
   tr: trMessages,
   ur: urMessages,
   vi: viMessages,
-  'el-CY': el_CYMessages,
   'zh-TW': zh_TWMessages,
   'zh-CN': zh_CNMessages,
 };

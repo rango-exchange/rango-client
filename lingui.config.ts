@@ -34,7 +34,6 @@ module.exports = {
     'ur',
     'vi',
     'ms',
-    'el-CY',
     'zh-CN',
     'zh-TW',
   ],
