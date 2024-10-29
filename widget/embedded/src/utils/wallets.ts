@@ -282,7 +282,7 @@ export function resetConnectedWalletState(
 
 export const calculateWalletUsdValue = (balances: BalanceState) => {
   const total = Object.values(balances).reduce((prev, balance) => {
-    return prev.plus(balance.usdValue);
+    return balance.usdValue ? prev.plus(balance.usdValue) : prev;
   }, new BigNumber(ZERO));
 
   return numberWithThousandSeparator(total.toString());
@@ -331,23 +331,24 @@ export function formatBalance(balance: Balance | null): Balance | null {
   const amount = new BigNumber(balance.amount)
     .shiftedBy(-balance.decimals)
     .toFixed();
-  const usdValue = new BigNumber(balance.usdValue)
-    .shiftedBy(-balance.decimals)
-    .toFixed();
+  const usdValue = balance.usdValue
+    ? new BigNumber(balance.usdValue).shiftedBy(-balance.decimals).toFixed()
+    : null;
+  const formattedAmount = numberToString(
+    amount,
+    BALANCE_MIN_DECIMALS,
+    BALANCE_MAX_DECIMALS
+  );
+  // null is using for detecing uknown prices
+  const formattedUsdValue = usdValue
+    ? numberToString(usdValue, USD_VALUE_MIN_DECIMALS, USD_VALUE_MAX_DECIMALS)
+    : null;
 
   const formattedBalance: Balance | null = balance
     ? {
         ...balance,
-        amount: numberToString(
-          amount,
-          BALANCE_MIN_DECIMALS,
-          BALANCE_MAX_DECIMALS
-        ),
-        usdValue: numberToString(
-          usdValue,
-          USD_VALUE_MIN_DECIMALS,
-          USD_VALUE_MAX_DECIMALS
-        ),
+        amount: formattedAmount,
+        usdValue: formattedUsdValue,
       }
     : null;
 

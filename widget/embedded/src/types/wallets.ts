@@ -10,7 +10,7 @@ export interface Wallet {
 export type Balance = {
   amount: string;
   decimals: number;
-  usdValue: string;
+  usdValue: string | null;
 };
 
 export type Blockchain = string;
