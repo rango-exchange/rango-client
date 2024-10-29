@@ -11,13 +11,20 @@ import {
 } from "./constants.mjs";
 
 
-export const getMachineTranslationEngineID = async () =>{
+export const getMachineTranslationEngineID = async () => {
   const responseData = await fetchDataWithAuthorization(MACHINE_TRANSLATE_API);
-  if(!responseData.data || !responseData.data.length){
+
+  if (!responseData.data || !responseData.data.length) {
     throw new CrowdinError('No data received for machine translation');
   }
-  return responseData.data[0].data.id;
+  const data = responseData.data;
+  const googleMachine = data.find(item => item.data.type === 'google');
+  console.log('all machine data', JSON.stringify(data) );
+  console.log('googleMachine.data.id', googleMachine.data.id);
+  console.log('data[0].data.id', data[0].data.id);
+  return googleMachine ? googleMachine.data.id : data[0].data.id;
 }
+
 
 export const getLanguageIds = async () => {
   const responseData = await fetchDataWithAuthorization(PROJECT_API);
@@ -33,6 +40,12 @@ export const getSourceFileId = async () => {
 };
 
 export const sendPreTranslateRequest = async ({ sourceFileId, languageIds, preTranslationOption }) => {
+
+  console.log('pretranslate options:', {...preTranslationOption,
+    fileIds: [sourceFileId],
+    languageIds,
+  });
+
   const responseData = await fetchDataWithAuthorization(PRETRANSLATE_API, 'POST', {
     ...preTranslationOption,
     fileIds: [sourceFileId],
