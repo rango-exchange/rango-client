@@ -17,8 +17,18 @@ const WALLET = WalletTypes.SOLFLARE;
 export const config = {
   type: WALLET,
 };
-
-const walletInstance = new Solflare();
+/*
+ * Solflare is a transpiling ESM to CJS as well. It causes interop issues which is normally will be fixed using following code
+ */
+let SDK = Solflare;
+if (
+  typeof Solflare !== 'function' &&
+  // @ts-expect-error This import error is not visible to TypeScript
+  typeof Solflare.default === 'function'
+) {
+  SDK = (Solflare as unknown as { default: typeof Solflare }).default;
+}
+const walletInstance = new SDK();
 
 export const getInstance = () => (window.solflare ? walletInstance : null);
 export const connect: Connect = async ({
