@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -44,7 +44,7 @@
     "@rango-dev/provider-rabby": "^0.5.0",
     "@rango-dev/provider-safe": "^0.31.0",
     "@rango-dev/provider-safepal": "^0.38.0",
-    "@rango-dev/provider-solflare": "^0.4.0",
+    "@rango-dev/provider-solflare": "^0.4.1",
     "@rango-dev/provider-solflare-snap": "^0.9.0",
     "@rango-dev/provider-taho": "^0.38.0",
     "@rango-dev/provider-tokenpocket": "^0.38.0",
