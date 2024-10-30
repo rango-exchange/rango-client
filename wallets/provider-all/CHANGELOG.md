@@ -1,3 +1,7 @@
+## [0.38.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.38.0...provider-all@0.38.1) (2024-10-30)
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.37.3...provider-all@0.38.0) (2024-10-12)
 
 
