@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-10-29 13:54\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1178,7 +1178,7 @@ msgstr " 入力とネットワーク料金について"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "必要額は ≈ {requiredAmount} {symbol}{reason}ですが、あなたの {blockchain} ウォレットには {currentAmount} {symbol} があります。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
