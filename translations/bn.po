@@ -5,16 +5,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: fi\n"
+"Language: bn\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2024-10-29 13:54\n"
 "Last-Translator: \n"
-"Language-Team: Finnish\n"
+"Language-Team: Bengali\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: rango\n"
 "X-Crowdin-Project-ID: 622238\n"
-"X-Crowdin-Language: fi\n"
+"X-Crowdin-Language: bn\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
 
@@ -24,7 +24,7 @@ msgstr ""
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
-msgstr "Tuloksia ei löytynyt"
+msgstr "কোন ফলাফল পাওয়া যায়নি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
@@ -32,7 +32,7 @@ msgstr "Tuloksia ei löytynyt"
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
-msgstr "Kokeile käyttää eri avainsanoja"
+msgstr "বিভিন্ন কীওয়ার্ড ব্যবহার করে দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
@@ -40,37 +40,37 @@ msgstr "Kokeile käyttää eri avainsanoja"
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
 msgid "Select Chain"
-msgstr "Valitse Ketju"
+msgstr "চেইন নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
 msgid "All"
-msgstr "Kaikki"
+msgstr "সব"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
-msgstr "Enemmän +{count}"
+msgstr "আরও +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
 msgid "Activate this tab"
-msgstr "Aktivoi tämä välilehti"
+msgstr "এই ট্যাব সক্রিয় করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:22
 msgid "Another tab is open and handles transactions."
-msgstr "Toinen välilehti on avoin ja käsittelee tapahtumia."
+msgstr "আরেকটি ট্যাব খোলা এবং লেনদেন পরিচালনা করে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
 msgid "Activate current tab"
-msgstr "Aktivoi nykyinen välilehti"
+msgstr "বর্তমান ট্যাব সক্রিয় করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
-msgstr "Tällä hetkellä jotkin tapahtumat ovat käynnissä ja niitä käsitellään muilla selainvälilehdillä. Jos aktivoit tämän välilehden, kaikki tapahtumat, jotka ovat jo tapahtumakirjautumisvaiheessa, vanhenevat."
+msgstr "বর্তমানে, কিছু লেনদেন চলছে এবং অন্য ব্রাউজার ট্যাব দ্বারা পরিচালিত হচ্ছে৷ আপনি যদি এই ট্যাবটি সক্রিয় করেন, লেনদেন সাইন ধাপে থাকা সমস্ত লেনদেনের মেয়াদ শেষ হয়ে যাবে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
@@ -79,1166 +79,1166 @@ msgstr "Tällä hetkellä jotkin tapahtumat ovat käynnissä ja niitä käsitell
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:116
 msgid "Confirm"
-msgstr "Vahvista"
+msgstr "নিশ্চিত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
 msgid "Your {blockchainName} wallets"
-msgstr "{blockchainName} lompakkoasi"
+msgstr "আপনার {blockchainName} ওয়ালেট"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
 msgid "Insufficient account balance"
-msgstr "Tilin saldo ei riitä"
+msgstr "অপর্যাপ্ত অ্যাকাউন্ট ব্যালেন্স"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:394
 msgid "Proceed anyway"
-msgstr "Jatka joka tapauksessa"
+msgstr "যাইহোক এগিয়ে যান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
 msgid "You need to connect a {blockchainName} wallet."
-msgstr "Sinun on yhdistettävä {blockchainName} lompakko."
+msgstr "আপনাকে একটি {blockchainName} ওয়ালেট সংযোগ করতে হবে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
 msgid "Add {chain} chain"
-msgstr "Lisää {chain} ketju"
+msgstr "{chain} চেইন যোগ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
 msgid "Show more wallets"
-msgstr "Näytä lisää lompakkoja"
+msgstr "আরও মানিব্যাগ দেখান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:113
 msgid "Send to a different address"
-msgstr "Lähetä toiseen osoitteeseen"
+msgstr "অন্য ঠিকানায় পাঠান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
 msgid "Enter {blockchainName} address"
-msgstr "Syötä {blockchainName} osoite"
+msgstr "{blockchainName} ঠিকানা লিখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
 msgid "Address {destination} doesn't match the blockchain address pattern."
-msgstr "Osoite {destination} ei vastaa lohkoketjun osoitekuviota."
+msgstr "ঠিকানা {destination} ব্লকচেইন ঠিকানা প্যাটার্নের সাথে মেলে না।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
 msgid "via"
-msgstr "kautta"
+msgstr "মাধ্যমে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
 msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Tämä tunnus ei näy aktiivisessa token listassa. Varmista, että tämä on token jonka haluat vaihtaa."
+msgstr "এই টোকেনটি সক্রিয় টোকেন তালিকায় উপস্থিত হয় না৷ নিশ্চিত করুন যে এটি সেই টোকেন যা আপনি ট্রেড করতে চান।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
 msgid "Import"
-msgstr "Tuo"
+msgstr "আমদানি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
 msgid "Status"
-msgstr "Tila"
+msgstr "স্ট্যাটাস"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
 #: widget/embedded/src/pages/SettingsPage.tsx:55
 msgid "Reset"
-msgstr "Reset"
+msgstr "রিসেট করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:18
 msgid "Cancel"
-msgstr "Peruuta"
+msgstr "বাতিল করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
 msgid "Refresh"
-msgstr "Päivitä"
+msgstr "রিফ্রেশ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
 #: widget/ui/src/containers/Notifications/Notifications.tsx:35
 msgid "Notifications"
-msgstr "Ilmoitukset"
+msgstr "বিজ্ঞপ্তি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:79
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
-msgstr "Asetukset"
+msgstr "সেটিংস"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
 #: widget/embedded/src/pages/HistoryPage.tsx:139
 msgid "History"
-msgstr "Historia"
+msgstr "ইতিহাস"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
-msgstr "Yhdistä Lompakko"
+msgstr "ওয়ালেট সংযুক্ত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
-msgstr "Tänään"
+msgstr "আজ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:424
 msgid "Swaps steps"
-msgstr "Swapin vaiheet"
+msgstr "ধাপগুলি অদলবদল করে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
-msgstr "Yritä Uudelleen"
+msgstr "আবার চেষ্টা করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
-msgstr "Virhe lipasivulla"
+msgstr "স্লিপেজ ত্রুটি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
-msgstr "lipasivun Varoitus"
+msgstr "স্লিপেজ সতর্কতা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
-msgstr "Sillan Rajoitus Virhe"
+msgstr "সেতু সীমা ত্রুটি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:240
 msgid "Yours: {amount} {symbol}"
-msgstr "Sinun: {amount} {symbol}"
+msgstr "আপনার: {amount} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:261
 msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr "Pienin vaadittu slippa: {minRequiredSlippage}"
+msgstr "ন্যূনতম প্রয়োজনীয় স্লিপেজ: {minRequiredSlippage}৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:282
 msgid "Yours: {userSlippage}"
-msgstr "Sinut: {userSlippage}"
+msgstr "আপনার: {userSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:395
 msgid "See All Routes"
-msgstr "Katso Kaikki Reitit"
+msgstr "সমস্ত রুট দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
 msgid "View more info"
-msgstr "Näytä lisätiedot"
+msgstr "আরো তথ্য দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
 msgid "Gas & Fee Explanation"
-msgstr "Kaasun Ja Maksun Selitys"
+msgstr "গ্যাস ও ফি ব্যাখ্যা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:107
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
 msgid "Details"
-msgstr "Yksityiskohdat"
+msgstr "বিস্তারিত"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:146
 msgid "Total Payable Fee"
-msgstr "Maksettu Maksu Yhteensä"
+msgstr "মোট প্রদেয় ফি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
 msgid "Hide non-payable fees"
-msgstr "Piilota muut kuin maksetut maksut"
+msgstr "অপ্রদেয় ফি লুকান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:167
 msgid "Show non-payable fees"
-msgstr "Näytä maksamattomat maksut"
+msgstr "অপ্রদেয় ফি দেখান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
 msgid "Description"
-msgstr "Kuvaus"
+msgstr "বর্ণনা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr "Seuraavat maksut otetaan huomioon liiketoimen tuotos, ja\n"
-"                sinun ei tarvitse maksaa ylimääräistä kaasua niistä."
+msgstr "নিম্নলিখিত ফিগুলি লেনদেনের আউটপুটে বিবেচনা করা হয় এবং\n"
+"                আপনাকে তাদের জন্য অতিরিক্ত গ্যাস দিতে হবে না৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
 msgid "Swap input"
-msgstr "Swap input"
+msgstr "অদলবদল ইনপুট"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
 msgid "Estimated output"
-msgstr "Arvioitu tuotos"
+msgstr "আনুমানিক আউটপুট"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
 msgid "Via:"
-msgstr "Via:"
+msgstr "এর মাধ্যমে:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
 msgid "Chains:"
-msgstr "Ketjut:"
+msgstr "চেইন:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/Quotes.tsx:77
 msgid "Sort by"
-msgstr "Järjestä"
+msgstr "অনুসারে সাজান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
 msgid "Smart Routing"
-msgstr "Älykäs Reititys"
+msgstr "স্মার্ট রাউটিং"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
 msgid "Lowest Fee"
-msgstr "Alin Maksu"
+msgstr "সর্বনিম্ন ফি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
 msgid "Fastest Transfer"
-msgstr "Nopein Siirto"
+msgstr "দ্রুততম স্থানান্তর"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
 msgid "Maximum Return"
-msgstr "Suurin Palautus"
+msgstr "সর্বোচ্চ রিটার্ন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
 msgid "Maximum Output"
-msgstr "Suurin Ulostulo"
+msgstr "সর্বোচ্চ আউটপুট"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
 msgid "Swapping"
-msgstr "Swapping"
+msgstr "অদলবদল"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
 msgid "Gas cost"
-msgstr "Kaasun hinta"
+msgstr "গ্যাস খরচ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
 msgid "Receiving"
-msgstr "Vastaanotetaan"
+msgstr "রিসিভিং"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
 msgid "Price impact"
-msgstr "Hinnan vaikutus"
+msgstr "দামের প্রভাব"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "Sinun täytyy lisätä lipsumissivua vähintään {minRequiredSlippage} tälle reitille."
+msgstr "এই রুটের জন্য আপনাকে অন্তত {minRequiredSlippage} স্লিপেজ বাড়াতে হবে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "Suosittelemme, että nostat lipsumisen vähintään {minRequiredSlippage} tälle reitille."
+msgstr "আমরা আপনাকে এই রুটের জন্য কমপক্ষে {minRequiredSlippage} স্লিপেজ বাড়াতে সুপারিশ করছি৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Caution, your slippage is high."
-msgstr "Varoitus, lipsumisesi on korkea."
+msgstr "সাবধান, আপনার স্লিপেজ বেশি।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
 msgid "Change"
-msgstr "Muuta"
+msgstr "পরিবর্তন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Change settings"
-msgstr "Muuta asetuksia"
+msgstr "সেটিংস পরিবর্তন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
 msgid "High slippage"
-msgstr "Korkea lipsahdus"
+msgstr "উচ্চ স্লিপেজ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
 msgid "Low slippage"
-msgstr "Alhainen lipsahdus"
+msgstr "কম স্লিপেজ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
 msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr " Varoitus, lipsumisesi on korkea (={userSlippage}). Kaupasi voi olla etu."
+msgstr " সাবধান, আপনার স্লিপেজ বেশি (={userSlippage})। আপনার ট্রেড ফ্রন্ট রান হতে পারে."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
 msgid "Confirm anyway"
-msgstr "Vahvista joka tapauksessa"
+msgstr "যাইহোক নিশ্চিত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
 msgid "Something went wrong"
-msgstr "Jokin meni pieleen"
+msgstr "কিছু ভুল হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
 msgid "Something went wrong. Please refresh the app."
-msgstr "Jokin meni pieleen. Päivitä sovellus."
+msgstr "কিছু ভুল হয়েছে অনুগ্রহ করে অ্যাপটি রিফ্রেশ করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:38
 msgid "Slippage tolerance per swap"
-msgstr "Liu'utuksen toleranssi swapia kohti"
+msgstr "অদলবদল প্রতি স্লিপেজ সহনশীলতা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:91
 msgid "Custom"
-msgstr "Mukautettu"
+msgstr "কাস্টম"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
 msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
-msgstr "Tapahtumasi palautetaan, jos hinta muuttuu epäsuotuisasti enemmän kuin tämä prosenttiosuus."
+msgstr "এই শতাংশের বেশি মূল্য প্রতিকূলভাবে পরিবর্তিত হলে আপনার লেনদেন ফিরিয়ে দেওয়া হবে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
 #: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Warning"
-msgstr "Varoitus"
+msgstr "সতর্কতা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
-msgstr "Tätä asetusta sovelletaan jokaiseen vaiheeseen (esim. 1Inch, Thorchain, jne.), mikä tarkoittaa vain sitä, että tietty vaihe peruutetaan, ei koko reittiä."
+msgstr "এই সেটিংটি প্রতিটি ধাপে প্রয়োগ করা হয় (যেমন 1 ইঞ্চি, থরচেইন, ইত্যাদি), যার অর্থ শুধুমাত্র সেই নির্দিষ্ট ধাপটি প্রত্যাবর্তন করা হবে, পুরো রুট নয়।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
 msgid "Swap Details"
-msgstr "Vaihda Tiedot"
+msgstr "অদলবদল বিবরণ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
 msgid "Request ID"
-msgstr "Pyydä ID"
+msgstr "আইডি অনুরোধ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
 msgid "Not found"
-msgstr "Ei löydy"
+msgstr "পাওয়া যায়নি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 msgid "Swap with request ID = {requestId} not found."
-msgstr "Vaihda pyynnön ID = {requestId} ei löytynyt."
+msgstr "অনুরোধ আইডি দিয়ে অদলবদল করুন = {requestId} পাওয়া যায়নি।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
-msgstr "Olet saanut {amount} {token} {conciseAddress} -lompakossa {chain} -ketjussa."
+msgstr "আপনি {chain} চেইনে {conciseAddress} ওয়ালেটে {amount} {token} পেয়েছেন৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 msgid "Transaction was not sent."
-msgstr "Tapahtumaa ei lähetetty."
+msgstr "লেনদেন পাঠানো হয়নি."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr "{amount} {symbol} {blockchain} jää lompakkoosi."
+msgstr "{amount} {symbol} {blockchain} -এ আপনার ওয়ালেটে থেকে যায়৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Delete"
-msgstr "Poista"
+msgstr "মুছে দিন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:304
 msgid "Try again"
-msgstr "Yritä uudelleen"
+msgstr "আবার চেষ্টা করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:322
 msgid "Copied To Clipboard"
-msgstr "Kopioitu Leikepöydälle"
+msgstr "ক্লিপবোর্ডে কপি করা হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:323
 msgid "Copy Request ID"
-msgstr "Kopioi Pyyntö ID"
+msgstr "অনুরোধ আইডি কপি করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:346
 msgid "View on Rango Explorer"
-msgstr "Näytä Rango Explorerissa"
+msgstr "Rango Explorer এ দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
 msgid "Finished at"
-msgstr "Valmis klo"
+msgstr "এ শেষ হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
 msgid "Created at"
-msgstr "Luotu klo"
+msgstr "এ তৈরি করা হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
 msgid "View transaction"
-msgstr "Näytä tapahtuma"
+msgstr "লেনদেন দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
-msgstr "Yhdistä"
+msgstr "সংযোগ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
 msgid "Swap Successful"
-msgstr "Vaihto Onnistui"
+msgstr "অদলবদল সফল"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
 msgid "Transaction Failed"
-msgstr "Tapahtuma Epäonnistui"
+msgstr "লেনদেন ব্যর্থ হয়েছে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:87
 msgid "Done"
-msgstr "Valmis"
+msgstr "সম্পন্ন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:100
 msgid "Diagnosis"
-msgstr "Diagnoosi"
+msgstr "রোগ নির্ণয়"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:112
 msgid "See Details"
-msgstr "Näytä Yksityiskohdat"
+msgstr "বিস্তারিত দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:13
 msgid "Cancel Swap"
-msgstr "Peruuta Vaihda"
+msgstr "অদলবদল বাতিল করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:14
 msgid "Are you sure you want to cancel this swap?"
-msgstr "Oletko varma, että haluat peruuttaa tämän swapin?"
+msgstr "আপনি কি এই অদলবদল বাতিল করার বিষয়ে নিশ্চিত?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
 msgid "Yes, Cancel it"
-msgstr "Kyllä, peruuta se"
+msgstr "হ্যাঁ, বাতিল করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
 #: widget/embedded/src/pages/CustomTokensPage.tsx:181
 msgid "No, Continue"
-msgstr "Ei, Jatka"
+msgstr "না, চালিয়ে যান"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
 msgid "Delete Transaction"
-msgstr "Poista Tapahtuma"
+msgstr "লেনদেন মুছুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:14
 msgid "Are you sure you want to delete this swap?"
-msgstr "Oletko varma, että haluat poistaa tämän swapin?"
+msgstr "আপনি কি এই অদলবদল মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
 #: widget/embedded/src/pages/CustomTokensPage.tsx:171
 msgid "Yes, Delete it"
-msgstr "Kyllä, poista se"
+msgstr "হ্যাঁ, মুছুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
 #: widget/embedded/src/pages/HistoryPage.tsx:253
 msgid "No, Cancel"
-msgstr "Ei, Peruuta"
+msgstr "না, বাতিল করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
 msgid "Change Network"
-msgstr "Vaihda Verkkoa"
+msgstr "নেটওয়ার্ক পরিবর্তন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
-msgstr "Verkko Muutettu"
+msgstr "নেটওয়ার্ক পরিবর্তিত হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:271
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
 msgid "Select Token"
-msgstr "Valitse Tunnus"
+msgstr "টোকেন নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
 msgid "Wallet Connected"
-msgstr "Lompakko Yhdistetty"
+msgstr "ওয়ালেট সংযুক্ত"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Your wallet is connected, you can use it to swap."
-msgstr "Lompakkosi on yhdistetty, voit käyttää sitä vaihtaaksesi."
+msgstr "আপনার ওয়ালেট সংযুক্ত আছে, আপনি এটি অদলবদল করতে ব্যবহার করতে পারেন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
 msgid "Failed to Connect"
-msgstr "Yhteyden muodostaminen epäonnistui"
+msgstr "সংযোগ করতে ব্যর্থ হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
 msgid "Your wallet is not connected. Please try again."
-msgstr "Lompakkosi ei ole yhdistetty. Yritä uudelleen."
+msgstr "আপনার ওয়ালেট সংযুক্ত নেই. আবার চেষ্টা করুন."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
 msgid "Connecting to your wallet"
-msgstr "Yhdistetään lompakkoon"
+msgstr "আপনার ওয়ালেটে সংযোগ করা হচ্ছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Click connect in your wallet popup."
-msgstr "Valitse yhdistä lompakon ponnahdusikkuna."
+msgstr "আপনার ওয়ালেট পপআপে সংযোগ ক্লিক করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
 msgid "Select Derivation Path"
-msgstr "Valitse Derivation Polku"
+msgstr "ডেরিভেশন পাথ নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "In order to connect to {type}, you must first select a Derivation Path"
-msgstr "Jotta voit muodostaa yhteyden {type}, sinun täytyy ensin valita Derivation Path"
+msgstr "{type}এর সাথে সংযোগ করার জন্য, আপনাকে প্রথমে একটি ডেরিভেশন পাথ নির্বাচন করতে হবে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
-msgstr "Valitse Derivation Polku Malli"
+msgstr "ডেরিভেশন পাথ টেমপ্লেট নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
 msgid "Enter Path"
-msgstr "Syötä Polku"
+msgstr "পাথ লিখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 msgid "Enter Index"
-msgstr "Syötä Hakemisto"
+msgstr "ইনডেক্স লিখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
-msgstr "Lisää {blockchainDisplayName} Ketju"
+msgstr "{blockchainDisplayName} চেইন যোগ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Haluatko lisätä lompakkoon {blockchainDisplayName} kokeellinen ketju?"
+msgstr "আপনি কি আপনার ওয়ালেটে {blockchainDisplayName} পরীক্ষামূলক চেইন যোগ করতে চান?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
 msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Ole hyvä ja hyväksy kokeellinen ketju ponnahdusikkuna lompakossa."
+msgstr "অনুগ্রহ করে আপনার ওয়ালেটে পরীক্ষামূলক চেইন পপ-আপ অনুমোদন করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
 msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} Ketju Lisätty"
+msgstr "{blockchainDisplayName} চেইন যোগ করা হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
 msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "{blockchainDisplayName} ketju on onnistuneesti lisätty lompakkoon."
+msgstr "{blockchainDisplayName} চেইন সফলভাবে আপনার ওয়ালেটে যোগ করা হয়েছে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
 msgid "Request Rejected"
-msgstr "Pyyntö Hylätty"
+msgstr "অনুরোধ প্রত্যাখ্যাত"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "Olet hylännyt {blockchainDisplayName} ketjun lisäämisen lompakkoon."
+msgstr "আপনি আপনার ওয়ালেটে {blockchainDisplayName} চেইন যোগ করা প্রত্যাখ্যান করেছেন৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
 msgid "Select chain types"
-msgstr "Valitse ketjutyypit"
+msgstr "চেইন প্রকার নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:71
 msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "Tämä lompakko tukee useita ketjuja. Valitse mihin ketjuun, johon haluat yhdistää."
+msgstr "এই ওয়ালেট একাধিক চেইন সমর্থন করে। আপনি কোন চেইনটির সাথে সংযোগ করতে চান তা নির্বাচন করুন৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
-msgstr "Epäonnistunut verkko, yritä swapisi uudelleen."
+msgstr "ব্যর্থ নেটওয়ার্ক, আপনার অদলবদল পুনরায় চেষ্টা করুন."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:11
 msgid "Please reset your liquidity sources."
-msgstr "Ole hyvä ja nollaa likviditeetin lähteet."
+msgstr "অনুগ্রহ করে আপনার তারল্য উত্স পুনরায় সেট করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:12
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
-msgstr "Olet rajoittanut likviditeettilähteitä ja tämä saattaa johtaa Rangon löytämiseen ilman reittejä. Harkitse likviditeetin lähteiden uudelleenasettamista."
+msgstr "আপনি তারল্যের উত্স সীমিত করেছেন এবং এর ফলে Rango কোনো রুট খুঁজে না পেতে পারে। অনুগ্রহ করে আপনার তারল্য উত্স পুনরায় সেট করার কথা বিবেচনা করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:17
 msgid "No Routes Found."
-msgstr "Reittejä Ei Löytynyt."
+msgstr "কোন রুট পাওয়া যায়নি."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:18
 msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
-msgstr "Syyt miksi Rango ei löytänyt reittiä: alhainen likviditeetti token, hyvin alhainen syöte määrä tai ei reittejä käytettävissä valitun sisään- / ulostulo token yhdistelmä."
+msgstr "রেঙ্গো কেন একটি রুট খুঁজে পায়নি তার কারণ: টোকেনে কম তারল্য, খুব কম ইনপুট পরিমাণ বা নির্বাচিত ইনপুট/আউটপুট টোকেন সংমিশ্রণের জন্য কোনও রুট উপলব্ধ নেই।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:23
 msgid "Bridge Limit Error: Please increase your amount."
-msgstr "Bridge Limit virhe: Ole hyvä ja lisää summaasi."
+msgstr "সেতু সীমা ত্রুটি: আপনার পরিমাণ বৃদ্ধি করুন."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:26
 msgid "Bridge Limit Error: Please decrease your amount."
-msgstr "Bridge Limit virhe: pienennä summaasi."
+msgstr "সেতু সীমা ত্রুটি: আপনার পরিমাণ হ্রাস করুন."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:31
 msgid "High Price Impact"
-msgstr "Korkean Hinnan Vaikutus"
+msgstr "উচ্চ মূল্যের প্রভাব"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:32
 msgid "Price impact is too high!"
-msgstr "Hintavaikutus on liian suuri!"
+msgstr "দামের প্রভাব খুব বেশি!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:33
 msgid "The price impact is significantly higher than the allowed amount."
-msgstr "Hintavaikutus on huomattavasti suurempi kuin sallittu määrä."
+msgstr "মূল্যের প্রভাব অনুমোদিত পরিমাণের তুলনায় উল্লেখযোগ্যভাবে বেশি।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:36
 msgid "Confirm high price impact"
-msgstr "Vahvista hintavaikutus"
+msgstr "উচ্চ মূল্য প্রভাব নিশ্চিত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:39
 msgid "Route updated and price impact is too high, try again later!"
-msgstr "Reitti päivitetty ja hintavaikutus on liian korkea, yritä myöhemmin uudelleen!"
+msgstr "রুট আপডেট করা হয়েছে এবং দামের প্রভাব খুব বেশি, পরে আবার চেষ্টা করুন!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:44
 msgid "USD Price Unknown"
-msgstr "Yhdysvaltain Hinta Tuntematon"
+msgstr "USD মূল্য অজানা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:45
 msgid "USD Price Unknown, Cannot calculate Price Impact."
-msgstr "USD Hinta tuntematon, Ei voida laskea Hintavaikutusta."
+msgstr "USD মূল্য অজানা, মূল্যের প্রভাব গণনা করা যাচ্ছে না।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:46
 msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
-msgstr "USD Hinta tuntematon, Ei voida laskea hintavaikutusta. Hintavaikutus voi olla tavallista suurempi. Oletko varma jatkamaan swap?"
+msgstr "USD মূল্য অজানা, মূল্যের প্রভাব গণনা করা যাচ্ছে না। দামের প্রভাব স্বাভাবিকের চেয়ে বেশি হতে পারে। আপনি কি অদলবদল চালিয়ে যাওয়ার বিষয়ে নিশ্চিত?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:49
 msgid "Confirm USD Price Unknown"
-msgstr "Vahvista USD Hinta Tuntematon"
+msgstr "নিশ্চিত করুন USD মূল্য অজানা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
 #: widget/embedded/src/pages/Home.tsx:161
 msgid "Swap"
-msgstr "Vaihda"
+msgstr "অদলবদল"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
-msgstr "Vaihda joka tapauksessa"
+msgstr "যেভাবেই হোক অদলবদল করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
 msgid "The route goes through Ethereum. Continue?"
-msgstr "Reitti kulkee Ethereumin kautta. Jatketaanko?"
+msgstr "রুট Ethereum মাধ্যমে যায়. চালিয়ে যান?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
-msgstr "Reitti on päivitetty."
+msgstr "রুট আপডেট করা হয়েছে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr "Lähtömääräksi muutettiin {newOutputAmount} ({percentageChange}% muutos)."
+msgstr "আউটপুট পরিমাণ {newOutputAmount} এ পরিবর্তিত হয়েছে ({percentageChange}% পরিবর্তন)।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
 msgid "Route swappers has been updated."
-msgstr "Reitin vaihtajat on päivitetty."
+msgstr "রুট সোয়াপার আপডেট করা হয়েছে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:22
 msgid "Route internal coins has been updated."
-msgstr "Reitin sisäiset kolikot on päivitetty."
+msgstr "রুট অভ্যন্তরীণ মুদ্রা আপডেট করা হয়েছে."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
 #: widget/embedded/src/pages/Routes.tsx:48
 msgid "Routes"
-msgstr "Reitit"
+msgstr "রুট"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Inputs/Inputs.tsx:76
 msgid "From"
-msgstr "Alkaen"
+msgstr "থেকে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Inputs/Inputs.tsx:118
 msgid "To"
-msgstr "Vastaanottaja"
+msgstr "প্রতি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:49
 msgid "Light"
-msgstr "Vaalea"
+msgstr "আলো"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:58
 msgid "Dark"
-msgstr "Tumma"
+msgstr "অন্ধকার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:67
 msgid "Auto"
-msgstr "Automaattinen"
+msgstr "অটো"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:140
 msgid "Loading failed"
-msgstr "Lataus epäonnistui"
+msgstr "লোডিং ব্যর্থ হয়েছে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:156
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Bridges"
-msgstr "Sillat"
+msgstr "ব্রিজ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:174
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Exchanges"
-msgstr "Pörssit"
+msgstr "বিনিময়"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:195
 #: widget/embedded/src/pages/CustomTokensPage.tsx:90
 msgid "Custom Tokens"
-msgstr "Mukautetut Tokenit"
+msgstr "কাস্টম টোকেন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:214
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
-msgstr "Kieli"
+msgstr "ভাষা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:235
 msgid "Infinite approval"
-msgstr "Loputon hyväksyntä"
+msgstr "অসীম অনুমোদন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:246
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
-msgstr "Päällekkäisen hyväksynnän käyttöönotto mahdollistaa rajoittamattoman pääsyn taustalla oleviin älykkäisiin sopimuksiin, jolloin ne voivat käyttää hyväksyttyä symbolin määrää rajoituksetta."
+msgstr "'অসীম অনুমোদন' মোড সক্ষম করা অন্তর্নিহিত স্মার্ট চুক্তিগুলিতে সীমাহীন অ্যাক্সেস মঞ্জুর করে, তাদের সীমাবদ্ধতা ছাড়াই অনুমোদিত টোকেন পরিমাণ ব্যবহার করার অনুমতি দেয়।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:266
 msgid "Theme"
-msgstr "Teema"
+msgstr "থিম"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:39
 msgid "Duplicate Token"
-msgstr "Duplicate Token"
+msgstr "ডুপ্লিকেট টোকেন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:40
 msgid "The address you entered is duplicate, please enter a new address."
-msgstr "Antamasi osoite on kaksoiskappale, kirjoita uusi osoite."
+msgstr "আপনি যে ঠিকানাটি লিখেছেন তা সদৃশ, অনুগ্রহ করে একটি নতুন ঠিকানা লিখুন৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:46
 msgid "Token Already Exists"
-msgstr "Token Jo Olemassa"
+msgstr "টোকেন ইতিমধ্যেই বিদ্যমান৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:47
 msgid "There's no need to add this token again because it already exists and is supported by us."
-msgstr "Tämän tunnuksen lisääminen uudelleen ei ole tarpeen, koska se on jo olemassa ja sitä tukee meidät."
+msgstr "এই টোকেনটি আবার যোগ করার দরকার নেই কারণ এটি ইতিমধ্যেই বিদ্যমান এবং আমাদের দ্বারা সমর্থিত।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
-msgstr "Tunnistetta Ei Löytynyt"
+msgstr "টোকেন পাওয়া যায়নি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-msgstr "Anteeksi, tunnus ei löytynyt {blockchain} ketjusta annetun osoitteen kanssa. Varmista, että olet syöttänyt oikeanlaisen token osoitteen."
+msgstr "দুঃখিত, প্রদত্ত ঠিকানা সহ {blockchain} চেইনে কোনো টোকেন পাওয়া যায়নি৷ দয়া করে নিশ্চিত করুন যে আপনি সঠিক টোকেন ঠিকানাটি প্রবেশ করেছেন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
 msgid "Network Error"
-msgstr "Verkon Virhe"
+msgstr "নেটওয়ার্ক ত্রুটি৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
 #: widget/embedded/src/pages/CustomTokensPage.tsx:149
 msgid "Add Custom Token"
-msgstr "Lisää Mukautettu Tunnus"
+msgstr "কাস্টম টোকেন যোগ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
 msgid "Select chain"
-msgstr "Valitse ketju"
+msgstr "চেইন নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
 msgid "Enter Address"
-msgstr "Syötä Osoite"
+msgstr "ঠিকানা লিখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
 msgid "Enter token address"
-msgstr "Syötä tunnisteen osoite"
+msgstr "টোকেন ঠিকানা লিখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
 msgid "Failed Network, Please retry."
-msgstr "Epäonnistunut verkko, yritä uudelleen."
+msgstr "নেটওয়ার্ক ব্যর্থ হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
 msgid "Add another custom token"
-msgstr "Lisää toinen mukautettu tunnus"
+msgstr "আরেকটি কাস্টম টোকেন যোগ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
 msgid "Confirm Swap"
-msgstr "Vahvista Vaihda"
+msgstr "অদলবদল নিশ্চিত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:254
 msgid "Start Swap"
-msgstr "Käynnistä Vaihda"
+msgstr "অদলবদল শুরু করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:282
 msgid "You get"
-msgstr "Sinä saat"
+msgstr "আপনি পাবেন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
-msgstr "Etsi Pääsymerkki"
+msgstr "টোকেন অনুসন্ধান করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:134
 msgid "No custom tokens"
-msgstr "Ei omia tunnuksia"
+msgstr "কোনো কাস্টম টোকেন নেই"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "press the button to add your custom token"
-msgstr "paina painiketta lisätäksesi mukautetun tunnuksen"
+msgstr "আপনার কাস্টম টোকেন যোগ করতে বোতাম টিপুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:158
 msgid "Delete Custom Token"
-msgstr "Poista Mukautettu Tunnus"
+msgstr "কাস্টম টোকেন মুছুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:160
 msgid "Are you sure you want to Delete this Token?"
-msgstr "Oletko varma, että haluat poistaa tämän polkun?"
+msgstr "আপনি কি নিশ্চিত আপনি এই টোকেন মুছে ফেলতে চান?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:59
 msgid "Complete"
-msgstr "Complete"
+msgstr "সম্পূর্ণ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Running"
-msgstr "Käynnissä"
+msgstr "চলছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:65
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
-msgstr "Epäonnistui"
+msgstr "ব্যর্থ হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:149
 msgid "Clear"
-msgstr "Tyhjennä"
+msgstr "পরিষ্কার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:161
 msgid "Search Transaction"
-msgstr "Etsi Tapahtuma"
+msgstr "অনুসন্ধান লেনদেন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:187
 msgid "No transactions"
-msgstr "Ei tapahtumia"
+msgstr "কোনো লেনদেন নেই"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
-msgstr "Tapahtumahistoriasi on tallennettu paikallisesti ja se tulee näkymään täällä swapin käynnistymisen jälkeen"
+msgstr "আপনার লেনদেনের ইতিহাস স্থানীয়ভাবে সংরক্ষণ করা হয় এবং আপনি একটি অদলবদল শুরু করার পরে এখানে উপস্থিত হবে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:218
 msgid "Clear Transaction History"
-msgstr "Tyhjennä Tapahtuman Historia"
+msgstr "লেনদেনের ইতিহাস সাফ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:222
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
-msgstr "Jatkaminen poistaa kaikki onnistuneet ja epäonnistuneet tapahtumat widgetistä. Haluatko jatkaa?"
+msgstr "অগ্রসর হলে উইজেট থেকে সমস্ত সফল এবং ব্যর্থ লেনদেন মুছে ফেলা হবে। আপনি কি চালিয়ে যেতে চান?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:229
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
-msgstr "Huom: Tämä ei poista tapahtumahistoriaasi ketjussa, vaan se poistaa ne vain täältä."
+msgstr "দ্রষ্টব্য: এটি চেইনে আপনার লেনদেনের ইতিহাস মুছে ফেলবে না; এটি শুধুমাত্র তাদের এখানে সরিয়ে দেয়।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:243
 msgid "Yes, Clear the history"
-msgstr "Kyllä, Tyhjennä historia"
+msgstr "হ্যাঁ, ইতিহাস সাফ করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:56
 msgid "language"
-msgstr "kieli"
+msgstr "ভাষা"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Deselect all"
-msgstr "Poista kaikki valinnat"
+msgstr "সব বাদ দিন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Select all"
-msgstr "Valitse kaikki"
+msgstr "সব নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
-msgstr "Hae {sourceType}"
+msgstr "{sourceType}অনুসন্ধান করুন৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
 msgid "Search Chain"
-msgstr "Etsi Ketju"
+msgstr "অনুসন্ধান চেইন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
 msgid "Source"
-msgstr "Lähde"
+msgstr "উৎস"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
 msgid "Destination"
-msgstr "Kohde"
+msgstr "গন্তব্য"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
 msgid "Swap {type}"
-msgstr "Vaihda {type}"
+msgstr "অদলবদল {type}৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:45
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
-msgstr "Tällä hetkellä olet kampanjatilassa, jossa on rajoituksia likviditeetin lähteitä. Haluatko vaihtaa pois tästä tilasta ja hyödyntää kaikkia käytettävissä olevia likviditeetin lähteitä?"
+msgstr "বর্তমানে, আপনি তারল্য উত্সের উপর বিধিনিষেধ সহ প্রচারাভিযান মোডে আছেন। আপনি কি এই মোড থেকে স্যুইচ আউট করতে এবং সমস্ত উপলব্ধ তারল্য উত্স ব্যবহার করতে চান?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
 msgid "The request ID is necessary to display the swap details."
-msgstr "Pyyntö ID on tarpeen näyttää swapin tiedot."
+msgstr "অদলবদল বিবরণ প্রদর্শন করার জন্য অনুরোধ আইডি প্রয়োজনীয়।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:67
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
-msgstr "Yhdistä Lompakot"
+msgstr "ওয়ালেট সংযুক্ত করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:82
 msgid "Choose a wallet to connect."
-msgstr "Valitse yhdistävä lompakko"
+msgstr "সংযোগ করতে একটি মানিব্যাগ চয়ন করুন."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:25
 msgid "This week"
-msgstr "Tällä viikolla"
+msgstr "এই সপ্তাহে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:32
 msgid "This month"
-msgstr "Tässä kuussa"
+msgstr "এই মাসে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
-msgstr "Tänä vuonna"
+msgstr "এই বছর"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
-msgstr "Pakollinen: >= {min} {symbol}"
+msgstr "প্রয়োজনীয়: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
-msgstr "Pakollinen: > {min} {symbol}"
+msgstr "প্রয়োজনীয়: > {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:157
 msgid "Required: <= {max} {symbol}"
-msgstr "Pakollinen: <= {max} {symbol}"
+msgstr "প্রয়োজনীয়: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
-msgstr "Pakollinen: < {max} {symbol}"
+msgstr "প্রয়োজনীয়: < {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:604
 msgid " for network fee"
-msgstr " verkkomaksua varten"
+msgstr " নেটওয়ার্ক ফি জন্য"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:607
 msgid " for swap"
-msgstr " vaihtamista varten"
+msgstr " অদলবদলের জন্য"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:610
 msgid " for input and network fee"
-msgstr " syöttö- ja verkkomaksu"
+msgstr " ইনপুট এবং নেটওয়ার্ক ফি জন্য"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr "Tarvitsee ≈ {requiredAmount} {symbol}{reason}, mutta sinulla on {currentAmount} {symbol} lompakossasi {blockchain} ."
+msgstr "প্রয়োজন ≈ {requiredAmount} {symbol}{reason}, কিন্তু আপনার {blockchain} ওয়ালেটে {currentAmount} {symbol} আছে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
 msgid "Waiting for connecting wallet"
-msgstr "Odotetaan lompakon yhdistämistä"
+msgstr "মানিব্যাগ সংযোগের জন্য অপেক্ষা করা হচ্ছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:676
 msgid "Waiting for other running tasks to be finished"
-msgstr "Odotetaan, että muut käynnissä olevat tehtävät valmistuvat"
+msgstr "অন্যান্য চলমান কাজ সমাপ্ত হওয়ার জন্য অপেক্ষা করা হচ্ছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:679
 msgid "Waiting for changing wallet network"
-msgstr "Odotetaan lompakon verkon vaihtamista"
+msgstr "ওয়ালেট নেটওয়ার্ক পরিবর্তনের জন্য অপেক্ষা করা হচ্ছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:6
 msgid "Sunday"
-msgstr "Sunnuntai"
+msgstr "রবিবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:7
 msgid "Monday"
-msgstr "Maanantai"
+msgstr "সোমবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:8
 msgid "Tuesday"
-msgstr "Tiistai"
+msgstr "মঙ্গলবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:9
 msgid "Wednesday"
-msgstr "Keskiviikko"
+msgstr "বুধবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:10
 msgid "Thursday"
-msgstr "Torstai"
+msgstr "বৃহস্পতিবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:11
 msgid "Friday"
-msgstr "Perjantai"
+msgstr "শুক্রবার"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:12
 msgid "Saturday"
-msgstr "Lauantai"
+msgstr "শনিবার"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
-msgstr "Palvelun Toimittaja"
+msgstr "দ্বারা চালিত"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
-msgstr "Yhdistetty Tapahtuma"
+msgstr "সমষ্টিগত লেনদেন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
@@ -1249,81 +1249,81 @@ msgstr "{blockchainCategory}"
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
-msgstr "Vaihda kohtaan {fromChain} kautta {swapper}"
+msgstr "{swapper}এর মাধ্যমে {fromChain} এ অদলবদল করুন৷"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
-msgstr "Silta {toChain} :n kautta {swapper}"
+msgstr "{swapper}হয়ে {toChain} এ সেতু"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
 msgid "Completed"
-msgstr "Valmis"
+msgstr "সম্পন্ন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
-msgstr "Toiminto käynnissä"
+msgstr "চলছে"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
 msgid "Waiting for bridge transaction"
-msgstr "Odotetaan siltatapahtumaa"
+msgstr "সেতু লেনদেনের জন্য অপেক্ষা করছে"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
-msgstr "Yhdistetty"
+msgstr "সংযুক্ত"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
-msgstr "Katkaise"
+msgstr "সংযোগ বিচ্ছিন্ন করুন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
 msgid "Install"
-msgstr "Asenna"
+msgstr "ইনস্টল করুন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 msgid "Connecting ..."
-msgstr "Yhdistetään ..."
+msgstr "সংযোগ করা হচ্ছে..."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Connecting"
-msgstr "Yhdistetään"
+msgstr "সংযোগ করা হচ্ছে"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Disconnected"
-msgstr "Yhteys Katkaistu"
+msgstr "সংযোগ বিচ্ছিন্ন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
 msgid "you need to pass a correct state to Wallet."
-msgstr "sinun täytyy siirtää oikea tila Walletiin."
+msgstr "আপনাকে Wallet এ একটি সঠিক অবস্থা দিতে হবে।"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Notifications/NotificationNotFound.tsx:15
 msgid "There are no notifications."
-msgstr "Ilmoituksia ei ole."
+msgstr "কোন বিজ্ঞপ্তি নেই."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Notifications/Notifications.tsx:39
 msgid "Clear all"
-msgstr "Tyhjennä kaikki"
+msgstr "সব সাফ করুন"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
 msgid "Balance"
-msgstr "Saldo"
+msgstr "ভারসাম্য"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
 msgid "Max"
-msgstr "Maksimi"
+msgstr "সর্বোচ্চ"
 
