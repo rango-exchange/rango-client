@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-10-29 13:54\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -285,7 +285,8 @@ msgstr "Опис"
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr ""
+msgstr "Наступні комісії враховуються у вихідних даних транзакції, і\n"
+"                вам не потрібно буде платити за них додатковий газ."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
