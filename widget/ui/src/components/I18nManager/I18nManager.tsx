@@ -17,7 +17,6 @@ import { messages as bnMessages } from '../../../../../translations/bn.js';
 import { messages as caMessages } from '../../../../../translations/ca.js';
 import { messages as daMessages } from '../../../../../translations/da.js';
 import { messages as deMessages } from '../../../../../translations/de.js';
-import { messages as el_CYMessages } from '../../../../../translations/el-CY.js';
 import { messages as elMessages } from '../../../../../translations/el.js';
 import { messages as enMessages } from '../../../../../translations/en.js';
 import { messages as esMessages } from '../../../../../translations/es.js';
@@ -45,45 +44,44 @@ import { messages as trMessages } from '../../../../../translations/tr.js';
 import { messages as ukMessages } from '../../../../../translations/uk.js';
 import { messages as urMessages } from '../../../../../translations/ur.js';
 import { messages as viMessages } from '../../../../../translations/vi.js';
+import { messages as zh_CNMessages } from '../../../../../translations/zh-CN.js';
 import { messages as zh_TWMessages } from '../../../../../translations/zh-TW.js';
-import { messages as zhMessages } from '../../../../../translations/zh.js';
 
 const messages = {
-  en: enMessages,
-  es: esMessages,
-  ja: jaMessages,
-  fr: frMessages,
-  pt: ptMessages,
-  zh: zhMessages,
-  ru: ruMessages,
-  de: deMessages,
-  uk: ukMessages,
-  sv: svMessages,
-  fi: fiMessages,
-  nl: nlMessages,
-  el: elMessages,
-  it: itMessages,
-  pl: plMessages,
   af: afMessages,
   ar: arMessages,
   bn: bnMessages,
   ca: caMessages,
   da: daMessages,
+  de: deMessages,
+  el: elMessages,
+  en: enMessages,
+  es: esMessages,
+  fi: fiMessages,
+  fil: filMessages,
+  fr: frMessages,
   hi: hiMessages,
   hu: huMessages,
   id: idMessages,
+  it: itMessages,
+  ja: jaMessages,
   ko: koMessages,
   lt: ltMessages,
   ms: msMessages,
-  fil: filMessages,
-  sr: srMessages,
+  nl: nlMessages,
+  pl: plMessages,
+  pt: ptMessages,
+  ru: ruMessages,
   sk: skMessages,
+  sr: srMessages,
+  sv: svMessages,
   sw: swMessages,
   th: thMessages,
   tr: trMessages,
+  uk: ukMessages,
   ur: urMessages,
   vi: viMessages,
-  'el-CY': el_CYMessages,
+  'zh-CN': zh_CNMessages,
   'zh-TW': zh_TWMessages,
 };
 

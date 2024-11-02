@@ -4,7 +4,6 @@ import {
   Bengali,
   Catalonia,
   Chinese,
-  Cyprus,
   Denmark,
   English,
   Finland,
@@ -53,7 +52,7 @@ export const LANGUAGES: LanguageItem[] = [
   {
     title: 'Chinese (Simplified)',
     label: '简体中文',
-    local: 'zh',
+    local: 'zh-CN',
     SVGFlag: Chinese,
   },
   {
@@ -70,12 +69,6 @@ export const LANGUAGES: LanguageItem[] = [
   { title: 'French', label: 'Français', local: 'fr', SVGFlag: French },
   { title: 'German', label: 'Deutsch', local: 'de', SVGFlag: German },
   { title: 'Greek', label: 'ελληνικά', local: 'el', SVGFlag: Greece },
-  {
-    title: 'Greek(Cyprus)',
-    label: 'Ελληνικά(Κύπρος)',
-    local: 'el-CY',
-    SVGFlag: Cyprus,
-  },
   { title: 'Hindi', label: 'हिंदी', local: 'hi', SVGFlag: India },
   { title: 'Hungarian', label: 'Magyar', local: 'hu', SVGFlag: Hungary },
   { title: 'Indonesian', label: 'Indonesia', local: 'id', SVGFlag: Indonesian },
