@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-29 13:54\n"
+"PO-Revision-Date: 2024-11-03 15:33\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Home.tsx:161
+msgid "Hello Home"
+msgstr "안녕하세요 홈"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -791,7 +796,6 @@ msgstr "USD 가격 확인 불명"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
 msgid "Swap"
 msgstr "교환"
 
