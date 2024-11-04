@@ -18,4 +18,5 @@ export interface TooltipPropTypes {
   };
   align?: RadixTooltipContentProps['align'];
   alignOffset?: RadixTooltipContentProps['alignOffset'];
+  collisionPadding?: RadixTooltipContentProps['collisionPadding'];
 }
