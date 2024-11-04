@@ -5,16 +5,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: fi\n"
+"Language: da\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2024-11-04 09:42\n"
 "Last-Translator: \n"
-"Language-Team: Finnish\n"
+"Language-Team: Danish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: rango\n"
 "X-Crowdin-Project-ID: 622238\n"
-"X-Crowdin-Language: fi\n"
+"X-Crowdin-Language: da\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
 
@@ -24,7 +24,7 @@ msgstr ""
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
-msgstr "Tuloksia ei löytynyt"
+msgstr "Ingen resultater fundet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
@@ -32,7 +32,7 @@ msgstr "Tuloksia ei löytynyt"
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
-msgstr "Kokeile käyttää eri avainsanoja"
+msgstr "Prøv at bruge forskellige søgeord"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
@@ -40,37 +40,37 @@ msgstr "Kokeile käyttää eri avainsanoja"
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
 msgid "Select Chain"
-msgstr "Valitse Ketju"
+msgstr "Vælg Kæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
 msgid "All"
-msgstr "Kaikki"
+msgstr "Alle"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
-msgstr "Enemmän +{count}"
+msgstr "Mere +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
 msgid "Activate this tab"
-msgstr "Aktivoi tämä välilehti"
+msgstr "Aktiver denne fane"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:22
 msgid "Another tab is open and handles transactions."
-msgstr "Toinen välilehti on avoin ja käsittelee tapahtumia."
+msgstr "En anden fane er åben og håndterer transaktioner."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
 msgid "Activate current tab"
-msgstr "Aktivoi nykyinen välilehti"
+msgstr "Aktiver den aktuelle fane"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
-msgstr "Tällä hetkellä jotkin tapahtumat ovat käynnissä ja niitä käsitellään muilla selainvälilehdillä. Jos aktivoit tämän välilehden, kaikki tapahtumat, jotka ovat jo tapahtumakirjautumisvaiheessa, vanhenevat."
+msgstr "I øjeblikket kører nogle transaktioner og håndteres af en anden browserfane. Hvis du aktiverer denne fane, vil alle transaktioner, der allerede er i transaktionstegntrinnet, udløbe."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
@@ -79,224 +79,224 @@ msgstr "Tällä hetkellä jotkin tapahtumat ovat käynnissä ja niitä käsitell
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:116
 msgid "Confirm"
-msgstr "Vahvista"
+msgstr "Bekræfte"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
 msgid "Your {blockchainName} wallets"
-msgstr "{blockchainName} lompakkoasi"
+msgstr "Dine {blockchainName} tegnebøger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
 msgid "Insufficient account balance"
-msgstr "Tilin saldo ei riitä"
+msgstr "Utilstrækkelig kontosaldo"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:394
 msgid "Proceed anyway"
-msgstr "Jatka joka tapauksessa"
+msgstr "Fortsæt alligevel"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
 msgid "You need to connect a {blockchainName} wallet."
-msgstr "Sinun on yhdistettävä {blockchainName} lompakko."
+msgstr "Du skal tilslutte en {blockchainName} tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
 msgid "Add {chain} chain"
-msgstr "Lisää {chain} ketju"
+msgstr "Tilføj {chain} kæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
 msgid "Show more wallets"
-msgstr "Näytä lisää lompakkoja"
+msgstr "Vis flere tegnebøger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:113
 msgid "Send to a different address"
-msgstr "Lähetä toiseen osoitteeseen"
+msgstr "Send til en anden adresse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
 msgid "Enter {blockchainName} address"
-msgstr "Syötä {blockchainName} osoite"
+msgstr "Indtast {blockchainName} adresse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
 msgid "Address {destination} doesn't match the blockchain address pattern."
-msgstr "Osoite {destination} ei vastaa lohkoketjun osoitekuviota."
+msgstr "Adressen {destination} matcher ikke blockchain-adressemønsteret."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
 msgid "via"
-msgstr "kautta"
+msgstr "via"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
 msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Tämä tunnus ei näy aktiivisessa token listassa. Varmista, että tämä on token jonka haluat vaihtaa."
+msgstr "Dette token vises ikke på den eller de aktive token-lister. Sørg for, at dette er det token, du vil handle."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
 msgid "Import"
-msgstr "Tuo"
+msgstr "Importere"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
 msgid "Status"
-msgstr "Tila"
+msgstr "Status"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
 #: widget/embedded/src/pages/SettingsPage.tsx:55
 msgid "Reset"
-msgstr "Reset"
+msgstr "Nulstil"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:18
 msgid "Cancel"
-msgstr "Peruuta"
+msgstr "Ophæve"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
 msgid "Refresh"
-msgstr "Päivitä"
+msgstr "Opfriske"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
 #: widget/ui/src/containers/Notifications/Notifications.tsx:35
 msgid "Notifications"
-msgstr "Ilmoitukset"
+msgstr "Meddelelser"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:79
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
-msgstr "Asetukset"
+msgstr "Indstillinger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
 #: widget/embedded/src/pages/HistoryPage.tsx:139
 msgid "History"
-msgstr "Historia"
+msgstr "Historie"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
-msgstr "Yhdistä Lompakko"
+msgstr "Tilslut tegnebog"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
-msgstr "Tänään"
+msgstr "I dag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:424
 msgid "Swaps steps"
-msgstr "Swapin vaiheet"
+msgstr "Bytter trin"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
-msgstr "Yritä Uudelleen"
+msgstr "Prøv igen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
-msgstr "Virhe lipasivulla"
+msgstr "Skridningsfejl"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
-msgstr "lipasivun Varoitus"
+msgstr "Advarsel om glidning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
-msgstr "Sillan Rajoitus Virhe"
+msgstr "Brogrænsefejl"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:240
 msgid "Yours: {amount} {symbol}"
-msgstr "Sinun: {amount} {symbol}"
+msgstr "Dine: {amount} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:261
 msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr "Pienin vaadittu slippa: {minRequiredSlippage}"
+msgstr "Minimum påkrævet glidning: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:282
 msgid "Yours: {userSlippage}"
-msgstr "Sinut: {userSlippage}"
+msgstr "Dine: {userSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:395
 msgid "See All Routes"
-msgstr "Katso Kaikki Reitit"
+msgstr "Se alle ruter"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
 msgid "View more info"
-msgstr "Näytä lisätiedot"
+msgstr "Se mere info"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
 msgid "Gas & Fee Explanation"
-msgstr "Kaasun Ja Maksun Selitys"
+msgstr "Gas & gebyrforklaring"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:107
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
 msgid "Details"
-msgstr "Yksityiskohdat"
+msgstr "Detaljer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:146
 msgid "Total Payable Fee"
-msgstr "Maksettu Maksu Yhteensä"
+msgstr "Samlet betalbar gebyr"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
 msgid "Hide non-payable fees"
-msgstr "Piilota muut kuin maksetut maksut"
+msgstr "Skjul ikke-betalbare gebyrer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:167
 msgid "Show non-payable fees"
-msgstr "Näytä maksamattomat maksut"
+msgstr "Vis ikke-betalbare gebyrer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
 msgid "Description"
-msgstr "Kuvaus"
+msgstr "Beskrivelse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr "Seuraavat maksut otetaan huomioon liiketoimen tuotos, ja\n"
-"                sinun ei tarvitse maksaa ylimääräistä kaasua niistä."
+msgstr "Følgende gebyrer tages i betragtning i transaktionens output, og\n"
+"                behøver du ikke betale ekstra gas for dem."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
 msgid "Swap input"
-msgstr "Swap input"
+msgstr "Skift input"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
 msgid "Estimated output"
-msgstr "Arvioitu tuotos"
+msgstr "Estimeret output"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
@@ -306,939 +306,939 @@ msgstr "Via:"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
 msgid "Chains:"
-msgstr "Ketjut:"
+msgstr "Kæder:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/Quotes.tsx:77
 msgid "Sort by"
-msgstr "Järjestä"
+msgstr "Sorter efter"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
 msgid "Smart Routing"
-msgstr "Älykäs Reititys"
+msgstr "Smart Routing"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
 msgid "Lowest Fee"
-msgstr "Alin Maksu"
+msgstr "Laveste gebyr"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
 msgid "Fastest Transfer"
-msgstr "Nopein Siirto"
+msgstr "Hurtigste overførsel"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
 msgid "Maximum Return"
-msgstr "Suurin Palautus"
+msgstr "Maksimal afkast"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
 msgid "Maximum Output"
-msgstr "Suurin Ulostulo"
+msgstr "Maksimal output"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
 msgid "Swapping"
-msgstr "Swapping"
+msgstr "Bytte"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
 msgid "Gas cost"
-msgstr "Kaasun hinta"
+msgstr "Gas omkostninger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
 msgid "Receiving"
-msgstr "Vastaanotetaan"
+msgstr "Modtager"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
 msgid "Price impact"
-msgstr "Hinnan vaikutus"
+msgstr "Prispåvirkning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "Sinun täytyy lisätä lipsumissivua vähintään {minRequiredSlippage} tälle reitille."
+msgstr "Du skal øge glidningen til mindst {minRequiredSlippage} for denne rute."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "Suosittelemme, että nostat lipsumisen vähintään {minRequiredSlippage} tälle reitille."
+msgstr "Vi anbefaler, at du øger glidningen til mindst {minRequiredSlippage} for denne rute."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Caution, your slippage is high."
-msgstr "Varoitus, lipsumisesi on korkea."
+msgstr "Forsigtig, din glidning er høj."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
 msgid "Change"
-msgstr "Muuta"
+msgstr "Forandring"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Change settings"
-msgstr "Muuta asetuksia"
+msgstr "Skift indstillinger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
 msgid "High slippage"
-msgstr "Korkea lipsahdus"
+msgstr "Høj glidning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
 msgid "Low slippage"
-msgstr "Alhainen lipsahdus"
+msgstr "Lav glidning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
 msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr " Varoitus, lipsumisesi on korkea (={userSlippage}). Kaupasi voi olla etu."
+msgstr " Forsigtig, din glidning er høj (={userSlippage}). Din handel kan være frontløb."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
 msgid "Confirm anyway"
-msgstr "Vahvista joka tapauksessa"
+msgstr "Bekræft alligevel"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
 msgid "Something went wrong"
-msgstr "Jokin meni pieleen"
+msgstr "Noget gik galt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
 msgid "Something went wrong. Please refresh the app."
-msgstr "Jokin meni pieleen. Päivitä sovellus."
+msgstr "Noget gik galt. Opdater venligst appen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:38
 msgid "Slippage tolerance per swap"
-msgstr "Liu'utuksen toleranssi swapia kohti"
+msgstr "Skridtolerance pr. swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:91
 msgid "Custom"
-msgstr "Mukautettu"
+msgstr "Skik"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
 msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
-msgstr "Tapahtumasi palautetaan, jos hinta muuttuu epäsuotuisasti enemmän kuin tämä prosenttiosuus."
+msgstr "Din transaktion vil blive tilbageført, hvis prisen ændres ugunstigt med mere end denne procentdel."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
 #: widget/embedded/src/containers/Settings/Lists.tsx:245
 msgid "Warning"
-msgstr "Varoitus"
+msgstr "Advarsel"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
-msgstr "Tätä asetusta sovelletaan jokaiseen vaiheeseen (esim. 1Inch, Thorchain, jne.), mikä tarkoittaa vain sitä, että tietty vaihe peruutetaan, ei koko reittiä."
+msgstr "Denne indstilling anvendes på hvert trin (f.eks. 1 tomme, Thorchain osv.), hvilket betyder, at kun det specifikke trin vil blive vendt tilbage, ikke hele ruten."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
 msgid "Swap Details"
-msgstr "Vaihda Tiedot"
+msgstr "Byt detaljer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
 msgid "Request ID"
-msgstr "Pyydä ID"
+msgstr "Anmod om ID"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
 msgid "Not found"
-msgstr "Ei löydy"
+msgstr "Ikke fundet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 msgid "Swap with request ID = {requestId} not found."
-msgstr "Vaihda pyynnön ID = {requestId} ei löytynyt."
+msgstr "Byt med anmodnings-id = {requestId} ikke fundet."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
-msgstr "Olet saanut {amount} {token} {conciseAddress} -lompakossa {chain} -ketjussa."
+msgstr "Du har modtaget {amount} {token} i {conciseAddress} tegnebog på {chain} kæden."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 msgid "Transaction was not sent."
-msgstr "Tapahtumaa ei lähetetty."
+msgstr "Transaktionen blev ikke sendt."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr "{amount} {symbol} {blockchain} jää lompakkoosi."
+msgstr "{amount} {symbol} på {blockchain} forbliver i din tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Delete"
-msgstr "Poista"
+msgstr "Slet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:304
 msgid "Try again"
-msgstr "Yritä uudelleen"
+msgstr "Prøv igen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:322
 msgid "Copied To Clipboard"
-msgstr "Kopioitu Leikepöydälle"
+msgstr "Kopieret til udklipsholder"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:323
 msgid "Copy Request ID"
-msgstr "Kopioi Pyyntö ID"
+msgstr "Kopiér anmodnings-id"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:346
 msgid "View on Rango Explorer"
-msgstr "Näytä Rango Explorerissa"
+msgstr "Se på Rango Explorer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
 msgid "Finished at"
-msgstr "Valmis klo"
+msgstr "Afsluttet kl"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
 msgid "Created at"
-msgstr "Luotu klo"
+msgstr "Oprettet kl"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
 msgid "View transaction"
-msgstr "Näytä tapahtuma"
+msgstr "Se transaktion"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
-msgstr "Yhdistä"
+msgstr "Forbinde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
 msgid "Swap Successful"
-msgstr "Vaihto Onnistui"
+msgstr "Swap vellykket"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
 msgid "Transaction Failed"
-msgstr "Tapahtuma Epäonnistui"
+msgstr "Transaktion mislykkedes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:87
 msgid "Done"
-msgstr "Valmis"
+msgstr "Færdig"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:100
 msgid "Diagnosis"
-msgstr "Diagnoosi"
+msgstr "Diagnose"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:112
 msgid "See Details"
-msgstr "Näytä Yksityiskohdat"
+msgstr "Se detaljer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:13
 msgid "Cancel Swap"
-msgstr "Peruuta Vaihda"
+msgstr "Annuller Swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:14
 msgid "Are you sure you want to cancel this swap?"
-msgstr "Oletko varma, että haluat peruuttaa tämän swapin?"
+msgstr "Er du sikker på, at du vil annullere dette bytte?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
 msgid "Yes, Cancel it"
-msgstr "Kyllä, peruuta se"
+msgstr "Ja, annuller det"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
 #: widget/embedded/src/pages/CustomTokensPage.tsx:181
 msgid "No, Continue"
-msgstr "Ei, Jatka"
+msgstr "Nej, fortsæt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
 msgid "Delete Transaction"
-msgstr "Poista Tapahtuma"
+msgstr "Slet transaktion"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:14
 msgid "Are you sure you want to delete this swap?"
-msgstr "Oletko varma, että haluat poistaa tämän swapin?"
+msgstr "Er du sikker på, at du vil slette denne swap?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
 #: widget/embedded/src/pages/CustomTokensPage.tsx:171
 msgid "Yes, Delete it"
-msgstr "Kyllä, poista se"
+msgstr "Ja, slet det"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
 #: widget/embedded/src/pages/HistoryPage.tsx:253
 msgid "No, Cancel"
-msgstr "Ei, Peruuta"
+msgstr "Nej, annuller"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
 msgid "Change Network"
-msgstr "Vaihda Verkkoa"
+msgstr "Skift netværk"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
-msgstr "Verkko Muutettu"
+msgstr "Netværk ændret"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:271
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
 msgid "Select Token"
-msgstr "Valitse Tunnus"
+msgstr "Vælg Token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
 msgid "Wallet Connected"
-msgstr "Lompakko Yhdistetty"
+msgstr "Tegnebog tilsluttet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Your wallet is connected, you can use it to swap."
-msgstr "Lompakkosi on yhdistetty, voit käyttää sitä vaihtaaksesi."
+msgstr "Din tegnebog er tilsluttet, du kan bruge den til at bytte."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
 msgid "Failed to Connect"
-msgstr "Yhteyden muodostaminen epäonnistui"
+msgstr "Kunne ikke oprette forbindelse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
 msgid "Your wallet is not connected. Please try again."
-msgstr "Lompakkosi ei ole yhdistetty. Yritä uudelleen."
+msgstr "Din tegnebog er ikke tilsluttet. Prøv venligst igen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
 msgid "Connecting to your wallet"
-msgstr "Yhdistetään lompakkoon"
+msgstr "Tilslutning til din tegnebog"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Click connect in your wallet popup."
-msgstr "Valitse yhdistä lompakon ponnahdusikkuna."
+msgstr "Klik på tilslut i din tegnebogs popup."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
 msgid "Select Derivation Path"
-msgstr "Valitse Derivation Polku"
+msgstr "Vælg Afledningssti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "In order to connect to {type}, you must first select a Derivation Path"
-msgstr "Jotta voit muodostaa yhteyden {type}, sinun täytyy ensin valita Derivation Path"
+msgstr "For at oprette forbindelse til {type}skal du først vælge en afledningssti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
 msgid "Choose Derivation Path Template"
-msgstr "Valitse Derivation Polku Malli"
+msgstr "Vælg Afledningsstiskabelon"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
 msgid "Enter Path"
-msgstr "Syötä Polku"
+msgstr "Indtast sti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 msgid "Enter Index"
-msgstr "Syötä Hakemisto"
+msgstr "Indtast indeks"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
-msgstr "Lisää {blockchainDisplayName} Ketju"
+msgstr "Tilføj {blockchainDisplayName} kæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Haluatko lisätä lompakkoon {blockchainDisplayName} kokeellinen ketju?"
+msgstr "Kunne du tænke dig at tilføje {blockchainDisplayName} eksperimentelle kæde til din tegnebog?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
 msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Ole hyvä ja hyväksy kokeellinen ketju ponnahdusikkuna lompakossa."
+msgstr "Godkend venligst den eksperimentelle kæde-pop-up i din tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
 msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} Ketju Lisätty"
+msgstr "{blockchainDisplayName} Kæde tilføjet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
 msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "{blockchainDisplayName} ketju on onnistuneesti lisätty lompakkoon."
+msgstr "{blockchainDisplayName} -kæden er blevet tilføjet til din tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
 msgid "Request Rejected"
-msgstr "Pyyntö Hylätty"
+msgstr "Anmodning afvist"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "Olet hylännyt {blockchainDisplayName} ketjun lisäämisen lompakkoon."
+msgstr "Du har afvist at tilføje {blockchainDisplayName} -kæden til din tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
 msgid "Select chain types"
-msgstr "Valitse ketjutyypit"
+msgstr "Vælg kædetyper"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:71
 msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "Tämä lompakko tukee useita ketjuja. Valitse mihin ketjuun, johon haluat yhdistää."
+msgstr "Denne pung understøtter flere kæder. Vælg hvilken kæde du vil oprette forbindelse til."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
-msgstr "Epäonnistunut verkko, yritä swapisi uudelleen."
+msgstr "Mislykket netværk. Prøv venligst at bytte igen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:11
 msgid "Please reset your liquidity sources."
-msgstr "Ole hyvä ja nollaa likviditeetin lähteet."
+msgstr "Nulstil venligst dine likviditetskilder."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:12
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
-msgstr "Olet rajoittanut likviditeettilähteitä ja tämä saattaa johtaa Rangon löytämiseen ilman reittejä. Harkitse likviditeetin lähteiden uudelleenasettamista."
+msgstr "Du har begrænset likviditetskilderne, og det kan resultere i, at Rango ikke finder nogen ruter. Overvej venligst at nulstille dine likviditetskilder."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:17
 msgid "No Routes Found."
-msgstr "Reittejä Ei Löytynyt."
+msgstr "Ingen ruter fundet."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:18
 msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
-msgstr "Syyt miksi Rango ei löytänyt reittiä: alhainen likviditeetti token, hyvin alhainen syöte määrä tai ei reittejä käytettävissä valitun sisään- / ulostulo token yhdistelmä."
+msgstr "Årsager til, at Rango ikke kunne finde en rute: lav likviditet på token, meget lavt inputbeløb eller ingen tilgængelige ruter for den valgte input/output token-kombination."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:23
 msgid "Bridge Limit Error: Please increase your amount."
-msgstr "Bridge Limit virhe: Ole hyvä ja lisää summaasi."
+msgstr "Bridge Limit Error: Forøg venligst dit beløb."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:26
 msgid "Bridge Limit Error: Please decrease your amount."
-msgstr "Bridge Limit virhe: pienennä summaasi."
+msgstr "Bridge Limit Error: Reducer venligst dit beløb."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:31
 msgid "High Price Impact"
-msgstr "Korkean Hinnan Vaikutus"
+msgstr "Høj prispåvirkning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:32
 msgid "Price impact is too high!"
-msgstr "Hintavaikutus on liian suuri!"
+msgstr "Prispåvirkningen er for høj!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:33
 msgid "The price impact is significantly higher than the allowed amount."
-msgstr "Hintavaikutus on huomattavasti suurempi kuin sallittu määrä."
+msgstr "Prispåvirkningen er væsentligt højere end det tilladte beløb."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:36
 msgid "Confirm high price impact"
-msgstr "Vahvista hintavaikutus"
+msgstr "Bekræft høj prispåvirkning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:39
 msgid "Route updated and price impact is too high, try again later!"
-msgstr "Reitti päivitetty ja hintavaikutus on liian korkea, yritä myöhemmin uudelleen!"
+msgstr "Ruten er opdateret, og prispåvirkningen er for høj. Prøv igen senere!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:44
 msgid "USD Price Unknown"
-msgstr "Yhdysvaltain Hinta Tuntematon"
+msgstr "USD Pris ukendt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:45
 msgid "USD Price Unknown, Cannot calculate Price Impact."
-msgstr "USD Hinta tuntematon, Ei voida laskea Hintavaikutusta."
+msgstr "USD-pris ukendt, kan ikke beregne prispåvirkning."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:46
 msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
-msgstr "USD Hinta tuntematon, Ei voida laskea hintavaikutusta. Hintavaikutus voi olla tavallista suurempi. Oletko varma jatkamaan swap?"
+msgstr "USD-pris ukendt, kan ikke beregne prispåvirkning. Prispåvirkningen kan være højere end normalt. Er du sikker på at du vil fortsætte byttet?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:49
 msgid "Confirm USD Price Unknown"
-msgstr "Vahvista USD Hinta Tuntematon"
+msgstr "Bekræft USD-pris ukendt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
 #: widget/embedded/src/pages/Home.tsx:161
 msgid "Swap"
-msgstr "Vaihda"
+msgstr "Byt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
-msgstr "Vaihda joka tapauksessa"
+msgstr "Byt alligevel"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
 msgid "The route goes through Ethereum. Continue?"
-msgstr "Reitti kulkee Ethereumin kautta. Jatketaanko?"
+msgstr "Ruten går gennem Ethereum. Fortsætte?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
-msgstr "Reitti on päivitetty."
+msgstr "Ruten er blevet opdateret."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr "Lähtömääräksi muutettiin {newOutputAmount} ({percentageChange}% muutos)."
+msgstr "Outputmængde ændret til {newOutputAmount} ({percentageChange}% ændring)."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
 msgid "Route swappers has been updated."
-msgstr "Reitin vaihtajat on päivitetty."
+msgstr "Rutebyttere er blevet opdateret."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:22
 msgid "Route internal coins has been updated."
-msgstr "Reitin sisäiset kolikot on päivitetty."
+msgstr "Rutens interne mønter er blevet opdateret."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
 #: widget/embedded/src/pages/Routes.tsx:48
 msgid "Routes"
-msgstr "Reitit"
+msgstr "Ruter"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Inputs/Inputs.tsx:76
 msgid "From"
-msgstr "Alkaen"
+msgstr "Fra"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Inputs/Inputs.tsx:118
 msgid "To"
-msgstr "Vastaanottaja"
+msgstr "Til"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:49
 msgid "Light"
-msgstr "Vaalea"
+msgstr "Lys"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:58
 msgid "Dark"
-msgstr "Tumma"
+msgstr "Mørk"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:67
 msgid "Auto"
-msgstr "Automaattinen"
+msgstr "Auto"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:140
 msgid "Loading failed"
-msgstr "Lataus epäonnistui"
+msgstr "Indlæsning mislykkedes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:156
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Bridges"
-msgstr "Sillat"
+msgstr "Broer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:174
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 msgid "Exchanges"
-msgstr "Pörssit"
+msgstr "Udvekslinger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:195
 #: widget/embedded/src/pages/CustomTokensPage.tsx:90
 msgid "Custom Tokens"
-msgstr "Mukautetut Tokenit"
+msgstr "Brugerdefinerede tokens"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:214
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
-msgstr "Kieli"
+msgstr "Sprog"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:235
 msgid "Infinite approval"
-msgstr "Loputon hyväksyntä"
+msgstr "Uendelig godkendelse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:246
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
-msgstr "Päällekkäisen hyväksynnän käyttöönotto mahdollistaa rajoittamattoman pääsyn taustalla oleviin älykkäisiin sopimuksiin, jolloin ne voivat käyttää hyväksyttyä symbolin määrää rajoituksetta."
+msgstr "Aktivering af tilstanden 'Uendelig godkendelse' giver ubegrænset adgang til underliggende smarte kontrakter, hvilket giver dem mulighed for at bruge det godkendte tokenbeløb uden begrænsninger."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:266
 msgid "Theme"
-msgstr "Teema"
+msgstr "Tema"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:39
 msgid "Duplicate Token"
-msgstr "Duplicate Token"
+msgstr "Dublet token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:40
 msgid "The address you entered is duplicate, please enter a new address."
-msgstr "Antamasi osoite on kaksoiskappale, kirjoita uusi osoite."
+msgstr "Den adresse du indtastede er dublet, indtast venligst en ny adresse."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:46
 msgid "Token Already Exists"
-msgstr "Token Jo Olemassa"
+msgstr "Token findes allerede"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:47
 msgid "There's no need to add this token again because it already exists and is supported by us."
-msgstr "Tämän tunnuksen lisääminen uudelleen ei ole tarpeen, koska se on jo olemassa ja sitä tukee meidät."
+msgstr "Der er ingen grund til at tilføje dette token igen, fordi det allerede eksisterer og understøttes af os."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Token Not Found"
-msgstr "Tunnistetta Ei Löytynyt"
+msgstr "Token ikke fundet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
-msgstr "Anteeksi, tunnus ei löytynyt {blockchain} ketjusta annetun osoitteen kanssa. Varmista, että olet syöttänyt oikeanlaisen token osoitteen."
+msgstr "Beklager, der blev ikke fundet noget token på {blockchain} -kæden med den angivne adresse. Sørg for, at du har indtastet den rigtige token-adresse."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
 msgid "Network Error"
-msgstr "Verkon Virhe"
+msgstr "Netværksfejl"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
 #: widget/embedded/src/pages/CustomTokensPage.tsx:149
 msgid "Add Custom Token"
-msgstr "Lisää Mukautettu Tunnus"
+msgstr "Tilføj tilpasset token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
 msgid "Select chain"
-msgstr "Valitse ketju"
+msgstr "Vælg kæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
 msgid "Enter Address"
-msgstr "Syötä Osoite"
+msgstr "Indtast adresse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
 msgid "Enter token address"
-msgstr "Syötä tunnisteen osoite"
+msgstr "Indtast token-adresse"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
 msgid "Failed Network, Please retry."
-msgstr "Epäonnistunut verkko, yritä uudelleen."
+msgstr "Mislykket netværk. Prøv venligst igen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
 msgid "Add another custom token"
-msgstr "Lisää toinen mukautettu tunnus"
+msgstr "Tilføj endnu et brugerdefineret token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
 msgid "Confirm Swap"
-msgstr "Vahvista Vaihda"
+msgstr "Bekræft Swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:254
 msgid "Start Swap"
-msgstr "Käynnistä Vaihda"
+msgstr "Start Swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:282
 msgid "You get"
-msgstr "Sinä saat"
+msgstr "Du får"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
-msgstr "Etsi Pääsymerkki"
+msgstr "Søg token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:134
 msgid "No custom tokens"
-msgstr "Ei omia tunnuksia"
+msgstr "Ingen brugerdefinerede tokens"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "press the button to add your custom token"
-msgstr "paina painiketta lisätäksesi mukautetun tunnuksen"
+msgstr "tryk på knappen for at tilføje dit brugerdefinerede token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:158
 msgid "Delete Custom Token"
-msgstr "Poista Mukautettu Tunnus"
+msgstr "Slet brugerdefineret token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:160
 msgid "Are you sure you want to Delete this Token?"
-msgstr "Oletko varma, että haluat poistaa tämän polkun?"
+msgstr "Er du sikker på, at du vil slette dette token?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:59
 msgid "Complete"
-msgstr "Complete"
+msgstr "Komplet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Running"
-msgstr "Käynnissä"
+msgstr "Løb"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:65
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
-msgstr "Epäonnistui"
+msgstr "Mislykkedes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:149
 msgid "Clear"
-msgstr "Tyhjennä"
+msgstr "Klar"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:161
 msgid "Search Transaction"
-msgstr "Etsi Tapahtuma"
+msgstr "Søg transaktion"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:187
 msgid "No transactions"
-msgstr "Ei tapahtumia"
+msgstr "Ingen transaktioner"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
-msgstr "Tapahtumahistoriasi on tallennettu paikallisesti ja se tulee näkymään täällä swapin käynnistymisen jälkeen"
+msgstr "Din transaktionshistorik gemmes lokalt og vises her, når du har startet en swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:218
 msgid "Clear Transaction History"
-msgstr "Tyhjennä Tapahtuman Historia"
+msgstr "Ryd transaktionshistorik"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:222
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
-msgstr "Jatkaminen poistaa kaikki onnistuneet ja epäonnistuneet tapahtumat widgetistä. Haluatko jatkaa?"
+msgstr "Hvis du fortsætter, fjernes alle vellykkede og mislykkede transaktioner fra widgetten. Vil du fortsætte?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:229
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
-msgstr "Huom: Tämä ei poista tapahtumahistoriaasi ketjussa, vaan se poistaa ne vain täältä."
+msgstr "Bemærk: Dette sletter ikke din transaktionshistorik på kæden; det fjerner dem kun her."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:243
 msgid "Yes, Clear the history"
-msgstr "Kyllä, Tyhjennä historia"
+msgstr "Ja, Ryd historikken"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:56
 msgid "language"
-msgstr "kieli"
+msgstr "sprog"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Deselect all"
-msgstr "Poista kaikki valinnat"
+msgstr "Fravælg alle"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Select all"
-msgstr "Valitse kaikki"
+msgstr "Vælg alle"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
-msgstr "Hae {sourceType}"
+msgstr "Søg {sourceType}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
 msgid "Search Chain"
-msgstr "Etsi Ketju"
+msgstr "Søgekæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
 msgid "Source"
-msgstr "Lähde"
+msgstr "Kilde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
 msgid "Destination"
-msgstr "Kohde"
+msgstr "Bestemmelsessted"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
 msgid "Swap {type}"
-msgstr "Vaihda {type}"
+msgstr "Byt {type}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:45
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
-msgstr "Tällä hetkellä olet kampanjatilassa, jossa on rajoituksia likviditeetin lähteitä. Haluatko vaihtaa pois tästä tilasta ja hyödyntää kaikkia käytettävissä olevia likviditeetin lähteitä?"
+msgstr "I øjeblikket er du i kampagnetilstand med begrænsninger på likviditetskilder. Vil du skifte ud af denne tilstand og gøre brug af alle tilgængelige likviditetskilder?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
 msgid "The request ID is necessary to display the swap details."
-msgstr "Pyyntö ID on tarpeen näyttää swapin tiedot."
+msgstr "Anmodnings-id'et er nødvendigt for at vise bytteoplysningerne."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:67
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
-msgstr "Yhdistä Lompakot"
+msgstr "Tilslut tegnebøger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:82
 msgid "Choose a wallet to connect."
-msgstr "Valitse yhdistävä lompakko"
+msgstr "Vælg en tegnebog at forbinde."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:25
 msgid "This week"
-msgstr "Tällä viikolla"
+msgstr "Denne uge"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:32
 msgid "This month"
-msgstr "Tässä kuussa"
+msgstr "Denne måned"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
-msgstr "Tänä vuonna"
+msgstr "I år"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
-msgstr "Pakollinen: >= {min} {symbol}"
+msgstr "Påkrævet: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
-msgstr "Pakollinen: > {min} {symbol}"
+msgstr "Påkrævet: > {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:157
 msgid "Required: <= {max} {symbol}"
-msgstr "Pakollinen: <= {max} {symbol}"
+msgstr "Påkrævet: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:170
 msgid "Required: < {max} {symbol}"
-msgstr "Pakollinen: < {max} {symbol}"
+msgstr "Påkrævet: < {max} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:604
 msgid " for network fee"
-msgstr " verkkomaksua varten"
+msgstr " mod netværksafgift"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:607
 msgid " for swap"
-msgstr " vaihtamista varten"
+msgstr " til bytte"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:610
 msgid " for input and network fee"
-msgstr " syöttö- ja verkkomaksu"
+msgstr " for input og netværksgebyr"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr "Tarvitsee ≈ {requiredAmount} {symbol}{reason}, mutta sinulla on {currentAmount} {symbol} lompakossasi {blockchain} ."
+msgstr "Har brug for ≈ {requiredAmount} {symbol}{reason}, men du har {currentAmount} {symbol} i din {blockchain} tegnebog."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
 msgid "Waiting for connecting wallet"
-msgstr "Odotetaan lompakon yhdistämistä"
+msgstr "Venter på tilslutning af tegnebog"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:676
 msgid "Waiting for other running tasks to be finished"
-msgstr "Odotetaan, että muut käynnissä olevat tehtävät valmistuvat"
+msgstr "Venter på, at andre kørende opgaver er færdige"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:679
 msgid "Waiting for changing wallet network"
-msgstr "Odotetaan lompakon verkon vaihtamista"
+msgstr "Venter på at skifte tegnebogsnetværk"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:6
 msgid "Sunday"
-msgstr "Sunnuntai"
+msgstr "søndag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:7
 msgid "Monday"
-msgstr "Maanantai"
+msgstr "mandag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:8
 msgid "Tuesday"
-msgstr "Tiistai"
+msgstr "tirsdag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:9
 msgid "Wednesday"
-msgstr "Keskiviikko"
+msgstr "onsdag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:10
 msgid "Thursday"
-msgstr "Torstai"
+msgstr "torsdag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:11
 msgid "Friday"
-msgstr "Perjantai"
+msgstr "fredag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:12
 msgid "Saturday"
-msgstr "Lauantai"
+msgstr "lørdag"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
-msgstr "Palvelun Toimittaja"
+msgstr "Drevet af"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
-msgstr "Yhdistetty Tapahtuma"
+msgstr "Aggregeret transaktion"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
@@ -1249,81 +1249,81 @@ msgstr "{blockchainCategory}"
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
-msgstr "Vaihda kohtaan {fromChain} kautta {swapper}"
+msgstr "Byt på {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
-msgstr "Silta {toChain} :n kautta {swapper}"
+msgstr "Bro til {toChain} via {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
 msgid "Completed"
-msgstr "Valmis"
+msgstr "Færdiggjort"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
-msgstr "Toiminto käynnissä"
+msgstr "I gang"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
 msgid "Waiting for bridge transaction"
-msgstr "Odotetaan siltatapahtumaa"
+msgstr "Venter på brotransaktion"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
-msgstr "Yhdistetty"
+msgstr "Forbundet"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
-msgstr "Katkaise"
+msgstr "Afbryde"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
 msgid "Install"
-msgstr "Asenna"
+msgstr "Installere"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 msgid "Connecting ..."
-msgstr "Yhdistetään ..."
+msgstr "Opretter forbindelse..."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Connecting"
-msgstr "Yhdistetään"
+msgstr "Forbinder"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Disconnected"
-msgstr "Yhteys Katkaistu"
+msgstr "Afbrudt"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
 msgid "you need to pass a correct state to Wallet."
-msgstr "sinun täytyy siirtää oikea tila Walletiin."
+msgstr "du skal sende en korrekt tilstand til Wallet."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Notifications/NotificationNotFound.tsx:15
 msgid "There are no notifications."
-msgstr "Ilmoituksia ei ole."
+msgstr "Der er ingen meddelelser."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Notifications/Notifications.tsx:39
 msgid "Clear all"
-msgstr "Tyhjennä kaikki"
+msgstr "Ryd alle"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
 msgid "Balance"
-msgstr "Saldo"
+msgstr "Balance"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
 msgid "Max"
-msgstr "Maksimi"
+msgstr "Maks"
 

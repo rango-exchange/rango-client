@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-11-04 09:42\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1178,7 +1178,7 @@ msgstr " per input e canone di rete"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "Servono ≈ {requiredAmount} {symbol}{reason}, ma hai {currentAmount} {symbol} nel tuo portafoglio {blockchain} ."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
