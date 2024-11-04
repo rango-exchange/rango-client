@@ -22,6 +22,7 @@ export function Tooltip(props: PropsWithChildren<TooltipPropTypes>) {
     styles,
     align,
     alignOffset,
+    collisionPadding,
   } = props;
 
   return (
@@ -36,6 +37,7 @@ export function Tooltip(props: PropsWithChildren<TooltipPropTypes>) {
             align={align}
             side={side}
             sideOffset={sideOffset}
+            collisionPadding={collisionPadding}
             collisionBoundary={container}>
             <TooltipTypography
               css={styles?.content}
