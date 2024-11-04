@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-11-04 09:42\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -476,7 +476,7 @@ msgstr "La transaction n'a pas été envoyée."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
-msgstr ""
+msgstr "{amount} {symbol} sur {blockchain} reste dans votre portefeuille."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
@@ -813,7 +813,7 @@ msgstr "La route a été mise à jour."
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr ""
+msgstr "La quantité de sortie a été modifiée à {newOutputAmount} ({percentageChange}%)."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
@@ -1178,7 +1178,7 @@ msgstr " pour les frais d'entrée et de réseau"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "Nécessite ≈ {requiredAmount} {symbol}{reason}, mais vous avez {currentAmount} {symbol} dans votre portefeuille {blockchain} ."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
@@ -1243,7 +1243,7 @@ msgstr "Transaction agrégée"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
-msgstr ""
+msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75

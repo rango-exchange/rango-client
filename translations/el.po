@@ -8,7 +8,7 @@ msgstr ""
 "Language: el\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-09 12:58\n"
+"PO-Revision-Date: 2024-11-04 09:42\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -50,7 +50,7 @@ msgstr "Όλα"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
-msgstr ""
+msgstr "Περισσότερα +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
@@ -228,7 +228,7 @@ msgstr "Σφάλμα Ορίου Γέφυρας"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:240
 msgid "Yours: {amount} {symbol}"
-msgstr ""
+msgstr "Δικά σας: {amount} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:261
@@ -238,7 +238,7 @@ msgstr "Ελάχιστη απαιτούμενη ολίσθηση: {minRequiredSl
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:282
 msgid "Yours: {userSlippage}"
-msgstr ""
+msgstr "Δικά σας: {userSlippage}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:395
@@ -361,7 +361,7 @@ msgstr "Αντίκτυπος τιμής"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr ""
+msgstr "Πρέπει να αυξήσετε την ολίσθηση σε τουλάχιστον {minRequiredSlippage} για αυτήν τη διαδρομή."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
@@ -398,7 +398,7 @@ msgstr "Χαμηλή ολίσθηση"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
 msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr ""
+msgstr " Προσοχή, η ολίσθησή σας είναι υψηλή (={userSlippage}). Η συναλλαγή σας μπορεί να είναι μπροστινή."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
@@ -461,7 +461,7 @@ msgstr "Δε βρέθηκε"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 msgid "Swap with request ID = {requestId} not found."
-msgstr ""
+msgstr "Ανταλλαγή με το αναγνωριστικό αιτήματος = {requestId} δεν βρέθηκε."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
@@ -667,7 +667,7 @@ msgstr "Εισαγωγή Ευρετηρίου"
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
-msgstr ""
+msgstr "Προσθήκη {blockchainDisplayName} Αλυσίδα"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
@@ -813,7 +813,7 @@ msgstr "Η διαδρομή έχει ενημερωθεί."
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr ""
+msgstr "Το ποσό εξόδου άλλαξε σε {newOutputAmount} ({percentageChange}% αλλαγή)."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
@@ -1082,7 +1082,7 @@ msgstr "Επιλογή όλων"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
-msgstr ""
+msgstr "Αναζήτηση {sourceType}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
@@ -1102,7 +1102,7 @@ msgstr "Προορισμός"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
 msgid "Swap {type}"
-msgstr ""
+msgstr "Ανταλλαγή {type}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:45
@@ -1143,12 +1143,12 @@ msgstr "Αυτό το έτος"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:129
 msgid "Required: >= {min} {symbol}"
-msgstr ""
+msgstr "Απαιτείται: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:142
 msgid "Required: > {min} {symbol}"
-msgstr ""
+msgstr "Απαιτείται: > {min} {symbol}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:157
@@ -1178,7 +1178,7 @@ msgstr " για εισροή και τέλη δικτύου"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:612
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
-msgstr ""
+msgstr "Χρειάζεται ≈ {requiredAmount} {symbol}{reason}, αλλά έχετε {currentAmount} {symbol} στο {blockchain} πορτοφόλι σας."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:672
@@ -1243,7 +1243,7 @@ msgstr "Συγκεντρωτική Συναλλαγή"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
-msgstr ""
+msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:75
@@ -1254,7 +1254,7 @@ msgstr "Εναλλαγή στο {fromChain} μέσω {swapper}"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
-msgstr ""
+msgstr "Γέφυρα στο {toChain} μέσω {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
