@@ -110,11 +110,11 @@ export const BarChart = (props: BarChartPropTypes) => {
 
   const totalValue = Math.max(...totalValueDates);
 
+  const scaledMaxValue = totalValue + totalValue / 5;
   const valueScale = scaleLinear<number>({
-    domain: [0, totalValue + totalValue / 5],
+    domain: [0, scaledMaxValue < 0.5 ? 0.5 : scaledMaxValue],
     nice: true,
   });
-
   const colorScale = scaleOrdinal<string, string>({
     domain: buckets,
     range: DEFAULT_CHART_COLORS,
