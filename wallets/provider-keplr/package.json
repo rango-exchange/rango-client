@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-keplr",
-  "version": "0.38.1",
+  "version": "0.38.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
