@@ -43,7 +43,8 @@
     "@walletconnect/types": "^2.11.2"
   },
   "resolutions": {
-    "protobufjs": "^6.11.4"
+    "protobufjs": "^6.11.4",
+    "@keplr-wallet/cosmos/@keplr-wallet/types/secretjs/protobufjs": "^6.14.4"
   },
   "publishConfig": {
     "access": "public"
