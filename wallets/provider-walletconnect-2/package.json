@@ -42,6 +42,9 @@
     "@walletconnect/modal": "^2.6.2",
     "@walletconnect/types": "^2.11.2"
   },
+  "resolutions": {
+    "protobufjs": "~6.11.4"
+  },
   "publishConfig": {
     "access": "public"
   }

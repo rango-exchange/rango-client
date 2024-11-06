@@ -118,7 +118,8 @@
     "vm-browserify": "^1.1.2"
   },
   "resolutions": {
-    "react-refresh": "0.9.0"
+    "react-refresh": "0.9.0",
+    "protobufjs": "^6.11.4"
   },
   "@parcel/resolver-default": {
     "packageExports": true

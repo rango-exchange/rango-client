@@ -31,6 +31,9 @@
   "devDependencies": {
     "@keplr-wallet/types": "^0.9.12"
   },
+  "resolutions": {
+    "protobufjs": "^6.11.4"
+  },
   "publishConfig": {
     "access": "public"
   }
