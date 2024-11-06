@@ -15,7 +15,7 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.38.4",
+    "@rango-dev/provider-all": "^0.38.5",
     "@rango-dev/ui": "^0.40.0",
     "@rango-dev/wallets-react": "^0.24.0",
     "@rango-dev/wallets-shared": "^0.38.0",
