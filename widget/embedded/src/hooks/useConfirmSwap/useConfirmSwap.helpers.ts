@@ -180,6 +180,17 @@ export function handleQuoteErrors(error: any): ConfirmSwapFetchResult {
     };
   }
 
+  if (error?.code === 'ERR_BAD_REQUEST') {
+    return {
+      swap: null,
+      error: {
+        type: QuoteErrorType.NO_RESULT,
+        diagnosisMessage: error.response.data.error,
+      },
+      warnings: null,
+    };
+  }
+
   return {
     swap: null,
     error: {
