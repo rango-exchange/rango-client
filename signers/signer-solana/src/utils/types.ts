@@ -1,5 +1,4 @@
 import type {
-  BlockhashWithExpiryBlockHeight,
   Connection,
   PublicKey,
   SendOptions,
@@ -39,8 +38,7 @@ export interface SolanaExternalProvider {
 
 export type TransactionSenderAndConfirmationWaiterArgs = {
   connection: Connection;
-  serializedTransaction: Buffer;
-  blockhashWithExpiryBlockHeight: BlockhashWithExpiryBlockHeight;
+  serializedTransaction: SerializedTransaction;
 };
 
 export type TransactionSenderAndConfirmationWaiterResponse = {

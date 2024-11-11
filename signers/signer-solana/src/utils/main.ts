@@ -20,19 +20,14 @@ export const generalSolanaTransactionExecutor = async (
   const latestBlock = await connection.getLatestBlockhash('confirmed');
 
   const finalTx = prepareTransaction(tx, latestBlock.blockhash);
-  const raw = await DefaultSolanaSigner(finalTx);
+  const serializedTransaction = await DefaultSolanaSigner(finalTx);
 
   // We first simulate whether the transaction would be successful
   await simulateTransaction(finalTx, tx.txType);
 
-  const serializedTransaction = Buffer.from(raw);
   const { txId, txResponse } = await transactionSenderAndConfirmationWaiter({
     connection,
     serializedTransaction,
-    blockhashWithExpiryBlockHeight: {
-      blockhash: latestBlock.blockhash,
-      lastValidBlockHeight: latestBlock.lastValidBlockHeight,
-    },
   });
   if (!txId || !txResponse) {
     throw new SignerError(

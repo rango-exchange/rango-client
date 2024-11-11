@@ -47,13 +47,9 @@ Currecntly all Rango Solana transactions are Versioned (and serialized), only So
 
 5. Send and confirm the transaction (similar to [jupiter suggested code](https://github.com/jup-ag/jupiter-quote-api-node/blob/main/example/utils/transactionSender.ts))
 
-   ````ts
+   ```ts
    const { txId, txResponse } = await transactionSenderAndConfirmationWaiter({
-    connection,
-    serializedTransaction,
-    blockhashWithExpiryBlockHeight: {
-      blockhash: latestBlock.blockhash,
-      lastValidBlockHeight: latestBlock.lastValidBlockHeight,
-    },
-   });   ```
-   ````
+     connection,
+     serializedTransaction,
+   });
+   ```
