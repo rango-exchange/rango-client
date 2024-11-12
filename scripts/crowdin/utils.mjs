@@ -1,4 +1,5 @@
 import {TOKEN } from "./constants.mjs";
+import { CrowdinError } from "../common/errors.mjs";
 
 // Reusable function to handle fetch requests with authorization headers
 export const fetchDataWithAuthorization = async (url, method = 'GET', body = null) => {

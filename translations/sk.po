@@ -1,0 +1,1329 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-11-06 17:24+0330\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sk\n"
+"Project-Id-Version: rango\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-04 09:42\n"
+"Last-Translator: \n"
+"Language-Team: Slovak\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
+"X-Crowdin-Project: rango\n"
+"X-Crowdin-Project-ID: 622238\n"
+"X-Crowdin-Language: sk\n"
+"X-Crowdin-File: en.po\n"
+"X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
+#: widget/embedded/src/components/TokenList/TokenList.tsx:286
+#: widget/embedded/src/pages/HistoryPage.tsx:186
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
+msgid "No results found"
+msgstr "Nenašli sa žiadne výsledky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
+#: widget/embedded/src/components/TokenList/TokenList.tsx:287
+#: widget/embedded/src/pages/HistoryPage.tsx:193
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
+msgid "Try using different keywords"
+msgstr "Skúste použiť iné kľúčové slová"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+msgid "Select Chain"
+msgstr "Vyberte položku Reťaz"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+msgid "All"
+msgstr "Všetky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+msgid "More +{count}"
+msgstr "Viac +{count}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
+msgid "Activate this tab"
+msgstr "Aktivujte túto kartu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:22
+msgid "Another tab is open and handles transactions."
+msgstr "Ďalšia karta je otvorená a spracováva transakcie."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
+msgid "Activate current tab"
+msgstr "Aktivovať aktuálnu kartu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
+msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
+msgstr "V súčasnosti sú niektoré transakcie spustené a spracovávané inou kartou prehliadača. Ak aktivujete túto kartu, platnosť všetkých transakcií, ktoré sa už nachádzajú v kroku podpisu transakcie, vyprší."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:349
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:116
+msgid "Confirm"
+msgstr "Potvrďte"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
+msgid "Your {blockchainName} wallets"
+msgstr "Vaše {blockchainName} peňaženky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
+msgid "Insufficient account balance"
+msgstr "Nedostatočný zostatok na účte"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:394
+msgid "Proceed anyway"
+msgstr "Aj tak pokračujte"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
+msgid "You need to connect a {blockchainName} wallet."
+msgstr "Musíte pripojiť {blockchainName} peňaženku."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
+msgid "Add {chain} chain"
+msgstr "Pridajte reťazec {chain}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+msgid "Show more wallets"
+msgstr "Zobraziť viac peňaženiek"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:113
+msgid "Send to a different address"
+msgstr "Odoslať na inú adresu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
+msgid "Enter {blockchainName} address"
+msgstr "Zadajte {blockchainName} adresu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
+msgid "Address {destination} doesn't match the blockchain address pattern."
+msgstr "Adresa {destination} sa nezhoduje so vzorom adresy blockchain."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+msgid "via"
+msgstr "cez"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "Tento token sa nezobrazuje v aktívnych zoznamoch tokenov. Uistite sa, že ide o token, s ktorým chcete obchodovať."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+msgid "Import"
+msgstr "Importovať"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
+msgid "Status"
+msgstr "Stav"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/pages/SettingsPage.tsx:55
+msgid "Reset"
+msgstr "Resetovať"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:18
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
+msgid "Refresh"
+msgstr "Obnoviť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
+#: widget/ui/src/containers/Notifications/Notifications.tsx:35
+msgid "Notifications"
+msgstr "Upozornenia"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:79
+#: widget/embedded/src/pages/SettingsPage.tsx:38
+msgid "Settings"
+msgstr "Nastavenia"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
+#: widget/embedded/src/pages/HistoryPage.tsx:139
+msgid "History"
+msgstr "História"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
+#: widget/embedded/src/constants/messages.ts:5
+msgid "Connect Wallet"
+msgstr "Pripojiť Peňaženku"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/utils/date.ts:18
+#: widget/embedded/src/utils/time.ts:22
+msgid "Today"
+msgstr "Dnes"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:424
+msgid "Swaps steps"
+msgstr "Vymieňa kroky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
+msgid "Retry"
+msgstr "Skúste to znova"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:149
+msgid "Slippage Error"
+msgstr "Chyba sklzu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:150
+msgid "Slippage Warning"
+msgstr "Upozornenie na sklz"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:153
+msgid "Bridge Limit Error"
+msgstr "Chyba limitu mosta"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:240
+msgid "Yours: {amount} {symbol}"
+msgstr "Váš: {amount} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:261
+msgid "Minimum required slippage: {minRequiredSlippage}"
+msgstr "Minimálny požadovaný sklz: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:282
+msgid "Yours: {userSlippage}"
+msgstr "Váš: {userSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:395
+msgid "See All Routes"
+msgstr "Pozrite si všetky trasy"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
+msgid "View more info"
+msgstr "Zobraziť viac informácií"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+msgid "Gas & Fee Explanation"
+msgstr "Vysvetlenie plynu a poplatkov"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:107
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
+msgid "Details"
+msgstr "Podrobnosti"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:146
+msgid "Total Payable Fee"
+msgstr "Celkový splatný poplatok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
+msgid "Hide non-payable fees"
+msgstr "Skryť neplatiteľné poplatky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:167
+msgid "Show non-payable fees"
+msgstr "Ukážte nezaplatiteľné poplatky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
+msgid "Description"
+msgstr "Popis"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
+msgid "The following fees are considered in the transaction output and\n"
+"                you won’t need to pay extra gas for them."
+msgstr "Nasledujúce poplatky sú zohľadnené vo výstupe transakcie a\n"
+"                za ne nebudete musieť platiť extra plyn."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
+msgid "Swap input"
+msgstr "Vymeňte vstup"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+msgid "Estimated output"
+msgstr "Odhadovaný výstup"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
+msgid "Via:"
+msgstr "cez:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
+msgid "Chains:"
+msgstr "reťaze:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/Quotes.tsx:77
+msgid "Sort by"
+msgstr "Zoradiť podľa"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
+msgid "Smart Routing"
+msgstr "Inteligentné smerovanie"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
+msgid "Lowest Fee"
+msgstr "Najnižší poplatok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
+msgid "Fastest Transfer"
+msgstr "Najrýchlejší prevod"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
+msgid "Maximum Return"
+msgstr "Maximálna návratnosť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
+msgid "Maximum Output"
+msgstr "Maximálny výkon"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+msgid "Swapping"
+msgstr "Výmena"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+msgid "Gas cost"
+msgstr "Náklady na plyn"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+msgid "Receiving"
+msgstr "Prijímanie"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+msgid "Price impact"
+msgstr "Vplyv na cenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
+msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "Pre túto trasu musíte zvýšiť sklz aspoň na {minRequiredSlippage} ."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
+msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "Na tejto trase vám odporúčame zvýšiť sklz aspoň na {minRequiredSlippage} ."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
+msgid "Caution, your slippage is high."
+msgstr "Pozor, váš sklz je vysoký."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
+msgid "Change"
+msgstr "Zmeniť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
+msgid "Change settings"
+msgstr "Zmeňte nastavenia"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
+msgid "High slippage"
+msgstr "Vysoký sklz"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
+msgid "Low slippage"
+msgstr "Nízky sklz"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
+msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
+msgstr " Pozor, váš sklz je vysoký (={userSlippage}). Váš obchod môže byť front run."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Confirm anyway"
+msgstr "Napriek tomu potvrďte"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something went wrong"
+msgstr "Niečo sa pokazilo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something went wrong. Please refresh the app."
+msgstr "Niečo sa pokazilo. Obnovte aplikáciu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+msgid "Slippage tolerance per swap"
+msgstr "Tolerancia sklzu na výmenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+msgid "Custom"
+msgstr "Vlastné"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
+msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
+msgstr "Vaša transakcia bude vrátená, ak sa cena nepriaznivo zmení o viac ako toto percento."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
+#: widget/embedded/src/containers/Settings/Lists.tsx:245
+msgid "Warning"
+msgstr "POZOR"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
+msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
+msgstr "Toto nastavenie sa aplikuje na každý krok (napr. 1Inch, Thorchain atď.), čo znamená, že sa vráti iba tento konkrétny krok, nie celá trasa."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
+msgid "Swap Details"
+msgstr "Podrobnosti o výmene"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+msgid "Request ID"
+msgstr "ID žiadosti"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+msgid "Not found"
+msgstr "Nenájdené"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+msgid "Swap with request ID = {requestId} not found."
+msgstr "Zámena s ID požiadavky = {requestId} sa nenašla."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
+msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
+msgstr "Dostali ste {amount} {token} do {conciseAddress} peňaženky v reťazci {chain} ."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
+msgid "Transaction was not sent."
+msgstr "Transakcia nebola odoslaná."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+msgid "{amount} {symbol} on {blockchain} remains in your wallet."
+msgstr "{amount} {symbol} na {blockchain} zostáva vo vašej peňaženke."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+msgid "Delete"
+msgstr "Odstrániť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:304
+msgid "Try again"
+msgstr "Skúste to znova"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:322
+msgid "Copied To Clipboard"
+msgstr "Skopírované do schránky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:323
+msgid "Copy Request ID"
+msgstr "Skopírovať ID žiadosti"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:346
+msgid "View on Rango Explorer"
+msgstr "Zobraziť na Rango Explorer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+msgid "Finished at"
+msgstr "Dokončené o"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+msgid "Created at"
+msgstr "Vytvorené o"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
+msgid "View transaction"
+msgstr "Zobraziť transakciu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+msgid "Connect"
+msgstr "Pripojte sa"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
+msgid "Swap Successful"
+msgstr "Výmena bola úspešná"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
+msgid "Transaction Failed"
+msgstr "Transakcia zlyhala"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:87
+msgid "Done"
+msgstr "Hotovo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:100
+msgid "Diagnosis"
+msgstr "Diagnóza"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:112
+msgid "See Details"
+msgstr "Pozri Podrobnosti"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:13
+msgid "Cancel Swap"
+msgstr "Zrušiť výmenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:14
+msgid "Are you sure you want to cancel this swap?"
+msgstr "Naozaj chcete zrušiť túto výmenu?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
+msgid "Yes, Cancel it"
+msgstr "Áno, zrušiť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
+#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+msgid "No, Continue"
+msgstr "Nie, pokračovať"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
+msgid "Delete Transaction"
+msgstr "Odstrániť transakciu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:14
+msgid "Are you sure you want to delete this swap?"
+msgstr "Naozaj chcete odstrániť túto výmenu?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
+#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+msgid "Yes, Delete it"
+msgstr "Áno, vymazať"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
+#: widget/embedded/src/pages/HistoryPage.tsx:253
+msgid "No, Cancel"
+msgstr "Nie, zrušiť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
+msgid "Change Network"
+msgstr "Zmeniť sieť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
+msgid "Network Changed"
+msgstr "Sieť zmenená"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:271
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+msgid "Select Token"
+msgstr "Vyberte položku Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+msgid "Wallet Connected"
+msgstr "Peňaženka je pripojená"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+msgid "Your wallet is connected, you can use it to swap."
+msgstr "Vaša peňaženka je pripojená, môžete ju použiť na výmenu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+msgid "Failed to Connect"
+msgstr "Nepodarilo sa pripojiť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+msgid "Your wallet is not connected. Please try again."
+msgstr "Vaša peňaženka nie je pripojená. Skúste to znova."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+msgid "Connecting to your wallet"
+msgstr "Pripojenie k vašej peňaženke"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+msgid "Click connect in your wallet popup."
+msgstr "Vo vyskakovacom okne peňaženky kliknite na Pripojiť."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+msgid "Select Derivation Path"
+msgstr "Vyberte cestu odvodenia"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "Ak sa chcete pripojiť k {type}, musíte najprv vybrať cestu odvodenia"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+msgid "Choose Derivation Path Template"
+msgstr "Vyberte možnosť Šablóna odvodenej cesty"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+msgid "Enter Path"
+msgstr "Zadajte cestu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+msgid "Enter Index"
+msgstr "Zadajte index"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
+msgid "Add {blockchainDisplayName} Chain"
+msgstr "Pridajte reťazec {blockchainDisplayName}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
+msgstr "Chceli by ste do svojej peňaženky pridať experimentálny reťazec {blockchainDisplayName} ?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
+msgid "Please approve the experimental chain pop-up in your wallet."
+msgstr "Schváľte kontextové okno experimentálneho reťazca vo vašej peňaženke."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
+msgid "{blockchainDisplayName} Chain Added"
+msgstr "{blockchainDisplayName} Pridaný reťazec"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
+msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
+msgstr "Reťazec {blockchainDisplayName} bol úspešne pridaný do vašej peňaženky."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
+msgid "Request Rejected"
+msgstr "Žiadosť zamietnutá"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
+msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
+msgstr "Odmietli ste pridať reťazec {blockchainDisplayName} do vašej peňaženky."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
+msgid "Select chain types"
+msgstr "Vyberte typy reťazí"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:71
+msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
+msgstr "Táto peňaženka podporuje viacero reťazí. Vyberte reťazec, ku ktorému sa chcete pripojiť."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:9
+msgid "Failed Network, Please retry your swap."
+msgstr "Sieť zlyhala, skúste výmenu zopakovať."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:11
+msgid "Please reset your liquidity sources."
+msgstr "Obnovte zdroje likvidity."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:12
+msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
+msgstr "Obmedzili ste zdroje likvidity a to môže viesť k tomu, že Rango nenájde žiadne cesty. Zvážte resetovanie zdrojov likvidity."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:17
+msgid "No Routes Found."
+msgstr "Nenašli sa žiadne trasy."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:18
+msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
+msgstr "Dôvody, prečo Rango nemohol nájsť cestu: nízka likvidita tokenu, veľmi nízka vstupná suma alebo žiadne dostupné cesty pre zvolenú kombináciu vstupných/výstupných tokenov."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:23
+msgid "Bridge Limit Error: Please increase your amount."
+msgstr "Chyba limitu mosta: Zvýšte svoju sumu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:26
+msgid "Bridge Limit Error: Please decrease your amount."
+msgstr "Chyba limitu mosta: Znížte sumu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:31
+msgid "High Price Impact"
+msgstr "Vysoký vplyv na cenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:32
+msgid "Price impact is too high!"
+msgstr "Vplyv na cenu je príliš vysoký!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:33
+msgid "The price impact is significantly higher than the allowed amount."
+msgstr "Cenový vplyv je výrazne vyšší ako povolená suma."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:36
+msgid "Confirm high price impact"
+msgstr "Potvrďte vysoký cenový vplyv"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:39
+msgid "Route updated and price impact is too high, try again later!"
+msgstr "Trasa bola aktualizovaná a vplyv na cenu je príliš vysoký, skúste to znova neskôr!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:44
+msgid "USD Price Unknown"
+msgstr "Cena v USD neznáma"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:45
+msgid "USD Price Unknown, Cannot calculate Price Impact."
+msgstr "Cena v USD nie je známa, vplyv na cenu sa nedá vypočítať."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:46
+msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
+msgstr "Cena v USD nie je známa, nie je možné vypočítať vplyv na cenu. Cenový vplyv môže byť vyšší ako zvyčajne. Naozaj chcete pokračovať vo výmene?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:49
+msgid "Confirm USD Price Unknown"
+msgstr "Potvrdenie ceny v USD nie je známe"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:6
+#: widget/embedded/src/pages/Home.tsx:161
+msgid "Swap"
+msgstr "Vymeňte"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:7
+msgid "Swap anyway"
+msgstr "Aj tak vymeniť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:8
+msgid "The route goes through Ethereum. Continue?"
+msgstr "Trasa vedie cez Ethereum. Pokračovať?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:10
+msgid "Route has been updated."
+msgstr "Trasa bola aktualizovaná."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:12
+msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+msgstr "Výstupné množstvo zmenené na {newOutputAmount} ({percentageChange}% zmena)."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:20
+msgid "Route swappers has been updated."
+msgstr "Výmenníky trás boli aktualizované."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:22
+msgid "Route internal coins has been updated."
+msgstr "Trasa interných mincí bola aktualizovaná."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
+#: widget/embedded/src/pages/Routes.tsx:48
+msgid "Routes"
+msgstr "Trasy"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
+msgid "From"
+msgstr "Od"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:118
+msgid "To"
+msgstr "Komu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:49
+msgid "Light"
+msgstr "Svetlo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:58
+msgid "Dark"
+msgstr "Tmavý"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:67
+msgid "Auto"
+msgstr "Auto"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:140
+msgid "Loading failed"
+msgstr "Načítanie zlyhalo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:156
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+msgid "Bridges"
+msgstr "Mosty"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:174
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+msgid "Exchanges"
+msgstr "Výmeny"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/pages/CustomTokensPage.tsx:90
+msgid "Custom Tokens"
+msgstr "Vlastné tokeny"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:214
+#: widget/embedded/src/pages/LanguagePage.tsx:43
+msgid "Language"
+msgstr "Jazyk"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:235
+msgid "Infinite approval"
+msgstr "Nekonečný súhlas"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:246
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
+msgstr "Povolenie režimu „Nekonečné schválenie“ poskytuje neobmedzený prístup k základným inteligentným zmluvám, čo im umožňuje využívať schválenú sumu tokenu bez obmedzení."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:266
+msgid "Theme"
+msgstr "Téma"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+msgid "Duplicate Token"
+msgstr "Duplicitný token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+msgid "The address you entered is duplicate, please enter a new address."
+msgstr "Zadaná adresa je duplicitná, zadajte novú adresu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+msgid "Token Already Exists"
+msgstr "Token už existuje"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+msgid "There's no need to add this token again because it already exists and is supported by us."
+msgstr "Tento token nie je potrebné znova pridávať, pretože už existuje a je nami podporovaný."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+msgid "Token Not Found"
+msgstr "Token sa nenašiel"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
+msgstr "Ľutujeme, v reťazci {blockchain} so zadanou adresou sa nenašiel žiadny token. uistite sa, že ste zadali správnu adresu tokenu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
+msgid "Network Error"
+msgstr "Chyba siete"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
+#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+msgid "Add Custom Token"
+msgstr "Pridať vlastný token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+msgid "Select chain"
+msgstr "Vyberte reťaz"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+msgid "Enter Address"
+msgstr "Zadajte adresu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+msgid "Enter token address"
+msgstr "Zadajte adresu tokenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+msgid "Failed Network, Please retry."
+msgstr "Sieť zlyhala, skúste to znova."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+msgid "Add another custom token"
+msgstr "Pridajte ďalší vlastný token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
+msgid "Confirm Swap"
+msgstr "Potvrďte Výmenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:254
+msgid "Start Swap"
+msgstr "Spustite výmenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:282
+msgid "You get"
+msgstr "dostaneš"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:102
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
+msgid "Search Token"
+msgstr "Vyhľadávací token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+msgid "No custom tokens"
+msgstr "Žiadne vlastné tokeny"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+msgid "press the button to add your custom token"
+msgstr "stlačte tlačidlo a pridajte svoj vlastný token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+msgid "Delete Custom Token"
+msgstr "Odstrániť vlastný token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+msgid "Are you sure you want to Delete this Token?"
+msgstr "Naozaj chcete odstrániť tento token?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:59
+msgid "Complete"
+msgstr "Dokončiť"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:63
+msgid "Running"
+msgstr "Beh"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
+msgid "Failed"
+msgstr "Nepodarilo sa"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:149
+msgid "Clear"
+msgstr "Jasné"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:161
+msgid "Search Transaction"
+msgstr "Vyhľadať transakciu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:187
+msgid "No transactions"
+msgstr "Žiadne transakcie"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:194
+msgid "Your transaction history is stored locally and will appear here after you start a swap"
+msgstr "Vaša história transakcií je uložená lokálne a zobrazí sa tu po spustení swapu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:218
+msgid "Clear Transaction History"
+msgstr "Vymazať históriu transakcií"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:222
+msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
+msgstr "Pokračovaním sa z miniaplikácie odstránia všetky úspešné a neúspešné transakcie. Chcete pokračovať?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:229
+msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
+msgstr "Poznámka: Týmto sa nevymaže vaša história transakcií v reťazci; odstráni ich len tu."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:243
+msgid "Yes, Clear the history"
+msgstr "Áno, vymazať históriu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:56
+msgid "language"
+msgstr "jazyk"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "Zrušte výber všetkých"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "Vybrať všetko"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+msgid "Search {sourceType}"
+msgstr "Hľadať {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+msgid "Search Chain"
+msgstr "Vyhľadávací reťazec"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+msgid "Source"
+msgstr "Zdroj"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
+msgid "Destination"
+msgstr "Cieľ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
+msgid "Swap {type}"
+msgstr "Vymeňte {type}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:45
+msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+msgstr "Momentálne ste v režime kampane s obmedzeniami na zdroje likvidity. Chceli by ste z tohto režimu vypnúť a využiť všetky dostupné zdroje likvidity?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
+msgid "The request ID is necessary to display the swap details."
+msgstr "ID požiadavky je potrebné na zobrazenie podrobností o výmene."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
+msgid "Connect Wallets"
+msgstr "Pripojte Peňaženky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:82
+msgid "Choose a wallet to connect."
+msgstr "Vyberte si peňaženku, ktorú chcete pripojiť."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:25
+msgid "This week"
+msgstr "Tento týždeň"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr "Tento mesiac"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:39
+msgid "This year"
+msgstr "Tento rok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:129
+msgid "Required: >= {min} {symbol}"
+msgstr "Povinné: >= {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:142
+msgid "Required: > {min} {symbol}"
+msgstr "Povinné: > {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:157
+msgid "Required: <= {max} {symbol}"
+msgstr "Povinné: <= {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:170
+msgid "Required: < {max} {symbol}"
+msgstr "Povinné: < {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:604
+msgid " for network fee"
+msgstr " za sieťový poplatok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:607
+msgid " for swap"
+msgstr " na výmenu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:610
+msgid " for input and network fee"
+msgstr " za vstupný a sieťový poplatok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:612
+msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
+msgstr "Potrebujete ≈ {requiredAmount} {symbol}{reason}, ale vo svojej {blockchain} peňaženke máte {currentAmount} {symbol} ."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:672
+msgid "Waiting for connecting wallet"
+msgstr "Čaká sa na pripojenie peňaženky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:676
+msgid "Waiting for other running tasks to be finished"
+msgstr "Čaká sa na dokončenie ostatných spustených úloh"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:679
+msgid "Waiting for changing wallet network"
+msgstr "Čaká sa na zmenu siete peňaženky"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:6
+msgid "Sunday"
+msgstr "nedeľu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:7
+msgid "Monday"
+msgstr "pondelok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:8
+msgid "Tuesday"
+msgstr "utorok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:9
+msgid "Wednesday"
+msgstr "streda"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:10
+msgid "Thursday"
+msgstr "štvrtok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:11
+msgid "Friday"
+msgstr "piatok"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:12
+msgid "Saturday"
+msgstr "sobota"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
+msgid "Powered By"
+msgstr "Beží na"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "Agregovaná transakcia"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+msgid "{blockchainCategory}"
+msgstr "{blockchainCategory}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+msgid "Swap on {fromChain} via {swapper}"
+msgstr "Vymeňte na {fromChain} cez {swapper}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+msgid "Bridge to {toChain} via {swapper}"
+msgstr "Most na {toChain} cez {swapper}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Completed"
+msgstr "Dokončené"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
+msgid "In progress"
+msgstr "Prebieha"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+msgid "Waiting for bridge transaction"
+msgstr "Čaká sa na preklenovaciu transakciu"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "Pripojené"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
+msgid "Disconnect"
+msgstr "Odpojiť"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Install"
+msgstr "Inštalovať"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+msgid "Connecting ..."
+msgstr "Pripája sa..."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+msgid "Connecting"
+msgstr "Pripája sa"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+msgid "Disconnected"
+msgstr "Odpojené"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
+msgid "you need to pass a correct state to Wallet."
+msgstr "musíte do Peňaženky odovzdať správny stav."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Notifications/NotificationNotFound.tsx:15
+msgid "There are no notifications."
+msgstr "Neexistujú žiadne upozornenia."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Notifications/Notifications.tsx:39
+msgid "Clear all"
+msgstr "Vymazať všetko"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+msgid "Balance"
+msgstr "Zostatok"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+msgid "Max"
+msgstr "Max"
+

@@ -1,0 +1,1329 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-11-06 17:24+0330\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: th\n"
+"Project-Id-Version: rango\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-04 09:42\n"
+"Last-Translator: \n"
+"Language-Team: Thai\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: rango\n"
+"X-Crowdin-Project-ID: 622238\n"
+"X-Crowdin-Language: th\n"
+"X-Crowdin-File: en.po\n"
+"X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
+#: widget/embedded/src/components/TokenList/TokenList.tsx:286
+#: widget/embedded/src/pages/HistoryPage.tsx:186
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
+msgid "No results found"
+msgstr "ไม่พบผลลัพธ์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
+#: widget/embedded/src/components/TokenList/TokenList.tsx:287
+#: widget/embedded/src/pages/HistoryPage.tsx:193
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
+msgid "Try using different keywords"
+msgstr "ลองใช้คำสำคัญอื่น ๆ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+msgid "Select Chain"
+msgstr "เลือกโซ่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+msgid "All"
+msgstr "ทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+msgid "More +{count}"
+msgstr "เพิ่มเติม +{count}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:17
+msgid "Activate this tab"
+msgstr "เปิดใช้งานแท็บนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:22
+msgid "Another tab is open and handles transactions."
+msgstr "มีแท็บอื่นเปิดอยู่และจัดการธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
+msgid "Activate current tab"
+msgstr "เปิดใช้งานแท็บปัจจุบัน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
+msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
+msgstr "ขณะนี้มีการดำเนินการธุรกรรมบางอย่างและถูกจัดการโดยแท็บเบราว์เซอร์อื่น หากคุณเปิดใช้งานแท็บนี้ ธุรกรรมทั้งหมดที่อยู่ในขั้นตอนการลงนามธุรกรรมจะหมดอายุ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:349
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:116
+msgid "Confirm"
+msgstr "ยืนยัน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
+msgid "Your {blockchainName} wallets"
+msgstr "กระเป๋าสตางค์ {blockchainName} ของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
+msgid "Insufficient account balance"
+msgstr "ยอดเงินในบัญชีไม่เพียงพอ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:394
+msgid "Proceed anyway"
+msgstr "ดำเนินการต่อไป"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
+msgid "You need to connect a {blockchainName} wallet."
+msgstr "คุณต้องเชื่อมต่อกระเป๋าเงิน {blockchainName}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
+msgid "Add {chain} chain"
+msgstr "เพิ่มโซ่ {chain}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+msgid "Show more wallets"
+msgstr "แสดงกระเป๋าสตางค์เพิ่มเติม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:113
+msgid "Send to a different address"
+msgstr "ส่งไปยังที่อยู่อื่น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
+msgid "Enter {blockchainName} address"
+msgstr "กรอกที่อยู่ {blockchainName}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
+msgid "Address {destination} doesn't match the blockchain address pattern."
+msgstr "ที่อยู่ {destination} ไม่ตรงกับรูปแบบที่อยู่บล็อคเชน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+msgid "via"
+msgstr "ทาง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
+msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+msgstr "โทเค็นนี้จะไม่ปรากฏในรายการโทเค็นที่ใช้งาน โปรดตรวจสอบให้แน่ใจว่านี่คือโทเค็นที่คุณต้องการแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+msgid "Import"
+msgstr "การนำเข้า"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
+msgid "Status"
+msgstr "สถานะ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/pages/SettingsPage.tsx:55
+msgid "Reset"
+msgstr "รีเซ็ต"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:18
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
+msgid "Refresh"
+msgstr "รีเฟรช"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
+#: widget/ui/src/containers/Notifications/Notifications.tsx:35
+msgid "Notifications"
+msgstr "การแจ้งเตือน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:79
+#: widget/embedded/src/pages/SettingsPage.tsx:38
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
+#: widget/embedded/src/pages/HistoryPage.tsx:139
+msgid "History"
+msgstr "ประวัติศาสตร์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
+#: widget/embedded/src/constants/messages.ts:5
+msgid "Connect Wallet"
+msgstr "เชื่อมต่อกระเป๋าสตางค์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/utils/date.ts:18
+#: widget/embedded/src/utils/time.ts:22
+msgid "Today"
+msgstr "วันนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:424
+msgid "Swaps steps"
+msgstr "สลับขั้นตอน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
+msgid "Retry"
+msgstr "ลองใหม่อีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:149
+msgid "Slippage Error"
+msgstr "ข้อผิดพลาดการลื่นไถล"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:150
+msgid "Slippage Warning"
+msgstr "คำเตือนการลื่นไถล"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:153
+msgid "Bridge Limit Error"
+msgstr "ข้อผิดพลาดการจำกัดสะพาน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:240
+msgid "Yours: {amount} {symbol}"
+msgstr "ของคุณ: {amount} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:261
+msgid "Minimum required slippage: {minRequiredSlippage}"
+msgstr "ค่าสลิปเปจขั้นต่ำที่ต้องการ: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:282
+msgid "Yours: {userSlippage}"
+msgstr "ของคุณ: {userSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:395
+msgid "See All Routes"
+msgstr "ดูเส้นทางทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
+msgid "View more info"
+msgstr "ดูข้อมูลเพิ่มเติม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+msgid "Gas & Fee Explanation"
+msgstr "คำอธิบายเกี่ยวกับก๊าซและค่าธรรมเนียม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:107
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
+msgid "Details"
+msgstr "รายละเอียด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:146
+msgid "Total Payable Fee"
+msgstr "ค่าธรรมเนียมรวมที่ต้องชำระ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
+msgid "Hide non-payable fees"
+msgstr "ซ่อนค่าธรรมเนียมที่ไม่ต้องชำระ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:167
+msgid "Show non-payable fees"
+msgstr "แสดงค่าธรรมเนียมที่ไม่ต้องชำระ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
+msgid "Description"
+msgstr "คำอธิบาย"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
+msgid "The following fees are considered in the transaction output and\n"
+"                you won’t need to pay extra gas for them."
+msgstr "ค่าธรรมเนียมดังต่อไปนี้จะถูกนำมาพิจารณาในผลลัพธ์ของธุรกรรม และ\n"
+"                คุณไม่จำเป็นต้องจ่ายค่าก๊าซเพิ่มเติมสำหรับค่าธรรมเนียมเหล่านี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
+msgid "Swap input"
+msgstr "สลับอินพุต"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+msgid "Estimated output"
+msgstr "ผลผลิตโดยประมาณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
+msgid "Via:"
+msgstr "ทาง:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
+msgid "Chains:"
+msgstr "โซ่:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/Quotes.tsx:77
+msgid "Sort by"
+msgstr "จัดเรียงตาม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
+msgid "Smart Routing"
+msgstr "การกำหนดเส้นทางอัจฉริยะ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
+msgid "Lowest Fee"
+msgstr "ค่าธรรมเนียมต่ำสุด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
+msgid "Fastest Transfer"
+msgstr "โอนถ่ายข้อมูลได้รวดเร็วที่สุด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
+msgid "Maximum Return"
+msgstr "ผลตอบแทนสูงสุด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
+msgid "Maximum Output"
+msgstr "เอาท์พุตสูงสุด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+msgid "Swapping"
+msgstr "การแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+msgid "Gas cost"
+msgstr "ค่าแก๊ส"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+msgid "Receiving"
+msgstr "การรับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+msgid "Price impact"
+msgstr "ผลกระทบต่อราคา"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
+msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "คุณจะต้องเพิ่มการลื่นไถลเป็นอย่างน้อย {minRequiredSlippage} สำหรับเส้นทางนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
+msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "เราขอแนะนำให้คุณเพิ่มการลื่นไถลเป็นอย่างน้อย {minRequiredSlippage} สำหรับเส้นทางนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
+msgid "Caution, your slippage is high."
+msgstr "ระวัง การลื่นไถลของคุณมีสูง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
+msgid "Change"
+msgstr "เปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
+msgid "Change settings"
+msgstr "การเปลี่ยนแปลงการตั้งค่า"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
+msgid "High slippage"
+msgstr "ความลื่นไถลสูง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
+msgid "Low slippage"
+msgstr "ความลื่นไถลต่ำ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
+msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
+msgstr " ระวัง สลิปเพจของคุณสูง (={userSlippage}) การซื้อขายของคุณอาจจะเกิดการฟรอนท์รัน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Confirm anyway"
+msgstr "ยืนยันต่อไป"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something went wrong"
+msgstr "มีบางอย่างผิดพลาดเกิดขึ้น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something went wrong. Please refresh the app."
+msgstr "มีบางอย่างผิดพลาด กรุณารีเฟรชแอป"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+msgid "Slippage tolerance per swap"
+msgstr "ความคลาดเคลื่อนของค่าสลิปต่อการสลับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
+msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage."
+msgstr "ธุรกรรมของคุณจะถูกกลับคืนหากราคามีการเปลี่ยนแปลงในทางลบมากกว่าเปอร์เซ็นต์นี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
+#: widget/embedded/src/containers/Settings/Lists.tsx:245
+msgid "Warning"
+msgstr "คำเตือน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
+msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
+msgstr "การตั้งค่านี้ใช้กับแต่ละขั้นตอน (เช่น 1 นิ้ว, Thorchain เป็นต้น) ซึ่งหมายความว่าจะย้อนกลับเฉพาะขั้นตอนที่ระบุเท่านั้น ไม่ใช่เส้นทางทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
+msgid "Swap Details"
+msgstr "รายละเอียดการสลับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+msgid "Request ID"
+msgstr "ขอรหัส ID"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+msgid "Not found"
+msgstr "ไม่พบ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+msgid "Swap with request ID = {requestId} not found."
+msgstr "สลับกับ ID คำขอ = {requestId} ไม่พบ."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
+msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
+msgstr "คุณได้รับ {amount} {token} ในกระเป๋าเงิน {conciseAddress} บนเครือข่าย {chain}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
+msgid "Transaction was not sent."
+msgstr "ไม่ได้ส่งธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+msgid "{amount} {symbol} on {blockchain} remains in your wallet."
+msgstr "{amount} {symbol} บน {blockchain} ยังคงอยู่ในกระเป๋าเงินของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+msgid "Delete"
+msgstr "ลบ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:304
+msgid "Try again"
+msgstr "ลองใหม่อีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:322
+msgid "Copied To Clipboard"
+msgstr "คัดลอกไปยังคลิปบอร์ด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:323
+msgid "Copy Request ID"
+msgstr "สำเนาคำขอ ID"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:346
+msgid "View on Rango Explorer"
+msgstr "ดูบน Rango Explorer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+msgid "Finished at"
+msgstr "เสร็จสิ้นแล้วที่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+msgid "Created at"
+msgstr "สร้างขึ้นเมื่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
+msgid "View transaction"
+msgstr "ดูการทำธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+msgid "Connect"
+msgstr "เชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
+msgid "Swap Successful"
+msgstr "สลับสำเร็จ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
+msgid "Transaction Failed"
+msgstr "การทำธุรกรรมล้มเหลว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:87
+msgid "Done"
+msgstr "เสร็จแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:100
+msgid "Diagnosis"
+msgstr "การวินิจฉัย"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:112
+msgid "See Details"
+msgstr "ดูรายละเอียด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:13
+msgid "Cancel Swap"
+msgstr "ยกเลิกการแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:14
+msgid "Are you sure you want to cancel this swap?"
+msgstr "คุณแน่ใจว่าต้องการยกเลิกการสลับนี้หรือไม่?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
+msgid "Yes, Cancel it"
+msgstr "ใช่ ยกเลิกมัน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
+#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+msgid "No, Continue"
+msgstr "ไม่ ดำเนินการต่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
+msgid "Delete Transaction"
+msgstr "ลบรายการธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:14
+msgid "Are you sure you want to delete this swap?"
+msgstr "คุณแน่ใจว่าต้องการลบการสลับนี้หรือไม่?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
+#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+msgid "Yes, Delete it"
+msgstr "ใช่ ลบมันซะ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
+#: widget/embedded/src/pages/HistoryPage.tsx:253
+msgid "No, Cancel"
+msgstr "ไม่ ยกเลิก"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
+msgid "Change Network"
+msgstr "เปลี่ยนเครือข่าย"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
+msgid "Network Changed"
+msgstr "เครือข่ายมีการเปลี่ยนแปลง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:271
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+msgid "Select Token"
+msgstr "เลือกโทเค็น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+msgid "Wallet Connected"
+msgstr "เชื่อมต่อกระเป๋าสตางค์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+msgid "Your wallet is connected, you can use it to swap."
+msgstr "กระเป๋าเงินของคุณเชื่อมต่อแล้ว คุณสามารถใช้มันเพื่อแลกเปลี่ยนได้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+msgid "Failed to Connect"
+msgstr "ไม่สามารถเชื่อมต่อได้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+msgid "Your wallet is not connected. Please try again."
+msgstr "กระเป๋าสตางค์ของคุณไม่ได้เชื่อมต่อ กรุณาลองอีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+msgid "Connecting to your wallet"
+msgstr "การเชื่อมต่อกับกระเป๋าสตางค์ของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+msgid "Click connect in your wallet popup."
+msgstr "คลิกเชื่อมต่อในป๊อปอัปกระเป๋าเงินของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+msgid "Select Derivation Path"
+msgstr "เลือกเส้นทางการอนุมาน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+msgid "In order to connect to {type}, you must first select a Derivation Path"
+msgstr "ในการเชื่อมต่อกับ {type}คุณต้องเลือกเส้นทางการได้มาก่อน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+msgid "Choose Derivation Path Template"
+msgstr "เลือกเทมเพลตเส้นทางการอนุมาน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+msgid "Enter Path"
+msgstr "เข้าสู่เส้นทาง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+msgid "Enter Index"
+msgstr "เข้าสู่ดัชนี"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
+msgid "Add {blockchainDisplayName} Chain"
+msgstr "เพิ่ม {blockchainDisplayName} เชน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
+msgstr "คุณต้องการเพิ่มโซ่ทดลอง {blockchainDisplayName} ลงในกระเป๋าเงินของคุณหรือไม่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
+msgid "Please approve the experimental chain pop-up in your wallet."
+msgstr "กรุณาอนุมัติให้ป๊อปอัปโซ่ทดลองอยู่ในกระเป๋าเงินของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
+msgid "{blockchainDisplayName} Chain Added"
+msgstr "{blockchainDisplayName} เพิ่มโซ่แล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
+msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
+msgstr "เพิ่มโซ่ {blockchainDisplayName} ลงในกระเป๋าเงินของคุณเรียบร้อยแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
+msgid "Request Rejected"
+msgstr "คำขอถูกปฏิเสธ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
+msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
+msgstr "คุณปฏิเสธที่จะเพิ่มโซ่ {blockchainDisplayName} ลงในกระเป๋าเงินของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
+msgid "Select chain types"
+msgstr "เลือกประเภทโซ่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:71
+msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
+msgstr "กระเป๋าสตางค์นี้รองรับหลายเครือข่าย เลือกเครือข่ายที่คุณต้องการเชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:9
+msgid "Failed Network, Please retry your swap."
+msgstr "เครือข่ายล้มเหลว กรุณาลองสลับอีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:11
+msgid "Please reset your liquidity sources."
+msgstr "กรุณารีเซ็ตแหล่งสภาพคล่องของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:12
+msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
+msgstr "คุณได้จำกัดแหล่งสภาพคล่องไว้ ซึ่งอาจส่งผลให้ Rango ไม่พบเส้นทางใด ๆ โปรดพิจารณารีเซ็ตแหล่งสภาพคล่องของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:17
+msgid "No Routes Found."
+msgstr "ไม่พบเส้นทาง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:18
+msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
+msgstr "สาเหตุที่ Rango ไม่สามารถค้นหาเส้นทางได้: สภาพคล่องของโทเค็นต่ำ, ปริมาณอินพุตต่ำมาก หรือไม่มีเส้นทางที่ใช้งานได้สำหรับชุดค่าผสมโทเค็นอินพุต/เอาต์พุตที่เลือก"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:23
+msgid "Bridge Limit Error: Please increase your amount."
+msgstr "ข้อผิดพลาดการจำกัดสะพาน: กรุณาเพิ่มจำนวนของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:26
+msgid "Bridge Limit Error: Please decrease your amount."
+msgstr "ข้อผิดพลาดการจำกัดสะพาน: กรุณาลดจำนวนเงินของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:31
+msgid "High Price Impact"
+msgstr "ผลกระทบต่อราคาสูง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:32
+msgid "Price impact is too high!"
+msgstr "ผลกระทบต่อราคาสูงเกินไป!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:33
+msgid "The price impact is significantly higher than the allowed amount."
+msgstr "ผลกระทบต่อราคาจะสูงกว่าจำนวนที่อนุญาตอย่างมาก"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:36
+msgid "Confirm high price impact"
+msgstr "ยืนยันผลกระทบต่อราคาสูง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:39
+msgid "Route updated and price impact is too high, try again later!"
+msgstr "เส้นทางได้รับการอัปเดตแล้วและมีผลกระทบต่อราคาสูงเกินไป โปรดลองอีกครั้งในภายหลัง!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:44
+msgid "USD Price Unknown"
+msgstr "ราคา USD ไม่ทราบ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:45
+msgid "USD Price Unknown, Cannot calculate Price Impact."
+msgstr "ราคา USD ไม่ทราบ ไม่สามารถคำนวณผลกระทบต่อราคาได้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:46
+msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
+msgstr "ราคา USD ไม่ทราบ ไม่สามารถคำนวณผลกระทบต่อราคาได้ ผลกระทบต่อราคาอาจสูงกว่าปกติ คุณแน่ใจหรือไม่ว่าจะดำเนินการ Swap ต่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:49
+msgid "Confirm USD Price Unknown"
+msgstr "ยืนยันราคา USD ไม่ทราบ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:6
+#: widget/embedded/src/pages/Home.tsx:161
+msgid "Swap"
+msgstr "แลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:7
+msgid "Swap anyway"
+msgstr "สลับกัน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/messages.ts:8
+msgid "The route goes through Ethereum. Continue?"
+msgstr "เส้นทางจะผ่าน Ethereum ดำเนินการต่อหรือไม่?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:10
+msgid "Route has been updated."
+msgstr "เส้นทางได้รับการอัปเดตแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:12
+msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+msgstr "ปริมาณผลลัพธ์ถูกเปลี่ยนเป็น {newOutputAmount} ({percentageChange}% เปลี่ยนแปลง)"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:20
+msgid "Route swappers has been updated."
+msgstr "ตัวเปลี่ยนเส้นทางได้รับการอัปเดตแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:22
+msgid "Route internal coins has been updated."
+msgstr "เหรียญภายในเส้นทางได้รับการอัปเดตแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
+#: widget/embedded/src/pages/Routes.tsx:48
+msgid "Routes"
+msgstr "เส้นทาง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
+msgid "From"
+msgstr "จาก"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:118
+msgid "To"
+msgstr "ถึง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:49
+msgid "Light"
+msgstr "แสงสว่าง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:58
+msgid "Dark"
+msgstr "มืด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:67
+msgid "Auto"
+msgstr "ออโต้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:140
+msgid "Loading failed"
+msgstr "การโหลดล้มเหลว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:156
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+msgid "Bridges"
+msgstr "สะพาน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:174
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+msgid "Exchanges"
+msgstr "การแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/pages/CustomTokensPage.tsx:90
+msgid "Custom Tokens"
+msgstr "โทเค็นที่กำหนดเอง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:214
+#: widget/embedded/src/pages/LanguagePage.tsx:43
+msgid "Language"
+msgstr "ภาษา"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:235
+msgid "Infinite approval"
+msgstr "การอนุมัติที่ไม่มีที่สิ้นสุด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:246
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
+msgstr "การเปิดใช้งานโหมด 'อนุมัติแบบไม่จำกัด' จะทำให้สามารถเข้าถึงสัญญาอัจฉริยะพื้นฐานได้อย่างไม่มีข้อจำกัด ช่วยให้สามารถใช้จำนวนโทเค็นที่ได้รับการอนุมัติโดยไม่มีข้อจำกัด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:266
+msgid "Theme"
+msgstr "ธีม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+msgid "Duplicate Token"
+msgstr "โทเค็นซ้ำ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+msgid "The address you entered is duplicate, please enter a new address."
+msgstr "ที่อยู่ที่คุณป้อนซ้ำ กรุณาป้อนที่อยู่ใหม่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+msgid "Token Already Exists"
+msgstr "โทเค็นมีอยู่แล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+msgid "There's no need to add this token again because it already exists and is supported by us."
+msgstr "ไม่จำเป็นต้องเพิ่มโทเค็นนี้อีกครั้ง เนื่องจากโทเค็นนี้มีอยู่แล้วและได้รับการสนับสนุนจากเราแล้ว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+msgid "Token Not Found"
+msgstr "ไม่พบโทเค็น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
+msgstr "ขออภัย ไม่พบโทเค็นบนเชน {blockchain} ที่มีที่อยู่ที่ให้ไว้ โปรดตรวจสอบให้แน่ใจว่าคุณได้ป้อนที่อยู่โทเค็นที่ถูกต้อง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
+msgid "Network Error"
+msgstr "ข้อผิดพลาดของเครือข่าย"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
+#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+msgid "Add Custom Token"
+msgstr "เพิ่มโทเค็นที่กำหนดเอง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+msgid "Select chain"
+msgstr "เลือกโซ่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+msgid "Enter Address"
+msgstr "กรอกที่อยู่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+msgid "Enter token address"
+msgstr "ป้อนที่อยู่โทเค็น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+msgid "Failed Network, Please retry."
+msgstr "เครือข่ายล้มเหลว กรุณาลองอีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+msgid "Add another custom token"
+msgstr "เพิ่มโทเค็นที่กำหนดเองอื่น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
+msgid "Confirm Swap"
+msgstr "ยืนยันการสลับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:254
+msgid "Start Swap"
+msgstr "เริ่มการแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:282
+msgid "You get"
+msgstr "คุณจะได้รับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:102
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
+msgid "Search Token"
+msgstr "ค้นหาโทเค็น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+msgid "No custom tokens"
+msgstr "ไม่มีโทเค็นที่กำหนดเอง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+msgid "press the button to add your custom token"
+msgstr "กดปุ่มเพื่อเพิ่มโทเค็นที่กำหนดเองของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+msgid "Delete Custom Token"
+msgstr "ลบโทเค็นที่กำหนดเอง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+msgid "Are you sure you want to Delete this Token?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบโทเค็นนี้?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:59
+msgid "Complete"
+msgstr "สมบูรณ์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:63
+msgid "Running"
+msgstr "วิ่ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
+msgid "Failed"
+msgstr "ล้มเหลว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:149
+msgid "Clear"
+msgstr "ชัดเจน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:161
+msgid "Search Transaction"
+msgstr "ค้นหาธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:187
+msgid "No transactions"
+msgstr "ไม่มีการทำธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:194
+msgid "Your transaction history is stored locally and will appear here after you start a swap"
+msgstr "ประวัติการทำธุรกรรมของคุณจะถูกเก็บไว้ในเครื่องและจะปรากฏที่นี่หลังจากที่คุณเริ่มสลับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:218
+msgid "Clear Transaction History"
+msgstr "ล้างประวัติการทำธุรกรรม"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:222
+msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
+msgstr "การดำเนินการต่อไปจะลบธุรกรรมที่สำเร็จและล้มเหลวทั้งหมดออกจากวิดเจ็ต คุณต้องการดำเนินการต่อหรือไม่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:229
+msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
+msgstr "หมายเหตุ: การดำเนินการนี้จะไม่ลบประวัติการทำธุรกรรมของคุณบนเครือข่าย แต่จะลบออกที่นี่เท่านั้น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:243
+msgid "Yes, Clear the history"
+msgstr "ใช่ ล้างประวัติ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:56
+msgid "language"
+msgstr "ภาษา"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "ยกเลิกการเลือกทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "เลือกทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+msgid "Search {sourceType}"
+msgstr "ค้นหา {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+msgid "Search Chain"
+msgstr "การค้นหาแบบโซ่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+msgid "Source"
+msgstr "แหล่งที่มา"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
+msgid "Destination"
+msgstr "ปลายทาง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
+msgid "Swap {type}"
+msgstr "สลับ {type}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:45
+msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+msgstr "ขณะนี้ คุณอยู่ในโหมดแคมเปญซึ่งมีข้อจำกัดเกี่ยวกับแหล่งสภาพคล่อง คุณต้องการออกจากโหมดนี้และใช้แหล่งสภาพคล่องที่มีอยู่ทั้งหมดหรือไม่"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
+msgid "The request ID is necessary to display the swap details."
+msgstr "จำเป็นต้องมี ID คำขอเพื่อแสดงรายละเอียดการสลับ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
+msgid "Connect Wallets"
+msgstr "เชื่อมต่อกระเป๋าสตางค์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:82
+msgid "Choose a wallet to connect."
+msgstr "เลือกกระเป๋าสตางค์ที่จะเชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:25
+msgid "This week"
+msgstr "สัปดาห์นี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr "เดือนนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:39
+msgid "This year"
+msgstr "ปีนี้"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:129
+msgid "Required: >= {min} {symbol}"
+msgstr "จำเป็น: >= {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:142
+msgid "Required: > {min} {symbol}"
+msgstr "จำเป็น: > {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:157
+msgid "Required: <= {max} {symbol}"
+msgstr "จำเป็น: <= {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:170
+msgid "Required: < {max} {symbol}"
+msgstr "จำเป็น: < {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:604
+msgid " for network fee"
+msgstr " สำหรับค่าธรรมเนียมเครือข่าย"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:607
+msgid " for swap"
+msgstr " สำหรับการแลกเปลี่ยน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:610
+msgid " for input and network fee"
+msgstr " สำหรับค่าอินพุทและค่าเน็ตเวิร์ค"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:612
+msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
+msgstr "ต้องการ ≈ {requiredAmount} {symbol}{reason}แต่คุณมี {currentAmount} {symbol} ในกระเป๋าเงิน {blockchain} ของคุณ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:672
+msgid "Waiting for connecting wallet"
+msgstr "กำลังรอการเชื่อมต่อกระเป๋าสตางค์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:676
+msgid "Waiting for other running tasks to be finished"
+msgstr "กำลังรอให้งานอื่นที่กำลังดำเนินการเสร็จสิ้น"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:679
+msgid "Waiting for changing wallet network"
+msgstr "กำลังรอเปลี่ยนเครือข่ายกระเป๋าเงิน"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:6
+msgid "Sunday"
+msgstr "วันอาทิตย์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:7
+msgid "Monday"
+msgstr "วันจันทร์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:8
+msgid "Tuesday"
+msgstr "วันอังคาร"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:9
+msgid "Wednesday"
+msgstr "วันพุธ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:10
+msgid "Thursday"
+msgstr "วันพฤหัสบดี"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:11
+msgid "Friday"
+msgstr "วันศุกร์"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:12
+msgid "Saturday"
+msgstr "วันเสาร์"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
+msgid "Powered By"
+msgstr "ขับเคลื่อนโดย"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "การทำธุรกรรมรวม"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+msgid "{blockchainCategory}"
+msgstr "{blockchainCategory}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+msgid "Swap on {fromChain} via {swapper}"
+msgstr "สลับ {fromChain} เป็น {swapper}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+msgid "Bridge to {toChain} via {swapper}"
+msgstr "สะพานไปยัง {toChain} ผ่าน {swapper}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Completed"
+msgstr "สมบูรณ์"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
+msgid "In progress"
+msgstr "อยู่ระหว่างดำเนินการ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+msgid "Waiting for bridge transaction"
+msgstr "กำลังรอการทำธุรกรรมสะพาน"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "เชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
+msgid "Disconnect"
+msgstr "ตัดการเชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Install"
+msgstr "ติดตั้ง"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+msgid "Connecting ..."
+msgstr "กำลังเชื่อมต่อ ..."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+msgid "Connecting"
+msgstr "การเชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+msgid "Disconnected"
+msgstr "ถูกตัดการเชื่อมต่อ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
+msgid "you need to pass a correct state to Wallet."
+msgstr "คุณต้องส่งสถานะที่ถูกต้องไปยัง Wallet"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Notifications/NotificationNotFound.tsx:15
+msgid "There are no notifications."
+msgstr "ไม่มีการแจ้งเตือนใดๆ."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Notifications/Notifications.tsx:39
+msgid "Clear all"
+msgstr "ล้างทั้งหมด"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+msgid "Balance"
+msgstr "สมดุล"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+msgid "Max"
+msgstr "แม็กซ์"
+
