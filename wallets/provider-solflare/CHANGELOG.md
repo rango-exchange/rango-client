@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.4.0...provider-solflare@0.4.1) (2024-10-30)
+
+
+### Bug Fixes
+
+* when host is using cjs, fallback to .default() for solfare sdk ([0aa702a](https://github.com/rango-exchange/rango-client/commit/0aa702ab1bed865a049541e87c4fa3b1a5006c1d))
+
+
+
 # [0.4.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.3.0...provider-solflare@0.4.0) (2024-10-12)
 
 

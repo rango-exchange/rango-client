@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-keplr",
-  "version": "0.38.0",
+  "version": "0.38.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,12 +21,15 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-cosmos": "^0.30.0",
+    "@rango-dev/signer-cosmos": "^0.30.1",
     "@rango-dev/wallets-shared": "^0.38.0",
     "rango-types": "^0.1.74"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.11.21"
+  },
+  "resolutions": {
+    "@keplr-wallet/types/secretjs/protobufjs": "^6.11.4"
   },
   "publishConfig": {
     "access": "public"

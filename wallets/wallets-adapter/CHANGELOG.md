@@ -1,3 +1,23 @@
+## [0.34.5](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.4...wallets-adapter@0.34.5) (2024-11-06)
+
+
+
+## [0.34.4](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.3...wallets-adapter@0.34.4) (2024-11-06)
+
+
+
+## [0.34.3](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.2...wallets-adapter@0.34.3) (2024-11-06)
+
+
+
+## [0.34.2](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.1...wallets-adapter@0.34.2) (2024-11-06)
+
+
+
+## [0.34.1](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.0...wallets-adapter@0.34.1) (2024-10-30)
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.33.3...wallets-adapter@0.34.0) (2024-10-12)
 
 
