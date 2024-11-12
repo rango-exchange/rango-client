@@ -131,9 +131,17 @@ export const BarChart = (props: BarChartPropTypes) => {
         hideTooltip();
       }
     }
+    function handleScroll() {
+      if (isMobile) {
+        hideTooltip();
+      }
+    }
     document.addEventListener('click', handleClickOutside, true);
+    window.addEventListener('scroll', handleScroll, true);
+
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
+      window.removeEventListener('scroll', handleScroll, true);
     };
   }, [tooltipRef, isMobile]);
 
@@ -157,7 +165,8 @@ export const BarChart = (props: BarChartPropTypes) => {
         clearTimeout(tooltipTimeout);
       }
       const eventSvgCoords = localPoint(event);
-      const left = bar.x + bar.width / 2;
+      const left = (eventSvgCoords?.x || bar.x) + bar.width / 2;
+
       setTimeout(() => {
         showTooltip({
           tooltipData: { bar, hoveredIndex: index },
