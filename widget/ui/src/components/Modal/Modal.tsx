@@ -1,5 +1,5 @@
 import type { ModalPropTypes } from './Modal.types.js';
-import type { PropsWithChildren } from 'react';
+import type { MouseEventHandler, PropsWithChildren } from 'react';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -41,10 +41,36 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   } = props;
   const exitCallbackRef = useRef<ModalPropTypes['onExit']>();
   const modalContainerRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   const handleBackDropClick = (open: boolean) => {
     if (dismissible && !open) {
       onClose();
+    }
+  };
+
+  // Restrict the overlay click area to just the overlay element, rather than the entire page
+  const handleOverlayClick: MouseEventHandler = (event) => {
+    if (event.target === overlayRef.current) {
+      handleBackDropClick(!open);
+    }
+  };
+
+  // The escape key functionality only works when the focus is within the overlay (modal).
+  const handleScapeKeyDown = () => {
+    if (overlayRef.current?.querySelector(':focus')) {
+      onClose();
+    }
+  };
+
+  /**
+   * When the user clicks on the content,
+   * we return the focus to the modal content if no other element is focused,
+   * ensuring the escape key functionality works.
+   */
+  const handleContentClick = () => {
+    if (!overlayRef.current?.querySelector(':focus')) {
+      modalContainerRef.current?.focus();
     }
   };
 
@@ -83,10 +109,12 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   };
 
   return (
-    <Dialog.Root open={open} onOpenChange={handleBackDropClick}>
+    <Dialog.Root open={open}>
       <Dialog.Portal container={container}>
-        <DialogOverlay>
+        <DialogOverlay ref={overlayRef} onClick={handleOverlayClick}>
           <DialogContent
+            onClick={handleContentClick}
+            onEscapeKeyDown={handleScapeKeyDown}
             ref={modalContainerRef}
             css={styles?.container}
             anchor={anchor}>
