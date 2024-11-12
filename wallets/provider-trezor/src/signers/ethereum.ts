@@ -27,7 +27,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
     const TrezorConnect = await getTrezorModule();
 
-    const { success, payload } = await TrezorConnect.signMessage({
+    const { success, payload } = await TrezorConnect.ethereumSignMessage({
       message: msg,
       path: getDerivationPath(),
     });

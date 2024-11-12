@@ -5,6 +5,7 @@ import type {
 
 import { TransactionExpiredBlockheightExceededError } from '@solana/web3.js';
 import promiseRetry from 'promise-retry';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { wait } from './helpers.js';
 
@@ -12,12 +13,12 @@ const SEND_OPTIONS = {
   skipPreflight: true,
 };
 const TIME_OUT = 2_000;
+const CONFIRMATION_TIME_OUT = 30_000;
 
 // https://github.com/jup-ag/jupiter-quote-api-node/blob/main/example/utils/transactionSender.ts
 export async function transactionSenderAndConfirmationWaiter({
   connection,
   serializedTransaction,
-  blockhashWithExpiryBlockHeight,
 }: TransactionSenderAndConfirmationWaiterArgs): Promise<TransactionSenderAndConfirmationWaiterResponse> {
   const txId = await connection.sendRawTransaction(
     serializedTransaction,
@@ -46,32 +47,53 @@ export async function transactionSenderAndConfirmationWaiter({
   };
 
   try {
-    const BLOCK_HEIGHT_DIFF = 150;
     void abortableResender();
-    const lastValidBlockHeight =
-      blockhashWithExpiryBlockHeight.lastValidBlockHeight - BLOCK_HEIGHT_DIFF;
 
     // this would throw TransactionExpiredBlockheightExceededError
     await Promise.race([
-      connection.confirmTransaction(
-        {
-          ...blockhashWithExpiryBlockHeight,
-          lastValidBlockHeight,
-          signature: txId,
-          abortSignal,
-        },
-        'confirmed'
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          if (!abortSignal.aborted) {
+            reject(
+              new SignerError(
+                SignerErrorCode.SEND_TX_ERROR,
+                undefined,
+                `Error confirming transaction (timeout)`
+              )
+            );
+          }
+        }, CONFIRMATION_TIME_OUT)
       ),
       // eslint-disable-next-line no-async-promise-executor
-      new Promise(async (resolve) => {
+      new Promise(async (resolve, reject) => {
         // in case ws socket died
         while (!abortSignal.aborted) {
           await wait(TIME_OUT);
-          const tx = await connection.getSignatureStatus(txId, {
-            searchTransactionHistory: false,
-          });
-          if (tx?.value?.confirmationStatus === 'confirmed') {
-            resolve(tx);
+          const { value: statuses } = await connection.getSignatureStatuses(
+            [txId],
+            {
+              searchTransactionHistory: false,
+            }
+          );
+          if (statuses?.length > 0) {
+            const status = statuses[0];
+            if (status) {
+              if (status.err) {
+                reject(
+                  new SignerError(
+                    SignerErrorCode.SEND_TX_ERROR,
+                    undefined,
+                    `Transaction failed: ${JSON.stringify(status.err)}`
+                  )
+                );
+              }
+              if (
+                status.confirmationStatus &&
+                ['confirmed', 'finalized'].includes(status.confirmationStatus)
+              ) {
+                resolve(true);
+              }
+            }
           }
         }
       }),
@@ -81,7 +103,6 @@ export async function transactionSenderAndConfirmationWaiter({
       // we consume this error and getTransaction would return null
       return { txId, txResponse: null };
     }
-    // invalid state from web3.js
     throw e;
   } finally {
     controller.abort();

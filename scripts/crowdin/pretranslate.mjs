@@ -11,12 +11,15 @@ import {
 } from "./constants.mjs";
 
 
-export const getMachineTranslationEngineID = async () =>{
+export const getMachineTranslationEngineID = async () => {
   const responseData = await fetchDataWithAuthorization(MACHINE_TRANSLATE_API);
-  if(!responseData.data || !responseData.data.length){
+
+  if (!responseData.data || !responseData.data.length) {
     throw new CrowdinError('No data received for machine translation');
   }
-  return responseData.data[0].data.id;
+  const data = responseData.data;
+  const googleMachine = data.find(item => item.data.type === 'google');
+  return googleMachine ? googleMachine.data.id : data[0].data.id;
 }
 
 export const getLanguageIds = async () => {
