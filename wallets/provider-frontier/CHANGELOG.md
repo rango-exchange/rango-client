@@ -1,3 +1,7 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-frontier@0.38.0...provider-frontier@0.39.0) (2024-11-12)
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/provider-frontier@0.37.0...provider-frontier@0.38.0) (2024-10-12)
 
 

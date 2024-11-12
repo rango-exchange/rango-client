@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.5.0...provider-trezor@0.6.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* resolve issues with trezor provider's sign message method ([017570f](https://github.com/rango-exchange/rango-client/commit/017570f6d757acdf03a81ad6999e6c8c1ba03b6b))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.4.1...provider-trezor@0.5.0) (2024-10-12)
 
 

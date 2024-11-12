@@ -1,3 +1,12 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.33.0...signer-solana@0.34.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* fix solana signer by migrating confirm transaction to get signature statuses ([07b2b89](https://github.com/rango-exchange/rango-client/commit/07b2b89fec1d22a09ed9215691ff296a6e77a382))
+
+
+
 # [0.33.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.32.0...signer-solana@0.33.0) (2024-10-12)
 
 
