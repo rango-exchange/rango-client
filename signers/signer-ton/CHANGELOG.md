@@ -1,3 +1,7 @@
+# [0.17.0](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.16.0...signer-ton@0.17.0) (2024-11-12)
+
+
+
 # [0.16.0](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.15.0...signer-ton@0.16.0) (2024-10-12)
 
 

@@ -1,3 +1,12 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.5...widget-embedded@0.35.0) (2024-11-12)
+
+
+### Features
+
+* add more languages to widget ([bc37fe9](https://github.com/rango-exchange/rango-client/commit/bc37fe97586545f993d7a2675a43b64aaa743791))
+
+
+
 ## [0.34.5](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.4...widget-embedded@0.34.5) (2024-11-06)
 
 
