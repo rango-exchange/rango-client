@@ -1,3 +1,23 @@
+## [0.34.5](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.4...widget-embedded@0.34.5) (2024-11-06)
+
+
+
+## [0.34.4](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.3...widget-embedded@0.34.4) (2024-11-06)
+
+
+
+## [0.34.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.2...widget-embedded@0.34.3) (2024-11-06)
+
+
+
+## [0.34.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.1...widget-embedded@0.34.2) (2024-11-06)
+
+
+
+## [0.34.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.34.0...widget-embedded@0.34.1) (2024-10-30)
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.33.3...widget-embedded@0.34.0) (2024-10-12)
 
 
