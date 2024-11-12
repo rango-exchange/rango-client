@@ -1,3 +1,13 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/ui@0.40.0...ui@0.41.0) (2024-11-12)
+
+
+### Features
+
+* add a prop to the tooltip component for collision padding ([f7dae29](https://github.com/rango-exchange/rango-client/commit/f7dae29f4b158af47ff4959ec0e22025e8211f41))
+* add more languages to widget ([bc37fe9](https://github.com/rango-exchange/rango-client/commit/bc37fe97586545f993d7a2675a43b64aaa743791))
+
+
+
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/ui@0.39.0...ui@0.40.0) (2024-10-12)
 
 
