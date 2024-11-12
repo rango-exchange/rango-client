@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/charts@0.2.0...charts@0.3.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* improve y-axis display for bar charts with smaller data sets ([ad13491](https://github.com/rango-exchange/rango-client/commit/ad1349157f38d172ae2028981881ae4276ddab8d))
+
+
+
 # 0.2.0 (2024-10-12)
 
 
