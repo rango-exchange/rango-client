@@ -44,30 +44,50 @@ export function makeAlerts(
     return alertInfo;
   }
   if (warning) {
-    if (warning.type === QuoteWarningType.HIGH_VALUE_LOSS) {
-      const warningLevel = getPriceImpactLevel(warning.priceImpact);
-      if (warningLevel === 'high') {
-        alertInfo.alertType = 'error';
+    switch (warning.type) {
+      case QuoteWarningType.HIGH_VALUE_LOSS: {
+        const warningLevel = getPriceImpactLevel(warning.priceImpact);
+        if (warningLevel === 'high') {
+          alertInfo.alertType = 'error';
+        }
+        alertInfo.action = 'show-info';
+        alertInfo.title = errorMessages().highValueLossError.title;
+        break;
       }
-      alertInfo.action = 'show-info';
-      alertInfo.title = errorMessages().highValueLossError.title;
+      case QuoteWarningType.EXCESSIVE_OUTPUT_AMOUNT_CHANGE: {
+        alertInfo.title = i18n.t({
+          id: 'Output amount changed by {percentageChange}% (${usdValueChange}).',
+          values: {
+            percentageChange: warning.percentageChange,
+            usdValueChange: warning.usdValueChange,
+          },
+        });
+        break;
+      }
+      case QuoteWarningType.UNKNOWN_PRICE: {
+        alertInfo.title = errorMessages().unknownPriceError.title;
+        break;
+      }
+      case QuoteWarningType.INSUFFICIENT_SLIPPAGE: {
+        alertInfo.title = i18n.t({
+          id: 'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
+          values: {
+            minRequiredSlippage: warning.minRequiredSlippage,
+          },
+        });
+        alertInfo.action = 'change-settings';
+        break;
+      }
+      case QuoteWarningType.HIGH_SLIPPAGE: {
+        alertInfo.title = i18n.t('Caution, your slippage is high.');
+        alertInfo.action = 'change-settings';
+        break;
+      }
+
+      default:
+        break;
     }
-    if (warning.type === QuoteWarningType.UNKNOWN_PRICE) {
-      alertInfo.title = errorMessages().unknownPriceError.title;
-    }
-    if (warning.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE) {
-      alertInfo.title = i18n.t({
-        id: 'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
-        values: {
-          minRequiredSlippage: warning.minRequiredSlippage,
-        },
-      });
-      alertInfo.action = 'change-settings';
-    }
-    if (warning.type === QuoteWarningType.HIGH_SLIPPAGE) {
-      alertInfo.title = i18n.t('Caution, your slippage is high.');
-      alertInfo.action = 'change-settings';
-    }
+
     return alertInfo;
   }
   return null;

@@ -21,11 +21,8 @@ import {
   WidgetEvents,
 } from '../types';
 import { isPositiveNumber } from '../utils/numbers';
-import {
-  getQuoteFromTokenUsdPrice,
-  getQuoteToTokenUsdPrice,
-} from '../utils/quote';
-import { calcOutputUsdValue } from '../utils/swap';
+import {} from '../utils/quote';
+import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
 
 import createSelectors from './selectors';
 
@@ -137,14 +134,8 @@ export const useQuoteStore = createSelectors(
             outputAmount = !!quote?.outputAmount
               ? new BigNumber(quote?.outputAmount)
               : null;
-            inputUsdValue = calcOutputUsdValue(
-              state.inputAmount,
-              getQuoteFromTokenUsdPrice(quote) || state.fromToken?.usdPrice
-            );
-            outputUsdValue = calcOutputUsdValue(
-              quote.outputAmount,
-              getQuoteToTokenUsdPrice(quote) || state.toToken?.usdPrice
-            );
+            inputUsdValue = getUsdInputFrom(quote) ?? ZERO;
+            outputUsdValue = getUsdOutputFrom(quote) ?? ZERO;
           }
           return {
             selectedQuote: quote,
