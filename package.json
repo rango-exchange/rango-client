@@ -118,9 +118,11 @@
     "vm-browserify": "^1.1.2"
   },
   "resolutions": {
-    "react-refresh": "0.9.0"
+    "react-refresh": "0.9.0",
+    "protobufjs": "^6.11.4"
   },
   "@parcel/resolver-default": {
     "packageExports": true
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-cosmos",
-  "version": "0.30.0",
+  "version": "0.30.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -30,6 +30,9 @@
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.9.12"
+  },
+  "resolutions": {
+    "protobufjs": "^6.11.4"
   },
   "publishConfig": {
     "access": "public"
