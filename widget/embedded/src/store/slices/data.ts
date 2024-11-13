@@ -20,6 +20,7 @@ import { compareWithSearchFor, containsText } from '../../utils/common';
 import { createTokenHash, isTokenNative } from '../../utils/meta';
 import {
   addCustomTokensToSupportedTokens,
+  isRoutingEnabled,
   sortLiquiditySourcesByGroupTitle,
 } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
@@ -324,7 +325,12 @@ export const createDataSlice: StateCreator<
   // Actions
   fetch: async () => {
     try {
-      const { enableCentralizedSwappers } = get().config;
+      const { routing } = get().config;
+      const enableCentralizedSwappers = isRoutingEnabled(
+        'enableCentralizedSwappers',
+        routing
+      );
+
       const response = await sdk().getAllMetadata({
         enableCentralizedSwappers,
       });
