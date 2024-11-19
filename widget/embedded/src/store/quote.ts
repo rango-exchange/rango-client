@@ -21,7 +21,6 @@ import {
   WidgetEvents,
 } from '../types';
 import { isPositiveNumber } from '../utils/numbers';
-import {} from '../utils/quote';
 import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
 
 import createSelectors from './selectors';

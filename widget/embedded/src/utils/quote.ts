@@ -265,7 +265,7 @@ export function generateQuoteWarnings(params: {
   return null;
 }
 
-export function doesQuoteWarningNeedConfirmation(warning: QuoteWarning) {
+export function isQuoteWarningConfirmationRequired(warning: QuoteWarning) {
   const WARNINGS_NOT_REQUIRING_CONFIRMATION = [
     QuoteWarningType.EXCESSIVE_OUTPUT_AMOUNT_CHANGE,
   ];

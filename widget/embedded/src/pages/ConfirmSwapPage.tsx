@@ -29,7 +29,7 @@ import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { doesQuoteWarningNeedConfirmation } from '../utils/quote';
+import { isQuoteWarningConfirmationRequired } from '../utils/quote';
 import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
@@ -135,7 +135,7 @@ export function ConfirmSwapPage() {
   const onStartConfirmSwap = async () => {
     const shouldShowWarningModal =
       confirmSwapResult.warnings?.quote &&
-      doesQuoteWarningNeedConfirmation(confirmSwapResult.warnings.quote) &&
+      isQuoteWarningConfirmationRequired(confirmSwapResult.warnings.quote) &&
       !quoteWarningsConfirmed;
 
     if (shouldShowWarningModal) {
