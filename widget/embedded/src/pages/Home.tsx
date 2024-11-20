@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderButtons } from '../components/HeaderButtons';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
+import { SameTokensWarning } from '../components/SameTokensWarning';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
@@ -123,6 +124,7 @@ export function Home() {
       setSelectedQuote(quote);
     }
   };
+
   return (
     <MainContainer>
       <Layout
@@ -226,6 +228,7 @@ export function Home() {
               />
             </>
           ) : null}
+          <SameTokensWarning />
         </PageContainer>
       </Layout>
       {isExpandable ? (
