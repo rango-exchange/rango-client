@@ -139,7 +139,6 @@ export function TokenList(props: PropTypes) {
       )
     );
   };
-
   const renderList = () => {
     return (
       <VirtualizedList

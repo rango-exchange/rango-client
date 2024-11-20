@@ -13,33 +13,30 @@ import BigNumber from 'bignumber.js';
 import { ZERO } from '../../constants/numbers';
 
 /**
- * output format: BlockchainId-TokenAddress
+ * Note: We need to use `symbol` as well since native coins and cosmos blockchains don't have `address`
+ * output format: BlockchainId-TokenAddress-TokenSymbol
  */
-export function createAssetKey(
-  asset: Pick<Asset, 'address' | 'blockchain'>
-): AssetKey {
-  return `${asset.blockchain}-${asset.address}`;
+export function createAssetKey(asset: Asset): AssetKey {
+  return `${asset.blockchain}-${asset.address}-${asset.symbol}`;
 }
 
 /**
- * output format: BlockchainId-TokenAddress-WalletAddress
+ * output format: BlockchainId-TokenAddress-TokenSymbol-WalletAddress
  */
 export function createBalanceKey(
   accountAddress: string,
-  asset: Pick<Asset, 'address' | 'blockchain'>
+  asset: Asset
 ): BalanceKey {
   const assetKey = createAssetKey(asset);
   return `${assetKey}-${accountAddress}`;
 }
 
-export function extractAssetFromBalanceKey(
-  key: BalanceKey
-): Pick<Asset, 'address' | 'blockchain'> {
-  const [assetChain, assetAddress] = key.split('-');
-
+export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
+  const [assetChain, assetAddress, assetSymbol] = key.split('-');
   return {
     address: assetAddress,
     blockchain: assetChain,
+    symbol: assetSymbol,
   };
 }
 

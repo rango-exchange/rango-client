@@ -24,11 +24,14 @@ import {
 
 type WalletAddress = string;
 type TokenAddress = string;
+type TokenSymbol = string;
 type BlockchainId = string;
-/** format: `BlockchainId-TokenAddress` */
-export type AssetKey = `${BlockchainId}-${TokenAddress}`;
-/** format: `BlockchainId-TokenAddress-WalletAddress` */
-export type BalanceKey = `${BlockchainId}-${TokenAddress}-${WalletAddress}`;
+/** format: `BlockchainId-TokenAddress-TokenSymbol` */
+export type AssetKey = `${BlockchainId}-${TokenAddress}-${TokenSymbol}`;
+/** format: `BlockchainId-TokenAddress-TokenSymbol-WalletAddress` */
+export type BalanceKey =
+  `${BlockchainId}-${TokenAddress}-${TokenSymbol}-${WalletAddress}`;
+
 export type BalanceState = {
   [key: BalanceKey]: Balance;
 };
@@ -268,6 +271,7 @@ export const createWalletsSlice: StateCreator<
           createBalanceKey(wallet.address, {
             address: asset.address,
             blockchain: wallet.chain,
+            symbol: asset.symbol,
           }) === key
       );
 
@@ -283,7 +287,6 @@ export const createWalletsSlice: StateCreator<
         );
       }
     });
-
     set({
       _balances: nextBalancesState,
       _aggregatedBalances: nextAggregatedBalanceState,
