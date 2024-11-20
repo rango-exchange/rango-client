@@ -1,13 +1,10 @@
 import type { Info } from './NoResult.types';
+import type { NoResultError, QuoteRequestFailed } from '../../types';
 
 import { i18n } from '@lingui/core';
 
 import { errorMessages } from '../../constants/errors';
-import {
-  type NoResultError,
-  QuoteErrorType,
-  type QuoteRequestFailed,
-} from '../../types';
+import { QuoteErrorType } from '../../types';
 
 const SMALL_NO_ROUTE__ICON_SIZE = 24;
 const LARGE_NO_ROUTE_ICON_SIZE = 60;
