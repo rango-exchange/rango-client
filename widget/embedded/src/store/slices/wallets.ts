@@ -192,8 +192,26 @@ export const createWalletsSlice: StateCreator<
       });
 
       set((state) => {
+        /*
+         * If wallet connected before and only need to update the address we should remove the old value and then add new conncted value.
+         * This scenario happens when user wants to change account inside the wallet.
+         * So the assumption here is the wallet has only one active address for a blockchain at the moment.
+         */
+        const connectedWalletsWithoutSameWalletAndBlockchain =
+          state.connectedWallets.filter((currentConnectedWallet) => {
+            return !newConnectedWallets.some(
+              (newConnectedWallet) =>
+                newConnectedWallet.walletType ===
+                  currentConnectedWallet.walletType &&
+                newConnectedWallet.chain === currentConnectedWallet.chain
+            );
+          });
+
         return {
-          connectedWallets: [...state.connectedWallets, ...newConnectedWallets],
+          connectedWallets: [
+            ...connectedWalletsWithoutSameWalletAndBlockchain,
+            ...newConnectedWallets,
+          ],
         };
       });
     }
