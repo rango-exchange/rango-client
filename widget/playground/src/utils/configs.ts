@@ -21,6 +21,8 @@ export const TREZOR_MANIFEST = {
   appUrl: 'https://widget.rango.exchange/',
   email: 'hi+trezorwidget@rango.exchange',
 };
+export const TON_CONNECT_MANIFEST_URL =
+  'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json';
 
 const configs: Configs = {
   API_KEY: RANGO_PUBLIC_API_KEY,

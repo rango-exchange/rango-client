@@ -17,6 +17,8 @@ export const DEFAULT_CONFIG: WidgetConfig = {
     appUrl: 'https://widget.rango.exchange/',
     email: 'hi+trezorwidget@rango.exchange',
   },
+  tonconnectManifest:
+    'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json',
 };
 
 interface IframeConfigs {

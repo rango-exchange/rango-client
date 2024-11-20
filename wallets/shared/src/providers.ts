@@ -1,6 +1,7 @@
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
+  Connect,
   Network,
   Providers,
   Subscribe,
@@ -9,6 +10,7 @@ import type {
 } from './rango.js';
 import type { BlockchainMeta } from 'rango-types';
 
+import { Address } from '@ton/core';
 import { isEvmBlockchain } from 'rango-types';
 
 import {
@@ -16,6 +18,7 @@ import {
   switchOrAddNetworkForMetamaskCompatibleWallets,
 } from './helpers.js';
 import { Networks } from './rango.js';
+import { isTonAddressItemReply, type TonProvider } from './types/ton.js';
 
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([
@@ -157,3 +160,51 @@ export function getEvmProvider(providers: Providers, type: WalletType): any {
   }
   return null;
 }
+
+export function parseTONAddress(rawAddress: string): string {
+  return Address.parse(rawAddress).toString({ bounceable: false });
+}
+
+export function connectToTON(manifestUrl: string): Connect {
+  return async ({ instance }) => {
+    const tonInstance = instance as TonProvider;
+    let result = await tonInstance.restoreConnection();
+
+    if ('items' in result.payload) {
+      const accounts = result.payload?.items
+        ?.filter(isTonAddressItemReply)
+        .map((item) => parseTONAddress(item.address));
+
+      return { accounts, chainId: Networks.TON };
+    }
+
+    result = await tonInstance.connect(2, {
+      manifestUrl,
+      items: [{ name: 'ton_addr' }],
+    });
+
+    if ('items' in result.payload) {
+      const accounts = result.payload?.items
+        ?.filter(isTonAddressItemReply)
+        .map((item) => parseTONAddress(item.address));
+      return { accounts: accounts, chainId: Networks.TON };
+    }
+    throw new Error(
+      result.payload?.message || 'error connecting to MyTonWallet'
+    );
+  };
+}
+
+export const canEagerlyConnectToTON: CanEagerConnect = async ({ instance }) => {
+  try {
+    const tonInstance = instance as TonProvider;
+    const result = await tonInstance.restoreConnection();
+    if ('items' in result.payload) {
+      const accounts = result.payload?.items;
+      return !!(accounts && accounts.length);
+    }
+    return false;
+  } catch (error) {
+    return false;
+  }
+};

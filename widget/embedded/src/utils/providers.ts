@@ -9,6 +9,7 @@ export interface ProvidersOptions {
     WidgetConfig['__UNSTABLE_OR_INTERNAL__']
   >['walletConnectListedDesktopWalletLink'];
   trezorManifest: WidgetConfig['trezorManifest'];
+  tonconnectManifest: WidgetConfig['tonconnectManifest'];
 }
 
 /**
@@ -30,6 +31,9 @@ export function matchAndGenerateProviders(
     selectedProviders: providers,
     trezor: options?.trezorManifest
       ? { manifest: options.trezorManifest }
+      : undefined,
+    tonconnect: options?.tonconnectManifest
+      ? { manifestUrl: options?.tonconnectManifest }
       : undefined,
   });
 

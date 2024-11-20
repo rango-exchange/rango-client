@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/provider-mytonwallet",
-  "version": "0.23.0",
+  "name": "@rango-dev/provider-tonkeeper",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-mytonwallet",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-tonkeeper",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

@@ -14,10 +14,10 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tonBlockchain } from 'rango-types';
 
-import { myTonWallet as myTonWallet_instance } from './helpers.js';
+import { tonkeeper as tonkeeper_instance } from './helpers.js';
 import signer from './signer.js';
 
-const WALLET = WalletTypes.MY_TON_WALLET;
+const WALLET = WalletTypes.TONKEEPER;
 
 export const config = {
   type: WALLET,
@@ -33,7 +33,7 @@ export const init = (environments: TONEnvironments) => {
   envs = environments;
 };
 
-export const getInstance = myTonWallet_instance;
+export const getInstance = tonkeeper_instance;
 export const connect: Connect = connectToTON(envs.manifestUrl);
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToTON;
@@ -47,12 +47,16 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const ton = tonBlockchain(allBlockChains);
   return {
-    name: 'MyTonWallet',
-    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/mytonwallet/icon.svg',
+    name: 'Tonkeeper',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/7fb19ed5d5019b4d6a41ce91b39cde64f86af4c6/wallets/tonkeeper/icon.svg',
     installLink: {
       CHROME:
-        'https://chrome.google.com/webstore/detail/mytonwallet-%C2%B7-my-ton-wall/fldfpgipfncgndfolcbkdeeknbbbnhcc',
-      DEFAULT: 'https://mytonwallet.io/',
+        'https://chromewebstore.google.com/detail/tonkeeper-%E2%80%94-wallet-for-to/omaabbefbmiijedngplfjmnooppbclkk',
+      BRAVE:
+        'https://chromewebstore.google.com/detail/tonkeeper-%E2%80%94-wallet-for-to/omaabbefbmiijedngplfjmnooppbclkk',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/tonkeeper/',
+      EDGE: 'https://chromewebstore.google.com/detail/tonkeeper-%E2%80%94-wallet-for-to/omaabbefbmiijedngplfjmnooppbclkk',
+      DEFAULT: 'https://tonkeeper.com/',
     },
     color: '#fff',
     supportedChains: ton,

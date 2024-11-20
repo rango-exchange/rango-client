@@ -56,6 +56,7 @@ export function useWalletList(params?: Params): API {
       walletConnectProjectId: config?.walletConnectProjectId,
       walletConnectListedDesktopWalletLink:
         config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
+      tonconnectManifest: config.tonconnectManifest,
     }) || ALL_SUPPORTED_WALLETS;
 
   let wallets = mapWalletTypesToWalletInfo(

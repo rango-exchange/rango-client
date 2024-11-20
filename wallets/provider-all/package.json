@@ -50,6 +50,7 @@
     "@rango-dev/provider-tokenpocket": "^0.38.0",
     "@rango-dev/provider-tomo": "^0.5.0",
     "@rango-dev/provider-mytonwallet": "0.23.0",
+    "@rango-dev/provider-tonkeeper": "0.1.0",
     "@rango-dev/provider-trezor": "^0.5.0",
     "@rango-dev/provider-tron-link": "^0.38.0",
     "@rango-dev/provider-trustwallet": "^0.38.0",

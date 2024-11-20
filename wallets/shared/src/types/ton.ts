@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 //TODO : move instance types to wallets-shared
 
 type SendTransactionFeatureDeprecated = 'SendTransaction';
@@ -282,3 +283,7 @@ export interface TonProvider {
 export const isTonAddressItemReply = (
   item: ConnectItemReply
 ): item is TonAddressItemReply => item.name === 'ton_addr';
+
+export interface TONEnvironments extends Record<string, string | undefined> {
+  manifestUrl: string;
+}

@@ -75,6 +75,7 @@ export enum WalletTypes {
   TOMO = 'tomo',
   TREZOR = 'trezor',
   SOLFLARE = 'solflare',
+  TONKEEPER = 'tonkeeper',
 }
 
 export const namespaces: Record<

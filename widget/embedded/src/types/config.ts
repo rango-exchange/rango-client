@@ -166,6 +166,7 @@ export type TrezorManifest = {
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
  * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
  * as a Trezor Connect integrator,share your e-mail and application url.
+ * @property {string} tonconnectManifest - Url to the TON Connect [manifest]{@link https://github.com/ton-connect/docs/blob/main/requests-responses.md#app-manifest} with the Dapp metadata that will be displayed in the user's wallet.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.
@@ -216,6 +217,7 @@ export type WidgetConfig = {
   title?: string;
   walletConnectProjectId?: string;
   trezorManifest?: TrezorManifest;
+  tonconnectManifest?: string;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;

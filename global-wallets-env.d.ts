@@ -39,5 +39,6 @@ declare global {
     offlineSigner?: any;
     tomo_evm?: any;
     solflare?: any;
+    tonkeeper?: any;
   }
 }

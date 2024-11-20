@@ -1,3 +1,4 @@
+import type { Environments as TonConnectEnvironment } from '@rango-dev/provider-mytonwallet';
 import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
@@ -31,6 +32,7 @@ import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
+import * as tonkeeper from '@rango-dev/provider-tonkeeper';
 import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
@@ -44,6 +46,7 @@ interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
   trezor?: TrezorEnvironments;
+  tonconnect?: TonConnectEnvironment;
 }
 
 export const allProviders = (options?: Options) => {
@@ -60,6 +63,36 @@ export const allProviders = (options?: Options) => {
     } else {
       throw new Error(
         'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
+      );
+    }
+  }
+
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.MY_TON_WALLET,
+      name: 'mytonwallet',
+    })
+  ) {
+    if (!!options?.tonconnect?.manifestUrl) {
+      mytonwallet.init(options.tonconnect);
+    } else {
+      throw new Error(
+        'TON Connect has been included in your providers. Passing a Manifest URL is required. Make sure you are passing "manifestUrl".'
+      );
+    }
+  }
+
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.TONKEEPER,
+      name: 'tonkeeper',
+    })
+  ) {
+    if (!!options?.tonconnect?.manifestUrl) {
+      tonkeeper.init(options.tonconnect);
+    } else {
+      throw new Error(
+        'TON Connect has been included in your providers. Passing a Manifest URL is required. Make sure you are passing "manifestUrl".'
       );
     }
   }
@@ -110,5 +143,6 @@ export const allProviders = (options?: Options) => {
     trezor,
     solflare,
     mytonwallet,
+    tonkeeper,
   ];
 };

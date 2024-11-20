@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@rango-dev/wallets-core": "^0.39.0",
+    "@ton/core": "^0.59.0",
+    "@ton/crypto": "3.3.0",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.74"
   },
