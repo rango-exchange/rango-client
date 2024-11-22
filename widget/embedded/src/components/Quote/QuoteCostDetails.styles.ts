@@ -28,7 +28,6 @@ export const ModalContainer = styled('div', {
 
 export const ModalHeader = styled('div', {
   padding: '$20 $20 $10',
-  textAlign: 'center',
   position: 'relative',
   '._icon-button': {
     position: 'absolute',
