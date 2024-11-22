@@ -16,7 +16,6 @@ type BaseProps = {
   tooltipContainer?: HTMLElement;
   onClick?: () => void;
   selected?: boolean;
-  feeWarning?: boolean;
 };
 
 export type DataLoadedProps = {
@@ -26,6 +25,7 @@ export type DataLoadedProps = {
   fee: QuoteCostProps['fee'];
   outputPrice: SwapInputPropTypes['price'];
   loading?: false;
+  quoteCost: React.ReactElement;
 };
 type LoadingProps = {
   loading: true;

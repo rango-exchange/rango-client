@@ -329,7 +329,17 @@ export function Quote(props: QuoteProps) {
       tooltipContainer={getExpanded()}
       steps={steps}
       tags={sortedQuoteTags}
-      feeWarning={feeWarning}
+      quoteCost={
+        <QuoteCostDetails
+          quote={quote}
+          fullExpandedMode
+          time={totalTime}
+          fee={fee}
+          feeWarning={feeWarning}
+          showModalFee={showModalFee}
+          steps={numberOfSteps}
+        />
+      }
       percentageChange={percentageChange}
       warningLevel={priceImpactWarningLevel}
       outputPrice={{
