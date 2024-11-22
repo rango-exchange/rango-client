@@ -4,6 +4,7 @@ export const Container = styled('div', {
   transition: 'width 0.2s, opacity 0.2s, margin-left 0.2s',
   height: '700px',
   width: '390px',
+  position: 'relative',
   opacity: 1,
   marginLeft: '$16',
   backgroundColor: '$neutral100',

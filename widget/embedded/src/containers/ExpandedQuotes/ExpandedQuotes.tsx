@@ -64,7 +64,7 @@ export function ExpandedQuotes(props: PropTypes) {
       />
       <Content>
         <Quotes
-          showModalFee={false}
+          showModalFee={true}
           fetch={fetch}
           hasSort={false}
           loading={loading}
