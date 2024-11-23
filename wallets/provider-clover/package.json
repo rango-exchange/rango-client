@@ -3,18 +3,18 @@
   "version": "0.39.0",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-clover",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-clover --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -24,6 +24,7 @@
     "@rango-dev/signer-evm": "^0.31.0",
     "@rango-dev/signer-solana": "^0.33.0",
     "@rango-dev/wallets-shared": "^0.38.0",
+    "@solana/web3.js": "^1.91.4",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.74"
   },
