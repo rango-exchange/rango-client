@@ -95,3 +95,35 @@ export function changeAccountSubscriber(
     },
   ];
 }
+
+export function changeChainSubscriber(
+  instance: () => ProviderAPI
+): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
+  let eventCallback: EIP1193EventMap['chainChanged'];
+
+  return [
+    (context) => {
+      const evmInstance = instance();
+
+      if (!evmInstance) {
+        throw new Error(
+          'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
+        );
+      }
+
+      const [, setState] = context.state();
+
+      eventCallback = async (chainId: string) => {
+        setState('network', chainId);
+      };
+      evmInstance.on('chainChanged', eventCallback);
+    },
+    () => {
+      const evmInstance = instance();
+
+      if (eventCallback && evmInstance) {
+        evmInstance.removeListener('chainChanged', eventCallback);
+      }
+    },
+  ];
+}
