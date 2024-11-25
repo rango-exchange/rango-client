@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-xdefi",
-  "version": "0.39.0",
+  "version": "0.39.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
