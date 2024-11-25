@@ -2,6 +2,7 @@ import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
+import Eth, { ledgerService } from '@ledgerhq/hw-app-eth';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
@@ -18,7 +19,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     try {
       const transport = await transportConnect();
 
-      const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
+      const eth = new Eth(transport);
       const result = await eth.signPersonalMessage(
         getDerivationPath(),
         Buffer.from(msg).toString('hex')
@@ -59,13 +60,15 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const unsignedTx =
         Transaction.from(transaction).unsignedSerialized.substring(2); // Create unsigned transaction
 
-      const resolution = await (
-        await import('@ledgerhq/hw-app-eth')
-      ).ledgerService.resolveTransaction(unsignedTx, {}, {}); // metadata necessary to allow the device to clear sign information
+      const resolution = await ledgerService.resolveTransaction(
+        unsignedTx,
+        {},
+        {}
+      ); // metadata necessary to allow the device to clear sign information
 
       const transport = await transportConnect();
 
-      const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
+      const eth = new Eth(transport);
 
       const signature = await eth.signTransaction(
         getDerivationPath(),
