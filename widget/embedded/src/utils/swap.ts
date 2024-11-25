@@ -43,7 +43,7 @@ import {
 
 import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
-import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
+import { getRequiredBalanceOfWallet } from './quote';
 import { getQuoteWallets } from './wallets';
 
 export function getOutputRatio(
@@ -574,10 +574,11 @@ export function isOutputAmountChangedExcessively(
   if (!usdInput || !previousUsdOutput || !currentUsdOutput) {
     return false;
   }
-  const percentageChange = getPriceImpact(previousUsdOutput, currentUsdOutput);
-  if (!percentageChange) {
-    return true;
-  }
+
+  const percentageChange = getPercentageChange(
+    previousUsdOutput.toString(),
+    currentUsdOutput.toString()
+  );
 
   return (
     (percentageChange <= -1 && usdInput.isGreaterThanOrEqualTo(1000)) ||
