@@ -2,6 +2,7 @@ import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
 import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
+import Solana from '@ledgerhq/hw-app-solana';
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
 import { PublicKey } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
@@ -24,9 +25,7 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
     try {
       const transport = await transportConnect();
 
-      const solana = new (await import('@ledgerhq/hw-app-solana')).default(
-        transport
-      );
+      const solana = new Solana(transport);
 
       const result = await solana.signOffchainMessage(
         getDerivationPath(),
@@ -44,9 +43,7 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
         solanaWeb3Transaction: Transaction | VersionedTransaction
       ) => {
         const transport = await transportConnect();
-        const solana = new (await import('@ledgerhq/hw-app-solana')).default(
-          transport
-        );
+        const solana = new Solana(transport);
 
         let signResult;
         if (isVersionedTransaction(solanaWeb3Transaction)) {
