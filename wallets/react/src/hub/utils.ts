@@ -125,10 +125,12 @@ export function checkHubStateAndTriggerEvents(
         hasNetworkChanged = true;
       }
 
+      // TODO: `accounts` has been frozen, we should check and find where object.freeze() is calling.
+
       // Check for accounts
       if (
-        previousNamespaceState.accounts?.sort().toString() !==
-        currentNamespaceState.accounts?.sort().toString()
+        previousNamespaceState.accounts?.slice().sort().toString() !==
+        currentNamespaceState.accounts?.slice().sort().toString()
       ) {
         if (currentNamespaceState.accounts) {
           const formattedAddresses = currentNamespaceState.accounts.map(
