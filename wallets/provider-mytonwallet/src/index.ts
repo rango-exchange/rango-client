@@ -1,4 +1,4 @@
-import type { TonProvider } from './types.js';
+import type { Environments, TonProvider } from './types.js';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -8,13 +8,14 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { toUserFriendlyAddress } from '@tonconnect/sdk/';
 import { tonBlockchain } from 'rango-types';
 
-import { TONCONNECT_MANIFEST_URL } from './constants.js';
-import { myTonWallet as myTonWallet_instance } from './helpers.js';
+import { getAccounts, myTonWallet as myTonWallet_instance } from './helpers.js';
 import signer from './signer.js';
-import { isTonAddressItemReply } from './types.js';
+
+let envs: Environments = {
+  manifestUrl: '',
+};
 
 const WALLET = WalletTypes.MY_TON_WALLET;
 
@@ -22,40 +23,44 @@ export const config = {
   type: WALLET,
 };
 
+export type { Environments };
+
+export const init = (environments: Environments) => {
+  envs = environments;
+};
+
 export const getInstance = myTonWallet_instance;
 export const connect: Connect = async ({ instance }) => {
-  // TODO : update wallets-shared types and remove type assertions
   const tonInstance = instance as TonProvider;
   const result = await tonInstance.restoreConnection();
 
-  if ('items' in result.payload) {
-    const accounts = result.payload?.items
-      ?.filter(isTonAddressItemReply)
-      .map((item) => toUserFriendlyAddress(item.address));
+  const accounts = await getAccounts(result);
 
+  if (accounts) {
     return { accounts, chainId: Networks.TON };
     // eslint-disable-next-line no-else-return
   } else {
     const result = await tonInstance.connect(2, {
-      manifestUrl: TONCONNECT_MANIFEST_URL,
+      manifestUrl: envs.manifestUrl,
       items: [{ name: 'ton_addr' }],
     });
 
-    if ('items' in result.payload) {
-      const accounts = result.payload?.items
-        ?.filter(isTonAddressItemReply)
-        .map((item) => toUserFriendlyAddress(item.address));
-      return { accounts: accounts, chainId: Networks.TON };
+    const accounts = await getAccounts(result);
+
+    if (accounts) {
+      return { accounts, chainId: Networks.TON };
     }
+
     throw new Error(
-      result.payload?.message || 'error connecting to MyTonWallet'
+      'message' in result.payload
+        ? result.payload.message
+        : 'error connecting to MyTonWallet'
     );
   }
 };
 
 export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
   try {
-    // TODO : update wallets-shared types and remove type assertions
     const tonInstance = instance as TonProvider;
     const result = await tonInstance.restoreConnection();
     if ('items' in result.payload) {

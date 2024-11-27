@@ -7,13 +7,18 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
-import { TREZOR_MANIFEST, WC_PROJECT_ID } from './configs';
+import {
+  TON_CONNECT_MANIFEST_URL,
+  TREZOR_MANIFEST,
+  WC_PROJECT_ID,
+} from './configs';
 
 const providers = allProviders({
   walletconnect2: {
     WC_PROJECT_ID: WC_PROJECT_ID,
   },
   trezorManifest: TREZOR_MANIFEST,
+  tonconnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
 });
 
 function AppContainer() {

@@ -6,7 +6,10 @@
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "typings": "dist/index.d.ts",
   "files": [
@@ -23,8 +26,9 @@
   "dependencies": {
     "@rango-dev/signer-ton": "^0.17.0",
     "@rango-dev/wallets-shared": "^0.39.0",
-    "@tonconnect/sdk": "^2.1.0",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.74",
+    "@ton/core": "^0.59.0",
+    "@ton/crypto": "^3.3.0"
   },
   "publishConfig": {
     "access": "public"

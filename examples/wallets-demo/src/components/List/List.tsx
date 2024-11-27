@@ -6,7 +6,11 @@ import { useWallets } from '@rango-dev/wallets-react';
 import { sortWalletsBasedOnState } from '@rango-dev/wallets-shared';
 import React from 'react';
 
-import { TREZOR_MANIFEST, WC_PROJECT_ID } from '../../constants';
+import {
+  TON_CONNECT_MANIFEST_URL,
+  TREZOR_MANIFEST,
+  WC_PROJECT_ID,
+} from '../../constants';
 
 import Item from './Item';
 
@@ -17,6 +21,7 @@ function List({ tokens }: { tokens: Token[] }) {
   const providerTypes = allProviders({
     walletconnect2: { WC_PROJECT_ID: WC_PROJECT_ID },
     trezorManifest: TREZOR_MANIFEST,
+    tonconnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
   }).map((p) => p.config.type);
   const allWallets = sortWalletsBasedOnState(
     providerTypes.map((type) => {

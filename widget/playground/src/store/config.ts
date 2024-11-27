@@ -14,7 +14,11 @@ import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 import { DEFAULT_THEME_COLORS } from '../constants';
-import { getConfig, TREZOR_MANIFEST } from '../utils/configs';
+import {
+  getConfig,
+  TON_CONNECT_MANIFEST_URL,
+  TREZOR_MANIFEST,
+} from '../utils/configs';
 
 import createSelectors from './selectors';
 
@@ -77,6 +81,7 @@ export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
   walletConnectProjectId: getConfig('WC_PROJECT_ID'),
   trezorManifest: TREZOR_MANIFEST,
+  tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
   amount: undefined,
   externalWallets: false,
   variant: 'default',

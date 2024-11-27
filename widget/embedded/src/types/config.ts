@@ -171,6 +171,15 @@ export type TrezorManifest = {
 };
 
 /**
+ *
+ * @property {string} manifestUrl - The URL of the TON Connect [manifest]{@link https://github.com/ton-connect/docs/blob/main/requests-responses.md#app-manifest}, containing the Dapp metadata to be displayed in the user’s wallet.
+ *
+ */
+export type TonConnectConfig = {
+  manifestUrl?: string;
+};
+
+/**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
  * and theme.
@@ -185,6 +194,7 @@ export type TrezorManifest = {
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
  * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
  * as a Trezor Connect integrator,share your e-mail and application url.
+ * @property {TonConnectConfig} tonConnect - Configuration for TON Connect compatible providers like MyTonWallet.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.
@@ -237,6 +247,7 @@ export type WidgetConfig = {
   title?: string;
   walletConnectProjectId?: string;
   trezorManifest?: TrezorManifest;
+  tonConnect?: TonConnectConfig;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
