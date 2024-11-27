@@ -3,3 +3,5 @@ export const TREZOR_MANIFEST = {
   appUrl: 'https://widget.rango.exchange/',
   email: 'hi+trezorwidget@rango.exchange',
 };
+export const TON_CONNECT_MANIFEST_URL =
+  'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/manifests/tonconnect/manifest.json';

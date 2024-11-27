@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:21
+msgid "No Routes Found"
+msgstr "No Routes Found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:25
+msgid "You cannot use the same token for From and To."
+msgstr "You cannot use the same token for From and To."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:286
 #: widget/embedded/src/pages/HistoryPage.tsx:186
@@ -145,7 +155,7 @@ msgstr "Status"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
 #: widget/embedded/src/pages/SettingsPage.tsx:55
 msgid "Reset"
 msgstr "Reset"
@@ -200,7 +210,7 @@ msgid "Swaps steps"
 msgstr "Swaps steps"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "Retry"
@@ -788,7 +798,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
+#: widget/embedded/src/pages/Home.tsx:163
 msgid "Swap"
 msgstr "Swap"
 
@@ -1158,37 +1168,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Required: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:604
+#: widget/embedded/src/utils/swap.ts:601
 msgid " for network fee"
 msgstr " for network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:607
+#: widget/embedded/src/utils/swap.ts:604
 msgid " for swap"
 msgstr " for swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:610
+#: widget/embedded/src/utils/swap.ts:607
 msgid " for input and network fee"
 msgstr " for input and network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:612
+#: widget/embedded/src/utils/swap.ts:609
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:672
+#: widget/embedded/src/utils/swap.ts:669
 msgid "Waiting for connecting wallet"
 msgstr "Waiting for connecting wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:676
+#: widget/embedded/src/utils/swap.ts:673
 msgid "Waiting for other running tasks to be finished"
 msgstr "Waiting for other running tasks to be finished"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:679
+#: widget/embedded/src/utils/swap.ts:676
 msgid "Waiting for changing wallet network"
 msgstr "Waiting for changing wallet network"
 

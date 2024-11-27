@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-04 09:42\n"
+"PO-Revision-Date: 2024-11-27 15:57\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,16 @@ msgstr ""
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:21
+msgid "No Routes Found"
+msgstr "No se encontraron rutas"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:25
+msgid "You cannot use the same token for From and To."
+msgstr "No puedes utilizar el mismo token para Desde y Hasta."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -150,7 +160,7 @@ msgstr "Estado"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
 #: widget/embedded/src/pages/SettingsPage.tsx:55
 msgid "Reset"
 msgstr "Reset"
@@ -205,7 +215,7 @@ msgid "Swaps steps"
 msgstr "Intercambiar pasos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "Reintentar"
@@ -791,7 +801,7 @@ msgstr "Confirmar el precio de USD desconocido"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
+#: widget/embedded/src/pages/Home.tsx:163
 msgid "Swap"
 msgstr "Intercambiar"
 
@@ -1161,37 +1171,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Requerido: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:604
+#: widget/embedded/src/utils/swap.ts:601
 msgid " for network fee"
 msgstr " por comisión de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:607
+#: widget/embedded/src/utils/swap.ts:604
 msgid " for swap"
 msgstr " para intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:610
+#: widget/embedded/src/utils/swap.ts:607
 msgid " for input and network fee"
 msgstr " por entrada y tarifa de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:612
+#: widget/embedded/src/utils/swap.ts:609
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Necesitas {requiredAmount} {symbol}{reason}, pero tienes {currentAmount} {symbol} en tu monedero {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:672
+#: widget/embedded/src/utils/swap.ts:669
 msgid "Waiting for connecting wallet"
 msgstr "Esperando por conectar cartera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:676
+#: widget/embedded/src/utils/swap.ts:673
 msgid "Waiting for other running tasks to be finished"
 msgstr "Esperando a que finalicen otras tareas en ejecución"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:679
+#: widget/embedded/src/utils/swap.ts:676
 msgid "Waiting for changing wallet network"
 msgstr "Esperando a cambiar la red del monedero"
 

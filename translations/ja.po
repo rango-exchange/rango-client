@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-04 09:42\n"
+"PO-Revision-Date: 2024-11-27 15:57\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,16 @@ msgstr ""
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:21
+msgid "No Routes Found"
+msgstr "ルートが見つかりません"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:25
+msgid "You cannot use the same token for From and To."
+msgstr "From と To に同じトークンを使用することはできません。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -150,7 +160,7 @@ msgstr "ステータス"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
 #: widget/embedded/src/pages/SettingsPage.tsx:55
 msgid "Reset"
 msgstr "Reset"
@@ -205,7 +215,7 @@ msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "再試行する"
@@ -791,7 +801,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:161
+#: widget/embedded/src/pages/Home.tsx:163
 msgid "Swap"
 msgstr "入れ替え"
 
@@ -1161,37 +1171,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "必須: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:604
+#: widget/embedded/src/utils/swap.ts:601
 msgid " for network fee"
 msgstr " ネットワーク料金で"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:607
+#: widget/embedded/src/utils/swap.ts:604
 msgid " for swap"
 msgstr " スワップ用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:610
+#: widget/embedded/src/utils/swap.ts:607
 msgid " for input and network fee"
 msgstr " 入力とネットワーク料金について"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:612
+#: widget/embedded/src/utils/swap.ts:609
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "必要額は ≈ {requiredAmount} {symbol}{reason}ですが、あなたの {blockchain} ウォレットには {currentAmount} {symbol} があります。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:672
+#: widget/embedded/src/utils/swap.ts:669
 msgid "Waiting for connecting wallet"
 msgstr "ウォレットの接続を待っています"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:676
+#: widget/embedded/src/utils/swap.ts:673
 msgid "Waiting for other running tasks to be finished"
 msgstr "他の実行中のタスクが完了するのを待っています"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:679
+#: widget/embedded/src/utils/swap.ts:676
 msgid "Waiting for changing wallet network"
 msgstr "ウォレットネットワークの変更を待っています"
 
