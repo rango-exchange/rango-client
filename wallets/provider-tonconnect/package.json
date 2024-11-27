@@ -1,12 +1,15 @@
 {
-  "name": "@rango-dev/provider-brave",
-  "version": "0.40.1-next.1",
+  "name": "@rango-dev/provider-tonconnect",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "typings": "dist/index.d.ts",
   "files": [
@@ -14,17 +17,18 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-brave",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-tonconnect",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.32.0",
-    "@rango-dev/signer-solana": "^0.34.1-next.0",
     "@rango-dev/wallets-shared": "^0.39.0",
-    "rango-types": "^0.1.74"
+    "@ton/core": "^0.59.0",
+    "@ton/crypto": "^3.3.0",
+    "@tonconnect/ui": "^2.0.9",
+    "rango-types": "^0.1.75"
   },
   "publishConfig": {
     "access": "public"
