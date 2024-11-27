@@ -13,7 +13,7 @@ const SEND_OPTIONS = {
   skipPreflight: true,
 };
 const TIME_OUT = 2_000;
-const CONFIRMATION_TIME_OUT = 30_000;
+const CONFIRMATION_TIME_OUT = 60_000;
 
 // https://github.com/jup-ag/jupiter-quote-api-node/blob/main/example/utils/transactionSender.ts
 export async function transactionSenderAndConfirmationWaiter({
