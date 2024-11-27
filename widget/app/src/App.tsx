@@ -4,7 +4,11 @@ import { Widget } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 
-import { TREZOR_MANIFEST, WC_PROJECT_ID } from './constants';
+import {
+  TON_CONNECT_MANIFEST_URL,
+  TREZOR_MANIFEST,
+  WC_PROJECT_ID,
+} from './constants';
 
 export function App() {
   const [searchParams] = useSearchParams();
@@ -36,6 +40,7 @@ export function App() {
         apiKey: '',
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
+        tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
       };
     }
     if (!!config) {

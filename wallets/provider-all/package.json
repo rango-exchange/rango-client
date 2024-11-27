@@ -49,6 +49,7 @@
     "@rango-dev/provider-taho": "^0.39.0",
     "@rango-dev/provider-tokenpocket": "^0.39.0",
     "@rango-dev/provider-tomo": "^0.6.0",
+    "@rango-dev/provider-mytonwallet": "^0.24.1-next.0",
     "@rango-dev/provider-trezor": "^0.6.0",
     "@rango-dev/provider-tron-link": "^0.39.1-next.0",
     "@rango-dev/provider-trustwallet": "^0.39.0",

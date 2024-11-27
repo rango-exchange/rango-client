@@ -1,5 +1,6 @@
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
+import { Cell } from '@ton/core';
 import { SignerError } from 'rango-types';
 
 export class DefaultTonSigner implements GenericSigner<TonTransaction> {
@@ -15,14 +16,12 @@ export class DefaultTonSigner implements GenericSigner<TonTransaction> {
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
     const { type, blockChain, ...transactionObjectForSign } = tx;
 
-    await this.provider.send({
+    const { result } = await this.provider.send({
       method: 'sendTransaction',
       params: [JSON.stringify(transactionObjectForSign)],
     });
-    /*
-     *No hash is returned when signing a Ton transaction.
-     *Returns a string for API consistency
-     */
-    return { hash: 'xxxxxxxx' };
+
+    const hash = Cell.fromBase64(result).hash().toString('hex');
+    return { hash };
   }
 }
