@@ -1,3 +1,18 @@
+## Widget [0.24.0] (2024-11-27)
+
+_includes `@rango-dev/widget-embedded@0.36.0`_
+
+### Bug Fixes
+
+- fix error display for bad requests ([82c0381](https://github.com/rango-exchange/rango-client/commit/82c03811b64a9197680314ac4f506d8680afec0c))
+
+### Features
+
+- Add support for MyTonWallet ([7027755](https://github.com/rango-exchange/rango-client/commit/7027755740426359f42b088b842dfd01590df5c3))
+- Add support for TonConnect ([2a2dbb7](https://github.com/rango-exchange/rango-client/commit/2a2dbb79022263f19446ced49d298e04d63f927f))
+- Accepting routing params (avoidNativeFee, maxLength) ([2a89744](https://github.com/rango-exchange/rango-client/commit/2a8974440d1269d9a12700fc7100f1f78371d277))
+- Show warning if source and destination token is same ([979cb0d](https://github.com/rango-exchange/rango-client/commit/979cb0d20c0730be9c94c2cd96d66630ea8e86ba))
+
 ## Widget [0.23.0] (2024-11-12)
 
 _includes `@rango-dev/widget-embedded@0.35.0`_
