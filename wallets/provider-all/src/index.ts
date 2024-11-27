@@ -1,3 +1,4 @@
+import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
 import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
@@ -20,6 +21,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as ledger from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
+import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
 import * as phantom from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
@@ -30,6 +32,7 @@ import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
+import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
@@ -43,6 +46,7 @@ interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
   trezor?: TrezorEnvironments;
+  tonConnect?: TonConnectEnvironments;
 }
 
 export const allProviders = (options?: Options) => {
@@ -74,12 +78,35 @@ export const allProviders = (options?: Options) => {
     }
   }
 
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.MY_TON_WALLET,
+      name: 'mytonwallet',
+    })
+  ) {
+    if (!!options?.tonConnect?.manifestUrl) {
+      mytonwallet.init(options.tonConnect);
+    }
+  }
+
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.TON_CONNECT,
+      name: 'tonconnect',
+    })
+  ) {
+    if (!!options?.tonConnect?.manifestUrl) {
+      tonconnect.init(options.tonConnect);
+    }
+  }
+
   return [
     safe,
     defaultInjected,
     metamask,
     solflareSnap,
     walletconnect2,
+    tonconnect,
     keplr,
     phantom,
     argentx,
@@ -108,5 +135,6 @@ export const allProviders = (options?: Options) => {
     rabby,
     trezor,
     solflare,
+    mytonwallet,
   ];
 };

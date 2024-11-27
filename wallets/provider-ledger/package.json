@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-ledger",
-  "version": "0.9.0",
+  "version": "0.9.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -27,8 +27,8 @@
     "@ledgerhq/hw-transport-webhid": "^6.28.6",
     "@ledgerhq/types-cryptoassets": "^7.11.0",
     "@ledgerhq/types-devices": "^6.24.0",
-    "@rango-dev/signer-solana": "^0.34.0",
-    "@rango-dev/wallets-shared": "^0.39.0",
+    "@rango-dev/signer-solana": "^0.34.1-next.0",
+    "@rango-dev/wallets-shared": "^0.39.1-next.0",
     "@solana/web3.js": "^1.91.4",
     "@types/w3c-web-hid": "^1.0.2",
     "bs58": "^5.0.0",

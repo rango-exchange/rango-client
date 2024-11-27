@@ -81,6 +81,26 @@ export function filterConfig(
     filteredConfigForExport.trezorManifest = config.trezorManifest;
   }
 
+  const isMytonwalletNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'tonConnect',
+    'mytonwallet'
+  );
+
+  if (isMytonwalletNeeded) {
+    filteredConfigForExport.tonConnect = config.tonConnect;
+  }
+
+  const isTonconnectNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'tonConnect',
+    'tonconnect'
+  );
+
+  if (isTonconnectNeeded) {
+    filteredConfigForExport.tonConnect = config.tonConnect;
+  }
+
   return { userSelectedConfig, filteredConfigForExport };
 }
 

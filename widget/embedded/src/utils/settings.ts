@@ -1,4 +1,4 @@
-import type { Features } from '../types';
+import type { Features, Routing } from '../types';
 import type { SwapperMeta, SwapperType, Token } from 'rango-sdk';
 
 import { removeDuplicateFrom } from './common';
@@ -72,8 +72,8 @@ export function isFeatureHidden(feature: keyof Features, features?: Features) {
   return features?.[feature] === 'hidden';
 }
 
-export function isFeatureEnabled(feature: keyof Features, features?: Features) {
-  return features?.[feature] === 'enabled';
+export function isRoutingEnabled(item: keyof Routing, routing?: Routing) {
+  return routing?.[item] === 'enabled';
 }
 
 export const addCustomTokensToSupportedTokens = (

@@ -15,7 +15,7 @@ import {
   getQuoteToTokenUsdPrice,
   sortQuotesBy,
 } from '../utils/quote';
-import { isFeatureEnabled } from '../utils/settings';
+import { isRoutingEnabled } from '../utils/settings';
 import { createQuoteRequestBody } from '../utils/swap';
 import { areTokensEqual } from '../utils/wallets';
 
@@ -48,11 +48,8 @@ export function useSwapInput({
   refetchQuote,
 }: UseSwapInputProps): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchAllQuotes();
-  const {
-    excludeLiquiditySources: configExcludeLiquiditySources,
-    features,
-    enableCentralizedSwappers,
-  } = useAppStore().config;
+  const { excludeLiquiditySources: configExcludeLiquiditySources, routing } =
+    useAppStore().config;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const {
@@ -125,11 +122,23 @@ export function useSwapInput({
         affiliateRef,
         affiliatePercent,
         affiliateWallets,
-        enableCentralizedSwappers,
       });
-      if (isFeatureEnabled('experimentalRoute', features)) {
+      if (isRoutingEnabled('experimental', routing)) {
         requestBody.experimental = true;
       }
+
+      if (isRoutingEnabled('avoidNativeFee', routing)) {
+        requestBody.avoidNativeFee = true;
+      }
+
+      if (isRoutingEnabled('enableCentralizedSwappers', routing)) {
+        requestBody.enableCentralizedSwappers = true;
+      }
+
+      if (routing?.maxLength) {
+        requestBody.maxLength = routing.maxLength;
+      }
+
       fetchQuote(requestBody)
         .then((res) => {
           const sortQuotes = sortQuotesBy(sortStrategy, res.results);

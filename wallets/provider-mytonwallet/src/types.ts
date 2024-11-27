@@ -80,10 +80,12 @@ interface TonProofItemReplySuccess {
   };
 }
 
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum CONNECT_ITEM_ERROR_CODES {
   UNKNOWN_ERROR = 0,
   METHOD_NOT_SUPPORTED = 400,
 }
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 
 type ConnectItemReplyError<T> = {
   name: T;
@@ -115,6 +117,7 @@ interface ConnectEventError {
   };
 }
 
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum CONNECT_EVENT_ERROR_CODES {
   UNKNOWN_ERROR = 0,
   BAD_REQUEST_ERROR = 1,
@@ -124,8 +127,9 @@ enum CONNECT_EVENT_ERROR_CODES {
   USER_REJECTS_ERROR = 300,
   METHOD_NOT_SUPPORTED = 400,
 }
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 
-type ConnectEvent = ConnectEventSuccess | ConnectEventError;
+export type ConnectEvent = ConnectEventSuccess | ConnectEventError;
 
 type RpcMethod = 'disconnect' | 'sendTransaction' | 'signData';
 
@@ -197,6 +201,7 @@ interface WalletResponseTemplateSuccess {
 
 type SendTransactionRpcResponseSuccess = WalletResponseTemplateSuccess;
 
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum SIGN_DATA_ERROR_CODES {
   UNKNOWN_ERROR = 0,
   BAD_REQUEST_ERROR = 1,
@@ -204,6 +209,7 @@ enum SIGN_DATA_ERROR_CODES {
   USER_REJECTS_ERROR = 300,
   METHOD_NOT_SUPPORTED = 400,
 }
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 
 interface SignDataRpcResponseError extends WalletResponseTemplateError {
   error: { code: SIGN_DATA_ERROR_CODES; message: string; data?: unknown };
@@ -218,12 +224,14 @@ interface SignDataRpcResponseSuccess {
   };
 }
 
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum DISCONNECT_ERROR_CODES {
   UNKNOWN_ERROR = 0,
   BAD_REQUEST_ERROR = 1,
   UNKNOWN_APP_ERROR = 100,
   METHOD_NOT_SUPPORTED = 400,
 }
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 
 interface DisconnectRpcResponseError extends WalletResponseTemplateError {
   error: { code: DISCONNECT_ERROR_CODES; message: string; data?: unknown };
@@ -282,3 +290,7 @@ export interface TonProvider {
 export const isTonAddressItemReply = (
   item: ConnectItemReply
 ): item is TonAddressItemReply => item.name === 'ton_addr';
+
+export interface Environments extends Record<string, string | undefined> {
+  manifestUrl: string;
+}
