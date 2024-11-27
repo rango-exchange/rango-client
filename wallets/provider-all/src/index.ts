@@ -1,4 +1,4 @@
-import type { Environments as MyTonWalletEnvironments } from '@rango-dev/provider-mytonwallet';
+import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
 import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
@@ -32,6 +32,7 @@ import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
+import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
@@ -45,7 +46,7 @@ interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface)[];
   trezor?: TrezorEnvironments;
-  tonConnect?: MyTonWalletEnvironments;
+  tonConnect?: TonConnectEnvironments;
 }
 
 export const allProviders = (options?: Options) => {
@@ -88,12 +89,24 @@ export const allProviders = (options?: Options) => {
     }
   }
 
+  if (
+    !isWalletExcluded(providers, {
+      type: WalletTypes.TON_CONNECT,
+      name: 'tonconnect',
+    })
+  ) {
+    if (!!options?.tonConnect?.manifestUrl) {
+      tonconnect.init(options.tonConnect);
+    }
+  }
+
   return [
     safe,
     defaultInjected,
     metamask,
     solflareSnap,
     walletconnect2,
+    tonconnect,
     keplr,
     phantom,
     argentx,
