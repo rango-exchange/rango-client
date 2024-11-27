@@ -91,6 +91,16 @@ export function filterConfig(
     filteredConfigForExport.tonConnect = config.tonConnect;
   }
 
+  const isTonconnectNeeded = isWalletConfigNeeded(
+    filteredConfigForExport,
+    'tonConnect',
+    'tonconnect'
+  );
+
+  if (isTonconnectNeeded) {
+    filteredConfigForExport.tonConnect = config.tonConnect;
+  }
+
   return { userSelectedConfig, filteredConfigForExport };
 }
 
