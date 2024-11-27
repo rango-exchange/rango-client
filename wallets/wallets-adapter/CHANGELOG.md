@@ -1,3 +1,12 @@
+# [0.36.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.35.0...wallets-adapter@0.36.0) (2024-11-27)
+
+
+### Features
+
+* add ton connect provider ([2a2dbb7](https://github.com/rango-exchange/rango-client/commit/2a2dbb79022263f19446ced49d298e04d63f927f))
+
+
+
 # [0.35.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.34.5...wallets-adapter@0.35.0) (2024-11-12)
 
 

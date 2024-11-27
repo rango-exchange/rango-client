@@ -1,3 +1,7 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.39.0...provider-keplr@0.40.0) (2024-11-27)
+
+
+
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.38.2...provider-keplr@0.39.0) (2024-11-12)
 
 
