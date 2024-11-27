@@ -1,3 +1,17 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.39.0...provider-all@0.40.0) (2024-11-27)
+
+
+### Bug Fixes
+
+* improve ton signer and mytonwallet provider ([7027755](https://github.com/rango-exchange/rango-client/commit/7027755740426359f42b088b842dfd01590df5c3))
+
+
+### Features
+
+* add ton connect provider ([2a2dbb7](https://github.com/rango-exchange/rango-client/commit/2a2dbb79022263f19446ced49d298e04d63f927f))
+
+
+
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.38.5...provider-all@0.39.0) (2024-11-12)
 
 
