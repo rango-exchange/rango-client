@@ -1,3 +1,7 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.39.0...provider-tron-link@0.40.0) (2024-11-27)
+
+
+
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.38.0...provider-tron-link@0.39.0) (2024-11-12)
 
 

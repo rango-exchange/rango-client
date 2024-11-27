@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare-snap@0.10.0...provider-solflare-snap@0.11.0) (2024-11-27)
+
+
+### Features
+
+* add ton connect provider ([2a2dbb7](https://github.com/rango-exchange/rango-client/commit/2a2dbb79022263f19446ced49d298e04d63f927f))
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare-snap@0.9.0...provider-solflare-snap@0.10.0) (2024-11-12)
 
 
