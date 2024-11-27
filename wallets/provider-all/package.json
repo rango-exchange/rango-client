@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.39.1-next.0",
+  "version": "0.39.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -39,6 +39,7 @@
     "@rango-dev/provider-ledger": "^0.9.1-next.0",
     "@rango-dev/provider-math-wallet": "^0.39.1-next.0",
     "@rango-dev/provider-metamask": "^0.39.0",
+    "@rango-dev/provider-mytonwallet": "^0.24.1-next.1",
     "@rango-dev/provider-okx": "^0.39.1-next.0",
     "@rango-dev/provider-phantom": "^0.39.1-next.0",
     "@rango-dev/provider-rabby": "^0.6.0",
@@ -49,7 +50,6 @@
     "@rango-dev/provider-taho": "^0.39.0",
     "@rango-dev/provider-tokenpocket": "^0.39.0",
     "@rango-dev/provider-tomo": "^0.6.0",
-    "@rango-dev/provider-mytonwallet": "^0.24.1-next.0",
     "@rango-dev/provider-trezor": "^0.6.0",
     "@rango-dev/provider-tron-link": "^0.39.1-next.0",
     "@rango-dev/provider-trustwallet": "^0.39.0",
