@@ -21,10 +21,10 @@ export function useConfirmSwap(): ConfirmSwap {
     fromToken,
     toToken,
     inputAmount,
+    inputUsdValue,
     setSelectedQuote,
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
-    setQuoteWarningsConfirmed,
     resetAlerts,
   } = useQuoteStore();
 
@@ -95,21 +95,16 @@ export function useConfirmSwap(): ConfirmSwap {
           disabledSwappersGroups: disabledLiquiditySources,
         };
 
-        const confirmSwapWarnings = generateWarnings(
-          initialQuote ?? undefined,
+        const confirmSwapWarnings = generateWarnings({
+          previousQuote: initialQuote ?? undefined,
           currentQuote,
-          {
-            fromToken,
-            toToken,
-            meta: { blockchains },
-            findToken,
-            selectedWallets,
-            userSlippage,
-          }
-        );
-        if (confirmSwapWarnings.quoteUpdate) {
-          setQuoteWarningsConfirmed(false);
-        }
+          meta: { blockchains },
+          selectedWallets,
+          userSlippage,
+          inputUsdValue,
+          findToken,
+        });
+
         resetAlerts();
 
         const proceedAnyway = !!confirmSwapWarnings.balance;

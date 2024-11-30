@@ -15,7 +15,6 @@ import type {
   MultiRouteSimulationResult,
   PreferenceType,
   RouteTag,
-  Token,
 } from 'rango-sdk';
 import type { PendingSwap } from 'rango-types';
 
@@ -29,29 +28,18 @@ import { QuoteWarningType } from '../types';
 
 import { areEqual } from './common';
 import { createTokenHash, findBlockchain } from './meta';
+import { numberToString } from './numbers';
 import {
-  calcOutputUsdValue,
   checkSlippageWarnings,
   getMinRequiredSlippage,
   getPercentageChange,
   getTotalFeeInUsd,
+  getUsdInputFrom,
+  getUsdOutputFrom,
   hasHighValueLoss,
   hasProperSlippage,
+  isOutputAmountChangedExcessively,
 } from './swap';
-
-export function getQuoteToTokenUsdPrice(
-  quote: SelectedQuote | null
-): number | null | undefined {
-  const swaps = quote?.swaps || [];
-  return swaps[swaps.length - 1].to.usdPrice;
-}
-
-export function getQuoteFromTokenUsdPrice(
-  quote: SelectedQuote | null
-): number | null | undefined {
-  const swaps = quote?.swaps || [];
-  return swaps[0].from.usdPrice;
-}
 
 export function isNumberOfSwapsChanged(
   quoteA: SelectedQuote,
@@ -195,56 +183,73 @@ export function createRetryQuote(
   };
 }
 
-export function generateQuoteWarnings(
-  quote: SelectedQuote,
-  params: {
-    fromToken: Token;
-    toToken: Token;
-    findToken: FindToken;
-    userSlippage: number;
-  }
-): QuoteWarning | null {
-  const { fromToken, toToken, findToken, userSlippage } = params;
-  const inputUsdValue = calcOutputUsdValue(
-    quote.requestAmount,
-    getQuoteFromTokenUsdPrice(quote) || fromToken?.usdPrice
-  );
-  const outputUsdValue = calcOutputUsdValue(
-    quote.outputAmount,
-    getQuoteToTokenUsdPrice(quote) || toToken?.usdPrice
-  );
+export function generateQuoteWarnings(params: {
+  previousQuote?: SelectedQuote;
+  currentQuote: SelectedQuote;
+  findToken: FindToken;
+  userSlippage: number;
+}): QuoteWarning | null {
+  const { previousQuote, currentQuote, findToken, userSlippage } = params;
+  const usdInput = getUsdInputFrom(currentQuote);
+  const usdOutput = getUsdOutputFrom(currentQuote);
 
-  if (!!quote && inputUsdValue && outputUsdValue) {
+  if (!!currentQuote && usdInput && usdOutput) {
     const priceImpact = getPriceImpact(
-      inputUsdValue.toString(),
-      outputUsdValue.toString()
+      usdInput.toString(),
+      usdOutput.toString()
     );
     const highValueLoss =
-      !!priceImpact && hasHighValueLoss(inputUsdValue, priceImpact);
+      !!priceImpact && hasHighValueLoss(usdInput, priceImpact);
 
     if (highValueLoss) {
-      const totalFee = getTotalFeeInUsd(quote?.swaps, findToken);
+      const totalFee = getTotalFeeInUsd(currentQuote?.swaps, findToken);
       const warningLevel = getPriceImpactLevel(priceImpact);
       return {
         type: QuoteWarningType.HIGH_VALUE_LOSS,
-        inputUsdValue,
-        outputUsdValue,
+        inputUsdValue: usdInput,
+        outputUsdValue: usdOutput,
         priceImpact,
         totalFee,
         warningLevel,
       };
     }
-  } else if (quote && (!inputUsdValue || !outputUsdValue)) {
+  }
+
+  if (
+    previousQuote &&
+    isOutputAmountChangedExcessively(previousQuote, currentQuote)
+  ) {
+    return {
+      type: QuoteWarningType.EXCESSIVE_OUTPUT_AMOUNT_CHANGE,
+      usdValueChange: numberToString(
+        getUsdOutputFrom(currentQuote)
+          ?.minus(getUsdOutputFrom(previousQuote) ?? 0)
+          .toString() ?? '0',
+        null,
+        2
+      ),
+      percentageChange: numberToString(
+        getPriceImpact(
+          getUsdOutputFrom(previousQuote) ?? '1',
+          getUsdOutputFrom(currentQuote) ?? '1'
+        ),
+        null,
+        2
+      ),
+    };
+  }
+
+  if (currentQuote && (!usdInput || !usdOutput)) {
     return { type: QuoteWarningType.UNKNOWN_PRICE };
   }
 
-  const minRequiredSlippage = getMinRequiredSlippage(quote.swaps);
+  const minRequiredSlippage = getMinRequiredSlippage(currentQuote.swaps);
   const highSlippage = userSlippage > HIGH_SLIPPAGE;
 
   if (!hasProperSlippage(params.userSlippage.toString(), minRequiredSlippage)) {
     return {
       type: QuoteWarningType.INSUFFICIENT_SLIPPAGE,
-      recommendedSlippages: checkSlippageWarnings(quote, userSlippage),
+      recommendedSlippages: checkSlippageWarnings(currentQuote, userSlippage),
       minRequiredSlippage: minRequiredSlippage,
     };
   } else if (
@@ -258,6 +263,13 @@ export function generateQuoteWarnings(
   }
 
   return null;
+}
+
+export function isQuoteWarningConfirmationRequired(warning: QuoteWarning) {
+  const WARNINGS_NOT_REQUIRING_CONFIRMATION = [
+    QuoteWarningType.EXCESSIVE_OUTPUT_AMOUNT_CHANGE,
+  ];
+  return !WARNINGS_NOT_REQUIRING_CONFIRMATION.includes(warning.type);
 }
 
 export function getPriceImpact(

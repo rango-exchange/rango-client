@@ -53,9 +53,8 @@ export function Quotes(props: PropTypes) {
       ...quote,
     };
 
-    return generateQuoteWarnings(mergedQuote, {
-      fromToken,
-      toToken,
+    return generateQuoteWarnings({
+      currentQuote: mergedQuote,
       userSlippage,
       findToken,
     });

@@ -7,27 +7,18 @@ import type {
   SelectedQuote,
   Wallet,
 } from '../../types';
-import type { BlockchainMeta, SwapResult, Token } from 'rango-sdk';
+import type BigNumber from 'bignumber.js';
+import type { BlockchainMeta, SwapResult } from 'rango-sdk';
 
 import { errorMessages } from '../../constants/errors';
-import { QuoteErrorType, QuoteUpdateType } from '../../types';
-import { numberToString } from '../../utils/numbers';
-import {
-  generateQuoteWarnings,
-  getPriceImpact,
-  isNumberOfSwapsChanged,
-  isQuoteChanged,
-  isQuoteInternalCoinsUpdated,
-  isQuoteSwappersUpdated,
-} from '../../utils/quote';
+import { QuoteErrorType } from '../../types';
+import { generateQuoteWarnings } from '../../utils/quote';
 import {
   checkSlippageErrors,
   generateBalanceWarnings,
   getLimitErrorMessage,
   getMinRequiredSlippage,
-  getQuoteOutputAmount,
   hasLimitError,
-  isOutputAmountChangedALot,
 } from '../../utils/swap';
 
 /**
@@ -82,72 +73,44 @@ export function getQuoteError(swaps: SwapResult[]): QuoteErrorResponse | null {
   return null;
 }
 
-export function generateWarnings(
-  previousQuote: SelectedQuote | undefined,
-  currentQuote: SelectedQuote,
-  params: {
-    fromToken: Token;
-    toToken: Token;
-    meta: { blockchains: BlockchainMeta[] };
-    selectedWallets: Wallet[];
-    userSlippage: number;
-    findToken: FindToken;
-  }
-): ConfirmSwapWarnings {
-  let quoteChanged = false;
-  if (previousQuote) {
-    quoteChanged = isQuoteChanged(previousQuote, currentQuote);
-  }
+export function generateWarnings(params: {
+  currentQuote: SelectedQuote;
+  previousQuote?: SelectedQuote;
+  meta: { blockchains: BlockchainMeta[] };
+  selectedWallets: Wallet[];
+  userSlippage: number;
+  inputUsdValue: BigNumber | null;
+  findToken: FindToken;
+}): ConfirmSwapWarnings {
+  const {
+    currentQuote,
+    previousQuote,
+    meta,
+    selectedWallets,
+    userSlippage,
+    findToken,
+  } = params;
+
   const output: ConfirmSwapWarnings = {
     quote: null,
-    quoteUpdate: null,
     balance: null,
   };
 
-  const quoteWarning = generateQuoteWarnings(currentQuote, {
-    fromToken: params.fromToken,
-    toToken: params.toToken,
-    findToken: params.findToken,
-    userSlippage: params.userSlippage,
+  const quoteWarning = generateQuoteWarnings({
+    previousQuote,
+    currentQuote,
+    findToken,
+    userSlippage,
   });
 
   if (quoteWarning) {
     output.quote = quoteWarning;
   }
 
-  if (previousQuote && quoteChanged) {
-    if (isOutputAmountChangedALot(previousQuote, currentQuote)) {
-      output.quoteUpdate = {
-        type: QuoteUpdateType.QUOTE_AND_OUTPUT_AMOUNT_UPDATED,
-        newOutputAmount: numberToString(getQuoteOutputAmount(currentQuote)),
-        percentageChange: numberToString(
-          getPriceImpact(
-            getQuoteOutputAmount(previousQuote) ?? '',
-            getQuoteOutputAmount(currentQuote) ?? ''
-          ),
-          null,
-          2
-        ),
-      };
-    } else if (isNumberOfSwapsChanged(previousQuote, currentQuote)) {
-      output.quoteUpdate = {
-        type: QuoteUpdateType.QUOTE_UPDATED,
-      };
-    } else if (isQuoteSwappersUpdated(previousQuote, currentQuote)) {
-      output.quoteUpdate = {
-        type: QuoteUpdateType.QUOTE_SWAPPERS_UPDATED,
-      };
-    } else if (isQuoteInternalCoinsUpdated(previousQuote, currentQuote)) {
-      output.quoteUpdate = {
-        type: QuoteUpdateType.QUOTE_COINS_UPDATED,
-      };
-    }
-  }
-
   const balanceWarnings = generateBalanceWarnings(
     currentQuote,
-    params.selectedWallets,
-    params.meta.blockchains
+    selectedWallets,
+    meta.blockchains
   );
 
   const enoughBalance = balanceWarnings.length === 0;

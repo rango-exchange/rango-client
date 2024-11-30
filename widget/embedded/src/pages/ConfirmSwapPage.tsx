@@ -24,12 +24,12 @@ import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { getQuoteUpdateWarningMessage } from '../constants/warnings';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
+import { isQuoteWarningConfirmationRequired } from '../utils/quote';
 import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
@@ -133,7 +133,12 @@ export function ConfirmSwapPage() {
   };
 
   const onStartConfirmSwap = async () => {
-    if (confirmSwapResult?.warnings?.quote && !quoteWarningsConfirmed) {
+    const shouldShowWarningModal =
+      confirmSwapResult.warnings?.quote &&
+      isQuoteWarningConfirmationRequired(confirmSwapResult.warnings.quote) &&
+      !quoteWarningsConfirmed;
+
+    if (shouldShowWarningModal) {
       setShowQuoteWarningModal(true);
     } else {
       await onConfirm();
@@ -194,19 +199,6 @@ export function ConfirmSwapPage() {
   const alerts = [];
   if (dbErrorMessage) {
     alerts.push(<Alert type="error" variant="alarm" title={dbErrorMessage} />);
-  }
-
-  if (confirmSwapResult.warnings?.quoteUpdate) {
-    alerts.push(
-      <Alert
-        variant="alarm"
-        type="warning"
-        title={
-          confirmSwapResult.warnings.quoteUpdate &&
-          getQuoteUpdateWarningMessage(confirmSwapResult.warnings.quoteUpdate)
-        }
-      />
-    );
   }
 
   if (quoteWarning || quoteError) {

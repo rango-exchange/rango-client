@@ -51,28 +51,8 @@ export enum QuoteWarningType {
   UNKNOWN_PRICE,
   INSUFFICIENT_SLIPPAGE,
   HIGH_SLIPPAGE,
+  EXCESSIVE_OUTPUT_AMOUNT_CHANGE,
 }
-
-export enum QuoteUpdateType {
-  QUOTE_UPDATED,
-  QUOTE_SWAPPERS_UPDATED,
-  QUOTE_COINS_UPDATED,
-  QUOTE_AND_OUTPUT_AMOUNT_UPDATED,
-  QUOTE_UPDATED_WITH_HIGH_VALUE_LOSS,
-}
-
-export type QuoteUpdateWarning =
-  | {
-      type: QuoteUpdateType.QUOTE_AND_OUTPUT_AMOUNT_UPDATED;
-      newOutputAmount: string;
-      percentageChange: string;
-    }
-  | {
-      type: Exclude<
-        QuoteUpdateType,
-        QuoteUpdateType.QUOTE_AND_OUTPUT_AMOUNT_UPDATED
-      >;
-    };
 
 export type RecommendedSlippages = Map<number, string>;
 
@@ -100,15 +80,21 @@ export type UnknownPriceWarning = {
   type: QuoteWarningType.UNKNOWN_PRICE;
 };
 
+export type ExcessiveOutputAmountChange = {
+  type: QuoteWarningType.EXCESSIVE_OUTPUT_AMOUNT_CHANGE;
+  usdValueChange: string;
+  percentageChange: string;
+};
+
 export type QuoteWarning =
   | HighValueLossWarning
+  | ExcessiveOutputAmountChange
+  | UnknownPriceWarning
   | InsufficientSlippageWarning
-  | HighSlippageWarning
-  | UnknownPriceWarning;
+  | HighSlippageWarning;
 
 export type ConfirmSwapWarnings = {
   quote: QuoteWarning | null;
-  quoteUpdate: QuoteUpdateWarning | null;
   balance: { messages: string[] } | null;
 };
 

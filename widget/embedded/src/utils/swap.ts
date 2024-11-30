@@ -43,7 +43,7 @@ import {
 
 import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
-import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
+import { getRequiredBalanceOfWallet } from './quote';
 import { getQuoteWallets } from './wallets';
 
 export function getOutputRatio(
@@ -535,8 +535,22 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   return wallets;
 }
 
-export function getQuoteOutputAmount(quote: SelectedQuote) {
-  return quote?.outputAmount || null;
+export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
+  const inputAmount = quote.requestAmount;
+  const inputTokenUsdPrice = quote.swaps[0].from.usdPrice;
+  if (!inputAmount || !inputTokenUsdPrice) {
+    return;
+  }
+  return new BigNumber(inputAmount).multipliedBy(inputTokenUsdPrice);
+}
+
+export function getUsdOutputFrom(quote: SelectedQuote): BigNumber | undefined {
+  const outputAmount = quote?.outputAmount || null;
+  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1].to.usdPrice;
+  if (!outputAmount || !outputTokenUsdPrice) {
+    return;
+  }
+  return new BigNumber(outputAmount).multipliedBy(outputTokenUsdPrice);
 }
 
 export function getPercentageChange(input: string, output: string) {
@@ -547,21 +561,26 @@ export function getPercentageChange(input: string, output: string) {
     .toNumber();
 }
 
-export function isOutputAmountChangedALot(
-  oldQuote: SelectedQuote,
-  newQuote: SelectedQuote
+export function isOutputAmountChangedExcessively(
+  previousQuote: SelectedQuote,
+  currentQuote: SelectedQuote
 ) {
-  const oldOutputAmount = getQuoteOutputAmount(oldQuote);
-  const newOutputAmount = getQuoteOutputAmount(newQuote);
-  if (!oldOutputAmount || !newOutputAmount) {
+  const usdInput = getUsdInputFrom(previousQuote);
+  const previousUsdOutput = getUsdOutputFrom(previousQuote);
+  const currentUsdOutput = getUsdOutputFrom(currentQuote);
+  if (!usdInput || !previousUsdOutput || !currentUsdOutput) {
     return false;
   }
-  const percentageChange = getPriceImpact(oldOutputAmount, newOutputAmount);
-  if (!percentageChange) {
-    return true;
-  }
 
-  return percentageChange <= -1;
+  const percentageChange = getPercentageChange(
+    previousUsdOutput.toString(),
+    currentUsdOutput.toString()
+  );
+
+  return (
+    (percentageChange <= -1 && usdInput.isGreaterThanOrEqualTo(1000)) ||
+    (percentageChange <= -2 && usdInput.isGreaterThanOrEqualTo(500))
+  );
 }
 
 export function generateBalanceWarnings(
@@ -621,15 +640,6 @@ export function generateBalanceWarnings(
       });
       return warningMessage;
     });
-}
-
-export function calcOutputUsdValue(
-  outputAmount?: string,
-  tokenPrice?: number | null
-) {
-  const amount = !!outputAmount ? new BigNumber(outputAmount) : ZERO;
-
-  return amount.multipliedBy(tokenPrice || 0);
 }
 
 export function isNetworkStatusInWarningState(
