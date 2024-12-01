@@ -7,7 +7,7 @@ import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
-import * as clover from '@rango-dev/provider-clover';
+import { versions as clover } from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
 import * as coinbase from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
@@ -119,7 +119,7 @@ export const allProviders = (options?: Options): VersionedProviders[] => {
     legacyProviderImportsToVersionsInterface(bitget),
     legacyProviderImportsToVersionsInterface(enkrypt),
     legacyProviderImportsToVersionsInterface(xdefi),
-    legacyProviderImportsToVersionsInterface(clover),
+    clover,
     legacyProviderImportsToVersionsInterface(safepal),
     legacyProviderImportsToVersionsInterface(brave),
     legacyProviderImportsToVersionsInterface(coin98),
