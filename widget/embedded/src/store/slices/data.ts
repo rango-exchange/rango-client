@@ -348,8 +348,9 @@ export const createDataSlice: StateCreator<
         {};
       const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
-      const swappers: SwapperMeta[] = response.swappers;
-
+      const swappers: SwapperMeta[] = response.swappers.filter(
+        (swapper) => swapper.enabled
+      );
       const blockchainsWithAtLeastOneToken = new Set();
 
       response.tokens.forEach((token) => {

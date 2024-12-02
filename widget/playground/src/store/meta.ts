@@ -29,7 +29,11 @@ export const useMetaStore = createSelectors(
             chain.enabled &&
             chainThatHasTokenInMetaResponse.includes(chain.name)
         );
+        const enabledSwappers = response.swappers.filter(
+          (swapper) => swapper.enabled
+        );
         response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
+        response.swappers = enabledSwappers;
         set({ meta: response, loadingStatus: 'success' });
       } catch (error) {
         set({ loadingStatus: 'failed' });
