@@ -27,6 +27,9 @@
     "bs58": "^5.0.0",
     "rango-types": "^0.1.74"
   },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.94.0"
+  },
   "publishConfig": {
     "access": "public"
   }
