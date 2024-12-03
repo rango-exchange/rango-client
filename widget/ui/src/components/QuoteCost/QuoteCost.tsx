@@ -22,6 +22,7 @@ export function QuoteCost(props: PropTypes) {
     onClickFee,
     tooltipGas,
     feeWarning,
+    timeWarning,
     tooltipContainer,
   } = props;
   return (
@@ -47,7 +48,7 @@ export function QuoteCost(props: PropTypes) {
       </Tooltip>
 
       <Separator />
-      <div className={itemStyles()}>
+      <div className={`${itemStyles()} ${timeWarning ? 'warning' : ''}`}>
         <div className={iconStyles()}>
           <TimeIcon size={12} color="gray" />
         </div>

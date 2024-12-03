@@ -33,3 +33,5 @@ export const HIGH_PRIORITY_TAGS: TagValue[] = [
 ];
 
 export const GAS_FEE_MAX = 30;
+export const ROUTE_TIME_MAX = 15;
+export const SECONDS_IN_MINUTE = 60;

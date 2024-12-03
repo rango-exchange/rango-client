@@ -17,7 +17,11 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 
-import { GAS_FEE_MAX } from '../../constants/quote';
+import {
+  GAS_FEE_MAX,
+  ROUTE_TIME_MAX,
+  SECONDS_IN_MINUTE,
+} from '../../constants/quote';
 import {
   GAS_FEE_MAX_DECIMALS,
   GAS_FEE_MIN_DECIMALS,
@@ -311,7 +315,8 @@ export function Quote(props: QuoteProps) {
   const container = propContainer || getContainer();
   const sortedQuoteTags = sortTags(props.quote.tags || []);
   const showAllRoutesButton = !!onClickAllRoutes;
-  const totalTime = roundedSecondsToString(totalArrivalTime(quote?.swaps));
+  const totalDurationSeconds = totalArrivalTime(quote?.swaps);
+  const totalTime = roundedSecondsToString(totalDurationSeconds);
   const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], findToken);
   const fee = numberToString(
     totalFee,
@@ -320,6 +325,8 @@ export function Quote(props: QuoteProps) {
   );
 
   const feeWarning = totalFee.gte(new BigNumber(GAS_FEE_MAX));
+  const timeWarning =
+    totalDurationSeconds / SECONDS_IN_MINUTE >= ROUTE_TIME_MAX;
 
   return fullExpandedMode ? (
     <FullExpandedQuote
@@ -336,6 +343,7 @@ export function Quote(props: QuoteProps) {
           time={totalTime}
           fee={fee}
           feeWarning={feeWarning}
+          timeWarning={timeWarning}
           showModalFee={showModalFee}
           steps={numberOfSteps}
         />
@@ -378,6 +386,7 @@ export function Quote(props: QuoteProps) {
             time={totalTime}
             fee={fee}
             feeWarning={feeWarning}
+            timeWarning={timeWarning}
             showModalFee={showModalFee}
             steps={numberOfSteps}
           />
