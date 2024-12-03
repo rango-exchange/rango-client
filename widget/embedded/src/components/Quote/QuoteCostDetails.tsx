@@ -63,6 +63,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
     fee,
     time,
     feeWarning,
+    timeWarning,
     showModalFee,
     fullExpandedMode = false,
   } = props;
@@ -84,6 +85,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
         }
         fee={fee}
         feeWarning={feeWarning}
+        timeWarning={timeWarning}
         time={time}
         steps={steps}
         tooltipGas={showModalFee ? i18n.t('View more info') : undefined}

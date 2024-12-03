@@ -48,6 +48,7 @@ export type QuoteCostDetailsProps = {
   fee: string;
   time: string;
   feeWarning?: boolean;
+  timeWarning?: boolean;
   showModalFee: boolean;
   fullExpandedMode?: boolean;
 };
