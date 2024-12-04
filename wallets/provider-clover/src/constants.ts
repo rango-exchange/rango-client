@@ -3,7 +3,7 @@ import { type ProviderInfo } from '@rango-dev/wallets-core';
 export const WALLET_ID = 'clover';
 
 export const info: ProviderInfo = {
-  name: 'Clover',
+  name: 'CLV',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/clover/icon.svg',
   extensions: {
     chrome:

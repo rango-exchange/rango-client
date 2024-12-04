@@ -30,6 +30,10 @@
     "./namespaces/solana": {
       "types": "./dist/namespaces/solana/mod.d.ts",
       "default": "./dist/namespaces/solana/mod.js"
+    },
+    "./hub": {
+      "types": "./dist/hub/mod.d.ts",
+      "default": "./dist/hub/mod.js"
     }
   },
   "files": [
@@ -38,7 +42,7 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts,src/hub/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
