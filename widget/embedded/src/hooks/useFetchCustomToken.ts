@@ -6,8 +6,6 @@ import { useState } from 'react';
 import { httpService } from '../services/httpService';
 import { useAppStore } from '../store/AppStore';
 
-const HTTP_STATUS_BAD_REQUEST = 400;
-
 type ErrorType = {
   title: string;
   message: string;
@@ -105,7 +103,7 @@ export function useFetchCustomToken(): UseFetchCustomToken {
 
       return token;
     } catch (error: any) {
-      if (error.status === HTTP_STATUS_BAD_REQUEST) {
+      if (error?.code === 'ERR_BAD_REQUEST') {
         const errorMessage = produceErrorMessage('not-found', blockchain);
         setError(errorMessage);
         return undefined;
