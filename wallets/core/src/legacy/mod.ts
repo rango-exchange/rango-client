@@ -27,11 +27,7 @@ export type {
   NamespaceInputWithDiscoverMode as LegacyNamespaceInputWithDiscoverMode,
 } from './types.js';
 
-export {
-  Events as LegacyEvents,
-  Namespace as LegacyNamespace,
-  Networks as LegacyNetworks,
-} from './types.js';
+export { Events as LegacyEvents, Networks as LegacyNetworks } from './types.js';
 
 export { Persistor } from './persistor.js';
 export {

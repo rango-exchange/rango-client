@@ -1,4 +1,5 @@
 import type { State as WalletState } from './wallet.js';
+import type { Namespace } from '../namespaces/common/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export enum Networks {
@@ -62,15 +63,6 @@ export enum Networks {
 
   // Using instead of null
   Unknown = 'Unkown',
-}
-
-export enum Namespace {
-  Solana = 'Solana',
-  Evm = 'EVM',
-  Cosmos = 'Cosmos',
-  Utxo = 'UTXO',
-  Starknet = 'Starknet',
-  Tron = 'Tron',
 }
 
 export type NamespaceData = {
@@ -248,13 +240,6 @@ export type ProviderInterface = { config: WalletConfig } & WalletActions;
 // it comes from wallets.ts and `connect`
 type NetworkTypeFromLegacyConnect = Network | undefined;
 
-export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
-  T extends 'DISCOVER_MODE'
-    ? string
-    : T extends Namespace
-    ? NetworkTypeFromLegacyConnect
-    : never;
-
 export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
 
 export type NamespaceInputWithDiscoverMode = {
@@ -273,7 +258,7 @@ export type NamespaceInputForConnect<T extends Namespace = Namespace> =
       /**
        * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
        */
-      network: NetworkTypeForNamespace<T>;
+      network: NetworkTypeFromLegacyConnect;
       derivationPath?: string;
     }
   | NamespaceInputWithDiscoverMode;

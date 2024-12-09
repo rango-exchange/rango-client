@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/evm",
+  "type": "module",
+  "main": "../../dist/namespaces/evm/mod.js",
+  "module": "../../dist/namespaces/evm/mod.js",
+  "types": "../../dist/namespaces/evm/mod.d.ts",
+  "sideEffects": false
+}
