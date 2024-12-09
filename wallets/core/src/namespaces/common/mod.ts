@@ -16,3 +16,8 @@ export type {
   Accounts,
   AccountsWithActiveChain,
 } from '../../types/accounts.js';
+
+export type {
+  Subscriber,
+  SubscriberCleanUp,
+} from '../../hub/namespaces/mod.js';

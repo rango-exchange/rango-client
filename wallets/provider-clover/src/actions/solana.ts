@@ -1,7 +1,7 @@
 import type {
   Subscriber,
   SubscriberCleanUp,
-} from '@rango-dev/wallets-core/hub';
+} from '@rango-dev/wallets-core/namespaces/common';
 
 import {
   CAIP_NAMESPACE,
@@ -12,6 +12,10 @@ import { AccountId } from 'caip';
 
 import { evmClover, solanaClover } from '../utils.js';
 
+/*
+ * The EVM instance is used to listen for the accountsChanged event,
+ * because Clover itself did not have a chain change event for the Solana namespace.
+ */
 export function changeAccountSubscriberAction(): [
   Subscriber<SolanaActions>,
   SubscriberCleanUp<SolanaActions>

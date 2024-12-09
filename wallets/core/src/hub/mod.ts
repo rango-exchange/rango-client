@@ -1,5 +1,5 @@
 export { Namespace } from './namespaces/mod.js';
-export type { Subscriber, SubscriberCleanUp } from './namespaces/mod.js';
+
 export { Provider } from './provider/mod.js';
 export type { CommonNamespaces, CommonNamespaceKeys } from './provider/mod.js';
 
