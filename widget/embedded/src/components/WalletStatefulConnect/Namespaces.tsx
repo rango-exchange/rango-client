@@ -1,5 +1,5 @@
 import type { PropTypes } from './Namespaces.types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import {

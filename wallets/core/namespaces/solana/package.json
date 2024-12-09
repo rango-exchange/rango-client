@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/solana",
+  "type": "module",
+  "main": "../../dist/namespaces/solana/mod.js",
+  "module": "../../dist/namespaces/solana/mod.js",
+  "types": "../../dist/namespaces/solana/mod.d.ts",
+  "sideEffects": false
+}

@@ -3,8 +3,6 @@ import type {
   NamespaceInputWithDiscoverMode,
 } from './types.js';
 
-import { Namespace } from './types.js';
-
 export async function eagerConnectHandler<R = unknown>(params: {
   canEagerConnect: () => Promise<boolean>;
   connectHandler: () => Promise<R>;
@@ -26,6 +24,6 @@ export function isNamespaceDiscoverMode(
 
 export function isEvmNamespace(
   namespace: NamespaceInputForConnect
-): namespace is NamespaceInputForConnect<Namespace.Evm> {
-  return namespace.namespace === Namespace.Evm;
+): namespace is NamespaceInputForConnect<'EVM'> {
+  return namespace.namespace === 'EVM';
 }

@@ -1,11 +1,8 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
 import type { ExtendedModalWalletInfo } from '../../utils/wallets';
-import type {
-  Namespace,
-  NamespaceData,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';

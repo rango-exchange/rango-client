@@ -1,5 +1,6 @@
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
 export interface Wallet {
   chain: string;

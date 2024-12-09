@@ -1,10 +1,8 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyNamespace as Namespace,
-} from '@rango-dev/wallets-core/legacy';
+import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { legacyIsNamespaceDiscoverMode } from '@rango-dev/wallets-core/legacy';

@@ -3,12 +3,10 @@ import type {
   LegacyWalletInfo as WalletInfo,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-import {
-  LegacyNamespace as Namespace,
-  LegacyNetworks as Networks,
-} from '@rango-dev/wallets-core/legacy';
+import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 
 export type {
   LegacyNetwork as Network,
@@ -27,7 +25,6 @@ export type {
 
 export {
   LegacyNetworks as Networks,
-  LegacyNamespace as Namespace,
   legacyGetBlockChainNameFromId as getBlockChainNameFromId,
 } from '@rango-dev/wallets-core/legacy';
 
@@ -82,7 +79,7 @@ export const namespaces: Record<
   Namespace,
   { mainBlockchain: string; title: string; derivationPaths?: DerivationPath[] }
 > = {
-  [Namespace.Evm]: {
+  EVM: {
     mainBlockchain: 'ETH',
     title: 'Ethereum',
     derivationPaths: [
@@ -103,7 +100,7 @@ export const namespaces: Record<
       },
     ],
   },
-  [Namespace.Solana]: {
+  Solana: {
     mainBlockchain: 'SOLANA',
     title: 'Solana',
     derivationPaths: [
@@ -119,21 +116,25 @@ export const namespaces: Record<
       },
     ],
   },
-  [Namespace.Cosmos]: {
+  Cosmos: {
     mainBlockchain: 'COSMOS',
     title: 'Cosmos',
   },
-  [Namespace.Utxo]: {
+  UTXO: {
     mainBlockchain: 'BTC',
     title: 'Utxo',
   },
-  [Namespace.Starknet]: {
+  Starknet: {
     title: 'Starknet',
     mainBlockchain: 'STARKNET',
   },
-  [Namespace.Tron]: {
+  Tron: {
     title: 'Tron',
     mainBlockchain: 'TRON',
+  },
+  Ton: {
+    title: 'Ton',
+    mainBlockchain: 'TON',
   },
 };
 

@@ -6,15 +6,13 @@ import type {
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import {
   guessProviderStateSelector,
   namespaceStateSelector,
 } from '@rango-dev/wallets-core';
-import {
-  LegacyEvents as Events,
-  LegacyNamespace as Namespace,
-} from '@rango-dev/wallets-core/legacy';
+import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
 import {
   generateStoreId,
   type VersionedProviders,
@@ -269,7 +267,7 @@ export function discoverNamespace(network: string): Namespace {
     case Networks.TERRA:
     case Networks.THORCHAIN:
     case Networks.UMEE:
-      return Namespace.Cosmos;
+      return 'Cosmos';
     case Networks.AVAX_CCHAIN:
     case Networks.ARBITRUM:
     case Networks.BOBA:
@@ -284,17 +282,18 @@ export function discoverNamespace(network: string): Namespace {
     case Networks.OPTIMISM:
     case Networks.POLYGON:
     case Networks.STARKNET:
-      return Namespace.Evm;
+      return 'Evm';
     case Networks.SOLANA:
-      return Namespace.Solana;
+      return 'Solana';
     case Networks.BTC:
     case Networks.BCH:
     case Networks.DOGE:
     case Networks.LTC:
     case Networks.TRON:
-      return Namespace.Utxo;
-    case Networks.POLKADOT:
+      return 'UTXO';
     case Networks.TON:
+      return 'Ton';
+    case Networks.POLKADOT:
     case Networks.AXELAR:
     case Networks.MARS:
     case Networks.MAYA:
