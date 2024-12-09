@@ -4,8 +4,8 @@ import type { Hub } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
-  LegacyNamespace as Namespace,
 } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import {
   legacyEagerConnectHandler,

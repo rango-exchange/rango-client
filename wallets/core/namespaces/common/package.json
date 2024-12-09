@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/common",
+  "type": "module",
+  "main": "../../dist/namespaces/common/mod.js",
+  "module": "../../dist/namespaces/common/mod.js",
+  "types": "../../dist/namespaces/common/mod.d.ts",
+  "sideEffects": false
+}

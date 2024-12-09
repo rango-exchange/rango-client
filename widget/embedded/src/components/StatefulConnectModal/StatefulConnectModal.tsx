@@ -1,6 +1,6 @@
 import type { Result } from '../../hooks/useStatefulConnect';
 import type { WalletInfoWithExtra } from '../../types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { Divider } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
