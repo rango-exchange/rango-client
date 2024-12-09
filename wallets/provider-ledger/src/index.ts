@@ -5,7 +5,7 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
-import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
@@ -26,10 +26,10 @@ export const connect: Connect = async ({ namespaces }) => {
   const results: ProviderConnectResult[] = [];
 
   const solanaNamespace = namespaces?.find(
-    (namespaceItem) => namespaceItem.namespace === Namespace.Solana
+    (namespaceItem) => namespaceItem.namespace === 'Solana'
   );
   const evmNamespace = namespaces?.find(
-    (namespaceItem) => namespaceItem.namespace === Namespace.Evm
+    (namespaceItem) => namespaceItem.namespace === 'EVM'
   );
 
   if (solanaNamespace) {
@@ -93,7 +93,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
-    namespaces: [Namespace.Evm, Namespace.Solana],
+    namespaces: ['EVM', 'Solana'],
     singleNamespace: true,
     showOnMobile: false,
     needsDerivationPath: true,

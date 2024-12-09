@@ -5,7 +5,7 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
-import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
@@ -40,7 +40,7 @@ export const connect: Connect = async ({ namespaces }) => {
   const TrezorConnect = await getTrezorModule();
 
   const evmNamespace = namespaces?.find(
-    (namespaceItem) => namespaceItem.namespace === Namespace.Evm
+    (namespaceItem) => namespaceItem.namespace === 'EVM'
   );
 
   if (evmNamespace) {
@@ -95,7 +95,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
-    namespaces: [Namespace.Evm],
+    namespaces: ['EVM'],
     singleNamespace: true,
     showOnMobile: false,
     needsDerivationPath: true,

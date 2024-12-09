@@ -1,6 +1,5 @@
 import type { CommonNamespaceKeys } from '@rango-dev/wallets-core';
-
-import { Namespace } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 export function convertCommonNamespacesKeysToLegacyNamespace(
   namespaces: CommonNamespaceKeys[]
@@ -8,15 +7,15 @@ export function convertCommonNamespacesKeysToLegacyNamespace(
   return namespaces.map((namespace) => {
     switch (namespace) {
       case 'evm':
-        return Namespace.Evm;
+        return 'EVM';
       case 'solana':
-        return Namespace.Solana;
+        return 'Solana';
       case 'cosmos':
-        return Namespace.Cosmos;
+        return 'Cosmos';
+      default:
+        throw new Error(
+          'Can not convert this common namespace key to a proper legacy key.'
+        );
     }
-
-    throw new Error(
-      'Can not convert this common namespace key to a proper legacy key.'
-    );
   });
 }

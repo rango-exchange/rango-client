@@ -16,3 +16,5 @@ export type {
   Accounts,
   AccountsWithActiveChain,
 } from '../../types/accounts.js';
+
+export type { Namespace } from './types.js';
