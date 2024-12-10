@@ -1,5 +1,8 @@
-import type { SwapQueueContext } from '@rango-dev/queue-manager-rango-preset';
-import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type {
+  SwapQueueContext,
+  TargetNamespace,
+} from '@rango-dev/queue-manager-rango-preset';
+import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
 import {
@@ -48,16 +51,14 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     })),
   };
 
-  const switchNetwork = async (wallet: WalletType, network: Network) => {
-    if (!canSwitchNetworkTo(wallet, network)) {
+  const switchNetwork = async (
+    wallet: WalletType,
+    namespace: TargetNamespace
+  ) => {
+    if (!canSwitchNetworkTo(wallet, namespace.network)) {
       return undefined;
     }
-    const result = await connect(wallet, [
-      {
-        namespace: 'DISCOVER_MODE',
-        network,
-      },
-    ]);
+    const result = await connect(wallet, [namespace]);
 
     return result;
   };
