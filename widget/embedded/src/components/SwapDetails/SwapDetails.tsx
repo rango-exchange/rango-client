@@ -3,7 +3,7 @@ import type { ModalState } from '../SwapDetailsModal';
 
 import { i18n } from '@lingui/core';
 import {
-  getCurrentBlockchainOfOrNull,
+  getCurrentNamespaceOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
 } from '@rango-dev/queue-manager-rango-preset';
@@ -138,8 +138,8 @@ export function SwapDetails(props: SwapDetailsProps) {
   const lastConvertedTokenInFailedSwap =
     getLastConvertedTokenInFailedSwap(swap);
 
-  const currentStepBlockchain = currentStep
-    ? getCurrentBlockchainOfOrNull(swap, currentStep)
+  const currentStepNamespace = currentStep
+    ? getCurrentNamespaceOfOrNull(swap, currentStep)
     : null;
   const currentStepWallet = currentStep
     ? getRelatedWalletOrNull(swap, currentStep)
@@ -154,16 +154,19 @@ export function SwapDetails(props: SwapDetailsProps) {
   const showSwitchNetwork =
     currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    !!currentStepBlockchain &&
+    !!currentStepNamespace &&
     !!currentStepWallet?.walletType &&
     (isMobileWallet(currentStepWallet.walletType) ||
-      canSwitchNetworkTo(currentStepWallet.walletType, currentStepBlockchain));
+      canSwitchNetworkTo(
+        currentStepWallet.walletType,
+        currentStepNamespace.network
+      ));
 
   const switchNetwork = showSwitchNetwork
     ? connect.bind(null, currentStepWallet.walletType, [
         {
-          namespace: 'DISCOVER_MODE',
-          network: currentStepBlockchain,
+          namespace: currentStepNamespace.namespace,
+          network: currentStepNamespace.network,
         },
       ])
     : undefined;

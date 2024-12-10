@@ -5,7 +5,7 @@ import type { PendingSwap } from 'rango-types/lib';
 
 import {
   cancelSwap,
-  getCurrentBlockchainOfOrNull,
+  getCurrentNamespaceOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
 } from '@rango-dev/queue-manager-rango-preset';
@@ -66,7 +66,7 @@ export class WidgetHistory {
       step: currentStep,
       wallet: currentStep ? getRelatedWalletOrNull(swap, currentStep) : null,
       network: currentStep
-        ? getCurrentBlockchainOfOrNull(swap, currentStep)
+        ? getCurrentNamespaceOfOrNull(swap, currentStep)?.network
         : null,
     };
   }

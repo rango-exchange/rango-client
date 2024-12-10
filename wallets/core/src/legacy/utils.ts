@@ -1,7 +1,4 @@
-import type {
-  NamespaceInputForConnect,
-  NamespaceInputWithDiscoverMode,
-} from './types.js';
+import type { NamespaceInputForConnect } from './types.js';
 
 export async function eagerConnectHandler<R = unknown>(params: {
   canEagerConnect: () => Promise<boolean>;
@@ -14,12 +11,6 @@ export async function eagerConnectHandler<R = unknown>(params: {
     return await params.connectHandler();
   }
   throw new Error(`can't restore connection for ${params.providerName}.`);
-}
-
-export function isNamespaceDiscoverMode(
-  namespace: NamespaceInputForConnect
-): namespace is NamespaceInputWithDiscoverMode {
-  return namespace.namespace === 'DISCOVER_MODE';
 }
 
 export function isEvmNamespace(
