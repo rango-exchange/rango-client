@@ -14,7 +14,7 @@ import {
   getLastSuccessfulStep,
   isApprovalCurrentStepTx,
 } from '../helpers';
-import { getCurrentBlockchainOfOrNull } from '../shared';
+import { getCurrentNamespaceOfOrNull } from '../shared';
 import {
   EventSeverity,
   RouteEventType,
@@ -179,7 +179,7 @@ export function notifier(params: NotifierParams) {
   const toAsset = `${step.toBlockchain}.${step.toSymbol}`;
   const outputAmount = step.outputAmount ?? '';
   const currentFromBlockchain = !!params.step
-    ? getCurrentBlockchainOfOrNull(params.swap, params.step)
+    ? getCurrentNamespaceOfOrNull(params.swap, params.step)
     : null;
   let message = '';
   let messageSeverity: StepEvent['messageSeverity'] = EventSeverity.INFO;

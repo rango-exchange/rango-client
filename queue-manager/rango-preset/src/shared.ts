@@ -1,3 +1,4 @@
+import type { NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
   BlockchainMeta,
@@ -86,49 +87,91 @@ export enum MessageSeverity {
 
 export type SwapStatus = 'running' | 'failed' | 'success';
 
-export const getCurrentBlockchainOfOrNull = (
+export interface TargetNamespace {
+  namespace: NamespaceInputForConnect['namespace'];
+  network: string;
+}
+export const getCurrentNamespaceOfOrNull = (
   swap: PendingSwap,
   step: PendingSwapStep
-): Network | null => {
+): TargetNamespace | null => {
   try {
-    return getCurrentBlockchainOf(swap, step);
+    return getCurrentNamespaceOf(swap, step);
   } catch (e) {
     return null;
   }
 };
 
-export const getCurrentBlockchainOf = (
+export const getCurrentNamespaceOf = (
   swap: PendingSwap,
   step: PendingSwapStep
-): Network => {
-  const b1 =
-    step.evmTransaction?.blockChain ||
-    step.evmApprovalTransaction?.blockChain ||
+): TargetNamespace => {
+  const evmNetwork =
+    step.evmTransaction?.blockChain || step.evmApprovalTransaction?.blockChain;
+  const starknetNetwork =
     step.starknetTransaction?.blockChain ||
-    step.starknetApprovalTransaction?.blockChain ||
+    step.starknetApprovalTransaction?.blockChain;
+  const tronNetwork =
     step.tronTransaction?.blockChain ||
-    step.tronApprovalTransaction?.blockChain ||
-    step.cosmosTransaction?.blockChain ||
-    step.solanaTransaction?.blockChain ||
-    step.tonTransaction?.blockChain;
-  if (b1) {
-    return b1;
+    step.tronApprovalTransaction?.blockChain;
+  const cosmosNetwork = step.cosmosTransaction?.blockChain;
+  const solanaNetwork = step.solanaTransaction?.blockChain;
+  const tonNetwork = step.tonTransaction?.blockChain;
+
+  if (evmNetwork) {
+    return {
+      namespace: 'EVM',
+      network: evmNetwork,
+    };
+  } else if (starknetNetwork) {
+    return {
+      namespace: 'Starknet',
+      network: starknetNetwork,
+    };
+  } else if (tronNetwork) {
+    return {
+      namespace: 'Tron',
+      network: tronNetwork,
+    };
+  } else if (cosmosNetwork) {
+    return {
+      namespace: 'Cosmos',
+      network: cosmosNetwork,
+    };
+  } else if (solanaNetwork) {
+    return {
+      namespace: 'Solana',
+      network: solanaNetwork,
+    };
+  } else if (tonNetwork) {
+    return {
+      namespace: 'Ton',
+      network: tonNetwork,
+    };
+  } else if (!!step.transferTransaction) {
+    const transferAddress = step.transferTransaction.fromWalletAddress;
+    if (!transferAddress) {
+      throw PrettyError.BlockchainMissing();
+    }
+    const utxoNetwork = Object.keys(swap.wallets).find(
+      (network) => swap.wallets[network]?.address === transferAddress
+    );
+    if (!utxoNetwork) {
+      throw PrettyError.BlockchainMissing();
+    }
+
+    return {
+      namespace: 'UTXO',
+      network: utxoNetwork,
+    };
   }
 
-  const transferAddress = step.transferTransaction?.fromWalletAddress;
-  if (!transferAddress) {
-    throw PrettyError.BlockchainMissing();
-  }
-
-  const blockchain =
-    Object.keys(swap.wallets).find(
-      (b) => swap.wallets[b]?.address === transferAddress
-    ) || null;
-  if (blockchain == null) {
-    throw PrettyError.BlockchainMissing();
-  }
-
-  return blockchain;
+  throw new Error(
+    'Unsupported transaction type has been included in your swap.',
+    {
+      cause: step,
+    }
+  );
 };
 
 export const getScannerUrl = (
