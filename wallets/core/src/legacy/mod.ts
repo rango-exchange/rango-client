@@ -24,7 +24,6 @@ export type {
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,
   NamespaceInputForConnect as LegacyNamespaceInputForConnect,
-  NamespaceInputWithDiscoverMode as LegacyNamespaceInputWithDiscoverMode,
 } from './types.js';
 
 export { Events as LegacyEvents, Networks as LegacyNetworks } from './types.js';
@@ -39,6 +38,5 @@ export { default as LegacyWallet } from './wallet.js';
 
 export {
   eagerConnectHandler as legacyEagerConnectHandler,
-  isNamespaceDiscoverMode as legacyIsNamespaceDiscoverMode,
   isEvmNamespace as legacyIsEvmNamespace,
 } from './utils.js';
