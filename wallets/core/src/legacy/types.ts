@@ -240,25 +240,14 @@ export type ProviderInterface = { config: WalletConfig } & WalletActions;
 // it comes from wallets.ts and `connect`
 type NetworkTypeFromLegacyConnect = Network | undefined;
 
-export type NamespacesWithDiscoverMode = Namespace | 'DISCOVER_MODE';
-
-export type NamespaceInputWithDiscoverMode = {
-  namespace: 'DISCOVER_MODE';
-  network: string;
+export type NamespaceInputForConnect<T extends Namespace = Namespace> = {
+  /**
+   * By default, you should specify namespace (e.g. evm).
+   */
+  namespace: T;
+  /**
+   * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+   */
+  network: NetworkTypeFromLegacyConnect;
   derivationPath?: string;
 };
-
-export type NamespaceInputForConnect<T extends Namespace = Namespace> =
-  | {
-      /**
-       * By default, you should specify namespace (e.g. evm).
-       * For backward compatibility with legacy implementation, DISCOVER_MODE will try to map a list of known (and hardcoded) networks to a namespace.
-       */
-      namespace: T;
-      /**
-       * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
-       */
-      network: NetworkTypeFromLegacyConnect;
-      derivationPath?: string;
-    }
-  | NamespaceInputWithDiscoverMode;

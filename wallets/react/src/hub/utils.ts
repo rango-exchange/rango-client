@@ -6,7 +6,6 @@ import type {
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import {
   guessProviderStateSelector,
@@ -21,7 +20,6 @@ import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
-  Networks,
 } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
@@ -225,87 +223,6 @@ export function checkHubStateAndTriggerEvents(
       );
     }
   });
-}
-
-/**
- * For backward compatibility, there is an special namespace called DISCOVER_MODE.
- * Alongside `DISCOVER_MODE`, `network` will be set as well. here we are manually matching networks to namespaces.
- * This will help us keep the legacy interface and have what hub needs as well.
- */
-export function discoverNamespace(network: string): Namespace {
-  // This trick is using for enforcing exhaustiveness check.
-  network = network as unknown as Networks;
-  switch (network) {
-    case Networks.AKASH:
-    case Networks.BANDCHAIN:
-    case Networks.BITCANNA:
-    case Networks.BITSONG:
-    case Networks.BINANCE:
-    case Networks.CRYPTO_ORG:
-    case Networks.CHIHUAHUA:
-    case Networks.COMDEX:
-    case Networks.COSMOS:
-    case Networks.CRONOS:
-    case Networks.DESMOS:
-    case Networks.EMONEY:
-    case Networks.INJECTIVE:
-    case Networks.IRIS:
-    case Networks.JUNO:
-    case Networks.KI:
-    case Networks.KONSTELLATION:
-    case Networks.KUJIRA:
-    case Networks.LUMNETWORK:
-    case Networks.MEDIBLOC:
-    case Networks.OSMOSIS:
-    case Networks.PERSISTENCE:
-    case Networks.REGEN:
-    case Networks.SECRET:
-    case Networks.SENTINEL:
-    case Networks.SIF:
-    case Networks.STARGAZE:
-    case Networks.STARNAME:
-    case Networks.TERRA:
-    case Networks.THORCHAIN:
-    case Networks.UMEE:
-      return 'Cosmos';
-    case Networks.AVAX_CCHAIN:
-    case Networks.ARBITRUM:
-    case Networks.BOBA:
-    case Networks.BSC:
-    case Networks.FANTOM:
-    case Networks.ETHEREUM:
-    case Networks.FUSE:
-    case Networks.GNOSIS:
-    case Networks.HARMONY:
-    case Networks.MOONBEAM:
-    case Networks.MOONRIVER:
-    case Networks.OPTIMISM:
-    case Networks.POLYGON:
-    case Networks.STARKNET:
-      return 'Evm';
-    case Networks.SOLANA:
-      return 'Solana';
-    case Networks.BTC:
-    case Networks.BCH:
-    case Networks.DOGE:
-    case Networks.LTC:
-    case Networks.TRON:
-      return 'UTXO';
-    case Networks.TON:
-      return 'Ton';
-    case Networks.POLKADOT:
-    case Networks.AXELAR:
-    case Networks.MARS:
-    case Networks.MAYA:
-    case Networks.STRIDE:
-    case Networks.Unknown:
-      throw new Error("Namespace isn't supported. network: " + network);
-  }
-
-  throw new Error(
-    "Couldn't matched network with any namespace. it's not discoverable. network: " +
-      network
-  );
 }
 
 export function getLegacyProvider(
