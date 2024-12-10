@@ -1,9 +1,5 @@
 import type { ProviderContext, ProviderProps } from './types.js';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyNamespaceInputWithDiscoverMode,
-  LegacyProviderInterface,
-} from '@rango-dev/wallets-core/legacy';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { useEffect, useReducer } from 'react';
@@ -55,20 +51,6 @@ export function useLegacyProviders(
         throw new Error(`You should add ${type} to provider first.`);
       }
 
-      /**
-       * Discover mode has a meaning in hub, so we are considering whenever a namespace with DISCOVER_MODE reaches here,
-       * we can ignore it and don't pass it to provider.
-       */
-      const namespacesForConnect = namespaces?.filter(
-        (
-          ns
-        ): ns is Exclude<
-          LegacyNamespaceInputForConnect,
-          LegacyNamespaceInputWithDiscoverMode
-        > => {
-          return ns.namespace !== 'DISCOVER_MODE';
-        }
-      );
       // Legacy providers doesn't implemented multiple namespaces, so it will always be one value.
       let network = undefined;
       if (namespaces && namespaces.length > 0) {
@@ -80,10 +62,7 @@ export function useLegacyProviders(
       }
 
       const walletInstance = getWalletInstance(wallet);
-      const result = await walletInstance.connect(
-        network,
-        namespacesForConnect
-      );
+      const result = await walletInstance.connect(network, namespaces);
       if (props.autoConnect) {
         void tryPersistWallet({
           type,

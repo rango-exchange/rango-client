@@ -2,10 +2,8 @@ import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
-import { legacyIsNamespaceDiscoverMode } from '@rango-dev/wallets-core/legacy';
 import { type WalletInfo } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 
@@ -26,7 +24,6 @@ import {
 import { useHubRefs } from './useHubRefs.js';
 import {
   checkHubStateAndTriggerEvents,
-  discoverNamespace,
   getLegacyProvider,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -146,9 +143,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       if (!namespaces) {
-        throw new Error(
-          'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
-        );
+        throw new Error('Passing namespace to `connect` is required.');
       }
 
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
@@ -157,12 +152,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         AllProxiedNamespaces
       ][] = [];
       namespaces.forEach((namespace) => {
-        let targetNamespace: Namespace;
-        if (legacyIsNamespaceDiscoverMode(namespace)) {
-          targetNamespace = discoverNamespace(namespace.network);
-        } else {
-          targetNamespace = namespace.namespace;
-        }
+        const targetNamespace = namespace.namespace;
 
         const result = wallet.findByNamespace(targetNamespace);
 

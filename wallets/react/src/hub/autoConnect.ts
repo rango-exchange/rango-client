@@ -10,17 +10,13 @@ import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import {
   legacyEagerConnectHandler,
   legacyIsEvmNamespace,
-  legacyIsNamespaceDiscoverMode,
 } from '@rango-dev/wallets-core/legacy';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
 
 import { sequentiallyRun } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
-import {
-  convertNamespaceNetworkToEvmChainId,
-  discoverNamespace,
-} from './utils.js';
+import { convertNamespaceNetworkToEvmChainId } from './utils.js';
 
 /**
  * Run `.connect` action on some selected namespaces (passed as param) for a provider.
@@ -42,9 +38,7 @@ async function eagerConnect(
   }
 
   if (!namespacesInput) {
-    throw new Error(
-      'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
-    );
+    throw new Error('Passing namespace to `connect` is required. ');
   }
 
   const targetNamespaces: [
@@ -52,12 +46,7 @@ async function eagerConnect(
     AllProxiedNamespaces
   ][] = [];
   namespacesInput.forEach((namespaceInput) => {
-    let targetNamespace: Namespace;
-    if (legacyIsNamespaceDiscoverMode(namespaceInput)) {
-      targetNamespace = discoverNamespace(namespaceInput.network);
-    } else {
-      targetNamespace = namespaceInput.namespace;
-    }
+    const targetNamespace: Namespace = namespaceInput.namespace;
 
     const result = wallet.findByNamespace(targetNamespace);
 
