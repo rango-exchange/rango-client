@@ -1,7 +1,7 @@
 /* eslint-disable destructuring/in-params */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import type { SwapStatus, Wallet } from './shared';
+import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
   ArrayElement,
   Step,
@@ -57,8 +57,8 @@ import { httpService } from './services';
 import { notifier } from './services/eventEmitter';
 import {
   getCurrentAddressOf,
-  getCurrentBlockchainOf,
-  getCurrentBlockchainOfOrNull,
+  getCurrentNamespaceOf,
+  getCurrentNamespaceOfOrNull,
   getRelatedWallet,
   getRelatedWalletOrNull,
   getScannerUrl,
@@ -519,9 +519,9 @@ export function markRunningSwapAsSwitchingNetwork({
 
   // Generate message
   const { type } = getRequiredWallet(swap);
-  const fromBlockchain = getCurrentBlockchainOf(swap, currentStep);
-  const reason = `Change ${type} wallet network to ${fromBlockchain}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromBlockchain}.`;
+  const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
+  const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -621,26 +621,26 @@ export function isWalletNull(wallet: Wallet | null): boolean {
  */
 export function getRequiredWallet(swap: PendingSwap): {
   type: WalletType | null;
-  network: Network | null;
+  namespace: TargetNamespace | null;
   address: string | null;
 } {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const step = getCurrentStep(swap)!;
-  const bcName = getCurrentBlockchainOfOrNull(swap, step);
-  if (!bcName) {
+  const currentNamespace = getCurrentNamespaceOfOrNull(swap, step);
+  if (!currentNamespace) {
     return {
       type: null,
-      network: null,
+      namespace: null,
       address: null,
     };
   }
 
-  const walletType = getSwapWalletType(swap, bcName);
-  const sourceWallet = swap.wallets[bcName];
+  const walletType = getSwapWalletType(swap, currentNamespace.network);
+  const sourceWallet = swap.wallets[currentNamespace.network];
 
   return {
     type: walletType || null,
-    network: bcName,
+    namespace: currentNamespace,
     address: sourceWallet ? sourceWallet.address : null,
   };
 }
@@ -674,18 +674,18 @@ export async function isNetworkMatchedForTransaction(
   if (isWalletNull(wallet)) {
     return false;
   }
-  const fromBlockChain = getCurrentBlockchainOfOrNull(swap, step);
-  if (!fromBlockChain) {
+  const fromNamespace = getCurrentNamespaceOfOrNull(swap, step);
+  if (!fromNamespace) {
     return false;
   }
 
   if (
     meta.evmBasedChains.find(
-      (evmBlochain) => evmBlochain.name === fromBlockChain
+      (evmBlochain) => evmBlochain.name === fromNamespace.network
     )
   ) {
     try {
-      const sourceWallet = swap.wallets[fromBlockChain];
+      const sourceWallet = swap.wallets[fromNamespace.network];
       if (sourceWallet) {
         const provider = getEvmProvider(providers, sourceWallet.walletType);
         const chainId: number | string | null = await getChainId(provider);
@@ -698,13 +698,13 @@ export async function isNetworkMatchedForTransaction(
           );
           if (
             blockChain &&
-            blockChain.toLowerCase() === fromBlockChain.toLowerCase()
+            blockChain.toLowerCase() === fromNamespace.network.toLowerCase()
           ) {
             return true;
           }
           if (
             blockChain &&
-            blockChain.toLowerCase() !== fromBlockChain.toLowerCase()
+            blockChain.toLowerCase() !== fromNamespace.network.toLowerCase()
           ) {
             return false;
           }
@@ -856,7 +856,10 @@ export function onBlockForChangeNetwork(
     setStorage: queue.setStorage.bind(queue),
   });
 
-  const requiredNetwork = getCurrentBlockchainOfOrNull(swap, currentStep);
+  const requiredNetwork = getCurrentNamespaceOfOrNull(
+    swap,
+    currentStep
+  )?.network;
 
   const requiredWallet = getRequiredWallet(swap).type;
 
@@ -878,10 +881,10 @@ export function onBlockForChangeNetwork(
   }
 
   // Try to auto switch
-  const { type, network } = getRequiredWallet(swap);
-  if (!!type && !!network) {
-    if (context.canSwitchNetworkTo(type, network)) {
-      const result = context.switchNetwork(type, network);
+  const { type, namespace } = getRequiredWallet(swap);
+  if (!!type && !!namespace?.network) {
+    if (context.canSwitchNetworkTo(type, namespace.network)) {
+      const result = context.switchNetwork(type, namespace);
       if (result) {
         result
           .then(() => {
@@ -950,7 +953,7 @@ export function onDependsOnOtherQueues(
 
   setClaimer(task.queue_id);
   const claimedStorage = task.storage.get() as SwapStorage;
-  const { type, network, address } = getRequiredWallet(
+  const { type, namespace, address } = getRequiredWallet(
     claimedStorage.swapDetails
   );
 
@@ -961,7 +964,7 @@ export function onDependsOnOtherQueues(
       reset();
       // TODO: Use key generator
       retryOn(
-        `${type}-${network}:${address}`,
+        `${type}-${namespace?.network}:${address}`,
         manager,
         context.canSwitchNetworkTo
       );
@@ -1004,7 +1007,7 @@ export async function signTransaction(
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const mobileWallet = isMobileWallet(sourceWallet?.walletType);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
+  const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
 
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here
@@ -1116,7 +1119,7 @@ export async function signTransaction(
     ({ hash, response }) => {
       const explorerUrl = getScannerUrl(
         hash,
-        currentStepBlockchain,
+        currentStepNamespace.network,
         meta.blockchains
       );
       setStepTransactionIds(
@@ -1215,7 +1218,10 @@ export function checkWaitingForConnectWalletChange(params: {
           }
         );
 
-        const requiredNetwork = getCurrentBlockchainOfOrNull(swap, currentStep);
+        const requiredNetwork = getCurrentNamespaceOfOrNull(
+          swap,
+          currentStep
+        )?.network;
 
         if (
           currentStepRequiredWallet === wallet &&
@@ -1386,7 +1392,8 @@ export function retryOn(
         const currentStep = getCurrentStep(swap);
         if (currentStep) {
           if (
-            getCurrentBlockchainOfOrNull(swap, currentStep) == network &&
+            getCurrentNamespaceOfOrNull(swap, currentStep)?.network ==
+              network &&
             queueStorage?.swapDetails.wallets[network]?.walletType === wallet
           ) {
             walletAndNetworkMatched.push(q.list);
