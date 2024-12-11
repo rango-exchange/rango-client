@@ -103,6 +103,11 @@ export function useFetchCustomToken(): UseFetchCustomToken {
 
       return token;
     } catch (error: any) {
+      if (error?.code === 'ERR_BAD_REQUEST') {
+        const errorMessage = produceErrorMessage('not-found', blockchain);
+        setError(errorMessage);
+        return undefined;
+      }
       setError(undefined);
       throw new Error(error.message);
     } finally {
