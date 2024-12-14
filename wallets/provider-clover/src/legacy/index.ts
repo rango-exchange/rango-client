@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -20,7 +21,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain, solanaBlockchain } from 'rango-types';
 
-import { clover as clover_instance, getNonEvmAccounts } from './helpers.js';
+import { clover as clover_instance, getSolanaAccounts } from '../utils.js';
+
 import signer from './signer.js';
 
 const WALLET = WalletTypes.CLOVER;
@@ -44,7 +46,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     });
   }
 
-  const nonEvmResults = await getNonEvmAccounts(instance);
+  const nonEvmResults = await getSolanaAccounts(instance);
   results = [...results, ...nonEvmResults];
 
   return results;
@@ -118,3 +120,17 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     supportedChains: [...evms, ...solana],
   };
 };
+
+const legacyProvider: LegacyProviderInterface = {
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+  switchNetwork,
+};
+
+export { legacyProvider };
