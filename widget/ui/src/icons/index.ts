@@ -12,6 +12,7 @@ export { default as ChevronRightIcon } from './ChevronRight.js';
 export { default as ChevronUpIcon } from './ChevronUp.js';
 export { default as CloseIcon } from './Close.js';
 export { default as CompleteIcon } from './Complete.js';
+export { default as CookieIcon } from './Cookie.js';
 export { default as CopyIcon } from './Copy.js';
 export { default as CosmosCategoryIcon } from './CosmosCategory.js';
 export { default as CreditCardIcon } from './CreditCard.js';
