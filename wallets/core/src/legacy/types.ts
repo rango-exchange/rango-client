@@ -81,6 +81,24 @@ export type InstallObjects = {
   DEFAULT: string;
 };
 
+interface NeedsNamespace {
+  selection: 'single' | 'multiple';
+  data: {
+    label: string;
+    id: string;
+    value: Namespace;
+  }[];
+}
+
+interface NeedsDerivationPath {
+  data: {
+    id: string;
+    label: string;
+    namespace: Namespace;
+    generateDerivationPath: (index: string) => string;
+  }[];
+}
+
 export type WalletInfo = {
   name: string;
   img: string;
@@ -93,9 +111,9 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  namespaces?: Namespace[];
-  singleNamespace?: boolean;
-  needsDerivationPath?: boolean;
+
+  needsDerivationPath?: NeedsDerivationPath;
+  needsNamespace?: NeedsNamespace;
 };
 
 export type State = {
