@@ -6,9 +6,11 @@
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -18,7 +20,9 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",
@@ -29,6 +33,10 @@
     "@rango-dev/wallets-core": "^0.40.1-next.2",
     "@rango-dev/wallets-shared": "^0.40.1-next.2",
     "rango-types": "^0.1.74"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.25"
   },
   "publishConfig": {
     "access": "public"
