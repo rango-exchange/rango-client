@@ -97,15 +97,10 @@ export function useStatefulConnect(): UseStatefulConnect {
           detachedInstances && wallet.state !== 'connected';
 
         if (needsNamespace) {
-          const availableNamespaces = detachedInstances.value;
-
           dispatch({
             type: 'needsNamespace',
             payload: {
-              providerType: wallet.type,
-              providerImage: wallet.image,
-              availableNamespaces,
-              singleNamespace: false,
+              targetWallet: wallet,
             },
           });
           return { status: ResultStatus.Namespace };
@@ -131,12 +126,7 @@ export function useStatefulConnect(): UseStatefulConnect {
         dispatch({
           type: 'needsNamespace',
           payload: {
-            providerType: wallet.type,
-            providerImage: wallet.image,
-            availableNamespaces: wallet.needsNamespace.data.map(
-              (ns) => ns.value
-            ),
-            singleNamespace: wallet.needsNamespace.selection === 'single',
+            targetWallet: wallet,
           },
         });
         return { status: ResultStatus.Namespace };
@@ -215,7 +205,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       );
     }
 
-    const type = connectState.namespace.providerType;
+    const type = connectState.namespace.targetWallet.type;
     const namespaces = selectedNamespaces.map((namespace) => ({
       namespace,
     }));

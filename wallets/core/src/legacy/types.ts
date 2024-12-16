@@ -85,6 +85,10 @@ interface NeedsNamespace {
   selection: 'single' | 'multiple';
   data: {
     label: string;
+    /**
+     * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
+     * e.g. ETH
+     */
     id: string;
     value: Namespace;
   }[];

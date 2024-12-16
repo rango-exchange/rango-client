@@ -102,7 +102,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       selection: 'single',
       data: [
         {
-          id: 'EVM',
+          id: 'ETH',
           value: 'EVM',
           label: 'Ethereum',
         },
