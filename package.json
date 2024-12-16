@@ -79,7 +79,7 @@
     "@testing-library/react": "^16.0.0",
     "@testing-library/dom": "^10.1.0",
     "@testing-library/react-hooks": "^8.0.1",
-    "happy-dom": "^14.12.0",
+    "happy-dom": "^15.10.2",
     "react-test-renderer": "^18.3.1",
     "buffer": "^5.5.0",
     "chalk": "^5.2.0",
