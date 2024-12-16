@@ -93,9 +93,56 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
-    namespaces: ['EVM', 'Solana'],
-    singleNamespace: true,
     showOnMobile: false,
-    needsDerivationPath: true,
+    needsDerivationPath: {
+      data: [
+        {
+          id: 'metamask',
+          label: `Metamask (m/44'/60'/0'/0/index)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
+        },
+        {
+          id: 'ledgerLive',
+          label: `LedgerLive (m/44'/60'/index'/0/0)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
+        },
+        {
+          id: 'legacy',
+          label: `Legacy (m/44'/60'/0'/index)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
+        },
+        {
+          id: `(m/44'/501'/index')`,
+          label: `(m/44'/501'/index')`,
+          namespace: 'Solana',
+          generateDerivationPath: (index: string) => `44'/501'/${index}'`,
+        },
+        {
+          id: `(m/44'/501'/0'/index)`,
+          label: `(m/44'/501'/0'/index)`,
+          namespace: 'Solana',
+          generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
+        },
+      ],
+    },
+
+    needsNamespace: {
+      selection: 'single',
+      data: [
+        {
+          label: 'EVM',
+          value: 'EVM',
+          id: 'ETH',
+        },
+        {
+          label: 'Solana',
+          value: 'Solana',
+          id: 'SOLANA',
+        },
+      ],
+    },
   };
 };

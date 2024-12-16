@@ -107,6 +107,22 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
       ),
     ],
+
+    needsNamespace: {
+      selection: 'multiple',
+      data: [
+        {
+          label: 'EVM',
+          value: 'EVM',
+          id: 'ETH',
+        },
+        {
+          label: 'Solana',
+          value: 'Solana',
+          id: 'SOLANA',
+        },
+      ],
+    },
   };
 };
 
