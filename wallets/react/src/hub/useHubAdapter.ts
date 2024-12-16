@@ -198,11 +198,15 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         params.allVersionedProviders,
         type
       );
+
       if (legacyProvider.canEagerConnect) {
-        const namespaces = targetNamespaces.map(
-          (targetNamespace) => targetNamespace[0].namespace
+        lastConnectedWalletsFromStorage.addWallet(
+          type,
+          namespaces.map((ns) => ({
+            namsepace: ns.namespace,
+            network: ns.network,
+          }))
         );
-        lastConnectedWalletsFromStorage.addWallet(type, namespaces);
       }
 
       return connectResultWithLegacyFormat;
