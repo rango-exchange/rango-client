@@ -55,7 +55,12 @@ export interface WalletsSlice {
   setConnectedWalletAsRefetching: (walletType: string) => void;
   setConnectedWalletHasError: (walletType: string) => void;
   setConnectedWalletRetrievedData: (walletType: string) => void;
-  removeBalancesForWallet: (walletType: string) => void;
+  removeBalancesForWallet: (
+    walletType: string,
+    options?: {
+      chains?: string[];
+    }
+  ) => void;
   addConnectedWallet: (accounts: Wallet[]) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
@@ -254,7 +259,7 @@ export const createWalletsSlice: StateCreator<
 
     void get().fetchBalances(accounts);
   },
-  removeBalancesForWallet: (walletType) => {
+  removeBalancesForWallet: (walletType, options) => {
     let walletsNeedsToBeRemoved = get().connectedWallets.filter(
       (connectedWallet) => connectedWallet.walletType === walletType
     );
@@ -274,6 +279,12 @@ export const createWalletsSlice: StateCreator<
         });
       }
     });
+
+    if (!!options?.chains && options.chains.length > 0) {
+      walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+        return options.chains?.includes(wallet.chain);
+      });
+    }
 
     const nextBalancesState: BalanceState = {};
     let nextAggregatedBalanceState: AggregatedBalanceState =
