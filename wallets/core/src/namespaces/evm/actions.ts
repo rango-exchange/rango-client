@@ -70,19 +70,23 @@ export function changeAccountSubscriber(
       const [, setState] = context.state();
 
       eventCallback = async (accounts) => {
-        const chainId = await evmInstance.request({ method: 'eth_chainId' });
+        // Phantom's intance on switching account to a not-connected account, will return empty array.
+        if (!accounts || accounts.length === 0) {
+          setState('accounts', null);
+        } else {
+          const chainId = await evmInstance.request({ method: 'eth_chainId' });
+          const formatAccounts = accounts.map((account) =>
+            AccountId.format({
+              address: account,
+              chainId: {
+                namespace: CAIP_NAMESPACE,
+                reference: chainId,
+              },
+            })
+          );
 
-        const formatAccounts = accounts.map((account) =>
-          AccountId.format({
-            address: account,
-            chainId: {
-              namespace: CAIP_NAMESPACE,
-              reference: chainId,
-            },
-          })
-        );
-
-        setState('accounts', formatAccounts);
+          setState('accounts', formatAccounts);
+        }
       };
       evmInstance.on('accountsChanged', eventCallback);
     },
