@@ -71,8 +71,18 @@ export function changeAccountSubscriber(
       const [, setState] = context.state();
 
       eventCallback = async (accounts) => {
-        const chainId = await evmInstance.request({ method: 'eth_chainId' });
+        /*
+         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
+         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
+         *
+         * This assumption may not work for other wallets, if that the case, we need to consider a new approach.
+         */
+        if (!accounts || accounts.length === 0) {
+          context.action('disconnect');
+          return;
+        }
 
+        const chainId = await evmInstance.request({ method: 'eth_chainId' });
         const formatAccounts = accounts.map((account) =>
           AccountId.format({
             address: account,
