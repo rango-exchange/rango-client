@@ -12,6 +12,8 @@ export function convertCommonNamespacesKeysToLegacyNamespace(
         return 'Solana';
       case 'cosmos':
         return 'Cosmos';
+      case 'utxo':
+        return 'Utxo';
       default:
         throw new Error(
           'Can not convert this common namespace key to a proper legacy key.'

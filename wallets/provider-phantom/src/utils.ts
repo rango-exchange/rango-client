@@ -2,6 +2,7 @@ import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/name
 import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { type Connect, Networks } from '@rango-dev/wallets-shared';
 
 type Provider = Map<string, unknown>;
 
@@ -12,7 +13,7 @@ export function phantom(): Provider | null {
     return null;
   }
 
-  const { solana, ethereum } = phantom;
+  const { solana, ethereum, bitcoin } = phantom;
 
   const instances: Provider = new Map();
 
@@ -22,6 +23,10 @@ export function phantom(): Provider | null {
 
   if (solana && solana.isPhantom) {
     instances.set(LegacyNetworks.SOLANA, solana);
+  }
+
+  if (bitcoin && bitcoin.isPhantom) {
+    instances.set(LegacyNetworks.BTC, bitcoin);
   }
 
   return instances;
@@ -53,3 +58,32 @@ export function solanaPhantom(): SolanaProviderApi {
 
   return solanaInstance;
 }
+
+export function bitcoinPhantom(): SolanaProviderApi {
+  const instance = phantom();
+  const bitcoinInstance = instance?.get(LegacyNetworks.BTC);
+
+  if (!bitcoinInstance) {
+    throw new Error(
+      'Phantom not injected or Bitcoin not enabled. Please check your wallet.'
+    );
+  }
+
+  return bitcoinInstance;
+}
+
+export const getBitcoinAccounts: Connect = async ({ instance }) => {
+  const accounts = await instance.requestAccounts();
+
+  return {
+    accounts: accounts.map(
+      (account: {
+        address: string;
+        publicKey: string;
+        addressType: 'p2tr' | 'p2wpkh' | 'p2sh' | 'p2pkh';
+        purpose: 'payment' | 'ordinals';
+      }) => account.address
+    ),
+    chainId: Networks.BTC,
+  };
+};

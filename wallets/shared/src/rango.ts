@@ -120,7 +120,7 @@ export const namespaces: Record<
     mainBlockchain: 'COSMOS',
     title: 'Cosmos',
   },
-  UTXO: {
+  Utxo: {
     mainBlockchain: 'BTC',
     title: 'Utxo',
   },

@@ -83,12 +83,18 @@ const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  let supportedChains: BlockchainMeta[] = [];
   const solana = solanaBlockchain(allBlockChains);
   const evms = allBlockChains.filter(
     (chain): chain is EvmBlockchainMeta =>
       isEvmBlockchain(chain) &&
       EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
   );
+  const btc = allBlockChains.find((chain) => chain.name === Networks.BTC);
+  supportedChains = supportedChains.concat(solana).concat(evms);
+  if (btc) {
+    supportedChains.push(btc);
+  }
 
   return {
     name: 'Phantom',
@@ -101,12 +107,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#4d40c6',
     // if you are adding a new namespace, don't forget to also update `properties`
-    supportedChains: [
-      ...solana,
-      ...evms.filter((chain) =>
-        EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
-      ),
-    ],
+    supportedChains,
   };
 };
 
