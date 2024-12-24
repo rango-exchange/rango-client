@@ -21,6 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.2.0",
     "@rango-dev/signer-solana": "^0.35.0",
     "@rango-dev/wallets-shared": "^0.40.1-next.2",
     "axios": "^1.7.7",
