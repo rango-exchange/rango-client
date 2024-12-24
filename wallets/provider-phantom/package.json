@@ -23,6 +23,8 @@
   "dependencies": {
     "@rango-dev/signer-solana": "^0.35.0",
     "@rango-dev/wallets-shared": "^0.40.1-next.2",
+    "axios": "^1.7.7",
+    "bitcoinjs-lib": "6.1.5",
     "rango-types": "^0.1.74"
   },
   "publishConfig": {

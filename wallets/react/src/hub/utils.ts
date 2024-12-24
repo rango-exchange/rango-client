@@ -290,7 +290,7 @@ export function discoverNamespace(network: string): Namespace {
     case Networks.DOGE:
     case Networks.LTC:
     case Networks.TRON:
-      return 'UTXO';
+      return 'Utxo';
     case Networks.TON:
       return 'Ton';
     case Networks.POLKADOT:
