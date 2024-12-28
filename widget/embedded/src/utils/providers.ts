@@ -57,29 +57,24 @@ export function matchAndGenerateProviders(
        * The second way is passing a custom provider which implemented ProviderInterface.
        */
       if (typeof requestedProvider === 'string') {
-        const result: BothProvidersInterface | undefined =
-          pickVersionWithFallbackToLegacy(all, options).find((provider) => {
-            if (provider instanceof Provider) {
-              return provider.id === requestedProvider;
-            }
-            return provider.config.type === requestedProvider;
-          });
+        const result = all.find((provider) => {
+          const versionedProvider =
+            pickSingleProviderVersionWithFallbackToLegacy(
+              provider,
+              options?.experimentalWallet
+            );
+          if (versionedProvider instanceof Provider) {
+            return versionedProvider.id === requestedProvider;
+          }
+          return versionedProvider.config.type === requestedProvider;
+        });
 
         if (result) {
-          if (result instanceof Provider) {
-            selectedProviders.push(
-              defineVersions().version('1.0.0', result).build()
-            );
-          } else {
-            selectedProviders.push(
-              defineVersions().version('0.0.0', result).build()
-            );
-          }
-        } else {
-          console.warn(
-            `Couldn't find ${requestedProvider} provider. Please make sure you are passing the correct name.`
-          );
+          selectedProviders.push(result);
         }
+        console.warn(
+          `Couldn't find ${requestedProvider} provider. Please make sure you are passing the correct name.`
+        );
       } else {
         // It's a custom provider so we directly push it to the list.
         if (requestedProvider instanceof Provider) {
@@ -107,15 +102,22 @@ function pickVersionWithFallbackToLegacy(
 ): BothProvidersInterface[] {
   const { experimentalWallet = 'enabled' } = options || {};
 
-  return providers.map((provider) => {
-    const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
-    try {
-      return pickVersion(provider, version)[1];
-    } catch {
-      // Fallback to legacy version, if target version doesn't exists.
-      return pickVersion(provider, '0.0.0')[1];
-    }
-  });
+  return providers.map((provider) =>
+    pickSingleProviderVersionWithFallbackToLegacy(provider, experimentalWallet)
+  );
+}
+
+function pickSingleProviderVersionWithFallbackToLegacy(
+  provider: VersionedProviders,
+  experimentalWallet?: 'enabled' | 'disabled'
+): BothProvidersInterface {
+  const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
+  try {
+    return pickVersion(provider, version)[1];
+  } catch {
+    // Fallback to legacy version, if target version doesn't exists.
+    return pickVersion(provider, '0.0.0')[1];
+  }
 }
 
 export function configWalletsToWalletName(
