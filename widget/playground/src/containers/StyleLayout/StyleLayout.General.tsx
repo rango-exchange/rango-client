@@ -47,7 +47,8 @@ export function General() {
     useConfigStore.use.config().theme?.secondaryBorderRadius;
   const fontFamily =
     useConfigStore.use.config().theme?.fontFamily || DEFAULT_FONT;
-  const language = useConfigStore.use.config().language || LANGUAGES[0].value;
+  const enLanguage = LANGUAGES.find((lng) => lng.value === 'en');
+  const language = useConfigStore.use.config().language || enLanguage?.value;
   const variant = useConfigStore.use.config().variant || VARIANTS[0].value;
 
   const { resetLanguage } = useWidget();
