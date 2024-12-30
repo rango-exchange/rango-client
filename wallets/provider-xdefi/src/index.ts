@@ -144,14 +144,14 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     ...supportedCosmosChains,
   ];
   return {
-    name: 'XDefi',
+    name: 'Ctrl',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',
     installLink: {
       CHROME:
-        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+        'https://chromewebstore.google.com/detail/ctrl-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
       BRAVE:
-        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
-      DEFAULT: 'https://xdefi.io/',
+        'https://chromewebstore.google.com/detail/ctrl-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+      DEFAULT: 'https://ctrl.xyz/',
     },
     color: '#0646c7',
     supportedChains,
