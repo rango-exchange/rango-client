@@ -108,6 +108,10 @@ export async function autoConnect(deps: {
     // Run `.connect` if `.canEagerConnect` returns `true`.
     walletIds.forEach((providerName) => {
       if (wallets && !wallets.includes(providerName)) {
+        console.warn(
+          'Trying to run auto connect for a wallet which is not included in config. Desired wallet:',
+          providerName
+        );
         walletsToRemoveFromPersistance.push(providerName);
         return;
       }

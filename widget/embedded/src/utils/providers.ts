@@ -48,6 +48,10 @@ export function matchAndGenerateProviders(
   const all = allProviders(envs);
 
   if (providers) {
+    /*
+     * If `wallets`  is included in widget config,
+     * allProviders should be filtered based on wallets list
+     */
     const selectedProviders: VersionedProviders[] = [];
 
     providers.forEach((requestedProvider) => {
@@ -58,11 +62,17 @@ export function matchAndGenerateProviders(
        */
       if (typeof requestedProvider === 'string') {
         const result = all.find((provider) => {
-          const versionedProvider =
-            pickSingleProviderVersionWithFallbackToLegacy(
-              provider,
-              options?.experimentalWallet
-            );
+          /*
+           * To find a provider in allProviders,
+           * a version of each provider should be picked
+           * and validated based on that version scheme.
+           * If the corresponding provider to a wallet was found in allProvider,
+           * it will be add to selected providers.
+           */
+          const versionedProvider = pickProviderVersionWithFallbackToLegacy(
+            provider,
+            options
+          );
           if (versionedProvider instanceof Provider) {
             return versionedProvider.id === requestedProvider;
           }
@@ -73,6 +83,7 @@ export function matchAndGenerateProviders(
           selectedProviders.push(result);
         }
         console.warn(
+          // A provider name is included in config but was not found in allProviders
           `Couldn't find ${requestedProvider} provider. Please make sure you are passing the correct name.`
         );
       } else {
@@ -95,23 +106,13 @@ export function matchAndGenerateProviders(
   return all;
 }
 
-// TODO: this is a duplication with what we do in core.
-function pickVersionWithFallbackToLegacy(
-  providers: VersionedProviders[],
-  options?: ProvidersOptions
-): BothProvidersInterface[] {
-  const { experimentalWallet = 'enabled' } = options || {};
-
-  return providers.map((provider) =>
-    pickSingleProviderVersionWithFallbackToLegacy(provider, experimentalWallet)
-  );
-}
-
-function pickSingleProviderVersionWithFallbackToLegacy(
+function pickProviderVersionWithFallbackToLegacy(
   provider: VersionedProviders,
-  experimentalWallet?: 'enabled' | 'disabled'
+  options?: ProvidersOptions
 ): BothProvidersInterface {
+  const { experimentalWallet = 'enabled' } = options || {};
   const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
+
   try {
     return pickVersion(provider, version)[1];
   } catch {
@@ -124,9 +125,8 @@ export function configWalletsToWalletName(
   config: WidgetConfig['wallets'],
   options?: ProvidersOptions
 ): string[] {
-  const providers = pickVersionWithFallbackToLegacy(
-    matchAndGenerateProviders(config, options),
-    options
+  const providers = matchAndGenerateProviders(config, options).map((provider) =>
+    pickProviderVersionWithFallbackToLegacy(provider, options)
   );
   const names = providers.map((provider) => {
     if (provider instanceof Provider) {
