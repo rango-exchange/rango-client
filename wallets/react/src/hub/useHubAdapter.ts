@@ -19,7 +19,10 @@ import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
 import { fromAccountIdToLegacyAddressFormat } from './helpers.js';
-import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
+import {
+  LastConnectedWalletsFromStorage,
+  type NamespaceInput,
+} from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   checkHubStateAndTriggerEvents,
@@ -172,6 +175,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         targetNamespaces.push([namespace, result]);
       });
 
+      // Keeping only namespaces that connected successfully, then we'll store them on storage for auto connect functionality.
+      const successfulyConnectedNamespaces: NamespaceInput[] = [];
+
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
         async ([namespaceInput, namespace]) => {
@@ -186,11 +192,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
            * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
            */
           const result = namespace.connect(network);
-          return result.then<ConnectResult>(transformHubResultToLegacyResult);
+          return result
+            .then<ConnectResult>(transformHubResultToLegacyResult)
+            .then((res) => {
+              successfulyConnectedNamespaces.push({
+                namsepace: namespaceInput.namespace,
+                network: namespaceInput.network,
+              });
+              return res;
+            });
         }
-      );
-      const connectResultWithLegacyFormat = await Promise.all(
-        connectResultFromTargetNamespaces
       );
 
       // If Provider has support for auto connect, we will add the wallet to storage.
@@ -198,12 +209,21 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         params.allVersionedProviders,
         type
       );
+
       if (legacyProvider.canEagerConnect) {
-        const namespaces = targetNamespaces.map(
-          (targetNamespace) => targetNamespace[0].namespace
-        );
-        lastConnectedWalletsFromStorage.addWallet(type, namespaces);
+        void Promise.allSettled(connectResultFromTargetNamespaces).then(() => {
+          if (successfulyConnectedNamespaces.length > 0) {
+            lastConnectedWalletsFromStorage.addWallet(
+              type,
+              successfulyConnectedNamespaces
+            );
+          }
+        });
       }
+
+      const connectResultWithLegacyFormat = await Promise.all(
+        connectResultFromTargetNamespaces
+      );
 
       return connectResultWithLegacyFormat;
     },
