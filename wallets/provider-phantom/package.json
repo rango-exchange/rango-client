@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.40.1-next.4",
+  "version": "0.40.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-solana": "^0.35.1-next.0",
-    "@rango-dev/wallets-shared": "^0.40.1-next.4",
+    "@rango-dev/wallets-shared": "^0.40.1-next.5",
     "rango-types": "^0.1.74"
   },
   "publishConfig": {
