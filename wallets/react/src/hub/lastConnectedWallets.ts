@@ -1,3 +1,5 @@
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+
 import { Persistor } from '@rango-dev/wallets-core/legacy';
 
 import {
@@ -5,8 +7,13 @@ import {
   LEGACY_LAST_CONNECTED_WALLETS,
 } from './constants.js';
 
+export interface NamespaceInput {
+  namsepace: Namespace;
+  network: string | undefined;
+}
+
 export interface LastConnectedWalletsStorage {
-  [providerId: string]: string[];
+  [providerId: string]: NamespaceInput[];
 }
 
 export type LegacyLastConnectedWalletsStorage = string[];
@@ -22,7 +29,7 @@ export class LastConnectedWalletsFromStorage {
     this.#storageKey = storageKey;
   }
 
-  addWallet(providerId: string, namespaces: string[]): void {
+  addWallet(providerId: string, namespaces: NamespaceInput[]): void {
     if (this.#storageKey === HUB_LAST_CONNECTED_WALLETS) {
       return this.#addWalletToHub(providerId, namespaces);
     } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
@@ -64,7 +71,7 @@ export class LastConnectedWalletsFromStorage {
       persistor.getItem(HUB_LAST_CONNECTED_WALLETS) || {};
     return lastConnectedWallets;
   }
-  #addWalletToHub(providerId: string, namespaces: string[]): void {
+  #addWalletToHub(providerId: string, namespaces: NamespaceInput[]): void {
     const storage = new Persistor<LastConnectedWalletsStorage>();
     const data = storage.getItem(this.#storageKey) || {};
 

@@ -57,8 +57,9 @@ export function changeAccountSubscriber(
 ): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
   let eventCallback: EIP1193EventMap['accountsChanged'];
 
+  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
   return [
-    (context) => {
+    (context, err) => {
       const evmInstance = instance();
 
       if (!evmInstance) {
@@ -85,12 +86,20 @@ export function changeAccountSubscriber(
         setState('accounts', formatAccounts);
       };
       evmInstance.on('accountsChanged', eventCallback);
+
+      if (err instanceof Error) {
+        throw err;
+      }
     },
-    () => {
+    (_, err) => {
       const evmInstance = instance();
 
       if (eventCallback && evmInstance) {
         evmInstance.removeListener('accountsChanged', eventCallback);
+      }
+
+      if (err instanceof Error) {
+        throw err;
       }
     },
   ];
