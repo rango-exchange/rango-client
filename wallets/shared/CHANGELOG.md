@@ -1,3 +1,12 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.40.0...wallets-shared@0.41.0) (2024-12-30)
+
+
+### Bug Fixes
+
+* fix ctrl wallet fail to connect problem ([f1bfedc](https://github.com/rango-exchange/rango-client/commit/f1bfedcf4e9bf4cf55c2bee7c954b83dbbb6376c))
+
+
+
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.39.0...wallets-shared@0.40.0) (2024-11-27)
 
 

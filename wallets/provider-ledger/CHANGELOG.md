@@ -1,3 +1,7 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.10.0...provider-ledger@0.11.0) (2024-12-30)
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.9.0...provider-ledger@0.10.0) (2024-11-27)
 
 
