@@ -58,6 +58,7 @@ export { default as NoNotificationIcon } from './NoNotification.js';
 export { default as NotificationNumberIcon } from './NotificationNumber.js';
 export { default as NotificationsIcon } from './Notifications.js';
 export { default as NumberIcon } from './Number.js';
+export { default as NumberBlocksIcon } from './NumberBlocks.js';
 export { default as OtherCategoryIcon } from './OtherCategory.js';
 export { default as PasteIcon } from './Paste.js';
 export { default as PinIcon } from './Pin.js';
