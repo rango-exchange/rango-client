@@ -131,8 +131,8 @@ export async function autoConnect(deps: {
       const namespaces: LegacyNamespaceInputForConnect[] = lastConnectedWallets[
         providerName
       ].map((namespace) => ({
-        namespace: namespace as Namespace,
-        network: undefined,
+        namespace: namespace.namsepace,
+        network: namespace.network,
       }));
 
       const canEagerConnect = async () => {
