@@ -21,6 +21,8 @@ interface CosmosBlockchainMetaWithChainId
   chainId: string;
 }
 
+const GET_ACCOUNTS_TIMEOUT = 1000;
+
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
     .filter((blockchain) => blockchain.info && !blockchain.info.experimental)
@@ -91,8 +93,14 @@ async function getMainAccounts({
       };
     })
     .filter(Boolean);
-  const accountsPromises = offlineSigners.map(({ signer }) =>
-    signer.getAccounts()
+  const timeout = new Promise((_, reject) =>
+    setTimeout(
+      () => reject(new Error('Timeout while fetching accounts')),
+      GET_ACCOUNTS_TIMEOUT
+    )
+  );
+  const accountsPromises = offlineSigners.map(async ({ signer }) =>
+    Promise.race([signer.getAccounts(), timeout])
   );
   const availableAccountForChains = await Promise.allSettled(accountsPromises);
   const resolvedAccounts: ProviderConnectResult[] = [];
