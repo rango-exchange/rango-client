@@ -178,7 +178,7 @@ export function notifier(params: NotifierParams) {
   const fromAsset = `${step.fromBlockchain}.${step.fromSymbol}`;
   const toAsset = `${step.toBlockchain}.${step.toSymbol}`;
   const outputAmount = step.outputAmount ?? '';
-  const currentFromBlockchain = !!params.step
+  const currentFromNamespace = !!params.step
     ? getCurrentNamespaceOfOrNull(params.swap, params.step)
     : null;
   let message = '';
@@ -254,7 +254,7 @@ export function notifier(params: NotifierParams) {
         event.status ===
         StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE
       ) {
-        message = `Please change your wallet network to ${currentFromBlockchain}.`;
+        message = `Please change your wallet network to ${currentFromNamespace?.network}.`;
         messageSeverity = EventSeverity.WARNING;
       }
       break;
