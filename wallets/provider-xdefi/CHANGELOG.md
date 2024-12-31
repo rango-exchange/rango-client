@@ -1,3 +1,12 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.40.0...provider-xdefi@0.41.0) (2024-12-30)
+
+
+### Features
+
+* update ctrl wallet name and info ([fcde421](https://github.com/rango-exchange/rango-client/commit/fcde42144a995ec655388b95b606abc669a8c1a8))
+
+
+
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.39.0...provider-xdefi@0.40.0) (2024-11-27)
 
 

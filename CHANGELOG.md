@@ -1,3 +1,15 @@
+## Widget [0.25.0] (2024-12-31)
+
+_includes `@rango-dev/widget-embedded@0.37.0`_
+
+### Bug Fixes
+
+- Fix ctrl wallet fail to connect problem ([f1bfedc](https://github.com/rango-exchange/rango-client/commit/f1bfedcf4e9bf4cf55c2bee7c954b83dbbb6376c))
+
+### Features
+
+- Update ctrl wallet name and info ([fcde421](https://github.com/rango-exchange/rango-client/commit/fcde42144a995ec655388b95b606abc669a8c1a8))
+
 ## Widget [0.24.0] (2024-11-27)
 
 _includes `@rango-dev/widget-embedded@0.36.0`_
