@@ -91,6 +91,9 @@ async function run() {
     keepNames: true,
     sourcemap: true,
     platform: 'browser',
+    loader: {
+      '.svg': 'file',
+    },
     format: 'esm',
     outdir: `${pkgPath}/dist`,
     entryPoints: entryPoints,

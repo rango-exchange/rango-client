@@ -6,6 +6,9 @@ export type Watermark = 'NONE' | 'FULL';
 type ConfigResponse = {
   config: {
     watermark: Watermark;
+    banners: {
+      profile: boolean;
+    };
   };
 };
 
@@ -14,7 +17,7 @@ interface UseFetchApiConfig {
 }
 
 export function useFetchApiConfig(): UseFetchApiConfig {
-  const { setWatermark } = useUiStore();
+  const { setWatermark, setShowProfileBanner } = useUiStore();
 
   const fetchApiConfig: UseFetchApiConfig['fetchApiConfig'] = async () => {
     const response = await fetch(
@@ -28,6 +31,7 @@ export function useFetchApiConfig(): UseFetchApiConfig {
     const data: ConfigResponse = await response.json();
 
     setWatermark(data.config.watermark);
+    setShowProfileBanner(data.config.banners.profile);
   };
   return { fetchApiConfig };
 }

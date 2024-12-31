@@ -5,7 +5,8 @@
     "src",
     "types",
     "../../global-wallets-env.d.ts",
-    "./global-env.d.ts"
+    "./global-env.d.ts",
+    "./svg.d.ts"
   ],
   "compilerOptions": {
     "outDir": "dist",
