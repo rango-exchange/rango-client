@@ -1,3 +1,7 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/ui@0.42.0...ui@0.43.0) (2024-12-30)
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/ui@0.41.0...ui@0.42.0) (2024-11-27)
 
 
