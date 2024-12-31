@@ -79,6 +79,11 @@ export function matchAndGenerateProviders(
           return versionedProvider.config.type === requestedProvider;
         });
 
+        /*
+         * A provider may have multiple versions
+         * (e.g., 0.0, also known as legacy, and 1.0, also known as hub).
+         * We should ensure that all existing versions of a provider are added to selectedProviders.
+         */
         if (result) {
           selectedProviders.push(result);
         }
