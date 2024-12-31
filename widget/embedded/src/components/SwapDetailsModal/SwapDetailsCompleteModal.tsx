@@ -11,7 +11,9 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Banner from '../../assets/Banner.svg';
 import { WIDGET_UI_ID } from '../../constants';
+import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
@@ -31,6 +33,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     diagnosisUrl,
   } = props;
   const navigate = useNavigate();
+  const { showProfileBanner } = useUiStore();
 
   return (
     <WatermarkedModal
@@ -74,19 +77,27 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
       )}
       <Divider size={32} />
       {status === 'success' && (
-        <Button
-          id="widget-swap-details-modal-done-btn"
-          variant="contained"
-          type="primary"
-          size="large"
-          onClick={() => {
-            const home = '../../';
-            navigate(home);
-          }}>
-          <Typography variant="title" size="medium" color="neutral100">
-            {i18n.t('Done')}
-          </Typography>
-        </Button>
+        <>
+          {showProfileBanner && (
+            <>
+              <img src={Banner} alt="Profile Banner" />
+              <Divider size={32} />
+            </>
+          )}
+          <Button
+            id="widget-swap-details-modal-done-btn"
+            variant="contained"
+            type="primary"
+            size="large"
+            onClick={() => {
+              const home = '../../';
+              navigate(home);
+            }}>
+            <Typography variant="title" size="medium" color="neutral100">
+              {i18n.t('Done')}
+            </Typography>
+          </Button>
+        </>
       )}
       <Divider size={12} />
       {diagnosisUrl && (
