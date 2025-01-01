@@ -9,7 +9,7 @@ import * as braavos from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
 import * as clover from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
-import * as coinbase from '@rango-dev/provider-coinbase';
+import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
@@ -123,7 +123,7 @@ export const allProviders = (options?: Options): VersionedProviders[] => {
     legacyProviderImportsToVersionsInterface(safepal),
     legacyProviderImportsToVersionsInterface(brave),
     legacyProviderImportsToVersionsInterface(coin98),
-    legacyProviderImportsToVersionsInterface(coinbase),
+    coinbase,
     legacyProviderImportsToVersionsInterface(cosmostation),
     legacyProviderImportsToVersionsInterface(exodus),
     legacyProviderImportsToVersionsInterface(mathwallet),
