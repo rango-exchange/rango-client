@@ -280,18 +280,23 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         }
       });
 
+      const walletInfoFromLegacy = provider.getWalletInfo(
+        params.allBlockChains || []
+      );
+
       return {
         name: info.name,
         img: info.icon,
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains: provider.getWalletInfo(params.allBlockChains || [])
-          .supportedChains,
+        supportedChains: walletInfoFromLegacy.supportedChains,
         isContractWallet: false,
         mobileWallet: false,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.
         showOnMobile: undefined,
+        needsNamespace: walletInfoFromLegacy.needsNamespace,
+        needsDerivationPath: walletInfoFromLegacy.needsDerivationPath,
 
         isHub: true,
         properties: wallet.info()?.properties,

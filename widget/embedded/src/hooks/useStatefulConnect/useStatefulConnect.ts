@@ -8,8 +8,6 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
-import { convertCommonNamespacesKeysToLegacyNamespace } from '../../utils/hub';
-
 import {
   isStateOnDerivationPathStep,
   isStateOnNamespace,
@@ -99,50 +97,48 @@ export function useStatefulConnect(): UseStatefulConnect {
           detachedInstances && wallet.state !== 'connected';
 
         if (needsNamespace) {
-          const availableNamespaces =
-            convertCommonNamespacesKeysToLegacyNamespace(
-              detachedInstances.value
-            );
-
           dispatch({
             type: 'needsNamespace',
             payload: {
-              providerType: wallet.type,
-              providerImage: wallet.image,
-              availableNamespaces,
-              singleNamespace: false,
+              targetWallet: wallet,
             },
           });
           return { status: ResultStatus.Namespace };
         }
       }
 
-      // Legacy
-      if (!wallet.namespaces) {
+      /*
+       * Legacy
+       *
+       * For legacy there are 3 states:
+       * 1. a wallet doesn't have any namespace defined, we call the connect.
+       * 2. a wallet has more than two namespaces, we should show namepsace modal, and in that place user will be checked to needs derivation path or not.
+       * 3. a wallet has exactly one namespacesape, in this case we check if that needs derivation or not, if it needs we will do it here by dispatching the action accordingly.
+       */
+      if (!wallet.needsNamespace) {
         return await runConnect(wallet.type, undefined, options);
       }
 
-      const needsNamespace = wallet.namespaces.length > 1;
+      const needsNamespace = wallet.needsNamespace.data.length > 1;
       const needsDerivationPath = wallet.needsDerivationPath;
 
       if (needsNamespace) {
         dispatch({
           type: 'needsNamespace',
           payload: {
-            providerType: wallet.type,
-            providerImage: wallet.image,
-            availableNamespaces: wallet.namespaces,
-            singleNamespace: wallet.singleNamespace,
+            targetWallet: wallet,
           },
         });
         return { status: ResultStatus.Namespace };
       } else if (needsDerivationPath) {
+        const namespace = wallet.needsNamespace.data[0];
+
         dispatch({
           type: 'needsDerivationPath',
           payload: {
             providerType: wallet.type,
             providerImage: wallet.image,
-            namespace: wallet.namespaces[0],
+            namespace: namespace.value,
           },
         });
         return { status: ResultStatus.DerivationPath };
@@ -150,7 +146,9 @@ export function useStatefulConnect(): UseStatefulConnect {
 
       return await runConnect(
         wallet.type,
-        wallet.namespaces.map((namespace) => ({ namespace })),
+        wallet.needsNamespace?.data.map((namespace) => ({
+          namespace: namespace.value,
+        })),
         options
       );
     }
@@ -167,7 +165,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
   ): Promise<Result> => {
-    const isSingleNamespace = wallet.singleNamespace;
+    const isSingleNamespace = wallet.needsNamespace?.selection === 'single';
     const needsDerivationPath = wallet.needsDerivationPath;
     const firstSelectedNamespace = selectedNamespaces[0];
 
@@ -207,7 +205,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       );
     }
 
-    const type = connectState.namespace.providerType;
+    const type = connectState.namespace.targetWallet.type;
     const namespaces = selectedNamespaces.map((namespace) => ({
       namespace,
     }));

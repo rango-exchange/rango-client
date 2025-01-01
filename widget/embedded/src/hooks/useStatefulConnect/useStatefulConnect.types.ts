@@ -1,3 +1,4 @@
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 export interface HandleConnectOptions {
@@ -6,10 +7,7 @@ export interface HandleConnectOptions {
 }
 
 export interface NeedsNamespacesState {
-  providerType: string;
-  providerImage: string;
-  availableNamespaces?: Namespace[];
-  singleNamespace?: boolean;
+  targetWallet: ExtendedModalWalletInfo;
 }
 
 export interface NeedsDerivationPathState {

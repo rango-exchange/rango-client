@@ -149,7 +149,7 @@ export function WalletList(props: PropTypes) {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
           const isConnectedButDifferentThanTargetNamespace = wallet.isHub
             ? !conciseAddress
-            : !!wallet.namespaces && !conciseAddress;
+            : !!wallet.needsNamespace && !conciseAddress;
 
           if (isDisconnected) {
             setSelectedWalletToConnect(wallet);
