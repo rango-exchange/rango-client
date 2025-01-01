@@ -208,6 +208,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         onUpdateState={onUpdateState}
         autoConnect={!!isActiveTab}
         configs={{
+          wallets: config.wallets,
           isExperimentalEnabled: isFeatureEnabled(
             'experimentalWallet',
             config.features
