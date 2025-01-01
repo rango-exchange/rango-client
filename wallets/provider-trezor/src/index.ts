@@ -87,6 +87,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   if (ethereumBlockchain) {
     supportedChains.push(ethereumBlockchain);
   }
+
   return {
     name: 'Trezor',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/trezor/icon.svg',
@@ -95,9 +96,51 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: 'black',
     supportedChains,
-    namespaces: ['EVM'],
-    singleNamespace: true,
     showOnMobile: false,
-    needsDerivationPath: true,
+
+    needsNamespace: {
+      selection: 'single',
+      data: [
+        {
+          id: 'ETH',
+          value: 'EVM',
+          label: 'Ethereum',
+        },
+      ],
+    },
+    needsDerivationPath: {
+      data: [
+        {
+          id: 'metamask',
+          label: `Metamask (m/44'/60'/0'/0/index)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
+        },
+        {
+          id: 'ledgerLive',
+          label: `LedgerLive (m/44'/60'/index'/0/0)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
+        },
+        {
+          id: 'legacy',
+          label: `Legacy (m/44'/60'/0'/index)`,
+          namespace: 'EVM',
+          generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
+        },
+        {
+          id: `(m/44'/501'/index')`,
+          label: `(m/44'/501'/index')`,
+          namespace: 'Solana',
+          generateDerivationPath: (index: string) => `44'/501'/${index}'`,
+        },
+        {
+          id: `(m/44'/501'/0'/index)`,
+          label: `(m/44'/501'/0'/index)`,
+          namespace: 'Solana',
+          generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
+        },
+      ],
+    },
   };
 };
