@@ -1,3 +1,4 @@
+import type { LegacyWalletInfo } from '@rango-dev/wallets-core/legacy';
 import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
 import type { TransactionType } from 'rango-types';
 
@@ -16,6 +17,8 @@ export type WalletInfo = {
   type: string;
   showOnMobile?: boolean;
   blockchainTypes: TransactionType[];
+  needsNamespace?: LegacyWalletInfo['needsNamespace'];
+  needsDerivationPath?: LegacyWalletInfo['needsDerivationPath'];
 };
 
 export interface Info {
