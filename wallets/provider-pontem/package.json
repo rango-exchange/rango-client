@@ -1,0 +1,27 @@
+{
+  "name": "@rango-dev/provider-pontem",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-pontem --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}
