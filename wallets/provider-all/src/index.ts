@@ -24,6 +24,7 @@ import * as metamask from '@rango-dev/provider-metamask';
 import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
+import { versions as pontem } from '@rango-dev/provider-pontem';
 import * as rabby from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
@@ -113,6 +114,7 @@ export const allProviders = (options?: Options): VersionedProviders[] => {
     legacyProviderImportsToVersionsInterface(tonconnect),
     legacyProviderImportsToVersionsInterface(keplr),
     phantom,
+    pontem,
     legacyProviderImportsToVersionsInterface(argentx),
     legacyProviderImportsToVersionsInterface(tronLink),
     legacyProviderImportsToVersionsInterface(trustwallet),
