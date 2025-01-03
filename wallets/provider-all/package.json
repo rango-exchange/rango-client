@@ -42,6 +42,7 @@
     "@rango-dev/provider-mytonwallet": "^0.25.1-next.5",
     "@rango-dev/provider-okx": "^0.40.1-next.5",
     "@rango-dev/provider-phantom": "^0.40.1-next.5",
+    "@rango-dev/provider-pontem": "^0.1.0",
     "@rango-dev/provider-rabby": "^0.7.1-next.5",
     "@rango-dev/provider-safe": "^0.33.1-next.5",
     "@rango-dev/provider-safepal": "^0.40.1-next.5",

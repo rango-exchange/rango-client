@@ -2,22 +2,20 @@ import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 
 import { solanaBlockchain } from 'rango-types';
 
-import { WALLET_ID } from './constants.js';
+import { WALLET_ID } from '../constants.js';
+import { pontem } from '../utils.js';
+
+import { getSigners } from './signer.js';
 
 export const legacyProvider: LegacyProviderInterface = {
-  connect: (): any => {
-    throw new Error('not implemented');
-  },
-  getInstance: (): any => {
-    throw new Error('not implemented');
-  },
-  getSigners: (): any => {
-    throw new Error('not implemented');
-  },
-
   config: {
     type: WALLET_ID,
   },
+  connect: (): any => {
+    throw new Error('not implemented');
+  },
+  getInstance: pontem,
+  getSigners,
   getWalletInfo: (allBlockChains) => {
     const solana = solanaBlockchain(allBlockChains);
 

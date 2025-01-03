@@ -39,5 +39,7 @@ declare global {
     offlineSigner?: any;
     tomo_evm?: any;
     solflare?: any;
+    pontem?: any;
+    solanaPontem?: any;
   }
 }

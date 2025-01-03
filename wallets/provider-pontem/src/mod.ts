@@ -1,6 +1,6 @@
 import { defineVersions } from '@rango-dev/wallets-core/utils';
 
-import { legacyProvider } from './legacy.js';
+import { legacyProvider } from './legacy/index.js';
 import { provider } from './provider.js';
 
 const versions = defineVersions()
