@@ -48,6 +48,10 @@ export function matchAndGenerateProviders(
   const all = allProviders(envs);
 
   if (providers) {
+    /*
+     * If `wallets`  is included in widget config,
+     * allProviders should be filtered based on wallets list
+     */
     const selectedProviders: VersionedProviders[] = [];
 
     providers.forEach((requestedProvider) => {
@@ -57,29 +61,36 @@ export function matchAndGenerateProviders(
        * The second way is passing a custom provider which implemented ProviderInterface.
        */
       if (typeof requestedProvider === 'string') {
-        const result: BothProvidersInterface | undefined =
-          pickVersionWithFallbackToLegacy(all, options).find((provider) => {
-            if (provider instanceof Provider) {
-              return provider.id === requestedProvider;
-            }
-            return provider.config.type === requestedProvider;
-          });
-
-        if (result) {
-          if (result instanceof Provider) {
-            selectedProviders.push(
-              defineVersions().version('1.0.0', result).build()
-            );
-          } else {
-            selectedProviders.push(
-              defineVersions().version('0.0.0', result).build()
-            );
-          }
-        } else {
-          console.warn(
-            `Couldn't find ${requestedProvider} provider. Please make sure you are passing the correct name.`
+        const result = all.find((provider) => {
+          /*
+           * To find a provider in allProviders,
+           * a version of each provider should be picked
+           * and validated based on that version scheme.
+           * If the corresponding provider to a wallet was found in allProvider,
+           * it will be add to selected providers.
+           */
+          const versionedProvider = pickProviderVersionWithFallbackToLegacy(
+            provider,
+            options
           );
+          if (versionedProvider instanceof Provider) {
+            return versionedProvider.id === requestedProvider;
+          }
+          return versionedProvider.config.type === requestedProvider;
+        });
+
+        /*
+         * A provider may have multiple versions
+         * (e.g., 0.0, also known as legacy, and 1.0, also known as hub).
+         * We should ensure that all existing versions of a provider are added to selectedProviders.
+         */
+        if (result) {
+          selectedProviders.push(result);
         }
+        console.warn(
+          // A provider name is included in config but was not found in allProviders
+          `Couldn't find ${requestedProvider} provider. Please make sure you are passing the correct name.`
+        );
       } else {
         // It's a custom provider so we directly push it to the list.
         if (requestedProvider instanceof Provider) {
@@ -100,31 +111,27 @@ export function matchAndGenerateProviders(
   return all;
 }
 
-// TODO: this is a duplication with what we do in core.
-function pickVersionWithFallbackToLegacy(
-  providers: VersionedProviders[],
+function pickProviderVersionWithFallbackToLegacy(
+  provider: VersionedProviders,
   options?: ProvidersOptions
-): BothProvidersInterface[] {
+): BothProvidersInterface {
   const { experimentalWallet = 'enabled' } = options || {};
+  const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
 
-  return providers.map((provider) => {
-    const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
-    try {
-      return pickVersion(provider, version)[1];
-    } catch {
-      // Fallback to legacy version, if target version doesn't exists.
-      return pickVersion(provider, '0.0.0')[1];
-    }
-  });
+  try {
+    return pickVersion(provider, version)[1];
+  } catch {
+    // Fallback to legacy version, if target version doesn't exists.
+    return pickVersion(provider, '0.0.0')[1];
+  }
 }
 
 export function configWalletsToWalletName(
   config: WidgetConfig['wallets'],
   options?: ProvidersOptions
 ): string[] {
-  const providers = pickVersionWithFallbackToLegacy(
-    matchAndGenerateProviders(config, options),
-    options
+  const providers = matchAndGenerateProviders(config, options).map((provider) =>
+    pickProviderVersionWithFallbackToLegacy(provider, options)
   );
   const names = providers.map((provider) => {
     if (provider instanceof Provider) {

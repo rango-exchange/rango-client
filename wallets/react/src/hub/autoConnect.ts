@@ -6,6 +6,7 @@ import type {
   LegacyProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
 import {
   legacyEagerConnectHandler,
@@ -88,8 +89,9 @@ export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
   getLegacyProvider: (type: string) => LegacyProviderInterface;
+  wallets?: (WalletType | LegacyProviderInterface)[];
 }): Promise<void> {
-  const { getHub, allBlockChains, getLegacyProvider } = deps;
+  const { getHub, allBlockChains, getLegacyProvider, wallets } = deps;
 
   // Getting connected wallets from storage
   const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
@@ -105,6 +107,15 @@ export async function autoConnect(deps: {
 
     // Run `.connect` if `.canEagerConnect` returns `true`.
     walletIds.forEach((providerName) => {
+      if (wallets && !wallets.includes(providerName)) {
+        console.warn(
+          'Trying to run auto connect for a wallet which is not included in config. Desired wallet:',
+          providerName
+        );
+        walletsToRemoveFromPersistance.push(providerName);
+        return;
+      }
+
       const legacyProvider = getLegacyProvider(providerName);
 
       let legacyInstance: any;
