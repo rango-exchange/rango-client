@@ -1,6 +1,7 @@
 import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
+  LegacyProviderInterface,
   LegacyNetwork as Network,
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletInfo as WalletInfo,
@@ -56,6 +57,7 @@ export type ProviderProps = PropsWithChildren<{
   providers: VersionedProviders[];
   configs?: {
     isExperimentalEnabled?: boolean;
+    wallets?: (WalletType | LegacyProviderInterface)[];
   };
 }>;
 
