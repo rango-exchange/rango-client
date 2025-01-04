@@ -35,6 +35,8 @@ import {
   Vietnamese,
 } from '@rango-dev/ui';
 
+export const DEFAULT_LANGUAGE = 'en';
+
 export const LANGUAGES = [
   { name: 'Afrikaans', value: 'af', Icon: SouthAfrica },
   { name: 'Arabic', value: 'ar', Icon: SaudiArabia },
@@ -44,7 +46,7 @@ export const LANGUAGES = [
   { name: 'Chinese (Traditional)', value: 'zh-TW', Icon: Chinese },
   { name: 'Danish', value: 'da', Icon: Denmark },
   { name: 'Dutch', value: 'nl', Icon: Netherlands },
-  { name: 'English', value: 'en', Icon: English },
+  { name: 'English', value: DEFAULT_LANGUAGE, Icon: English },
   { name: 'Filipino', value: 'fil', Icon: Philippines },
   { name: 'Finnish', value: 'fi', Icon: Finland },
   { name: 'French', value: 'fr', Icon: French },
