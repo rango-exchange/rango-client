@@ -10,8 +10,6 @@ import { isPositiveNumber } from '../utils/numbers';
 import {
   generateQuoteWarnings,
   getDefaultQuote,
-  getQuoteFromTokenUsdPrice,
-  getQuoteToTokenUsdPrice,
   sortQuotesBy,
 } from '../utils/quote';
 import { isRoutingEnabled } from '../utils/settings';
@@ -156,15 +154,10 @@ export function useSwapInput({
             requestId: quote?.requestId || '',
             swaps: quote?.swaps,
           });
-          const outputUsdValue =
-            getQuoteToTokenUsdPrice(quote) || toToken?.usdPrice;
-          const inputUsdValue =
-            getQuoteFromTokenUsdPrice(quote) || fromToken?.usdPrice;
           const quoteWarning =
             quote &&
-            generateQuoteWarnings(quote, {
-              fromToken: { ...fromToken, usdPrice: inputUsdValue },
-              toToken: { ...toToken, usdPrice: outputUsdValue },
+            generateQuoteWarnings({
+              currentQuote: quote,
               userSlippage,
               findToken,
             });
