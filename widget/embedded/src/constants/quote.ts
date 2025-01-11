@@ -32,6 +32,29 @@ export const HIGH_PRIORITY_TAGS: TagValue[] = [
   'HIGH_IMPACT',
 ];
 
+export type Criteria = {
+  threshold: number;
+  minInput: number;
+};
+
+export const PERCENT_MULTIPLIER = 100;
 export const GAS_FEE_MAX = 30;
 export const ROUTE_TIME_MAX = 15;
 export const SECONDS_IN_MINUTE = 60;
+export const HIGH_FEE_THRESHOLD_USD = 30;
+
+export const HIGH_VALUE_LOSS_CRITERIA: Criteria[] = [
+  { threshold: -10, minInput: 400 },
+  { threshold: -5, minInput: 1000 },
+];
+
+export const OUTPUT_CHANGE_WARNING_CRITERIA: Criteria[] = [
+  {
+    threshold: -1,
+    minInput: 1000,
+  },
+  {
+    threshold: -2,
+    minInput: 500,
+  },
+];

@@ -1,6 +1,6 @@
 import type { PropTypes } from './ConfirmWalletsModal.types';
 import type { ConnectedWallet } from '../../store/slices/wallets';
-import type { ConfirmSwapWarnings, Wallet } from '../../types';
+import type { Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
 import {
@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
-import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { getBlockchainShortNameFor } from '../../utils/meta';
@@ -58,9 +57,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
   const [error, setError] = useState('');
-  const [quoteWarning, setQuoteWarning] = useState<
-    ConfirmSwapWarnings['quoteUpdate'] | null
-  >(null);
 
   const [isCustomDestinationOpen, setCustomDestinationOpen] = useState(
     !!customDestination
@@ -224,7 +220,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const onConfirmWallets = async () => {
     setBalanceWarnings([]);
     setError('');
-    setQuoteWarning(null);
 
     const result = await onCheckBalance?.({
       selectedWallets: selectableWallets.filter((wallet) => wallet.selected),
@@ -234,9 +229,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     if (warnings?.balance?.messages) {
       setBalanceWarnings(warnings.balance.messages);
     }
-    if (warnings?.quoteUpdate) {
-      setQuoteWarning(warnings.quoteUpdate);
-    }
+
     if (result.error) {
       setError(getQuoteErrorMessage(result.error));
     }
@@ -413,16 +406,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
           {error && (
             <>
               <Alert variant="alarm" type="error" title={i18n.t(error)} />
-              <Divider size={12} />
-            </>
-          )}
-          {quoteWarning && (
-            <>
-              <Alert
-                variant="alarm"
-                type="warning"
-                title={getQuoteUpdateWarningMessage(quoteWarning)}
-              />
               <Divider size={12} />
             </>
           )}
