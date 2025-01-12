@@ -5,10 +5,9 @@ import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
 type Provider = Map<string, unknown>;
+
 export function safepal(): Provider | null {
-  const windowAny = window as any;
-  const safePalSolana = windowAny.safepal;
-  const safePalEvm = windowAny.safepalProvider;
+  const { safepal: safePalSolana, safepalProvider: safePalEvm } = window;
   if (!safePalEvm && !safePalSolana) {
     return null;
   }
@@ -21,6 +20,7 @@ export function safepal(): Provider | null {
   }
   return instances;
 }
+
 export function evmSafepal(): EvmProviderApi {
   const instances = safepal();
   const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
@@ -31,6 +31,7 @@ export function evmSafepal(): EvmProviderApi {
   }
   return evmInstance as EvmProviderApi;
 }
+
 export function solanaSafepal(): SolanaProviderApi {
   const instance = safepal();
   const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
@@ -41,6 +42,7 @@ export function solanaSafepal(): SolanaProviderApi {
   }
   return solanaInstance;
 }
+
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult> {
