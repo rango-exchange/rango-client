@@ -318,6 +318,13 @@ class Wallet<InstanceType = any> {
   }
 
   onInit() {
+    // some times functions can be overridden by wallets. see rf-2119
+    if (!this.actions.getInstance) {
+      throw new Error(
+        `Provider hasn't defined how to get wallet's instance. provider: ${this.options.config.type} on: onInit`
+      );
+    }
+
     if (!this.options.config.isAsyncInstance) {
       const instance = this.actions.getInstance();
       if (!!instance && !this.state.installed) {
