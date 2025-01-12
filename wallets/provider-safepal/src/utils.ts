@@ -46,8 +46,8 @@ export function solanaSafepal(): SolanaProviderApi {
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult> {
-  await instance.connect();
-  const account = instance.publicKey.toString();
+  const solanaResponse = await instance.connect();
+  const account = solanaResponse.publicKey.toString();
   return {
     accounts: [account],
     chainId: LegacyNetworks.SOLANA,
