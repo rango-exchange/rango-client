@@ -7,7 +7,6 @@ import { pontem } from './utils.js';
 const provider = new ProviderBuilder(WALLET_ID)
   .init(function (context) {
     const [, setState] = context.state();
-
     if (pontem()) {
       setState('installed', true);
     }

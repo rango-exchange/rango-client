@@ -20,7 +20,11 @@
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@rango-dev/signer-solana": "^0.35.1-next.0",
+    "@rango-dev/wallets-shared": "^0.40.1-next.5",
+    "rango-types": "^0.1.74"
+  },
   "publishConfig": {
     "access": "public"
   }

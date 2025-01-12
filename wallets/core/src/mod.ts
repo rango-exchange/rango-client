@@ -5,6 +5,7 @@ export type {
   CommonNamespaces,
   CommonNamespaceKeys,
 } from './hub/mod.js';
+export type { AnyFunction } from './types/actions.js';
 export {
   Hub,
   Provider,

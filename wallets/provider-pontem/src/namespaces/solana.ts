@@ -11,9 +11,12 @@ import {
 import { CAIP } from '@rango-dev/wallets-core/utils';
 import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 
+import { changeAccountSubscriber as changeAccountSubscriberAction } from '../actions/solana.js';
 import { WALLET_ID } from '../constants.js';
 import { solanaInstance } from '../utils.js';
 
+const [changeAccountSubscriber, changeAccountCleanup] =
+  changeAccountSubscriberAction(solanaInstance);
 const connect = builders
   .connect()
   .action(async function () {
@@ -41,9 +44,14 @@ const connect = builders
 
     return formatAccounts;
   })
+  .before(changeAccountSubscriber)
+  .or(changeAccountCleanup)
   .build();
 
-const disconnect = commonBuilders.disconnect<SolanaActions>().build();
+const disconnect = commonBuilders
+  .disconnect<SolanaActions>()
+  .after(changeAccountCleanup)
+  .build();
 
 export const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
   .action(connect)

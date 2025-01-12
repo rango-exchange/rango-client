@@ -4,7 +4,7 @@ export const WALLET_ID = 'pontem';
 
 export const info: ProviderInfo = {
   name: 'Pontem',
-  icon: '',
+  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/pontem/icon.svg',
   extensions: {
     firefox:
       'https://addons.mozilla.org/en-US/firefox/addon/pontem-aptos-wallet/',

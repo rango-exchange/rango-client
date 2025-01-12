@@ -60,7 +60,6 @@ export function WalletsPage() {
 
     setSelectedWalletToConnect(wallet);
   };
-
   return (
     <Layout
       header={{
