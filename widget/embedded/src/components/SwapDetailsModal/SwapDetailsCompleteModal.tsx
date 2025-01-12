@@ -12,6 +12,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
@@ -31,6 +32,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     diagnosisUrl,
   } = props;
   const navigate = useNavigate();
+  const { showProfileBanner } = useUiStore();
 
   return (
     <WatermarkedModal
@@ -72,21 +74,32 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           description={description}
         />
       )}
-      <Divider size={32} />
+      <Divider size={30} />
       {status === 'success' && (
-        <Button
-          id="widget-swap-details-modal-done-btn"
-          variant="contained"
-          type="primary"
-          size="large"
-          onClick={() => {
-            const home = '../../';
-            navigate(home);
-          }}>
-          <Typography variant="title" size="medium" color="neutral100">
+        <>
+          {showProfileBanner && (
+            <>
+              <img
+                src={
+                  'https://raw.githubusercontent.com/rango-exchange/assets/main/banners/widget/profile.png'
+                }
+                alt="Profile Banner"
+              />
+              <Divider size={30} />
+            </>
+          )}
+          <Button
+            id="widget-swap-details-modal-done-btn"
+            variant="contained"
+            type="primary"
+            size="large"
+            onClick={() => {
+              const home = '../../';
+              navigate(home);
+            }}>
             {i18n.t('Done')}
-          </Typography>
-        </Button>
+          </Button>
+        </>
       )}
       <Divider size={12} />
       {diagnosisUrl && (

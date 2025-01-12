@@ -12,12 +12,14 @@ interface UiState {
   tabManagerInitiated: boolean;
   showActivateTabModal: boolean;
   watermark: Watermark;
+  showProfileBanner: boolean;
   activateCurrentTab: (
     setCurrentTabAsActive: () => void,
     hasRunningSwaps: boolean
   ) => void;
   setShowActivateTabModal: (flag: boolean) => void;
   setWatermark: (watermark: Watermark) => void;
+  setShowProfileBanner: (showProfileBanner: boolean) => void;
 }
 
 export const useUiStore = createSelectors(
@@ -26,6 +28,7 @@ export const useUiStore = createSelectors(
     tabManagerInitiated: false,
     showActivateTabModal: false,
     watermark: 'NONE',
+    showProfileBanner: false,
     fetchingApiConfig: false,
     activateCurrentTab: (setCurrentTabAsActive, hasRunningSwaps) => {
       const { showActivateTabModal } = get();
@@ -41,6 +44,9 @@ export const useUiStore = createSelectors(
     },
     setWatermark: (watermark) => {
       set({ watermark });
+    },
+    setShowProfileBanner: (showProfileBanner) => {
+      set({ showProfileBanner });
     },
   }))
 );
