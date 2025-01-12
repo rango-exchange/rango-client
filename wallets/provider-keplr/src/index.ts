@@ -14,7 +14,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
 
-import { keplr as keplrInstance } from './helpers.js';
+import { getKeplrInstance } from './helpers.js';
 import signer from './signer.js';
 
 const WALLET = WalletTypes.KEPLR;
@@ -24,7 +24,7 @@ export const config = {
   defaultNetwork: Networks.COSMOS,
 };
 
-export const getInstance = keplrInstance;
+export const getInstance = getKeplrInstance;
 
 export const connect: Connect = async ({ instance, network, meta }) => {
   return await getCosmosAccounts({
