@@ -56,7 +56,6 @@ export function useWalletList(params?: Params): API {
         config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
       tonConnect: config.tonConnect,
     }) || ALL_SUPPORTED_WALLETS;
-
   let wallets = mapWalletTypesToWalletInfo(
     state,
     getWalletInfo,
@@ -141,7 +140,6 @@ export function useWalletList(params?: Params): API {
         !shouldShowDefaultInjectedWallet(wallets))
     );
   };
-
   return {
     list: sortedWallets.filter(
       (wallet) => !shouldExcludeWallet(wallet.type, chain ?? '', blockchains)

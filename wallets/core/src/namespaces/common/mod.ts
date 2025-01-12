@@ -1,5 +1,10 @@
 export * as actions from './actions.js';
 export * as builders from './builders.js';
+export type {
+  Subscriber,
+  SubscriberCleanUp,
+} from '../../hub/namespaces/mod.js';
+
 export {
   intoConnectionFinished,
   recommended as afterRecommended,
