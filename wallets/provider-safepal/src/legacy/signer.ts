@@ -1,7 +1,8 @@
 import type { SignerFactory } from 'rango-types';
 
 import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
-import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
