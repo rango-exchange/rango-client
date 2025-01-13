@@ -304,3 +304,19 @@ export function transformHubResultToLegacyResult(
     provider: undefined,
   };
 }
+
+export function checkProviderListsEquality(
+  providerList1: Provider[],
+  providerList2: Provider[]
+) {
+  const providerIds1 = providerList1
+    .map((provider) => provider.id)
+    .sort()
+    .toString();
+  const providerIds2 = providerList2
+    .map((provider) => provider.id)
+    .sort()
+    .toString();
+
+  return providerIds1 === providerIds2;
+}

@@ -126,7 +126,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   };
 };
 
-const legacyProvider: LegacyProviderInterface = {
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   config,
   getInstance,
   connect,
@@ -135,6 +135,6 @@ const legacyProvider: LegacyProviderInterface = {
   getSigners,
   getWalletInfo,
   canEagerConnect,
-};
+});
 
-export { legacyProvider };
+export { buildLegacyProvider };

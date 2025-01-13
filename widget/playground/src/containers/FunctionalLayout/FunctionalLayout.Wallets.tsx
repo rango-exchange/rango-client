@@ -1,5 +1,6 @@
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+import { allProviders as getAllProviders } from '@rango-dev/provider-all';
 import {
   Button,
   Checkbox,
@@ -8,12 +9,14 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
+import { separateLegacyAndHubProviders } from '@rango-dev/wallets-react';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
+import { useMetaStore } from '../../store/meta';
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
 
@@ -25,26 +28,52 @@ import {
 } from './FunctionalLayout.styles';
 
 export function WalletSection() {
-  const { state, connect, disconnect, getWalletInfo } = useWallets();
+  const { state, connect, disconnect } = useWallets();
+  const { onChangeWallets, onChangeBooleansConfig, config } = useConfigStore();
   const {
-    onChangeWallets,
-    onChangeBooleansConfig,
-    config: { externalWallets, wallets, multiWallets },
-  } = useConfigStore();
+    meta: { blockchains },
+  } = useMetaStore();
 
-  const allWalletList = Object.values(WalletTypes)
-    .filter((wallet) => !excludedWallets.includes(wallet))
-    .map((wallet) => {
-      const type = wallet as string;
+  const getWalletsList = () => {
+    const envs = {
+      walletconnect2: {
+        WC_PROJECT_ID: config?.walletConnectProjectId || '',
+        DISABLE_MODAL_AND_OPEN_LINK:
+          config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
+      },
+      selectedProviders: config.wallets,
+      trezor: config?.trezorManifest
+        ? { manifest: config.trezorManifest }
+        : undefined,
+      tonConnect: config?.tonConnect?.manifestUrl
+        ? { manifestUrl: config?.tonConnect.manifestUrl }
+        : undefined,
+    };
+    const allProviders = getAllProviders(envs);
+    const allBuiltProviders = allProviders.map((build) => build());
+    const [legacyProviders] = separateLegacyAndHubProviders(allBuiltProviders, {
+      isExperimentalEnabled: config.features?.experimentalWallet === 'enabled',
+    });
+    const filteredProviders = legacyProviders.filter(
+      (provider) =>
+        !excludedWallets.includes(provider.config.type as WalletTypes)
+    );
 
-      const { name: title, img: logo, supportedChains } = getWalletInfo(type);
+    const allWalletList = filteredProviders.map((provider) => {
+      const walletInfo = provider.getWalletInfo(blockchains);
       return {
-        title,
-        logo,
-        name: type,
-        supportedNetworks: getCategoryNetworks(supportedChains),
+        title: walletInfo.name,
+        logo: walletInfo.img,
+        name: provider.config.type,
+        supportedNetworks: getCategoryNetworks(walletInfo.supportedChains),
       };
     });
+
+    return allWalletList;
+  };
+
+  const { externalWallets, wallets, multiWallets } = config;
+  const allWalletList = getWalletsList();
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
@@ -112,6 +141,7 @@ export function WalletSection() {
         <Divider size={16} />
         <Footer>
           <Button
+            id="external-wallets"
             type={externalWallets ? 'primary' : 'secondary'}
             size="small"
             variant="outlined"

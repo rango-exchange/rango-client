@@ -22,8 +22,6 @@ import {
 
 import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
 
-const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
-
 interface Params {
   chain?: string;
 }
@@ -42,20 +40,22 @@ interface API {
  */
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
-  const { config, connectedWallets } = useAppStore();
+  const { config, connectedWallets, getAvailableProviders } = useAppStore();
   const { state, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
-  const listAvailableWalletTypes =
-    configWalletsToWalletName(config?.wallets, {
+  const listAvailableWalletTypes = configWalletsToWalletName(
+    getAvailableProviders(),
+    {
       trezorManifest: config?.trezorManifest,
       walletConnectProjectId: config?.walletConnectProjectId,
       walletConnectListedDesktopWalletLink:
         config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
       tonConnect: config.tonConnect,
-    }) || ALL_SUPPORTED_WALLETS;
+    }
+  );
 
   let wallets = mapWalletTypesToWalletInfo(
     state,
