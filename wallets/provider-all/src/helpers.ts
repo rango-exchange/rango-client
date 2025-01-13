@@ -1,3 +1,4 @@
+import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
@@ -14,3 +15,5 @@ export const isWalletExcluded = (
     )
   );
 };
+
+export const lazyProvider = (provider: VersionedProviders) => () => provider;
