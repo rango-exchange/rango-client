@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.40.1-next.7",
+  "version": "0.40.1-next.8",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -41,7 +41,7 @@
     "@rango-dev/provider-metamask": "^0.40.1-next.6",
     "@rango-dev/provider-mytonwallet": "^0.25.1-next.6",
     "@rango-dev/provider-okx": "^0.40.1-next.6",
-    "@rango-dev/provider-phantom": "^0.40.1-next.6",
+    "@rango-dev/provider-phantom": "^0.40.1-next.7",
     "@rango-dev/provider-rabby": "^0.7.1-next.6",
     "@rango-dev/provider-safe": "^0.33.1-next.6",
     "@rango-dev/provider-safepal": "^0.40.1-next.6",
@@ -56,7 +56,7 @@
     "@rango-dev/provider-trustwallet": "^0.40.1-next.6",
     "@rango-dev/provider-walletconnect-2": "^0.33.1-next.6",
     "@rango-dev/provider-xdefi": "^0.40.1-next.6",
-    "@rango-dev/wallets-react": "^0.26.1-next.8",
+    "@rango-dev/wallets-react": "^0.26.1-next.9",
     "@rango-dev/wallets-shared": "^0.40.1-next.6"
   },
   "publishConfig": {
