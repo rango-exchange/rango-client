@@ -4,27 +4,27 @@ import type { ProvidersOptions } from '../../utils/providers';
 import { useEffect } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
-import { matchAndGenerateProviders } from '../../utils/providers';
 
 import { hashProviders } from './useWalletProviders.helpers';
 
 export function useWalletProviders(
-  providers: WidgetConfig['wallets'],
+  configWallets: WidgetConfig['wallets'],
   options?: ProvidersOptions
 ) {
-  const { clearConnectedWallet } = useAppStore();
-  let generateProviders = matchAndGenerateProviders(providers, options);
+  const { clearConnectedWallet, getAvailableProviders, buildAndSetProviders } =
+    useAppStore();
+  const providers = getAvailableProviders();
 
   useEffect(() => {
     clearConnectedWallet();
-    generateProviders = matchAndGenerateProviders(providers, options);
+    buildAndSetProviders();
   }, [
-    hashProviders(providers ?? []),
+    hashProviders(configWallets ?? []),
     options?.walletConnectProjectId,
     options?.walletConnectListedDesktopWalletLink,
   ]);
 
   return {
-    providers: generateProviders,
+    providers,
   };
 }
