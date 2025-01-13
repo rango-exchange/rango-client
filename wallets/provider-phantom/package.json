@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.40.1-next.6",
+  "version": "0.40.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
