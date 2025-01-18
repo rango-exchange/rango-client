@@ -23,8 +23,8 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const retrySwap = useQuoteStore.use.retry();
   const {
     findToken,
-    connectedWallets,
     getBalances,
+    getConnectedWalletsDetails,
     fetchBalances: refetch,
   } = useAppStore();
 
@@ -49,7 +49,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
     history,
     wallets: {
       isLoading,
-      details: connectedWallets,
+      details: getConnectedWalletsDetails(),
       totalBalance,
       refetch: async (accounts) => refetch(accounts),
     },
