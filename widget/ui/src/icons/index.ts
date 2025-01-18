@@ -61,6 +61,7 @@ export { default as NumberIcon } from './Number.js';
 export { default as NumberBlocksIcon } from './NumberBlocks.js';
 export { default as OtherCategoryIcon } from './OtherCategory.js';
 export { default as PasteIcon } from './Paste.js';
+export { default as PencilIcon } from './Pencil.js';
 export { default as PinIcon } from './Pin.js';
 export { default as ProfileIcon } from './Profile.js';
 export { default as RangoExplorerIcon } from './RangoExplorer.js';
