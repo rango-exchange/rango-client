@@ -8,7 +8,7 @@ import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
 import * as clover from '@rango-dev/provider-clover';
-import * as coin98 from '@rango-dev/provider-coin98';
+import { versions as coin98 } from '@rango-dev/provider-coin98';
 import * as coinbase from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
@@ -124,7 +124,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
     lazyProvider(legacyProviderImportsToVersionsInterface(safepal)),
     lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
+    coin98,
     lazyProvider(legacyProviderImportsToVersionsInterface(coinbase)),
     lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
     lazyProvider(legacyProviderImportsToVersionsInterface(exodus)),
