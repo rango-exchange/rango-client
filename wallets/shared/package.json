@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.40.1-next.6",
+  "version": "0.41.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
