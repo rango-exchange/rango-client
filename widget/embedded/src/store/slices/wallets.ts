@@ -4,6 +4,7 @@ import type { StateCreator } from 'zustand';
 
 import BigNumber from 'bignumber.js';
 
+import { ZERO } from '../../constants/numbers';
 import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
 import {
@@ -46,6 +47,22 @@ export interface ConnectedWallet extends Wallet {
   error: boolean;
 }
 
+interface DeprecatedTokenBalance {
+  chain: string;
+  symbol: string;
+  ticker: string;
+  address: string | null;
+  rawAmount: string;
+  decimal: number | null;
+  amount: string;
+  logo: string | null;
+  usdPrice: number | null;
+}
+
+export interface DeprecatedWalletDetail extends ConnectedWallet {
+  balances: DeprecatedTokenBalance[] | null;
+}
+
 export interface WalletsSlice {
   _balances: BalanceState;
   _aggregatedBalances: AggregatedBalanceState;
@@ -80,6 +97,13 @@ export interface WalletsSlice {
   ) => Promise<void>;
   getBalanceFor: (token: Token) => Balance | null;
   getBalances: () => BalanceState;
+  getBalancesForWalletAddress: (address: string) => BalanceState;
+
+  /**
+   * @deprecated
+   * This is been added for backward compatibilty for WidgetInfo
+   */
+  getConnectedWalletsDetails: () => DeprecatedWalletDetail[];
 }
 
 export const createWalletsSlice: StateCreator<
@@ -484,5 +508,70 @@ export const createWalletsSlice: StateCreator<
       }
     });
     return maxBalance;
+  },
+  getBalancesForWalletAddress: (address: string) => {
+    const balances = get().getBalances();
+    const balanceKeys = Object.keys(balances) as BalanceKey[];
+
+    const balancesForTargetWalletAddress = balanceKeys.reduce(
+      (output, balanceKey) => {
+        const balance = balances[balanceKey];
+
+        const [, , , balanceWalletAddreess] = balanceKey.split('-');
+        if (balanceWalletAddreess === address) {
+          output[balanceKey] = balance;
+        }
+
+        return output;
+      },
+      {} as BalanceState
+    );
+
+    return balancesForTargetWalletAddress;
+  },
+
+  getConnectedWalletsDetails: () => {
+    const connectedWallets = get().connectedWallets;
+    return connectedWallets.map((wallet) => {
+      const balances = get().getBalancesForWalletAddress(wallet.address);
+      const balancesKeys = Object.keys(balances) as BalanceKey[];
+
+      return {
+        ...wallet,
+        balances: balancesKeys.reduce((output, balanceKey) => {
+          const balance = balances[balanceKey];
+          const asset = extractAssetFromBalanceKey(balanceKey);
+
+          if (asset.blockchain === wallet.chain) {
+            const token = get().findToken(asset);
+
+            if (!!token) {
+              const amount = balance.amount
+                ? new BigNumber(balance.amount).shiftedBy(-balance.decimals)
+                : ZERO;
+
+              output.push({
+                chain: wallet.chain,
+                symbol: token.symbol,
+                ticker: token.symbol,
+                address: token.address,
+                rawAmount: balance.amount,
+                decimal: balance.decimals,
+                amount: amount.toString(),
+                logo: token.image,
+                usdPrice: token.usdPrice,
+              });
+            } else {
+              console.debug(
+                "Looking for asset but it couldn't be found in tokens store. May not be provided in meta.'",
+                asset
+              );
+            }
+          }
+
+          return output;
+        }, [] as DeprecatedTokenBalance[]),
+      };
+    });
   },
 });
