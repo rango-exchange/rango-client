@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tron-link",
-  "version": "0.41.0",
+  "version": "0.41.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-tron": "^0.31.0",
-    "@rango-dev/wallets-shared": "^0.41.0",
+    "@rango-dev/wallets-shared": "^0.41.1-next.0",
     "rango-types": "^0.1.74"
   },
   "publishConfig": {
