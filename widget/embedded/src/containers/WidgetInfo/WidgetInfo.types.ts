@@ -1,6 +1,6 @@
 import type { WidgetHistory } from './WidgetInfo.helpers';
 import type { FetchStatus, FindToken } from '../../store/slices/data';
-import type { ConnectedWallet } from '../../store/slices/wallets';
+import type { DeprecatedWalletDetail } from '../../store/slices/wallets';
 import type { QuoteInputs, UpdateQuoteInputs, Wallet } from '../../types';
 import type { Notification } from '../../types/notification';
 import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
@@ -10,7 +10,7 @@ export interface WidgetInfoContextInterface {
   setCurrentTabAsActive: () => void;
   history: WidgetHistory;
   wallets: {
-    details: ConnectedWallet[];
+    details: DeprecatedWalletDetail[];
     totalBalance: string;
     isLoading: boolean;
     refetch: (accounts: Wallet[]) => void;

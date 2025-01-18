@@ -33,8 +33,11 @@ export function createBalanceKey(
 
 export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
   const [assetChain, assetAddress, assetSymbol] = key.split('-');
+
+  // null will be serialized to 'null', we need to make it back to a null type
+  const address = assetAddress === 'null' ? null : assetAddress;
   return {
-    address: assetAddress,
+    address,
     blockchain: assetChain,
     symbol: assetSymbol,
   };
