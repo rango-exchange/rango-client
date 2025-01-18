@@ -70,6 +70,7 @@ import {
   NumberIcon,
   OtherCategoryIcon,
   PasteIcon,
+  PencilIcon,
   PinIcon,
   ProfileIcon,
   RangoExplorerIcon,
@@ -204,4 +205,5 @@ export const Icons = {
   StyleIcon,
   TelegramIcon,
   XIcon,
+  PencilIcon,
 };
