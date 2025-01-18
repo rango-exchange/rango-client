@@ -280,7 +280,10 @@ export function resetConnectedWalletState(
 
 export const calculateWalletUsdValue = (balances: BalanceState) => {
   const total = Object.values(balances).reduce((prev, balance) => {
-    return balance.usdValue ? prev.plus(balance.usdValue) : prev;
+    const formattedBalance = formatBalance(balance);
+    return formattedBalance?.usdValue
+      ? prev.plus(formattedBalance.usdValue)
+      : prev;
   }, new BigNumber(ZERO));
 
   return numberWithThousandSeparator(total.toString());
