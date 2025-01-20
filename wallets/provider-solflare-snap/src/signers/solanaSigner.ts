@@ -3,6 +3,7 @@ import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import {
   getSolanaConnection,
+  getSolanaRpcNodes,
   prepareTransaction,
   simulateTransaction,
 } from '@rango-dev/signer-solana';
@@ -32,7 +33,7 @@ export class SolflareSnapSolanaSigner
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
     try {
-      const connection = getSolanaConnection();
+      const connection = getSolanaConnection(getSolanaRpcNodes().main);
       const latestBlock = await connection.getLatestBlockhash('confirmed');
 
       const finalTx = prepareTransaction(tx, latestBlock.blockhash);
