@@ -1,4 +1,6 @@
 import type {
+  ConnectionPool,
+  SerializedTransaction,
   TransactionSenderAndConfirmationWaiterArgs,
   TransactionSenderAndConfirmationWaiterResponse,
 } from './types.js';
@@ -15,12 +17,25 @@ const SEND_OPTIONS = {
 const TIME_OUT = 2_000;
 const CONFIRMATION_TIME_OUT = 60_000;
 
+async function sendTransactionOnMultipleNodes(
+  serializedTransaction: SerializedTransaction,
+  connectionPool: ConnectionPool
+) {
+  await Promise.allSettled(
+    connectionPool.list.map(async (connection) =>
+      connection
+        .sendRawTransaction(serializedTransaction, SEND_OPTIONS)
+        .catch((e) => console.warn(`Failed to resend transaction: ${e}`))
+    )
+  );
+}
+
 // https://github.com/jup-ag/jupiter-quote-api-node/blob/main/example/utils/transactionSender.ts
 export async function transactionSenderAndConfirmationWaiter({
-  connection,
+  connectionPool,
   serializedTransaction,
 }: TransactionSenderAndConfirmationWaiterArgs): Promise<TransactionSenderAndConfirmationWaiterResponse> {
-  const txId = await connection.sendRawTransaction(
+  const txId = await connectionPool.main.sendRawTransaction(
     serializedTransaction,
     SEND_OPTIONS
   );
@@ -35,14 +50,10 @@ export async function transactionSenderAndConfirmationWaiter({
       if (abortSignal.aborted) {
         return;
       }
-      try {
-        await connection.sendRawTransaction(
-          serializedTransaction,
-          SEND_OPTIONS
-        );
-      } catch (e) {
-        console.warn(`Failed to resend transaction: ${e}`);
-      }
+      await sendTransactionOnMultipleNodes(
+        serializedTransaction,
+        connectionPool
+      );
     }
   };
 
@@ -69,12 +80,10 @@ export async function transactionSenderAndConfirmationWaiter({
         // in case ws socket died
         while (!abortSignal.aborted) {
           await wait(TIME_OUT);
-          const { value: statuses } = await connection.getSignatureStatuses(
-            [txId],
-            {
+          const { value: statuses } =
+            await connectionPool.main.getSignatureStatuses([txId], {
               searchTransactionHistory: false,
-            }
-          );
+            });
           if (statuses?.length > 0) {
             const status = statuses[0];
             if (status) {
@@ -111,7 +120,7 @@ export async function transactionSenderAndConfirmationWaiter({
   // in case rpc is not synced yet, we add some retries
   const txResponse = await promiseRetry(
     async (retry: any) => {
-      const response = await connection.getTransaction(txId, {
+      const response = await connectionPool.main.getTransaction(txId, {
         commitment: 'confirmed',
         maxSupportedTransactionVersion: 0,
       });

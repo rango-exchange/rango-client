@@ -4,5 +4,5 @@ export {
   generalSolanaTransactionExecutor,
 } from './main.js';
 export { prepareTransaction } from './prepare.js';
-export { getSolanaConnection } from './helpers.js';
+export { getSolanaConnection, getSolanaRpcNodes } from './helpers.js';
 export { simulateTransaction } from './simulate.js';

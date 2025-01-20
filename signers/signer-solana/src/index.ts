@@ -4,6 +4,7 @@ export {
   generalSolanaTransactionExecutor,
   prepareTransaction,
   getSolanaConnection,
+  getSolanaRpcNodes,
   simulateTransaction,
 } from './utils/index.js';
 export type { SolanaWeb3Signer } from './utils/index.js';

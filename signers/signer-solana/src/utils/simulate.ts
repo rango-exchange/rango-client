@@ -2,7 +2,7 @@ import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { getSolanaConnection } from './helpers.js';
+import { getSolanaConnection, getSolanaRpcNodes } from './helpers.js';
 
 const INSUFFICIENT_FUNDS_ERROR_CODE = 1;
 const SLIPPAGE_ERROR_CODE = 6001;
@@ -14,7 +14,7 @@ export async function simulateTransaction(
   type: 'VERSIONED' | 'LEGACY'
 ) {
   if (type === 'VERSIONED') {
-    const connection = getSolanaConnection();
+    const connection = getSolanaConnection(getSolanaRpcNodes().main);
 
     // We first simulate whether the transaction would be successful
     const { value: simulatedTransactionResponse } =
