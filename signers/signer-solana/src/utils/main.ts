@@ -1,9 +1,13 @@
-import type { SolanaExternalProvider, SolanaWeb3Signer } from './types.js';
+import type {
+  ConnectionPool,
+  SolanaExternalProvider,
+  SolanaWeb3Signer,
+} from './types.js';
 import type { SolanaTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-import { getSolanaConnection } from './helpers.js';
+import { getSolanaConnection, getSolanaRpcNodes } from './helpers.js';
 import { prepareTransaction } from './prepare.js';
 import { transactionSenderAndConfirmationWaiter } from './send.js';
 import { simulateTransaction } from './simulate.js';
@@ -16,7 +20,7 @@ export const generalSolanaTransactionExecutor = async (
   tx: SolanaTransaction,
   DefaultSolanaSigner: SolanaWeb3Signer
 ): Promise<string> => {
-  const connection = getSolanaConnection();
+  const connection = getSolanaConnection(getSolanaRpcNodes().main);
   const latestBlock = await connection.getLatestBlockhash('confirmed');
 
   const finalTx = prepareTransaction(tx, latestBlock.blockhash);
@@ -25,8 +29,13 @@ export const generalSolanaTransactionExecutor = async (
   // We first simulate whether the transaction would be successful
   await simulateTransaction(finalTx, tx.txType);
 
+  const connectionPool: ConnectionPool = {
+    main: connection,
+    list: getSolanaRpcNodes().list.map((url) => getSolanaConnection(url)),
+  };
+
   const { txId, txResponse } = await transactionSenderAndConfirmationWaiter({
-    connection,
+    connectionPool,
     serializedTransaction,
   });
   if (!txId || !txResponse) {
