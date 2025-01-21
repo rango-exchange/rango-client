@@ -37,11 +37,21 @@ export interface SolanaExternalProvider {
 }
 
 export type TransactionSenderAndConfirmationWaiterArgs = {
-  connection: Connection;
+  connectionPool: ConnectionPool;
   serializedTransaction: SerializedTransaction;
 };
 
 export type TransactionSenderAndConfirmationWaiterResponse = {
   txId: string | null;
   txResponse: VersionedTransactionResponse | null;
+};
+
+export type RpcNodeUrls = {
+  main: string;
+  list: string[];
+};
+
+export type ConnectionPool = {
+  main: Connection;
+  list: Connection[];
 };
