@@ -1,3 +1,12 @@
+# [0.38.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.37.0...widget-embedded@0.38.0) (2025-01-20)
+
+
+### Features
+
+* add sending solana transaction on multiple nodes ([5b5ee8e](https://github.com/rango-exchange/rango-client/commit/5b5ee8e4bd8e5c732df674bc94b112b5d2b198c0))
+
+
+
 # [0.37.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.36.0...widget-embedded@0.37.0) (2024-12-30)
 
 

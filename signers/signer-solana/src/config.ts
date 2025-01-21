@@ -1,5 +1,5 @@
 type SolanaSignerConfig = {
-  customRPC?: string;
+  customRPC?: string | string[];
 };
 
 const solanaSignerConfig: SolanaSignerConfig = {};

@@ -1,3 +1,11 @@
+## Widget [0.26.0] (2025-01-20)
+
+_includes `@rango-dev/widget-embedded@0.38.0`_
+
+### Features
+
+- Add sending solana transaction on multiple nodes ([5b5ee8e](https://github.com/rango-exchange/rango-client/commit/5b5ee8e4bd8e5c732df674bc94b112b5d2b198c0))
+
 ## Widget [0.25.0] (2024-12-31)
 
 _includes `@rango-dev/widget-embedded@0.37.0`_
