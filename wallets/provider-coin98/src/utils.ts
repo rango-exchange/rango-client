@@ -2,7 +2,10 @@ import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/name
 import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { Networks } from '@rango-dev/wallets-shared';
+import {
+  Networks,
+  type ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 
 export function coin98() {
   const { coin98, ethereum } = window;
@@ -31,11 +34,14 @@ export function coin98() {
  *This is how coin98 is getting solana accounts.
  *That's the reason we haven't moved it to `shared`
  */
-export async function getSolanaAccounts(instance: any) {
+export async function getSolanaAccounts(
+  instance: any
+): Promise<ProviderConnectResult> {
   await instance.enable();
-  const accounts = await instance.request({ method: 'sol_accounts' });
+  const account = await instance.request({ method: 'sol_accounts' });
   return {
-    accounts,
+    accounts: [account],
+    chainId: LegacyNetworks.SOLANA,
   };
 }
 
