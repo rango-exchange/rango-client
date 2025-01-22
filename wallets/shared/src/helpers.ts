@@ -216,7 +216,8 @@ export function detectMobileScreens(): boolean {
  */
 
 export function splitWalletNetwork(input: string): string[] {
-  const removedAddressInput = input?.split(':')[0] || '';
+  const removedNullInput = input?.split('-null').join('');
+  const removedAddressInput = removedNullInput?.split(':')[0] || '';
   const splittedInput = removedAddressInput.split('-');
   const network = splittedInput[splittedInput.length - 1];
   const walletNetwork = splittedInput.slice(0, -1);
