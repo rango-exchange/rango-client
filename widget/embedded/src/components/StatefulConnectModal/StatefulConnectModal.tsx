@@ -26,8 +26,8 @@ const DELAY_SHOWING_MODAL_FOR = 300;
 interface PropTypes {
   wallet: WalletInfoWithExtra | undefined;
   onClose: () => void;
-  // When `handleConnect` runs **successfully**, this will be called afterwards.
-  onConnect?: (result: Result) => void;
+  // When connecting wallet is executed **successfully**, this will be called afterwards.
+  onConnect?: () => void;
 }
 
 export function StatefulConnectModal(props: PropTypes) {
@@ -48,9 +48,9 @@ export function StatefulConnectModal(props: PropTypes) {
   } = useStatefulConnect();
 
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
-    handleNamespace(props.wallet!, selectedNamespaces).catch(
-      catchErrorOnHandle
-    );
+    handleNamespace(props.wallet!, selectedNamespaces)
+      .then(afterConnected)
+      .catch(catchErrorOnHandle);
   };
 
   const handleDerivationPathConfirm = (derivationPath: string) => {
@@ -60,7 +60,9 @@ export function StatefulConnectModal(props: PropTypes) {
       );
     }
 
-    handleDerivationPath(derivationPath).catch(catchErrorOnHandle);
+    handleDerivationPath(derivationPath)
+      .then(afterConnected)
+      .catch(catchErrorOnHandle);
   };
 
   const handleClosingModal = () => {
@@ -74,6 +76,26 @@ export function StatefulConnectModal(props: PropTypes) {
 
     if (successModalTimerId.current) {
       clearTimeout(successModalTimerId.current);
+    }
+  };
+
+  const afterConnected = (result: Result, isImmediatelyConnected?: boolean) => {
+    const resultIsConnected = result.status === ResultStatus.Connected;
+    const resultIsDisconnected = [
+      ResultStatus.Disconnected,
+      ResultStatus.DisconnectedUnhandled,
+    ].includes(result.status);
+
+    if (resultIsConnected) {
+      props.onConnect?.();
+      if (!isImmediatelyConnected) {
+        successModalTimerId.current = setTimeout(
+          handleClosingModal,
+          KEEP_SUCCESS_MODAL_FOR
+        );
+      }
+    } else if (resultIsDisconnected) {
+      handleClosingModal();
     }
   };
 
@@ -97,40 +119,21 @@ export function StatefulConnectModal(props: PropTypes) {
         }, DELAY_SHOWING_MODAL_FOR);
       };
 
-      const afterConnected = (result: Result) => {
-        const resultIsConnected = result.status === ResultStatus.Connected;
-        const resultIsDisconnected = [
-          ResultStatus.Disconnected,
-          ResultStatus.DisconnectedUnhandled,
-        ].includes(result.status);
-        const resultIsNeedMoreStepsToConnect = [
-          ResultStatus.Namespace,
-          ResultStatus.DerivationPath,
-        ].includes(result.status);
-
-        if (!resultIsNeedMoreStepsToConnect) {
-          isConnected = true;
-        }
-
-        if (resultIsConnected && !isImmediatelyConnected) {
-          successModalTimerId.current = setTimeout(
-            handleClosingModal,
-            KEEP_SUCCESS_MODAL_FOR
-          );
-        } else if (resultIsDisconnected) {
-          handleClosingModal();
-        }
-
-        if (props.onConnect) {
-          props.onConnect(result);
-        }
-      };
-
       beforeConnecting();
       handleConnect(props.wallet, {
         disconnectIfConnected: true,
       })
-        .then(afterConnected)
+        .then((result) => {
+          const resultIsNeedMoreStepsToConnect = [
+            ResultStatus.Namespace,
+            ResultStatus.DerivationPath,
+          ].includes(result.status);
+
+          if (!resultIsNeedMoreStepsToConnect) {
+            isConnected = true;
+          }
+          afterConnected(result, isImmediatelyConnected);
+        })
         .catch(catchErrorOnHandle);
     }
   }, [props.wallet]);
