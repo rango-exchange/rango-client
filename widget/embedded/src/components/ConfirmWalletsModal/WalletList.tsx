@@ -14,10 +14,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
 import { WIDGET_UI_ID } from '../../constants';
-import {
-  ResultStatus,
-  useStatefulConnect,
-} from '../../hooks/useStatefulConnect';
+import { useStatefulConnect } from '../../hooks/useStatefulConnect';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
@@ -227,8 +224,8 @@ export function WalletList(props: PropTypes) {
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}
-        onConnect={(result) => {
-          if (props.onConnect && result.status === ResultStatus.Connected) {
+        onConnect={() => {
+          if (props.onConnect) {
             if (selectedWalletToConnect?.type) {
               props.onConnect(selectedWalletToConnect.type);
             } else {
