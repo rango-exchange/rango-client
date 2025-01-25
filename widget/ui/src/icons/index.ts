@@ -51,6 +51,7 @@ export { default as LoadingIcon } from './Loading.js';
 export { default as LogoWithTextIcon } from './LogoWithText.js';
 export { default as LogoutIcon } from './Logout.js';
 export { default as MenuIcon } from './Menu.js';
+export { default as MoneyBagIcon } from './MoneyBag.js';
 export { default as MoreIcon } from './More.js';
 export { default as NoRouteIcon } from './NoRoute.js';
 export { default as NextIcon } from './Next.js';

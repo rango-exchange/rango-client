@@ -60,6 +60,7 @@ import {
   LogoWithTextIcon,
   MediumIcon,
   MenuIcon,
+  MoneyBagIcon,
   MoreIcon,
   NextIcon,
   NoNotificationIcon,
@@ -206,4 +207,5 @@ export const Icons = {
   TelegramIcon,
   XIcon,
   PencilIcon,
+  MoneyBagIcon,
 };
