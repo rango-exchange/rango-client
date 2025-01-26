@@ -187,7 +187,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             .then<ConnectResult>(transformHubResultToLegacyResult)
             .then((res) => {
               successfulyConnectedNamespaces.push({
-                namsepace: namespaceInput.namespace,
+                namespace: namespaceInput.namespace,
                 network: namespaceInput.network,
               });
               return res;
