@@ -6,7 +6,7 @@ type RangoNamespace =
   | 'EVM'
   | 'Solana'
   | 'Cosmos'
-  | 'UTXO'
+  | 'Utxo'
   | 'Starknet'
   | 'Tron'
   | 'Ton';
