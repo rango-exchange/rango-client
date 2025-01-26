@@ -42,14 +42,20 @@ export function fromAccountIdToLegacyAddressFormat(account: string): string {
 /**
  * Getting a list of (lazy) promises and run them one after another.
  */
-export async function sequentiallyRun<T extends () => Promise<unknown>>(
+export async function runSequentiallyWithoutFailure<
+  T extends () => Promise<unknown>
+>(
   promises: Array<T>
 ): Promise<Array<T extends () => Promise<infer R> ? R : never>> {
   const result = await promises.reduce(async (prev, task) => {
     const previousResults = await prev;
-    const taskResult = await task();
+    try {
+      const taskResult = await task();
 
-    return [...previousResults, taskResult];
+      return [...previousResults, taskResult];
+    } catch (error) {
+      return [...previousResults, error];
+    }
   }, Promise.resolve([]) as Promise<any>);
   return result;
 }
