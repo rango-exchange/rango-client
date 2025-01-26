@@ -81,7 +81,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
             <>
               <img
                 src={
-                  'https://raw.githubusercontent.com/rango-exchange/assets/main/banners/widget/profile.png'
+                  'https://raw.githubusercontent.com/rango-exchange/assets/main/banners/widget/profile.jpg'
                 }
                 alt="Profile Banner"
               />
