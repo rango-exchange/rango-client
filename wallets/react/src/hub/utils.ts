@@ -101,6 +101,7 @@ export function checkHubStateAndTriggerEvents(
     let hasAccountChanged = false;
     let hasNetworkChanged = false;
     let hasProviderDisconnected = false;
+    let anyNamespaceIsConnected = false;
     // It will pick the last network from namespaces.
     let maybeNetwork = null;
     const disconnectedNamespacesIds: string[] = [];
@@ -128,28 +129,30 @@ export function checkHubStateAndTriggerEvents(
       // TODO: `accounts` has been frozen, we should check and find where object.freeze() is calling.
 
       // Check for accounts
-      if (
-        previousNamespaceState.accounts?.slice().sort().toString() !==
-        currentNamespaceState.accounts?.slice().sort().toString()
-      ) {
-        if (currentNamespaceState.accounts) {
-          const formattedAddresses = currentNamespaceState.accounts.map(
-            fromAccountIdToLegacyAddressFormat
-          );
-
-          if (accounts) {
-            accounts = [...accounts, ...formattedAddresses];
-          } else {
-            accounts = [...formattedAddresses];
-          }
-
+      if (currentNamespaceState.accounts) {
+        anyNamespaceIsConnected = true;
+        if (
+          previousNamespaceState.accounts?.slice().sort().toString() !==
+          currentNamespaceState.accounts?.slice().sort().toString()
+        ) {
           hasAccountChanged = true;
-        } else {
-          // Namespace has been disconnected
-          disconnectedNamespacesIds.push(namespace.namespaceId);
-          accounts = null;
-          hasProviderDisconnected = true;
         }
+        const formattedAddresses = currentNamespaceState.accounts.map(
+          fromAccountIdToLegacyAddressFormat
+        );
+
+        if (accounts) {
+          accounts = [...accounts, ...formattedAddresses];
+        } else {
+          accounts = [...formattedAddresses];
+        }
+      } else if (!!previousNamespaceState.accounts) {
+        /*
+         * If previously namespace was connected and now we can not get any accounts from the namespace, the namespace should be considered as disconnected.
+         * For example switching to an account which did not permitted to connect yet or maybe the account does not support the requested namespace.
+         */
+        disconnectedNamespacesIds.push(namespace.namespaceId);
+        hasAccountChanged = true;
       }
     });
 
@@ -158,6 +161,11 @@ export function checkHubStateAndTriggerEvents(
         providerId,
         disconnectedNamespacesIds
       );
+    }
+
+    if (disconnectedNamespacesIds.length > 0 && !anyNamespaceIsConnected) {
+      accounts = null;
+      hasProviderDisconnected = true;
     }
 
     let legacyProvider;
@@ -215,6 +223,8 @@ export function checkHubStateAndTriggerEvents(
       );
     }
     if (hasAccountChanged) {
+      // This event is triggered to clear wallet state and after that set new accounts for wallet
+      onUpdateState(providerId, Events.ACCOUNTS, null, coreState, eventInfo);
       onUpdateState(
         providerId,
         Events.ACCOUNTS,
