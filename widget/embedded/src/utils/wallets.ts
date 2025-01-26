@@ -280,10 +280,10 @@ export function resetConnectedWalletState(
 
 export const calculateWalletUsdValue = (balances: BalanceState) => {
   const total = Object.values(balances).reduce((prev, balance) => {
-    const formattedBalance = formatBalance(balance);
-    return formattedBalance?.usdValue
-      ? prev.plus(formattedBalance.usdValue)
-      : prev;
+    const usdBalance = balance.usdValue
+      ? representAmountInNumber(balance.usdValue, balance.decimals)
+      : ZERO.toFixed();
+    return prev.plus(usdBalance);
   }, new BigNumber(ZERO));
 
   return numberWithThousandSeparator(total.toString());
@@ -324,16 +324,18 @@ export const getKeplrCompatibleConnectedWallets = (
   );
 };
 
+function representAmountInNumber(amount: string, decimals: number): string {
+  return new BigNumber(amount).shiftedBy(-decimals).toFixed();
+}
+
 export function formatBalance(balance: Balance | null): Balance | null {
   if (!balance) {
     return null;
   }
 
-  const amount = new BigNumber(balance.amount)
-    .shiftedBy(-balance.decimals)
-    .toFixed();
+  const amount = representAmountInNumber(balance.amount, balance.decimals);
   const usdValue = balance.usdValue
-    ? new BigNumber(balance.usdValue).shiftedBy(-balance.decimals).toFixed()
+    ? representAmountInNumber(balance.usdValue, balance.decimals)
     : null;
   const formattedAmount = numberToString(
     amount,
