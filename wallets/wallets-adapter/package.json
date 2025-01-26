@@ -17,7 +17,7 @@
     "build": "node ../../scripts/build/command.mjs --path wallets/wallets-adapter",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "react": ">=16"

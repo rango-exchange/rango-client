@@ -16,7 +16,7 @@
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "clean": "rimraf storybook-static",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "react": ">=16"

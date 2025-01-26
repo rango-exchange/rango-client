@@ -22,7 +22,7 @@
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "@lingui/core": "4.2.1",
