@@ -1,5 +1,4 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { ConnectResult, ProviderProps } from '../legacy/mod.js';
 import type { Hub, Provider, State } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
@@ -24,10 +23,17 @@ import {
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 import {
+  type ConnectResult,
+  HUB_LAST_CONNECTED_WALLETS,
+  type ProviderProps,
+} from '../legacy/mod.js';
+
+import {
   fromAccountIdToLegacyAddressFormat,
   isConnectResultEvm,
   isConnectResultSolana,
 } from './helpers.js';
+import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 
 /* Gets a list of hub and legacy providers and returns a tuple which separates them. */
 export function separateLegacyAndHubProviders(
@@ -72,6 +78,11 @@ export function findProviderByType(
  * We will call this function on hub's `subscribe`.
  * it will check states and will emit legacy events for backward compatibility.
  */
+
+const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
+  HUB_LAST_CONNECTED_WALLETS
+);
+
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
   currentState: State,
@@ -101,6 +112,8 @@ export function checkHubStateAndTriggerEvents(
     let hasProviderDisconnected = false;
     // It will pick the last network from namespaces.
     let maybeNetwork = null;
+    const disconnectedNamespacesIds: string[] = [];
+
     provider.getAll().forEach((namespace) => {
       const storeId = generateStoreId(providerId, namespace.namespaceId);
       const currentNamespaceState = namespaceStateSelector(
@@ -141,11 +154,20 @@ export function checkHubStateAndTriggerEvents(
 
           hasAccountChanged = true;
         } else {
+          // Namespace has been disconnected
+          disconnectedNamespacesIds.push(namespace.namespaceId);
           accounts = null;
           hasProviderDisconnected = true;
         }
       }
     });
+
+    if (disconnectedNamespacesIds.length > 0) {
+      lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+        providerId,
+        disconnectedNamespacesIds
+      );
+    }
 
     let legacyProvider;
     try {
