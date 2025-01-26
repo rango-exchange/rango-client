@@ -8,7 +8,7 @@ import {
 } from './constants.js';
 
 export interface NamespaceInput {
-  namsepace: Namespace;
+  namespace: Namespace;
   network: string | undefined;
 }
 
@@ -50,6 +50,12 @@ export class LastConnectedWalletsFromStorage {
       return this.#listFromHub();
     } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
       return this.#listFromLegacy();
+    }
+    throw new Error('Not implemented');
+  }
+  removeNamespacesFromWallet(providerId: string, namespaceIds: string[]) {
+    if (this.#storageKey === HUB_LAST_CONNECTED_WALLETS) {
+      return this.#removeNamespaceFromWalletHub(providerId, namespaceIds);
     }
     throw new Error('Not implemented');
   }
@@ -104,6 +110,21 @@ export class LastConnectedWalletsFromStorage {
     });
 
     persistor.setItem(this.#storageKey, storageState);
+  }
+  #removeNamespaceFromWalletHub(
+    providerId: string,
+    namespaceIds: string[]
+  ): void {
+    const persistor = new Persistor<LastConnectedWalletsStorage>();
+    const storageState = persistor.getItem(this.#storageKey) || {};
+
+    const currentProviderNamespaces = storageState[providerId];
+    const newProviderNamespaces = currentProviderNamespaces.filter(
+      (namespace) => !namespaceIds.includes(namespace.namespace)
+    );
+
+    this.#removeWalletsFromHub([providerId]);
+    this.#addWalletToHub(providerId, newProviderNamespaces);
   }
   #removeWalletsFromLegacy(providerIds?: string[]): void {
     const persistor = new Persistor<LegacyLastConnectedWalletsStorage>();
