@@ -15,9 +15,14 @@ import {
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
 
-import { sequentiallyRun } from './helpers.js';
+import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { convertNamespaceNetworkToEvmChainId } from './utils.js';
+
+// Getting connected wallets from storage
+const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
+  HUB_LAST_CONNECTED_WALLETS
+);
 
 /**
  * Run `.connect` action on some selected namespaces (passed as param) for a provider.
@@ -60,21 +65,60 @@ async function eagerConnect(
     targetNamespaces.push([namespaceInput, result]);
   });
 
-  const finalResult = targetNamespaces.map(([info, namespace]) => {
-    const evmChain = legacyIsEvmNamespace(info)
-      ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
-      : undefined;
-    const chain = evmChain || info.network;
+  const connectNamespacesPromises = targetNamespaces.map(
+    ([info, namespace]) => {
+      const evmChain = legacyIsEvmNamespace(info)
+        ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
+        : undefined;
+      const chain = evmChain || info.network;
 
-    return async () => await namespace.connect(chain);
-  });
+      return async () =>
+        await namespace.connect(chain).catch((e) => {
+          /*
+           * Since we check for connect failures using `instanceof Error`
+           * this check is added here to make sure the thrown error always is an instance of `Error`
+           */
+          if (e instanceof Error) {
+            throw e;
+          }
+          throw new Error(e);
+        });
+    }
+  );
 
   /**
    * Sometimes calling methods on a instance in parallel, would cause an error in wallet.
    * We are running a method at a time to make sure we are covering this.
    * e.g. when we are trying to eagerConnect evm and solana on phantom at the same time, the last namespace throw an error.
    */
-  return await sequentiallyRun(finalResult);
+  const connectNamespacesResult = await runSequentiallyWithoutFailure(
+    connectNamespacesPromises
+  );
+
+  const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
+  connectNamespacesResult.forEach((result, index) => {
+    if (result instanceof Error) {
+      failedNamespaces.push(targetNamespaces[index][0]);
+    }
+  });
+
+  if (failedNamespaces.length > 0) {
+    lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+      type,
+      failedNamespaces.map((namespace) => namespace.namespace)
+    );
+  }
+
+  const atLeastOneNamespaceConnectedSuccessfully =
+    connectNamespacesResult.length - failedNamespaces.length > 0;
+  if (!atLeastOneNamespaceConnectedSuccessfully) {
+    throw new Error(`No namespace connected for ${type}`);
+  }
+
+  const successfulResult = connectNamespacesResult.filter(
+    (result) => !(result instanceof Error)
+  );
+  return successfulResult;
 }
 
 /*
@@ -92,11 +136,6 @@ export async function autoConnect(deps: {
   wallets?: (WalletType | LegacyProviderInterface)[];
 }): Promise<void> {
   const { getHub, allBlockChains, getLegacyProvider, wallets } = deps;
-
-  // Getting connected wallets from storage
-  const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
-    HUB_LAST_CONNECTED_WALLETS
-  );
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
   const walletIds = Object.keys(lastConnectedWallets);
 
@@ -123,7 +162,8 @@ export async function autoConnect(deps: {
         legacyInstance = legacyProvider.getInstance();
       } catch (e) {
         console.warn(
-          "It seems instance isn't available yet. This can happens when extension not loaded yet (sometimes when opening browser for first time) or extension is disabled."
+          "It seems instance isn't available yet for auto connect. This can happen when extension not loaded yet (sometimes when opening browser for first time) or extension is disabled. Desired wallet:",
+          providerName
         );
         return;
       }
@@ -161,26 +201,15 @@ export async function autoConnect(deps: {
           providerName,
         }).catch((e) => {
           walletsToRemoveFromPersistance.push(providerName);
-          throw e;
+          console.warn(e);
         })
       );
     });
 
-    await Promise.allSettled(eagerConnectQueue);
+    await Promise.all(eagerConnectQueue);
 
-    /*
-     *After successfully connecting to at least one wallet,
-     *we will removing the other wallets from persistence.
-     *If we are unable to connect to any wallet,
-     *the persistence will not be removed and the eager connection will be retried with another page load.
-     */
-    const canRestoreAnyConnection =
-      walletIds.length > walletsToRemoveFromPersistance.length;
-
-    if (canRestoreAnyConnection) {
-      lastConnectedWalletsFromStorage.removeWallets(
-        walletsToRemoveFromPersistance
-      );
-    }
+    lastConnectedWalletsFromStorage.removeWallets(
+      walletsToRemoveFromPersistance
+    );
   }
 }

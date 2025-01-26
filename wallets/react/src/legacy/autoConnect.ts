@@ -46,33 +46,21 @@ export async function autoConnect(
       eagerConnectQueue.map(async ({ eagerConnect }) => eagerConnect())
     );
 
-    const canRestoreAnyConnection = !!result.find(
-      ({ status }) => status === 'fulfilled'
-    );
+    const walletsToRemoveFromPersistance: WalletType[] = [];
+    result.forEach((settleResult, index) => {
+      const { status } = settleResult;
 
-    /*
-     *After successfully connecting to at least one wallet,
-     *we will removing the other wallets from persistence.
-     *If we are unable to connect to any wallet,
-     *the persistence will not be removed and the eager connection will be retried with another page load.
-     */
-    if (canRestoreAnyConnection) {
-      const walletsToRemoveFromPersistance: WalletType[] = [];
-      result.forEach((settleResult, index) => {
-        const { status } = settleResult;
-
-        if (status === 'rejected') {
-          walletsToRemoveFromPersistance.push(
-            eagerConnectQueue[index].walletType
-          );
-        }
-      });
-
-      if (walletsToRemoveFromPersistance.length) {
-        lastConnectedWalletsFromStorage.removeWallets(
-          walletsToRemoveFromPersistance
+      if (status === 'rejected') {
+        walletsToRemoveFromPersistance.push(
+          eagerConnectQueue[index].walletType
         );
       }
+    });
+
+    if (walletsToRemoveFromPersistance.length) {
+      lastConnectedWalletsFromStorage.removeWallets(
+        walletsToRemoveFromPersistance
+      );
     }
   }
 }
