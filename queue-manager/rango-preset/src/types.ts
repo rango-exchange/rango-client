@@ -185,12 +185,15 @@ export type FailedRouteEventPayload = {
 export type FailedStepEventPayload = FailedRouteEventPayload;
 
 export type SucceededRouteEventPayload = {
+  inputAmount: string;
+  inputAmountUsd: string;
   outputAmount: string;
+  outputAmountUsd: string;
 };
 
 export type SucceededStepEventPayload = SucceededRouteEventPayload;
 
-export type OutputRevealedEventPayload = SucceededRouteEventPayload;
+export type OutputRevealedEventPayload = { outputAmount: string };
 
 export type StepExecutionEventPayload = {
   status:

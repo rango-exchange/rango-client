@@ -5,6 +5,9 @@ import type { PendingSwapStep } from 'rango-types';
 import {
   getCurrentStep,
   getLastSuccessfulStep,
+  getLastSuccessfulStepInput,
+  getLastSuccessfulStepInputUsd,
+  getLastSuccessfulStepOutputUsd,
   isTxAlreadyCreated,
 } from '../helpers';
 import { notifier } from '../services/eventEmitter';
@@ -76,8 +79,11 @@ export function scheduleNextStep({
         : {
             event: {
               type: StepEventType.SUCCEEDED,
+              inputAmount: getLastSuccessfulStepInput(swap),
+              inputAmountUsd: getLastSuccessfulStepInputUsd(swap),
               outputAmount:
                 getLastSuccessfulStep(swap.steps)?.outputAmount ?? '',
+              outputAmountUsd: getLastSuccessfulStepOutputUsd(swap),
             },
           }),
       swap: swap,
