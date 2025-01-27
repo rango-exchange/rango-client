@@ -9,6 +9,9 @@ import {
   getCurrentStep,
   getCurrentStepTx,
   getCurrentStepTxType,
+  getLastSuccessfulStepInput,
+  getLastSuccessfulStepInputUsd,
+  getLastSuccessfulStepOutputUsd,
   inMemoryTransactionsData,
   resetNetworkStatus,
   setCurrentStepTx,
@@ -222,7 +225,10 @@ async function checkTransactionStatus({
     notifier({
       event: {
         type: StepEventType.SUCCEEDED,
+        inputAmount: getLastSuccessfulStepInput(swap),
+        inputAmountUsd: getLastSuccessfulStepInputUsd(swap),
         outputAmount: currentStep.outputAmount ?? '',
+        outputAmountUsd: getLastSuccessfulStepOutputUsd(swap),
       },
       swap,
       step: currentStep,
