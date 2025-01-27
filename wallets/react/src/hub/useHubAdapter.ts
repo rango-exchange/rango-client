@@ -222,7 +222,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(
-          `You should add ${type} to provider first then call 'connect'.`
+          `You should add ${type} to provider first then call 'disconnect'.`
         );
       }
 
@@ -234,8 +234,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         lastConnectedWalletsFromStorage.removeWallets([type]);
       }
     },
-    disconnectAll() {
-      throw new Error('`disconnectAll` not implemented');
+    async disconnectAll() {
+      const disconnectPromises: Promise<any>[] = Array.from(
+        getHub().getAll().values()
+      ).map(async (provider) => this.disconnect(provider.id));
+
+      return await Promise.allSettled(disconnectPromises);
     },
     async getSigners(type) {
       const provider = getLegacyProvider(params.allVersionedProviders, type);
