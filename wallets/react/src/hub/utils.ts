@@ -238,12 +238,29 @@ export function checkHubStateAndTriggerEvents(
   });
 }
 
+export function getAllLegacyProviders(
+  allProviders: VersionedProviders[]
+): LegacyProviderInterface[] {
+  const LEGACY_VERSION = '0.0.0';
+
+  const legacyProviders: LegacyProviderInterface[] = [];
+
+  allProviders.forEach((provider) => {
+    const target = pickVersion(provider, LEGACY_VERSION);
+    legacyProviders.push(target[1]);
+  });
+
+  return legacyProviders;
+}
+
 export function getLegacyProvider(
   allProviders: VersionedProviders[],
   type: string
 ): LegacyProviderInterface {
-  const [legacy] = separateLegacyAndHubProviders(allProviders);
-  const provider = legacy.find((legacyProvider) => {
+  const legacyProviders: LegacyProviderInterface[] =
+    getAllLegacyProviders(allProviders);
+
+  const provider = legacyProviders.find((legacyProvider) => {
     return legacyProvider.config.type === type;
   });
 
