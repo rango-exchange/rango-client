@@ -9,7 +9,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import { separateLegacyAndHubProviders } from '@rango-dev/wallets-react';
+import { getAllLegacyProviders } from '@rango-dev/wallets-react';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
@@ -51,7 +51,7 @@ export function WalletSection() {
     };
     const allProviders = getAllProviders(envs);
     const allBuiltProviders = allProviders.map((build) => build());
-    const [legacyProviders] = separateLegacyAndHubProviders(allBuiltProviders);
+    const legacyProviders = getAllLegacyProviders(allBuiltProviders);
     const filteredProviders = legacyProviders.filter(
       (provider) =>
         !excludedWallets.includes(provider.config.type as WalletTypes)
