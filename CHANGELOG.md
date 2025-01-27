@@ -1,3 +1,11 @@
+## Widget [0.27.0] (2025-01-27)
+
+_includes `@rango-dev/widget-embedded@0.39.0`_
+
+### Features
+
+- Update payload for events ([36a11b6](https://github.com/rango-exchange/rango-client/commit/36a11b6cebc153eced9e01f97fa1fabaf9a44e9f))
+
 ## Widget [0.26.0] (2025-01-20)
 
 _includes `@rango-dev/widget-embedded@0.38.0`_
