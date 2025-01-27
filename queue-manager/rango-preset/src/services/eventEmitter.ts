@@ -12,6 +12,8 @@ import {
   getCurrentStepTx,
   getFailedStep,
   getLastSuccessfulStep,
+  getSwapInputUsd,
+  getSwapOutputUsd,
   isApprovalCurrentStepTx,
 } from '../helpers';
 import { getCurrentNamespaceOfOrNull } from '../shared';
@@ -140,7 +142,7 @@ function getEventPayload(
   return result;
 }
 
-function emitRouteEvent(stepEvent: StepEvent, route: Route) {
+function emitRouteEvent(stepEvent: StepEvent, route: Route, swap: PendingSwap) {
   let routeEvent: RouteEvent | undefined;
   const { type } = stepEvent;
   switch (type) {
@@ -150,9 +152,17 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route) {
     case StepEventType.FAILED:
       routeEvent = { ...stepEvent, type: RouteEventType.FAILED };
       break;
-    case StepEventType.SUCCEEDED:
-      routeEvent = { ...stepEvent, type: RouteEventType.SUCCEEDED };
+    case StepEventType.SUCCEEDED: {
+      routeEvent = {
+        ...stepEvent,
+        type: RouteEventType.SUCCEEDED,
+        inputAmount: swap.inputAmount,
+        inputAmountUsd: getSwapInputUsd(swap),
+        outputAmount: swap.steps[swap.steps.length - 1].outputAmount ?? '',
+        outputAmountUsd: getSwapOutputUsd(swap),
+      };
       break;
+    }
     default:
       break;
   }
@@ -267,6 +277,6 @@ export function notifier(params: NotifierParams) {
     emitStepEvent({ ...event, message, messageSeverity }, route, step);
   }
   if (params.event.type === StepEventType.FAILED || !params.step) {
-    emitRouteEvent({ ...event, message, messageSeverity }, route);
+    emitRouteEvent({ ...event, message, messageSeverity }, route, params.swap);
   }
 }

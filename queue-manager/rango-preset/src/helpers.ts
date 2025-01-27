@@ -44,6 +44,7 @@ import {
   getEvmProvider,
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
+import BigNumber from 'bignumber.js';
 import { TransactionType } from 'rango-sdk';
 import { PendingSwapNetworkStatus, SignerError } from 'rango-types';
 
@@ -1524,4 +1525,63 @@ export function isApprovalTX(step: Step): boolean {
     (transaction?.type === TransactionType.TRON && transaction.isApprovalTx);
 
   return approvalTx;
+}
+
+export function getTokenAmountInUsd(
+  amount: string | number,
+  usdPrice: string | number
+): string {
+  const usdValue = new BigNumber(amount).multipliedBy(usdPrice);
+  if (isNaN(usdValue.toNumber())) {
+    return '';
+  }
+  return usdValue.toString();
+}
+
+export function getSwapInputUsd(swap: PendingSwap): string {
+  return getTokenAmountInUsd(
+    swap.inputAmount,
+    swap.steps[0].fromUsdPrice ?? ''
+  );
+}
+
+export function getSwapOutputUsd(swap: PendingSwap): string {
+  const lastStep = swap.steps[swap.steps.length - 1];
+
+  return getTokenAmountInUsd(
+    lastStep.outputAmount ?? '',
+    lastStep.toUsdPrice ?? ''
+  );
+}
+
+export function getLastSuccessfulStepInput(swap: PendingSwap): string {
+  const lastSuccessfulStepIndex = swap.steps.findLastIndex(
+    (step) => step.status === 'success'
+  );
+
+  if (lastSuccessfulStepIndex < 0) {
+    return '';
+  }
+
+  return lastSuccessfulStepIndex === 0
+    ? swap.inputAmount
+    : swap.steps[lastSuccessfulStepIndex - 1].outputAmount ?? '';
+}
+
+export function getLastSuccessfulStepInputUsd(swap: PendingSwap): string {
+  const lastSuccessfulStep = getLastSuccessfulStep(swap.steps);
+
+  return getTokenAmountInUsd(
+    getLastSuccessfulStepInput(swap),
+    lastSuccessfulStep?.fromUsdPrice ?? ''
+  );
+}
+
+export function getLastSuccessfulStepOutputUsd(swap: PendingSwap): string {
+  const lastSuccessfulStep = getLastSuccessfulStep(swap.steps);
+
+  return getTokenAmountInUsd(
+    lastSuccessfulStep?.outputAmount ?? '',
+    lastSuccessfulStep?.toUsdPrice ?? ''
+  );
 }
