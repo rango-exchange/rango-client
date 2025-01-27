@@ -134,9 +134,6 @@ export type SignersConfig = {
  *
  * @property {'visible' | 'hidden'} [liquiditySource]
  * - The visibility state for the liquiditySource feature. Optional property.
- *
- * @property {'disabled' | 'enabled'} [experimentalWallet]
- * - Enable our experimental version of wallets. Default: disable on production, enabled on dev.
  */
 export type Features = Partial<
   Record<
@@ -148,8 +145,7 @@ export type Features = Partial<
     | 'customTokens',
     'visible' | 'hidden'
   >
-> &
-  Partial<Record<'experimentalWallet', 'disabled' | 'enabled'>>;
+>;
 
 /**
  * `Routing`

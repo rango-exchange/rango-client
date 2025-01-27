@@ -37,34 +37,25 @@ import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 
 /* Gets a list of hub and legacy providers and returns a tuple which separates them. */
 export function separateLegacyAndHubProviders(
-  providers: VersionedProviders[],
-  options?: { isExperimentalEnabled?: boolean }
+  providers: VersionedProviders[]
 ): [LegacyProviderInterface[], Provider[]] {
   const LEGACY_VERSION = '0.0.0';
   const HUB_VERSION = '1.0.0';
-  const { isExperimentalEnabled = false } = options || {};
 
-  if (isExperimentalEnabled) {
-    const legacyProviders: LegacyProviderInterface[] = [];
-    const hubProviders: Provider[] = [];
+  const legacyProviders: LegacyProviderInterface[] = [];
+  const hubProviders: Provider[] = [];
 
-    providers.forEach((provider) => {
-      try {
-        const target = pickVersion(provider, HUB_VERSION);
-        hubProviders.push(target[1]);
-      } catch {
-        const target = pickVersion(provider, LEGACY_VERSION);
-        legacyProviders.push(target[1]);
-      }
-    });
+  providers.forEach((provider) => {
+    try {
+      const target = pickVersion(provider, HUB_VERSION);
+      hubProviders.push(target[1]);
+    } catch {
+      const target = pickVersion(provider, LEGACY_VERSION);
+      legacyProviders.push(target[1]);
+    }
+  });
 
-    return [legacyProviders, hubProviders];
-  }
-
-  const legacyProviders = providers.map(
-    (provider) => pickVersion(provider, LEGACY_VERSION)[1]
-  );
-  return [legacyProviders, []];
+  return [legacyProviders, hubProviders];
 }
 
 export function findProviderByType(

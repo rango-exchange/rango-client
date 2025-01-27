@@ -56,7 +56,6 @@ export type ProviderProps = PropsWithChildren<{
   autoConnect?: boolean;
   providers: VersionedProviders[];
   configs?: {
-    isExperimentalEnabled?: boolean;
     wallets?: (WalletType | LegacyProviderInterface)[];
   };
 }>;

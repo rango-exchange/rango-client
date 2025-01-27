@@ -15,7 +15,6 @@ export interface ProvidersOptions {
   >['walletConnectListedDesktopWalletLink'];
   trezorManifest: WidgetConfig['trezorManifest'];
   tonConnect: WidgetConfig['tonConnect'];
-  experimentalWallet?: 'enabled' | 'disabled';
 }
 
 /**
@@ -28,7 +27,6 @@ type BothProvidersInterface = LegacyProviderInterface | Provider;
 export function matchAndGenerateProviders({
   allProviders,
   configWallets,
-  options,
 }: {
   allProviders: VersionedProviders[];
   configWallets: WidgetConfig['wallets'];
@@ -56,10 +54,8 @@ export function matchAndGenerateProviders({
            * If the corresponding provider to a wallet was found in allProvider,
            * it will be add to selected providers.
            */
-          const versionedProvider = pickProviderVersionWithFallbackToLegacy(
-            provider,
-            options
-          );
+          const versionedProvider =
+            pickProviderVersionWithFallbackToLegacy(provider);
           if (versionedProvider instanceof Provider) {
             return versionedProvider.id === requestedWallet;
           }
@@ -100,14 +96,10 @@ export function matchAndGenerateProviders({
 }
 
 function pickProviderVersionWithFallbackToLegacy(
-  provider: VersionedProviders,
-  options?: ProvidersOptions
+  provider: VersionedProviders
 ): BothProvidersInterface {
-  const { experimentalWallet = 'enabled' } = options || {};
-  const version = experimentalWallet == 'disabled' ? '0.0.0' : '1.0.0';
-
   try {
-    return pickVersion(provider, version)[1];
+    return pickVersion(provider, '1.0.0')[1];
   } catch {
     // Fallback to legacy version, if target version doesn't exists.
     return pickVersion(provider, '0.0.0')[1];
@@ -115,13 +107,10 @@ function pickProviderVersionWithFallbackToLegacy(
 }
 
 export function configWalletsToWalletName(
-  providers: VersionedProviders[],
-  options?: ProvidersOptions
+  providers: VersionedProviders[]
 ): string[] {
   const names = providers
-    .map((provider) =>
-      pickProviderVersionWithFallbackToLegacy(provider, options)
-    )
+    .map((provider) => pickProviderVersionWithFallbackToLegacy(provider))
     .map((provider) => {
       if (provider instanceof Provider) {
         return provider.id;

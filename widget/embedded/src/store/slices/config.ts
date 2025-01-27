@@ -22,7 +22,6 @@ function makeProvidersOptionsFromConfig(
     tonConnect: config?.tonConnect,
     walletConnectListedDesktopWalletLink:
       config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-    experimentalWallet: config.features?.experimentalWallet,
   };
 
   return options;
@@ -42,9 +41,6 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   tonConnect: {
     manifestUrl:
       'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json',
-  },
-  features: {
-    experimentalWallet: 'enabled',
   },
 };
 
