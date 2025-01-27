@@ -146,10 +146,15 @@ export const evmChainsToRpcMap = (
 };
 
 export const getSolanaAccounts: Connect = async ({ instance }) => {
-  // Asking for account from wallet.
-  const solanaResponse = await instance.connect();
+  let account = '';
+  if (instance.isConnected && instance.publicKey) {
+    account = instance.publicKey.toString();
+  } else {
+    // Asking for account from wallet if not connected or no public key available.
+    const solanaResponse = await instance.connect();
+    account = solanaResponse.publicKey.toString();
+  }
 
-  const account = solanaResponse.publicKey.toString();
   return {
     accounts: [account],
     chainId: Networks.SOLANA,
