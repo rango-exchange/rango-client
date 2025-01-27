@@ -22,12 +22,8 @@ import { useLegacyProviders } from './legacy/mod.js';
  */
 function useProviders(props: ProviderProps) {
   const { providers, ...restProps } = props;
-  const [legacyProviders, hubProviders] = separateLegacyAndHubProviders(
-    providers,
-    {
-      isExperimentalEnabled: restProps.configs?.isExperimentalEnabled,
-    }
-  );
+  const [legacyProviders, hubProviders] =
+    separateLegacyAndHubProviders(providers);
 
   const legacyApi = useLegacyProviders({
     ...restProps,

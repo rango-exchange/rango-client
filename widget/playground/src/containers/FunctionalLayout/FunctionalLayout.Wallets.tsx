@@ -51,9 +51,7 @@ export function WalletSection() {
     };
     const allProviders = getAllProviders(envs);
     const allBuiltProviders = allProviders.map((build) => build());
-    const [legacyProviders] = separateLegacyAndHubProviders(allBuiltProviders, {
-      isExperimentalEnabled: config.features?.experimentalWallet === 'enabled',
-    });
+    const [legacyProviders] = separateLegacyAndHubProviders(allBuiltProviders);
     const filteredProviders = legacyProviders.filter(
       (provider) =>
         !excludedWallets.includes(provider.config.type as WalletTypes)

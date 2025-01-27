@@ -34,9 +34,6 @@ const DEFAULT_CONFIG: WidgetConfig = {
     manifestUrl:
       'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json',
   },
-  features: {
-    experimentalWallet: 'enabled',
-  },
 };
 
 beforeEach(() => {

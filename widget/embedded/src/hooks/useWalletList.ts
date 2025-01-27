@@ -40,21 +40,14 @@ interface API {
  */
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
-  const { config, connectedWallets, getAvailableProviders } = useAppStore();
+  const { connectedWallets, getAvailableProviders } = useAppStore();
   const { state, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes = configWalletsToWalletName(
-    getAvailableProviders(),
-    {
-      trezorManifest: config?.trezorManifest,
-      walletConnectProjectId: config?.walletConnectProjectId,
-      walletConnectListedDesktopWalletLink:
-        config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-      tonConnect: config.tonConnect,
-    }
+    getAvailableProviders()
   );
 
   let wallets = mapWalletTypesToWalletInfo(
