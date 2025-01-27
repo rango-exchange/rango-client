@@ -19,7 +19,6 @@ import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { isFeatureEnabled } from '../../utils/settings';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -54,7 +53,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,
-    experimentalWallet: props.config.features?.experimentalWallet,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
   const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
@@ -209,10 +207,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
         autoConnect={!!isActiveTab}
         configs={{
           wallets: config.wallets,
-          isExperimentalEnabled: isFeatureEnabled(
-            'experimentalWallet',
-            config.features
-          ),
         }}>
         {props.children}
       </Provider>
