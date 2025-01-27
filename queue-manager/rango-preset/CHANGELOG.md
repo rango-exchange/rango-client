@@ -1,3 +1,12 @@
+# [0.42.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.41.0...queue-manager-rango-preset@0.42.0) (2025-01-27)
+
+
+### Features
+
+* update payload for events ([36a11b6](https://github.com/rango-exchange/rango-client/commit/36a11b6cebc153eced9e01f97fa1fabaf9a44e9f))
+
+
+
 # [0.41.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.40.0...queue-manager-rango-preset@0.41.0) (2024-12-30)
 
 
