@@ -1,6 +1,6 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
+import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
@@ -28,9 +28,35 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
+const canEagerConnect = new ActionBuilder<EvmActions, 'canEagerConnect'>(
+  'canEagerConnect'
+)
+  .action(async function () {
+    /*
+     * TODO: This function is copied from `canEagerlyConnectToEvm` of "@rango-dev/wallets-shared"
+     * to not pass meta to this function and try make hub decoupled from legacyProvider.
+     * This can be moved to EVMActions
+     */
+    const instance = evmPhantom();
+    try {
+      const accounts: string[] = await instance.request({
+        method: 'eth_accounts',
+      });
+      if (accounts.length) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  })
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(canEagerConnect)
   .build();
 
 export { evm };
