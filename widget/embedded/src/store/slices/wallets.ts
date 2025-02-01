@@ -21,6 +21,7 @@ import {
   extractAssetFromBalanceKey,
   removeBalanceFromAggregatedBalance,
   updateAggregatedBalanceStateForNewAccount,
+  updateBalancesWithNewPrices,
 } from '../utils/wallets';
 
 type WalletAddress = string;
@@ -275,17 +276,21 @@ export const createWalletsSlice: StateCreator<
             walletAddress: wallet.address,
           });
           if (balances) {
-            let nextBalances: BalanceState = {};
+            let nextBalances: BalanceState = get()._balances;
             let nextAggregatedBalances: AggregatedBalanceState =
               get()._aggregatedBalances;
 
             balances.forEach((balance) => {
+              const WalletDetail = {
+                blockChain: wallet.chain,
+                balances: [balance],
+                address: wallet.address,
+              };
+
+              updateBalancesWithNewPrices(WalletDetail, nextBalances, get);
+
               const balancesForWallet = createBalanceStateForNewAccount(
-                {
-                  blockChain: wallet.chain,
-                  balances: [balance],
-                  address: wallet.address,
-                },
+                WalletDetail,
                 get
               );
 
@@ -490,7 +495,6 @@ export const createWalletsSlice: StateCreator<
     const response = await httpService().getWalletsDetails(addressesToFetch);
 
     const listWalletsWithBalances = response.wallets;
-
     if (listWalletsWithBalances) {
       const { retryOnFailedBalances = true } = options || {};
       if (retryOnFailedBalances) {
@@ -508,7 +512,7 @@ export const createWalletsSlice: StateCreator<
         }
       }
 
-      let nextBalances: BalanceState = {};
+      let nextBalances: BalanceState = get()._balances;
       let nextAggregatedBalances: AggregatedBalanceState =
         get()._aggregatedBalances;
       listWalletsWithBalances.forEach((wallet) => {
@@ -516,12 +520,15 @@ export const createWalletsSlice: StateCreator<
           return;
         }
 
+        updateBalancesWithNewPrices(wallet, nextBalances, get);
+
         const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
 
-        nextAggregatedBalances = updateAggregatedBalanceStateForNewAccount(
-          nextAggregatedBalances,
-          balancesForWallet
-        );
+        nextAggregatedBalances = nextAggregatedBalances =
+          updateAggregatedBalanceStateForNewAccount(
+            nextAggregatedBalances,
+            balancesForWallet
+          );
 
         nextBalances = {
           ...nextBalances,
