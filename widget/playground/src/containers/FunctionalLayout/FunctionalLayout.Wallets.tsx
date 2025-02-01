@@ -9,7 +9,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import { getAllLegacyProviders } from '@rango-dev/wallets-react';
+import { getAllLegacyProviders } from '@rango-dev/wallets-react/dist/helpers/index';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
