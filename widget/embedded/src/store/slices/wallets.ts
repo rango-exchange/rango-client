@@ -1,5 +1,5 @@
 import type { AppStoreState } from './types';
-import type { Token } from 'rango-sdk';
+import type { Asset, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import BigNumber from 'bignumber.js';
@@ -95,6 +95,10 @@ export interface WalletsSlice {
     accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
   ) => Promise<void>;
+  fetchCustomTokensBalance: (params: {
+    tokens: Asset[];
+    connectedWallets: Wallet[];
+  }) => Promise<void>;
   getBalanceFor: (token: Token) => Balance | null;
   getBalances: () => BalanceState;
   getBalancesForWalletAddress: (address: string) => BalanceState;
@@ -245,6 +249,72 @@ export const createWalletsSlice: StateCreator<
       });
     }
   },
+  fetchCustomTokensBalance: async (params) => {
+    const { tokens } = params;
+    const blockchainsAndAssets: { [key: string]: Asset[] } = {};
+    tokens.forEach((asset) => {
+      if (!blockchainsAndAssets[asset.blockchain]) {
+        blockchainsAndAssets[asset.blockchain] = [];
+      }
+      blockchainsAndAssets[asset.blockchain] =
+        blockchainsAndAssets[asset.blockchain].concat(asset);
+    });
+
+    Object.keys(blockchainsAndAssets).forEach((blockchain) => {
+      const connectedWalletWithSameBlockchain = params.connectedWallets.filter(
+        (wallet) => wallet.chain === blockchain
+      );
+      connectedWalletWithSameBlockchain.forEach(async (wallet) => {
+        try {
+          const { balances } = await httpService().getMultipleTokenBalance({
+            assets: blockchainsAndAssets[blockchain].map((token) => ({
+              blockchain: token.blockchain,
+              address: token.address,
+              symbol: token.symbol,
+            })),
+            walletAddress: wallet.address,
+          });
+          if (balances) {
+            let nextBalances: BalanceState = {};
+            let nextAggregatedBalances: AggregatedBalanceState =
+              get()._aggregatedBalances;
+
+            balances.forEach((balance) => {
+              const balancesForWallet = createBalanceStateForNewAccount(
+                {
+                  blockChain: wallet.chain,
+                  balances: [balance],
+                  address: wallet.address,
+                },
+                get
+              );
+
+              nextAggregatedBalances =
+                updateAggregatedBalanceStateForNewAccount(
+                  nextAggregatedBalances,
+                  balancesForWallet
+                );
+
+              nextBalances = {
+                ...nextBalances,
+                ...balancesForWallet,
+              };
+            });
+
+            set((state) => ({
+              _balances: {
+                ...state._balances,
+                ...nextBalances,
+              },
+              _aggregatedBalances: nextAggregatedBalances,
+            }));
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    });
+  },
   setWalletsAsSelected: (wallets) => {
     const nextConnectedWalletsWithUpdatedSelectedStatus =
       get().connectedWallets.map((connectedWallet) => {
@@ -282,6 +352,10 @@ export const createWalletsSlice: StateCreator<
     get().addConnectedWallet(accounts);
 
     void get().fetchBalances(accounts);
+    void get().fetchCustomTokensBalance({
+      tokens: get().customTokens(),
+      connectedWallets: accounts,
+    });
   },
   removeBalancesForWallet: (walletType, options) => {
     let walletsNeedsToBeRemoved = get().connectedWallets.filter(
@@ -507,6 +581,7 @@ export const createWalletsSlice: StateCreator<
         maxBalance = currentBalance;
       }
     });
+
     return maxBalance;
   },
   getBalancesForWalletAddress: (address: string) => {

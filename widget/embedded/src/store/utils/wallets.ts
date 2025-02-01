@@ -44,7 +44,7 @@ export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
 }
 
 export function createBalanceStateForNewAccount(
-  account: WalletDetail,
+  account: Omit<WalletDetail, 'failed' | 'explorerUrl'>,
   store: () => AppStoreState
 ): BalanceState {
   const state: BalanceState = {};
