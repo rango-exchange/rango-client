@@ -38,9 +38,9 @@ export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult> {
   await instance.enable();
-  const account = await instance.request({ method: 'sol_accounts' });
+  const accounts = await instance.request({ method: 'sol_accounts' });
   return {
-    accounts: [account],
+    accounts,
     chainId: LegacyNetworks.SOLANA,
   };
 }
