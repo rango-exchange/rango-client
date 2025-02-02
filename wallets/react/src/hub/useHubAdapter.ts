@@ -16,7 +16,10 @@ import {
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
-import { fromAccountIdToLegacyAddressFormat } from './helpers.js';
+import {
+  fromAccountIdToLegacyAddressFormat,
+  runSequentiallyWithoutFailure,
+} from './helpers.js';
 import {
   LastConnectedWalletsFromStorage,
   type NamespaceInput,
@@ -167,11 +170,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       });
 
       // Keeping only namespaces that connected successfully, then we'll store them on storage for auto connect functionality.
-      const successfulyConnectedNamespaces: NamespaceInput[] = [];
+      const successfullyConnectedNamespaces: NamespaceInput[] = [];
 
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
-        async ([namespaceInput, namespace]) => {
+        ([namespaceInput, namespace]) => {
           const network = tryConvertNamespaceNetworkToChainInfo(
             namespaceInput,
             params.allBlockChains || []
@@ -182,17 +185,22 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
            * our assumption here is all the `connect` hasn't chain or if they have, they will accept it in first argument.
            * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
            */
-          const result = namespace.connect(network);
-          return result
-            .then<ConnectResult>(transformHubResultToLegacyResult)
-            .then((res) => {
-              successfulyConnectedNamespaces.push({
-                namespace: namespaceInput.namespace,
-                network: namespaceInput.network,
+          return async () =>
+            namespace
+              .connect(network)
+              .then<ConnectResult>(transformHubResultToLegacyResult)
+              .then((res) => {
+                successfullyConnectedNamespaces.push({
+                  namespace: namespaceInput.namespace,
+                  network: namespaceInput.network,
+                });
+                return res;
               });
-              return res;
-            });
         }
+      );
+
+      const connectResultWithLegacyFormat = await runSequentiallyWithoutFailure(
+        connectResultFromTargetNamespaces
       );
 
       // If Provider has support for auto connect, we will add the wallet to storage.
@@ -201,20 +209,24 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         type
       );
 
-      if (legacyProvider.canEagerConnect) {
-        void Promise.allSettled(connectResultFromTargetNamespaces).then(() => {
-          if (successfulyConnectedNamespaces.length > 0) {
-            lastConnectedWalletsFromStorage.addWallet(
-              type,
-              successfulyConnectedNamespaces
-            );
+      if (
+        legacyProvider.canEagerConnect &&
+        successfullyConnectedNamespaces.length > 0
+      ) {
+        lastConnectedWalletsFromStorage.addWallet(
+          type,
+          successfullyConnectedNamespaces
+        );
+      }
+
+      // Throw error if no namespace connected succeffully
+      if (!successfullyConnectedNamespaces.length) {
+        connectResultWithLegacyFormat.forEach((result) => {
+          if (result instanceof Error) {
+            throw result;
           }
         });
       }
-
-      const connectResultWithLegacyFormat = await Promise.all(
-        connectResultFromTargetNamespaces
-      );
 
       return connectResultWithLegacyFormat;
     },
@@ -235,7 +247,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
     },
     async disconnectAll() {
-      const disconnectPromises: Promise<any>[] = Array.from(
+      const disconnectPromises: Promise<void>[] = Array.from(
         getHub().getAll().values()
       ).map(async (provider) => this.disconnect(provider.id));
 
