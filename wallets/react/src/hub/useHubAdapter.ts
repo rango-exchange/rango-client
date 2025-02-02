@@ -166,8 +166,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         targetNamespaces.push([namespace, result]);
       });
 
-      // Keeping only namespaces that connected successfully, then we'll store them on storage for auto connect functionality.
-      const successfulyConnectedNamespaces: NamespaceInput[] = [];
+      // Keeping only namespaces that connected successfully and support eager connect, then we'll store them on storage for eager connect functionality.
+      const successfullyConnectedSupportingEagerConnectNamespaces: NamespaceInput[] =
+        [];
 
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
@@ -186,31 +187,26 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
           return result
             .then<ConnectResult>(transformHubResultToLegacyResult)
             .then((res) => {
-              successfulyConnectedNamespaces.push({
-                namespace: namespaceInput.namespace,
-                network: namespaceInput.network,
-              });
+              if (!!namespace.canEagerConnect) {
+                successfullyConnectedSupportingEagerConnectNamespaces.push({
+                  namespace: namespaceInput.namespace,
+                  network: namespaceInput.network,
+                });
+              }
               return res;
             });
         }
       );
 
-      // If Provider has support for auto connect, we will add the wallet to storage.
-      const legacyProvider = getLegacyProvider(
-        params.allVersionedProviders,
-        type
-      );
-
-      if (legacyProvider.canEagerConnect) {
-        void Promise.allSettled(connectResultFromTargetNamespaces).then(() => {
-          if (successfulyConnectedNamespaces.length > 0) {
-            lastConnectedWalletsFromStorage.addWallet(
-              type,
-              successfulyConnectedNamespaces
-            );
-          }
-        });
-      }
+      void Promise.allSettled(connectResultFromTargetNamespaces).then(() => {
+        // If Namespace has support for auto connect, we will add the wallet to storage.
+        if (successfullyConnectedSupportingEagerConnectNamespaces.length > 0) {
+          lastConnectedWalletsFromStorage.addWallet(
+            type,
+            successfullyConnectedSupportingEagerConnectNamespaces
+          );
+        }
+      });
 
       const connectResultWithLegacyFormat = await Promise.all(
         connectResultFromTargetNamespaces
@@ -235,7 +231,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
     },
     async disconnectAll() {
-      const disconnectPromises: Promise<any>[] = Array.from(
+      const disconnectPromises: Promise<void>[] = Array.from(
         getHub().getAll().values()
       ).map(async (provider) => this.disconnect(provider.id));
 
