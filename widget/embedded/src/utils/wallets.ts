@@ -1,4 +1,8 @@
-import type { BalanceState, ConnectedWallet } from '../store/slices/wallets';
+import type {
+  BalanceKey,
+  BalanceState,
+  ConnectedWallet,
+} from '../store/slices/wallets';
 import type {
   Balance,
   SelectedQuote,
@@ -45,6 +49,7 @@ export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -261,15 +266,13 @@ export function getQuoteWallets(params: {
   return Array.from(wallets);
 }
 
-export function isAccountAndWalletMatched(
-  account: Wallet,
-  connectedWallet: ConnectedWallet
+export function isBalanceKeyAndWalletMatched(
+  balanceKey: BalanceKey,
+  wallet: ConnectedWallet
 ) {
-  return (
-    account.address === connectedWallet.address &&
-    account.chain === connectedWallet.chain &&
-    account.walletType === connectedWallet.walletType
-  );
+  const [keyChain, , , keyWalletAddress] = balanceKey.split('-');
+
+  return wallet.address === keyWalletAddress && wallet.chain === keyChain;
 }
 
 export function resetConnectedWalletState(

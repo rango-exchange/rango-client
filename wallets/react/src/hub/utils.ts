@@ -223,8 +223,6 @@ export function checkHubStateAndTriggerEvents(
       );
     }
     if (hasAccountChanged) {
-      // This event is triggered to clear wallet state and after that set new accounts for wallet
-      onUpdateState(providerId, Events.ACCOUNTS, null, coreState, eventInfo);
       onUpdateState(
         providerId,
         Events.ACCOUNTS,

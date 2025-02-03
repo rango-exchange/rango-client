@@ -1,4 +1,5 @@
 import type { AppStoreState } from './types';
+import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
@@ -13,7 +14,7 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from '../../types';
-import { isAccountAndWalletMatched } from '../../utils/wallets';
+import { isBalanceKeyAndWalletMatched } from '../../utils/wallets';
 import {
   createAssetKey,
   createBalanceKey,
@@ -72,20 +73,24 @@ export interface WalletsSlice {
   setConnectedWalletAsRefetching: (walletType: string) => void;
   setConnectedWalletHasError: (walletType: string) => void;
   setConnectedWalletRetrievedData: (walletType: string) => void;
-  removeBalancesForWallet: (
-    walletType: string,
-    options?: {
-      chains?: string[];
-    }
-  ) => void;
-  addConnectedWallet: (accounts: Wallet[]) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
   ) => void;
   /**
-   * Add new accounts to store and fetch balances for them.
+   * Update wallet accounts and balances.
    */
-  newWalletConnected: (accounts: Wallet[]) => Promise<void>;
+  updateWalletAccounts: (
+    walletType: WalletType,
+    accounts: Wallet[]
+  ) => Promise<void>;
+  /**
+   * Fetch balance for new connected accounts and remove balance for old accounts
+   */
+  updateBalances: (walletType: WalletType, accounts: Wallet[]) => Promise<void>;
+  /**
+   * Fetch balance for new connected accounts and remove balance for old accounts
+   */
+  removeBalances: (balanceKeys: BalanceKey[]) => void;
   /**
    * Disconnect a wallet and clean up balances after that.
    */
@@ -172,79 +177,6 @@ export const createWalletsSlice: StateCreator<
       };
     });
   },
-  addConnectedWallet: (accounts: Wallet[]) => {
-    /*
-     * When we are going to add a new account, there are two thing that can be happens:
-     * 1. Wallet hasn't add yet.
-     * 2. Wallet has added, and there are some more account that needs to added to connected wallet. consider we've added an ETH and Pol account, then we need to add Arb account later as well.
-     *
-     * For handling this, we need to only keep not-added-account, then only add those.
-     *
-     * Note:
-     * The second option would be useful for hub particularly.
-     */
-    const connectedWallets = get().connectedWallets;
-    const walletsNeedToBeAdded = accounts.filter(
-      (account) =>
-        !connectedWallets.some((connectedWallet) =>
-          isAccountAndWalletMatched(account, connectedWallet)
-        )
-    );
-
-    if (walletsNeedToBeAdded.length > 0) {
-      const newConnectedWallets = walletsNeedToBeAdded.map((account) => {
-        /*
-         * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
-         * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
-         */
-        const shouldMarkWalletAsSelected = !connectedWallets.some(
-          (connectedWallet) =>
-            connectedWallet.chain === account.chain &&
-            connectedWallet.selected &&
-            /**
-             * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
-             * This check is there to make sure the chosen wallet doesn't end up unselected.
-             */
-            connectedWallet.walletType !== account.walletType
-        );
-
-        return {
-          address: account.address,
-          chain: account.chain,
-          explorerUrl: null,
-          walletType: account.walletType,
-          selected: shouldMarkWalletAsSelected,
-
-          loading: false,
-          error: false,
-        };
-      });
-
-      set((state) => {
-        /*
-         * If wallet connected before and only need to update the address we should remove the old value and then add new conncted value.
-         * This scenario happens when user wants to change account inside the wallet.
-         * So the assumption here is the wallet has only one active address for a blockchain at the moment.
-         */
-        const connectedWalletsWithoutSameWalletAndBlockchain =
-          state.connectedWallets.filter((currentConnectedWallet) => {
-            return !newConnectedWallets.some(
-              (newConnectedWallet) =>
-                newConnectedWallet.walletType ===
-                  currentConnectedWallet.walletType &&
-                newConnectedWallet.chain === currentConnectedWallet.chain
-            );
-          });
-
-        return {
-          connectedWallets: [
-            ...connectedWalletsWithoutSameWalletAndBlockchain,
-            ...newConnectedWallets,
-          ],
-        };
-      });
-    }
-  },
   setWalletsAsSelected: (wallets) => {
     const nextConnectedWalletsWithUpdatedSelectedStatus =
       get().connectedWallets.map((connectedWallet) => {
@@ -273,29 +205,73 @@ export const createWalletsSlice: StateCreator<
       connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
     });
   },
-  newWalletConnected: async (accounts) => {
+  updateWalletAccounts: async (walletType, accounts) => {
     eventEmitter.emit(WidgetEvents.WalletEvent, {
       type: WalletEventTypes.CONNECT,
       payload: { walletType: accounts[0].walletType, accounts },
     });
+    const connectedWallets = get().connectedWallets;
 
-    get().addConnectedWallet(accounts);
-
-    void get().fetchBalances(accounts);
-  },
-  removeBalancesForWallet: (walletType, options) => {
-    let walletsNeedsToBeRemoved = get().connectedWallets.filter(
-      (connectedWallet) => connectedWallet.walletType === walletType
+    const otherConnectedWallets = connectedWallets.filter(
+      (wallet) => wallet.walletType !== walletType
     );
+
+    const newConnectedWallets = accounts.map((account) => {
+      /*
+       * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
+       * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
+       */
+      const shouldMarkWalletAsSelected = !connectedWallets.some(
+        (connectedWallet) =>
+          connectedWallet.chain === account.chain &&
+          connectedWallet.selected &&
+          /**
+           * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
+           * This check is there to make sure the chosen wallet doesn't end up unselected.
+           */
+          connectedWallet.walletType !== account.walletType
+      );
+
+      return {
+        address: account.address,
+        chain: account.chain,
+        explorerUrl: null,
+        walletType: account.walletType,
+        selected: shouldMarkWalletAsSelected,
+
+        loading: false,
+        error: false,
+      };
+    });
+
+    void get().updateBalances(walletType, accounts);
+
+    set(() => ({
+      connectedWallets: [...otherConnectedWallets, ...newConnectedWallets],
+    }));
+  },
+  updateBalances: async (walletType, accounts) => {
+    // Get wallets which should be removed (have same wallet type and not included in new accounts)
+    let walletsNeedToBeRemoved = get().connectedWallets.filter(
+      (connectedWallet) =>
+        connectedWallet.walletType === walletType &&
+        !accounts.some(
+          (account) =>
+            account.address === connectedWallet.address &&
+            account.chain === connectedWallet.chain
+        )
+    );
+
     /*
-     * We only need to delete balances where there is no connected wallets with same chain and address for that balance.
-     * Consider both Metamask and Solana having support for `0xblahblahblahblah` for Ethereum.
+     * We only need to remove balances where there is no connected wallets with the same chain and address related to that balance.
+     * Consider both Metamask and Solana support `0xblahblahblahblah` address for Ethereum.
      * If Phantom is disconnecting, we should keep the balance since Metamask has access to same address yet.
-     * So we only delete balance when there is no connected wallet that has access to that specific chain and address.
+     * So we should remove balances only if there is no connected wallet to that specific chain and address.
      */
+
     get().connectedWallets.forEach((connectedWallet) => {
       if (connectedWallet.walletType !== walletType) {
-        walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+        walletsNeedToBeRemoved = walletsNeedToBeRemoved.filter((wallet) => {
           const isAnotherWalletHasSameAddressAndChain =
             wallet.chain === connectedWallet.chain &&
             wallet.address === connectedWallet.address;
@@ -304,42 +280,51 @@ export const createWalletsSlice: StateCreator<
       }
     });
 
-    if (!!options?.chains && options.chains.length > 0) {
-      walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
-        return options.chains?.includes(wallet.chain);
-      });
-    }
+    // Remove balance related to wallets which should be removed
+    const balancesState = get()._balances;
+    const balanceKeys = Object.keys(balancesState) as BalanceKey[];
+    const shouldRemoveBalanceKeys: BalanceKey[] = [];
 
-    const nextBalancesState: BalanceState = {};
+    walletsNeedToBeRemoved.forEach((wallet) => {
+      const balanceKeysRelatedToWallet = balanceKeys.filter((balanceKey) =>
+        isBalanceKeyAndWalletMatched(balanceKey, wallet)
+      );
+      shouldRemoveBalanceKeys.push(...balanceKeysRelatedToWallet);
+    });
+
+    if (shouldRemoveBalanceKeys.length) {
+      void get().removeBalances(shouldRemoveBalanceKeys);
+    }
+    // Fetch balance for wallets which not exist currently
+    const shouldFetchAccounts = accounts.filter(
+      (account) =>
+        !balanceKeys.find((key) => {
+          const keyAsset = extractAssetFromBalanceKey(key);
+          const walletKey = createBalanceKey(account.address, {
+            address: keyAsset.address,
+            blockchain: account.chain,
+            symbol: keyAsset.symbol,
+          });
+          return walletKey === key;
+        })
+    );
+    if (shouldFetchAccounts.length) {
+      void get().fetchBalances(shouldFetchAccounts);
+    }
+  },
+  removeBalances: async (balanceKeys) => {
+    const nextBalancesState = get()._balances;
     let nextAggregatedBalanceState: AggregatedBalanceState =
       get()._aggregatedBalances;
-    const currentBalancesState = get()._balances;
-    const balanceKeys = Object.keys(currentBalancesState) as BalanceKey[];
 
-    balanceKeys.forEach((key) => {
-      const asset = extractAssetFromBalanceKey(key);
-
-      const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
-        (wallet) =>
-          createBalanceKey(wallet.address, {
-            address: asset.address,
-            blockchain: wallet.chain,
-            symbol: asset.symbol,
-          }) === key
+    balanceKeys.forEach((balanceKey) => {
+      delete nextBalancesState[balanceKey];
+      nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
+        nextAggregatedBalanceState,
+        balanceKey
       );
-
-      if (!shouldBalanceBeRemoved) {
-        nextBalancesState[key] = currentBalancesState[key];
-      }
-
-      // if a balance should be removed, we need to remove its caches in _aggregatedBalances as wel.
-      if (shouldBalanceBeRemoved) {
-        nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
-          nextAggregatedBalanceState,
-          key
-        );
-      }
     });
+
     set({
       _balances: nextBalancesState,
       _aggregatedBalances: nextAggregatedBalanceState,
@@ -356,7 +341,7 @@ export const createWalletsSlice: StateCreator<
       });
 
       // This should be called before updating connectedWallets since we need the old state to remove balances.
-      get().removeBalancesForWallet(walletType);
+      void get().updateBalances(walletType, []);
 
       let targetWalletWasSelectedForBlockchains = get()
         .connectedWallets.filter(
