@@ -23,6 +23,10 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'ETH';
   }
 
+  if (chainId.namespace === 'move') {
+    return chainId.reference.toUpperCase();
+  }
+
   return chainId.reference;
 }
 

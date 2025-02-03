@@ -60,6 +60,7 @@ export enum Networks {
   UMEE = 'UMEE',
   STARKNET = 'STARKNET',
   TON = 'TON',
+  SUI = 'SUI',
 
   // Using instead of null
   Unknown = 'Unkown',
