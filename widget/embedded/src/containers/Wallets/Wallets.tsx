@@ -7,10 +7,6 @@ import type { ProvidersOptions } from '../../utils/providers';
 import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
-import {
-  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
-  legacyReadAccountAddress as readAccountAddress,
-} from '@rango-dev/wallets-core/legacy';
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { type Network } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
@@ -39,11 +35,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
     updateSettings,
     fetch: fetchMeta,
     fetchStatus,
-    removeBalancesForWallet,
   } = useAppStore();
   const blockchains = useAppStore().blockchains();
-  const { newWalletConnected, disconnectWallet, connectedWallets } =
-    useAppStore();
+  const { updateWalletAccounts, disconnectWallet } = useAppStore();
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
@@ -82,58 +76,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
       const supportedChainNames: Network[] | null =
         walletAndSupportedChainsNames(meta.supportedBlockchains);
 
-      /*
-       * When a wallet is connecting to an evm account, we will consider it as the account exists on other evm-compatible blockchains
-       * To get their balances.
-       *
-       * The logic here is for handling switching account functionality in wallets. when a wallet is switching to another account
-       * we need to clean the balances for old accounts.
-       */
-      const evmAccounts: string[] = [];
-      const nonEvmAccounts: string[] = [];
-
-      value?.forEach((account: string) => {
-        const { network } = readAccountAddress(account);
-        if (evmBasedChainNames.includes(network)) {
-          evmAccounts.push(account);
-        } else {
-          nonEvmAccounts.push(account);
-        }
-      });
-
-      const previousAccounts = connectedWallets
-        .filter((wallet) => wallet.walletType === type)
-        .map((wallet) =>
-          formatAddressWithNetwork(wallet.address, wallet.chain)
-        );
-
-      if (previousAccounts.length > 0) {
-        if (evmAccounts.length > 0) {
-          // We use same logic for removing as we use for adding.
-          const data = prepareAccountsForWalletStore(
-            type,
-            evmAccounts,
-            evmBasedChainNames,
-            supportedChainNames,
-            meta.isContractWallet
-          );
-
-          removeBalancesForWallet(type, {
-            chains: data.map((account) => account.chain),
-          });
-        }
-
-        if (nonEvmAccounts.length > 0) {
-          removeBalancesForWallet(type, {
-            chains: nonEvmAccounts.map((account) => {
-              const { network } = readAccountAddress(account);
-              return network;
-            }),
-          });
-        }
-      }
-
-      // After cleaning up balances, it's time to add new accounts.
       if (value) {
         const data = prepareAccountsForWalletStore(
           type,
@@ -143,10 +85,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
           meta.isContractWallet
         );
         if (data.length) {
-          void newWalletConnected(data);
+          void updateWalletAccounts(type, data);
         }
       } else {
-        disconnectWallet(type);
+        void disconnectWallet(type);
         if (!!onDisconnectWalletHandler.current) {
           onDisconnectWalletHandler.current(type);
         } else {
