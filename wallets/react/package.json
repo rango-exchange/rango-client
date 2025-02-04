@@ -9,14 +9,19 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers/index.d.ts",
+      "default": "./dist/helpers/index.js"
     }
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "helpers"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/react",
+    "build": "node ../../scripts/build/command.mjs --path wallets/react --inputs src/index.ts,src/helpers/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
