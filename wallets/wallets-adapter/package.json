@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-adapter",
-  "version": "0.38.1-next.10",
+  "version": "0.38.1-next.11",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -23,10 +23,10 @@
     "react": ">=16"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.42.1-next.9",
-    "@rango-dev/ui": "^0.43.1-next.4",
-    "@rango-dev/wallets-react": "^0.27.1-next.10",
-    "@rango-dev/wallets-shared": "^0.41.1-next.3",
+    "@rango-dev/provider-all": "^0.42.1-next.10",
+    "@rango-dev/ui": "^0.43.1-next.5",
+    "@rango-dev/wallets-react": "^0.27.1-next.11",
+    "@rango-dev/wallets-shared": "^0.41.1-next.4",
     "rango-types": "^0.1.78"
   },
   "publishConfig": {
