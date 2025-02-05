@@ -11,7 +11,7 @@ export async function isReleaseTagExistFor(pkg) {
     .then((result) => result.stdout)
     .catch((err) => {
       throw new GitError(
-        `An error occured on getting tags \n ${err.message} \n ${err.stderr}`
+        `An error occurred on getting tags \n ${err.message} \n ${err.stderr}`
       );
     });
 
