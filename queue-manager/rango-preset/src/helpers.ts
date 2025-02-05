@@ -1,5 +1,5 @@
 /* eslint-disable destructuring/in-params */
-/* eslint-disable @typescript-eslint/no-magic-numbers */
+
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
@@ -110,6 +110,7 @@ export function claimQueue() {
  *
  */
 type TransactionData = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response?: any; // e.g. TransactionResponse in case of EVM transactions
   receiptReceived?: boolean; // e.g. is TransactionReceipt ready in case of EVM transactions
 };
@@ -411,7 +412,7 @@ export function setStepTransactionIds(
 ): void {
   const swap = getStorage().swapDetails;
   swap.hasAlreadyProceededToSign = null;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const currentStep = getCurrentStep(swap)!;
   currentStep.executedTransactionId = txId;
   currentStep.executedTransactionTime = new Date().getTime().toString();
@@ -522,7 +523,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -625,7 +626,6 @@ export function getRequiredWallet(swap: PendingSwap): {
   namespace: TargetNamespace | null;
   address: string | null;
 } {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const step = getCurrentStep(swap)!;
   const currentNamespace = getCurrentNamespaceOfOrNull(swap, step);
   if (!currentNamespace) {
@@ -794,7 +794,6 @@ export function onBlockForConnectWallet(
   const { ok, reason } = isRequiredWalletConnected(swap, context.state);
 
   if (!ok) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentStep = getCurrentStep(swap)!;
     const { type: walletType, address } = getRequiredWallet(swap);
     notifier({
@@ -1002,7 +1001,7 @@ export async function signTransaction(
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const currentStep = getCurrentStep(swap)!;
 
   const sourceWallet = getRelatedWallet(swap, currentStep);
@@ -1135,7 +1134,9 @@ export async function signTransaction(
           : undefined
       );
       // response used for evm transactions to get receipt and track replaced
-      response && setTransactionDataByHash(hash, { response });
+      if (response) {
+        setTransactionDataByHash(hash, { response });
+      }
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       next();
       onFinish();
