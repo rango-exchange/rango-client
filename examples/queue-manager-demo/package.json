@@ -21,7 +21,7 @@
   "dependencies": {
     "@rango-dev/provider-all": "^0.42.1-next.11",
     "@rango-dev/provider-xdefi": "^0.42.1-next.3",
-    "@rango-dev/queue-manager-rango-preset": "^0.42.1-next.3",
+    "@rango-dev/queue-manager-rango-preset": "^0.42.1-next.4",
     "@rango-dev/queue-manager-react": "^0.27.1-next.0",
     "@rango-dev/wallets-react": "^0.27.1-next.12",
     "@rango-dev/wallets-shared": "^0.41.1-next.4",
