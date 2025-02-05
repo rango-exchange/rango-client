@@ -3,9 +3,11 @@ import type {
   Accounts,
   AccountsWithActiveChain,
 } from '@rango-dev/wallets-core/namespaces/common';
+import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
 import { CAIP } from '@rango-dev/wallets-core/utils';
+import { Err, Ok } from 'ts-results';
 
 export function mapCaipNamespaceToLegacyNetworkName(
   chainId: CAIP.ChainIdParams | string
@@ -42,22 +44,19 @@ export function fromAccountIdToLegacyAddressFormat(account: string): string {
 /**
  * Getting a list of (lazy) promises and run them one after another.
  */
-export async function runSequentiallyWithoutFailure<
-  T extends () => Promise<unknown>
->(
-  promises: Array<T>
-): Promise<Array<T extends () => Promise<infer R> ? R : never>> {
-  const result = await promises.reduce(async (prev, task) => {
-    const previousResults = await prev;
+
+export async function runSequentiallyWithoutFailure<R>(
+  promises: Array<() => Promise<R>>
+): Promise<Result<R, unknown>[]> {
+  return promises.reduce(async (prevPromise, task) => {
+    const previousResults = await prevPromise;
     try {
       const taskResult = await task();
-
-      return [...previousResults, taskResult];
+      return [...previousResults, new Ok(taskResult)];
     } catch (error) {
-      return [...previousResults, error];
+      return [...previousResults, new Err(error)];
     }
-  }, Promise.resolve([]) as Promise<any>);
-  return result;
+  }, Promise.resolve<Result<R, unknown>[]>([]));
 }
 
 export function isConnectResultEvm(
