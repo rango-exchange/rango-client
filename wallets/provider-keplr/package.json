@@ -23,7 +23,7 @@
   "dependencies": {
     "@rango-dev/signer-cosmos": "^0.30.2-next.0",
     "@rango-dev/wallets-shared": "^0.41.1-next.3",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.78"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.11.21"

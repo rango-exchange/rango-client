@@ -37,7 +37,7 @@
   "dependencies": {
     "@rango-dev/wallets-core": "^0.40.1-next.10",
     "@rango-dev/wallets-shared": "^0.41.1-next.3",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.78"
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
