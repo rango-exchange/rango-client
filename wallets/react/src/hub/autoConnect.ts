@@ -12,6 +12,7 @@ import {
   legacyEagerConnectHandler,
   legacyIsEvmNamespace,
 } from '@rango-dev/wallets-core/legacy';
+import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
 
@@ -97,7 +98,7 @@ async function eagerConnect(
 
   const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
   connectNamespacesResult.forEach((result, index) => {
-    if (result instanceof Error) {
+    if (result.err) {
       failedNamespaces.push(targetNamespaces[index][0]);
     }
   });
@@ -109,16 +110,13 @@ async function eagerConnect(
     );
   }
 
-  const atLeastOneNamespaceConnectedSuccessfully =
-    connectNamespacesResult.length - failedNamespaces.length > 0;
+  const atLeastOneNamespaceConnectedSuccessfully = connectNamespacesResult.some(
+    (result) => result.ok
+  );
   if (!atLeastOneNamespaceConnectedSuccessfully) {
     throw new Error(`No namespace connected for ${type}`);
   }
-
-  const successfulResult = connectNamespacesResult.filter(
-    (result) => !(result instanceof Error)
-  );
-  return successfulResult;
+  return Result.all(...connectNamespacesResult).unwrap();
 }
 
 /*
@@ -142,7 +140,7 @@ export async function autoConnect(deps: {
   const walletsToRemoveFromPersistance: string[] = [];
 
   if (walletIds.length) {
-    const eagerConnectQueue: any[] = [];
+    const eagerConnectQueue: unknown[] = [];
 
     // Run `.connect` if `.canEagerConnect` returns `true`.
     walletIds.forEach((providerName) => {
@@ -157,10 +155,10 @@ export async function autoConnect(deps: {
 
       const legacyProvider = getLegacyProvider(providerName);
 
-      let legacyInstance: any;
+      let legacyInstance: unknown;
       try {
         legacyInstance = legacyProvider.getInstance();
-      } catch (e) {
+      } catch {
         console.warn(
           "It seems instance isn't available yet for auto connect. This can happen when extension not loaded yet (sometimes when opening browser for first time) or extension is disabled. Desired wallet:",
           providerName
