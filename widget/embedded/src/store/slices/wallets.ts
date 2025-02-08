@@ -545,28 +545,21 @@ export const createWalletsSlice: StateCreator<
           if (asset.blockchain === wallet.chain) {
             const token = get().findToken(asset);
 
-            if (!!token) {
-              const amount = balance.amount
-                ? new BigNumber(balance.amount).shiftedBy(-balance.decimals)
-                : ZERO;
+            const amount = balance.amount
+              ? new BigNumber(balance.amount).shiftedBy(-balance.decimals)
+              : ZERO;
 
-              output.push({
-                chain: wallet.chain,
-                symbol: token.symbol,
-                ticker: token.symbol,
-                address: token.address,
-                rawAmount: balance.amount,
-                decimal: balance.decimals,
-                amount: amount.toString(),
-                logo: token.image,
-                usdPrice: token.usdPrice,
-              });
-            } else {
-              console.debug(
-                "Looking for asset but it couldn't be found in tokens store. May not be provided in meta.'",
-                asset
-              );
-            }
+            output.push({
+              chain: wallet.chain,
+              symbol: asset.symbol,
+              ticker: asset.symbol,
+              address: asset.address,
+              rawAmount: balance.amount,
+              decimal: balance.decimals,
+              amount: amount.toString(),
+              logo: token?.image || null,
+              usdPrice: token?.usdPrice || null,
+            });
           }
 
           return output;
