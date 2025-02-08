@@ -216,13 +216,15 @@ export function detectMobileScreens(): boolean {
  */
 
 export function splitWalletNetwork(input: string): string[] {
-  const removedNullInput = input?.split('-null').join('');
-  const removedAddressInput = removedNullInput?.split(':')[0] || '';
+  const removedAddressInput = input?.split(':')[0] || '';
   const splittedInput = removedAddressInput.split('-');
   const network = splittedInput[splittedInput.length - 1];
   const walletNetwork = splittedInput.slice(0, -1);
 
-  if (walletNetwork[walletNetwork.length - 1] === network) {
+  if (
+    walletNetwork[walletNetwork.length - 1] === network ||
+    walletNetwork[walletNetwork.length - 1] === 'null'
+  ) {
     walletNetwork.pop();
   }
   const wallet = walletNetwork.join('-');
