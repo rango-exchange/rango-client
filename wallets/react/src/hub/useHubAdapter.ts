@@ -236,11 +236,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       );
 
       const allResult = Result.all(...connectResults);
-      if (allResult.err) {
+      if (
+        Result.all(...connectResults).err &&
+        !successfullyConnectedNamespaces.length
+      ) {
         throw allResult.val;
       }
 
-      return allResult.unwrap();
+      return Result.all(
+        ...connectResults.filter((result) => !result.err)
+      ).unwrap();
     },
     async disconnect(type) {
       const wallet = getHub().get(type);
