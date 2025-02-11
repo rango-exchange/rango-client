@@ -1,5 +1,5 @@
 import type { AppStoreState } from './types';
-import type { Token } from 'rango-sdk';
+import type { Token, WalletDetail } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import BigNumber from 'bignumber.js';
@@ -63,6 +63,17 @@ export interface DeprecatedWalletDetail extends ConnectedWallet {
   balances: DeprecatedTokenBalance[] | null;
 }
 
+function matchWalletDetailsWithConnectedWallet(
+  connectedWallet: ConnectedWallet,
+  walletsDetails: WalletDetail[]
+): WalletDetail | undefined {
+  return walletsDetails.find(
+    (walletDetails) =>
+      connectedWallet.address === walletDetails.address &&
+      connectedWallet.chain === walletDetails.blockChain
+  );
+}
+
 export interface WalletsSlice {
   _balances: BalanceState;
   _aggregatedBalances: AggregatedBalanceState;
@@ -71,7 +82,10 @@ export interface WalletsSlice {
 
   setConnectedWalletAsRefetching: (walletType: string) => void;
   setConnectedWalletHasError: (walletType: string) => void;
-  setConnectedWalletRetrievedData: (walletType: string) => void;
+  setConnectedWalletRetrievedData: (
+    walletType: string,
+    walletsDetails: WalletDetail[]
+  ) => void;
   removeBalancesForWallet: (
     walletType: string,
     options?: {
@@ -136,7 +150,10 @@ export const createWalletsSlice: StateCreator<
       };
     });
   },
-  setConnectedWalletRetrievedData: (walletType: string) => {
+  setConnectedWalletRetrievedData: (
+    walletType: string,
+    walletsDetails: WalletDetail[]
+  ) => {
     set((state) => {
       return {
         fetchingWallets: false,
@@ -146,6 +163,11 @@ export const createWalletsSlice: StateCreator<
               ...connectedWallet,
               loading: false,
               error: false,
+              explorerUrl:
+                matchWalletDetailsWithConnectedWallet(
+                  connectedWallet,
+                  walletsDetails
+                )?.explorerUrl || connectedWallet.explorerUrl,
             };
           }
 
@@ -415,12 +437,12 @@ export const createWalletsSlice: StateCreator<
     }));
     const response = await httpService().getWalletsDetails(addressesToFetch);
 
-    const listWalletsWithBalances = response.wallets;
+    const walletsDetails = response.wallets;
 
-    if (listWalletsWithBalances) {
+    if (walletsDetails) {
       const { retryOnFailedBalances = true } = options || {};
       if (retryOnFailedBalances) {
-        const failedWallets: Wallet[] = listWalletsWithBalances
+        const failedWallets: Wallet[] = walletsDetails
           .filter((wallet) => wallet.failed)
           .map((wallet) => ({
             chain: wallet.blockChain,
@@ -437,7 +459,7 @@ export const createWalletsSlice: StateCreator<
       let nextBalances: BalanceState = {};
       let nextAggregatedBalances: AggregatedBalanceState =
         get()._aggregatedBalances;
-      listWalletsWithBalances.forEach((wallet) => {
+      walletsDetails.forEach((wallet) => {
         if (wallet.failed) {
           return;
         }
@@ -463,7 +485,7 @@ export const createWalletsSlice: StateCreator<
         _aggregatedBalances: nextAggregatedBalances,
       }));
 
-      get().setConnectedWalletRetrievedData(walletType);
+      get().setConnectedWalletRetrievedData(walletType, walletsDetails);
     } else {
       get().setConnectedWalletHasError(walletType);
       throw new Error(
@@ -529,7 +551,6 @@ export const createWalletsSlice: StateCreator<
 
     return balancesForTargetWalletAddress;
   },
-
   getConnectedWalletsDetails: () => {
     const connectedWallets = get().connectedWallets;
     return connectedWallets.map((wallet) => {
