@@ -442,6 +442,11 @@ export const createWalletsSlice: StateCreator<
           return;
         }
 
+        // Remove old balances for current wallet and blockchain
+        get().removeBalancesForWallet(walletType, {
+          chains: [wallet.blockChain],
+        });
+
         const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
 
         nextAggregatedBalances = updateAggregatedBalanceStateForNewAccount(
