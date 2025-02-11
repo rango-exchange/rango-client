@@ -63,7 +63,7 @@ export function WalletList(props: PropTypes) {
     try {
       await suggestAndConnect(wallet.walletType, wallet.chain);
       setAddingExperimentalChainStatus('completed');
-    } catch (e) {
+    } catch {
       setAddingExperimentalChainStatus('rejected');
     }
   };

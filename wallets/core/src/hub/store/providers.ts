@@ -4,6 +4,7 @@ import type { StateCreator } from 'zustand';
 
 import { produce } from 'immer';
 
+import { ConsumableEvents, type ProviderDetectedEvent } from './events.js';
 import { guessProviderStateSelector, type State } from './mod.js';
 
 type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
@@ -25,19 +26,26 @@ interface ProviderData {
   installed: boolean;
 }
 
+interface ProviderItem {
+  config: ProviderConfig;
+  data: ProviderData;
+  error: unknown;
+}
+
 type ProviderState = {
-  list: Record<
-    string,
-    {
-      config: ProviderConfig;
-      data: ProviderData;
-      error: unknown;
-    }
-  >;
+  events: ConsumableEvents;
+  list: Record<string, ProviderItem>;
 };
 interface ProviderActions {
   addProvider: (id: string, config: ProviderConfig) => void;
   updateStatus: <K extends keyof ProviderData>(
+    id: string,
+    key: K,
+    value: ProviderData[K]
+  ) => void;
+
+  _produceEventsWhenUpdatingStatus: <K extends keyof ProviderData>(
+    provider: ProviderItem,
     id: string,
     key: K,
     value: ProviderData[K]
@@ -56,6 +64,8 @@ export type ProviderStore = ProviderState & ProviderActions & ProviderSelectors;
 type ProvidersStateCreator = StateCreator<State, [], [], ProviderStore>;
 
 const providersStore: ProvidersStateCreator = (set, get) => ({
+  events: new ConsumableEvents(),
+
   list: {},
   addProvider: (id, config) => {
     const item = {
@@ -73,9 +83,12 @@ const providersStore: ProvidersStateCreator = (set, get) => ({
     );
   },
   updateStatus: (id, key, value) => {
-    if (!get().providers.list[id]) {
+    const provider = get().providers.list[id];
+    if (!provider) {
       throw new Error(`No namespace namespace with '${id}' found.`);
     }
+
+    get().providers._produceEventsWhenUpdatingStatus(provider, id, key, value);
 
     set(
       produce((state: State) => {
@@ -85,6 +98,17 @@ const providersStore: ProvidersStateCreator = (set, get) => ({
   },
   guessNamespacesState: (providerId: string): InternalProviderState => {
     return guessProviderStateSelector(get(), providerId);
+  },
+
+  _produceEventsWhenUpdatingStatus: (_provider, id, key, _value) => {
+    if (key === 'installed') {
+      const event: ProviderDetectedEvent = {
+        type: 'provider_detected',
+        provider: id,
+      };
+
+      get().providers.events.push(event);
+    }
   },
 });
 

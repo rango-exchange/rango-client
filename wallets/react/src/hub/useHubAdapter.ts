@@ -24,8 +24,8 @@ import {
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
-  checkHubStateAndTriggerEvents,
   getLegacyProvider,
+  mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
 } from './utils.js';
@@ -86,19 +86,24 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
 
-    getStore().subscribe((curr, prev) => {
-      if (dataRef.current.onUpdateState) {
-        checkHubStateAndTriggerEvents(
-          getHub(),
-          curr,
-          prev,
-          dataRef.current.onUpdateState,
-          dataRef.current.allVersionedProviders,
-          dataRef.current.allBlockChains
-        );
-      }
-      rerender((currentRender) => currentRender + 1);
-    });
+    getStore()
+      .subscribe((event) => {
+        if (dataRef.current.onUpdateState) {
+          try {
+            mapHubEventsToLegacy(
+              getHub(),
+              event,
+              dataRef.current.onUpdateState,
+              dataRef.current.allVersionedProviders,
+              dataRef.current.allBlockChains
+            );
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        rerender((currentRender) => currentRender + 1);
+      })
+      .flushEvents();
   }, []);
 
   useAutoConnect({
