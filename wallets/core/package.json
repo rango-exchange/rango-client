@@ -19,6 +19,10 @@
       "types": "./dist/utils/mod.d.ts",
       "default": "./dist/utils/mod.js"
     },
+    "./store": {
+      "types": "./dist/hub/store/mod.d.ts",
+      "default": "./dist/hub/store/mod.js"
+    },
     "./namespaces/common": {
       "types": "./dist/namespaces/common/mod.d.ts",
       "default": "./dist/namespaces/common/mod.js"
@@ -38,7 +42,7 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

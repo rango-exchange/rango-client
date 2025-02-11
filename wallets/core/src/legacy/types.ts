@@ -65,6 +65,9 @@ export enum Networks {
   Unknown = 'Unkown',
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type NamespaceData = {
   namespace: Namespace;
   derivationPath?: string;
@@ -127,10 +130,10 @@ export type State = {
 export type ConnectResult = {
   accounts: string[] | null;
   network: Network | null;
-  provider: any;
+  provider: InstanceType;
 };
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };
 
 export enum Events {
   CONNECTED = 'connected',
@@ -139,6 +142,8 @@ export enum Events {
   INSTALLED = 'installed',
   ACCOUNTS = 'accounts',
   NETWORK = 'network',
+  // Hub only events
+  NAMESPACE_DISCONNECTED = 'namespace_disconnected',
 }
 
 export type ProviderConnectResult = {
@@ -148,7 +153,7 @@ export type ProviderConnectResult = {
 
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   getState: () => WalletState;
   /**
@@ -162,29 +167,31 @@ export type GetInstanceOptions = {
 };
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 
 export type Connect = (options: {
-  instance: any;
+  instance: InstanceType;
   network?: Network;
   meta: BlockchainMeta[];
   namespaces?: NamespaceData[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
-  instance: any;
+  instance: InstanceType;
   destroyInstance: () => void;
 }) => Promise<void>;
 
 type CleanupSubscribe = () => void;
 
 export type Subscribe = (options: {
-  instance: any;
+  instance: InstanceType;
   state: WalletState;
   meta: BlockchainMeta[];
   updateChainId: (chainId: string) => void;
@@ -194,7 +201,7 @@ export type Subscribe = (options: {
 }) => CleanupSubscribe | void;
 
 export type SwitchNetwork = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
@@ -203,7 +210,7 @@ export type SwitchNetwork = (options: {
 }) => Promise<void>;
 
 export type Suggest = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
 }) => Promise<void>;
@@ -211,11 +218,11 @@ export type Suggest = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
-  provider: any;
+  provider: InstanceType;
 }) => boolean;
 
 export type CanEagerConnect = (options: {
-  instance: any;
+  instance: InstanceType;
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
@@ -227,7 +234,7 @@ export type EagerConnectResult<I = unknown> = {
 
 export interface WalletActions {
   connect: Connect;
-  getInstance: any;
+  getInstance: InstanceType;
   disconnect?: Disconnect;
   subscribe?: Subscribe;
   // unsubscribe, // coupled to subscribe.
@@ -235,7 +242,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => Promise<SignerFactory>;
+  getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;

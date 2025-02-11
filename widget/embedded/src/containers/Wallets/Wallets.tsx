@@ -77,10 +77,16 @@ function Main(props: PropsWithChildren<PropTypes>) {
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
-  const onUpdateState: EventHandler = (type, event, value, state, meta) => {
+  const onUpdateState: EventHandler = (type, event, value, state, info) => {
+    if (event === Events.NAMESPACE_DISCONNECTED) {
+      removeBalancesForWallet(type, {
+        namespaces: value,
+      });
+    }
+
     if (event === Events.ACCOUNTS) {
       const supportedChainNames: Network[] | null =
-        walletAndSupportedChainsNames(meta.supportedBlockchains);
+        walletAndSupportedChainsNames(info.supportedBlockchains);
 
       /*
        * When a wallet is connecting to an evm account, we will consider it as the account exists on other evm-compatible blockchains
@@ -88,48 +94,52 @@ function Main(props: PropsWithChildren<PropTypes>) {
        *
        * The logic here is for handling switching account functionality in wallets. when a wallet is switching to another account
        * we need to clean the balances for old accounts.
+       *
+       * Note: hub will do the cleanup on namespace diconnected event.
        */
-      const evmAccounts: string[] = [];
-      const nonEvmAccounts: string[] = [];
+      if (!info.isHub) {
+        const evmAccounts: string[] = [];
+        const nonEvmAccounts: string[] = [];
 
-      value?.forEach((account: string) => {
-        const { network } = readAccountAddress(account);
-        if (evmBasedChainNames.includes(network)) {
-          evmAccounts.push(account);
-        } else {
-          nonEvmAccounts.push(account);
-        }
-      });
+        value?.forEach((account: string) => {
+          const { network } = readAccountAddress(account);
+          if (evmBasedChainNames.includes(network)) {
+            evmAccounts.push(account);
+          } else {
+            nonEvmAccounts.push(account);
+          }
+        });
 
-      const previousAccounts = connectedWallets
-        .filter((wallet) => wallet.walletType === type)
-        .map((wallet) =>
-          formatAddressWithNetwork(wallet.address, wallet.chain)
-        );
-
-      if (previousAccounts.length > 0) {
-        if (evmAccounts.length > 0) {
-          // We use same logic for removing as we use for adding.
-          const data = prepareAccountsForWalletStore(
-            type,
-            evmAccounts,
-            evmBasedChainNames,
-            supportedChainNames,
-            meta.isContractWallet
+        const previousAccounts = connectedWallets
+          .filter((wallet) => wallet.walletType === type)
+          .map((wallet) =>
+            formatAddressWithNetwork(wallet.address, wallet.chain)
           );
 
-          removeBalancesForWallet(type, {
-            chains: data.map((account) => account.chain),
-          });
-        }
+        if (previousAccounts.length > 0) {
+          if (evmAccounts.length > 0) {
+            // We use same logic for removing as we use for adding.
+            const data = prepareAccountsForWalletStore(
+              type,
+              evmAccounts,
+              evmBasedChainNames,
+              supportedChainNames,
+              info.isContractWallet
+            );
 
-        if (nonEvmAccounts.length > 0) {
-          removeBalancesForWallet(type, {
-            chains: nonEvmAccounts.map((account) => {
-              const { network } = readAccountAddress(account);
-              return network;
-            }),
-          });
+            removeBalancesForWallet(type, {
+              chains: data.map((account) => account.chain),
+            });
+          }
+
+          if (nonEvmAccounts.length > 0) {
+            removeBalancesForWallet(type, {
+              chains: nonEvmAccounts.map((account) => {
+                const { network } = readAccountAddress(account);
+                return network;
+              }),
+            });
+          }
         }
       }
 
@@ -140,10 +150,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
           value,
           evmBasedChainNames,
           supportedChainNames,
-          meta.isContractWallet
+          info.isContractWallet
         );
         if (data.length) {
-          void newWalletConnected(data);
+          void newWalletConnected(data, info.namespace);
         }
       } else {
         disconnectWallet(type);
@@ -156,11 +166,15 @@ function Main(props: PropsWithChildren<PropTypes>) {
         }
       }
     }
-    if (
-      (event === Events.ACCOUNTS && state.connected) ||
-      // Hub works differently, and this check should be enough.
-      (event === Events.ACCOUNTS && meta.isHub)
-    ) {
+
+    /*
+     * TODO: not sure why we used `Events.Acccounts` for detecting if a provider gets connected or not, if we can use `CONNCECTED` for the legacy
+     * we can only rely Events.Connected and remove the legacy conidition
+     */
+    const isLegacyProviderConnected =
+      event === Events.ACCOUNTS && state.connected;
+    const isHubPorviderConnected = event === Events.CONNECTED && info.isHub;
+    if (isLegacyProviderConnected || isHubPorviderConnected) {
       const key = `${type}-${state.network}-${value}`;
 
       if (!!onConnectWalletHandler.current) {
@@ -181,7 +195,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
 
     // propagate updates for Dapps using external wallets
     if (props.onUpdateState) {
-      props.onUpdateState(type, event, value, state, meta);
+      props.onUpdateState(type, event, value, state, info);
     }
   };
   const isActiveTab = useUiStore.use.isActiveTab();

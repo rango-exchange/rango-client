@@ -7,6 +7,7 @@ import type {
   WalletConfig,
   WalletType,
 } from './types.js';
+import type { Namespace } from '../namespaces/common/types.js';
 import type { BlockchainMeta } from 'rango-types';
 
 import {
@@ -20,6 +21,7 @@ import { eagerConnectHandler } from './utils.js';
 export type EventHandler = (
   type: WalletType,
   event: Events,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
   coreState: State,
   info: EventInfo
@@ -28,8 +30,11 @@ export type EventHandler = (
 export type EventInfo = {
   supportedBlockchains: BlockchainMeta[];
   isContractWallet: boolean;
-  // This is for Hub and be able to make it compatible with legacy behavior.
+
+  // Hub fields
   isHub: boolean;
+  // will be set alongside ACCOUNT event
+  namespace?: Namespace;
 };
 
 export interface State {
@@ -49,6 +54,7 @@ export interface Options {
   handler: EventHandler;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class Wallet<InstanceType = any> {
   public provider: InstanceType | null;
   private actions: WalletActions;
@@ -298,13 +304,13 @@ class Wallet<InstanceType = any> {
     });
   }
 
-  async getSigners(provider: any) {
+  async getSigners(provider: InstanceType) {
     return await this.actions.getSigners(provider);
   }
   getWalletInfo(allBlockChains: BlockchainMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
-  canSwitchNetworkTo(network: Network, provider: any) {
+  canSwitchNetworkTo(network: Network, provider: InstanceType) {
     const switchTo = this.actions.canSwitchNetworkTo;
     if (!switchTo) {
       return false;
@@ -331,7 +337,7 @@ class Wallet<InstanceType = any> {
         this.setInstalledAs(true);
       }
     } else if (needsCheckInstallation(this.options)) {
-      this.actions.getInstance().then((data: any) => {
+      this.actions.getInstance().then((data: unknown) => {
         if (data) {
           this.setInstalledAs(true);
         }
@@ -339,7 +345,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setProvider(value: any) {
+  setProvider(value: InstanceType | null) {
     this.provider = value;
     if (!!value && !!this.actions.subscribe) {
       const cleanup = this.actions.subscribe({
@@ -395,7 +401,7 @@ class Wallet<InstanceType = any> {
      * We will notify handler after updating all the states.
      * Because when we call `handler` it will has latest states.
      */
-    const updates: [Events, any][] = [];
+    const updates: [Events, unknown][] = [];
 
     if (typeof states.connected !== 'undefined') {
       this.state.connected = states.connected;
