@@ -4,6 +4,7 @@ import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
   LegacyNetworks.POLYGON,
+  LegacyNetworks.BASE,
 ];
 
 export const WALLET_ID = 'phantom';
