@@ -1,4 +1,5 @@
 import type { AppStoreState } from './types';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { Token, WalletDetail } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
@@ -45,6 +46,7 @@ export interface ConnectedWallet extends Wallet {
   selected: boolean;
   loading: boolean;
   error: boolean;
+  namespace?: Namespace;
 }
 
 interface DeprecatedTokenBalance {
@@ -90,16 +92,20 @@ export interface WalletsSlice {
     walletType: string,
     options?: {
       chains?: string[];
+      namespaces?: Namespace[];
     }
   ) => void;
-  addConnectedWallet: (accounts: Wallet[]) => void;
+  addConnectedWallet: (accounts: Wallet[], namespace?: Namespace) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
   ) => void;
   /**
    * Add new accounts to store and fetch balances for them.
    */
-  newWalletConnected: (accounts: Wallet[]) => Promise<void>;
+  newWalletConnected: (
+    accounts: Wallet[],
+    namespace?: Namespace
+  ) => Promise<void>;
   /**
    * Disconnect a wallet and clean up balances after that.
    */
@@ -194,7 +200,7 @@ export const createWalletsSlice: StateCreator<
       };
     });
   },
-  addConnectedWallet: (accounts: Wallet[]) => {
+  addConnectedWallet: (accounts, namespace) => {
     /*
      * When we are going to add a new account, there are two thing that can be happens:
      * 1. Wallet hasn't add yet.
@@ -214,33 +220,35 @@ export const createWalletsSlice: StateCreator<
     );
 
     if (walletsNeedToBeAdded.length > 0) {
-      const newConnectedWallets = walletsNeedToBeAdded.map((account) => {
-        /*
-         * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
-         * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
-         */
-        const shouldMarkWalletAsSelected = !connectedWallets.some(
-          (connectedWallet) =>
-            connectedWallet.chain === account.chain &&
-            connectedWallet.selected &&
-            /**
-             * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
-             * This check is there to make sure the chosen wallet doesn't end up unselected.
-             */
-            connectedWallet.walletType !== account.walletType
-        );
+      const newConnectedWallets: ConnectedWallet[] = walletsNeedToBeAdded.map(
+        (account) => {
+          /*
+           * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
+           * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
+           */
+          const shouldMarkWalletAsSelected = !connectedWallets.some(
+            (connectedWallet) =>
+              connectedWallet.chain === account.chain &&
+              connectedWallet.selected &&
+              /**
+               * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
+               * This check is there to make sure the chosen wallet doesn't end up unselected.
+               */
+              connectedWallet.walletType !== account.walletType
+          );
 
-        return {
-          address: account.address,
-          chain: account.chain,
-          explorerUrl: null,
-          walletType: account.walletType,
-          selected: shouldMarkWalletAsSelected,
-
-          loading: false,
-          error: false,
-        };
-      });
+          return {
+            address: account.address,
+            chain: account.chain,
+            explorerUrl: null,
+            walletType: account.walletType,
+            selected: shouldMarkWalletAsSelected,
+            namespace: namespace,
+            loading: false,
+            error: false,
+          };
+        }
+      );
 
       set((state) => {
         /*
@@ -295,13 +303,13 @@ export const createWalletsSlice: StateCreator<
       connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
     });
   },
-  newWalletConnected: async (accounts) => {
+  newWalletConnected: async (accounts, namespace) => {
     eventEmitter.emit(WidgetEvents.WalletEvent, {
       type: WalletEventTypes.CONNECT,
       payload: { walletType: accounts[0].walletType, accounts },
     });
 
-    get().addConnectedWallet(accounts);
+    get().addConnectedWallet(accounts, namespace);
 
     void get().fetchBalances(accounts);
   },
@@ -332,6 +340,15 @@ export const createWalletsSlice: StateCreator<
       });
     }
 
+    if (!!options?.namespaces && options.namespaces.length > 0) {
+      walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+        if (wallet.namespace) {
+          return options.namespaces?.includes(wallet.namespace);
+        }
+        return false;
+      });
+    }
+
     const nextBalancesState: BalanceState = {};
     let nextAggregatedBalanceState: AggregatedBalanceState =
       get()._aggregatedBalances;
@@ -350,18 +367,17 @@ export const createWalletsSlice: StateCreator<
           }) === key
       );
 
-      if (!shouldBalanceBeRemoved) {
-        nextBalancesState[key] = currentBalancesState[key];
-      }
-
       // if a balance should be removed, we need to remove its caches in _aggregatedBalances as wel.
       if (shouldBalanceBeRemoved) {
         nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
           nextAggregatedBalanceState,
           key
         );
+      } else {
+        nextBalancesState[key] = currentBalancesState[key];
       }
     });
+
     set({
       _balances: nextBalancesState,
       _aggregatedBalances: nextAggregatedBalanceState,

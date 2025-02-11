@@ -1,20 +1,14 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { Hub, Provider, State } from '@rango-dev/wallets-core';
+import type { Hub, Provider } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
+import type { Event } from '@rango-dev/wallets-core/store';
 
-import {
-  guessProviderStateSelector,
-  namespaceStateSelector,
-} from '@rango-dev/wallets-core';
 import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
-import {
-  generateStoreId,
-  type VersionedProviders,
-} from '@rango-dev/wallets-core/utils';
+import { type VersionedProviders } from '@rango-dev/wallets-core/utils';
 import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
@@ -74,178 +68,163 @@ const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
   HUB_LAST_CONNECTED_WALLETS
 );
 
-export function checkHubStateAndTriggerEvents(
+export function mapHubEventsToLegacy(
   hub: Hub,
-  currentState: State,
-  previousState: State,
+  event: Event,
   onUpdateState: WalletEventHandler,
   allProviders: VersionedProviders[],
   allBlockChains: ProviderProps['allBlockChains']
 ): void {
-  hub.getAll().forEach((provider, providerId) => {
-    const currentProviderState = guessProviderStateSelector(
-      currentState,
-      providerId
+  let legacyProvider;
+  try {
+    legacyProvider = getLegacyProvider(allProviders, event.provider);
+  } catch (e) {
+    console.warn(
+      'Having legacy provider is required for including some information like supported chain. ',
+      e
     );
-    const previousProviderState = guessProviderStateSelector(
-      previousState,
-      providerId
+  }
+
+  const provider = hub.get(event.provider);
+  if (!provider) {
+    throw new Error(
+      "Currently all the events have assigned to a provider. The event doesn't include one.",
+      {
+        cause: event,
+      }
     );
+  }
 
-    let accounts: string[] | null = [];
-    /*
-     * We don't rely `accounts` to make sure we will trigger proper event on this case:
-     * previous value: [0x...]
-     * current value: []
-     */
-    let hasAccountChanged = false;
-    let hasNetworkChanged = false;
-    let hasProviderDisconnected = false;
-    let anyNamespaceIsConnected = false;
-    // It will pick the last network from namespaces.
-    let maybeNetwork = null;
-    const disconnectedNamespacesIds: string[] = [];
+  // @ts-expect-error for those events that doesn't have namespace, it will be undefinded
+  const namespaceId: string | undefined = event.namespace;
 
-    provider.getAll().forEach((namespace) => {
-      const storeId = generateStoreId(providerId, namespace.namespaceId);
-      const currentNamespaceState = namespaceStateSelector(
-        currentState,
-        storeId
+  const namespace = namespaceId
+    ? provider.findByNamespace(namespaceId)
+    : undefined;
+  let accounts: string[] | null = null;
+  let network: string | null = null;
+
+  if (namespace) {
+    const [getNamespaceState] = namespace.state();
+    accounts = getNamespaceState().accounts;
+    network = getNamespaceState().network;
+  }
+
+  const [getProviderState] = provider.state();
+  const coreState = {
+    connected: getProviderState().connected,
+    connecting: getProviderState().connecting,
+    installed: getProviderState().installed,
+    accounts,
+    network,
+    reachable: true,
+  };
+
+  const eventInfo = {
+    supportedBlockchains:
+      legacyProvider?.getWalletInfo(allBlockChains || []).supportedChains || [],
+    isContractWallet: false,
+    isHub: true,
+    namespace: namespaceId,
+  };
+
+  switch (event.type) {
+    case 'provider_detected':
+      onUpdateState(
+        event.provider,
+        Events.INSTALLED,
+        true,
+        coreState,
+        eventInfo
       );
-      const previousNamespaceState = namespaceStateSelector(
-        previousState,
-        storeId
+      break;
+    case 'provider_connecting':
+      onUpdateState(
+        event.provider,
+        Events.CONNECTING,
+        event.value,
+        coreState,
+        eventInfo
+      );
+      break;
+    case 'provider_connected':
+      onUpdateState(
+        event.provider,
+        Events.CONNECTED,
+        true,
+        coreState,
+        eventInfo
+      );
+      break;
+    case 'provider_disconnected':
+      onUpdateState(
+        event.provider,
+        Events.CONNECTED,
+        false,
+        coreState,
+        eventInfo
+      );
+      onUpdateState(
+        event.provider,
+        Events.ACCOUNTS,
+        null,
+        coreState,
+        eventInfo
+      );
+      break;
+    case 'namespace_disconnected':
+      lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+        event.provider,
+        [event.namespace]
       );
 
-      if (currentNamespaceState.network !== null) {
-        maybeNetwork = currentNamespaceState.network;
-      }
-
-      // Check for network
-      if (currentNamespaceState.network !== previousNamespaceState.network) {
-        hasNetworkChanged = true;
-      }
-
-      // TODO: `accounts` has been frozen, we should check and find where object.freeze() is calling.
-
-      // Check for accounts
-      if (currentNamespaceState.accounts) {
-        anyNamespaceIsConnected = true;
-        if (
-          previousNamespaceState.accounts?.slice().sort().toString() !==
-          currentNamespaceState.accounts?.slice().sort().toString()
-        ) {
-          hasAccountChanged = true;
+      onUpdateState(
+        event.provider,
+        Events.NAMESPACE_DISCONNECTED,
+        event.namespace,
+        coreState,
+        {
+          ...eventInfo,
+          namespace: event.namespace,
         }
-        const formattedAddresses = currentNamespaceState.accounts.map(
+      );
+      // onUpdateState(event.provider, Events.ACCOUNTS, null, coreState, eventInfo);
+      break;
+    case 'namespace_connected':
+    case 'namespace_account_switched':
+      {
+        if (event.type === 'namespace_account_switched') {
+          onUpdateState(
+            event.provider,
+            Events.NAMESPACE_DISCONNECTED,
+            event.namespace,
+            coreState,
+            eventInfo
+          );
+        }
+
+        const formattedAddresses = event.accounts.map(
           fromAccountIdToLegacyAddressFormat
         );
-
-        if (accounts) {
-          accounts = [...accounts, ...formattedAddresses];
-        } else {
-          accounts = [...formattedAddresses];
-        }
-      } else if (!!previousNamespaceState.accounts) {
-        /*
-         * If previously namespace was connected and now we can not get any accounts from the namespace, the namespace should be considered as disconnected.
-         * For example switching to an account which did not permitted to connect yet or maybe the account does not support the requested namespace.
-         */
-        disconnectedNamespacesIds.push(namespace.namespaceId);
-        hasAccountChanged = true;
+        onUpdateState(
+          event.provider,
+          Events.ACCOUNTS,
+          formattedAddresses,
+          coreState,
+          {
+            ...eventInfo,
+            namespace: event.namespace,
+          }
+        );
       }
-    });
-
-    if (disconnectedNamespacesIds.length > 0) {
-      lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
-        providerId,
-        disconnectedNamespacesIds
-      );
-    }
-
-    if (disconnectedNamespacesIds.length > 0 && !anyNamespaceIsConnected) {
-      accounts = null;
-      hasProviderDisconnected = true;
-    }
-
-    let legacyProvider;
-    try {
-      legacyProvider = getLegacyProvider(allProviders, providerId);
-    } catch (e) {
-      console.warn(
-        'Having legacy provider is required for including some information like supported chain. ',
-        e
-      );
-    }
-
-    const coreState = {
-      connected: currentProviderState.connected,
-      connecting: currentProviderState.connecting,
-      installed: currentProviderState.installed,
-      accounts: accounts,
-      network: maybeNetwork,
-      reachable: true,
-    };
-
-    const eventInfo = {
-      supportedBlockchains:
-        legacyProvider?.getWalletInfo(allBlockChains || []).supportedChains ||
-        [],
-      isContractWallet: false,
-      isHub: true,
-    };
-
-    if (previousProviderState.installed !== currentProviderState.installed) {
-      onUpdateState(
-        providerId,
-        Events.INSTALLED,
-        currentProviderState.installed,
-        coreState,
-        eventInfo
-      );
-    }
-    if (previousProviderState.connecting !== currentProviderState.connecting) {
-      onUpdateState(
-        providerId,
-        Events.CONNECTING,
-        currentProviderState.connecting,
-        coreState,
-        eventInfo
-      );
-    }
-    if (previousProviderState.connected !== currentProviderState.connected) {
-      onUpdateState(
-        providerId,
-        Events.CONNECTED,
-        currentProviderState.connected,
-        coreState,
-        eventInfo
-      );
-    }
-    if (hasAccountChanged) {
-      // This event is triggered to clear wallet state and after that set new accounts for wallet
-      onUpdateState(providerId, Events.ACCOUNTS, null, coreState, eventInfo);
-      onUpdateState(
-        providerId,
-        Events.ACCOUNTS,
-        accounts,
-        coreState,
-        eventInfo
-      );
-    }
-    if (hasProviderDisconnected) {
-      onUpdateState(providerId, Events.ACCOUNTS, null, coreState, eventInfo);
-    }
-    if (hasNetworkChanged) {
-      onUpdateState(
-        providerId,
-        Events.NETWORK,
-        maybeNetwork,
-        coreState,
-        eventInfo
-      );
-    }
-  });
+      break;
+    case 'namespace_network_switched':
+      onUpdateState(event.provider, Events.NETWORK, event.network, coreState, {
+        ...eventInfo,
+        namespace: event.namespace,
+      });
+      break;
+  }
 }
 
 export function getAllLegacyProviders(
