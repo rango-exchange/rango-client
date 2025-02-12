@@ -93,6 +93,7 @@
     "esbuild-plugins-node-modules-polyfill": "^1.6.6",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-config-rango": "^0.0.1",
     "eslint-plugin-destructuring": "^2.2.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-id-attribute-enforcement": "^1.0.2",
