@@ -83,6 +83,12 @@ const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  // TODO: from rango-types
+  const sui = allBlockChains.filter(
+    (blockchain) =>
+      // @ts-expect-error will be added to rango-types
+      blockchain.type === 'MOVE'
+  );
   const solana = solanaBlockchain(allBlockChains);
   const evms = allBlockChains.filter(
     (chain): chain is EvmBlockchainMeta =>
@@ -106,6 +112,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       ...evms.filter((chain) =>
         EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
       ),
+      ...sui,
     ],
 
     needsNamespace: {
@@ -120,6 +127,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+        },
+        {
+          label: 'Sui',
+          value: 'Sui',
+          id: 'SUI',
         },
       ],
     },

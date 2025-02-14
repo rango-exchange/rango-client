@@ -75,69 +75,6 @@ export enum WalletTypes {
   TON_CONNECT = 'tonconnect',
 }
 
-export const namespaces: Record<
-  Namespace,
-  { mainBlockchain: string; title: string; derivationPaths?: DerivationPath[] }
-> = {
-  EVM: {
-    mainBlockchain: 'ETH',
-    title: 'Ethereum',
-    derivationPaths: [
-      {
-        id: 'metamask',
-        label: `Metamask (m/44'/60'/0'/0/index)`,
-        generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
-      },
-      {
-        id: 'ledgerLive',
-        label: `LedgerLive (m/44'/60'/index'/0/0)`,
-        generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
-      },
-      {
-        id: 'legacy',
-        label: `Legacy (m/44'/60'/0'/index)`,
-        generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
-      },
-    ],
-  },
-  Solana: {
-    mainBlockchain: 'SOLANA',
-    title: 'Solana',
-    derivationPaths: [
-      {
-        id: `(m/44'/501'/index')`,
-        label: `(m/44'/501'/index')`,
-        generateDerivationPath: (index: string) => `44'/501'/${index}'`,
-      },
-      {
-        id: `(m/44'/501'/0'/index)`,
-        label: `(m/44'/501'/0'/index)`,
-        generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
-      },
-    ],
-  },
-  Cosmos: {
-    mainBlockchain: 'COSMOS',
-    title: 'Cosmos',
-  },
-  UTXO: {
-    mainBlockchain: 'BTC',
-    title: 'Utxo',
-  },
-  Starknet: {
-    title: 'Starknet',
-    mainBlockchain: 'STARKNET',
-  },
-  Tron: {
-    title: 'Tron',
-    mainBlockchain: 'TRON',
-  },
-  Ton: {
-    title: 'Ton',
-    mainBlockchain: 'TON',
-  },
-};
-
 export type DerivationPath = {
   id: string;
   label: string;

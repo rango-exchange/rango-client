@@ -3,6 +3,7 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 import { info, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
+import { sui } from './namespaces/sui.js';
 import { phantom as phantomInstance } from './utils.js';
 
 const buildProvider = () =>
@@ -18,6 +19,7 @@ const buildProvider = () =>
     .config('info', info)
     .add('solana', solana)
     .add('evm', evm)
+    .add('sui', sui)
     .build();
 
 export { buildProvider };
