@@ -75,6 +75,73 @@ export enum WalletTypes {
   TON_CONNECT = 'tonconnect',
 }
 
+export const namespaces: Record<
+  Namespace,
+  { mainBlockchain: string; title: string; derivationPaths?: DerivationPath[] }
+> = {
+  EVM: {
+    mainBlockchain: 'ETH',
+    title: 'Ethereum',
+    derivationPaths: [
+      {
+        id: 'metamask',
+        label: `Metamask (m/44'/60'/0'/0/index)`,
+        generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
+      },
+      {
+        id: 'ledgerLive',
+        label: `LedgerLive (m/44'/60'/index'/0/0)`,
+        generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
+      },
+      {
+        id: 'legacy',
+        label: `Legacy (m/44'/60'/0'/index)`,
+        generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
+      },
+    ],
+  },
+  Solana: {
+    mainBlockchain: 'SOLANA',
+    title: 'Solana',
+    derivationPaths: [
+      {
+        id: `(m/44'/501'/index')`,
+        label: `(m/44'/501'/index')`,
+        generateDerivationPath: (index: string) => `44'/501'/${index}'`,
+      },
+      {
+        id: `(m/44'/501'/0'/index)`,
+        label: `(m/44'/501'/0'/index)`,
+        generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
+      },
+    ],
+  },
+  Cosmos: {
+    mainBlockchain: 'COSMOS',
+    title: 'Cosmos',
+  },
+  UTXO: {
+    mainBlockchain: 'BTC',
+    title: 'Utxo',
+  },
+  Starknet: {
+    title: 'Starknet',
+    mainBlockchain: 'STARKNET',
+  },
+  Tron: {
+    title: 'Tron',
+    mainBlockchain: 'TRON',
+  },
+  Ton: {
+    title: 'Ton',
+    mainBlockchain: 'TON',
+  },
+  Sui: {
+    mainBlockchain: 'SUI',
+    title: 'Sui',
+  },
+};
+
 export type DerivationPath = {
   id: string;
   label: string;
@@ -151,9 +218,12 @@ export interface WalletConfig {
   isAsyncSwitchNetwork?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
@@ -161,12 +231,14 @@ export type GetInstanceOptions = {
 };
 
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 
 export type ProviderConnectResult = {
   accounts: string[];
@@ -180,4 +252,4 @@ export interface Wallet {
   info: Omit<WalletInfo, 'color'>;
 }
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };
