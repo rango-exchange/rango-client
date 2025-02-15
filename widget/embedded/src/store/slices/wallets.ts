@@ -6,6 +6,7 @@ import type { StateCreator } from 'zustand';
 import BigNumber from 'bignumber.js';
 
 import { ZERO } from '../../constants/numbers';
+import { BALANCE_SEPARATOR } from '../../constants/wallets';
 import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
 import {
@@ -28,11 +29,12 @@ type WalletAddress = string;
 type TokenAddress = string;
 type TokenSymbol = string;
 type BlockchainId = string;
-/** format: `BlockchainId-TokenAddress-TokenSymbol` */
-export type AssetKey = `${BlockchainId}-${TokenAddress}-${TokenSymbol}`;
-/** format: `BlockchainId-TokenAddress-TokenSymbol-WalletAddress` */
+/** format: `BlockchainId${BALANCE_SEPARATOR}TokenAddress${BALANCE_SEPARATOR}TokenSymbol` */
+export type AssetKey =
+  `${BlockchainId}${typeof BALANCE_SEPARATOR}${TokenAddress}${typeof BALANCE_SEPARATOR}${TokenSymbol}`;
+/** format: `BlockchainId${BALANCE_SEPARATOR}TokenAddress${BALANCE_SEPARATOR}TokenSymbol${BALANCE_SEPARATOR}WalletAddress` */
 export type BalanceKey =
-  `${BlockchainId}-${TokenAddress}-${TokenSymbol}-${WalletAddress}`;
+  `${BlockchainId}${typeof BALANCE_SEPARATOR}${TokenAddress}${typeof BALANCE_SEPARATOR}${TokenSymbol}${typeof BALANCE_SEPARATOR}${WalletAddress}`;
 
 export type BalanceState = {
   [key: BalanceKey]: Balance;
@@ -575,7 +577,8 @@ export const createWalletsSlice: StateCreator<
       (output, balanceKey) => {
         const balance = balances[balanceKey];
 
-        const [, , , balanceWalletAddreess] = balanceKey.split('-');
+        const [, , , balanceWalletAddreess] =
+          balanceKey.split(BALANCE_SEPARATOR);
         if (balanceWalletAddreess === address) {
           output[balanceKey] = balance;
         }
