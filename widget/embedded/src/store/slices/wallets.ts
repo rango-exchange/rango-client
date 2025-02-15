@@ -251,30 +251,48 @@ export const createWalletsSlice: StateCreator<
     }
   },
   fetchCustomTokensBalance: async (params) => {
-    const { tokens } = params;
-    const blockchainsAndAssets: { [key: string]: Asset[] } = {};
-    tokens.forEach((asset) => {
-      if (!blockchainsAndAssets[asset.blockchain]) {
-        blockchainsAndAssets[asset.blockchain] = [];
-      }
-      blockchainsAndAssets[asset.blockchain] =
-        blockchainsAndAssets[asset.blockchain].concat(asset);
-    });
+    const { tokens, connectedWallets } = params;
 
-    Object.keys(blockchainsAndAssets).forEach((blockchain) => {
-      const connectedWalletWithSameBlockchain = params.connectedWallets.filter(
-        (wallet) => wallet.chain === blockchain
-      );
-      connectedWalletWithSameBlockchain.forEach(async (wallet) => {
+    const tokensByBlockchain = tokens.reduce<{ [key: string]: Asset[] }>(
+      (acc, asset) => {
+        (acc[asset.blockchain] ||= []).push(asset);
+        return acc;
+      },
+      {}
+    );
+
+    const addedWallets = new Set<string>();
+
+    const tokensByWalletAddress = connectedWallets.reduce<{
+      [key: string]: Asset[];
+    }>((acc, wallet) => {
+      const key = `${wallet.address}-${wallet.chain}`;
+      if (addedWallets.has(key)) {
+        return acc;
+      }
+
+      addedWallets.add(key);
+      if (tokensByBlockchain[wallet.chain]) {
+        if (!acc[wallet.address]) {
+          acc[wallet.address] = [];
+        }
+        acc[wallet.address].push(...tokensByBlockchain[wallet.chain]);
+      }
+      return acc;
+    }, {});
+
+    Object.entries(tokensByWalletAddress).forEach(
+      async ([walletAddress, tokens]) => {
         try {
           const { balances } = await httpService().getMultipleTokenBalance({
-            assets: blockchainsAndAssets[blockchain].map((token) => ({
-              blockchain: token.blockchain,
-              address: token.address,
-              symbol: token.symbol,
+            assets: tokens.map(({ symbol, address, blockchain }) => ({
+              symbol,
+              address,
+              blockchain,
             })),
-            walletAddress: wallet.address,
+            walletAddress,
           });
+
           if (balances) {
             let nextBalances: BalanceState = get()._balances;
             let nextAggregatedBalances: AggregatedBalanceState =
@@ -282,9 +300,9 @@ export const createWalletsSlice: StateCreator<
 
             balances.forEach((balance) => {
               const WalletDetail = {
-                blockChain: wallet.chain,
+                blockChain: balance.asset.blockchain,
                 balances: [balance],
-                address: wallet.address,
+                address: walletAddress,
               };
 
               updateBalancesWithNewPrices(WalletDetail, nextBalances, get);
@@ -317,8 +335,8 @@ export const createWalletsSlice: StateCreator<
         } catch (error) {
           console.error(error);
         }
-      });
-    });
+      }
+    );
   },
   setWalletsAsSelected: (wallets) => {
     const nextConnectedWalletsWithUpdatedSelectedStatus =
