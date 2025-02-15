@@ -1,38 +1,39 @@
 import type { Balance } from '../../types';
 import type { AppStoreState } from '../app';
-import type {
-  AggregatedBalanceState,
-  AssetKey,
-  BalanceKey,
-  BalanceState,
-} from '../slices/wallets';
 import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 
 import { ZERO } from '../../constants/numbers';
+import { BALANCE_SEPARATOR } from '../../constants/wallets';
+import {
+  type AggregatedBalanceState,
+  type AssetKey,
+  type BalanceKey,
+  type BalanceState,
+} from '../slices/wallets';
 
 /**
  * Note: We need to use `symbol` as well since native coins and cosmos blockchains don't have `address`
- * output format: BlockchainId-TokenAddress-TokenSymbol
+ * output format: BlockchainId${BALANCE_SEPARATOR}TokenAddress${BALANCE_SEPARATOR}TokenSymbol
  */
 export function createAssetKey(asset: Asset): AssetKey {
-  return `${asset.blockchain}-${asset.address}-${asset.symbol}`;
+  return `${asset.blockchain}${BALANCE_SEPARATOR}${asset.address}${BALANCE_SEPARATOR}${asset.symbol}`;
 }
 
 /**
- * output format: BlockchainId-TokenAddress-TokenSymbol-WalletAddress
+ * output format: BlockchainId${BALANCE_SEPARATOR}TokenAddress${BALANCE_SEPARATOR}TokenSymbol${BALANCE_SEPARATOR}WalletAddress
  */
 export function createBalanceKey(
   accountAddress: string,
   asset: Asset
 ): BalanceKey {
   const assetKey = createAssetKey(asset);
-  return `${assetKey}-${accountAddress}`;
+  return `${assetKey}${BALANCE_SEPARATOR}${accountAddress}`;
 }
 
 export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
-  const [assetChain, assetAddress, assetSymbol] = key.split('-');
+  const [assetChain, assetAddress, assetSymbol] = key.split(BALANCE_SEPARATOR);
 
   // null will be serialized to 'null', we need to make it back to a null type
   const address = assetAddress === 'null' ? null : assetAddress;
