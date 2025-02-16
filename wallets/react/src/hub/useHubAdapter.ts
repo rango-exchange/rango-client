@@ -295,7 +295,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       Object.keys(info.extensions).forEach((k) => {
         const key = k as ExtensionLink;
 
-        if (info.extensions[key] === 'homepage') {
+        if (key === 'homepage') {
           installLink.DEFAULT = info.extensions[key] || '';
         }
 
