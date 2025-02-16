@@ -485,6 +485,21 @@ export const createWalletsSlice: StateCreator<
           chains: [wallet.blockChain],
         });
 
+        /*
+         * Check if after fetching balance for an account, the account still exists.
+         * (It might get disconnected while fetching balances is pending)
+         */
+        if (
+          !get().connectedWallets.find(
+            (connectedWallet) =>
+              connectedWallet.walletType === walletType &&
+              connectedWallet.address === wallet.address &&
+              connectedWallet.chain === wallet.blockChain
+          )
+        ) {
+          return;
+        }
+
         const balancesForWallet = createBalanceStateForNewAccount(wallet, get);
 
         nextAggregatedBalances = updateAggregatedBalanceStateForNewAccount(
