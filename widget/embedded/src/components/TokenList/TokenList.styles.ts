@@ -179,6 +179,12 @@ export const ListItemContainer = styled('div', {
     height: '$20',
     padding: '0 $10',
 
+    '& ._text': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
     '& ._typography': {
       [`.${darkTheme} &`]: {
         color: '$foreground',

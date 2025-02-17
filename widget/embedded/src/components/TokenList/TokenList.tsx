@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes, RenderDescProps, TokenData } from './TokenList.types';
-import type { BlockchainMeta } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
@@ -53,6 +52,8 @@ import {
 } from './TokenList.styles';
 
 const PAGE_SIZE = 20;
+const DEFAULT_IMAGE_SRC =
+  'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/common/unknown-image.png';
 
 const renderDesc = (props: RenderDescProps) => {
   const { address, name, url, token, customCssForTag, customCssForTagTitle } =
@@ -151,11 +152,9 @@ export function TokenList(props: PropTypes) {
           size="small"
           className="widget-token-list-item-import-btn"
           onClick={handleClick}>
-          {
-            <Typography variant="body" size="xsmall" color="background">
-              {t('import')}
-            </Typography>
-          }
+          <Typography variant="body" size="xsmall" color="background">
+            {t('import')}
+          </Typography>
         </Button>
       );
     }
@@ -223,7 +222,17 @@ export function TokenList(props: PropTypes) {
           const address = token.address || '';
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
-          ) as BlockchainMeta;
+          );
+
+          /**
+           * This block is added to satisfy TypeScript without using assertions and to prevent any errors that could break the app.
+           * Be cautious, as Virtuoso warns us if we return empty elements.
+           * If you need to exclude any items, do so before passing them to the virtual list.
+           */
+          if (!blockchain) {
+            return null;
+          }
+
           const colors = createTintsAndShades(blockchain.color, 'main');
           const customCssForTag = {
             $$color: colors.main150,
@@ -258,7 +267,10 @@ export function TokenList(props: PropTypes) {
                 onClick={handleClick}
                 start={
                   <ImageSection>
-                    <Image src={token.image} size={30} />
+                    <Image
+                      src={token.image === '' ? DEFAULT_IMAGE_SRC : token.image}
+                      size={30}
+                    />
                     {props.type !== 'custom-token' &&
                       isTokenPinned(token, props.type) && (
                         <Pin>

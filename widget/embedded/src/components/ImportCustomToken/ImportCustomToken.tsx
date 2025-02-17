@@ -42,7 +42,7 @@ export function ImportCustomToken(props: PropTypes) {
     setShowErrorModal(false);
   };
 
-  const handleErrorModalButtonClick = async () => {
+  const handleErrorModalButtonClick = () => {
     setRetryClicked(true);
     closeErrorModal();
   };

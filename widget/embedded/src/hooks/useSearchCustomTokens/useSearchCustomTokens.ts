@@ -1,3 +1,4 @@
+import type { UseSearchCustomTokens } from './types';
 import type { Token } from 'rango-sdk';
 
 import { useCallback, useRef, useState } from 'react';
@@ -9,34 +10,40 @@ import { debounce } from '../../utils/common';
 
 import { DEBOUNCE_DELAY } from './useSearchCustomTokens.constants';
 
-export function useSearchCustomTokens() {
-  const abortController = useRef<AbortController | null>(null);
+export function useSearchCustomTokens(): UseSearchCustomTokens {
+  const blockchains = useAppStore().blockchains();
+  const abortControllerRef = useRef<AbortController | null>(null);
   const { customTokens } = useAppStore();
   const [loading, setLoading] = useState(false);
   const [tokens, setTokens] = useState<Token[]>([]);
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<string | null>(null);
 
   const fetch = async (query: string, blockchain?: string) => {
     setError(null);
     setLoading(true);
-    abortController.current?.abort();
-    abortController.current = new AbortController();
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = new AbortController();
     setTokens([]);
 
     try {
-      let { tokens } = await httpService().searchCustomTokens(
+      const response = await httpService().searchCustomTokens(
         { query, blockchain },
-        { signal: abortController.current.signal }
+        { signal: abortControllerRef.current.signal }
       );
 
       const customTokensSet = new Set(
         customTokens().map((token) => createAssetKey(token))
       );
-      tokens = tokens.filter(
-        (token) => !customTokensSet.has(createAssetKey(token))
+      const blockchainsSet = new Set(
+        blockchains.map((blockchain) => blockchain.name)
+      );
+      const filteredTokens = response.tokens.filter(
+        (token) =>
+          blockchainsSet.has(token.blockchain) &&
+          !customTokensSet.has(createAssetKey(token))
       );
 
-      setTokens(tokens);
+      setTokens(filteredTokens);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'something went wrong');
       setTokens([]);
@@ -47,7 +54,7 @@ export function useSearchCustomTokens() {
 
   const debouncedFetch = useCallback(
     debounce((query: string, blockchain?: string) => {
-      if (abortController.current?.signal.aborted) {
+      if (abortControllerRef.current?.signal.aborted) {
         return;
       }
       void fetch(query, blockchain);
@@ -56,8 +63,8 @@ export function useSearchCustomTokens() {
   );
 
   const cancel = () => {
-    abortController.current?.abort();
-    abortController.current = null;
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
   };
 
   return {
