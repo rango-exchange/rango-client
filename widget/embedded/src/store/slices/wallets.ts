@@ -86,10 +86,10 @@ export interface WalletsSlice {
   fetchingWallets: boolean;
   lastUpdatedAt: number;
 
-  setConnectedWalletAsRefetching: (walletType: string) => void;
-  setConnectedWalletHasError: (walletType: string) => void;
+  setConnectedWalletAsRefetching: (accounts: Wallet[]) => void;
+  setConnectedWalletHasError: (accounts: Wallet[]) => void;
   setConnectedWalletRetrievedData: (
-    walletType: string,
+    accounts: Wallet[],
     walletsDetails: WalletDetail[]
   ) => void;
   removeBalancesForWallet: (
@@ -145,12 +145,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     lastUpdatedAt: +new Date(),
 
     // Actions
-    setConnectedWalletAsRefetching: (walletType: string) => {
+    setConnectedWalletAsRefetching: (accounts: Wallet[]) => {
       set((state) => {
         return {
           fetchingWallets: true,
           connectedWallets: state.connectedWallets.map((connectedWallet) => {
-            if (connectedWallet.walletType === walletType) {
+            if (
+              accounts.find((account) =>
+                isAccountAndWalletMatched(account, connectedWallet)
+              )
+            ) {
               return {
                 ...connectedWallet,
                 loading: true,
@@ -164,14 +168,18 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       });
     },
     setConnectedWalletRetrievedData: (
-      walletType: string,
+      accounts: Wallet[],
       walletsDetails: WalletDetail[]
     ) => {
       set((state) => {
         return {
           fetchingWallets: false,
           connectedWallets: state.connectedWallets.map((connectedWallet) => {
-            if (connectedWallet.walletType === walletType) {
+            if (
+              accounts.find((account) =>
+                isAccountAndWalletMatched(account, connectedWallet)
+              )
+            ) {
               return {
                 ...connectedWallet,
                 loading: false,
@@ -189,12 +197,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         };
       });
     },
-    setConnectedWalletHasError: (walletType: string) => {
+    setConnectedWalletHasError: (accounts: Wallet[]) => {
       set((state) => {
         return {
           fetchingWallets: false,
           connectedWallets: state.connectedWallets.map((connectedWallet) => {
-            if (connectedWallet.walletType === walletType) {
+            if (
+              accounts.find((account) =>
+                isAccountAndWalletMatched(account, connectedWallet)
+              )
+            ) {
               return {
                 ...connectedWallet,
                 loading: false,
@@ -515,13 +527,20 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       // All the `accounts` have same `walletType` so we can pick the first one.
       const walletType = accounts[0].walletType;
 
-      get().setConnectedWalletAsRefetching(walletType);
+      get().setConnectedWalletAsRefetching(accounts);
 
       const addressesToFetch = accounts.map((account) => ({
         address: account.address,
         blockchain: account.chain,
       }));
-      const response = await httpService().getWalletsDetails(addressesToFetch);
+
+      let response;
+      try {
+        response = await httpService().getWalletsDetails(addressesToFetch);
+      } catch (e) {
+        get().setConnectedWalletHasError(accounts);
+        throw new Error(`Request for fetching balances failed.`, { cause: e });
+      }
 
       const walletsDetails = response.wallets;
 
@@ -594,9 +613,9 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           _aggregatedBalances: nextAggregatedBalances,
         }));
 
-        get().setConnectedWalletRetrievedData(walletType, walletsDetails);
+        get().setConnectedWalletRetrievedData(accounts, walletsDetails);
       } else {
-        get().setConnectedWalletHasError(walletType);
+        get().setConnectedWalletHasError(accounts);
         throw new Error(
           `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
         );
