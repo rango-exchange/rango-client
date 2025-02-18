@@ -144,6 +144,8 @@ export enum Events {
   NETWORK = 'network',
   // Hub only events
   NAMESPACE_DISCONNECTED = 'namespace_disconnected',
+
+  PROVIDER_DISCONNECTED = 'provider_disconnected',
 }
 
 export type ProviderConnectResult = {
