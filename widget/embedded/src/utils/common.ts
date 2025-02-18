@@ -26,10 +26,12 @@ export function areEqual(
     array1.length === array2.length && array1.every((v, i) => v === array2[i])
   );
 }
-// eslint-disable-next-line @typescript-eslint/ban-types
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function debounce(fn: Function, time: number) {
   let timeoutId: ReturnType<typeof setTimeout> | null;
   return wrapper;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function wrapper(...args: any) {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -42,7 +44,6 @@ export function debounce(fn: Function, time: number) {
 }
 
 export function containsText(text: string, searchText: string): boolean {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 }
 
@@ -257,4 +258,25 @@ export function isSingleWalletActive(
     (w) => w.state === WalletState.CONNECTED
   );
   return multiWallets === false && atLeastOneWalletIsConnected;
+}
+
+/**
+ * A simple memo implementation
+ * you can use it when you want to memoize a value in js space
+ */
+export function memoizedResult(): <R>(fn: () => R, key: number | string) => R {
+  let currentKey: number | string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let result: any;
+
+  return (fn, key) => {
+    if (!result || !currentKey || currentKey !== key) {
+      currentKey = key;
+      result = fn();
+      return result;
+    }
+
+    return result;
+  };
 }
