@@ -108,10 +108,15 @@ export interface WalletsSlice {
     accounts: Wallet[],
     namespace?: Namespace
   ) => Promise<void>;
+  disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
   /**
    * Disconnect a wallet and clean up balances after that.
    */
   disconnectWallet: (walletType: string) => void;
+  _changeSelectedWalletIfNeededOnRemove: (
+    walletType: string,
+    options?: { namespaces?: Namespace[] }
+  ) => void;
   clearConnectedWallet: () => void;
   fetchBalances: (
     accounts: Wallet[],
@@ -385,39 +390,99 @@ export const createWalletsSlice: StateCreator<
       _aggregatedBalances: nextAggregatedBalanceState,
     });
   },
+  disconnectNamespaces: (walletType, requestedNamesapces) => {
+    const isTargetWalletExistsInConnectedWallets = get().connectedWallets.find(
+      (wallet) => wallet.walletType === walletType
+    );
+
+    if (isTargetWalletExistsInConnectedWallets) {
+      // This should be called before updating connectedWallets since we need the old state to remove balances.
+      get().removeBalancesForWallet(walletType, {
+        namespaces: requestedNamesapces,
+      });
+
+      get()._changeSelectedWalletIfNeededOnRemove(walletType, {
+        namespaces: requestedNamesapces,
+      });
+
+      const nextConnectedWallets = get().connectedWallets.filter(
+        (connectedWallet) => {
+          if (connectedWallet.namespace) {
+            const targetWalletAndNamespace =
+              connectedWallet.walletType === walletType &&
+              requestedNamesapces.includes(connectedWallet.namespace);
+
+            // If the wallet and namespace matched, we should filter it out.
+            return !targetWalletAndNamespace;
+          }
+          /*
+           * if a connected wallet hasn't `namesapce`, it means it legacy.
+           * legacy will not reach this method, but for we check anyways
+           */
+          return true;
+        }
+      );
+
+      set({
+        connectedWallets: nextConnectedWallets,
+      });
+    }
+  },
   disconnectWallet: (walletType) => {
     const isTargetWalletExistsInConnectedWallets = get().connectedWallets.find(
       (wallet) => wallet.walletType === walletType
     );
+    /*
+     * Previously DISCONNECT event was being emitted if target wallet existed in connected wallets.
+     * Considering that connected wallets get clear on namespace disconnect in hub,
+     * now emitting this event is done without checking for connected wallets to be compatible with hub.
+     */
+    eventEmitter.emit(WidgetEvents.WalletEvent, {
+      type: WalletEventTypes.DISCONNECT,
+      payload: { walletType },
+    });
     if (isTargetWalletExistsInConnectedWallets) {
-      eventEmitter.emit(WidgetEvents.WalletEvent, {
-        type: WalletEventTypes.DISCONNECT,
-        payload: { walletType },
-      });
-
       // This should be called before updating connectedWallets since we need the old state to remove balances.
       get().removeBalancesForWallet(walletType);
 
-      let targetWalletWasSelectedForBlockchains = get()
-        .connectedWallets.filter(
-          (connectedWallet) =>
-            connectedWallet.selected &&
-            connectedWallet.walletType === walletType
-        )
-        .map((connectedWallet) => connectedWallet.chain);
+      get()._changeSelectedWalletIfNeededOnRemove(walletType);
 
       // Remove target wallet from connectedWallets
-      let nextConnectedWallets = get().connectedWallets.filter(
+      const nextConnectedWallets = get().connectedWallets.filter(
         (connectedWallet) => connectedWallet.walletType !== walletType
       );
 
-      /*
-       * If we are disconnecting a wallet that has `selected` for some blockchains,
-       * For those blockchains we will fallback to first connected wallet
-       * which means selected wallet will change.
-       */
-      if (targetWalletWasSelectedForBlockchains.length > 0) {
-        nextConnectedWallets = nextConnectedWallets.map((connectedWallet) => {
+      set({
+        connectedWallets: nextConnectedWallets,
+      });
+    }
+  },
+  /*
+   * If we are disconnecting a wallet that has `selected` for some blockchains,
+   * For those blockchains we will fallback to first connected wallet
+   * which means selected wallet will change.
+   */
+  _changeSelectedWalletIfNeededOnRemove: (walletType, options) => {
+    let connectedWallets = get().connectedWallets;
+
+    if (options?.namespaces && options.namespaces.length > 0) {
+      connectedWallets = connectedWallets.filter(
+        (connectedWallet) =>
+          !!connectedWallet.namespace &&
+          options.namespaces?.includes(connectedWallet.namespace)
+      );
+    }
+
+    let targetWalletWasSelectedForBlockchains = connectedWallets
+      .filter(
+        (connectedWallet) =>
+          connectedWallet.selected && connectedWallet.walletType === walletType
+      )
+      .map((connectedWallet) => connectedWallet.chain);
+
+    if (targetWalletWasSelectedForBlockchains.length > 0) {
+      const nextConnectedWallets = get().connectedWallets.map(
+        (connectedWallet) => {
           if (
             targetWalletWasSelectedForBlockchains.includes(
               connectedWallet.chain
@@ -434,8 +499,8 @@ export const createWalletsSlice: StateCreator<
           }
 
           return connectedWallet;
-        });
-      }
+        }
+      );
 
       set({
         connectedWallets: nextConnectedWallets,

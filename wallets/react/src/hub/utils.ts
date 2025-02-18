@@ -159,6 +159,13 @@ export function mapHubEventsToLegacy(
     case 'provider_disconnected':
       onUpdateState(
         event.provider,
+        Events.PROVIDER_DISCONNECTED,
+        event.provider,
+        coreState,
+        eventInfo
+      );
+      onUpdateState(
+        event.provider,
         Events.CONNECTED,
         false,
         coreState,

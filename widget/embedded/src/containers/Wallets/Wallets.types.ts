@@ -1,5 +1,8 @@
 import type { WidgetConfig } from '../../types';
-import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core/legacy';
+import type {
+  LegacyEventHandler as EventHandler,
+  LegacyEvents,
+} from '@rango-dev/wallets-core/legacy';
 
 export type OnWalletConnectionChange = (key: string) => void;
 export interface WidgetContextInterface {
@@ -17,7 +20,18 @@ export interface WidgetContextInterface {
   onDisconnectWallet(handler: OnWalletConnectionChange): void;
 }
 
+type EventHandlerParams = Parameters<EventHandler>;
+type EventParam = Exclude<LegacyEvents, LegacyEvents.PROVIDER_DISCONNECTED>;
+
+export type OnUpdateState = (
+  type: EventHandlerParams[0],
+  event: EventParam,
+  value: EventHandlerParams[2],
+  coreState: EventHandlerParams[3],
+  info: EventHandlerParams[4]
+) => void;
+
 export interface PropTypes {
-  onUpdateState?: EventHandler;
+  onUpdateState?: OnUpdateState;
   config: WidgetConfig;
 }
