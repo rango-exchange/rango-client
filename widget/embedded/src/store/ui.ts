@@ -13,6 +13,7 @@ interface UiState {
   showActivateTabModal: boolean;
   watermark: Watermark;
   showProfileBanner: boolean;
+  showCompactTokenSelector: boolean;
   activateCurrentTab: (
     setCurrentTabAsActive: () => void,
     hasRunningSwaps: boolean
@@ -20,6 +21,7 @@ interface UiState {
   setShowActivateTabModal: (flag: boolean) => void;
   setWatermark: (watermark: Watermark) => void;
   setShowProfileBanner: (showProfileBanner: boolean) => void;
+  setShowCompactTokenSelector: (showCompactTokenSelector: boolean) => void;
 }
 
 export const useUiStore = createSelectors(
@@ -30,6 +32,7 @@ export const useUiStore = createSelectors(
     watermark: 'NONE',
     showProfileBanner: false,
     fetchingApiConfig: false,
+    showCompactTokenSelector: false,
     activateCurrentTab: (setCurrentTabAsActive, hasRunningSwaps) => {
       const { showActivateTabModal } = get();
 
@@ -47,6 +50,9 @@ export const useUiStore = createSelectors(
     },
     setShowProfileBanner: (showProfileBanner) => {
       set({ showProfileBanner });
+    },
+    setShowCompactTokenSelector: (showCompactTokenSelector) => {
+      set({ showCompactTokenSelector });
     },
   }))
 );

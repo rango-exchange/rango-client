@@ -1,16 +1,10 @@
 import { css, darkTheme, styled, Typography } from '@rango-dev/ui';
 
-import { ScrollableArea } from '../Layout';
+import { PageContainer } from '../Layout';
 
-export const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  overflow: 'hidden',
-});
+export const Container = styled(PageContainer, {
+  overflowY: 'auto',
 
-export const HeaderDetails = styled('div', {
-  width: '100%',
   '& ._icon-button': {
     '&:hover': {
       '& svg': {
@@ -23,7 +17,21 @@ export const HeaderDetails = styled('div', {
   },
 });
 
-export const StepsList = styled(ScrollableArea, {
+export const SkeletonContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  overflow: 'hidden',
+});
+
+export const RequestIdContainer = styled('div', {
+  position: 'sticky',
+  top: 0,
+  zIndex: 10,
+  backgroundColor: '$background',
+});
+
+export const StepsList = styled('div', {
   padding: '$0 $20 $20 $20',
 });
 
