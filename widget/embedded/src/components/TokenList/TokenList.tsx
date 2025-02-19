@@ -10,7 +10,6 @@ import {
   ExternalLinkIcon,
   Image,
   ListItem,
-  ListItemButton,
   NotFound,
   PinIcon,
   Skeleton,
@@ -20,6 +19,7 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
@@ -40,6 +40,7 @@ import {
   ListItemContainer,
   Pin,
   StyledLink,
+  StyledListItemButton,
   Tag,
   TagTitle,
   Title,
@@ -52,8 +53,6 @@ import {
 } from './TokenList.styles';
 
 const PAGE_SIZE = 20;
-const DEFAULT_IMAGE_SRC =
-  'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/common/unknown-image.png';
 
 const renderDesc = (props: RenderDescProps) => {
   const { address, name, url, token, customCssForTag, customCssForTagTitle } =
@@ -251,24 +250,29 @@ export function TokenList(props: PropTypes) {
           };
 
           const handleClick = () => {
-            if (typeof token !== 'string') {
+            if (typeof token !== 'string' && !token.customToken) {
               onChange?.(token);
             }
           };
 
           return (
             <ListItemContainer>
-              <ListItemButton
+              <StyledListItemButton
                 tab-index={index}
                 key={`${token.symbol}${token.address}`}
                 id={`${token.symbol}${token.address}`}
                 className="widget-token-list-item-btn"
                 hasDivider
+                customToken={token.customToken}
                 onClick={handleClick}
                 start={
                   <ImageSection>
                     <Image
-                      src={token.image === '' ? DEFAULT_IMAGE_SRC : token.image}
+                      src={
+                        token.image === ''
+                          ? DEFAULT_TOKEN_IMAGE_SRC
+                          : token.image
+                      }
                       size={30}
                     />
                     {props.type !== 'custom-token' &&

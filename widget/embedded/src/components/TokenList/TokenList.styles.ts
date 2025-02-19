@@ -2,6 +2,7 @@ import {
   css,
   darkTheme,
   ImageContainer,
+  ListItemButton,
   styled,
   Typography,
 } from '@rango-dev/ui';
@@ -96,6 +97,18 @@ export const List = styled('ul', {
           position: 'absolute',
           transform: 'translateY(-12px)',
           bottom: '-10px',
+        },
+      },
+    },
+  },
+});
+
+export const StyledListItemButton = styled(ListItemButton, {
+  variants: {
+    customToken: {
+      true: {
+        '&:hover': {
+          cursor: 'unset',
         },
       },
     },

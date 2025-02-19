@@ -10,6 +10,7 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
@@ -29,7 +30,11 @@ export function CustomTokenModal(props: PropTypes) {
       onExit={onExit}
       container={getContainer()}>
       <Container>
-        <Image src={token.image} size={45} type="circular" />
+        <Image
+          src={token.image === '' ? DEFAULT_TOKEN_IMAGE_SRC : token.image}
+          size={45}
+          type="circular"
+        />
         <Typography variant="title" size="medium">
           {token.name}
         </Typography>
