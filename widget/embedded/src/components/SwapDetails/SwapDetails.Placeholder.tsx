@@ -9,12 +9,11 @@ import { Layout } from '../Layout';
 import { LoadingSwapDetails } from '../LoadingSwapDetails';
 
 import {
-  Container,
   datePlaceholderStyles,
-  HeaderDetails,
   PlaceholderContainer,
   requestIdStyles,
   rowStyles,
+  SkeletonContainer,
 } from './SwapDetails.styles';
 
 export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
@@ -26,37 +25,35 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
         suffix: <SuffixContainer />,
       }}>
       {showSkeleton && (
-        <Container>
-          <HeaderDetails>
-            <div className={rowStyles()}>
-              <Typography variant="label" size="large" color="neutral700">
-                {`${i18n.t('Request ID')}`}
-              </Typography>
-              <div className={requestIdStyles()}>
-                <Typography variant="label" size="small" color="neutral700">
-                  <Skeleton width={60} height={10} variant="rounded" />
-                </Typography>
-                <Divider direction="horizontal" size={4} />
-                <Skeleton width={16} height={16} variant="rectangular" />
-                <Divider direction="horizontal" size={4} />
-                <Skeleton width={16} height={16} variant="rectangular" />
-              </div>
-            </div>
-            <div className={rowStyles()}>
-              <Typography
-                className={datePlaceholderStyles()}
-                variant="label"
-                size="large"
-                color="neutral700">
-                <Skeleton width={60} height={10} variant="rounded" />
-              </Typography>
+        <SkeletonContainer>
+          <div className={rowStyles()}>
+            <Typography variant="label" size="large" color="neutral700">
+              {`${i18n.t('Request ID')}`}
+            </Typography>
+            <div className={requestIdStyles()}>
               <Typography variant="label" size="small" color="neutral700">
                 <Skeleton width={60} height={10} variant="rounded" />
               </Typography>
+              <Divider direction="horizontal" size={4} />
+              <Skeleton width={16} height={16} variant="rectangular" />
+              <Divider direction="horizontal" size={4} />
+              <Skeleton width={16} height={16} variant="rectangular" />
             </div>
-          </HeaderDetails>
+          </div>
+          <div className={rowStyles()}>
+            <Typography
+              className={datePlaceholderStyles()}
+              variant="label"
+              size="large"
+              color="neutral700">
+              <Skeleton width={60} height={10} variant="rounded" />
+            </Typography>
+            <Typography variant="label" size="small" color="neutral700">
+              <Skeleton width={60} height={10} variant="rounded" />
+            </Typography>
+          </div>
           <LoadingSwapDetails />
-        </Container>
+        </SkeletonContainer>
       )}
       {!showSkeleton && (
         <PlaceholderContainer>
