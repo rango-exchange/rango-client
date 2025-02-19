@@ -109,8 +109,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     const handler = () => {
       const isInIframe = window.self !== window.top;
       const isMobile = window.innerWidth < MAX_MOBILE_DEVICE_WIDTH;
+      const shouldSuggestNewHeight =
+        !isInIframe && isMobile && height === 'fixed' && containerRef.current;
 
-      if (!isInIframe && isMobile && containerRef.current) {
+      if (shouldSuggestNewHeight) {
         const suggestedHeight =
           window.innerHeight - containerRef.current.offsetTop;
 
@@ -136,7 +138,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     window.addEventListener('resize', handler);
 
     return () => window.removeEventListener('resize', handler);
-  }, []);
+  }, [height]);
 
   return (
     <Container
