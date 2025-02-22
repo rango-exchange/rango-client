@@ -97,6 +97,7 @@ export { default as DiscordIcon } from './Discord.js';
 export { default as InfinityIcon } from './Infinity.js';
 export { default as KeyIcon } from './Key.js';
 export { default as MediumIcon } from './Medium.js';
+export { default as ScrollIcon } from './Scroll.js';
 export { default as SettingsIcon } from './Settings.js';
 export { default as StyleIcon } from './Style.js';
 export { default as TelegramIcon } from './Telegram.js';
