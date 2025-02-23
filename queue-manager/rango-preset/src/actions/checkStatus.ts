@@ -20,7 +20,7 @@ import {
 import { httpService } from '../services';
 import { notifier } from '../services/eventEmitter';
 import {
-  getCurrentBlockchainOf,
+  getCurrentNamespaceOf,
   getNextStep,
   getRelatedWallet,
   getScannerUrl,
@@ -93,13 +93,13 @@ async function checkTransactionStatus({
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
-        const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
+        const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
         let explorerUrl: string | undefined;
         const blockchainsMetaNotEmpty = !!Object.keys(meta.blockchains).length;
         if (blockchainsMetaNotEmpty) {
           explorerUrl = getScannerUrl(
             currentStep.executedTransactionId,
-            currentStepBlockchain,
+            currentStepNamespace.network,
             meta.blockchains
           );
         }
@@ -320,13 +320,13 @@ async function checkApprovalStatus({
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
-        const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
+        const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
         let explorerUrl: string | undefined;
         const blockchainsMetaNotEmpty = !!Object.keys(meta.blockchains).length;
         if (blockchainsMetaNotEmpty) {
           explorerUrl = getScannerUrl(
             currentStep.executedTransactionId,
-            currentStepBlockchain,
+            currentStepNamespace.network,
             meta.blockchains
           );
         }

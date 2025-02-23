@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { FeesGroup, NameOfFees } from '../constants/quote';
 import type { FetchStatus, FindToken } from '../store/slices/data';
-import type { ConnectedWallet } from '../store/wallets';
+import type { ConnectedWallet } from '../store/slices/wallets';
 import type {
   ConvertedToken,
   QuoteError,
@@ -35,6 +33,14 @@ import { errorMessages } from '../constants/errors';
 import { swapButtonTitles } from '../constants/messages';
 import { ZERO } from '../constants/numbers';
 import {
+  type FeesGroup,
+  HIGH_FEE_THRESHOLD_USD,
+  HIGH_VALUE_LOSS_CRITERIA,
+  type NameOfFees,
+  OUTPUT_CHANGE_WARNING_CRITERIA,
+  PERCENT_MULTIPLIER,
+} from '../constants/quote';
+import {
   BALANCE_MAX_DECIMALS,
   BALANCE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
@@ -43,7 +49,7 @@ import {
 
 import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
-import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
+import { getRequiredBalanceOfWallet } from './quote';
 import { getQuoteWallets } from './wallets';
 
 export function getOutputRatio(
@@ -61,7 +67,7 @@ export function getOutputRatio(
   return outputUsdValue
     .div(inputUsdValue)
     .minus(1)
-    .multipliedBy(100)
+    .multipliedBy(PERCENT_MULTIPLIER)
     .toNumber();
 }
 
@@ -69,12 +75,16 @@ export function hasHighValueLoss(
   inputUsdValue: BigNumber | null,
   priceImpact: number
 ): boolean {
-  return (
-    ((parseInt(priceImpact.toFixed(2) || '0') <= -10 &&
-      inputUsdValue?.gte(new BigNumber(400))) ||
-      (parseInt(priceImpact.toFixed(2) || '0') <= -5 &&
-        inputUsdValue?.gte(new BigNumber(1000)))) ??
-    false
+  if (!inputUsdValue) {
+    return false;
+  }
+
+  const formattedPriceImpact = parseInt(priceImpact.toFixed(2) || '0');
+
+  return HIGH_VALUE_LOSS_CRITERIA.some(
+    ({ threshold, minInput }) =>
+      formattedPriceImpact <= threshold &&
+      inputUsdValue.gte(new BigNumber(minInput))
   );
 }
 
@@ -328,7 +338,7 @@ export function hasHighFee(totalFeeInUsd: BigNumber | null) {
   if (!totalFeeInUsd) {
     return false;
   }
-  return !totalFeeInUsd.lt(new BigNumber(30));
+  return !totalFeeInUsd.lt(new BigNumber(HIGH_FEE_THRESHOLD_USD));
 }
 
 export function hasSlippageError(
@@ -480,8 +490,7 @@ export function createQuoteRequestBody(params: {
       addresses: [wallet.address],
     });
   });
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
     affiliateRef: affiliateRef ?? undefined,
@@ -535,33 +544,52 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   return wallets;
 }
 
-export function getQuoteOutputAmount(quote: SelectedQuote) {
-  return quote?.outputAmount || null;
+export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
+  const inputAmount = quote.requestAmount;
+  const inputTokenUsdPrice = quote.swaps[0].from.usdPrice;
+  if (!inputAmount || !inputTokenUsdPrice) {
+    return;
+  }
+  return new BigNumber(inputAmount).multipliedBy(inputTokenUsdPrice);
+}
+
+export function getUsdOutputFrom(quote: SelectedQuote): BigNumber | undefined {
+  const outputAmount = quote?.outputAmount || null;
+  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1].to.usdPrice;
+  if (!outputAmount || !outputTokenUsdPrice) {
+    return;
+  }
+  return new BigNumber(outputAmount).multipliedBy(outputTokenUsdPrice);
 }
 
 export function getPercentageChange(input: string, output: string) {
   return new BigNumber(output)
     .div(new BigNumber(input))
     .minus(1)
-    .multipliedBy(100)
+    .multipliedBy(PERCENT_MULTIPLIER)
     .toNumber();
 }
 
-export function isOutputAmountChangedALot(
-  oldQuote: SelectedQuote,
-  newQuote: SelectedQuote
+export function isOutputAmountChangedExcessively(
+  previousQuote: SelectedQuote,
+  currentQuote: SelectedQuote
 ) {
-  const oldOutputAmount = getQuoteOutputAmount(oldQuote);
-  const newOutputAmount = getQuoteOutputAmount(newQuote);
-  if (!oldOutputAmount || !newOutputAmount) {
+  const usdInput = getUsdInputFrom(previousQuote);
+  const previousUsdOutput = getUsdOutputFrom(previousQuote);
+  const currentUsdOutput = getUsdOutputFrom(currentQuote);
+  if (!usdInput || !previousUsdOutput || !currentUsdOutput) {
     return false;
   }
-  const percentageChange = getPriceImpact(oldOutputAmount, newOutputAmount);
-  if (!percentageChange) {
-    return true;
-  }
 
-  return percentageChange <= -1;
+  const percentageChange = getPercentageChange(
+    previousUsdOutput.toString(),
+    currentUsdOutput.toString()
+  );
+
+  return OUTPUT_CHANGE_WARNING_CRITERIA.some(
+    ({ threshold, minInput }) =>
+      percentageChange <= threshold && usdInput.isGreaterThanOrEqualTo(minInput)
+  );
 }
 
 export function generateBalanceWarnings(
@@ -621,15 +649,6 @@ export function generateBalanceWarnings(
       });
       return warningMessage;
     });
-}
-
-export function calcOutputUsdValue(
-  outputAmount?: string,
-  tokenPrice?: number | null
-) {
-  const amount = !!outputAmount ? new BigNumber(outputAmount) : ZERO;
-
-  return amount.multipliedBy(tokenPrice || 0);
 }
 
 export function isNetworkStatusInWarningState(

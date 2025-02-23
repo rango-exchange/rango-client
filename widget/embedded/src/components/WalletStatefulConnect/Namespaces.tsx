@@ -1,5 +1,5 @@
 import type { PropTypes } from './Namespaces.types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import {
@@ -12,8 +12,7 @@ import {
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import { namespaces } from '@rango-dev/wallets-shared';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
@@ -23,24 +22,13 @@ import { getBlockchainLogo } from './Namespaces.helpers';
 import { NamespaceList } from './Namespaces.styles';
 
 export function Namespaces(props: PropTypes) {
-  const { singleNamespace, availableNamespaces, providerImage } = props.value;
+  const { targetWallet } = props.value;
+  const singleNamespace = targetWallet.needsNamespace?.selection === 'single';
+  const providerImage = targetWallet.image;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
 
   const blockchains = useAppStore().blockchains();
-
-  const namespacesInfo = useMemo(
-    () =>
-      availableNamespaces?.map((namespace) => ({
-        name: namespace,
-        logo: getBlockchainLogo(
-          blockchains,
-          namespaces[namespace].mainBlockchain
-        ),
-        title: namespaces[namespace].title,
-      })),
-    [availableNamespaces]
-  );
 
   const onSelect = (namespace: Namespace) => {
     if (singleNamespace) {
@@ -83,28 +71,33 @@ export function Namespaces(props: PropTypes) {
       <NamespaceList>
         {wrapRadioRoot(
           <>
-            {namespacesInfo?.map((namespaceInfoItem) => (
-              <ListItemButton
-                key={namespaceInfoItem.name}
-                id={namespaceInfoItem.name}
-                title={namespaceInfoItem.title}
-                hasDivider
-                style={{ height: 60 }}
-                onClick={() => onSelect(namespaceInfoItem.name)}
-                start={<Image src={namespaceInfoItem.logo} size={22} />}
-                end={
-                  singleNamespace ? (
-                    <Radio value={namespaceInfoItem.name} />
-                  ) : (
-                    <Checkbox
-                      checked={selectedNamespaces.includes(
-                        namespaceInfoItem.name
-                      )}
+            {targetWallet.needsNamespace?.data.map((ns) => {
+              return (
+                <ListItemButton
+                  key={ns.id}
+                  id={ns.id}
+                  title={ns.label}
+                  hasDivider
+                  style={{ height: 60 }}
+                  onClick={() => onSelect(ns.value)}
+                  start={
+                    <Image
+                      src={getBlockchainLogo(blockchains, ns.id)}
+                      size={22}
                     />
-                  )
-                }
-              />
-            ))}
+                  }
+                  end={
+                    singleNamespace ? (
+                      <Radio value={ns.value} />
+                    ) : (
+                      <Checkbox
+                        checked={selectedNamespaces.includes(ns.value)}
+                      />
+                    )
+                  }
+                />
+              );
+            })}
           </>
         )}
       </NamespaceList>

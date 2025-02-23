@@ -1,4 +1,5 @@
 import type {
+  EagerConnectResult,
   GetInstanceOptions,
   NamespaceData,
   Network,
@@ -6,6 +7,7 @@ import type {
   WalletConfig,
   WalletType,
 } from './types.js';
+import type { Namespace } from '../namespaces/common/types.js';
 import type { BlockchainMeta } from 'rango-types';
 
 import {
@@ -14,10 +16,12 @@ import {
   needsCheckInstallation,
 } from './helpers.js';
 import { Events, Networks } from './types.js';
+import { eagerConnectHandler } from './utils.js';
 
 export type EventHandler = (
   type: WalletType,
   event: Events,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
   coreState: State,
   info: EventInfo
@@ -26,11 +30,19 @@ export type EventHandler = (
 export type EventInfo = {
   supportedBlockchains: BlockchainMeta[];
   isContractWallet: boolean;
+
+  // Hub fields
+  isHub: boolean;
+  // will be set alongside ACCOUNT event
+  namespace?: Namespace;
 };
 
 export interface State {
   connected: boolean;
   connecting: boolean;
+  /**
+   * @depreacted it always returns `false`. don't use it.
+   */
   reachable: boolean;
   installed: boolean;
   accounts: string[] | null;
@@ -42,6 +54,7 @@ export interface Options {
   handler: EventHandler;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class Wallet<InstanceType = any> {
   public provider: InstanceType | null;
   private actions: WalletActions;
@@ -57,6 +70,7 @@ class Wallet<InstanceType = any> {
     this.info = {
       supportedBlockchains: [],
       isContractWallet: false,
+      isHub: false,
     };
     this.state = {
       connected: false,
@@ -264,35 +278,39 @@ class Wallet<InstanceType = any> {
   }
 
   // This method is only used for auto connection
-  async eagerConnect() {
+  async eagerConnect(): Promise<EagerConnectResult<InstanceType>> {
     const instance = await this.tryGetInstance({ network: undefined });
     const { canEagerConnect } = this.actions;
-    const error_message = `can't restore connection for ${this.options.config.type} .`;
+    const providerName = this.options.config.type;
 
-    if (canEagerConnect) {
-      // Check if we can eagerly connect to the wallet
-      const eagerConnection = await canEagerConnect({
-        instance: instance,
-        meta: this.info.supportedBlockchains,
-      });
+    return await eagerConnectHandler({
+      canEagerConnect: async () => {
+        if (!canEagerConnect) {
+          throw new Error(
+            `${providerName} provider hasn't implemented canEagerConnect.`
+          );
+        }
 
-      if (eagerConnection) {
-        // Connect to wallet as usual
-        return this.connect();
-      }
-      throw new Error(error_message);
-    } else {
-      throw new Error(error_message);
-    }
+        return await canEagerConnect({
+          instance: instance,
+          meta: this.info.supportedBlockchains,
+        });
+      },
+      connectHandler: async () => {
+        const result = await this.connect();
+        return result;
+      },
+      providerName,
+    });
   }
 
-  async getSigners(provider: any) {
+  async getSigners(provider: InstanceType) {
     return await this.actions.getSigners(provider);
   }
   getWalletInfo(allBlockChains: BlockchainMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
-  canSwitchNetworkTo(network: Network, provider: any) {
+  canSwitchNetworkTo(network: Network, provider: InstanceType) {
     const switchTo = this.actions.canSwitchNetworkTo;
     if (!switchTo) {
       return false;
@@ -306,13 +324,20 @@ class Wallet<InstanceType = any> {
   }
 
   onInit() {
+    // some times functions can be overridden by wallets. see rf-2119
+    if (!this.actions.getInstance) {
+      throw new Error(
+        `Provider hasn't defined how to get wallet's instance. provider: ${this.options.config.type} on: onInit`
+      );
+    }
+
     if (!this.options.config.isAsyncInstance) {
       const instance = this.actions.getInstance();
       if (!!instance && !this.state.installed) {
         this.setInstalledAs(true);
       }
     } else if (needsCheckInstallation(this.options)) {
-      this.actions.getInstance().then((data: any) => {
+      this.actions.getInstance().then((data: unknown) => {
         if (data) {
           this.setInstalledAs(true);
         }
@@ -320,7 +345,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setProvider(value: any) {
+  setProvider(value: InstanceType | null) {
     this.provider = value;
     if (!!value && !!this.actions.subscribe) {
       const cleanup = this.actions.subscribe({
@@ -376,7 +401,7 @@ class Wallet<InstanceType = any> {
      * We will notify handler after updating all the states.
      * Because when we call `handler` it will has latest states.
      */
-    const updates: [Events, any][] = [];
+    const updates: [Events, unknown][] = [];
 
     if (typeof states.connected !== 'undefined') {
       this.state.connected = states.connected;
@@ -408,6 +433,7 @@ class Wallet<InstanceType = any> {
       const eventInfo: EventInfo = {
         supportedBlockchains: this.info.supportedBlockchains,
         isContractWallet: this.info.isContractWallet,
+        isHub: false,
       };
       this.options.handler(
         this.options.config.type,

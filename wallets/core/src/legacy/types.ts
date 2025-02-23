@@ -1,4 +1,5 @@
 import type { State as WalletState } from './wallet.js';
+import type { Namespace } from '../namespaces/common/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export enum Networks {
@@ -59,19 +60,13 @@ export enum Networks {
   UMEE = 'UMEE',
   STARKNET = 'STARKNET',
   TON = 'TON',
-
+  BASE = 'BASE',
   // Using instead of null
   Unknown = 'Unkown',
 }
 
-export enum Namespace {
-  Solana = 'Solana',
-  Evm = 'EVM',
-  Cosmos = 'Cosmos',
-  Utxo = 'UTXO',
-  Starknet = 'Starknet',
-  Tron = 'Tron',
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
 
 export type NamespaceData = {
   namespace: Namespace;
@@ -89,18 +84,43 @@ export type InstallObjects = {
   DEFAULT: string;
 };
 
+interface NeedsNamespace {
+  selection: 'single' | 'multiple';
+  data: {
+    label: string;
+    /**
+     * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
+     * e.g. ETH
+     */
+    id: string;
+    value: Namespace;
+  }[];
+}
+
+interface NeedsDerivationPath {
+  data: {
+    id: string;
+    label: string;
+    namespace: Namespace;
+    generateDerivationPath: (index: string) => string;
+  }[];
+}
+
 export type WalletInfo = {
   name: string;
   img: string;
   installLink: InstallObjects | string;
+  /**
+   * @deprecated we don't use this value anymore.
+   */
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  namespaces?: Namespace[];
-  singleNamespace?: boolean;
-  needsDerivationPath?: boolean;
+
+  needsDerivationPath?: NeedsDerivationPath;
+  needsNamespace?: NeedsNamespace;
 };
 
 export type State = {
@@ -110,10 +130,10 @@ export type State = {
 export type ConnectResult = {
   accounts: string[] | null;
   network: Network | null;
-  provider: any;
+  provider: InstanceType;
 };
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };
 
 export enum Events {
   CONNECTED = 'connected',
@@ -122,6 +142,10 @@ export enum Events {
   INSTALLED = 'installed',
   ACCOUNTS = 'accounts',
   NETWORK = 'network',
+  // Hub only events
+  NAMESPACE_DISCONNECTED = 'namespace_disconnected',
+
+  PROVIDER_DISCONNECTED = 'provider_disconnected',
 }
 
 export type ProviderConnectResult = {
@@ -131,7 +155,7 @@ export type ProviderConnectResult = {
 
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   getState: () => WalletState;
   /**
@@ -145,29 +169,31 @@ export type GetInstanceOptions = {
 };
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 
 export type Connect = (options: {
-  instance: any;
+  instance: InstanceType;
   network?: Network;
   meta: BlockchainMeta[];
   namespaces?: NamespaceData[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
-  instance: any;
+  instance: InstanceType;
   destroyInstance: () => void;
 }) => Promise<void>;
 
 type CleanupSubscribe = () => void;
 
 export type Subscribe = (options: {
-  instance: any;
+  instance: InstanceType;
   state: WalletState;
   meta: BlockchainMeta[];
   updateChainId: (chainId: string) => void;
@@ -177,7 +203,7 @@ export type Subscribe = (options: {
 }) => CleanupSubscribe | void;
 
 export type SwitchNetwork = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
@@ -186,7 +212,7 @@ export type SwitchNetwork = (options: {
 }) => Promise<void>;
 
 export type Suggest = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
 }) => Promise<void>;
@@ -194,17 +220,23 @@ export type Suggest = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
-  provider: any;
+  provider: InstanceType;
 }) => boolean;
 
 export type CanEagerConnect = (options: {
-  instance: any;
+  instance: InstanceType;
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
+export type EagerConnectResult<I = unknown> = {
+  accounts: string[] | null;
+  network: string | null;
+  provider: I | null;
+};
+
 export interface WalletActions {
   connect: Connect;
-  getInstance: any;
+  getInstance: InstanceType;
   disconnect?: Disconnect;
   subscribe?: Subscribe;
   // unsubscribe, // coupled to subscribe.
@@ -212,7 +244,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => Promise<SignerFactory>;
+  getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
@@ -235,3 +267,18 @@ export type WalletProviders = Map<
 >;
 
 export type ProviderInterface = { config: WalletConfig } & WalletActions;
+
+// it comes from wallets.ts and `connect`
+type NetworkTypeFromLegacyConnect = Network | undefined;
+
+export type NamespaceInputForConnect<T extends Namespace = Namespace> = {
+  /**
+   * By default, you should specify namespace (e.g. evm).
+   */
+  namespace: T;
+  /**
+   * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+   */
+  network: NetworkTypeFromLegacyConnect;
+  derivationPath?: string;
+};

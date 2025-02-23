@@ -1,31 +1,23 @@
-import type { GetWalletInstance } from './hooks.js';
-import type { ProviderProps, WalletProviders } from './types.js';
+import type { ProviderProps } from './types.js';
 
 import { useEffect, useRef } from 'react';
 
-import { autoConnect } from './helpers.js';
+import { shouldTryAutoConnect } from './utils.js';
 
 export function useAutoConnect(
   props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'> & {
-    wallets: WalletProviders;
-    getWalletInstanceFromLegacy: GetWalletInstance;
+    /**
+     * A function to run autoConnect on instances
+     */
+    autoConnectHandler: () => void;
   }
 ) {
   const autoConnectInitiated = useRef(false);
 
-  // Running auto connect on instances
   useEffect(() => {
-    const shouldTryAutoConnect =
-      props.allBlockChains &&
-      props.allBlockChains.length &&
-      props.autoConnect &&
-      !autoConnectInitiated.current;
-
-    if (shouldTryAutoConnect) {
+    if (shouldTryAutoConnect(props) && !autoConnectInitiated.current) {
       autoConnectInitiated.current = true;
-      void (async () => {
-        await autoConnect(props.wallets, props.getWalletInstanceFromLegacy);
-      })();
+      props.autoConnectHandler();
     }
   }, [props.autoConnect, props.allBlockChains]);
 }

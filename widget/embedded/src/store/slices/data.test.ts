@@ -1,3 +1,4 @@
+import type { WidgetConfig } from '../../types';
 import type { AppStoreState } from '../app';
 import type { EvmBlockchainMeta, Token } from 'rango-sdk';
 
@@ -16,6 +17,24 @@ import { createAppStore } from '../app';
 let appStoreState: AppStoreState;
 let customTokens: [Token, Token, Token];
 let rangoBlockchain: EvmBlockchainMeta;
+
+const DEFAULT_CONFIG: WidgetConfig = {
+  apiKey: '',
+  walletConnectProjectId: 'e24844c5deb5193c1c14840a7af6a40b',
+  title: undefined,
+  multiWallets: true,
+  excludeLiquiditySources: true,
+  customDestination: true,
+  variant: 'default',
+  trezorManifest: {
+    appUrl: 'https://widget.rango.exchange/',
+    email: 'hi+trezorwidget@rango.exchange',
+  },
+  tonConnect: {
+    manifestUrl:
+      'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json',
+  },
+};
 
 beforeEach(() => {
   cacheService.clear();
@@ -60,7 +79,7 @@ beforeEach(() => {
     initData._tokensMapByBlockchainName[token.blockchain].push(tokenHash);
   });
 
-  const appStore = createAppStore();
+  const appStore = createAppStore(DEFAULT_CONFIG);
   appStore.setState(initData);
   appStoreState = appStore.getState();
 });

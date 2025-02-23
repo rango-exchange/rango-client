@@ -9,10 +9,10 @@
     "build": "parcel build --no-source-maps --cache-dir=.parcel-cache",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.39.0"
+    "@rango-dev/widget-embedded": "^0.39.1-next.20"
   }
 }

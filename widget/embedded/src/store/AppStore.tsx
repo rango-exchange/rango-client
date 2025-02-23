@@ -15,6 +15,11 @@ export function useAppStore() {
 
   useEffect(() => {
     if (store && !store.persist.hasHydrated()) {
+      /*
+       * folan
+       * asds
+       *
+       */
       void store.persist.rehydrate();
     }
   }, []);

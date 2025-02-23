@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.40.0",
+  "version": "0.39.1-next.13",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -18,16 +18,16 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "react": ">=16"
   },
   "dependencies": {
-    "@rango-dev/signer-terra": "^0.31.0",
-    "@rango-dev/wallets-shared": "^0.41.0",
+    "@rango-dev/signer-terra": "^0.31.1-next.1",
+    "@rango-dev/wallets-shared": "^0.41.1-next.6",
     "@terra-money/wallet-controller": "^3.11.2",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.78"
   },
   "publishConfig": {
     "access": "public"

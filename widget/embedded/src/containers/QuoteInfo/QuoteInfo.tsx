@@ -7,8 +7,7 @@ import { Quote } from '../../components/Quote';
 import { QuoteSkeleton } from '../../components/QuoteSkeleton';
 import { useQuoteStore } from '../../store/quote';
 import { QuoteErrorType } from '../../types';
-import { getQuoteToTokenUsdPrice } from '../../utils/quote';
-import { calcOutputUsdValue } from '../../utils/swap';
+import { getUsdOutputFrom } from '../../utils/swap';
 
 import { QuoteContainer } from './QuoteInfo.styles';
 
@@ -28,17 +27,12 @@ export function QuoteInfo(props: PropTypes) {
     fullExpandedMode = false,
     container,
   } = props;
-  const { inputAmount, inputUsdValue, toToken } = useQuoteStore();
+  const { inputAmount, inputUsdValue } = useQuoteStore();
 
   const outputAmount = !!quote?.outputAmount
     ? new BigNumber(quote?.outputAmount)
     : null;
-  const outputUsdValue = !!quote?.outputAmount
-    ? calcOutputUsdValue(
-        quote?.outputAmount,
-        getQuoteToTokenUsdPrice(quote) || toToken?.usdPrice
-      )
-    : null;
+  const outputUsdValue = quote ? getUsdOutputFrom(quote) : null;
 
   const noResult =
     error &&

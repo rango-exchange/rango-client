@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.36.0",
+  "version": "0.36.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -18,13 +18,13 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@solana/web3.js": "^1.91.4",
     "bs58": "^5.0.0",
     "promise-retry": "^2.0.1",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.78"
   },
   "devDependencies": {
     "@types/promise-retry": "^1.1.6"

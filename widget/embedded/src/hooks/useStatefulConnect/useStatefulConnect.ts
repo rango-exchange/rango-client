@@ -1,10 +1,8 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
-import type {
-  Namespace,
-  NamespaceData,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
@@ -61,7 +59,11 @@ export function useStatefulConnect(): UseStatefulConnect {
     });
 
     try {
-      await connect(type, undefined, namespaces);
+      const legacyNamespacesInput = namespaces?.map((namespaceInput) => ({
+        ...namespaceInput,
+        network: undefined,
+      }));
+      await connect(type, legacyNamespacesInput);
 
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,7 +77,7 @@ export function useStatefulConnect(): UseStatefulConnect {
   };
 
   const handleConnect = async (
-    wallet: WalletInfoWithExtra,
+    wallet: ExtendedModalWalletInfo,
     options?: HandleConnectOptions
   ): Promise<{
     status: ResultStatus;
@@ -83,31 +85,60 @@ export function useStatefulConnect(): UseStatefulConnect {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
     if (isDisconnected) {
-      if (!wallet.namespaces) {
+      // Legacy and hub have different structure to check wether we need to show namespace or not.
+
+      // Hub
+      const isHub = !!wallet.isHub;
+      if (isHub) {
+        const detachedInstances = wallet.properties?.find(
+          (item) => item.name === 'detached'
+        );
+        const needsNamespace =
+          detachedInstances && wallet.state !== 'connected';
+
+        if (needsNamespace) {
+          dispatch({
+            type: 'needsNamespace',
+            payload: {
+              targetWallet: wallet,
+            },
+          });
+          return { status: ResultStatus.Namespace };
+        }
+      }
+
+      /*
+       * Legacy
+       *
+       * For legacy there are 3 states:
+       * 1. a wallet doesn't have any namespace defined, we call the connect.
+       * 2. a wallet has more than two namespaces, we should show namepsace modal, and in that place user will be checked to needs derivation path or not.
+       * 3. a wallet has exactly one namespacesape, in this case we check if that needs derivation or not, if it needs we will do it here by dispatching the action accordingly.
+       */
+      if (!wallet.needsNamespace) {
         return await runConnect(wallet.type, undefined, options);
       }
 
-      const needsNamespace = wallet.namespaces.length > 1;
+      const needsNamespace = wallet.needsNamespace.data.length > 1;
       const needsDerivationPath = wallet.needsDerivationPath;
 
       if (needsNamespace) {
         dispatch({
           type: 'needsNamespace',
           payload: {
-            providerType: wallet.type,
-            providerImage: wallet.image,
-            availableNamespaces: wallet.namespaces,
-            singleNamespace: wallet.singleNamespace,
+            targetWallet: wallet,
           },
         });
         return { status: ResultStatus.Namespace };
       } else if (needsDerivationPath) {
+        const namespace = wallet.needsNamespace.data[0];
+
         dispatch({
           type: 'needsDerivationPath',
           payload: {
             providerType: wallet.type,
             providerImage: wallet.image,
-            namespace: wallet.namespaces[0],
+            namespace: namespace.value,
           },
         });
         return { status: ResultStatus.DerivationPath };
@@ -115,7 +146,9 @@ export function useStatefulConnect(): UseStatefulConnect {
 
       return await runConnect(
         wallet.type,
-        wallet.namespaces.map((namespace) => ({ namespace })),
+        wallet.needsNamespace?.data.map((namespace) => ({
+          namespace: namespace.value,
+        })),
         options
       );
     }
@@ -132,7 +165,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
   ): Promise<Result> => {
-    const isSingleNamespace = wallet.singleNamespace;
+    const isSingleNamespace = wallet.needsNamespace?.selection === 'single';
     const needsDerivationPath = wallet.needsDerivationPath;
     const firstSelectedNamespace = selectedNamespaces[0];
 
@@ -172,7 +205,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       );
     }
 
-    const type = connectState.namespace.providerType;
+    const type = connectState.namespace.targetWallet.type;
     const namespaces = selectedNamespaces.map((namespace) => ({
       namespace,
     }));

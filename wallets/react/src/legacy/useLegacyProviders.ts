@@ -1,8 +1,10 @@
 import type { ProviderContext, ProviderProps } from './types.js';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { useEffect, useReducer } from 'react';
 
+import { autoConnect } from './autoConnect.js';
 import {
   availableWallets,
   checkWalletProviders,
@@ -17,7 +19,13 @@ import {
 import { useInitializers } from './hooks.js';
 import { useAutoConnect } from './useAutoConnect.js';
 
-export function useLegacyProviders(props: ProviderProps): ProviderContext {
+export type LegacyProviderProps = Omit<ProviderProps, 'providers'> & {
+  providers: LegacyProviderInterface[];
+};
+
+export function useLegacyProviders(
+  props: LegacyProviderProps
+): ProviderContext {
   const [providersState, dispatch] = useReducer(stateReducer, {});
 
   // Get (or add) wallet instance (`provider`s will be wrapped in a `Wallet`)
@@ -30,20 +38,29 @@ export function useLegacyProviders(props: ProviderProps): ProviderContext {
   const wallets = checkWalletProviders(listOfProviders);
 
   useAutoConnect({
-    wallets,
     allBlockChains: props.allBlockChains,
     autoConnect: props.autoConnect,
-    getWalletInstanceFromLegacy: getWalletInstance,
+    autoConnectHandler: async () => autoConnect(wallets, getWalletInstance),
   });
 
   // Final API we put in context and it will be available to use for users.
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
-    async connect(type, network, namespaces) {
+    async connect(type, namespaces) {
       const wallet = wallets.get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
+
+      // Legacy providers doesn't implemented multiple namespaces, so it will always be one value.
+      let network = undefined;
+      if (namespaces && namespaces.length > 0) {
+        /*
+         * This may not be safe in cases there are two `network` for namespaces, the first one will be picked always.
+         * But since legacy provider only accepts one value, it shouldn't be happened when we are using legacy mode.
+         */
+        network = namespaces.find((ns) => !!ns.network)?.network;
+      }
+
       const walletInstance = getWalletInstance(wallet);
       const result = await walletInstance.connect(network, namespaces);
       if (props.autoConnect) {
@@ -54,7 +71,7 @@ export function useLegacyProviders(props: ProviderProps): ProviderContext {
         });
       }
 
-      return result;
+      return [result];
     },
     async disconnect(type) {
       const wallet = wallets.get(type);

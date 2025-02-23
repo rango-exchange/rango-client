@@ -1,6 +1,6 @@
 # @rango-dev/ui
 
-Rango UI design system components
+Rango UI components
 
 ### Icons
 

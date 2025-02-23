@@ -9,11 +9,18 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
+import {
+  PROFILE_BANNER_IMAGE_SOURCE,
+  PROFILE_BANNER_NAVIGATION_LINK,
+} from '../../constants/profileBanner';
+import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
+
+import { ProfileBanner } from './SwapDetailsModal.styles';
 
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
@@ -31,6 +38,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     diagnosisUrl,
   } = props;
   const navigate = useNavigate();
+  const { showProfileBanner } = useUiStore();
 
   return (
     <WatermarkedModal
@@ -72,21 +80,33 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           description={description}
         />
       )}
-      <Divider size={32} />
+      <Divider size={30} />
       {status === 'success' && (
-        <Button
-          id="widget-swap-details-modal-done-btn"
-          variant="contained"
-          type="primary"
-          size="large"
-          onClick={() => {
-            const home = '../../';
-            navigate(home);
-          }}>
-          <Typography variant="title" size="medium" color="neutral100">
+        <>
+          {showProfileBanner && (
+            <>
+              <Link to={PROFILE_BANNER_NAVIGATION_LINK}>
+                <ProfileBanner
+                  src={PROFILE_BANNER_IMAGE_SOURCE}
+                  alt="Profile Banner"
+                />
+              </Link>
+
+              <Divider size={30} />
+            </>
+          )}
+          <Button
+            id="widget-swap-details-modal-done-btn"
+            variant="contained"
+            type="primary"
+            size="large"
+            onClick={() => {
+              const home = '../../';
+              navigate(home);
+            }}>
             {i18n.t('Done')}
-          </Typography>
-        </Button>
+          </Button>
+        </>
       )}
       <Divider size={12} />
       {diagnosisUrl && (

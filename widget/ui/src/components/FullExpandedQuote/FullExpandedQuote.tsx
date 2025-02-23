@@ -8,7 +8,6 @@ import { ErrorIcon, WarningIcon } from '../../icons/index.js';
 import { ChainToken } from '../ChainToken/index.js';
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
-import { QuoteCost } from '../QuoteCost/index.js';
 import { QuoteTag } from '../QuoteTag/index.js';
 import { NumericTooltip, Tooltip } from '../Tooltip/index.js';
 import { Typography } from '../Typography/index.js';
@@ -54,7 +53,6 @@ export function FullExpandedQuote(props: PropTypes) {
     warningLevel,
     tooltipContainer,
     onClick,
-    feeWarning,
     selected = false,
   } = props;
   const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
@@ -74,12 +72,7 @@ export function FullExpandedQuote(props: PropTypes) {
           <SkeletonHeader />
         ) : (
           <>
-            <QuoteCost
-              fee={props.fee}
-              time={props.time}
-              steps={numberOfSteps}
-              feeWarning={feeWarning}
-            />
+            {props.quoteCost}
             <TagsContainer>
               {props.tags.map((tag) => (
                 <QuoteTag

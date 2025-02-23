@@ -3,8 +3,29 @@ import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 
+import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import { type VersionedProviders } from '@rango-dev/wallets-core';
+
 import { cacheService } from '../../services/cacheService';
+import {
+  matchAndGenerateProviders,
+  type ProvidersOptions,
+} from '../../utils/providers';
 import { matchTokensFromConfigWithMeta } from '../utils';
+
+function makeProvidersOptionsFromConfig(
+  config: WidgetConfig
+): ProvidersOptions {
+  const options: ProvidersOptions = {
+    walletConnectProjectId: config?.walletConnectProjectId,
+    trezorManifest: config?.trezorManifest,
+    tonConnect: config?.tonConnect,
+    walletConnectListedDesktopWalletLink:
+      config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
+  };
+
+  return options;
+}
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
@@ -58,6 +79,31 @@ export interface ConfigSlice {
     name: K,
     value: IframeConfigs[K]
   ) => void;
+  allProviders: VersionedProviders[];
+  buildAndSetProviders: () => void;
+  getAvailableProviders: () => VersionedProviders[];
+}
+
+function generateProviders(config: WidgetConfig) {
+  const options = makeProvidersOptionsFromConfig(config);
+  const envs = {
+    walletconnect2: {
+      WC_PROJECT_ID: options?.walletConnectProjectId || '',
+      DISABLE_MODAL_AND_OPEN_LINK:
+        options?.walletConnectListedDesktopWalletLink,
+    },
+    selectedProviders: config.wallets,
+    trezor: options?.trezorManifest
+      ? { manifest: options.trezorManifest }
+      : undefined,
+    tonConnect: options?.tonConnect?.manifestUrl
+      ? { manifestUrl: options?.tonConnect.manifestUrl }
+      : undefined,
+  };
+  const allProviders = getAllProviders(envs);
+  const allBuiltProviders = allProviders.map((build) => build());
+
+  return allBuiltProviders;
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
@@ -65,10 +111,15 @@ export const createConfigSlice: StateCreatorWithInitialData<
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
+  const allBuiltProviders = generateProviders({
+    ...DEFAULT_CONFIG,
+    ...initialData,
+  });
   return {
     config: { ...DEFAULT_CONFIG, ...initialData },
     iframe: DEFAULT_IFRAME_CONFIGS,
     campaignMode: DEFAULT_CAMPAIGN_MODE,
+    allProviders: allBuiltProviders,
     getLiquiditySources: () => {
       const { config, campaignMode } = get();
       return campaignMode.liquiditySources?.length
@@ -158,6 +209,27 @@ export const createConfigSlice: StateCreatorWithInitialData<
           [name]: value,
         },
       });
+    },
+
+    buildAndSetProviders: () => {
+      const { config } = get();
+      const allBuiltProviders = generateProviders(config);
+
+      set({
+        allProviders: allBuiltProviders,
+      });
+    },
+
+    getAvailableProviders: () => {
+      const { allProviders, config } = get();
+      const options = makeProvidersOptionsFromConfig(config);
+
+      const availableProviders = matchAndGenerateProviders({
+        allProviders,
+        configWallets: config.wallets,
+        options,
+      });
+      return availableProviders;
     },
   };
 };

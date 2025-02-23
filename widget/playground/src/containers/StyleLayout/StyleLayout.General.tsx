@@ -18,6 +18,7 @@ import { OverlayPanel } from '../../components/OverlayPanel';
 import { SingleList } from '../../components/SingleList';
 import { Slider } from '../../components/Slider';
 import {
+  DEFAULT_LANGUAGE,
   DEFAULT_PRIMARY_RADIUS,
   DEFAULT_SECONDARY_RADIUS,
   LANGUAGES,
@@ -47,7 +48,11 @@ export function General() {
     useConfigStore.use.config().theme?.secondaryBorderRadius;
   const fontFamily =
     useConfigStore.use.config().theme?.fontFamily || DEFAULT_FONT;
-  const language = useConfigStore.use.config().language || LANGUAGES[0].value;
+  const defaultLanguage = LANGUAGES.find(
+    (lng) => lng.value === DEFAULT_LANGUAGE
+  );
+  const language =
+    useConfigStore.use.config().language || defaultLanguage?.value;
   const variant = useConfigStore.use.config().variant || VARIANTS[0].value;
 
   const { resetLanguage } = useWidget();

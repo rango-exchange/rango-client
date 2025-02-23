@@ -1,4 +1,4 @@
-import type { Store } from './store.js';
+import type { Store } from './mod.js';
 
 import { beforeEach, describe, expect, test } from 'vitest';
 

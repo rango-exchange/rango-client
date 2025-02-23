@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/logging-console",
-  "version": "0.6.0",
+  "version": "0.6.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,14 +14,14 @@
     "src"
   ],
   "dependencies": {
-    "@rango-dev/logging-types": "^0.6.0"
+    "@rango-dev/logging-types": "^0.6.1-next.0"
   },
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path logging/console",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "publishConfig": {
     "access": "public"
