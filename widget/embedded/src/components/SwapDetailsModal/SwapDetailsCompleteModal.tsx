@@ -9,12 +9,18 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
+import {
+  PROFILE_BANNER_IMAGE_SOURCE,
+  PROFILE_BANNER_NAVIGATION_LINK,
+} from '../../constants/profileBanner';
 import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
+
+import { ProfileBanner } from './SwapDetailsModal.styles';
 
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
@@ -79,12 +85,13 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
         <>
           {showProfileBanner && (
             <>
-              <img
-                src={
-                  'https://raw.githubusercontent.com/rango-exchange/assets/main/banners/widget/profile.jpg'
-                }
-                alt="Profile Banner"
-              />
+              <Link to={PROFILE_BANNER_NAVIGATION_LINK}>
+                <ProfileBanner
+                  src={PROFILE_BANNER_IMAGE_SOURCE}
+                  alt="Profile Banner"
+                />
+              </Link>
+
               <Divider size={30} />
             </>
           )}
