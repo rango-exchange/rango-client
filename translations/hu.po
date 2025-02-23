@@ -8,7 +8,7 @@ msgstr ""
 "Language: hu\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-27 15:57\n"
+"PO-Revision-Date: 2025-02-23 11:46\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,18 +19,13 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:21
-msgid "No Routes Found"
-msgstr "Nem található útvonal"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:25
-msgid "You cannot use the same token for From and To."
-msgstr "Nem használhatja ugyanazt a tokent a Kezdő és a Címzett számára."
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "A kimeneti mennyiség {percentageChange}%-kal módosult (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:286
+#: widget/embedded/src/components/TokenList/TokenList.tsx:263
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -38,7 +33,7 @@ msgstr "Nincs találat"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:287
+#: widget/embedded/src/components/TokenList/TokenList.tsx:264
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -84,36 +79,36 @@ msgstr "Jelenleg néhány tranzakció fut, és más böngészőlap kezeli őket.
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:349
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 msgid "Confirm"
 msgstr "Erősítse meg"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:428
 msgid "Your {blockchainName} wallets"
 msgstr "Az Ön {blockchainName} pénztárcája"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:384
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:375
 msgid "Insufficient account balance"
 msgstr "Elégtelen számlaegyenleg"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:394
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:385
 msgid "Proceed anyway"
 msgstr "Mindenképpen folytassa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:437
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Egy {blockchainName} pénztárcát kell csatlakoztatnia."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:143
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:139
 msgid "Add {chain} chain"
 msgstr "Add hozzá a {chain} láncot"
 
@@ -210,7 +205,7 @@ msgstr "Ma"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:424
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:432
 msgid "Swaps steps"
 msgstr "Felcseréli a lépéseket"
 
@@ -221,78 +216,78 @@ msgid "Retry"
 msgstr "Próbálja újra"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Slippage Error"
 msgstr "Csúszási hiba"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:150
+#: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Slippage Warning"
 msgstr "Csúszásra figyelmeztetés"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:157
 msgid "Bridge Limit Error"
 msgstr "Bridge Limit hiba"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:240
+#: widget/embedded/src/components/Quote/Quote.tsx:244
 msgid "Yours: {amount} {symbol}"
 msgstr "A tiéd: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:261
+#: widget/embedded/src/components/Quote/Quote.tsx:265
 msgid "Minimum required slippage: {minRequiredSlippage}"
 msgstr "Minimális szükséges csúszás: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:282
+#: widget/embedded/src/components/Quote/Quote.tsx:286
 msgid "Yours: {userSlippage}"
 msgstr "A tiéd: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:395
+#: widget/embedded/src/components/Quote/Quote.tsx:414
 msgid "See All Routes"
 msgstr "Lásd: Összes útvonal"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
 msgid "View more info"
 msgstr "További információk megtekintése"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:110
 msgid "Gas & Fee Explanation"
 msgstr "Gáz és díj magyarázata"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:107
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:126
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
 msgid "Details"
 msgstr "Részletek"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:146
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
 msgid "Total Payable Fee"
 msgstr "Teljes fizetendő díj"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:185
 msgid "Hide non-payable fees"
 msgstr "A nem fizetendő díjak elrejtése"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:167
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:186
 msgid "Show non-payable fees"
 msgstr "Mutassa meg a nem fizetendő díjakat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:196
 msgid "Description"
 msgstr "Leírás"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:181
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "Az alábbi díjak figyelembe vételre kerülnek a tranzakció kimeneténél, és\n"
@@ -319,7 +314,7 @@ msgid "Chains:"
 msgstr "Láncok:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:77
+#: widget/embedded/src/components/Quotes/Quotes.tsx:76
 msgid "Sort by"
 msgstr "Rendezés"
 
@@ -374,13 +369,13 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Ehhez az útvonalhoz legalább {minRequiredSlippage} -ra kell növelnie a csúszást."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Javasoljuk, hogy ezen az útvonalon növelje a csúszást legalább {minRequiredSlippage} -ra."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
 msgid "Caution, your slippage is high."
 msgstr "Vigyázat, nagy a csúszásod."
 
@@ -426,6 +421,16 @@ msgid "Something went wrong. Please refresh the app."
 msgstr "Valami elromlott. Kérjük, frissítse az alkalmazást."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:21
+msgid "No Routes Found"
+msgstr "Nem található útvonal"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SameTokensWarning/SameTokensWarning.tsx:25
+msgid "You cannot use the same token for From and To."
+msgstr "Nem használhatja ugyanazt a tokent a Kezdő és a Címzett számára."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:38
 msgid "Slippage tolerance per swap"
 msgstr "Csúszási tűrés cserénként"
@@ -453,13 +458,13 @@ msgstr "Ez a beállítás minden lépésre vonatkozik (pl. 1 hüvelyk, Thorchain
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
 msgid "Swap Details"
 msgstr "Csere részletei"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "Kérjen azonosítót"
 
@@ -474,52 +479,52 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Csere kérésazonosítóval = {requestId} nem található."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "{amount} {token} kapott {conciseAddress} pénztárcában a {chain} láncon."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
 msgid "Transaction was not sent."
 msgstr "A tranzakció nem lett elküldve."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "A {amount} {symbol} {blockchain} a pénztárcájában marad."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:289
 msgid "Delete"
 msgstr "Töröl"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:304
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
 msgid "Try again"
 msgstr "Próbáld újra"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:322
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:330
 msgid "Copied To Clipboard"
 msgstr "Vágólapra másolva"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:323
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:331
 msgid "Copy Request ID"
 msgstr "Kérésazonosító másolása"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:346
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:354
 msgid "View on Rango Explorer"
 msgstr "Megtekintés a Rango Exploreren"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
 msgid "Finished at"
 msgstr "Készült:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:355
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
 msgid "Created at"
 msgstr "Létrehozva:"
 
@@ -535,27 +540,27 @@ msgid "Connect"
 msgstr "Csatlakozás"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:51
 msgid "Swap Successful"
 msgstr "A csere sikeres"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:79
 msgid "Transaction Failed"
 msgstr "A tranzakció sikertelen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:87
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
 msgid "Done"
 msgstr "Kész"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:100
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:120
 msgid "Diagnosis"
 msgstr "Diagnózis"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:112
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:132
 msgid "See Details"
 msgstr "Lásd Részletek"
 
@@ -613,7 +618,7 @@ msgid "Network Changed"
 msgstr "Hálózat megváltozott"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:271
+#: widget/embedded/src/components/TokenList/TokenList.tsx:248
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
 msgid "Select Token"
 msgstr "Válassza a Token lehetőséget"
@@ -710,12 +715,12 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Ön elutasította a {blockchainDisplayName} lánc hozzáadását pénztárcájához."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:70
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:58
 msgid "Select chain types"
 msgstr "Válasszon lánctípusokat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:59
 msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
 msgstr "Ez a pénztárca több láncot is támogat. Válassza ki, melyik lánchoz szeretne csatlakozni."
 
@@ -801,7 +806,7 @@ msgstr "Erősítse USD Ár Ismeretlen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:163
+#: widget/embedded/src/pages/Home.tsx:165
 msgid "Swap"
 msgstr "Csere"
 
@@ -816,38 +821,18 @@ msgid "The route goes through Ethereum. Continue?"
 msgstr "Az út az Ethereumon keresztül vezet. Folytatja?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:10
-msgid "Route has been updated."
-msgstr "Az útvonal frissítve."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:12
-msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr "A kimeneti mennyiség {newOutputAmount} értékre módosult ({percentageChange}% változás)."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:20
-msgid "Route swappers has been updated."
-msgstr "Az útvonalcserélők frissítve."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:22
-msgid "Route internal coins has been updated."
-msgstr "Az útvonal belső érméi frissítve lettek."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
 #: widget/embedded/src/pages/Routes.tsx:48
 msgid "Routes"
 msgstr "Útvonalak"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:79
 msgid "From"
 msgstr "Tól"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:118
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
 msgid "To"
 msgstr "To"
 
@@ -978,23 +963,23 @@ msgid "Add another custom token"
 msgstr "Adjon hozzá egy másik egyéni tokent"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
 msgid "Confirm Swap"
 msgstr "Erősítse meg a cserét"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:254
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:246
 msgid "Start Swap"
 msgstr "Indítsa el a Swapot"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:282
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
 msgid "You get"
 msgstr "Megkapod"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
 msgid "Search Token"
 msgstr "Token keresése"
 
@@ -1100,17 +1085,17 @@ msgid "Search Chain"
 msgstr "Keresőlánc"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
 msgid "Source"
 msgstr "Forrás"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
 msgid "Destination"
 msgstr "Rendeltetési hely"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
 msgid "Swap {type}"
 msgstr "Csere {type}"
 
@@ -1151,57 +1136,57 @@ msgid "This year"
 msgstr "Idén"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:129
+#: widget/embedded/src/utils/swap.ts:139
 msgid "Required: >= {min} {symbol}"
 msgstr "Kötelező: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:142
+#: widget/embedded/src/utils/swap.ts:152
 msgid "Required: > {min} {symbol}"
 msgstr "Kötelező: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:157
+#: widget/embedded/src/utils/swap.ts:167
 msgid "Required: <= {max} {symbol}"
 msgstr "Kötelező: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:170
+#: widget/embedded/src/utils/swap.ts:180
 msgid "Required: < {max} {symbol}"
 msgstr "Kötelező: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:601
+#: widget/embedded/src/utils/swap.ts:629
 msgid " for network fee"
 msgstr " hálózati díj ellenében"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:604
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for swap"
 msgstr " cserére"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:607
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for input and network fee"
 msgstr " bemeneti és hálózati díjért"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:609
+#: widget/embedded/src/utils/swap.ts:637
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "≈ {requiredAmount} {symbol}{reason}kell, de {currentAmount} {symbol} van a {blockchain} pénztárcájában."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:669
+#: widget/embedded/src/utils/swap.ts:688
 msgid "Waiting for connecting wallet"
 msgstr "Várakozás a pénztárca csatlakoztatására"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:673
+#: widget/embedded/src/utils/swap.ts:692
 msgid "Waiting for other running tasks to be finished"
 msgstr "Várakozás a többi futó feladat befejezésére"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:676
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for changing wallet network"
 msgstr "Várakozás a pénztárcahálózat megváltoztatására"
 
