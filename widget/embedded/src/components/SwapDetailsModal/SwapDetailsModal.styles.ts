@@ -12,3 +12,7 @@ export const TooltipErrorContent = styled('div', {
     display: 'block',
   },
 });
+
+export const ProfileBanner = styled('img', {
+  width: '100%',
+});
