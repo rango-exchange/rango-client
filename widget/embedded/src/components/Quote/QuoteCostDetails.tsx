@@ -21,7 +21,7 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
-import { getContainer } from '../../utils/common';
+import { getContainer, getExpanded } from '../../utils/common';
 import { numberToString } from '../../utils/numbers';
 import { getFeesGroup, getTotalFeesInUsd, getUsdFee } from '../../utils/swap';
 import { WatermarkedModal } from '../common/WatermarkedModal';
@@ -57,9 +57,18 @@ const NonPayableFee = (props: { fee: BigNumber; label: string }) => {
 export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
-  const { steps, quote, fee, time, feeWarning, showModalFee } = props;
+  const {
+    steps,
+    quote,
+    fee,
+    time,
+    feeWarning,
+    timeWarning,
+    showModalFee,
+    fullExpandedMode = false,
+  } = props;
   const swaps = quote?.swaps ?? [];
-  const container = getContainer();
+  const container = fullExpandedMode ? getExpanded() : getContainer();
 
   const feesGroup = getFeesGroup(swaps);
 
@@ -76,6 +85,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
         }
         fee={fee}
         feeWarning={feeWarning}
+        timeWarning={timeWarning}
         time={time}
         steps={steps}
         tooltipGas={showModalFee ? i18n.t('View more info') : undefined}
@@ -85,8 +95,17 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
       <WatermarkedModal
         container={container}
         open={open}
+        anchor={fullExpandedMode ? 'center' : 'bottom'}
+        styles={{
+          container: {
+            maxWidth: fullExpandedMode ? '484px' : 'unset',
+          },
+        }}
         header={
-          <ModalHeader>
+          <ModalHeader
+            style={{
+              textAlign: fullExpandedMode ? 'left' : 'center',
+            }}>
             <Typography variant="title" size="medium">
               {i18n.t('Gas & Fee Explanation')}
             </Typography>

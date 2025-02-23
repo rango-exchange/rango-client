@@ -4,15 +4,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useWalletsStore } from '../store/wallets';
 import { QuoteErrorType } from '../types';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
 import {
   generateQuoteWarnings,
   getDefaultQuote,
-  getQuoteFromTokenUsdPrice,
-  getQuoteToTokenUsdPrice,
   sortQuotesBy,
 } from '../utils/quote';
 import { isRoutingEnabled } from '../utils/settings';
@@ -50,7 +47,7 @@ export function useSwapInput({
   const { fetch: fetchQuote, cancelFetch } = useFetchAllQuotes();
   const { excludeLiquiditySources: configExcludeLiquiditySources, routing } =
     useAppStore().config;
-  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const { connectedWallets } = useAppStore();
 
   const {
     fromToken,
@@ -157,15 +154,10 @@ export function useSwapInput({
             requestId: quote?.requestId || '',
             swaps: quote?.swaps,
           });
-          const outputUsdValue =
-            getQuoteToTokenUsdPrice(quote) || toToken?.usdPrice;
-          const inputUsdValue =
-            getQuoteFromTokenUsdPrice(quote) || fromToken?.usdPrice;
           const quoteWarning =
             quote &&
-            generateQuoteWarnings(quote, {
-              fromToken: { ...fromToken, usdPrice: inputUsdValue },
-              toToken: { ...toToken, usdPrice: outputUsdValue },
+            generateQuoteWarnings({
+              currentQuote: quote,
               userSlippage,
               findToken,
             });

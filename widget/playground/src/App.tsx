@@ -23,6 +23,11 @@ export function App() {
     theme: {},
     ...config,
     ...filteredConfigForExport,
+    /*
+     * externalWallets should be always true to avoid mounting WidgetProvider twice.
+     * mounting multiple WidgetProviders may result in conflicts and unexpected behaviour.
+     */
+    externalWallets: true,
     apiKey: RANGO_PUBLIC_API_KEY,
     features: {
       theme: 'hidden',
@@ -32,15 +37,6 @@ export function App() {
     },
   };
 
-  /*
-   * Playground widget provider should contain all wallets so we need to remove 'wallets' from config
-   * to make sure we can access to list of all wallets in playground
-   */
-  const playgroundConfig: WidgetConfig = {
-    ...overridedConfig,
-    wallets: undefined,
-  };
-
   useEffect(() => {
     void fetchMeta();
   }, []);
@@ -48,7 +44,7 @@ export function App() {
   return (
     <ToastProvider container={document.body}>
       <div id={PLAYGROUND_CONTAINER_ID} className={activeStyle}>
-        <WidgetProvider config={playgroundConfig}>
+        <WidgetProvider config={overridedConfig}>
           <ConfigContainer>
             <Routes>
               <Route path="/*" element={<Widget config={overridedConfig} />} />

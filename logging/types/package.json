@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/logging-types",
-  "version": "0.6.0",
+  "version": "0.6.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -18,7 +18,7 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "publishConfig": {
     "access": "public"

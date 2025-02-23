@@ -1,24 +1,33 @@
 {
   "name": "@rango-dev/wallets-react",
-  "version": "0.27.0",
+  "version": "0.27.1-next.15",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers/index.d.ts",
+      "default": "./dist/helpers/index.js"
+    }
   },
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "helpers"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/react",
+    "build": "node ../../scripts/build/command.mjs --path wallets/react --inputs src/index.ts,src/helpers/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",
@@ -26,9 +35,14 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.40.0",
-    "@rango-dev/wallets-shared": "^0.41.0",
-    "rango-types": "^0.1.74"
+    "@rango-dev/wallets-core": "^0.40.1-next.13",
+    "@rango-dev/wallets-shared": "^0.41.1-next.6",
+    "rango-types": "^0.1.78",
+    "ts-results": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.25"
   },
   "publishConfig": {
     "access": "public"

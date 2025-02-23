@@ -1,22 +1,21 @@
 import type { Provider } from '../hub/mod.js';
 import type { LegacyProviderInterface } from '../legacy/mod.js';
 
-type VersionedVLegacy = ['0.0.0', LegacyProviderInterface];
-type VersionedV1 = ['1.0.0', Provider];
-type AvailableVersions = VersionedVLegacy | VersionedV1;
-export type Versions = AvailableVersions[];
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-export type VersionInterface<T extends AvailableVersions[]> = T[1];
+type LegacyVersioned = ['0.0.0', LegacyProviderInterface];
+type HubVersioned = ['1.0.0', Provider];
+type AvailableVersionedProviders = LegacyVersioned | HubVersioned;
+export type VersionedProviders = AvailableVersionedProviders[];
+export type VersionInterface<T extends AvailableVersionedProviders[]> = T[1];
 
 type SemVer<T extends [string, any]> = T extends [infer U, any] ? U : never;
-type MatchVersion<T extends Versions, Version> = Extract<
+type MatchVersion<T extends VersionedProviders, Version> = Extract<
   T[number],
   [Version, any]
 >;
 
 export function pickVersion<
-  L extends Versions,
-  V extends SemVer<Versions[number]>
+  L extends VersionedProviders,
+  V extends SemVer<VersionedProviders[number]>
 >(list: L, targetVersion: V): MatchVersion<L, V> {
   if (!targetVersion) {
     throw new Error(`You should provide a valid semver, e.g 1.0.0.`);
@@ -35,15 +34,15 @@ export function pickVersion<
 }
 
 interface DefineVersionsApi {
-  version: <T extends SemVer<Versions[number]>>(
+  version: <T extends SemVer<VersionedProviders[number]>>(
     semver: T,
-    value: VersionInterface<MatchVersion<Versions, T>>
+    value: VersionInterface<MatchVersion<VersionedProviders, T>>
   ) => DefineVersionsApi;
-  build: () => Versions;
+  build: () => VersionedProviders;
 }
 
 export function defineVersions(): DefineVersionsApi {
-  const versions: Versions = [];
+  const versions: VersionedProviders = [];
   const api: DefineVersionsApi = {
     version: (semver, value) => {
       versions.push([semver, value]);
@@ -58,6 +57,6 @@ export function defineVersions(): DefineVersionsApi {
 
 export function legacyProviderImportsToVersionsInterface(
   provider: LegacyProviderInterface
-): Versions {
+): VersionedProviders {
   return defineVersions().version('0.0.0', provider).build();
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.42.0",
+  "version": "0.42.1-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -18,7 +18,7 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
@@ -34,8 +34,8 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
-    "@rango-dev/logging-core": "^0.6.0",
-    "rango-types": "^0.1.74",
+    "@rango-dev/logging-core": "^0.6.1-next.0",
+    "rango-types": "^0.1.78",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

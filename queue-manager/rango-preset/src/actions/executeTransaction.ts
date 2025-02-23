@@ -21,7 +21,7 @@ import {
   signTransaction,
   updateNetworkStatus,
 } from '../helpers';
-import { getCurrentBlockchainOf } from '../shared';
+import { getCurrentNamespaceOf } from '../shared';
 import { BlockReason } from '../types';
 
 /**
@@ -95,8 +95,10 @@ export async function executeTransaction(
     requestBlock(blockedFor);
     return;
   } else if (!networkMatched) {
-    const fromBlockchain = getCurrentBlockchainOf(swap, currentStep);
-    const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(fromBlockchain);
+    const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
+    const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(
+      fromNamespace.network
+    );
 
     const blockedFor = {
       reason: BlockReason.WAIT_FOR_NETWORK_CHANGE,

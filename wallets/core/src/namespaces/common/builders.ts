@@ -11,9 +11,4 @@ export const disconnect = <
 >() =>
   new ActionBuilder<AutoImplementedActionsByRecommended, 'disconnect'>(
     'disconnect'
-  )
-    .after((c) => {
-      c;
-      //
-    })
-    .action(disconnectAction) as unknown as ActionBuilder<T, 'disconnect'>;
+  ).action(disconnectAction) as unknown as ActionBuilder<T, 'disconnect'>;

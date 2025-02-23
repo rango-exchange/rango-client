@@ -5,5 +5,6 @@ export type PropTypes = {
   onClickFee?: React.MouseEventHandler<HTMLDivElement>;
   tooltipGas?: string;
   feeWarning?: boolean;
+  timeWarning?: boolean;
   tooltipContainer?: HTMLElement;
 };

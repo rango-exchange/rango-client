@@ -23,17 +23,20 @@ export type {
   InstallObjects as LegacyInstallObjects,
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,
+  NamespaceInputForConnect as LegacyNamespaceInputForConnect,
 } from './types.js';
 
-export {
-  Events as LegacyEvents,
-  Namespace as LegacyNamespace,
-  Networks as LegacyNetworks,
-} from './types.js';
+export { Events as LegacyEvents, Networks as LegacyNetworks } from './types.js';
 
 export { Persistor } from './persistor.js';
 export {
   readAccountAddress as legacyReadAccountAddress,
   getBlockChainNameFromId as legacyGetBlockChainNameFromId,
+  formatAddressWithNetwork as legacyFormatAddressWithNetwork,
 } from './helpers.js';
 export { default as LegacyWallet } from './wallet.js';
+
+export {
+  eagerConnectHandler as legacyEagerConnectHandler,
+  isEvmNamespace as legacyIsEvmNamespace,
+} from './utils.js';

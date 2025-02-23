@@ -57,8 +57,9 @@ export function changeAccountSubscriber(
 ): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
   let eventCallback: EIP1193EventMap['accountsChanged'];
 
+  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
   return [
-    (context) => {
+    (context, err) => {
       const evmInstance = instance();
 
       if (!evmInstance) {
@@ -70,8 +71,18 @@ export function changeAccountSubscriber(
       const [, setState] = context.state();
 
       eventCallback = async (accounts) => {
-        const chainId = await evmInstance.request({ method: 'eth_chainId' });
+        /*
+         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
+         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
+         *
+         * This assumption may not work for other wallets, if that the case, we need to consider a new approach.
+         */
+        if (!accounts || accounts.length === 0) {
+          context.action('disconnect');
+          return;
+        }
 
+        const chainId = await evmInstance.request({ method: 'eth_chainId' });
         const formatAccounts = accounts.map((account) =>
           AccountId.format({
             address: account,
@@ -85,12 +96,52 @@ export function changeAccountSubscriber(
         setState('accounts', formatAccounts);
       };
       evmInstance.on('accountsChanged', eventCallback);
+
+      if (err instanceof Error) {
+        throw err;
+      }
+    },
+    (_, err) => {
+      const evmInstance = instance();
+
+      if (eventCallback && evmInstance) {
+        evmInstance.removeListener('accountsChanged', eventCallback);
+      }
+
+      if (err instanceof Error) {
+        throw err;
+      }
+    },
+  ];
+}
+
+export function changeChainSubscriber(
+  instance: () => ProviderAPI
+): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
+  let eventCallback: EIP1193EventMap['chainChanged'];
+
+  return [
+    (context) => {
+      const evmInstance = instance();
+
+      if (!evmInstance) {
+        throw new Error(
+          'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
+        );
+      }
+
+      const [, setState] = context.state();
+
+      eventCallback = async (chainId: string) => {
+        setState('network', chainId);
+      };
+      evmInstance.on('chainChanged', eventCallback);
     },
     () => {
       const evmInstance = instance();
 
       if (eventCallback && evmInstance) {
-        evmInstance.removeListener('accountsChanged', eventCallback);
+        evmInstance.removeListener('chainChanged', eventCallback);
       }
     },
   ];

@@ -16,7 +16,7 @@ import {
   getSwapOutputUsd,
   isApprovalCurrentStepTx,
 } from '../helpers';
-import { getCurrentBlockchainOfOrNull } from '../shared';
+import { getCurrentNamespaceOfOrNull } from '../shared';
 import {
   EventSeverity,
   RouteEventType,
@@ -188,8 +188,8 @@ export function notifier(params: NotifierParams) {
   const fromAsset = `${step.fromBlockchain}.${step.fromSymbol}`;
   const toAsset = `${step.toBlockchain}.${step.toSymbol}`;
   const outputAmount = step.outputAmount ?? '';
-  const currentFromBlockchain = !!params.step
-    ? getCurrentBlockchainOfOrNull(params.swap, params.step)
+  const currentFromNamespace = !!params.step
+    ? getCurrentNamespaceOfOrNull(params.swap, params.step)
     : null;
   let message = '';
   let messageSeverity: StepEvent['messageSeverity'] = EventSeverity.INFO;
@@ -264,7 +264,7 @@ export function notifier(params: NotifierParams) {
         event.status ===
         StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE
       ) {
-        message = `Please change your wallet network to ${currentFromBlockchain}.`;
+        message = `Please change your wallet network to ${currentFromNamespace?.network}.`;
         messageSeverity = EventSeverity.WARNING;
       }
       break;

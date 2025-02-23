@@ -1,7 +1,7 @@
 import type { WalletPropTypes } from './Wallet.types.js';
 
 import { detectInstallLink } from '@rango-dev/wallets-shared';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
@@ -35,41 +35,48 @@ function Wallet(props: WalletPropTypes) {
     );
   }
 
-  const WrapperComponent = disabled ? Fragment : Tooltip;
+  const wrapComponentWithTooltip = (children: React.ReactNode) => {
+    if (disabled) {
+      return <>{children}</>;
+    }
+    return (
+      <Tooltip
+        container={props.container}
+        content={info.tooltipText}
+        side="top">
+        {children}
+      </Tooltip>
+    );
+  };
 
-  return (
-    <WrapperComponent
-      container={props.container}
-      content={info.tooltipText}
-      side="top">
-      <WalletButton
-        disabled={props.state == WalletState.CONNECTING || disabled}
-        onClick={() => {
-          if (props.state === WalletState.NOT_INSTALLED) {
-            window.open(detectInstallLink(props.link), '_blank');
-          } else {
-            onClick(type);
-          }
-        }}>
-        <WalletImageContainer>
-          <Image src={image} size={35} />
-        </WalletImageContainer>
+  return wrapComponentWithTooltip(
+    <WalletButton
+      disabled={props.state == WalletState.CONNECTING || disabled}
+      onClick={() => {
+        if (props.state === WalletState.NOT_INSTALLED) {
+          window.open(detectInstallLink(props.link), '_blank');
+        } else {
+          onClick(type);
+        }
+      }}>
+      <WalletImageContainer>
+        <Image src={image} size={35} />
+      </WalletImageContainer>
 
-        <Text>
-          <Title variant="label" size="medium" noWrap={false}>
-            {title}
-          </Title>
+      <Text>
+        <Title variant="label" size="medium" noWrap={false}>
+          {title}
+        </Title>
 
-          <Typography
-            variant="body"
-            size="xsmall"
-            noWrap={false}
-            color={info.color}>
-            {info.description}
-          </Typography>
-        </Text>
-      </WalletButton>
-    </WrapperComponent>
+        <Typography
+          variant="body"
+          size="xsmall"
+          noWrap={false}
+          color={info.color}>
+          {info.description}
+        </Typography>
+      </Text>
+    </WalletButton>
   );
 }
 

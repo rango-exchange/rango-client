@@ -23,13 +23,6 @@ export class Hub {
 
   constructor(options?: HubOptions) {
     this.#options = options ?? {};
-    /*
-     * TODO:
-     * config:
-     * isEagerConnectEnabled? (warning if explicitly calls eagerConnect)
-     *
-     */
-    this.init();
   }
 
   init() {

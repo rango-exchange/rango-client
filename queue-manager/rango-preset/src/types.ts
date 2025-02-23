@@ -1,4 +1,4 @@
-import type { Wallet } from './shared';
+import type { TargetNamespace, Wallet } from './shared';
 import type {
   QueueContext,
   QueueDef,
@@ -70,13 +70,9 @@ export interface SwapQueueContext extends QueueContext {
   getSigners: (type: WalletType) => Promise<SignerFactory>;
   switchNetwork: (
     wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult | undefined> | undefined;
+    namespaces: TargetNamespace
+  ) => Promise<ConnectResult | ConnectResult[] | undefined> | undefined;
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
-  connect: (
-    wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
 

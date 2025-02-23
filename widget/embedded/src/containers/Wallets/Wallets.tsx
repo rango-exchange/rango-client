@@ -4,22 +4,18 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core/legacy';
+import type { LegacyEventHandler } from '@rango-dev/wallets-core/dist/legacy/mod';
 import type { PropsWithChildren } from 'react';
 
-import { Events, Provider } from '@rango-dev/wallets-react';
-import { type Network } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain } from 'rango-sdk';
+import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { useWalletsStore } from '../../store/wallets';
-import {
-  prepareAccountsForWalletStore,
-  walletAndSupportedChainsNames,
-} from '../../utils/wallets';
+
+import { useUpdates } from './useUpdates';
+import { propagateEvents } from './Wallets.helpers';
 
 export const WidgetContext = createContext<WidgetContextInterface>({
   onConnectWallet: () => {
@@ -38,7 +34,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     fetchStatus,
   } = useAppStore();
   const blockchains = useAppStore().blockchains();
-  const { findToken } = useAppStore();
   const config = useAppStore().config;
 
   const walletOptions: ProvidersOptions = {
@@ -50,9 +45,12 @@ function Main(props: PropsWithChildren<PropTypes>) {
         ?.walletConnectListedDesktopWalletLink,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
-  const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
   const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();
+  const { handler: handleEvent } = useUpdates({
+    onConnectWalletHandler,
+    onDisconnectWalletHandler,
+  });
 
   useEffect(() => {
     void fetchMeta().catch(console.log);
@@ -69,64 +67,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     }
   }, [props.config, fetchStatus]);
 
-  const evmBasedChainNames = blockchains
-    .filter(isEvmBlockchain)
-    .map((chain) => chain.name);
-
-  const onUpdateState: EventHandler = (type, event, value, state, meta) => {
-    if (event === Events.ACCOUNTS) {
-      if (value) {
-        const supportedChainNames: Network[] | null =
-          walletAndSupportedChainsNames(meta.supportedBlockchains);
-        const data = prepareAccountsForWalletStore(
-          type,
-          value,
-          evmBasedChainNames,
-          supportedChainNames,
-          meta.isContractWallet
-        );
-        if (data.length) {
-          connectWallet(data, findToken);
-        }
-      } else {
-        disconnectWallet(type);
-        if (!!onDisconnectWalletHandler.current) {
-          onDisconnectWalletHandler.current(type);
-        } else {
-          console.warn(
-            `onDisconnectWallet handler hasn't been set. Are you sure?`
-          );
-        }
-      }
-    }
-    if (event === Events.ACCOUNTS && state.connected) {
-      const key = `${type}-${state.network}-${value}`;
-
-      if (state.connected) {
-        if (!!onConnectWalletHandler.current) {
-          onConnectWalletHandler.current(key);
-        } else {
-          console.warn(
-            `onConnectWallet handler hasn't been set. Are you sure?`
-          );
-        }
-      }
-    }
-
-    if (event === Events.NETWORK && state.network) {
-      const key = `${type}-${state.network}`;
-      if (!!onConnectWalletHandler.current) {
-        onConnectWalletHandler.current(key);
-      } else {
-        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
-      }
-    }
-
-    // propagate updates for Dapps using external wallets
-    if (props.onUpdateState) {
-      props.onUpdateState(type, event, value, state, meta);
-    }
-  };
   const isActiveTab = useUiStore.use.isActiveTab();
 
   const handlers = useMemo(
@@ -146,8 +86,24 @@ function Main(props: PropsWithChildren<PropTypes>) {
       <Provider
         allBlockChains={blockchains}
         providers={providers}
-        onUpdateState={onUpdateState}
-        autoConnect={!!isActiveTab}>
+        onUpdateState={(type, event, value, state, info) => {
+          const eventParams: Parameters<LegacyEventHandler> = [
+            type,
+            event,
+            value,
+            state,
+            info,
+          ];
+          handleEvent(...eventParams);
+
+          if (props.onUpdateState) {
+            propagateEvents(props.onUpdateState, eventParams);
+          }
+        }}
+        autoConnect={!!isActiveTab}
+        configs={{
+          wallets: config.wallets,
+        }}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

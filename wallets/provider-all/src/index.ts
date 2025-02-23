@@ -23,7 +23,7 @@ import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
-import * as phantom from '@rango-dev/provider-phantom';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
@@ -38,9 +38,13 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import {
+  legacyProviderImportsToVersionsInterface,
+  type VersionedProviders,
+} from '@rango-dev/wallets-core/utils';
 import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isWalletExcluded } from './helpers.js';
+import { isWalletExcluded, lazyProvider } from './helpers.js';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
@@ -49,7 +53,9 @@ interface Options {
   tonConnect?: TonConnectEnvironments;
 }
 
-export const allProviders = (options?: Options) => {
+export const allProviders = (
+  options?: Options
+): (() => VersionedProviders)[] => {
   const providers = options?.selectedProviders || [];
 
   if (
@@ -101,40 +107,40 @@ export const allProviders = (options?: Options) => {
   }
 
   return [
-    safe,
-    defaultInjected,
-    metamask,
-    solflareSnap,
-    walletconnect2,
-    tonconnect,
-    keplr,
+    lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(metamask)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(solflareSnap)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
     phantom,
-    argentx,
-    tronLink,
-    trustwallet,
-    bitget,
-    enkrypt,
-    xdefi,
-    clover,
-    safepal,
-    brave,
-    coin98,
-    coinbase,
-    cosmostation,
-    exodus,
-    mathwallet,
-    okx,
-    tokenpocket,
-    tomo,
-    halo,
-    leapCosmos,
-    frontier,
-    taho,
-    braavos,
-    ledger,
-    rabby,
-    trezor,
-    solflare,
-    mytonwallet,
+    lazyProvider(legacyProviderImportsToVersionsInterface(argentx)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(trustwallet)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(safepal)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(coinbase)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(exodus)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(okx)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(tokenpocket)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(ledger)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
+    lazyProvider(legacyProviderImportsToVersionsInterface(mytonwallet)),
   ];
 };

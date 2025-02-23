@@ -1,5 +1,7 @@
+import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
 import type {
-  LegacyNamespaceData as NamespaceData,
+  LegacyNamespaceInputForConnect,
+  LegacyProviderInterface,
   LegacyNetwork as Network,
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletInfo as WalletInfo,
@@ -9,6 +11,11 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
+import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type State = {
   [key: string]: WalletState | undefined;
 };
@@ -16,18 +23,23 @@ export type State = {
 export type ConnectResult = {
   accounts: string[] | null;
   network: Network | null;
-  provider: any;
+  provider: InstanceType;
 };
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };
+
+export type ExtendedWalletInfo = WalletInfo & {
+  properties?: ProviderInfo['properties'];
+  isHub?: boolean;
+};
 
 export type ProviderContext = {
   connect(
     type: WalletType,
-    network?: Network,
-    namespaces?: NamespaceData[]
-  ): Promise<ConnectResult>;
+    namespaces?: LegacyNamespaceInputForConnect[]
+  ): Promise<ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
@@ -40,7 +52,7 @@ export type ProviderContext = {
    */
   providers(): Providers;
   getSigners(type: WalletType): Promise<SignerFactory>;
-  getWalletInfo(type: WalletType): WalletInfo;
+  getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
 };
 
@@ -48,17 +60,13 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: ProviderInterface[];
+  providers: VersionedProviders[];
+  configs?: {
+    wallets?: (WalletType | LegacyProviderInterface)[];
+  };
 }>;
 
-export enum Events {
-  CONNECTED = 'connected',
-  CONNECTING = 'connecting',
-  REACHABLE = 'reachable',
-  INSTALLED = 'installed',
-  ACCOUNTS = 'accounts',
-  NETWORK = 'network',
-}
+export { Events };
 
 export type ProviderConnectResult = {
   accounts: string[];
@@ -67,7 +75,7 @@ export type ProviderConnectResult = {
 
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   getState: () => WalletState;
   /**
@@ -81,26 +89,28 @@ export type GetInstanceOptions = {
 };
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 export type Connect = (options: {
-  instance: any;
+  instance: InstanceType;
   network?: Network;
   meta: BlockchainMeta[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
-  instance: any;
+  instance: InstanceType;
   destroyInstance: () => void;
 }) => Promise<void>;
 
 type CleanupSubscribe = () => void;
 
 export type Subscribe = (options: {
-  instance: any;
+  instance: InstanceType;
   state: WalletState;
   meta: BlockchainMeta[];
   updateChainId: (chainId: string) => void;
@@ -110,7 +120,7 @@ export type Subscribe = (options: {
 }) => CleanupSubscribe | void;
 
 export type SwitchNetwork = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
@@ -119,7 +129,7 @@ export type SwitchNetwork = (options: {
 }) => Promise<void>;
 
 export type Suggest = (options: {
-  instance: any;
+  instance: InstanceType;
   network: Network;
   meta: BlockchainMeta[];
 }) => Promise<void>;
@@ -127,17 +137,17 @@ export type Suggest = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
-  provider: any;
+  provider: InstanceType;
 }) => boolean;
 
 export type CanEagerConnect = (options: {
-  instance: any;
+  instance: InstanceType;
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
 export interface WalletActions {
   connect: Connect;
-  getInstance: any;
+  getInstance: InstanceType;
   disconnect?: Disconnect;
   subscribe?: Subscribe;
   // unsubscribe, // coupled to subscribe.
@@ -145,7 +155,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => Promise<SignerFactory>;
+  getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;

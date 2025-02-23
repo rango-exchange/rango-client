@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.40.0",
+  "version": "0.40.1-next.14",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -18,6 +18,10 @@
     "./utils": {
       "types": "./dist/utils/mod.d.ts",
       "default": "./dist/utils/mod.js"
+    },
+    "./store": {
+      "types": "./dist/hub/store/mod.d.ts",
+      "default": "./dist/hub/store/mod.js"
     },
     "./namespaces/common": {
       "types": "./dist/namespaces/common/mod.d.ts",
@@ -38,11 +42,11 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/common/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -54,7 +58,7 @@
   "dependencies": {
     "caip": "^1.1.1",
     "immer": "^10.0.4",
-    "rango-types": "^0.1.74",
+    "rango-types": "^0.1.78",
     "zustand": "^4.5.2"
   },
   "publishConfig": {

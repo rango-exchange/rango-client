@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.43.0",
+  "version": "0.43.1-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "@lingui/core": "4.2.1",
@@ -53,10 +53,10 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@rango-dev/wallets-shared": "^0.41.0",
+    "@rango-dev/wallets-shared": "^0.41.1-next.6",
     "@stitches/react": "^1.2.8",
     "copy-to-clipboard": "^3.3.3",
-    "rango-types": "^0.1.74",
+    "rango-types": "^0.1.78",
     "react-virtuoso": "^4.6.2"
   },
   "publishConfig": {

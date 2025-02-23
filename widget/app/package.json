@@ -15,13 +15,13 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/logging-console": "^0.6.0",
-    "@rango-dev/logging-subscriber": "^0.6.0",
-    "@rango-dev/widget-embedded": "^0.39.0",
+    "@rango-dev/logging-console": "^0.6.1-next.0",
+    "@rango-dev/logging-subscriber": "^0.6.1-next.0",
+    "@rango-dev/widget-embedded": "^0.39.1-next.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

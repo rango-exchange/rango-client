@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.41.0",
+  "version": "0.41.1-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,15 +21,15 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.40.0",
+    "@rango-dev/wallets-core": "^0.40.1-next.13",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.74"
+    "rango-types": "^0.1.78"
   },
   "publishConfig": {
     "access": "public"
