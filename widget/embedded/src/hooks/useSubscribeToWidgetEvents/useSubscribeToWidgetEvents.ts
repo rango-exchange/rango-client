@@ -27,20 +27,30 @@ export function useSubscribeToWidgetEvents() {
         event.type === StepEventType.SUCCEEDED;
 
       if (shouldRefetchBalance) {
+        const fromWallet = route.wallets[step?.fromBlockchain];
         const fromAccount = connectedWallets.find(
-          (account) => account.chain === step?.fromBlockchain
+          (connectedWallet) =>
+            connectedWallet.address?.toLocaleLowerCase() ===
+              fromWallet.address?.toLocaleLowerCase() &&
+            connectedWallet.walletType === fromWallet.walletType &&
+            connectedWallet.chain === step?.fromBlockchain
         );
-        const toAccount =
-          step?.fromBlockchain !== step?.toBlockchain &&
-          connectedWallets.find(
-            (wallet) => wallet.chain === step?.toBlockchain
-          );
-
         if (fromAccount) {
           void fetchBalances([fromAccount]);
         }
-        if (toAccount) {
-          void fetchBalances([toAccount]);
+
+        if (step?.fromBlockchain !== step?.toBlockchain) {
+          const toWallet = route.wallets[step?.toBlockchain];
+          const toAccount = connectedWallets.find(
+            (connectedWallet) =>
+              connectedWallet.address?.toLocaleLowerCase() ===
+                toWallet.address?.toLocaleLowerCase() &&
+              connectedWallet.walletType === toWallet.walletType &&
+              connectedWallet.chain === step?.toBlockchain
+          );
+          if (toAccount) {
+            void fetchBalances([toAccount]);
+          }
         }
       }
 
