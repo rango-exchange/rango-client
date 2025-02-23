@@ -1,3 +1,28 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.27.0...wallets-react@0.28.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* fix frozen accounts array ([5438438](https://github.com/rango-exchange/rango-client/commit/54384388239adafc35e7d7b1afbb58ff6f6a0d79))
+* fix hub problems with wallets config ([822f209](https://github.com/rango-exchange/rango-client/commit/822f209d5e013ef4cc05f23c9b5f33acba336fcc))
+* fix incorrect default install link for wallets ([09fee13](https://github.com/rango-exchange/rango-client/commit/09fee1314dc20ba84935ed8ac7d7674619b055a2))
+* fix incorrect wallet state after switch account ([5ee5dda](https://github.com/rango-exchange/rango-client/commit/5ee5dda42a31a0630462be3ec56ce45f9992f916))
+* make connect namespaces sequential ([b430c56](https://github.com/rango-exchange/rango-client/commit/b430c561197fdcf34a710581c345c31f0c596636))
+* make hub compatible with external wallets ([316f18c](https://github.com/rango-exchange/rango-client/commit/316f18c4b270b5e94b7e475d6bf7922cdcc9c712))
+* remove connected wallet on namespace disconnect ([4f0be8a](https://github.com/rango-exchange/rango-client/commit/4f0be8a1eab99af9e6077b7c8c45fdfc6d40f4e9))
+* remove namespace from storage on auto connect failure ([6b6504f](https://github.com/rango-exchange/rango-client/commit/6b6504f32f34041f5c33ef3348a244d32bffe399))
+* update connected namespaces in storage on switch account ([782ec1d](https://github.com/rango-exchange/rango-client/commit/782ec1d1624fd9305c3bcf4ba0254ecbcdcdb2a2))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+* add disconnect all to hub adapter ([c9934cc](https://github.com/rango-exchange/rango-client/commit/c9934cc1ab883b6de6309be6225e5d590e6e5bf6))
+* introducing store events for hub and fix switching accounts using that ([ba95ba2](https://github.com/rango-exchange/rango-client/commit/ba95ba2584f41e2a4b4b2984a62c737ab74d7cd8))
+* storing network alongside namespace for hub localstorage ([c5437fa](https://github.com/rango-exchange/rango-client/commit/c5437fa0f5117d9d762358cf7cf8ca4627c43406))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.26.0...wallets-react@0.27.0) (2024-12-30)
 
 

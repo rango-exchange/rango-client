@@ -1,3 +1,12 @@
+# [0.42.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.41.0...wallets-shared@0.42.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* resolve issue with connecting to solana namespace ([1bde858](https://github.com/rango-exchange/rango-client/commit/1bde858230744fcea6ac4d313aed82e2a4af7b21))
+
+
+
 # [0.41.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.40.0...wallets-shared@0.41.0) (2024-12-30)
 
 

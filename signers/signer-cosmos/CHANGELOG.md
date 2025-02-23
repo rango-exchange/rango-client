@@ -1,3 +1,7 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/signer-cosmos@0.30.1...signer-cosmos@0.31.0) (2025-02-23)
+
+
+
 ## [0.30.1](https://github.com/rango-exchange/rango-client/compare/signer-cosmos@0.30.0...signer-cosmos@0.30.1) (2024-11-06)
 
 

@@ -1,3 +1,22 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/ui@0.43.0...ui@0.44.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* add cookie icon ([9538a97](https://github.com/rango-exchange/rango-client/commit/9538a97ed27049226c364e1f09e441a8217d3724))
+* resolve error in clickable wallet component ([7e15e1f](https://github.com/rango-exchange/rango-client/commit/7e15e1fa20ddee5ffe37bddd13d12059e8dbc953))
+
+
+### Features
+
+* add fee details modal in widget full-expanded mode ([9e9b2a9](https://github.com/rango-exchange/rango-client/commit/9e9b2a9d4737176675129aaac0ffea6cdc07be35))
+* add money bag icon ([23f3961](https://github.com/rango-exchange/rango-client/commit/23f3961fe84f854ae71a8ccf2ff42a20b6e4f287))
+* add number blocks icon ([57808ae](https://github.com/rango-exchange/rango-client/commit/57808ae62af95e3c1472a88e05ad2c360f3c7c0d))
+* add pencil icon ([282307b](https://github.com/rango-exchange/rango-client/commit/282307bc04aa725df4ea4e50968c7a25d2b0cb2b))
+* add route time warning for slow routes ([9a913f6](https://github.com/rango-exchange/rango-client/commit/9a913f65deffc9877ebeb4dea24071613ed313fe))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/ui@0.42.0...ui@0.43.0) (2024-12-30)
 
 

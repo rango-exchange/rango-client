@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-playground",
-  "version": "0.26.0",
+  "version": "0.28.0",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -22,11 +22,11 @@
     "@types/stringify-object": "^4.0.2"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.42.1-next.14",
-    "@rango-dev/ui": "^0.43.1-next.7",
-    "@rango-dev/wallets-react": "^0.27.1-next.15",
-    "@rango-dev/wallets-shared": "^0.41.1-next.6",
-    "@rango-dev/widget-embedded": "^0.39.1-next.20",
+    "@rango-dev/provider-all": "^0.43.0",
+    "@rango-dev/ui": "^0.44.0",
+    "@rango-dev/wallets-react": "^0.28.0",
+    "@rango-dev/wallets-shared": "^0.42.0",
+    "@rango-dev/widget-embedded": "^0.40.0",
     "rango-sdk": "^0.1.62",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
