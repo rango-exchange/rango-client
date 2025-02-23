@@ -1,3 +1,12 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.38.0...wallets-adapter@0.39.0) (2025-02-23)
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.37.0...wallets-adapter@0.38.0) (2025-01-20)
 
 

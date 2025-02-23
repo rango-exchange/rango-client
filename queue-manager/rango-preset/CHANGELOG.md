@@ -1,3 +1,18 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.42.0...queue-manager-rango-preset@0.43.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* display correct network in switch network modal ([8a558f1](https://github.com/rango-exchange/rango-client/commit/8a558f190cc1c25e15a1ca57a7c3f760906fd067))
+* showing correct network in notification ([3c4ef13](https://github.com/rango-exchange/rango-client/commit/3c4ef1320f773dadc174d49a707ebfae73b7c0db))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.41.0...queue-manager-rango-preset@0.42.0) (2025-01-27)
 
 
