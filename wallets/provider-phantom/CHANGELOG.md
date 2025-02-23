@@ -1,3 +1,18 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.42.0...provider-phantom@0.43.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* make hub compatible with external wallets ([316f18c](https://github.com/rango-exchange/rango-client/commit/316f18c4b270b5e94b7e475d6bf7922cdcc9c712))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+* add base chain to phantom evm supported chains ([58a2d54](https://github.com/rango-exchange/rango-client/commit/58a2d54c0eff18e8d5ecf980b2487f7c8dada59f))
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.41.0...provider-phantom@0.42.0) (2025-01-20)
 
 

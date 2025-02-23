@@ -1,3 +1,12 @@
+# [0.42.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.41.0...provider-keplr@0.42.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* ctrl wallet is changing 'keplr' named function to undefined ([f1b7f2a](https://github.com/rango-exchange/rango-client/commit/f1b7f2a814f45441639174b36d498a1e341bb559))
+
+
+
 # [0.41.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.40.0...provider-keplr@0.41.0) (2024-12-30)
 
 

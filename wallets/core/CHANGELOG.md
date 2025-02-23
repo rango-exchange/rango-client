@@ -1,3 +1,23 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.40.0...wallets-core@0.41.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* ctrl wallet is changing 'keplr' named function to undefined ([f1b7f2a](https://github.com/rango-exchange/rango-client/commit/f1b7f2a814f45441639174b36d498a1e341bb559))
+* remove connected wallet on namespace disconnect ([4f0be8a](https://github.com/rango-exchange/rango-client/commit/4f0be8a1eab99af9e6077b7c8c45fdfc6d40f4e9))
+* switching to not connected account should disconnect evm as well ([8ea7d40](https://github.com/rango-exchange/rango-client/commit/8ea7d40569972fe14dbde630b1e0ba9c4d6b0df5))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+* add base chain to phantom evm supported chains ([58a2d54](https://github.com/rango-exchange/rango-client/commit/58a2d54c0eff18e8d5ecf980b2487f7c8dada59f))
+* add chain change subscribe to evm namespace ([0a7e7ee](https://github.com/rango-exchange/rango-client/commit/0a7e7ee6b53c94dcb842fff7e34f9dcbf6120a37))
+* introducing store events for hub and fix switching accounts using that ([ba95ba2](https://github.com/rango-exchange/rango-client/commit/ba95ba2584f41e2a4b4b2984a62c737ab74d7cd8))
+* storing network alongside namespace for hub localstorage ([c5437fa](https://github.com/rango-exchange/rango-client/commit/c5437fa0f5117d9d762358cf7cf8ca4627c43406))
+
+
+
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.39.0...wallets-core@0.40.0) (2024-11-12)
 
 

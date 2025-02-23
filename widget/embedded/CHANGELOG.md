@@ -1,3 +1,45 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.39.0...widget-embedded@0.40.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* add unsupported tokens to wallets details ([3db5538](https://github.com/rango-exchange/rango-client/commit/3db55383cb0ffa21b186489d4d20583065266d02))
+* adding balances to ConnectedWallet for WidgetInfo ([e071111](https://github.com/rango-exchange/rango-client/commit/e0711113faff56d87f61af9da869d214eb74b2ff))
+* change balance key separator ([1f3da97](https://github.com/rango-exchange/rango-client/commit/1f3da972a7da2cebe2b9876c058980ba9d32ad65))
+* clean up old balances when switching account ([78d559f](https://github.com/rango-exchange/rango-client/commit/78d559f0ef52bc6a6a80f824b075157eb7274bc1))
+* close wallet connection modal after connect with namespace ([29dff44](https://github.com/rango-exchange/rango-client/commit/29dff448650f83deda8892e3f3ba62dd1f3df555))
+* fix balance not updating properly after transaction ([e607dfc](https://github.com/rango-exchange/rango-client/commit/e607dfc706e79f5d68fc140ff9a4f5f8e6fc91fe))
+* fix hub problems with wallets config ([822f209](https://github.com/rango-exchange/rango-client/commit/822f209d5e013ef4cc05f23c9b5f33acba336fcc))
+* fix total balance calculation for WidgetInfo ([a1a474a](https://github.com/rango-exchange/rango-client/commit/a1a474aab2a37b9cd7001cc5419788d297a96deb))
+* handle token not found error for custom tokens ([b33059e](https://github.com/rango-exchange/rango-client/commit/b33059e911de7ebf86b629e0adc68ba656a7a3a1))
+* improve handling of disabled swappers in widget ([d1b42e9](https://github.com/rango-exchange/rango-client/commit/d1b42e999b4d4bf606886481be884866d594fa4b))
+* make hub compatible with external wallets ([316f18c](https://github.com/rango-exchange/rango-client/commit/316f18c4b270b5e94b7e475d6bf7922cdcc9c712))
+* remove connected wallet on namespace disconnect ([4f0be8a](https://github.com/rango-exchange/rango-client/commit/4f0be8a1eab99af9e6077b7c8c45fdfc6d40f4e9))
+* switch only selected accounts to loading state and handle failure on fetch balance ([ff8429d](https://github.com/rango-exchange/rango-client/commit/ff8429d9311e25b877886c4d826e6a817e393f9c))
+* update balance after transaction with max amount ([9915cba](https://github.com/rango-exchange/rango-client/commit/9915cbaf1b27ded6265ba638f62ad42b07448968))
+* update balance only if account is still connected ([b65e3b2](https://github.com/rango-exchange/rango-client/commit/b65e3b242f00a42858385ebefd3cd515a9556ea3))
+* update explorer url on connected wallets ([ebb5e08](https://github.com/rango-exchange/rango-client/commit/ebb5e0836c8221a6cf70eb9cb7b639bb7c70817e))
+* updated profile banner format from png to jpg ([3100a66](https://github.com/rango-exchange/rango-client/commit/3100a66ea31a26919c738e10ff5dd9db203d371d))
+* usdValue shouldn't be formatted to calculate the total value ([0e2d987](https://github.com/rango-exchange/rango-client/commit/0e2d987c4fff601e421989f9a8afd6330125e5a6))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+* add fee details modal in widget full-expanded mode ([9e9b2a9](https://github.com/rango-exchange/rango-client/commit/9e9b2a9d4737176675129aaac0ffea6cdc07be35))
+* add link to profile banner ([b752c6f](https://github.com/rango-exchange/rango-client/commit/b752c6f2bf19eead23121503494a36ea39923206))
+* add profile banner to widget success modal ([8abbf51](https://github.com/rango-exchange/rango-client/commit/8abbf51523a2ff57d9d76eb0ed91b599236b88b0))
+* add route time warning for slow routes ([9a913f6](https://github.com/rango-exchange/rango-client/commit/9a913f65deffc9877ebeb4dea24071613ed313fe))
+* display a warning if the output amount changes on the confirm swap page ([a77422d](https://github.com/rango-exchange/rango-client/commit/a77422dd4707d3a66711dcfe6e7982b6ab31c439))
+* introducing store events for hub and fix switching accounts using that ([ba95ba2](https://github.com/rango-exchange/rango-client/commit/ba95ba2584f41e2a4b4b2984a62c737ab74d7cd8))
+
+
+### Performance Improvements
+
+* improve getConnectedWalletsDetails query by memozing ([7a0dcae](https://github.com/rango-exchange/rango-client/commit/7a0dcae938c74a9fa6d6aaa37c958055e0b704f7))
+
+
+
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.38.0...widget-embedded@0.39.0) (2025-01-27)
 
 
