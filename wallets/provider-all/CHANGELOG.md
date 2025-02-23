@@ -1,3 +1,17 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.42.0...provider-all@0.43.0) (2025-02-23)
+
+
+### Bug Fixes
+
+* make hub compatible with external wallets ([316f18c](https://github.com/rango-exchange/rango-client/commit/316f18c4b270b5e94b7e475d6bf7922cdcc9c712))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([a14bdf9](https://github.com/rango-exchange/rango-client/commit/a14bdf9619e448bc4568d6b758ca86d2359e1740))
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.41.0...provider-all@0.42.0) (2025-01-20)
 
 
