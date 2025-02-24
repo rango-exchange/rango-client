@@ -145,12 +145,18 @@ function getEventPayload(
 function emitRouteEvent(stepEvent: StepEvent, route: Route, swap: PendingSwap) {
   let routeEvent: RouteEvent | undefined;
   const { type } = stepEvent;
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (type) {
     case StepEventType.STARTED:
       routeEvent = { ...stepEvent, type: RouteEventType.STARTED };
       break;
     case StepEventType.FAILED:
-      routeEvent = { ...stepEvent, type: RouteEventType.FAILED };
+      routeEvent = {
+        ...stepEvent,
+        type: RouteEventType.FAILED,
+        inputAmount: swap.inputAmount,
+        inputAmountUsd: getSwapInputUsd(swap),
+      };
       break;
     case StepEventType.SUCCEEDED: {
       routeEvent = {

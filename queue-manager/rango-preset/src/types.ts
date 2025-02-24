@@ -178,6 +178,8 @@ export type Event<
 } & U;
 
 export type FailedRouteEventPayload = {
+  inputAmount: string;
+  inputAmountUsd: string;
   reason?: string;
   reasonCode: APIErrorCode;
 };

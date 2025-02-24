@@ -9,8 +9,8 @@ import {
   getCurrentStep,
   getCurrentStepTx,
   getCurrentStepTxType,
-  getLastSuccessfulStepInput,
-  getLastSuccessfulStepInputUsd,
+  getLastFinishedStepInput,
+  getLastFinishedStepInputUsd,
   getLastSuccessfulStepOutputUsd,
   inMemoryTransactionsData,
   resetNetworkStatus,
@@ -51,7 +51,7 @@ async function checkTransactionStatus({
 >): Promise<void> {
   const swap = getStorage().swapDetails;
   const { meta } = context;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const currentStep = getCurrentStep(swap)!;
 
   if (!currentStep?.executedTransactionId) {
@@ -73,6 +73,7 @@ async function checkTransactionStatus({
         txType
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     /*
      * wallet is not connected yet
@@ -141,6 +142,8 @@ async function checkTransactionStatus({
         type: StepEventType.FAILED,
         reason: extraMessage,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -153,12 +156,12 @@ async function checkTransactionStatus({
   }
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     status = await httpService().checkStatus({
       requestId: swap.requestId,
       txId,
       step: currentStep.id,
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     await delay(INTERVAL_FOR_CHECK_STATUS);
     retry();
@@ -225,8 +228,8 @@ async function checkTransactionStatus({
     notifier({
       event: {
         type: StepEventType.SUCCEEDED,
-        inputAmount: getLastSuccessfulStepInput(swap),
-        inputAmountUsd: getLastSuccessfulStepInputUsd(swap),
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
         outputAmount: currentStep.outputAmount ?? '',
         outputAmountUsd: getLastSuccessfulStepOutputUsd(swap),
       },
@@ -300,6 +303,7 @@ async function checkApprovalStatus({
       const walletSigners = await context.getSigners(sourceWallet.walletType);
       signer = walletSigners.getSigner(txType);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     /*
      * wallet is not connected yet
@@ -367,6 +371,8 @@ async function checkApprovalStatus({
         type: StepEventType.FAILED,
         reason: extraMessage,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -420,6 +426,8 @@ async function checkApprovalStatus({
           type: StepEventType.FAILED,
           reason: message,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+          inputAmount: getLastFinishedStepInput(swap),
+          inputAmountUsd: getLastFinishedStepInputUsd(swap),
         },
         ...updateResult,
       });
@@ -433,6 +441,7 @@ async function checkApprovalStatus({
         step: currentStep,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     isApproved = false;
   }

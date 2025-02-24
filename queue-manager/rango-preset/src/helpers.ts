@@ -1036,6 +1036,8 @@ export async function signTransaction(
         type: StepEventType.FAILED,
         reason: extraMessage,
         reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -1096,6 +1098,8 @@ export async function signTransaction(
         type: eventType,
         reason: message,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -1177,6 +1181,8 @@ export async function signTransaction(
           type: StepEventType.FAILED,
           reason: extraMessage,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+          inputAmount: getLastFinishedStepInput(swap),
+          inputAmountUsd: getLastFinishedStepInputUsd(swap),
         },
         ...updateResult,
       });
@@ -1485,6 +1491,8 @@ export function cancelSwap(
       type: StepEventType.FAILED,
       reasonCode: 'USER_CANCEL',
       reason: updateResult.swap.extraMessage ?? undefined,
+      inputAmount: getLastFinishedStepInput(updateResult.swap),
+      inputAmountUsd: getLastFinishedStepInputUsd(updateResult.swap),
     },
 
     swap: updateResult.swap,
@@ -1555,26 +1563,41 @@ export function getSwapOutputUsd(swap: PendingSwap): string {
   );
 }
 
-export function getLastSuccessfulStepInput(swap: PendingSwap): string {
-  const lastSuccessfulStepIndex = swap.steps.findLastIndex(
-    (step) => step.status === 'success'
+export function getLastFinishedStep(
+  swap: PendingSwap
+): { step: PendingSwapStep; index: number } | undefined {
+  const FINISHED_STATUS: PendingSwap['steps'][number]['status'][] = [
+    'success',
+    'failed',
+  ];
+
+  const lastFinishedStepIndex = swap.steps.findLastIndex((step) =>
+    FINISHED_STATUS.includes(step.status)
   );
 
-  if (lastSuccessfulStepIndex < 0) {
+  return lastFinishedStepIndex < 0
+    ? undefined
+    : { step: swap.steps[lastFinishedStepIndex], index: lastFinishedStepIndex };
+}
+
+export function getLastFinishedStepInput(swap: PendingSwap): string {
+  const lastFinishedStep = getLastFinishedStep(swap);
+
+  if (!lastFinishedStep) {
     return '';
   }
 
-  return lastSuccessfulStepIndex === 0
+  return lastFinishedStep.index === 0
     ? swap.inputAmount
-    : swap.steps[lastSuccessfulStepIndex - 1].outputAmount ?? '';
+    : swap.steps[lastFinishedStep.index - 1].outputAmount ?? '';
 }
 
-export function getLastSuccessfulStepInputUsd(swap: PendingSwap): string {
-  const lastSuccessfulStep = getLastSuccessfulStep(swap.steps);
+export function getLastFinishedStepInputUsd(swap: PendingSwap): string {
+  const lastSuccessfulStep = getLastFinishedStep(swap);
 
   return getTokenAmountInUsd(
-    getLastSuccessfulStepInput(swap),
-    lastSuccessfulStep?.fromUsdPrice ?? ''
+    getLastFinishedStepInput(swap),
+    lastSuccessfulStep?.step?.fromUsdPrice ?? ''
   );
 }
 

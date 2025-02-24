@@ -6,6 +6,7 @@ import { DEFAULT_ERROR_CODE } from '../constants';
 import {
   getCurrentStep,
   getCurrentStepTx,
+  getLastFinishedStepInput,
   setCurrentStepTx,
   throwOnOK,
   updateSwapStatus,
@@ -31,7 +32,7 @@ export async function createTransaction(
 ): Promise<void> {
   const { setStorage, getStorage, next, schedule } = actions;
   const swap = getStorage().swapDetails;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const currentStep = getCurrentStep(swap)!;
   const transaction = getCurrentStepTx(currentStep);
 
@@ -91,6 +92,8 @@ export async function createTransaction(
           type: StepEventType.FAILED,
           reason: extraMessage,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+          inputAmount: getLastFinishedStepInput(swap),
+          inputAmountUsd: getLastFinishedStepInput(swap),
         },
         ...updateResult,
       });
