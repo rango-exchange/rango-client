@@ -1,5 +1,6 @@
 export type {
   Subscriber,
+  SubscriberCleanUp,
   State,
   RegisteredActions as ActionsMap,
   Context,

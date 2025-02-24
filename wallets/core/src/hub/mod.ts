@@ -1,3 +1,4 @@
+export type { Subscriber, SubscriberCleanUp } from './namespaces/mod.js';
 export { Namespace } from './namespaces/mod.js';
 
 export { Provider } from './provider/mod.js';
