@@ -17,7 +17,7 @@ import { generateExplorerLink } from './CustomTokenModal.helpers';
 import { Container, StyledLink } from './CustomTokenModal.styles';
 
 export function CustomTokenModal(props: PropTypes) {
-  const { open, onClose, token, onSubmitClick, blockchain } = props;
+  const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
 
   const explorerLink = generateExplorerLink(token.address, blockchain);
 
@@ -26,6 +26,7 @@ export function CustomTokenModal(props: PropTypes) {
       open={open}
       dismissible
       onClose={onClose}
+      onExit={onExit}
       container={getContainer()}>
       <Container>
         <Image src={token.image} size={45} type="circular" />

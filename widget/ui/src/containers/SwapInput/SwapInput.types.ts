@@ -8,6 +8,7 @@ export type BaseProps = {
   token: {
     displayName: string;
     image: string;
+    securityWarning?: boolean;
   };
   price: {
     value: string;
@@ -41,4 +42,5 @@ type ToProps = {
   warningLevel: PriceImpactWarningLevel;
 };
 
-export type SwapInputPropTypes = BaseProps & (FromProps | ToProps);
+export type SwapInputPropTypes = BaseProps &
+  (FromProps | ToProps) & { tooltipContainer?: HTMLElement };

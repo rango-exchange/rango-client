@@ -96,6 +96,8 @@ export function SwapInput(props: SwapInputPropTypes) {
           tokenImage={props.token.image}
           onClick={props.onClickToken}
           loading={props.loading}
+          warning={props.token.securityWarning}
+          tooltipContainer={props.tooltipContainer}
         />
         <div className={amountStyles()}>
           {props.loading || (props.mode === 'To' && props.fetchingQuote) ? (

@@ -165,3 +165,24 @@ export const StyledLink = styled('a', {
     color: '$colors$info',
   },
 });
+
+export const ListItemContainer = styled('div', {
+  paddingRight: '$5',
+
+  '& .widget-token-list-item-btn': {
+    width: '100%',
+    overflow: 'hidden',
+    height: '60px',
+  },
+
+  '& .widget-token-list-item-import-btn': {
+    height: '$20',
+    padding: '0 $10',
+
+    '& ._typography': {
+      [`.${darkTheme} &`]: {
+        color: '$foreground',
+      },
+    },
+  },
+});

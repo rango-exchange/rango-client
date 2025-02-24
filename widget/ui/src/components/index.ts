@@ -43,6 +43,7 @@ export * from './Flags/index.js';
 export * from './Select/index.js';
 export * from './QuoteTag/index.js';
 export * from './Tabs/index.js';
+export * from './CustomTokenWarning/index.js';
 export type {
   SvgIconProps,
   SvgIconPropsWithChildren,
