@@ -3,7 +3,7 @@ import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/n
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
-type Provider = Map<string, unknown>;
+export type Provider = Map<string, unknown>;
 
 export function phantom(): Provider | null {
   const { phantom } = window;
@@ -12,7 +12,7 @@ export function phantom(): Provider | null {
     return null;
   }
 
-  const { solana, ethereum } = phantom;
+  const { solana, ethereum, bitcoin } = phantom;
 
   const instances: Provider = new Map();
 
@@ -22,6 +22,10 @@ export function phantom(): Provider | null {
 
   if (solana && solana.isPhantom) {
     instances.set(LegacyNetworks.SOLANA, solana);
+  }
+
+  if (bitcoin && bitcoin.isPhantom) {
+    instances.set(LegacyNetworks.BTC, bitcoin);
   }
 
   return instances;
@@ -52,4 +56,17 @@ export function solanaPhantom(): SolanaProviderApi {
   }
 
   return solanaInstance;
+}
+
+export function bitcoinPhantom(): SolanaProviderApi {
+  const instance = phantom();
+  const bitcoinInstance = instance?.get(LegacyNetworks.BTC);
+
+  if (!bitcoinInstance) {
+    throw new Error(
+      'Phantom not injected or Bitcoin not enabled. Please check your wallet.'
+    );
+  }
+
+  return bitcoinInstance;
 }

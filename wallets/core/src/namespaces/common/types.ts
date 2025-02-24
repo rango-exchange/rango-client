@@ -11,7 +11,6 @@ type RangoNamespace =
   | 'Tron'
   | 'Ton';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type Namespace = RangoNamespace | (string & {});
 
 export interface CommonActions {
