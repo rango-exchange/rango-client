@@ -97,7 +97,7 @@ export const getCurrentNamespaceOfOrNull = (
 ): TargetNamespace | null => {
   try {
     return getCurrentNamespaceOf(swap, step);
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -261,7 +261,7 @@ export function getRelatedWalletOrNull(
   }
   try {
     return getRelatedWallet(swap, currentStep);
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -421,6 +421,7 @@ export function calculatePendingSwap(
           solanaTransaction: null,
           transferTransaction: null,
           tonTransaction: null,
+          moveTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,

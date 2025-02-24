@@ -61,6 +61,7 @@ export enum Networks {
   STARKNET = 'STARKNET',
   TON = 'TON',
   BASE = 'BASE',
+  SUI = 'SUI',
   // Using instead of null
   Unknown = 'Unkown',
 }
@@ -175,8 +176,8 @@ export type GetInstance =
 export type TryGetInstance =
   | (() => InstanceType)
   | ((
-      options: Pick<GetInstanceOptions, 'force' | 'network'>
-    ) => Promise<InstanceType>);
+    options: Pick<GetInstanceOptions, 'force' | 'network'>
+  ) => Promise<InstanceType>);
 
 export type Connect = (options: {
   instance: InstanceType;

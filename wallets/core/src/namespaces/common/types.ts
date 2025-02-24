@@ -9,9 +9,9 @@ type RangoNamespace =
   | 'UTXO'
   | 'Starknet'
   | 'Tron'
-  | 'Ton';
+  | 'Ton'
+  | 'Sui';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type Namespace = RangoNamespace | (string & {});
 
 export interface CommonActions {

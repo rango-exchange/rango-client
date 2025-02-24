@@ -110,7 +110,6 @@ export function claimQueue() {
  *
  */
 type TransactionData = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response?: any; // e.g. TransactionResponse in case of EVM transactions
   receiptReceived?: boolean; // e.g. is TransactionReceipt ready in case of EVM transactions
 };
@@ -201,6 +200,7 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
   currentStep.tonTransaction = null;
+  currentStep.moveTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -236,6 +236,9 @@ export const setCurrentStepTx = (
       break;
     case TransactionType.TON:
       currentStep.tonTransaction = transaction;
+      break;
+    case TransactionType.MOVE:
+      currentStep.moveTransaction = transaction;
       break;
     default:
       ((x: never) => {
@@ -355,8 +358,8 @@ export function updateSwapStatus({
     // If trace of error was available, we will send it to the api (except user rejection)
     const errorReasonForAPI =
       errorCode !== 'REJECTED_BY_USER' &&
-      trace?.message &&
-      typeof trace.message === 'string'
+        trace?.message &&
+        typeof trace.message === 'string'
         ? trace.message
         : errorReason || '';
 
@@ -368,8 +371,8 @@ export function updateSwapStatus({
         reason: errorReasonForAPI,
         tags: walletType
           ? {
-              wallet: walletType,
-            }
+            wallet: walletType,
+          }
           : undefined,
       })
       .then()
@@ -480,7 +483,7 @@ export function markRunningSwapAsWaitingForConnectingWallet(
 
   const isAlreadyMarked =
     currentStep.networkStatus ===
-      PendingSwapNetworkStatus.WaitingForConnectingWallet &&
+    PendingSwapNetworkStatus.WaitingForConnectingWallet &&
     swap.networkStatusExtraMessage === reason &&
     swap.networkStatusExtraMessageDetail === reasonDetail;
 
@@ -508,9 +511,9 @@ export function markRunningSwapAsSwitchingNetwork({
   setStorage,
 }: Pick<ExecuterActions, 'getStorage' | 'setStorage'>):
   | {
-      swap: PendingSwap;
-      step: PendingSwapStep;
-    }
+    swap: PendingSwap;
+    step: PendingSwapStep;
+  }
   | undefined {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
 
@@ -523,7 +526,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -552,9 +555,9 @@ export function markRunningSwapAsDependsOnOtherQueues({
   setStorage,
 }: Pick<ExecuterActions, 'getStorage' | 'setStorage'>):
   | {
-      swap: PendingSwap;
-      step: PendingSwapStep;
-    }
+    swap: PendingSwap;
+    step: PendingSwapStep;
+  }
   | undefined {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
@@ -759,10 +762,10 @@ export function updateNetworkStatus(
     details: string;
     status: PendingSwapNetworkStatus | null;
   } = {
-    message: '',
-    details: '',
-    status: null,
-  }
+      message: '',
+      details: '',
+      status: null,
+    }
 ): void {
   const { message, details, status } = data;
   const { getStorage, setStorage } = actions;
@@ -801,16 +804,16 @@ export function onBlockForConnectWallet(
         type: StepEventType.TX_EXECUTION_BLOCKED,
         ...(reason === 'account_miss_match'
           ? {
-              status:
-                StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
-              requiredAccount: address ?? undefined,
-            }
+            status:
+              StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
+            requiredAccount: address ?? undefined,
+          }
           : {
-              status:
-                StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT,
-              requiredWallet: walletType ?? undefined,
-              requiredAccount: address ?? undefined,
-            }),
+            status:
+              StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT,
+            requiredWallet: walletType ?? undefined,
+            requiredAccount: address ?? undefined,
+          }),
       },
       swap: swap,
       step: currentStep,
@@ -1055,9 +1058,8 @@ export async function signTransaction(
     eventType: StepEventType;
 
   if (isApproval) {
-    message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      mobileWallet ? 'on your mobile phone!' : ''
-    }`;
+    message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${mobileWallet ? 'on your mobile phone!' : ''
+      }`;
     details =
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
@@ -1128,15 +1130,13 @@ export async function signTransaction(
         explorerUrl &&
           (!response || (response && !response.hashRequiringUpdate))
           ? {
-              url: explorerUrl,
-              description: isApproval ? 'Approve' : 'Swap',
-            }
+            url: explorerUrl,
+            description: isApproval ? 'Approve' : 'Swap',
+          }
           : undefined
       );
       // response used for evm transactions to get receipt and track replaced
-      if (response) {
-        setTransactionDataByHash(hash, { response });
-      }
+      response && setTransactionDataByHash(hash, { response });
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       next();
       onFinish();
@@ -1395,7 +1395,7 @@ export function retryOn(
         if (currentStep) {
           if (
             getCurrentNamespaceOfOrNull(swap, currentStep)?.network ==
-              network &&
+            network &&
             queueStorage?.swapDetails.wallets[network]?.walletType === wallet
           ) {
             walletAndNetworkMatched.push(q.list);
