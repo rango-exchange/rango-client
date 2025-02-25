@@ -1,3 +1,12 @@
+## [0.40.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.40.0...widget-embedded@0.40.1) (2025-02-25)
+
+
+### Bug Fixes
+
+* fix incorrect input amount on max button click ([715a526](https://github.com/rango-exchange/rango-client/commit/715a526d8137f3ce92683639d5b67180452a0404))
+
+
+
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.39.0...widget-embedded@0.40.0) (2025-02-23)
 
 
