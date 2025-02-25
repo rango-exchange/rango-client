@@ -117,7 +117,7 @@ export function Inputs(props: PropTypes) {
 
             // if a token hasn't any value, we will reset the input by setting an empty string.
             const nextInputAmount = !!fromTokenBalance?.amount
-              ? tokenBalanceReal
+              ? tokenBalanceReal.split(',').join('')
               : '';
 
             setInputAmount(nextInputAmount);
