@@ -1,3 +1,11 @@
+## Widget [0.29.0] (2025-02-25)
+
+_includes `@rango-dev/widget-embedded@0.40.1`_
+
+### Bug Fixes
+
+- fix incorrect input amount on max button click
+
 ## Widget [0.28.0] (2025-02-23)
 
 _includes `@rango-dev/widget-embedded@0.40.0`_
