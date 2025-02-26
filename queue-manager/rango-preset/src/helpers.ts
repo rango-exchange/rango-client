@@ -963,11 +963,17 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(
-        `${type}-${namespace?.network}:${address}`,
-        manager,
-        context.canSwitchNetworkTo
-      );
+      if (type) {
+        retryOn(
+          {
+            walletType: type,
+            network: namespace?.network,
+            accounts: address ? [address] : [],
+          },
+          manager,
+          context.canSwitchNetworkTo
+        );
+      }
     },
   });
 }
