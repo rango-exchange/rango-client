@@ -45,8 +45,11 @@ import {
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { TransactionType } from 'rango-sdk';
-import { PendingSwapNetworkStatus, SignerError } from 'rango-types';
+import {
+  PendingSwapNetworkStatus,
+  SignerError,
+  TransactionType,
+} from 'rango-types';
 
 import {
   DEFAULT_ERROR_CODE,
@@ -167,6 +170,7 @@ export const getCurrentStepTx = (
     tronApprovalTransaction,
     tronTransaction,
     tonTransaction,
+    moveTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -178,7 +182,8 @@ export const getCurrentStepTx = (
     starknetTransaction ||
     tronApprovalTransaction ||
     tronTransaction ||
-    tonTransaction
+    tonTransaction ||
+    moveTransaction
   );
 };
 
@@ -201,6 +206,7 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
   currentStep.tonTransaction = null;
+  currentStep.moveTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -236,6 +242,9 @@ export const setCurrentStepTx = (
       break;
     case TransactionType.TON:
       currentStep.tonTransaction = transaction;
+      break;
+    case TransactionType.MOVE:
+      currentStep.moveTransaction = transaction;
       break;
     default:
       ((x: never) => {
@@ -523,7 +532,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -733,6 +742,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
+    swap.wallets[step.moveTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
