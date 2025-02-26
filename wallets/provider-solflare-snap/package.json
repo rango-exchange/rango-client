@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-solflare-snap",
-  "version": "0.14.1-next.0",
+  "version": "0.14.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/provider-metamask": "^0.42.1-next.0",
-    "@rango-dev/signer-solana": "^0.37.1-next.0",
-    "@rango-dev/wallets-shared": "^0.42.1-next.0",
+    "@rango-dev/provider-metamask": "^0.42.1-next.1",
+    "@rango-dev/signer-solana": "^0.37.1-next.1",
+    "@rango-dev/wallets-shared": "^0.42.1-next.1",
     "@solflare-wallet/metamask-sdk": "^1.0.3",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.80"
