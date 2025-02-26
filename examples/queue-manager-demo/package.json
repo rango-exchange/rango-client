@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "process": "^0.11.10",
-    "rango-sdk": "^0.1.62"
+    "rango-sdk": "^0.1.63"
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.43.1-next.0",
@@ -27,7 +27,7 @@
     "@rango-dev/wallets-shared": "^0.42.1-next.0",
     "bignumber.js": "^9.1.1",
     "ethers": "^6.13.2",
-    "rango-sdk-basic": "^0.1.57",
-    "rango-types": "^0.1.78"
+    "rango-sdk-basic": "^0.1.63",
+    "rango-types": "^0.1.80"
   }
 }

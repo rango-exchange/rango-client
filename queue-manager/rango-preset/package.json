@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@rango-dev/logging-core": "^0.7.1-next.0",
-    "rango-types": "^0.1.78",
+    "rango-types": "^0.1.80",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

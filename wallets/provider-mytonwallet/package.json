@@ -28,7 +28,7 @@
     "@rango-dev/wallets-shared": "^0.42.1-next.0",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
-    "rango-types": "^0.1.78"
+    "rango-types": "^0.1.80"
   },
   "publishConfig": {
     "access": "public"
