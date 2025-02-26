@@ -81,8 +81,14 @@ export interface SwapQueueContext extends QueueContext {
   resetClaimedBy?: () => void;
 }
 
+export type LastConnectedWallet = {
+  walletType: string;
+  network?: string;
+  accounts?: string[];
+};
+
 export interface UseQueueManagerParams {
-  lastConnectedWallet: string;
+  lastConnectedWallet: LastConnectedWallet | null;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
