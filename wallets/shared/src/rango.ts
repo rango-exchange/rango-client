@@ -136,6 +136,10 @@ export const namespaces: Record<
     title: 'Ton',
     mainBlockchain: 'TON',
   },
+  Sui: {
+    mainBlockchain: 'SUI',
+    title: 'Sui',
+  },
 };
 
 export type DerivationPath = {
@@ -214,9 +218,12 @@ export interface WalletConfig {
   isAsyncSwitchNetwork?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
@@ -224,12 +231,14 @@ export type GetInstanceOptions = {
 };
 
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 
 export type ProviderConnectResult = {
   accounts: string[];
@@ -243,4 +252,4 @@ export interface Wallet {
   info: Omit<WalletInfo, 'color'>;
 }
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };
