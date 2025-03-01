@@ -26,7 +26,7 @@
     "@keplr-wallet/cosmos": "^0.9.12",
     "cosmjs-types": "^0.5.2",
     "long": "^5.2.3",
-    "rango-types": "^0.1.80"
+    "rango-types": "^0.1.81"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.9.12"
