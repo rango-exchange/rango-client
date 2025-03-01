@@ -24,7 +24,7 @@
     "@rango-dev/signer-evm": "^0.33.1-next.1",
     "@rango-dev/signer-tron": "^0.32.1-next.1",
     "@rango-dev/wallets-shared": "^0.42.1-next.1",
-    "rango-types": "^0.1.80"
+    "rango-types": "^0.1.81"
   },
   "publishConfig": {
     "access": "public"
