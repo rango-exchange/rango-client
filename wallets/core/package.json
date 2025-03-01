@@ -58,7 +58,7 @@
   "dependencies": {
     "caip": "^1.1.1",
     "immer": "^10.0.4",
-    "rango-types": "^0.1.80",
+    "rango-types": "^0.1.81",
     "zustand": "^4.5.2"
   },
   "publishConfig": {
