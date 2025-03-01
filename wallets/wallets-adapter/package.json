@@ -27,7 +27,7 @@
     "@rango-dev/ui": "^0.44.1-next.0",
     "@rango-dev/wallets-react": "^0.28.1-next.0",
     "@rango-dev/wallets-shared": "^0.42.1-next.0",
-    "rango-types": "^0.1.78"
+    "rango-types": "^0.1.81"
   },
   "publishConfig": {
     "access": "public"

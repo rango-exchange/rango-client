@@ -24,7 +24,7 @@
     "@solana/web3.js": "^1.91.4",
     "bs58": "^5.0.0",
     "promise-retry": "^2.0.1",
-    "rango-types": "^0.1.78"
+    "rango-types": "^0.1.81"
   },
   "devDependencies": {
     "@types/promise-retry": "^1.1.6"

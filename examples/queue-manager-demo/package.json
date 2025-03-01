@@ -28,6 +28,6 @@
     "bignumber.js": "^9.1.1",
     "ethers": "^6.13.2",
     "rango-sdk-basic": "^0.1.57",
-    "rango-types": "^0.1.78"
+    "rango-types": "^0.1.81"
   }
 }
