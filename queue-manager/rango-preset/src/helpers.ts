@@ -246,10 +246,9 @@ export const setCurrentStepTx = (
     case TransactionType.MOVE:
       currentStep.moveTransaction = transaction;
       break;
-    default:
-      ((x: never) => {
-        throw new Error(`${x} was unhandled!`);
-      })(txType);
+    default: {
+      throw new Error(`${txType} was unhandled!`);
+    }
   }
   return currentStep;
 };
