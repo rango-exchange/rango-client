@@ -41,7 +41,7 @@
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "rango-sdk": "^0.1.63",
-    "rango-types": "^0.1.80",
+    "rango-types": "^0.1.81",
     "react-i18next": "^12.2.0",
     "react-router-dom": "^6.8.0",
     "values.js": "2.1.1",

@@ -25,7 +25,7 @@
     "@rango-dev/wallets-shared": "^0.42.1-next.1",
     "@solflare-wallet/sdk": "^1.4.2",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.80"
+    "rango-types": "^0.1.81"
   },
   "publishConfig": {
     "access": "public"
