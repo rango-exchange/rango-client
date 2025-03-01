@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
@@ -21,6 +21,11 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
+import {
+  MAX_MOBILE_DEVICE_WIDTH,
+  WIDGET_MAX_HEIGHT,
+  WIDGET_MIN_HEIGHT,
+} from './Layout.constants';
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
 
@@ -99,6 +104,37 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     setOpenRefreshModal(fetchStatus === 'failed');
   }, [fetchStatus]);
 
+  useLayoutEffect(() => {
+    const handler = () => {
+      const isInIframe = window.self !== window.top;
+      const isMobile = window.innerWidth < MAX_MOBILE_DEVICE_WIDTH;
+      const shouldSuggestNewHeight =
+        !isInIframe && isMobile && height === 'fixed' && containerRef.current;
+
+      if (shouldSuggestNewHeight) {
+        const suggestedHeight =
+          window.innerHeight - containerRef.current.offsetTop;
+
+        let calculatedHeight = suggestedHeight;
+
+        if (suggestedHeight > WIDGET_MAX_HEIGHT) {
+          calculatedHeight = WIDGET_MAX_HEIGHT;
+        }
+        if (suggestedHeight < WIDGET_MIN_HEIGHT) {
+          calculatedHeight = WIDGET_MIN_HEIGHT;
+        }
+
+        containerRef.current.style.height = `${calculatedHeight}px`;
+      }
+    };
+
+    handler();
+
+    window.addEventListener('resize', handler);
+
+    return () => window.removeEventListener('resize', handler);
+  }, [height]);
+
   return (
     <Container
       height={height}
@@ -112,7 +148,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
               onClick={() => {
                 navigateBack();
                 // As an example, used in routes page to add a custom logic when navigating back to the home page.
-                header.onBack && header.onBack();
+                header.onBack?.();
               }}
             />
           ) : null
