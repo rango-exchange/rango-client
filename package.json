@@ -127,6 +127,7 @@
     "vm-browserify": "^1.1.2"
   },
   "resolutions": {
+    "valibot": "^0.38.0",
     "react-refresh": "0.9.0",
     "protobufjs": "^6.11.4",
     "@types/node": "^20.17.19"
