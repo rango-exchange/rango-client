@@ -60,7 +60,7 @@ import {
 import { getSwapDate } from '../../utils/time';
 import { getConciseAddress } from '../../utils/wallets';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
-import { Layout, PageContainer } from '../Layout';
+import { Layout } from '../Layout';
 import { QuoteSummary } from '../Quote';
 import {
   SwapDetailsCompleteModal,
@@ -69,10 +69,11 @@ import {
 
 import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
 import {
+  Container,
   ErrorMessages,
-  HeaderDetails,
   MessageText,
   outputStyles,
+  RequestIdContainer,
   requestIdStyles,
   rowStyles,
   StepsList,
@@ -90,7 +91,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
   const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
-  const listRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [modalState, setModalState] = useState<ModalState>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
@@ -313,60 +314,58 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Button>
         )
       }>
-      <PageContainer compact view>
-        <HeaderDetails>
-          <div className={rowStyles()}>
-            <Typography variant="label" size="large" color="neutral700">
-              {`${i18n.t('Request ID')}`}
+      <Container compact ref={containerRef}>
+        <RequestIdContainer className={rowStyles()}>
+          <Typography variant="label" size="large" color="neutral700">
+            {`${i18n.t('Request ID')}`}
+          </Typography>
+          <div className={requestIdStyles()}>
+            <Typography variant="label" size="small" color="neutral700">
+              {requestId}
             </Typography>
-            <div className={requestIdStyles()}>
-              <Typography variant="label" size="small" color="neutral700">
-                {requestId}
-              </Typography>
+            <Tooltip
+              container={getContainer()}
+              content={
+                isCopied
+                  ? i18n.t('Copied To Clipboard')
+                  : i18n.t('Copy Request ID')
+              }
+              open={isCopied || undefined}
+              side="bottom"
+              alignOffset={-16}
+              align="end">
+              <IconButton
+                id="widget-swap-details-done-copy-icon-btn"
+                variant="ghost"
+                onClick={handleCopy.bind(null, requestId || '')}>
+                {isCopied ? (
+                  <DoneIcon size={16} color="secondary" />
+                ) : (
+                  <CopyIcon size={16} color="gray" />
+                )}
+              </IconButton>
+            </Tooltip>
+
+            <StyledLink
+              target="_blank"
+              href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
               <Tooltip
                 container={getContainer()}
-                content={
-                  isCopied
-                    ? i18n.t('Copied To Clipboard')
-                    : i18n.t('Copy Request ID')
-                }
-                open={isCopied || undefined}
-                side="bottom"
-                alignOffset={-16}
-                align="end">
-                <IconButton
-                  id="widget-swap-details-done-copy-icon-btn"
-                  variant="ghost"
-                  onClick={handleCopy.bind(null, requestId || '')}>
-                  {isCopied ? (
-                    <DoneIcon size={16} color="secondary" />
-                  ) : (
-                    <CopyIcon size={16} color="gray" />
-                  )}
-                </IconButton>
+                content={i18n.t('View on Rango Explorer')}
+                side="bottom">
+                <RangoExplorerIcon size={20} />
               </Tooltip>
-
-              <StyledLink
-                target="_blank"
-                href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
-                <Tooltip
-                  container={getContainer()}
-                  content={i18n.t('View on Rango Explorer')}
-                  side="bottom">
-                  <RangoExplorerIcon size={20} />
-                </Tooltip>
-              </StyledLink>
-            </div>
+            </StyledLink>
           </div>
-          <div className={rowStyles()}>
-            <Typography variant="label" size="large" color="neutral700">
-              {swap.finishTime ? i18n.t('Finished at') : i18n.t('Created at')}
-            </Typography>
-            <Typography variant="label" size="small" color="neutral700">
-              {swapDate}
-            </Typography>
-          </div>
-        </HeaderDetails>
+        </RequestIdContainer>
+        <div className={rowStyles()}>
+          <Typography variant="label" size="large" color="neutral700">
+            {swap.finishTime ? i18n.t('Finished at') : i18n.t('Created at')}
+          </Typography>
+          <Typography variant="label" size="small" color="neutral700">
+            {swapDate}
+          </Typography>
+        </div>
 
         <div className={outputStyles()}>
           <QuoteCost
@@ -433,7 +432,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Typography>
         </div>
         <Divider size={8} />
-        <StepsList ref={listRef}>
+        <StepsList>
           {steps.map((step, index) => {
             const key = index;
             const state = getStepState(swap.steps[index]);
@@ -447,7 +446,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 key={key}
                 step={step}
                 type="swap-progress"
-                ref={listRef}
+                ref={containerRef}
                 state={state}
                 hasSeparator={index !== 0}
                 tabIndex={key}
@@ -457,7 +456,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             );
           })}
         </StepsList>
-      </PageContainer>
+      </Container>
 
       <SwapDetailsModal
         state={modalState}
