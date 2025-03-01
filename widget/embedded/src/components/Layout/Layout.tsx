@@ -22,6 +22,7 @@ import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
 import {
+  COMPACT_TOKEN_SELECTOR_THRESHOLD,
   MAX_MOBILE_DEVICE_WIDTH,
   WIDGET_MAX_HEIGHT,
   WIDGET_MIN_HEIGHT,
@@ -37,7 +38,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   const {
     config: { features, theme },
   } = useAppStore();
-  const { watermark } = useUiStore();
+  const { watermark, setShowCompactTokenSelector } = useUiStore();
 
   const hasWatermark = watermark === 'FULL';
   const { activeTheme } = useTheme(theme || {});
@@ -125,6 +126,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
         }
 
         containerRef.current.style.height = `${calculatedHeight}px`;
+
+        setShowCompactTokenSelector(
+          calculatedHeight < COMPACT_TOKEN_SELECTOR_THRESHOLD
+        );
       }
     };
 

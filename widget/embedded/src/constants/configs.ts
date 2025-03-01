@@ -1,1 +1,2 @@
+export const BLOCKCHAIN_LIST_SIZE_COMPACT_MODE = 4;
 export const BLOCKCHAIN_LIST_SIZE = 10;
