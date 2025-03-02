@@ -86,6 +86,7 @@ export type InstallObjects = {
 
 interface NeedsNamespace {
   selection: 'single' | 'multiple';
+  showAsNetwork?: boolean;
   data: {
     label: string;
     /**
@@ -94,6 +95,7 @@ interface NeedsNamespace {
      */
     id: string;
     value: Namespace;
+    notSupported?: boolean;
   }[];
 }
 

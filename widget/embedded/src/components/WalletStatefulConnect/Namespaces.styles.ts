@@ -1,7 +1,40 @@
-import { styled } from '@rango-dev/ui';
+import { Image, styled } from '@rango-dev/ui';
 
 export const NamespaceList = styled('ul', {
   padding: 0,
-  paddingTop: '$4',
-  paddingBottom: '$4',
+});
+
+export const NamespaceItemContainer = styled('li', {
+  backgroundColor: '$neutral200',
+  padding: '$16',
+  display: 'flex',
+  gap: '$8',
+  cursor: 'pointer',
+  borderRadius: '$sm',
+  alignItems: 'center',
+});
+
+export const NamespaceItemContent = styled('div', {
+  flex: '1',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+});
+
+export const NotSupportedNamespaceItemContent = styled('div', {
+  flex: '1',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$4',
+  opacity: '0.5',
+});
+
+export const NamespaceLogo = styled(Image, {
+  variants: {
+    disabled: {
+      true: {
+        opacity: '0.5',
+      },
+    },
+  },
 });

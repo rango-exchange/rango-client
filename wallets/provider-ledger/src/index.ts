@@ -17,6 +17,9 @@ import {
 import signer from './signer.js';
 import { setDerivationPath } from './state.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export const config = {
   type: WalletTypes.LEDGER,
 };
@@ -63,7 +66,8 @@ export const disconnect: Disconnect = async () => {
   void transportDisconnect();
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: InstanceType) => Promise<SignerFactory> =
+  signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
@@ -131,6 +135,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 
     needsNamespace: {
       selection: 'single',
+      showAsNetwork: true,
       data: [
         {
           label: 'EVM',

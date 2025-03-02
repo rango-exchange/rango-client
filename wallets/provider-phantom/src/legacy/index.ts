@@ -25,6 +25,9 @@ import { phantom as phantom_instance } from '../utils.js';
 
 import signer from './signer.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 const WALLET = WalletTypes.PHANTOM;
 
 export const config = {
@@ -69,14 +72,15 @@ const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: InstanceType) => Promise<SignerFactory> =
+  signer;
 
 const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   try {
     const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -120,6 +124,12 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+        },
+        {
+          label: 'BTC',
+          value: 'UTXO',
+          id: 'BTC',
+          notSupported: true,
         },
       ],
     },
