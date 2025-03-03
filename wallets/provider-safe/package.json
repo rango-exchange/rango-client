@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.35.1-next.3",
+  "version": "0.35.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.33.1-next.2",
-    "@rango-dev/wallets-shared": "^0.42.1-next.3",
+    "@rango-dev/wallets-shared": "^0.42.1-next.4",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "ethers": "^6.13.2",
