@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/utxo",
+  "type": "module",
+  "main": "../../dist/namespaces/utxo/mod.js",
+  "module": "../../dist/namespaces/utxo/mod.js",
+  "types": "../../dist/namespaces/utxo/mod.d.ts",
+  "sideEffects": false
+}
