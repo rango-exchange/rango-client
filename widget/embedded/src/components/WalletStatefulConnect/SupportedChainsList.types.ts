@@ -1,5 +1,5 @@
-import type { BlockchainMeta } from 'rango-types';
+import type { Chain } from '@rango-dev/wallets-core/dist/chains/types';
 
 export type PropTypes = {
-  chains: BlockchainMeta[];
+  chains: Chain[];
 };

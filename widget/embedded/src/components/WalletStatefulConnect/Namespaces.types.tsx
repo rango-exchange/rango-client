@@ -1,6 +1,6 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
+import type { Chain } from '@rango-dev/wallets-core/dist/chains/types';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { BlockchainMeta } from 'rango-types';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;
@@ -14,9 +14,8 @@ export type NamespaceItemPropTypes = {
     label: string;
     id: string;
     value: Namespace;
+    networks: Chain[];
     notSupported?: boolean;
   };
   checked: boolean;
-  walletSupportedChains: BlockchainMeta[];
-  showAsNetwork: boolean;
 };

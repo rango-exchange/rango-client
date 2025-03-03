@@ -5,6 +5,7 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
+import { ETH } from '@rango-dev/wallets-core/chains';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
@@ -26,6 +27,8 @@ export const config = {
 };
 
 export type { Environments };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
 
 export const init = (environments: Environments) => {
   trezorManifest = environments.manifest;
@@ -74,7 +77,8 @@ export const connect: Connect = async ({ namespaces }) => {
   return results;
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
@@ -105,6 +109,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           id: 'ETH',
           value: 'EVM',
           label: 'Ethereum',
+          networks: [ETH],
         },
       ],
     },

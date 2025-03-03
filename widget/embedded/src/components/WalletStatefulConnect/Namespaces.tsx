@@ -10,7 +10,6 @@ import {
   MessageBox,
   RadioRoot,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
 import { NamespaceListItem } from './NamespaceListItem';
@@ -19,12 +18,9 @@ import { NamespaceList } from './Namespaces.styles';
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
   const singleNamespace = targetWallet.needsNamespace?.selection === 'single';
-  const showAsNetwork = !!targetWallet.needsNamespace?.showAsNetwork;
   const providerImage = targetWallet.image;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
-  const { getWalletInfo } = useWallets();
-  const { supportedChains } = getWalletInfo(targetWallet.type);
 
   const onSelect = (namespace: Namespace) => {
     if (singleNamespace) {
@@ -109,8 +105,6 @@ export function Namespaces(props: PropTypes) {
                     namespace={namespace}
                     singleSelect={singleNamespace}
                     onClick={() => onSelect(namespace.value)}
-                    walletSupportedChains={supportedChains}
-                    showAsNetwork={showAsNetwork}
                   />
                   {index !== array.length - 1 && <Divider size={10} />}
                 </>

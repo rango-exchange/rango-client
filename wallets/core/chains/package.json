@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/chains",
+  "type": "module",
+  "main": "../../dist/chains/mod.js",
+  "module": "../../dist/chains/mod.js",
+  "types": "../../dist/chains/mod.d.ts",
+  "sideEffects": false
+}

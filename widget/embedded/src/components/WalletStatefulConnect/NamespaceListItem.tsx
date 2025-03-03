@@ -6,10 +6,7 @@ import React from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 
-import {
-  getBlockchainLogo,
-  getNamespaceSupportedChains,
-} from './Namespaces.helpers';
+import { getBlockchainLogo } from './Namespaces.helpers';
 import {
   NamespaceItemContainer,
   NamespaceItemContent,
@@ -19,19 +16,8 @@ import {
 import { SupportedChainsList } from './SupportedChainsList';
 
 export function NamespaceListItem(props: NamespaceItemPropTypes) {
-  const {
-    onClick,
-    singleSelect,
-    namespace,
-    checked,
-    walletSupportedChains,
-    showAsNetwork,
-  } = props;
+  const { onClick, singleSelect, namespace, checked } = props;
   const blockchains = useAppStore().blockchains();
-  const supportedChains = getNamespaceSupportedChains(
-    namespace.value,
-    walletSupportedChains
-  );
 
   if (namespace.notSupported) {
     return (
@@ -63,7 +49,9 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
         <Typography variant="label" size="large">
           {namespace.label}
         </Typography>
-        {!showAsNetwork && <SupportedChainsList chains={supportedChains} />}
+        {namespace.networks.length > 1 && (
+          <SupportedChainsList chains={namespace.networks} />
+        )}
       </NamespaceItemContent>
       {singleSelect ? (
         <Radio value={namespace.value} />
