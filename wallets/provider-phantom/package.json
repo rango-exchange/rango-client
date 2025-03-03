@@ -23,6 +23,9 @@
   "dependencies": {
     "@rango-dev/signer-solana": "^0.37.1-next.2",
     "@rango-dev/wallets-shared": "^0.42.1-next.3",
+    "@rango-dev/signer-sui": "^0.1.1-next.0",
+    "@mysten/sui": "^1.21.2",
+    "@mysten/wallet-standard": "^0.13.26",
     "rango-types": "^0.1.81"
   },
   "publishConfig": {
