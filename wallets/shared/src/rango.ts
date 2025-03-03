@@ -8,6 +8,9 @@ import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type {
   LegacyNetwork as Network,
   LegacyConnect as Connect,
@@ -121,8 +124,8 @@ export const namespaces: Record<
     title: 'Cosmos',
   },
   UTXO: {
+    title: 'UTXO',
     mainBlockchain: 'BTC',
-    title: 'Utxo',
   },
   Starknet: {
     title: 'Starknet',
@@ -217,9 +220,6 @@ export interface WalletConfig {
   isAsyncInstance?: boolean;
   isAsyncSwitchNetwork?: boolean;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type InstanceType = any;
 
 export type GetInstanceOptions = {
   network?: Network;

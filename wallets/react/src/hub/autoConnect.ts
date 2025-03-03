@@ -116,7 +116,9 @@ async function eagerConnect(
   if (!atLeastOneNamespaceConnectedSuccessfully) {
     throw new Error(`No namespace connected for ${type}`);
   }
-  return Result.all(...connectNamespacesResult).unwrap();
+  return Result.all(
+    ...connectNamespacesResult.filter((result) => result.ok)
+  ).unwrap();
 }
 
 /*

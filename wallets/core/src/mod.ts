@@ -4,6 +4,8 @@ export type {
   ProviderInfo,
   CommonNamespaces,
   CommonNamespaceKeys,
+  Subscriber,
+  SubscriberCleanUp,
 } from './hub/mod.js';
 export {
   Hub,
