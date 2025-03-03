@@ -18,7 +18,11 @@ import {
   getSolanaAccounts,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain, solanaBlockchain } from 'rango-types';
+import {
+  isEvmBlockchain,
+  solanaBlockchain,
+  TransactionType,
+} from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
 import { phantom as phantom_instance } from '../utils.js';
@@ -26,6 +30,9 @@ import { phantom as phantom_instance } from '../utils.js';
 import signer from './signer.js';
 
 const WALLET = WalletTypes.PHANTOM;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
 
 export const config = {
   type: WALLET,
@@ -69,20 +76,24 @@ const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   try {
     const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const sui = allBlockChains.filter(
+    (blockchain) => blockchain.type === TransactionType.MOVE
+  );
   const solana = solanaBlockchain(allBlockChains);
   const evms = allBlockChains.filter(
     (chain): chain is EvmBlockchainMeta =>
@@ -106,6 +117,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       ...evms.filter((chain) =>
         EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
       ),
+      ...sui,
     ],
 
     needsNamespace: {
@@ -120,6 +132,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+        },
+        {
+          label: 'Sui',
+          value: 'Sui',
+          id: 'SUI',
         },
       ],
     },
