@@ -21,7 +21,7 @@ import {
 import { isEvmBlockchain, solanaBlockchain } from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
-import { phantom as phantom_instance } from '../utils.js';
+import { phantom as phantom_instance, type Provider } from '../utils.js';
 
 import signer from './signer.js';
 
@@ -69,26 +69,33 @@ const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   try {
     const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  let supportedChains: BlockchainMeta[] = [];
   const solana = solanaBlockchain(allBlockChains);
   const evms = allBlockChains.filter(
     (chain): chain is EvmBlockchainMeta =>
       isEvmBlockchain(chain) &&
       EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
   );
+  const btc = allBlockChains.find((chain) => chain.name === Networks.BTC);
+  supportedChains = supportedChains.concat(solana).concat(evms);
+  if (btc) {
+    supportedChains.push(btc);
+  }
 
   return {
     name: 'Phantom',
@@ -101,13 +108,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#4d40c6',
     // if you are adding a new namespace, don't forget to also update `properties`
-    supportedChains: [
-      ...solana,
-      ...evms.filter((chain) =>
-        EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
-      ),
-    ],
-
     needsNamespace: {
       selection: 'multiple',
       data: [
@@ -121,8 +121,14 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'Solana',
           id: 'SOLANA',
         },
+        {
+          label: 'BTC',
+          value: 'UTXO',
+          id: 'BTC',
+        },
       ],
     },
+    supportedChains,
   };
 };
 

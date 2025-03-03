@@ -21,8 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.2.0",
     "@rango-dev/signer-solana": "^0.37.1-next.2",
     "@rango-dev/wallets-shared": "^0.42.1-next.3",
+    "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.1.81"
   },
   "publishConfig": {
