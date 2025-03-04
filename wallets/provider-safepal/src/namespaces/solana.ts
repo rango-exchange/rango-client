@@ -40,8 +40,13 @@ const disconnect = commonBuilders
   .disconnect<SolanaActions>()
   .after(changeAccountCleanup)
   .build();
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(actions.canEagerConnect(solanaSafepal))
+  .build();
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(canEagerConnect)
   .build();
 export { solana };
