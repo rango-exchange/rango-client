@@ -44,8 +44,36 @@ export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
   };
 }
 
+export function updateBalancesWithNewPrices(
+  wallet: Omit<WalletDetail, 'failed' | 'explorerUrl'>,
+  balanceState: BalanceState,
+  store: () => AppStoreState
+): BalanceState {
+  wallet.balances?.forEach((balance) => {
+    const usdPrice =
+      balance.price ?? store().findToken(balance.asset)?.usdPrice;
+    const balancesToUpdate =
+      store()._aggregatedBalances[createAssetKey(balance.asset)];
+
+    balancesToUpdate?.forEach((balanceKey) => {
+      if (balanceState[balanceKey]) {
+        balanceState[balanceKey] = {
+          ...balanceState[balanceKey],
+          usdValue: usdPrice
+            ? new BigNumber(usdPrice ?? ZERO)
+                .multipliedBy(balanceState[balanceKey].amount)
+                .toString()
+            : '',
+        };
+      }
+    });
+  });
+
+  return balanceState;
+}
+
 export function createBalanceStateForNewAccount(
-  account: WalletDetail,
+  account: Omit<WalletDetail, 'failed' | 'explorerUrl'>,
   store: () => AppStoreState
 ): BalanceState {
   const state: BalanceState = {};
@@ -55,7 +83,8 @@ export function createBalanceStateForNewAccount(
     const amount = accountBalance.amount.amount;
     const decimals = accountBalance.amount.decimals;
 
-    const usdPrice = store().findToken(accountBalance.asset)?.usdPrice;
+    const usdPrice =
+      accountBalance.price ?? store().findToken(accountBalance.asset)?.usdPrice;
     const usdValue = usdPrice
       ? new BigNumber(usdPrice ?? ZERO).multipliedBy(amount).toString()
       : '';
