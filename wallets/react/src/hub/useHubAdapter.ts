@@ -1,5 +1,5 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
-import type { Providers } from '../index.js';
+import type { ProviderContext, Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
@@ -11,7 +11,6 @@ import { Ok, Result } from 'ts-results';
 import {
   type ConnectResult,
   HUB_LAST_CONNECTED_WALLETS,
-  type ProviderContext,
   type ProviderProps,
 } from '../legacy/mod.js';
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
@@ -247,6 +246,38 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       return allResult.unwrap();
     },
+    async connectNamespace(type, namespace) {
+      console.log('connectNamespace', type, namespace);
+
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'connect'.`
+        );
+      }
+
+      if (!namespace) {
+        throw new Error('Passing namespace to `connect` is required.');
+      }
+
+      const targetNamespace = wallet.findByNamespace(namespace.namespace);
+
+      if (!targetNamespace) {
+        throw new Error(
+          `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace})`
+        );
+      }
+
+      const network = tryConvertNamespaceNetworkToChainInfo(
+        namespace,
+        params.allBlockChains || []
+      );
+
+      const result = await targetNamespace.connect(network);
+      const resultWithLegacyFormat = transformHubResultToLegacyResult(result);
+
+      return resultWithLegacyFormat;
+    },
     async disconnect(type) {
       const wallet = getHub().get(type);
       if (!wallet) {
@@ -262,6 +293,29 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       if (params.autoConnect) {
         lastConnectedWalletsFromStorage.removeWallets([type]);
       }
+    },
+    async disconnectNamespace(type, namespace) {
+      console.log('disconnectNamespace', type, namespace);
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'disconnect'.`
+        );
+      }
+
+      if (!namespace) {
+        throw new Error('Passing namespace to `disconnect` is required.');
+      }
+
+      const targetNamespace = wallet.findByNamespace(namespace);
+
+      if (!targetNamespace) {
+        throw new Error(
+          `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace})`
+        );
+      }
+
+      await targetNamespace.disconnect();
     },
     async disconnectAll() {
       const disconnectPromises: Promise<void>[] = Array.from(
@@ -379,6 +433,29 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     },
     suggestAndConnect(_type, _network): never {
       throw new Error('`suggestAndConnect` is not implemented');
+    },
+    getNamespaceState(type, namespace) {
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'disconnect'.`
+        );
+      }
+
+      if (!namespace) {
+        throw new Error('Passing namespace to `disconnect` is required.');
+      }
+
+      const targetNamespace = wallet.findByNamespace(namespace);
+
+      if (!targetNamespace) {
+        throw new Error(
+          `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace})`
+        );
+      }
+      const a = targetNamespace.state()[0]();
+
+      return a;
     },
   };
 

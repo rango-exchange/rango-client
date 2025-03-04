@@ -1,4 +1,4 @@
-import { Image, styled } from '@rango-dev/ui';
+import { Image, styled, Typography } from '@rango-dev/ui';
 
 export const NamespaceList = styled('ul', {
   padding: 0,
@@ -12,6 +12,14 @@ export const NamespaceItemContainer = styled('li', {
   cursor: 'pointer',
   borderRadius: '$sm',
   alignItems: 'center',
+  height: '72px',
+  variants: {
+    clickable: {
+      true: {
+        cursor: 'pointer',
+      },
+    },
+  },
 });
 
 export const NamespaceItemContent = styled('div', {
@@ -37,4 +45,8 @@ export const NamespaceLogo = styled(Image, {
       },
     },
   },
+});
+
+export const NamespaceAccountAddress = styled(Typography, {
+  maxWidth: '100px',
 });

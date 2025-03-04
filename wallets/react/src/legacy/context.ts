@@ -31,6 +31,15 @@ const defaultContext: ProviderContext = {
   getSigners() {
     throw new Error(defaultErrorMesssage);
   },
+  async connectNamespace() {
+    throw new Error('');
+  },
+  async disconnectNamespace() {
+    throw new Error('');
+  },
+  getNamespaceState() {
+    throw new Error('');
+  },
 };
 
 export const WalletContext = createContext<ProviderContext>(defaultContext);

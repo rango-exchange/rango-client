@@ -40,7 +40,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
   }
 
   return (
-    <NamespaceItemContainer onClick={onClick}>
+    <NamespaceItemContainer onClick={onClick} clickable>
       <NamespaceLogo
         src={getBlockchainLogo(blockchains, namespace.id)}
         size={40}

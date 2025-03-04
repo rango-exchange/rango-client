@@ -8,6 +8,8 @@ import type {
   LegacyState as WalletState,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { NamespaceData } from '@rango-dev/wallets-core/store';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
@@ -54,6 +56,12 @@ export type ProviderContext = {
   getSigners(type: WalletType): Promise<SignerFactory>;
   getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
+  connectNamespace(
+    type: WalletType,
+    namespace: LegacyNamespaceInputForConnect
+  ): Promise<ConnectResult>;
+  disconnectNamespace(type: WalletType, namespace: Namespace): Promise<void>;
+  getNamespaceState(type: WalletType, namespace: Namespace): NamespaceData;
 };
 
 export type ProviderProps = PropsWithChildren<{

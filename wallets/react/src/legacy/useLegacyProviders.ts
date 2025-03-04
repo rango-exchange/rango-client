@@ -19,6 +19,9 @@ import {
 import { useInitializers } from './hooks.js';
 import { useAutoConnect } from './useAutoConnect.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProviderType = any;
+
 export type LegacyProviderProps = Omit<ProviderProps, 'providers'> & {
   providers: LegacyProviderInterface[];
 };
@@ -73,6 +76,15 @@ export function useLegacyProviders(
 
       return [result];
     },
+    async connectNamespace() {
+      throw new Error('');
+    },
+    async disconnectNamespace(): Promise<void> {
+      throw new Error('');
+    },
+    getNamespaceState() {
+      throw new Error('');
+    },
     async disconnect(type) {
       const wallet = wallets.get(type);
       if (!wallet) {
@@ -86,7 +98,7 @@ export function useLegacyProviders(
       }
     },
     async disconnectAll() {
-      const disconnect_promises: Promise<any>[] = [];
+      const disconnect_promises: Promise<void>[] = [];
 
       /*
        * When a wallet is initializing, a record will be added to `providersState`
@@ -134,7 +146,7 @@ export function useLegacyProviders(
         : false;
     },
     providers() {
-      const providers: { [type in WalletType]?: any } = {};
+      const providers: { [type in WalletType]?: ProviderType } = {};
       availableWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
         if (wallet) {

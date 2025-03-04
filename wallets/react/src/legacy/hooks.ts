@@ -39,7 +39,7 @@ export function useInitializers(
       );
     }
 
-    return availableWallets.current[type]!;
+    return availableWallets.current[type];
   }
 
   return updater;

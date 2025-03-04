@@ -108,6 +108,30 @@ function useProviders(props: ProviderProps) {
 
       return await legacyApi.suggestAndConnect(type, network);
     },
+    async connectNamespace(type, namespace): Promise<ConnectResult> {
+      const hubProvider = findProviderByType(hubProviders, type);
+      if (hubProvider) {
+        return await hubApi.connectNamespace(type, namespace);
+      }
+
+      throw new Error('');
+    },
+    async disconnectNamespace(type, namespace): Promise<void> {
+      const hubProvider = findProviderByType(hubProviders, type);
+      if (hubProvider) {
+        return await hubApi.disconnectNamespace(type, namespace);
+      }
+
+      throw new Error('');
+    },
+    getNamespaceState(type, namespace) {
+      const hubProvider = findProviderByType(hubProviders, type);
+      if (hubProvider) {
+        return hubApi.getNamespaceState(type, namespace);
+      }
+
+      throw new Error('');
+    },
   };
 
   return api;

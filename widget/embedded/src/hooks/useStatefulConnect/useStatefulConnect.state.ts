@@ -5,7 +5,7 @@ import type {
 } from './useStatefulConnect.types';
 
 export interface State {
-  status: 'init' | 'namespace' | 'derivationPath';
+  status: 'init' | 'namespace' | 'derivationPath' | 'detached';
   namespace: NeedsNamespacesState | null;
   derivationPath: NeedsDerivationPathState | null;
 }
@@ -30,6 +30,12 @@ export function reducer(state: State, action: Actions): State {
         ...state,
         status: 'derivationPath',
         derivationPath: action.payload,
+      };
+    case 'detached':
+      return {
+        ...state,
+        status: 'detached',
+        derivationPath: null,
       };
     case 'reset':
       return initState;

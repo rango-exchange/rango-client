@@ -17,8 +17,14 @@ import {
   DerivationPath,
   Namespaces,
 } from '../WalletStatefulConnect';
+import { Detached } from '../WalletStatefulConnect/Detached';
 
-import { isOnDerivationPath, isOnNamespace, isOnStatus } from './helpers';
+import {
+  isOnDerivationPath,
+  isOnDetached,
+  isOnNamespace,
+  isOnStatus,
+} from './helpers';
 
 const KEEP_SUCCESS_MODAL_FOR = 3_000;
 const DELAY_SHOWING_MODAL_FOR = 300;
@@ -43,6 +49,7 @@ export function StatefulConnectModal(props: PropTypes) {
     handleConnect,
     handleDerivationPath,
     handleNamespace,
+    handleDetached,
     getState,
     resetState,
   } = useStatefulConnect();
@@ -60,7 +67,7 @@ export function StatefulConnectModal(props: PropTypes) {
       );
     }
 
-    handleDerivationPath(derivationPath)
+    handleDerivationPath(props.wallet!, derivationPath)
       .then(afterConnected)
       .catch(catchErrorOnHandle);
   };
@@ -173,6 +180,9 @@ export function StatefulConnectModal(props: PropTypes) {
           onConfirm={handleDerivationPathConfirm}
           value={getState().derivationPath}
         />
+      )}
+      {isOnDetached(getState) && (
+        <Detached onConfirm={handleDetached} value={getState().namespace} />
       )}
     </WatermarkedModal>
   );

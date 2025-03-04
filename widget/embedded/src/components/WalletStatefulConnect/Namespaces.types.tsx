@@ -19,3 +19,14 @@ export type NamespaceItemPropTypes = {
   };
   checked: boolean;
 };
+
+export type NamespaceDetachedItemPropTypes = {
+  walletType: string;
+  namespace: {
+    label: string;
+    id: string;
+    value: Namespace;
+    networks: Chain[];
+    notSupported?: boolean;
+  };
+};

@@ -23,6 +23,7 @@ export enum ResultStatus {
   Disconnected = 'disconnected',
   DisconnectedUnhandled = 'disconnected-unhandled',
   Noop = 'noop',
+  Detached = 'Detached',
 }
 
 export type Result = { status: ResultStatus };
@@ -39,6 +40,11 @@ interface UpdateDerivationPathAction {
   payload: NeedsDerivationPathState;
 }
 
+interface UpdateDetachedAction {
+  type: 'detached';
+  payload: NeedsNamespacesState;
+}
+
 interface ResetAction {
   type: 'reset';
 }
@@ -51,4 +57,5 @@ export type Actions =
   | ResetAction
   | ResetDerivationAction
   | UpdateDerivationPathAction
-  | UpdateNamespaceAction;
+  | UpdateNamespaceAction
+  | UpdateDetachedAction;
