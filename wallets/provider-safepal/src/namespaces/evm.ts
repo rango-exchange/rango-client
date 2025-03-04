@@ -19,8 +19,13 @@ const disconnect = commonBuilders
   .disconnect<EvmActions>()
   .after(changeAccountCleanup)
   .build();
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(actions.canEagerConnect(evmSafepal))
+  .build();
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(canEagerConnect)
   .build();
 export { evm };
