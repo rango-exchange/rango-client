@@ -215,12 +215,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         connectResultWithLegacyFormat
           .filter(<T, E>(result: Result<T, E>): result is Ok<T> => result.ok)
           .filter((result) => result.val.input.supportsEagerConnect)
-          .map((result) => {
-            return {
-              namespace: result.val.input.namespace,
-              network: result.val.input.network,
-            };
-          });
+          .map((result) => ({
+            namespace: result.val.input.namespace,
+            network: result.val.input.network,
+          }));
 
       if (successfullyConnectedSupportingEagerConnectNamespaces.length > 0) {
         lastConnectedWalletsFromStorage.addWallet(

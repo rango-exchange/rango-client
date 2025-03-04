@@ -1,7 +1,7 @@
 import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
-import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
+import { NamespaceBuilder } from '@rango-dev/wallets-core';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import {
   actions,
@@ -60,19 +60,9 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
-const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
-  'canEagerConnect'
-)
-  .action(async function () {
-    const solanaInstance = solanaPhantom();
-    try {
-      const result = await solanaInstance.connect({ onlyIfTrusted: true });
-      return !!result;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  })
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(actions.canEagerConnect(solanaPhantom))
   .build();
 
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
