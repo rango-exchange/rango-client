@@ -455,6 +455,7 @@ export function createQuoteRequestBody(params: {
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
   destination?: string;
+  contractCall: boolean;
 }): BestRouteRequest {
   const {
     fromToken,
@@ -470,6 +471,7 @@ export function createQuoteRequestBody(params: {
     affiliatePercent,
     affiliateWallets,
     destination,
+    contractCall,
   } = params;
   const selectedWalletsMap = selectedWallets?.reduce(
     (
@@ -509,6 +511,7 @@ export function createQuoteRequestBody(params: {
     connectedWallets,
     selectedWallets: selectedWalletsMap ?? {},
     slippage: slippage.toString(),
+    contractCall,
     ...(destination && { destination: destination }),
     ...(excludeLiquiditySources && {
       swapperGroups: disabledLiquiditySources.concat(liquiditySources ?? []),
