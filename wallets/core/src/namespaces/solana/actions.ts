@@ -80,7 +80,7 @@ export function canEagerConnect(
 
     if (!solanaInstance) {
       throw new Error(
-        'Trying to subscribe to your Solana wallet, but seems its instance is not available.'
+        'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
       );
     }
 

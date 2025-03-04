@@ -158,7 +158,7 @@ export function canEagerConnect(
 
     if (!evmInstance) {
       throw new Error(
-        'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
+        'Trying to eagerly connect to your EVM wallet, but seems its instance is not available.'
       );
     }
 
