@@ -44,11 +44,14 @@ export function useSearchCustomTokens(): UseSearchCustomTokens {
       );
 
       setTokens(filteredTokens);
-    } catch (error) {
+      setLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setError(error instanceof Error ? error.message : 'something went wrong');
       setTokens([]);
-    } finally {
-      setLoading(false);
+      if (error?.name !== 'CanceledError') {
+        setLoading(false);
+      }
     }
   };
 
