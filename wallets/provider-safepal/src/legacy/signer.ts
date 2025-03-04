@@ -1,11 +1,13 @@
 import type { SignerFactory } from 'rango-types';
 
 import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
-import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
 export default async function getSigners(
-  provider: any
+  provider: Provider
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);
