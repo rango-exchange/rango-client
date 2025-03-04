@@ -133,7 +133,7 @@ async function getNamespacesAvailableForEagerConnect(
 
   const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
   canEagerConnectNamespacesResult.forEach((result, index) => {
-    if (!result) {
+    if (!result.ok) {
       failedNamespaces.push(namespaces[index]);
     }
   });
