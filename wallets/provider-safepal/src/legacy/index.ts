@@ -24,6 +24,7 @@ import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import {
   getSolanaAccounts as getNonEvmAccounts,
+  type Provider,
   safepal as safepal_instance,
   solanaSafepal,
 } from '../utils.js';
@@ -79,8 +80,6 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Provider = any;
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 

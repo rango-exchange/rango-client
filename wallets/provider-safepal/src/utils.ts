@@ -4,8 +4,8 @@ import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
-type Provider = Map<string, unknown>;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Provider = Record<string, any>;
 export function safepal(): Provider | null {
   const { safepal: safePalSolana, safepalProvider: safePalEvm } = window;
   if (!safePalEvm && !safePalSolana) {
