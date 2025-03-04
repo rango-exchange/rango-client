@@ -1,3 +1,4 @@
+import type { Provider } from '../utils.js';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -118,7 +119,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -163,7 +165,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   };
 };
 
-const legacyProvider: LegacyProviderInterface = {
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   config,
   getInstance,
   connect,
@@ -173,6 +175,6 @@ const legacyProvider: LegacyProviderInterface = {
   getSigners,
   getWalletInfo,
   canEagerConnect,
-};
+});
 
-export { legacyProvider };
+export { buildLegacyProvider };
