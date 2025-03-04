@@ -26,7 +26,6 @@ export function useSyncStoresWithConfig() {
   const config = useAppStore().config;
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
   const { findToken } = useAppStore();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
@@ -61,7 +60,7 @@ export function useSyncStoresWithConfig() {
       }
 
       if (token) {
-        setFromToken({ token, meta: { blockchains, tokens } });
+        setFromToken({ token, meta: { blockchains } });
       } else if (!token && prevConfigFromToken.current) {
         setFromToken({ token: null });
       }
@@ -111,7 +110,7 @@ export function useSyncStoresWithConfig() {
       }
 
       if (token) {
-        setToToken({ token, meta: { blockchains, tokens } });
+        setToToken({ token, meta: { blockchains } });
       } else if (!token && prevConfigToToken.current) {
         setToToken({ token: null });
       }
