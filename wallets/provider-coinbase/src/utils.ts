@@ -4,7 +4,8 @@ import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
-type Provider = Map<string, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Provider = Record<string, any>;
 
 export function coinbase(): Provider | null {
   const { coinbaseWalletExtension, coinbaseSolana } = window;
@@ -50,11 +51,11 @@ export function solanaCoinbase(): SolanaProviderApi {
     );
   }
 
-  return solanaInstance;
+  return solanaInstance as SolanaProviderApi;
 }
 
 export async function getSolanaAccounts(
-  instance: any
+  instance: Provider
 ): Promise<ProviderConnectResult> {
   await instance.connect();
   const account = instance.publicKey.toString();
