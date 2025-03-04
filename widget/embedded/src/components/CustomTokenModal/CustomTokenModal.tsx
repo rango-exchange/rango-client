@@ -39,6 +39,7 @@ export function CustomTokenModal(props: PropTypes) {
           size={45}
           type="circular"
         />
+        <Divider size={4} />
         <Typography variant="title" size="medium">
           {token.name}
         </Typography>
