@@ -45,6 +45,8 @@ export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
+  // TODO: refactor
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -137,7 +139,11 @@ export function prepareAccountsForWalletStore(
 ): Wallet[] {
   const result: Wallet[] = [];
 
-  function addAccount(network: Network, address: string) {
+  function addAccount(
+    network: Network,
+    address: string,
+    isContractWallet?: boolean
+  ) {
     const accountForChainAlreadyExists = !!result.find(
       (account) => account.chain === network
     );
@@ -146,6 +152,7 @@ export function prepareAccountsForWalletStore(
         address,
         chain: network,
         walletType: wallet,
+        isContractWallet: isContractWallet ?? false,
       };
 
       result.push(newAccount);
@@ -192,7 +199,7 @@ export function prepareAccountsForWalletStore(
          * for contract wallets like Safe wallet, we should add only account for the
          * current connected blockchain not all of the supported blockchains
          */
-        addAccount(network, address.toLowerCase());
+        addAccount(network, address.toLowerCase(), isContractWallet);
       } else {
         /*
          * all evm chains are not supported in wallets, so we are adding

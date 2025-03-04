@@ -23,10 +23,9 @@ import {
 import { useFetchAllQuotes } from './useFetchAllQuotes';
 
 const DEBOUNCE_DELAY = 600;
-const FIRST_INDEX = 0;
 
 type FetchQuoteParams = Omit<
-  Parameters<typeof createQuoteRequestBody>[typeof FIRST_INDEX],
+  Parameters<typeof createQuoteRequestBody>[0],
   'fromToken' | 'toToken'
 > & { fromToken: Token | null; toToken: Token | null };
 
@@ -48,6 +47,10 @@ export function useSwapInput({
   const { excludeLiquiditySources: configExcludeLiquiditySources, routing } =
     useAppStore().config;
   const { connectedWallets } = useAppStore();
+  const anyContractWalletConnected = connectedWallets.some(
+    (wallet) => wallet.isContractWallet
+  );
+  const contractCall = anyContractWalletConnected;
 
   const {
     fromToken,
@@ -119,6 +122,7 @@ export function useSwapInput({
         affiliateRef,
         affiliatePercent,
         affiliateWallets,
+        contractCall,
       });
       if (isRoutingEnabled('experimental', routing)) {
         requestBody.experimental = true;
@@ -227,6 +231,7 @@ export function useSwapInput({
       affiliateRef,
       affiliatePercent,
       affiliateWallets,
+      contractCall,
     });
     return cancelFetch;
   }, [
@@ -245,6 +250,7 @@ export function useSwapInput({
     userSlippage,
     affiliateRef,
     affiliatePercent,
+    contractCall,
     JSON.stringify(affiliateWallets),
   ]);
 
@@ -261,6 +267,7 @@ export function useSwapInput({
         affiliateRef,
         affiliatePercent,
         affiliateWallets,
+        contractCall,
       }),
     loading,
   };

@@ -259,6 +259,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
             return {
               address: account.address,
               chain: account.chain,
+              isContractWallet: account.isContractWallet,
               explorerUrl: null,
               walletType: account.walletType,
               selected: shouldMarkWalletAsSelected,
