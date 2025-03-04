@@ -98,16 +98,15 @@ export function Namespaces(props: PropTypes) {
           <>
             {targetWallet.needsNamespace?.data.map(
               (namespace, index, array) => (
-                <>
+                <React.Fragment key={namespace.id}>
                   <NamespaceListItem
                     checked={selectedNamespaces.includes(namespace.value)}
-                    key={namespace.id}
                     namespace={namespace}
                     singleSelect={singleNamespace}
                     onClick={() => onSelect(namespace.value)}
                   />
                   {index !== array.length - 1 && <Divider size={10} />}
-                </>
+                </React.Fragment>
               )
             )}
           </>
