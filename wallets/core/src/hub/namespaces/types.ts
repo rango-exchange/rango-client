@@ -2,14 +2,22 @@ import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
 import type { NamespaceData } from '../store/mod.js';
 
 type ActionName<K> = K | Omit<K, string>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Args = any[];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ActionResult = any;
 
 export type Subscriber<C extends Actions<C>> = (
   context: Context<C>,
-  ...args: any[]
+  ...args: Args
 ) => void;
 export type SubscriberCleanUp<C extends Actions<C>> = (
   context: Context<C>,
-  ...args: any[]
+  ...args: Args
+) => void;
+export type CanEagerConnect<C extends Actions<C>> = (
+  context: Context<C>,
+  ...args: Args
 ) => void;
 export type State = NamespaceData;
 export type SetState = <K extends keyof State>(
@@ -38,7 +46,7 @@ export type HooksWithOptions<T> = Map<
 >;
 export type Context<T extends Actions<T> = object> = {
   state: () => [GetState, SetState];
-  action: (name: keyof T, ...args: any[]) => any;
+  action: (name: keyof T, ...args: Args) => ActionResult;
 };
 
 /**

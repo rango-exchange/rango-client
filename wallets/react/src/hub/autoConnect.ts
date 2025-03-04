@@ -93,12 +93,9 @@ async function eagerConnect(
     connectNamespacesPromises
   );
 
-  const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
-  connectNamespacesResult.forEach((result, index) => {
-    if (result.err) {
-      failedNamespaces.push(targetNamespaces[index][0]);
-    }
-  });
+  const failedNamespaces: LegacyNamespaceInputForConnect[] = targetNamespaces
+    .filter((_, index) => connectNamespacesResult[index].err)
+    .map((targetNamespace) => targetNamespace[0]);
 
   if (failedNamespaces.length > 0) {
     lastConnectedWalletsFromStorage.removeNamespacesFromWallet(

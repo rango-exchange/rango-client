@@ -12,3 +12,6 @@ export const connect = () =>
     .and(connectAndUpdateStateForMultiNetworks)
     .before(intoConnecting)
     .after(intoConnectionFinished);
+
+export const canEagerConnect = () =>
+  new ActionBuilder<EvmActions, 'canEagerConnect'>('canEagerConnect');

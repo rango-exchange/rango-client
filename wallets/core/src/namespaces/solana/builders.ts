@@ -12,3 +12,6 @@ export const connect = () =>
     .and(connectAndUpdateStateForSingleNetwork)
     .before(intoConnecting)
     .after(intoConnectionFinished);
+
+export const canEagerConnect = () =>
+  new ActionBuilder<SolanaActions, 'canEagerConnect'>('canEagerConnect');
