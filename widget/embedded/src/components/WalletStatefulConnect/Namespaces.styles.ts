@@ -18,7 +18,17 @@ export const NamespaceItemContent = styled('div', {
   flex: '1',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
+  height: '$40',
+  variants: {
+    showSupportedChains: {
+      true: {
+        justifyContent: 'space-between',
+      },
+      false: {
+        justifyContent: 'center',
+      },
+    },
+  },
 });
 
 export const NotSupportedNamespaceItemContent = styled('div', {

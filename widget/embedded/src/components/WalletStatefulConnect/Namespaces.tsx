@@ -34,11 +34,18 @@ export function Namespaces(props: PropTypes) {
     }
   };
 
+  const allSupportedNamespacesSelected =
+    targetWallet.needsNamespace?.data.filter(
+      (namespace) => !namespace.notSupported
+    ).length === selectedNamespaces.length;
+
   const onSelectAll = () => {
     if (singleNamespace) {
       throw new Error(
         'onSelectAll should not be called on single selection mode.'
       );
+    } else if (allSupportedNamespacesSelected) {
+      setSelectedNamespaces([]);
     } else {
       setSelectedNamespaces(
         targetWallet.needsNamespace?.data
@@ -89,7 +96,9 @@ export function Namespaces(props: PropTypes) {
             variant="ghost"
             type="primary"
             onClick={onSelectAll}>
-            {i18n.t('Select all')}
+            {allSupportedNamespacesSelected
+              ? i18n.t('Deselect all')
+              : i18n.t('Select all')}
           </Button>
         </>
       )}

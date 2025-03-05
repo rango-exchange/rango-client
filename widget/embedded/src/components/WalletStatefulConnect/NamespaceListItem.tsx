@@ -39,17 +39,18 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
     );
   }
 
+  const showSupportedChains = namespace.networks.length > 1;
   return (
     <NamespaceItemContainer onClick={onClick}>
       <NamespaceLogo
         src={getBlockchainLogo(blockchains, namespace.id)}
         size={40}
       />
-      <NamespaceItemContent>
+      <NamespaceItemContent showSupportedChains={showSupportedChains}>
         <Typography variant="label" size="large">
           {namespace.label}
         </Typography>
-        {namespace.networks.length > 1 && (
+        {showSupportedChains && (
           <SupportedChainsList chains={namespace.networks} />
         )}
       </NamespaceItemContent>
