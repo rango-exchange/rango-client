@@ -63,7 +63,8 @@ export function SelectSwapItemsPage(props: PropTypes) {
     tokens,
     customTokens,
     searchedFor,
-    loading
+    loading,
+    selectedBlockchain?.name
   );
 
   const updateBlockchain = (blockchain: BlockchainMeta) => {
@@ -87,7 +88,9 @@ export function SelectSwapItemsPage(props: PropTypes) {
   };
 
   useEffect(() => {
-    if (shouldSearchForCustomTokens(tokens.length, searchedFor)) {
+    if (
+      shouldSearchForCustomTokens(tokens, searchedFor, selectedBlockchain?.name)
+    ) {
       fetch(searchedFor, selectedBlockchain?.name ?? undefined);
     }
 
@@ -122,8 +125,11 @@ export function SelectSwapItemsPage(props: PropTypes) {
           setValue={() => setSearchedFor('')}
           onChange={(event) => setSearchedFor(event.target.value)}
           suffix={
-            shouldSearchForCustomTokens(tokens.length, searchedFor) &&
-            loading ? (
+            shouldSearchForCustomTokens(
+              tokens,
+              searchedFor,
+              selectedBlockchain?.name
+            ) && loading ? (
               <Spinner size={12} color="secondary" />
             ) : undefined
           }

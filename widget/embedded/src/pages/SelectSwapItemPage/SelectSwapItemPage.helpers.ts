@@ -8,11 +8,19 @@ import {
 } from './SelectSwapItemPage.constants';
 
 export function shouldSearchForCustomTokens(
-  numberOfTokens: number,
-  query: string
+  metaSearchResultTokens: Token[],
+  query: string,
+  blockchain?: string
 ) {
+  if (
+    blockchain &&
+    metaSearchResultTokens.length === 1 &&
+    metaSearchResultTokens[0].address === query
+  ) {
+    return false;
+  }
   return (
-    numberOfTokens < MAX_TOKENS_BEFORE_FETCH &&
+    metaSearchResultTokens.length < MAX_TOKENS_BEFORE_FETCH &&
     query.trim().length >= MIN_SEARCH_LENGTH
   );
 }
@@ -21,11 +29,12 @@ export function prepareTokensList(
   tokens: Token[],
   customTokens: Token[],
   query: string,
-  loading: boolean
+  loading: boolean,
+  blockchain?: string
 ) {
   let modifiedList: ComponentProps<typeof TokenList>['list'] = [...tokens];
 
-  if (shouldSearchForCustomTokens(tokens.length, query)) {
+  if (shouldSearchForCustomTokens(tokens, query, blockchain)) {
     modifiedList = loading
       ? [...modifiedList, 'skeleton', 'skeleton', 'skeleton']
       : [
