@@ -62,16 +62,16 @@ export function useSearchCustomTokens(): UseSearchCustomTokens {
       }
       void fetch(query, blockchain);
     }, DEBOUNCE_DELAY),
-    []
+    [blockchains.length]
   );
 
   const cancel = () => {
     abortControllerRef.current?.abort();
-    abortControllerRef.current = null;
   };
 
   return {
     fetch: (query: string, blockchain?: string) => {
+      abortControllerRef.current = null;
       setTokens([]);
       setLoading(true);
       debouncedFetch(query, blockchain);

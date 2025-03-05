@@ -41,7 +41,7 @@ export function CustomTokenModal(props: PropTypes) {
         />
         <Divider size={4} />
         <Typography variant="title" size="medium">
-          {token.name}
+          {token.symbol}
         </Typography>
         <Typography variant="body" size="small" className="_blockchain-name">
           {blockchain.displayName}

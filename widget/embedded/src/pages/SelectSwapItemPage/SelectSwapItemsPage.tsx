@@ -121,7 +121,12 @@ export function SelectSwapItemsPage(props: PropTypes) {
           size="large"
           setValue={() => setSearchedFor('')}
           onChange={(event) => setSearchedFor(event.target.value)}
-          suffix={loading ? <Spinner size={12} color="secondary" /> : undefined}
+          suffix={
+            shouldSearchForCustomTokens(tokens.length, searchedFor) &&
+            loading ? (
+              <Spinner size={12} color="secondary" />
+            ) : undefined
+          }
         />
         <Divider size={16} />
         <TokenList

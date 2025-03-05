@@ -108,6 +108,7 @@ export function TokenList(props: PropTypes) {
     showTitle = true,
     action,
     type,
+    showWarning = true,
   } = props;
 
   const fetchStatus = useAppStore().fetchStatus;
@@ -300,7 +301,7 @@ export function TokenList(props: PropTypes) {
                           {token.blockchain}
                         </TagTitle>
                       </Tag>
-                      {token.warning && (
+                      {showWarning && token.warning && (
                         <>
                           <Divider direction="horizontal" size={4} />
                           <CustomTokenWarning container={getContainer()} />

@@ -12,6 +12,7 @@ export interface PropTypes {
   type: 'source' | 'destination' | 'custom-token';
   action?: (token: Token) => ReactElement;
   showTitle?: boolean;
+  showWarning?: boolean;
 }
 
 export interface LoadingTokenListProps {
