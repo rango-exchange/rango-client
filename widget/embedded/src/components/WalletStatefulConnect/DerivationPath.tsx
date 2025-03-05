@@ -13,11 +13,6 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import {
-  LogoContainer,
-  Spinner,
-  WalletImageContainer,
-} from './ConnectStatus.styles';
-import {
   CUSTOM_DERIVATION_PATH,
   getDerivationPaths,
 } from './DerivationPath.helpers';
@@ -103,14 +98,7 @@ export function DerivationPath(props: PropTypes) {
             type,
           },
         })}
-        icon={
-          <LogoContainer>
-            <WalletImageContainer>
-              <Image src={image} size={45} />
-            </WalletImageContainer>
-            <Spinner />
-          </LogoContainer>
-        }
+        icon={<Image src={image} size={45} />}
       />
 
       <InputsContainer>
