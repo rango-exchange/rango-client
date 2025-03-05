@@ -15,6 +15,7 @@ import type {
 import {
   BASE,
   BTC,
+  COSMOS,
   ETH,
   POLYGON,
   SOLANA,
@@ -135,6 +136,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'UTXO',
           id: 'BTC',
           networks: [BTC],
+        },
+        {
+          label: 'Cosmos',
+          value: 'Cosmos',
+          id: 'COSMOS',
+          networks: [COSMOS],
+          notSupported: true,
         },
       ],
     },

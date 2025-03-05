@@ -20,3 +20,7 @@ export const BTC: Chain = {
   name: 'BTC',
   logo: 'https://raw.githubusercontent.com/rango-exchange/assets/main/blockchains/BTC/icon.svg',
 };
+export const COSMOS: Chain = {
+  name: 'COSMOS',
+  logo: 'https://raw.githubusercontent.com/rango-exchange/assets/main/blockchains/COSMOS/icon.svg',
+};
