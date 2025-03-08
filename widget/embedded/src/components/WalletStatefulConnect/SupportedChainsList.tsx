@@ -10,7 +10,7 @@ import {
   SupportedChainsContainer,
 } from './SupportedChainsList.styles';
 
-const SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER = 3;
+const SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER = 2;
 
 export function SupportedChainsList(props: PropTypes) {
   const { chains } = props;
@@ -19,15 +19,24 @@ export function SupportedChainsList(props: PropTypes) {
       {chains
         .slice(0, SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER)
         .map((chain, index) => (
-          <SupportedChainItem key={chain.name} firstItem={index === 0}>
-            <Image src={chain.logo} size={15} />
-          </SupportedChainItem>
+          <Tooltip
+            key={chain.name}
+            container={getContainer()}
+            side="bottom"
+            align="start"
+            content={chain.name}
+            sideOffset={4}>
+            <SupportedChainItem firstItem={index === 0}>
+              <Image src={chain.logo} size={15} />
+            </SupportedChainItem>
+          </Tooltip>
         ))}
       {chains.length > SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER && (
         <Tooltip
           container={getContainer()}
           side="bottom"
           align="start"
+          sideOffset={4}
           content={
             <SupportedChainsContainer>
               {chains.map((chain, index) => (
