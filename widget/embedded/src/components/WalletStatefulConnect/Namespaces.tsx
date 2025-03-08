@@ -10,7 +10,7 @@ import {
   MessageBox,
   RadioRoot,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList } from './Namespaces.styles';
@@ -62,6 +62,23 @@ export function Namespaces(props: PropTypes) {
 
     return <>{children}</>;
   };
+
+  useEffect(() => {
+    if (!singleNamespace) {
+      setSelectedNamespaces(
+        targetWallet.needsNamespace?.data
+          .filter(
+            (namespace) =>
+              !namespace.notSupported &&
+              (!props.value.requiredChains ||
+                namespace.networks.some((network) =>
+                  props.value.requiredChains?.includes(network.name)
+                ))
+          )
+          .map((namespace) => namespace.value) as Namespace[]
+      );
+    }
+  }, []);
 
   return (
     <>

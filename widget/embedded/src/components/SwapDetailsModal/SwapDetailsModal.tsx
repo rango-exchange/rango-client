@@ -18,6 +18,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
     onDelete,
     onCancel,
     currentStepWallet,
+    currentStepFromBlockchain,
     message,
     walletButtonDisabled,
   } = props;
@@ -39,6 +40,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
           type={modalNetworkValues[state].type}
           title={modalNetworkValues[state].title}
           currentStepWallet={currentStepWallet}
+          currentStepFromBlockchain={currentStepFromBlockchain}
           message={message}
           walletButtonDisabled={walletButtonDisabled}
           showWalletButton={
