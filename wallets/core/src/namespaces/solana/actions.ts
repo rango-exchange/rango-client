@@ -1,16 +1,18 @@
 import type { ProviderAPI, SolanaActions } from './types.js';
-import type { Subscriber } from '../../hub/namespaces/mod.js';
+import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
 import type {
   CanEagerConnect,
   SubscriberCleanUp,
 } from '../../hub/namespaces/types.js';
-import type { AnyFunction } from '../../types/actions.js';
+import type { CaipAccount } from '../../types/accounts.js';
+import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
 
 import { AccountId } from 'caip';
 
 import { recommended as commonRecommended } from '../common/actions.js';
 
 import { CAIP_NAMESPACE, CAIP_SOLANA_CHAIN_ID } from './constants.js';
+import { getAccounts } from './utils.js';
 
 export const recommended = [...commonRecommended];
 
@@ -90,5 +92,25 @@ export function canEagerConnect(
     } catch {
       return false;
     }
+  };
+}
+
+export function connect(
+  instance: () => ProviderAPI
+): FunctionWithContext<SolanaActions['connect'], Context> {
+  return async () => {
+    const solanaInstance = instance();
+    const result = await getAccounts(solanaInstance);
+
+    return result.accounts.map(
+      (account) =>
+        AccountId.format({
+          address: account,
+          chainId: {
+            namespace: CAIP_NAMESPACE,
+            reference: CAIP_SOLANA_CHAIN_ID,
+          },
+        }) as CaipAccount
+    );
   };
 }
