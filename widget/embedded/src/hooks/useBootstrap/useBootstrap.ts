@@ -1,7 +1,7 @@
 import type { WalletType } from '../..';
+import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 
 import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
-import { splitWalletNetwork } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 import { useContext, useEffect, useState } from 'react';
 
@@ -24,8 +24,8 @@ export function useBootstrap() {
   useSyncNotifications();
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
-  const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
-    useState('');
+  const [lastConnectedWallet, setLastConnectedWallet] =
+    useState<LastConnectedWallet | null>(null);
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
 
@@ -38,7 +38,7 @@ export function useBootstrap() {
 
   // At the moment, we only detect the disconnection of EVM wallets.
   useQueueManager({
-    lastConnectedWallet: lastConnectedWalletWithNetwork,
+    lastConnectedWallet,
     clearDisconnectedWallet: () => {
       setDisconnectedWallet(undefined);
     },
@@ -63,14 +63,31 @@ export function useBootstrap() {
      * it the future we should add a safer soloution like considering array of handlers .
      * https://github.com/rango-exchange/rango-client/pull/630/files#r1518846728
      */
-    widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
+    widgetContext.onConnectWallet((wallet) => {
+      setLastConnectedWallet((lastConnectedWallet) => {
+        if (
+          !lastConnectedWallet ||
+          lastConnectedWallet.walletType !== wallet.walletType
+        ) {
+          return wallet;
+        }
+        const lastConnectedWalletClone = { ...lastConnectedWallet };
+        if (wallet.network) {
+          lastConnectedWalletClone.network = wallet.network;
+        }
+        if (wallet.accounts) {
+          lastConnectedWalletClone.accounts = wallet.accounts;
+        }
+        return lastConnectedWalletClone;
+      });
+    });
     widgetContext.onDisconnectWallet((walletType) => {
       setDisconnectedWallet(walletType);
-      if (
-        walletType === splitWalletNetwork(lastConnectedWalletWithNetwork)?.[0]
-      ) {
-        setLastConnectedWalletWithNetwork('');
-      }
+      setLastConnectedWallet((lastConnectedWallet) =>
+        walletType === lastConnectedWallet?.walletType
+          ? null
+          : lastConnectedWallet
+      );
     });
 
     void fetchApiConfig().catch(console.log);

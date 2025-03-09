@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
   ConfirmSwap,
   ConfirmSwapFetchResult,
@@ -11,11 +10,13 @@ import {
   Button,
   css,
   Divider,
+  ExitIcon,
   IconButton,
   styled,
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-react';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -94,6 +95,8 @@ export function ConfirmSwapPage() {
     });
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
 
+  const { disconnectAll } = useWallets();
+
   const onConfirmSwap: ConfirmSwap['fetch'] = async ({
     selectedWallets,
     customDestination,
@@ -121,6 +124,7 @@ export function ConfirmSwapPage() {
           setInputAmount('');
         }, 0);
       } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setDbErrorMessage('Error: ' + (e as any)?.message);
       }
     }
@@ -246,6 +250,14 @@ export function ConfirmSwapPage() {
               {i18n.t('Start Swap')}
             </Button>
           </div>
+          <IconButton
+            id="widget-confirm-swap-wallet-icon-btn"
+            variant="contained"
+            type="primary"
+            size="large"
+            onClick={async () => disconnectAll()}>
+            <ExitIcon size={24} />
+          </IconButton>
           <IconButton
             id="widget-confirm-swap-wallet-icon-btn"
             variant="contained"
