@@ -5,6 +5,7 @@ export interface Wallet {
   chain: string;
   address: string;
   walletType: WalletType;
+  isContractWallet?: boolean;
 }
 
 export type Balance = {
