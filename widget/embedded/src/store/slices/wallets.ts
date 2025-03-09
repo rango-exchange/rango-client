@@ -524,9 +524,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     },
     clearConnectedWallet: () => set({ connectedWallets: [] }),
     fetchBalances: async (accounts, options) => {
-      // All the `accounts` have same `walletType` so we can pick the first one.
-      const walletType = accounts[0].walletType;
-
+      const connectedWallets = get().connectedWallets;
       get().setConnectedWalletAsRefetching(accounts);
 
       const addressesToFetch = accounts.map((account) => ({
@@ -547,13 +545,14 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       if (walletsDetails) {
         const { retryOnFailedBalances = true } = options || {};
         if (retryOnFailedBalances) {
-          const failedWallets: Wallet[] = walletsDetails
-            .filter((wallet) => wallet.failed)
-            .map((wallet) => ({
-              chain: wallet.blockChain,
-              walletType: walletType,
-              address: wallet.address,
-            }));
+          const failedWallets = connectedWallets.filter((connectedWallet) =>
+            walletsDetails.find(
+              (walletDetails) =>
+                connectedWallet.address === walletDetails.address &&
+                connectedWallet.chain === walletDetails.blockChain &&
+                walletDetails.failed
+            )
+          );
           if (failedWallets.length > 0) {
             void get().fetchBalances(failedWallets, {
               retryOnFailedBalances: false,
@@ -564,24 +563,41 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         let nextBalances: BalanceState = {};
         let nextAggregatedBalances: AggregatedBalanceState =
           get()._aggregatedBalances;
+        const successfulWallets = connectedWallets.filter((connectedWallet) =>
+          walletsDetails.find(
+            (walletDetails) =>
+              connectedWallet.address === walletDetails.address &&
+              connectedWallet.chain === walletDetails.blockChain &&
+              !walletDetails.failed
+          )
+        );
+        const successfulWalletsObj: { [key: string]: string[] } =
+          successfulWallets.reduce((obj, curr) => {
+            if (!obj[curr.walletType]) {
+              obj[curr.walletType] = [];
+            }
+            obj[curr.walletType].push(curr.chain);
+            return obj;
+          }, {} as { [key: string]: string[] });
+
+        // Remove old balances for current wallet and blockchain
+        Object.keys(successfulWalletsObj).forEach((walletType) =>
+          get().removeBalancesForWallet(walletType, {
+            chains: successfulWalletsObj[walletType],
+          })
+        );
         walletsDetails.forEach((wallet) => {
           if (wallet.failed) {
             return;
           }
-
-          // Remove old balances for current wallet and blockchain
-          get().removeBalancesForWallet(walletType, {
-            chains: [wallet.blockChain],
-          });
 
           /*
            * Check if after fetching balance for an account, the account still exists.
            * (It might get disconnected while fetching balances is pending)
            */
           if (
-            !get().connectedWallets.find(
+            !successfulWallets.find(
               (connectedWallet) =>
-                connectedWallet.walletType === walletType &&
                 connectedWallet.address === wallet.address &&
                 connectedWallet.chain === wallet.blockChain
             )
