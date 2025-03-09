@@ -221,7 +221,10 @@ export function splitWalletNetwork(input: string): string[] {
   const network = splittedInput[splittedInput.length - 1];
   const walletNetwork = splittedInput.slice(0, -1);
 
-  if (walletNetwork[walletNetwork.length - 1] === network) {
+  if (
+    walletNetwork[walletNetwork.length - 1] === network ||
+    walletNetwork[walletNetwork.length - 1] === 'null'
+  ) {
     walletNetwork.pop();
   }
   const wallet = walletNetwork.join('-');
