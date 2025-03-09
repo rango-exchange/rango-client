@@ -102,6 +102,12 @@ export function connect(
     const solanaInstance = instance();
     const result = await getAccounts(solanaInstance);
 
+    if (Array.isArray(result)) {
+      throw new Error(
+        'Expecting solana response to be a single value, not an array.'
+      );
+    }
+
     return result.accounts.map(
       (account) =>
         AccountId.format({
