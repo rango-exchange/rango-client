@@ -10,11 +10,6 @@ import { evmTrustWallet } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(evmTrustWallet);
 
-const canEagerConnect = builders
-  .canEagerConnect()
-  .action(actions.canEagerConnect(evmTrustWallet))
-  .build();
-
 const connect = builders
   .connect()
   .action(actions.connect(evmTrustWallet))
@@ -30,7 +25,6 @@ const disconnect = commonBuilders
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
-  .action(canEagerConnect)
   .build();
 
 export { evm };
