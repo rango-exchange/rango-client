@@ -3,22 +3,16 @@ import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import {
+  Alert,
   Button,
-  Checkbox,
   Divider,
   Image,
-  ListItemButton,
   MessageBox,
-  Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useAppStore } from '../../store/AppStore';
-import { WalletImageContainer } from '../HeaderButtons/HeaderButtons.styles';
-
-import { LogoContainer, Spinner } from './ConnectStatus.styles';
-import { getBlockchainLogo } from './Namespaces.helpers';
+import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList } from './Namespaces.styles';
 
 export function Namespaces(props: PropTypes) {
@@ -27,8 +21,6 @@ export function Namespaces(props: PropTypes) {
   const providerImage = targetWallet.image;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
-
-  const blockchains = useAppStore().blockchains();
 
   const onSelect = (namespace: Namespace) => {
     if (singleNamespace) {
@@ -42,6 +34,27 @@ export function Namespaces(props: PropTypes) {
     }
   };
 
+  const allSupportedNamespacesSelected =
+    targetWallet.needsNamespace?.data.filter(
+      (namespace) => !namespace.notSupported
+    ).length === selectedNamespaces.length;
+
+  const onSelectAll = () => {
+    if (singleNamespace) {
+      throw new Error(
+        'onSelectAll should not be called on single selection mode.'
+      );
+    } else if (allSupportedNamespacesSelected) {
+      setSelectedNamespaces([]);
+    } else {
+      setSelectedNamespaces(
+        targetWallet.needsNamespace?.data
+          .filter((namespace) => !namespace.notSupported)
+          .map((namespace) => namespace.value) as Namespace[]
+      );
+    }
+  };
+
   const wrapRadioRoot = (children: React.ReactNode) => {
     if (singleNamespace) {
       return <RadioRoot value={selectedNamespaces?.[0]}>{children}</RadioRoot>;
@@ -50,63 +63,88 @@ export function Namespaces(props: PropTypes) {
     return <>{children}</>;
   };
 
+  useEffect(() => {
+    if (!singleNamespace) {
+      setSelectedNamespaces(
+        targetWallet.needsNamespace?.data
+          .filter(
+            (namespace) =>
+              !namespace.notSupported &&
+              (!props.value.requiredChains ||
+                namespace.networks.some((network) =>
+                  props.value.requiredChains?.includes(network.name)
+                ))
+          )
+          .map((namespace) => namespace.value) as Namespace[]
+      );
+    }
+  }, []);
+
   return (
     <>
-      <Divider size={20} />
       <MessageBox
         type="info"
-        title={i18n.t('Select chain types')}
+        title={i18n.t(`Connect {wallet}`, {
+          wallet: targetWallet.title,
+        })}
         description={i18n.t(
-          `This wallet supports multiple chains. Select which chain you'd like to connect to.`
+          "This wallet supports multiple chains. Choose which chains you'd like to connect to."
         )}
-        icon={
-          <LogoContainer>
-            <WalletImageContainer>
-              <Image src={providerImage} size={45} />
-            </WalletImageContainer>
-            <Spinner />
-          </LogoContainer>
-        }
+        icon={<Image src={providerImage} size={45} />}
       />
+      {singleNamespace ? (
+        <>
+          <Divider size={20} />
+          <Alert
+            variant="alarm"
+            type="info"
+            title={i18n.t(
+              'This wallet can only connect to one chain at a time. '
+            )}
+          />
+        </>
+      ) : (
+        <>
+          <Divider size={30} />
+          <Button
+            style={{ marginLeft: 'auto' }}
+            id="widget-name-space-select-all-btn"
+            size="xsmall"
+            variant="ghost"
+            type="primary"
+            onClick={onSelectAll}>
+            {allSupportedNamespacesSelected
+              ? i18n.t('Deselect all')
+              : i18n.t('Select all')}
+          </Button>
+        </>
+      )}
       <NamespaceList>
         {wrapRadioRoot(
           <>
-            {targetWallet.needsNamespace?.data.map((ns) => {
-              return (
-                <ListItemButton
-                  key={ns.id}
-                  id={ns.id}
-                  title={ns.label}
-                  hasDivider
-                  style={{ height: 60 }}
-                  onClick={() => onSelect(ns.value)}
-                  start={
-                    <Image
-                      src={getBlockchainLogo(blockchains, ns.id)}
-                      size={22}
-                    />
-                  }
-                  end={
-                    singleNamespace ? (
-                      <Radio value={ns.value} />
-                    ) : (
-                      <Checkbox
-                        checked={selectedNamespaces.includes(ns.value)}
-                      />
-                    )
-                  }
-                />
-              );
-            })}
+            {targetWallet.needsNamespace?.data.map(
+              (namespace, index, array) => (
+                <React.Fragment key={namespace.id}>
+                  <NamespaceListItem
+                    checked={selectedNamespaces.includes(namespace.value)}
+                    namespace={namespace}
+                    singleSelect={singleNamespace}
+                    onClick={() => onSelect(namespace.value)}
+                  />
+                  {index !== array.length - 1 && <Divider size={10} />}
+                </React.Fragment>
+              )
+            )}
           </>
         )}
       </NamespaceList>
+      <Divider size={20} />
       <Button
         id="widget-name-space-confirm-btn"
         type="primary"
         disabled={!selectedNamespaces.length}
         onClick={() => props.onConfirm(selectedNamespaces)}>
-        {i18n.t('Confirm')}
+        {i18n.t('Connect')}
       </Button>
     </>
   );
