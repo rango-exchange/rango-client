@@ -7,4 +7,6 @@ export type TokenSectionProps = {
   error?: boolean;
   onClick: () => void;
   loading?: boolean;
+  warning?: boolean;
+  tooltipContainer?: HTMLElement;
 };

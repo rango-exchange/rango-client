@@ -2,6 +2,7 @@ import type { TokenSectionProps } from './TokenSection.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
+import { CustomTokenWarning } from 'src/components/CustomTokenWarning/CustomTokenWarning.js';
 
 import {
   ChainToken,
@@ -14,6 +15,7 @@ import {
   chainNameStyles,
   Container,
   skeletonStyles,
+  TitleContainer,
   tokenChainStyles,
   TokenSectionContainer,
 } from './TokenSection.styles.js';
@@ -28,6 +30,8 @@ export function TokenSection(props: TokenSectionProps) {
     chianImageId,
     onClick,
     loading,
+    warning,
+    tooltipContainer,
   } = props;
   return (
     <Container variant="default" disabled={error || loading} onClick={onClick}>
@@ -49,11 +53,19 @@ export function TokenSection(props: TokenSectionProps) {
             </div>
           ) : (
             <>
-              <Typography variant="title" size="medium">
-                {error || (!loading && !tokenSymbol)
-                  ? i18n.t('Select Token')
-                  : tokenSymbol}
-              </Typography>
+              <TitleContainer>
+                <Typography variant="title" size="medium">
+                  {error || (!loading && !tokenSymbol)
+                    ? i18n.t('Select Token')
+                    : tokenSymbol}
+                </Typography>
+                {warning && (
+                  <>
+                    <Divider size={4} direction="horizontal" />
+                    <CustomTokenWarning container={tooltipContainer} />
+                  </>
+                )}
+              </TitleContainer>
               <Typography
                 variant="body"
                 size="medium"

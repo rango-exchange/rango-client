@@ -87,6 +87,7 @@ export function Inputs(props: PropTypes) {
           token={{
             displayName: fromToken?.symbol || '',
             image: fromToken?.image || '',
+            securityWarning: !!fromToken?.warning,
           }}
           onClickToken={() => onClickToken('from')}
           price={{
@@ -138,6 +139,7 @@ export function Inputs(props: PropTypes) {
         token={{
           displayName: toToken?.symbol || '',
           image: toToken?.image || '',
+          securityWarning: !!toToken?.warning,
         }}
         percentageChange={numberToString(
           getPriceImpact(inputUsdValue, outputUsdValue),

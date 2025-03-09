@@ -13,7 +13,7 @@ import { LanguagePage } from '../pages/LanguagePage';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcePage';
 import { RoutesPage } from '../pages/Routes';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
-import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
+import { SelectSwapItemsPage } from '../pages/SelectSwapItemPage/index';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WalletsPage } from '../pages/WalletsPage';

@@ -1,14 +1,18 @@
 import type { Token } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
+export type TokenData = Token &
+  (Token & { customToken?: boolean; warning?: boolean });
+
 export interface PropTypes {
-  list: Token[];
+  list: (TokenData | 'skeleton')[];
   searchedFor?: string;
   onChange?: (token: Token) => void;
   selectedBlockchain?: string;
   type: 'source' | 'destination' | 'custom-token';
   action?: (token: Token) => ReactElement;
   showTitle?: boolean;
+  showWarning?: boolean;
 }
 
 export interface LoadingTokenListProps {
