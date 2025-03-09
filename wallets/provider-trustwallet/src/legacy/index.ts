@@ -1,5 +1,4 @@
 import type {
-  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -8,14 +7,9 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import {
-  type LegacyProviderInterface,
-  LegacyNetworks as Networks,
-} from '@rango-dev/wallets-core/legacy';
-import {
-  canEagerlyConnectToEvm as canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
-  chooseInstance,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
@@ -55,17 +49,6 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
-
-export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
-  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
-  if (evm_instance) {
-    return canEagerlyConnectToEvm({
-      instance: evm_instance,
-      meta,
-    });
-  }
-  return Promise.resolve(false);
-};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
@@ -108,10 +91,10 @@ const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   getInstance,
   connect,
   subscribe,
+  switchNetwork,
   canSwitchNetworkTo,
   getSigners,
   getWalletInfo,
-  canEagerConnect,
 });
 
 export { buildLegacyProvider };
