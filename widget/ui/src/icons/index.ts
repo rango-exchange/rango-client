@@ -83,6 +83,7 @@ export { default as SwapIcon } from './Swap.js';
 export { default as TargetIcon } from './Target.js';
 export { default as TimeIcon } from './Time.js';
 export { default as TransactionIcon } from './Transaction.js';
+export { default as TrophyIcon } from './Trophy.js';
 export { default as TuneIcon } from './Tune.js';
 export { default as UtxoCategoryIcon } from './UtxoCategory.js';
 export { default as WalletIcon } from './Wallet.js';
