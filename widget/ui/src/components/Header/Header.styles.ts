@@ -22,6 +22,8 @@ export const Container = styled('div', {
   },
   backgroundColor: '$$color',
   position: 'relative',
+  borderTopRightRadius: '$primary',
+  borderTopLeftRadius: '$primary',
 
   variants: {
     titlePosition: {
