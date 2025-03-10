@@ -24,7 +24,7 @@ import * as metamask from '@rango-dev/provider-metamask';
 import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
-import * as rabby from '@rango-dev/provider-rabby';
+import { versions as rabby } from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as solflare from '@rango-dev/provider-solflare';
@@ -138,7 +138,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
     lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(ledger)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
+    rabby,
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
     lazyProvider(legacyProviderImportsToVersionsInterface(mytonwallet)),
