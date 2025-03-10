@@ -444,6 +444,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   <ListContainer>
                     <WalletList
                       chain={requiredWallet}
+                      requiredChains={quoteWallets}
                       isSelected={isSelected}
                       selectWallet={onChange}
                       limit={NUMBER_OF_WALLETS_TO_DISPLAY}
