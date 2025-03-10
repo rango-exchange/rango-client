@@ -8,6 +8,7 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
@@ -18,7 +19,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { rabby as rabby_instance } from './helpers.js';
+import { type Provider, rabby as rabby_instance } from '../utils.js';
+
 import signer from './signer.js';
 
 export const config = {
@@ -47,7 +49,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
@@ -61,9 +64,36 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch',
+      BRAVE:
+        'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/rabby-wallet/',
       DEFAULT: 'https://rabby.io/',
     },
     color: '#fff',
     supportedChains: evms,
+    needsNamespace: {
+      selection: 'single',
+      data: [
+        {
+          id: 'ETH',
+          value: 'EVM',
+          label: 'Ethereum',
+        },
+      ],
+    },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  canEagerConnect,
+  getWalletInfo,
+});
+
+export { buildLegacyProvider };
