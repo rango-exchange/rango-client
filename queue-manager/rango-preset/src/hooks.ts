@@ -1,3 +1,5 @@
+import type { LastConnectedWallet, UseQueueManagerParams } from './types';
+
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useEffect, useState } from 'react';
 
@@ -7,9 +9,16 @@ import {
   retryOn,
 } from './helpers';
 import { migrated, migration } from './migration';
-import { type UseQueueManagerParams } from './types';
 
 let isCalled = 0;
+
+function getLastConnectedWalletHash(
+  lastConnectedWallet: LastConnectedWallet | null
+) {
+  return `${lastConnectedWallet?.walletType}-${
+    lastConnectedWallet?.network
+  }-${lastConnectedWallet?.accounts?.toString()}`;
+}
 
 /**
  *
@@ -31,7 +40,7 @@ function useMigration(): {
       }
       isCalled = 1;
 
-      migration().finally(() => {
+      void migration().finally(() => {
         setStatus(true);
       });
     })();
@@ -50,29 +59,36 @@ function useMigration(): {
  */
 function useQueueManager(params: UseQueueManagerParams): void {
   const { manager } = useManager();
+  const {
+    lastConnectedWallet,
+    disconnectedWallet,
+    evmChains,
+    canSwitchNetworkTo,
+    clearDisconnectedWallet,
+  } = params;
 
   useEffect(() => {
-    if (params.lastConnectedWallet) {
+    if (lastConnectedWallet) {
       checkWaitingForConnectWalletChange({
-        evmChains: params.evmChains,
-        wallet_network: params.lastConnectedWallet,
+        evmChains,
+        lastConnectedWallet,
         manager,
       });
-      retryOn(params.lastConnectedWallet, manager, params.canSwitchNetworkTo);
+      retryOn(lastConnectedWallet, manager, canSwitchNetworkTo);
     }
-  }, [params.lastConnectedWallet]);
+  }, [getLastConnectedWalletHash(lastConnectedWallet)]);
 
   useEffect(() => {
-    if (params.disconnectedWallet) {
+    if (disconnectedWallet) {
       checkWaitingForNetworkChange(manager);
 
       /*
        *We need to reset the state value, so if a wallet disconnected twice (after reconnect),
        *this effect will be run properly.
        */
-      params.clearDisconnectedWallet();
+      clearDisconnectedWallet();
     }
-  }, [params.disconnectedWallet]);
+  }, [disconnectedWallet]);
 }
 
 export { useQueueManager, useMigration };
