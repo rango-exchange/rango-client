@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
@@ -22,12 +22,22 @@ import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
-import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
+import {
+  BannerContainer,
+  Container,
+  Content,
+  Footer,
+  LayoutContainer,
+} from './Layout.styles';
 
 function Layout(props: PropsWithChildren<PropTypes>) {
   const { connectHeightObserver, disconnectHeightObserver } = useIframe();
   const { children, header, footer, height = 'fixed' } = props;
-  const { fetchStatus, connectedWallets } = useAppStore();
+  const {
+    fetchStatus,
+    connectedWallets,
+    config: { __UNSTABLE_OR_INTERNAL__ },
+  } = useAppStore();
   const [openRefreshModal, setOpenRefreshModal] = useState(false);
   const {
     config: { features, theme },
@@ -68,6 +78,22 @@ function Layout(props: PropsWithChildren<PropTypes>) {
 
   const scrollViewRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const showBanner = useMemo(() => {
+    const anyRouteExists =
+      (__UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.length ?? 0) === 0;
+    const routesMatched =
+      !!__UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.some((route) =>
+        location.pathname.endsWith(route)
+      );
+
+    return (
+      __UNSTABLE_OR_INTERNAL__?.swapBoxBanner &&
+      (anyRouteExists || routesMatched)
+    );
+  }, [
+    __UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.length,
+    location.pathname,
+  ]);
 
   useEffect(() => {
     const isIframe = isAppLoadedIntoIframe();
@@ -104,7 +130,8 @@ function Layout(props: PropsWithChildren<PropTypes>) {
       height={height}
       id={WIDGET_UI_ID.SWAP_BOX_ID}
       className={`${activeTheme()} ${LayoutContainer()}`}
-      ref={containerRef}>
+      ref={containerRef}
+      showBanner={showBanner}>
       <Header
         prefix={
           showBackButton ? (
@@ -112,7 +139,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
               onClick={() => {
                 navigateBack();
                 // As an example, used in routes page to add a custom logic when navigating back to the home page.
-                header.onBack && header.onBack();
+                header.onBack?.();
               }}
             />
           ) : null
@@ -159,6 +186,11 @@ function Layout(props: PropsWithChildren<PropTypes>) {
           <BottomLogo />
         </div>
       </Footer>
+      {showBanner && (
+        <BannerContainer>
+          {__UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.element}
+        </BannerContainer>
+      )}
       <RefreshModal
         open={openRefreshModal}
         onClose={() => setOpenRefreshModal(false)}
