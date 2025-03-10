@@ -26,7 +26,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.33.1-next.2",
     "@rango-dev/wallets-shared": "^0.42.1-next.4",
-    "@trezor/connect-web": "^9.2.4",
+    "@trezor/connect-web": "^9.5.0",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.81"
   },
