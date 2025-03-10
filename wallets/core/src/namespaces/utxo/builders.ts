@@ -9,4 +9,5 @@ export const connect = () =>
   new ActionBuilder<UtxoActions, 'connect'>('connect')
     .and(connectAndUpdateStateForSingleNetwork)
     .before(intoConnecting)
+    .or(intoConnectionFinished)
     .after(intoConnectionFinished);

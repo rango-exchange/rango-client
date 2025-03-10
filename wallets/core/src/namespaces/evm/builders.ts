@@ -11,4 +11,5 @@ export const connect = () =>
   new ActionBuilder<EvmActions, 'connect'>('connect')
     .and(connectAndUpdateStateForMultiNetworks)
     .before(intoConnecting)
+    .or(intoConnectionFinished)
     .after(intoConnectionFinished);
