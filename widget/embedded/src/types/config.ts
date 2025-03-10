@@ -2,6 +2,7 @@ import type { Language, theme } from '@rango-dev/ui';
 import type { LegacyProviderInterface } from '@rango-dev/wallets-core/dist/legacy/mod';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
+import type { ReactElement } from 'react';
 
 export type WidgetVariant = 'default' | 'expanded' | 'full-expanded';
 
@@ -273,6 +274,10 @@ export type WidgetConfig = {
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;
     autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
+    swapBoxBanner?: {
+      element: ReactElement;
+      routes?: string[];
+    };
   };
   routing?: Routing;
 };
