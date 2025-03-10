@@ -142,7 +142,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'Cosmos',
           id: 'COSMOS',
           networks: [COSMOS],
-          notSupported: true,
+          unsupported: true,
         },
       ],
     },

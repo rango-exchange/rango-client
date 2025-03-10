@@ -19,7 +19,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
   const { onClick, singleSelect, namespace, checked } = props;
   const blockchains = useAppStore().blockchains();
 
-  if (namespace.notSupported) {
+  if (namespace.unsupported) {
     return (
       <NamespaceItemContainer>
         <NamespaceLogo

@@ -15,7 +15,7 @@ export type NamespaceItemPropTypes = {
     id: string;
     value: Namespace;
     networks: Chain[];
-    notSupported?: boolean;
+    unsupported?: boolean;
   };
   checked: boolean;
 };

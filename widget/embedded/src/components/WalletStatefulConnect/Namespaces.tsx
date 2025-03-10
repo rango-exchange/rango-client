@@ -36,7 +36,7 @@ export function Namespaces(props: PropTypes) {
 
   const allSupportedNamespacesSelected =
     targetWallet.needsNamespace?.data.filter(
-      (namespace) => !namespace.notSupported
+      (namespace) => !namespace.unsupported
     ).length === selectedNamespaces.length;
 
   const onSelectAll = () => {
@@ -49,7 +49,7 @@ export function Namespaces(props: PropTypes) {
     } else {
       setSelectedNamespaces(
         targetWallet.needsNamespace?.data
-          .filter((namespace) => !namespace.notSupported)
+          .filter((namespace) => !namespace.unsupported)
           .map((namespace) => namespace.value) as Namespace[]
       );
     }
@@ -69,7 +69,7 @@ export function Namespaces(props: PropTypes) {
         targetWallet.needsNamespace?.data
           .filter(
             (namespace) =>
-              !namespace.notSupported &&
+              !namespace.unsupported &&
               (!props.value.requiredChains ||
                 namespace.networks.some((network) =>
                   props.value.requiredChains?.includes(network.name)
