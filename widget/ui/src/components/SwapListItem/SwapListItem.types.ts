@@ -25,11 +25,11 @@ export const StatusColors = {
 export interface SwapTokenData {
   from: {
     token: {
-      image: string;
+      image?: string;
       displayName: string;
     };
     blockchain: {
-      image: string;
+      image?: string;
     };
     amount: string;
     realAmount: string;
@@ -37,11 +37,11 @@ export interface SwapTokenData {
 
   to: {
     token: {
-      image: string;
+      image?: string;
       displayName: string;
     };
     blockchain: {
-      image: string;
+      image?: string;
     };
     amount: string;
     realAmount: string;

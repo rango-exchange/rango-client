@@ -21,14 +21,12 @@ export function useSearchCustomTokens(): UseSearchCustomTokens {
   const fetch = async (query: string, blockchain?: string) => {
     setError(null);
     setLoading(true);
-    abortControllerRef.current?.abort();
-    abortControllerRef.current = new AbortController();
     setTokens([]);
 
     try {
       const response = await httpService().searchCustomTokens(
         { query, blockchain },
-        { signal: abortControllerRef.current.signal }
+        { signal: abortControllerRef.current?.signal }
       );
 
       const customTokensSet = new Set(
@@ -68,10 +66,9 @@ export function useSearchCustomTokens(): UseSearchCustomTokens {
   const cancel = () => {
     abortControllerRef.current?.abort();
   };
-
   return {
     fetch: (query: string, blockchain?: string) => {
-      abortControllerRef.current = null;
+      abortControllerRef.current = new AbortController();
       setTokens([]);
       setLoading(true);
       debouncedFetch(query, blockchain);

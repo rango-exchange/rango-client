@@ -31,11 +31,11 @@ export interface CompleteModalPropTypes {
   percentageChange: string;
   chain: {
     displayName?: string;
-    image: string;
+    image?: string;
   };
   token: {
     displayName: string;
-    image: string;
+    image?: string;
   };
   description?: React.ReactNode;
   diagnosisUrl?: string | null;

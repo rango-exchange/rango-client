@@ -77,7 +77,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
             <React.Fragment key={key}>
               <ImageComponent
                 content={step.swapper.displayName}
-                src={step.swapper.image}
+                src={step.swapper.image ?? ''}
                 state={step.state}
                 container={container}
               />
@@ -90,7 +90,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                 <>
                   <ImageComponent
                     content={step.swapper.displayName}
-                    src={step.swapper.image}
+                    src={step.swapper.image ?? ''}
                     state={step.state}
                     container={container}
                   />
@@ -113,7 +113,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                               <React.Fragment key={key}>
                                 <ImageComponent
                                   content={step.swapper.displayName}
-                                  src={step.swapper.image}
+                                  src={step.swapper.image ?? ''}
                                   state={step.state}
                                   open={false}
                                 />
@@ -162,7 +162,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                     sideOffset={4}>
                     <ImageComponent
                       content={''}
-                      src={blockchain.image}
+                      src={blockchain.image ?? ''}
                       open={false}
                       className={index !== 0 ? 'blockchainImage' : ''}
                     />
@@ -182,7 +182,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                                 <ImageComponent
                                   key={chain.displayName}
                                   content={''}
-                                  src={chain.image}
+                                  src={chain.image ?? ''}
                                   open={false}
                                   className={i > index ? 'blockchainImage' : ''}
                                   container={container}

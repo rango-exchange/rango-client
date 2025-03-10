@@ -1,6 +1,6 @@
 export type TokenSectionProps = {
-  chainImage: string;
-  tokenImage: string;
+  chainImage?: string;
+  tokenImage?: string;
   tokenSymbol: string;
   chain: string;
   chianImageId?: string;

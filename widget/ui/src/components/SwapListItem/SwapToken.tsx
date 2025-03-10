@@ -27,23 +27,13 @@ export function SwapToken(props: PropTypes) {
       <TokenContainer>
         <Images>
           <div>
-            <ChainToken
-              tokenImage=""
-              chainImage=""
-              size="medium"
-              loading={true}
-            />
+            <ChainToken size="medium" loading={true} />
           </div>
           <div
             style={{
               transform: 'translateX(-5px)',
             }}>
-            <ChainToken
-              tokenImage=""
-              chainImage=""
-              size="medium"
-              loading={true}
-            />
+            <ChainToken size="medium" loading={true} />
           </div>
         </Images>
         <LayoutLoading>
