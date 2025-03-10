@@ -8,6 +8,7 @@ export interface SolanaActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   connect: () => Promise<Accounts>;
+  canEagerConnect: () => Promise<boolean>;
 }
 
 /*
@@ -17,4 +18,5 @@ export interface SolanaActions
  * If Phantom's interface is what Solana wallets are supporting, another option would be define that type here.
  *
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;

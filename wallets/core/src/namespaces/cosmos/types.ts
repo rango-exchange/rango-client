@@ -8,4 +8,5 @@ export interface CosmosActions
     CommonActions {
   // TODO
   connect: () => Promise<string>;
+  canEagerConnect: () => Promise<boolean>;
 }
