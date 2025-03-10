@@ -5,7 +5,10 @@ import React from 'react';
 import { Image } from '../common/index.js';
 import { Skeleton } from '../Skeleton/index.js';
 
-import { tokenChainSizeMap } from './ChainToken.constants.js';
+import {
+  DEFAULT_TOKEN_IMAGE_SRC,
+  tokenChainSizeMap,
+} from './ChainToken.constants.js';
 import {
   ChainImageContainer,
   Container,
@@ -13,14 +16,12 @@ import {
 } from './ChainToken.styles.js';
 
 export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
-  const {
-    tokenImage,
-    chainImage,
-    chianImageId,
-    size,
-    useAsPlaceholder,
-    loading,
-  } = props;
+  const { chianImageId, size, useAsPlaceholder, loading } = props;
+
+  const tokenImage =
+    props.tokenImage === '' ? DEFAULT_TOKEN_IMAGE_SRC : props.tokenImage;
+  const chainImage =
+    props.chainImage === '' ? DEFAULT_TOKEN_IMAGE_SRC : props.chainImage;
 
   return (
     <Container

@@ -10,27 +10,38 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
+import { CUSTOM_TOKEN_LEARN_MORE_LINK } from './CustomTokenModal.constants';
 import { generateExplorerLink } from './CustomTokenModal.helpers';
 import { Container, StyledLink } from './CustomTokenModal.styles';
 
 export function CustomTokenModal(props: PropTypes) {
-  const { open, onClose, token, onSubmitClick, blockchain } = props;
+  const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
 
   const explorerLink = generateExplorerLink(token.address, blockchain);
+
+  const onClickLearnMore = () =>
+    window.open(CUSTOM_TOKEN_LEARN_MORE_LINK, '_blank');
 
   return (
     <WatermarkedModal
       open={open}
       dismissible
       onClose={onClose}
+      onExit={onExit}
       container={getContainer()}>
       <Container>
-        <Image src={token.image} size={45} type="circular" />
+        <Image
+          src={token.image === '' ? DEFAULT_TOKEN_IMAGE_SRC : token.image}
+          size={45}
+          type="circular"
+        />
+        <Divider size={4} />
         <Typography variant="title" size="medium">
-          {token.name}
+          {token.symbol}
         </Typography>
         <Typography variant="body" size="small" className="_blockchain-name">
           {blockchain.displayName}
@@ -72,7 +83,7 @@ export function CustomTokenModal(props: PropTypes) {
           variant="body"
           className="_custom-token-description">
           {i18n.t(
-            `This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade.`
+            `This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding.`
           )}
         </Typography>
       </Container>
@@ -86,7 +97,17 @@ export function CustomTokenModal(props: PropTypes) {
         type="primary"
         fullWidth
         onClick={onSubmitClick}>
-        {i18n.t('Import')}
+        {i18n.t('Import Anyway')}
+      </Button>
+      <Divider size={10} />
+      <Button
+        id="widget-custom-token-modal-learn-more-btn"
+        variant="outlined"
+        size="large"
+        type="primary"
+        fullWidth
+        onClick={onClickLearnMore}>
+        {i18n.t('Learn More')}
       </Button>
     </WatermarkedModal>
   );

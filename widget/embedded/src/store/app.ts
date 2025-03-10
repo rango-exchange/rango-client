@@ -1,5 +1,5 @@
-import type { AppStoreState } from './slices/types';
 import type { WidgetConfig } from '../types';
+import type { AppStoreState } from './slices/types';
 import type { StateCreator } from 'zustand';
 
 import { create } from 'zustand';
@@ -47,6 +47,17 @@ export function createAppStore(initialData?: WidgetConfig) {
             preferredBlockchains: state.preferredBlockchains,
             disabledLiquiditySources: state.disabledLiquiditySources,
           };
+        },
+        version: 1,
+        migrate: (persistedState, version) => {
+          const state = persistedState as AppStoreState;
+          if (version === 0) {
+            state._customTokens = state._customTokens.map((token) => ({
+              ...token,
+              warning: true,
+            }));
+          }
+          return state;
         },
       }
     )

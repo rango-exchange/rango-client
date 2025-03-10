@@ -5,8 +5,8 @@ type BaseProps = Stitches.VariantProps<typeof ChainImageContainer>;
 type BaseSizes = Exclude<BaseProps['size'], object>;
 
 export type ChainTokenPropTypes = {
-  tokenImage: string;
-  chainImage: string;
+  tokenImage?: string;
+  chainImage?: string;
   chianImageId?: string;
   size: NonNullable<BaseSizes>;
   useAsPlaceholder?: boolean;

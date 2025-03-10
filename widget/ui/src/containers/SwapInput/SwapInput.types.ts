@@ -3,11 +3,12 @@ import type { PriceImpactWarningLevel } from '../../components/PriceImpact/Price
 export type BaseProps = {
   chain: {
     displayName: string;
-    image: string;
+    image?: string;
   };
   token: {
     displayName: string;
-    image: string;
+    image?: string;
+    securityWarning?: boolean;
   };
   price: {
     value: string;
@@ -41,4 +42,5 @@ type ToProps = {
   warningLevel: PriceImpactWarningLevel;
 };
 
-export type SwapInputPropTypes = BaseProps & (FromProps | ToProps);
+export type SwapInputPropTypes = BaseProps &
+  (FromProps | ToProps) & { tooltipContainer?: HTMLElement };

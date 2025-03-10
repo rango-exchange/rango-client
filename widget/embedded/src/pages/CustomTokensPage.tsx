@@ -108,6 +108,7 @@ export function CustomTokensPage() {
                 type="custom-token"
                 searchedFor={searchedFor}
                 showTitle={false}
+                showWarning={false}
                 action={(token) => (
                   <DeleteIconButton
                     id="widget-custom-token-delete-icon-btn"

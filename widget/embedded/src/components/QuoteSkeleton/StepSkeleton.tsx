@@ -25,7 +25,7 @@ export function StepSkeleton(props: PropTypes) {
         <StepSeparator hideSeparator={!separator} />
         <StepTokens extraSpace={separator}>
           <StepTokenInfo>
-            <ChainToken size="small" loading chainImage="" tokenImage="" />
+            <ChainToken size="small" loading />
             <Divider direction="horizontal" size={8} />
             <Skeleton height={12} variant="rounded" />
           </StepTokenInfo>
@@ -33,7 +33,7 @@ export function StepSkeleton(props: PropTypes) {
             <NextIcon color="gray" size={16} />
           </StepIconContainer>
           <StepTokenInfo>
-            <ChainToken size="small" loading chainImage="" tokenImage="" />
+            <ChainToken size="small" loading />
             <Divider direction="horizontal" size={8} />
             <Skeleton height={12} variant="rounded" />
           </StepTokenInfo>
