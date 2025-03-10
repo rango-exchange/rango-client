@@ -82,6 +82,7 @@ export function SwapToken(props: PropTypes) {
     },
     status,
     tooltipContainer,
+    currentStep,
   } = props;
 
   return (
@@ -119,7 +120,9 @@ export function SwapToken(props: PropTypes) {
             </Typography>
           </TopSection>
           <Typography size="small" variant="body" color="neutral700">
-            {i18n.t('Waiting for bridge transaction')}
+            {currentStep?.fromBlockchain === currentStep?.toBlockchain
+              ? i18n.t('waiting for swap transaction')
+              : i18n.t('Waiting for bridge transaction')}
           </Typography>
         </Layout>
       ) : (
