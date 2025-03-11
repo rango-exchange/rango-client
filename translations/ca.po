@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-23 11:46\n"
+"PO-Revision-Date: 2025-03-11 11:00\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,13 +19,43 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Aquest testimoni no forma part de la nostra llista de testimonis verificats. si us plau, verifiqueu la seva font i assegureu-vos d'entendre tots els riscos associats abans de continuar."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+msgid "Import Anyway"
+msgstr "Importa de totes maneres"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+msgid "Learn More"
+msgstr "Més informació"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Error de xarxa"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "S'ha produït un error en recuperar les dades del testimoni."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Aquest testimoni pot implicar possibles riscos de seguretat; procedir amb precaució."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "La quantitat de sortida ha canviat en {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:375
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -33,7 +63,7 @@ msgstr "No s'han trobat resultats"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:264
+#: widget/embedded/src/components/TokenList/TokenList.tsx:376
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -43,7 +73,7 @@ msgstr "Proveu d'utilitzar paraules clau diferents"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
 msgid "Select Chain"
 msgstr "Seleccioneu Cadena"
 
@@ -133,18 +163,12 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "L'adreça {destination} no coincideix amb el patró d'adreces blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
 msgid "via"
 msgstr "via"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Aquest testimoni no apareix a les llistes de fitxes actives. Assegureu-vos que aquest és el testimoni que voleu negociar."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
 msgid "Import"
 msgstr "Importar"
 
@@ -210,8 +234,8 @@ msgid "Swaps steps"
 msgstr "Canvia passos"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "Torna-ho a provar"
 
@@ -581,7 +605,7 @@ msgstr "Sí, cancel·la-ho"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+#: widget/embedded/src/pages/CustomTokensPage.tsx:182
 msgid "No, Continue"
 msgstr "No, continua"
 
@@ -597,7 +621,7 @@ msgstr "Esteu segur que voleu suprimir aquest intercanvi?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+#: widget/embedded/src/pages/CustomTokensPage.tsx:172
 msgid "Yes, Delete it"
 msgstr "Sí, esborra-ho"
 
@@ -618,8 +642,8 @@ msgid "Network Changed"
 msgstr "La xarxa ha canviat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:248
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
 msgid "Select Token"
 msgstr "Seleccioneu Token"
 
@@ -832,7 +856,7 @@ msgid "From"
 msgstr "Des de"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
 msgid "To"
 msgstr "A"
 
@@ -896,69 +920,64 @@ msgid "Theme"
 msgstr "Tema"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Duplicate Token"
 msgstr "Token duplicat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "The address you entered is duplicate, please enter a new address."
 msgstr "L'adreça que heu introduït és duplicada, introduïu una adreça nova."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:61
 msgid "Token Already Exists"
 msgstr "El testimoni ja existeix"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:62
 msgid "There's no need to add this token again because it already exists and is supported by us."
 msgstr "No cal tornar a afegir aquest testimoni perquè ja existeix i el donem suport."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:69
 msgid "Token Not Found"
 msgstr "No s'ha trobat el testimoni"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:70
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 msgstr "Ho sentim, no s'ha trobat cap testimoni a la cadena {blockchain} amb l'adreça proporcionada. si us plau, assegureu-vos que heu introduït l'adreça de testimoni correcta."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
-msgid "Network Error"
-msgstr "Error de xarxa"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
-#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
 msgstr "Afegeix un testimoni personalitzat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
 msgid "Select chain"
 msgstr "Seleccioneu la cadena"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
 msgid "Enter Address"
 msgstr "Introduïu l'adreça"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
 msgid "Enter token address"
 msgstr "Introduïu l'adreça del testimoni"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
 msgid "Failed Network, Please retry."
 msgstr "La xarxa ha fallat, torneu-ho a provar."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
 msgid "Add another custom token"
 msgstr "Afegiu un altre testimoni personalitzat"
 
@@ -979,27 +998,27 @@ msgstr "Ho aconsegueixes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
 msgid "Search Token"
 msgstr "Token de cerca"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "No custom tokens"
 msgstr "Sense fitxes personalitzades"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "press the button to add your custom token"
 msgstr "premeu el botó per afegir el vostre testimoni personalitzat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+#: widget/embedded/src/pages/CustomTokensPage.tsx:159
 msgid "Delete Custom Token"
 msgstr "Suprimeix el testimoni personalitzat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Are you sure you want to Delete this Token?"
 msgstr "Esteu segur que voleu suprimir aquest testimoni?"
 
@@ -1085,17 +1104,17 @@ msgid "Search Chain"
 msgstr "Cadena de cerca"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:86
 msgid "Source"
 msgstr "Font"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:87
 msgid "Destination"
 msgstr "Destinació"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:105
 msgid "Swap {type}"
 msgstr "Canvia {type}"
 
@@ -1156,37 +1175,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Necessari: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:629
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for network fee"
 msgstr " per tarifa de xarxa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for swap"
 msgstr " per intercanvi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for input and network fee"
 msgstr " per entrada i tarifa de xarxa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Necessita ≈ {requiredAmount} {symbol}{reason}, però tens {currentAmount} {symbol} a la teva cartera {blockchain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:688
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for connecting wallet"
 msgstr "S'està esperant la connexió de la cartera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:692
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for other running tasks to be finished"
 msgstr "Esperant que s'acabin altres tasques en execució"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:698
 msgid "Waiting for changing wallet network"
 msgstr "S'està esperant el canvi de xarxa de cartera"
 
@@ -1262,7 +1281,7 @@ msgid "In progress"
 msgstr "En curs"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
 msgid "Waiting for bridge transaction"
 msgstr "S'està esperant la transacció pont"
 
