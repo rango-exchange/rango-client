@@ -1,3 +1,23 @@
+## Widget [0.30.0] (2025-03-11)
+
+_includes `@rango-dev/widget-embedded@0.41.0`_
+
+### Features
+
+- Add sui namespace support for widget ([990d4c3](https://github.com/rango-exchange/rango-client/commit/990d4c32e7ad674c01140ca0bd557d541c596bbb))
+- Update the event payload for failed step and failed route events ([75aa989](https://github.com/rango-exchange/rango-client/commit/75aa9898040aede600aee2d9aa8188295a5a37ae))
+- Creating a signer package for sui ([de9b976](https://github.com/rango-exchange/rango-client/commit/de9b9764a7474e3ee446da5d28da35c209997580))
+- Add bitcoin signer for phantom on hub ([750124e](https://github.com/rango-exchange/rango-client/commit/750124e693753078abb537d4043964e2eebdbc01))
+- Add sui namespace to wallets-core ([5bcf5dd](https://github.com/rango-exchange/rango-client/commit/5bcf5ddd1444bcabb894ddfac0e3766c88988fbd))
+- Add functionality to display a banner at the bottom of the swap box ([8f4893e](https://github.com/rango-exchange/rango-client/commit/8f4893e26d383552bb5b3cb6188c9b12206abb12))
+- Fetch balance for custom tokens ([1676730](https://github.com/rango-exchange/rango-client/commit/1676730960ef56374ad632a95011b8da0a102792))
+- Implement search functionality for custom tokens ([d479cc6](https://github.com/rango-exchange/rango-client/commit/d479cc64ab122a65f87a8ee46e8c27dabe7a71c1))
+- Add trophy icon ([22f40aa](https://github.com/rango-exchange/rango-client/commit/22f40aaf3e13222a6769174bb1230f52679b81eb))
+
+## Bug Fixes
+
+- Avoid problematic routes for contract wallets ([0c82a83](https://github.com/rango-exchange/rango-client/commit/0c82a83008de6fe22f3685f1d22ab54bd59e5362))
+
 ## Widget [0.29.0] (2025-02-25)
 
 _includes `@rango-dev/widget-embedded@0.40.1`_
