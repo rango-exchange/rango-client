@@ -27,9 +27,9 @@
     "@types/react-dom": "^18.0.8"
   },
   "dependencies": {
-    "@rango-dev/ui": "^0.44.1-next.5",
+    "@rango-dev/ui": "^0.44.1-next.6",
     "@rango-dev/wallets-shared": "^0.42.1-next.4",
-    "@rango-dev/charts": "^0.6.1-next.5",
+    "@rango-dev/charts": "^0.6.1-next.6",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^8.0.8",
