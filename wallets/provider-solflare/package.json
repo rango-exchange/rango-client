@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-solflare",
-  "version": "0.9.1-next.4",
+  "version": "0.9.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
