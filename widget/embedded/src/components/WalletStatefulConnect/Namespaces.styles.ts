@@ -12,6 +12,13 @@ export const NamespaceItemContainer = styled('li', {
   cursor: 'pointer',
   borderRadius: '$sm',
   alignItems: 'center',
+  variants: {
+    unsupported: {
+      true: {
+        cursor: 'not-allowed',
+      },
+    },
+  },
 });
 
 export const NamespaceItemContent = styled('div', {

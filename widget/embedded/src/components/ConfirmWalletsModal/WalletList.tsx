@@ -222,7 +222,7 @@ export function WalletList(props: PropTypes) {
       })}
       <StatefulConnectModal
         wallet={selectedWalletToConnect}
-        requiredChains={requiredChains ? requiredChains : [chain]}
+        requiredChains={requiredChains || [chain]}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}

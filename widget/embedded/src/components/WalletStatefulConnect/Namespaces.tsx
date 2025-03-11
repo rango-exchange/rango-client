@@ -10,7 +10,7 @@ import {
   MessageBox,
   RadioRoot,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList } from './Namespaces.styles';
@@ -21,6 +21,13 @@ export function Namespaces(props: PropTypes) {
   const providerImage = targetWallet.image;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
+  const supportedNamespaces = useMemo(
+    () =>
+      targetWallet.needsNamespace?.data.filter(
+        (namespace) => !namespace.unsupported
+      ),
+    [targetWallet?.type]
+  );
 
   const onSelect = (namespace: Namespace) => {
     if (singleNamespace) {
@@ -35,9 +42,7 @@ export function Namespaces(props: PropTypes) {
   };
 
   const allSupportedNamespacesSelected =
-    targetWallet.needsNamespace?.data.filter(
-      (namespace) => !namespace.unsupported
-    ).length === selectedNamespaces.length;
+    supportedNamespaces?.length === selectedNamespaces.length;
 
   const onSelectAll = () => {
     if (singleNamespace) {
@@ -46,11 +51,9 @@ export function Namespaces(props: PropTypes) {
       );
     } else if (allSupportedNamespacesSelected) {
       setSelectedNamespaces([]);
-    } else {
+    } else if (supportedNamespaces) {
       setSelectedNamespaces(
-        targetWallet.needsNamespace?.data
-          .filter((namespace) => !namespace.unsupported)
-          .map((namespace) => namespace.value) as Namespace[]
+        supportedNamespaces.map((namespace) => namespace.value)
       );
     }
   };
@@ -64,19 +67,23 @@ export function Namespaces(props: PropTypes) {
   };
 
   useEffect(() => {
-    if (!singleNamespace) {
-      setSelectedNamespaces(
-        targetWallet.needsNamespace?.data
-          .filter(
-            (namespace) =>
-              !namespace.unsupported &&
-              (!props.value.requiredChains ||
-                namespace.networks.some((network) =>
-                  props.value.requiredChains?.includes(network.name)
-                ))
-          )
-          .map((namespace) => namespace.value) as Namespace[]
-      );
+    // Initially select supported and required namespaces
+    if (!singleNamespace && supportedNamespaces) {
+      if (props.value.requiredChains) {
+        setSelectedNamespaces(
+          supportedNamespaces.map((namespace) => namespace.value)
+        );
+      } else {
+        const namespacesContainingRequiredChains = supportedNamespaces.filter(
+          (namespace) =>
+            namespace.networks.some((network) =>
+              props.value.requiredChains?.includes(network.name)
+            )
+        );
+        setSelectedNamespaces(
+          namespacesContainingRequiredChains.map((namespace) => namespace.value)
+        );
+      }
     }
   }, []);
 
@@ -128,7 +135,7 @@ export function Namespaces(props: PropTypes) {
                   <NamespaceListItem
                     checked={selectedNamespaces.includes(namespace.value)}
                     namespace={namespace}
-                    singleSelect={singleNamespace}
+                    type={singleNamespace ? 'radio' : 'checkbox'}
                     onClick={() => onSelect(namespace.value)}
                   />
                   {index !== array.length - 1 && <Divider size={10} />}

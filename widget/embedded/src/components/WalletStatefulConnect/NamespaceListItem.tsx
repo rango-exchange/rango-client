@@ -16,12 +16,12 @@ import {
 import { SupportedChainsList } from './SupportedChainsList';
 
 export function NamespaceListItem(props: NamespaceItemPropTypes) {
-  const { onClick, singleSelect, namespace, checked } = props;
+  const { onClick, type, namespace, checked } = props;
   const blockchains = useAppStore().blockchains();
 
   if (namespace.unsupported) {
     return (
-      <NamespaceItemContainer>
+      <NamespaceItemContainer unsupported>
         <NamespaceLogo
           src={getBlockchainLogo(blockchains, namespace.id)}
           size={40}
@@ -54,7 +54,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
           <SupportedChainsList chains={namespace.networks} />
         )}
       </NamespaceItemContent>
-      {singleSelect ? (
+      {type === 'radio' ? (
         <Radio value={namespace.value} />
       ) : (
         <Checkbox checked={checked} />

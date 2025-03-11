@@ -9,7 +9,7 @@ export interface PropTypes {
 
 export type NamespaceItemPropTypes = {
   onClick: () => void;
-  singleSelect: boolean;
+  type: 'radio' | 'checkbox';
   namespace: {
     label: string;
     id: string;
