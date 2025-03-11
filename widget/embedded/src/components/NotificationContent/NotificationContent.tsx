@@ -26,9 +26,9 @@ export function NotificationContent() {
     <Notifications
       list={notifications}
       getBlockchainImage={(blockchain) =>
-        getBlockchainImage(blockchain, blockchains) ?? ''
+        getBlockchainImage(blockchain, blockchains)
       }
-      getTokenImage={(token) => findToken(token)?.image ?? ''}
+      getTokenImage={(token) => findToken(token)?.image}
       onClickItem={onClickItem}
       onClearAll={clearNotifications}
     />

@@ -293,7 +293,7 @@ export function getPriceImpact(
 
 export const getUniqueBlockchains = (steps: Step[]) => {
   const set = new Set();
-  const result: { displayName: string; image: string }[] = [];
+  const result: { displayName: string; image?: string }[] = [];
   steps.forEach((step) => {
     if (!set.has(step.from.chain.displayName)) {
       set.add(step.from.chain.displayName);

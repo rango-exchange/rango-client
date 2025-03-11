@@ -74,3 +74,10 @@ export const skeletonStyles = css({
   width: '100%',
   padding: '$5 $0',
 });
+
+export const TitleContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+});
