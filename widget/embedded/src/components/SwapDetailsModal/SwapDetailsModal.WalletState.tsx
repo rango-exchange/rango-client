@@ -74,9 +74,11 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}
-        requiredChains={
-          currentStepFromBlockchain ? [currentStepFromBlockchain] : undefined
-        }
+        options={{
+          preselectChains: currentStepFromBlockchain
+            ? [currentStepFromBlockchain]
+            : undefined,
+        }}
       />
     </>
   );

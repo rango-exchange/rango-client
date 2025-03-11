@@ -101,7 +101,7 @@ export function useStatefulConnect(): UseStatefulConnect {
             type: 'needsNamespace',
             payload: {
               targetWallet: wallet,
-              requiredChains: options?.requiredChains,
+              preselectChains: options?.preselectChains,
             },
           });
           return { status: ResultStatus.Namespace };
@@ -128,7 +128,7 @@ export function useStatefulConnect(): UseStatefulConnect {
           type: 'needsNamespace',
           payload: {
             targetWallet: wallet,
-            requiredChains: options?.requiredChains,
+            preselectChains: options?.preselectChains,
           },
         });
         return { status: ResultStatus.Namespace };

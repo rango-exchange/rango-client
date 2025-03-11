@@ -45,16 +45,14 @@ export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
-  switch (true) {
-    case state.connected:
-      return WalletStatus.CONNECTED;
-    case state.connecting:
-      return WalletStatus.CONNECTING;
-    case !state.installed:
-      return WalletStatus.NOT_INSTALLED;
-    default:
-      return WalletStatus.DISCONNECTED;
+  if (state.connected) {
+    return WalletStatus.CONNECTED;
+  } else if (state.connecting) {
+    return WalletStatus.CONNECTING;
+  } else if (!state.installed) {
+    return WalletStatus.NOT_INSTALLED;
   }
+  return WalletStatus.DISCONNECTED;
 }
 
 export function mapWalletTypesToWalletInfo(
@@ -218,7 +216,7 @@ export function prepareAccountsForWalletStore(
   return result;
 }
 
-export function getQuoteWallets(params: {
+export function getQuoteChains(params: {
   filter: 'all' | 'required';
   quote: SelectedQuote | null;
 }): string[] {

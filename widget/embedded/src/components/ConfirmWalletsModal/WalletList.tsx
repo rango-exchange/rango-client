@@ -35,7 +35,7 @@ const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 const TIME_TO_CLOSE_MODAL = 3_000;
 
 export function WalletList(props: PropTypes) {
-  const { chain, requiredChains, isSelected, selectWallet, limit, onShowMore } =
+  const { chain, quoteChains, isSelected, selectWallet, limit, onShowMore } =
     props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
@@ -222,7 +222,7 @@ export function WalletList(props: PropTypes) {
       })}
       <StatefulConnectModal
         wallet={selectedWalletToConnect}
-        requiredChains={requiredChains || [chain]}
+        options={{ preselectChains: quoteChains || [chain] }}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}

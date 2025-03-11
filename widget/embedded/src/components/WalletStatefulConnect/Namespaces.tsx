@@ -69,19 +69,21 @@ export function Namespaces(props: PropTypes) {
   useEffect(() => {
     // Initially select supported and required namespaces
     if (!singleNamespace && supportedNamespaces) {
-      if (props.value.requiredChains) {
+      if (props.value.preselectChains) {
         setSelectedNamespaces(
           supportedNamespaces.map((namespace) => namespace.value)
         );
       } else {
-        const namespacesContainingRequiredChains = supportedNamespaces.filter(
+        const namespacesContainingPreselectChains = supportedNamespaces.filter(
           (namespace) =>
             namespace.networks.some((network) =>
-              props.value.requiredChains?.includes(network.name)
+              props.value.preselectChains?.includes(network.name)
             )
         );
         setSelectedNamespaces(
-          namespacesContainingRequiredChains.map((namespace) => namespace.value)
+          namespacesContainingPreselectChains.map(
+            (namespace) => namespace.value
+          )
         );
       }
     }

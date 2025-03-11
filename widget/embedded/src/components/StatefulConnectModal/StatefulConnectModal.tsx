@@ -28,7 +28,9 @@ interface PropTypes {
   onClose: () => void;
   // When connecting wallet is executed **successfully**, this will be called afterwards.
   onConnect?: () => void;
-  requiredChains?: string[];
+  options?: {
+    preselectChains?: string[];
+  };
 }
 
 export function StatefulConnectModal(props: PropTypes) {
@@ -123,7 +125,7 @@ export function StatefulConnectModal(props: PropTypes) {
       beforeConnecting();
       handleConnect(props.wallet, {
         disconnectIfConnected: true,
-        requiredChains: props.requiredChains,
+        preselectChains: props.options?.preselectChains,
       })
         .then((result) => {
           const resultIsNeedMoreStepsToConnect = [
