@@ -1,5 +1,6 @@
 import type { ConfigSlice } from './config';
 import type { DataSlice } from './data';
+import type { WalletsSlice } from './wallets';
 import type { TokenData } from '../../components/TokenList/TokenList.types';
 import type { WidgetConfig } from '../../types';
 import type { SwapperMeta, Token } from 'rango-sdk';
@@ -53,7 +54,7 @@ export interface SettingsSlice {
 }
 
 export const createSettingsSlice: StateCreator<
-  SettingsSlice & DataSlice & ConfigSlice,
+  SettingsSlice & DataSlice & ConfigSlice & WalletsSlice,
   [],
   [],
   SettingsSlice
@@ -187,10 +188,15 @@ export const createSettingsSlice: StateCreator<
       }),
     });
   },
-  setCustomToken: (token) =>
+  setCustomToken: (token) => {
+    void get().fetchCustomTokensBalance({
+      tokens: [token],
+      connectedWallets: get().connectedWallets,
+    });
     set((state) => ({
       _customTokens: [token, ...state._customTokens],
-    })),
+    }));
+  },
   deleteCustomToken: (token) =>
     set((state) => ({
       _customTokens: state._customTokens.filter(
