@@ -111,10 +111,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allBlockChains: params.allBlockChains,
     autoConnectHandler: () => {
       void autoConnect({
-        getLegacyProvider: getLegacyProvider.bind(
-          null,
-          params.allVersionedProviders
-        ),
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,

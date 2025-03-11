@@ -1,9 +1,6 @@
 import type { ProviderAPI, SolanaActions } from './types.js';
 import type { Subscriber } from '../../hub/namespaces/mod.js';
-import type {
-  CanEagerConnect,
-  SubscriberCleanUp,
-} from '../../hub/namespaces/types.js';
+import type { SubscriberCleanUp } from '../../hub/namespaces/types.js';
 import type { AnyFunction } from '../../types/actions.js';
 
 import { AccountId } from 'caip';
@@ -70,25 +67,4 @@ export function changeAccountSubscriber(
       }
     },
   ];
-}
-
-export function canEagerConnect(
-  instance: () => ProviderAPI | undefined
-): CanEagerConnect<SolanaActions> {
-  return async () => {
-    const solanaInstance = instance();
-
-    if (!solanaInstance) {
-      throw new Error(
-        'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
-      );
-    }
-
-    try {
-      const result = await solanaInstance.connect({ onlyIfTrusted: true });
-      return !!result;
-    } catch {
-      return false;
-    }
-  };
 }

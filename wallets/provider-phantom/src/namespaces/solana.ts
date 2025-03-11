@@ -62,7 +62,22 @@ const disconnect = commonBuilders
 
 const canEagerConnect = builders
   .canEagerConnect()
-  .action(actions.canEagerConnect(solanaPhantom))
+  .action(async () => {
+    const solanaInstance = solanaPhantom();
+
+    if (!solanaInstance) {
+      throw new Error(
+        'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
+      );
+    }
+
+    try {
+      const result = await solanaInstance.connect({ onlyIfTrusted: true });
+      return !!result;
+    } catch {
+      return false;
+    }
+  })
   .build();
 
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)

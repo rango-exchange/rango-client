@@ -145,9 +145,10 @@ async function getNamespacesAvailableForEagerConnect(
     );
   }
 
-  return namespaces.filter(
+  const resolvedNamespaces = namespaces.filter(
     (_, index) => !!canEagerConnectNamespacesResult[index]
   );
+  return resolvedNamespaces;
 }
 
 /*
@@ -157,7 +158,6 @@ async function getNamespacesAvailableForEagerConnect(
 export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
-  getLegacyProvider: (type: string) => LegacyProviderInterface;
   wallets?: (WalletType | LegacyProviderInterface)[];
 }): Promise<void> {
   const { getHub, allBlockChains, wallets } = deps;
