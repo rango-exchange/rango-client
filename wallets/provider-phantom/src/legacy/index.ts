@@ -12,6 +12,14 @@ import type {
   SignerFactory,
 } from 'rango-types';
 
+import {
+  BASE,
+  BTC,
+  COSMOS,
+  ETH,
+  POLYGON,
+  SOLANA,
+} from '@rango-dev/wallets-core/chains';
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 import {
   chooseInstance,
@@ -115,16 +123,26 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
+          chains: [ETH, BASE, POLYGON],
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+          chains: [SOLANA],
         },
         {
           label: 'BTC',
           value: 'UTXO',
           id: 'BTC',
+          chains: [BTC],
+        },
+        {
+          label: 'Cosmos',
+          value: 'Cosmos',
+          id: 'COSMOS',
+          chains: [COSMOS],
+          unsupported: true,
         },
       ],
     },

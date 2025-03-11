@@ -18,6 +18,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
     type,
     title,
     currentStepWallet,
+    currentStepFromBlockchain,
     message,
     showWalletButton,
     walletButtonDisabled,
@@ -72,6 +73,11 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         wallet={selectedWalletToConnect}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
+        }}
+        options={{
+          preselectChains: currentStepFromBlockchain
+            ? [currentStepFromBlockchain]
+            : undefined,
         }}
       />
     </>

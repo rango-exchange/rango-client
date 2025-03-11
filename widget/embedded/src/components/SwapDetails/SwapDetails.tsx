@@ -172,6 +172,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     : undefined;
 
   const stepMessage = getSwapMessages(swap, currentStep);
+  const currentStepFromBlockchain = currentStep?.fromBlockchain;
   const steps = getSteps({
     swap,
     switchNetwork,
@@ -466,6 +467,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         onDelete={onDelete}
         message={stepMessage.detailedMessage.content}
         currentStepWallet={currentStepWallet}
+        currentStepFromBlockchain={currentStepFromBlockchain}
         walletButtonDisabled={!isActiveTab}
       />
       <SwapDetailsCompleteModal

@@ -4,10 +4,12 @@ import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 export interface HandleConnectOptions {
   // To have a switch between connect and disconnect when user is clicking on a button, this option can be helpful.
   disconnectIfConnected?: boolean;
+  preselectChains?: string[];
 }
 
 export interface NeedsNamespacesState {
   targetWallet: ExtendedModalWalletInfo;
+  preselectChains?: string[];
 }
 
 export interface NeedsDerivationPathState {

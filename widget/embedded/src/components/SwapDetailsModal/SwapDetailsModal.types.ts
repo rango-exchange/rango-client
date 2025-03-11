@@ -16,6 +16,7 @@ export interface ModalPropTypes {
   onDelete: () => void;
   state: ModalState;
   currentStepWallet: WalletTypeAndAddress | null;
+  currentStepFromBlockchain?: string;
   message: string;
   walletButtonDisabled: boolean;
 }
@@ -48,6 +49,7 @@ export interface ModalNetworkValueTypes {
 
 export interface WalletStateContentProps extends ModalNetworkValueTypes {
   currentStepWallet: WalletTypeAndAddress | null;
+  currentStepFromBlockchain?: string;
   message: string;
   showWalletButton: boolean;
   walletButtonDisabled: boolean;

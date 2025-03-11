@@ -1,4 +1,5 @@
 import type { State as WalletState } from './wallet.js';
+import type { Chain } from '../chains/types.js';
 import type { Namespace } from '../namespaces/common/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
@@ -95,6 +96,8 @@ interface NeedsNamespace {
      */
     id: string;
     value: Namespace;
+    unsupported?: boolean;
+    chains: Chain[];
   }[];
 }
 
