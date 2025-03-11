@@ -34,13 +34,7 @@ export function SkeletonHeader() {
 export function SkeletonOutput() {
   return (
     <OutputLoading>
-      <ChainToken
-        useAsPlaceholder={true}
-        size="large"
-        chainImage=""
-        tokenImage=""
-        loading={true}
-      />
+      <ChainToken useAsPlaceholder={true} size="large" loading={true} />
       <Skeleton variant="rounded" width={122} height={29} />
     </OutputLoading>
   );

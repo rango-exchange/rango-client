@@ -5,7 +5,10 @@ import React from 'react';
 import { Image } from '../common/index.js';
 import { Skeleton } from '../Skeleton/index.js';
 
-import { tokenChainSizeMap } from './ChainToken.constants.js';
+import {
+  DEFAULT_TOKEN_IMAGE_SRC,
+  tokenChainSizeMap,
+} from './ChainToken.constants.js';
 import {
   ChainImageContainer,
   Container,
@@ -21,6 +24,11 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
     useAsPlaceholder,
     loading,
   } = props;
+
+  const tokenImageSrc =
+    tokenImage === '' ? DEFAULT_TOKEN_IMAGE_SRC : tokenImage;
+  const chainImageSrc =
+    chainImage === '' ? DEFAULT_TOKEN_IMAGE_SRC : chainImage;
 
   return (
     <Container
@@ -39,19 +47,19 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
           width={tokenChainSizeMap[size].token}
         />
       ) : (
-        <TokenImageContainer hasBorder={!tokenImage}>
+        <TokenImageContainer hasBorder={!tokenImageSrc}>
           <Image
             size={tokenChainSizeMap[size].token}
-            src={tokenImage}
+            src={tokenImageSrc}
             type="circular"
-            {...((useAsPlaceholder || !tokenImage) && {
+            {...((useAsPlaceholder || !tokenImageSrc) && {
               useAsPlaceholder: true,
               backgroundColor: 'transparent',
             })}
           />
         </TokenImageContainer>
       )}
-      <ChainImageContainer size={size} hasBorder={!chainImage}>
+      <ChainImageContainer size={size} hasBorder={!chainImageSrc}>
         {loading ? (
           <Skeleton
             variant="circular"
@@ -62,9 +70,9 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
           <Image
             id={chianImageId}
             size={tokenChainSizeMap[size].chain}
-            src={chainImage}
+            src={chainImageSrc}
             type="circular"
-            {...((useAsPlaceholder || !chainImage) && {
+            {...((useAsPlaceholder || !chainImageSrc) && {
               useAsPlaceholder: true,
               backgroundColor: 'transparent',
             })}

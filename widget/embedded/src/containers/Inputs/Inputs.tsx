@@ -82,11 +82,12 @@ export function Inputs(props: PropTypes) {
           balance={fromTokenFormattedBalance}
           chain={{
             displayName: fromBlockchain?.displayName || '',
-            image: fromBlockchain?.logo || '',
+            image: fromBlockchain?.logo,
           }}
           token={{
             displayName: fromToken?.symbol || '',
-            image: fromToken?.image || '',
+            image: fromToken?.image,
+            securityWarning: !!fromToken?.warning,
           }}
           onClickToken={() => onClickToken('from')}
           price={{
@@ -133,11 +134,12 @@ export function Inputs(props: PropTypes) {
         fetchingQuote={fetchingQuote}
         chain={{
           displayName: toBlockchain?.displayName || '',
-          image: toBlockchain?.logo || '',
+          image: toBlockchain?.logo,
         }}
         token={{
           displayName: toToken?.symbol || '',
-          image: toToken?.image || '',
+          image: toToken?.image,
+          securityWarning: !!toToken?.warning,
         }}
         percentageChange={numberToString(
           getPriceImpact(inputUsdValue, outputUsdValue),

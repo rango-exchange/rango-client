@@ -1,5 +1,6 @@
 import type { ConfigSlice } from './config';
 import type { DataSlice } from './data';
+import type { TokenData } from '../../components/TokenList/TokenList.types';
 import type { WidgetConfig } from '../../types';
 import type { SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
@@ -46,7 +47,7 @@ export interface SettingsSlice {
   ) => void;
   addPreferredBlockchain: (blockchain: string) => void;
   updateSettings: (config: WidgetConfig) => void;
-  setCustomToken: (token: Token) => void;
+  setCustomToken: (token: TokenData) => void;
   deleteCustomToken: (token: Token) => void;
   customTokens: () => Token[];
 }

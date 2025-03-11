@@ -23,7 +23,7 @@ export function QuoteSummarySkeleton(props: PropTypes) {
   const quotePreview = (
     <QuoteSummary>
       <TokenAmount>
-        <ChainToken loading size="medium" chainImage="" tokenImage="" />
+        <ChainToken loading size="medium" />
         <Divider size={8} direction="horizontal" />
         <TokenAmountLabel>
           <Skeleton height={10} width={60} variant="rounded" />
@@ -72,7 +72,7 @@ export function QuoteSummarySkeleton(props: PropTypes) {
       {type === 'list-item' && (
         <Output>
           <OutputTokenInfo>
-            <ChainToken loading size="medium" chainImage="" tokenImage="" />
+            <ChainToken loading size="medium" />
             <Divider direction="horizontal" size={4} />
             <Skeleton height={15} width={150} variant="rounded" />
           </OutputTokenInfo>
