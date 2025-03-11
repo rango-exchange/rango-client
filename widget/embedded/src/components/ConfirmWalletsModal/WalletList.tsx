@@ -222,7 +222,7 @@ export function WalletList(props: PropTypes) {
       })}
       <StatefulConnectModal
         wallet={selectedWalletToConnect}
-        options={{ preselectChains: quoteChains || [chain] }}
+        options={{ defaultSelectedChains: quoteChains || [chain] }}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}

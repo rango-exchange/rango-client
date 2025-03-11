@@ -69,7 +69,7 @@ export function Namespaces(props: PropTypes) {
   useEffect(() => {
     // Initially select supported and required namespaces
     if (!singleNamespace && supportedNamespaces) {
-      if (props.value.preselectChains) {
+      if (props.value.defaultSelectedChains) {
         setSelectedNamespaces(
           supportedNamespaces.map((namespace) => namespace.value)
         );
@@ -77,7 +77,7 @@ export function Namespaces(props: PropTypes) {
         const namespacesContainingPreselectChains = supportedNamespaces.filter(
           (namespace) =>
             namespace.chains.some((chain) =>
-              props.value.preselectChains?.includes(chain.name)
+              props.value.defaultSelectedChains?.includes(chain.name)
             )
         );
         setSelectedNamespaces(
