@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-solflare-snap",
-  "version": "0.14.1-next.4",
+  "version": "0.14.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
