@@ -1,25 +1,33 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { PropTypes, RenderDescProps } from './TokenList.types';
-import type { BlockchainMeta, Token } from 'rango-sdk';
+import type { PropTypes, RenderDescProps, TokenData } from './TokenList.types';
 
 import { i18n } from '@lingui/core';
 import {
+  Button,
+  CustomTokenWarning,
   darkTheme,
   Divider,
   ExternalLinkIcon,
   Image,
-  ListItemButton,
+  ListItem,
   NotFound,
   PinIcon,
   Skeleton,
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
+import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useAppStore } from '../../store/AppStore';
+import { useQuoteStore } from '../../store/quote';
 import { createTintsAndShades } from '../../utils/colors';
+import { getContainer } from '../../utils/common';
+import { findBlockchain } from '../../utils/meta';
 import { formatBalance } from '../../utils/wallets';
+import { ImportCustomToken } from '../ImportCustomToken';
 
 import { LoadingTokenList } from './LoadingTokenList';
 import {
@@ -29,8 +37,10 @@ import {
   End,
   ImageSection,
   List,
+  ListItemContainer,
   Pin,
   StyledLink,
+  StyledListItemButton,
   Tag,
   TagTitle,
   Title,
@@ -97,14 +107,57 @@ export function TokenList(props: PropTypes) {
     selectedBlockchain,
     showTitle = true,
     action,
+    type,
+    showWarning = true,
   } = props;
 
   const fetchStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const { getBalanceFor, fetchingWallets: loadingWallet } = useAppStore();
   const { isTokenPinned } = useAppStore();
+  const { setFromToken, setToToken } = useQuoteStore();
+  const { t } = useTranslation();
+  const navigateBack = useNavigateBack();
 
-  const endRenderer = (token: Token) => {
+  const [customToken, setCustomToken] = useState<TokenData | null>(null);
+
+  const updateToken = () => {
+    if (type === 'source') {
+      setFromToken({ token: customToken, meta: { blockchains } });
+    } else {
+      setToToken({ token: customToken, meta: { blockchains } });
+    }
+  };
+
+  const handleImportToken = () => {
+    updateToken();
+    navigateBack();
+  };
+
+  const endRenderer = (token: TokenData) => {
+    if (token.customToken) {
+      const { customToken, ...otherProps } = token;
+      const handleClick: React.MouseEventHandler<HTMLButtonElement> = (
+        event
+      ) => {
+        event.stopPropagation();
+        setCustomToken({ ...otherProps, warning: true });
+      };
+
+      return (
+        // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
+        <Button
+          variant="contained"
+          type="primary"
+          size="small"
+          className="widget-token-list-item-import-btn"
+          onClick={handleClick}>
+          <Typography variant="body" size="xsmall" color="background">
+            {t('import')}
+          </Typography>
+        </Button>
+      );
+    }
     const tokenBalance = formatBalance(getBalanceFor(token));
 
     if (action) {
@@ -144,10 +197,42 @@ export function TokenList(props: PropTypes) {
       <VirtualizedList
         itemContent={(index) => {
           const token = tokens[index];
+          if (token === 'skeleton') {
+            return (
+              <ListItem
+                hasDivider
+                start={<Skeleton variant="circular" width={35} height={35} />}
+                end={
+                  <End>
+                    <Skeleton variant="text" size="large" width={70} />
+                    <Divider size={4} />
+                    <Skeleton variant="text" size="medium" width={50} />
+                  </End>
+                }
+                title={
+                  <div>
+                    <Skeleton variant="text" size="large" width={90} />
+                    <Divider size={4} />
+                    <Skeleton variant="text" size="medium" width={90} />
+                  </div>
+                }
+              />
+            );
+          }
           const address = token.address || '';
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
-          ) as BlockchainMeta;
+          );
+
+          /**
+           * This block is added to satisfy TypeScript without using assertions and to prevent any errors that could break the app.
+           * Be cautious, as Virtuoso warns us if we return empty elements.
+           * If you need to exclude any items, do so before passing them to the virtual list.
+           */
+          if (!blockchain) {
+            return null;
+          }
+
           const colors = createTintsAndShades(blockchain.color, 'main');
           const customCssForTag = {
             $$color: colors.main150,
@@ -165,26 +250,32 @@ export function TokenList(props: PropTypes) {
             color: '$$color',
           };
 
+          const handleClick = () => {
+            if (typeof token !== 'string' && !token.customToken) {
+              onChange?.(token);
+            }
+          };
+
           return (
-            <div
-              style={{
-                paddingRight: 5,
-              }}>
-              <ListItemButton
-                style={{
-                  width: '100%',
-                  overflow: 'hidden',
-                  height: '60px',
-                }}
+            <ListItemContainer>
+              <StyledListItemButton
                 tab-index={index}
                 key={`${token.symbol}${token.address}`}
                 id={`${token.symbol}${token.address}`}
-                className={`widget-token-list-item-btn`}
+                className="widget-token-list-item-btn"
                 hasDivider
-                onClick={() => onChange && onChange(tokens[index])}
+                customToken={token.customToken}
+                onClick={handleClick}
                 start={
                   <ImageSection>
-                    <Image src={token.image} size={30} />
+                    <Image
+                      src={
+                        token.image === ''
+                          ? DEFAULT_TOKEN_IMAGE_SRC
+                          : token.image
+                      }
+                      size={30}
+                    />
                     {props.type !== 'custom-token' &&
                       isTokenPinned(token, props.type) && (
                         <Pin>
@@ -210,16 +301,23 @@ export function TokenList(props: PropTypes) {
                           {token.blockchain}
                         </TagTitle>
                       </Tag>
+                      {showWarning && token.warning && (
+                        <>
+                          <Divider direction="horizontal" size={4} />
+                          <CustomTokenWarning container={getContainer()} />
+                        </>
+                      )}
                     </Title>
                   ) : undefined
                 }
                 description={
+                  typeof token !== 'string' &&
                   !!blockchain?.info &&
                   !!address &&
                   blockchain.type !== 'COSMOS'
                     ? renderDesc({
                         address,
-                        token: tokens[index],
+                        token,
                         customCssForTag,
                         customCssForTagTitle,
                         name: token.name,
@@ -231,7 +329,7 @@ export function TokenList(props: PropTypes) {
                 }
                 end={endRenderer(token)}
               />
-            </div>
+            </ListItemContainer>
           );
         }}
         totalCount={tokens.length}
@@ -239,6 +337,10 @@ export function TokenList(props: PropTypes) {
       />
     );
   };
+
+  const customTokenBlockchain = customToken
+    ? findBlockchain(customToken?.blockchain, blockchains)
+    : null;
 
   return (
     <>
@@ -256,7 +358,17 @@ export function TokenList(props: PropTypes) {
         {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
         {fetchStatus === 'success' &&
           (tokens.length ? (
-            <List as="ul">{renderList()}</List>
+            <>
+              <ImportCustomToken
+                token={customToken}
+                address={customToken?.address ?? ''}
+                blockchain={customTokenBlockchain ?? undefined}
+                onImport={handleImportToken}
+                onExitErrorModal={() => setCustomToken(null)}
+                onExitImportModal={() => setCustomToken(null)}
+              />
+              <List as="ul">{renderList()}</List>
+            </>
           ) : (
             !!searchedFor && (
               <NotFound

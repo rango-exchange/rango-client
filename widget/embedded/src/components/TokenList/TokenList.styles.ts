@@ -2,6 +2,7 @@ import {
   css,
   darkTheme,
   ImageContainer,
+  ListItemButton,
   styled,
   Typography,
 } from '@rango-dev/ui';
@@ -102,6 +103,18 @@ export const List = styled('ul', {
   },
 });
 
+export const StyledListItemButton = styled(ListItemButton, {
+  variants: {
+    customToken: {
+      true: {
+        '&:hover': {
+          cursor: 'unset',
+        },
+      },
+    },
+  },
+});
+
 export const Tag = styled('div', {
   paddingLeft: '$5',
   paddingRight: '$5',
@@ -163,5 +176,32 @@ export const TokenBalance = styled(Typography, {
 export const StyledLink = styled('a', {
   '& svg:hover': {
     color: '$colors$info',
+  },
+});
+
+export const ListItemContainer = styled('div', {
+  paddingRight: '$5',
+
+  '& .widget-token-list-item-btn': {
+    width: '100%',
+    overflow: 'hidden',
+    height: '60px',
+  },
+
+  '& .widget-token-list-item-import-btn': {
+    height: '$20',
+    padding: '0 $10',
+
+    '& ._text': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+    '& ._typography': {
+      [`.${darkTheme} &`]: {
+        color: '$foreground',
+      },
+    },
   },
 });
