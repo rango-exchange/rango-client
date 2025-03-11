@@ -1,3 +1,14 @@
+# [0.45.0](https://github.com/rango-exchange/rango-client/compare/ui@0.44.0...ui@0.45.0) (2025-03-11)
+
+
+### Features
+
+* add functionality to display a banner at the bottom of the swap box ([8f4893e](https://github.com/rango-exchange/rango-client/commit/8f4893e26d383552bb5b3cb6188c9b12206abb12))
+* add trophy icon ([22f40aa](https://github.com/rango-exchange/rango-client/commit/22f40aaf3e13222a6769174bb1230f52679b81eb))
+* implement search functionality for custom tokens ([d479cc6](https://github.com/rango-exchange/rango-client/commit/d479cc64ab122a65f87a8ee46e8c27dabe7a71c1))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/ui@0.43.0...ui@0.44.0) (2025-02-23)
 
 

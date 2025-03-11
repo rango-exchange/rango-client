@@ -1,3 +1,12 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.43.0...provider-phantom@0.44.0) (2025-03-11)
+
+
+### Features
+
+* add bitcoin signer for phantom on hub ([750124e](https://github.com/rango-exchange/rango-client/commit/750124e693753078abb537d4043964e2eebdbc01))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.42.0...provider-phantom@0.43.0) (2025-02-23)
 
 

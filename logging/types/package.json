@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/logging-types",
-  "version": "0.7.1-next.0",
+  "version": "0.8.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
