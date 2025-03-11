@@ -9,7 +9,10 @@ export interface PropTypes {
   value: NeedsNamespacesState;
 }
 
-export type NamespaceItemPropTypes = {
+export type NamespaceItemPropTypes = (
+  | { type: 'radio' }
+  | { type: 'checkbox'; value: boolean }
+) & {
   onClick: () => void;
   type: 'radio' | 'checkbox';
   namespace: {
@@ -19,5 +22,4 @@ export type NamespaceItemPropTypes = {
     chains: Chain[];
     unsupported?: boolean;
   };
-  checked: boolean;
 };

@@ -135,7 +135,7 @@ export function Namespaces(props: PropTypes) {
               (namespace, index, array) => (
                 <React.Fragment key={namespace.id}>
                   <NamespaceListItem
-                    checked={selectedNamespaces.includes(namespace.value)}
+                    value={selectedNamespaces.includes(namespace.value)}
                     namespace={namespace}
                     type={singleNamespace ? 'radio' : 'checkbox'}
                     onClick={() => onSelect(namespace.value)}
