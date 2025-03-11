@@ -1,3 +1,13 @@
+# [0.42.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.41.0...wallets-core@0.42.0) (2025-03-11)
+
+
+### Features
+
+* add bitcoin signer for phantom on hub ([750124e](https://github.com/rango-exchange/rango-client/commit/750124e693753078abb537d4043964e2eebdbc01))
+* add sui namespace to wallets-core ([5bcf5dd](https://github.com/rango-exchange/rango-client/commit/5bcf5ddd1444bcabb894ddfac0e3766c88988fbd))
+
+
+
 # [0.41.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.40.0...wallets-core@0.41.0) (2025-02-23)
 
 

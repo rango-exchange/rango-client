@@ -1,3 +1,13 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.43.0...queue-manager-rango-preset@0.44.0) (2025-03-11)
+
+
+### Features
+
+* add sui namespace support for widget ([990d4c3](https://github.com/rango-exchange/rango-client/commit/990d4c32e7ad674c01140ca0bd557d541c596bbb))
+* update the event payload for failed step and failed route events ([75aa989](https://github.com/rango-exchange/rango-client/commit/75aa9898040aede600aee2d9aa8188295a5a37ae))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.42.0...queue-manager-rango-preset@0.43.0) (2025-02-23)
 
 

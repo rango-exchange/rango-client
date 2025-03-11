@@ -1,3 +1,13 @@
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.28.0...wallets-react@0.29.0) (2025-03-11)
+
+
+### Features
+
+* add bitcoin signer for phantom on hub ([750124e](https://github.com/rango-exchange/rango-client/commit/750124e693753078abb537d4043964e2eebdbc01))
+* add sui namespace support for widget ([990d4c3](https://github.com/rango-exchange/rango-client/commit/990d4c32e7ad674c01140ca0bd557d541c596bbb))
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.27.0...wallets-react@0.28.0) (2025-02-23)
 
 
