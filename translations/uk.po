@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-23 11:46\n"
+"PO-Revision-Date: 2025-03-11 11:01\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -19,13 +19,43 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Цей маркер не є частиною нашого перевіреного списку маркерів. перевірте його джерело та переконайтеся, що розумієте всі пов’язані з цим ризики, перш ніж продовжити."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+msgid "Import Anyway"
+msgstr "Все одно імпортувати"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+msgid "Learn More"
+msgstr "Дізнайтеся більше"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Помилка мережі"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "Під час отримання даних маркера сталася помилка."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Цей маркер може містити потенційні ризики для безпеки; діяти обережно."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "Обсяг виведення змінено на {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:375
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -33,7 +63,7 @@ msgstr "Нічого не знайдено"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:264
+#: widget/embedded/src/components/TokenList/TokenList.tsx:376
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -43,7 +73,7 @@ msgstr "Спробуйте використовувати інші ключов�
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
 msgid "Select Chain"
 msgstr "Обрати ланцюжок"
 
@@ -133,18 +163,12 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Адреса {destination} не відповідає шаблону адреси блокчейн."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
 msgid "via"
 msgstr "через"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Цей токен не відображається у списку активних токенів. Переконайтеся, що це маркер який ви хочете торгувати."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
 msgid "Import"
 msgstr "Імпорт"
 
@@ -210,8 +234,8 @@ msgid "Swaps steps"
 msgstr "Кроки зміни"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "Повторити спробу"
 
@@ -581,7 +605,7 @@ msgstr "Так, скасувати"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+#: widget/embedded/src/pages/CustomTokensPage.tsx:182
 msgid "No, Continue"
 msgstr "Ні, продовжити"
 
@@ -597,7 +621,7 @@ msgstr "Ви впевнені, що бажаєте видалити це пер�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+#: widget/embedded/src/pages/CustomTokensPage.tsx:172
 msgid "Yes, Delete it"
 msgstr "Так, видалити його"
 
@@ -618,8 +642,8 @@ msgid "Network Changed"
 msgstr "Мережа змінена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:248
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
 msgid "Select Token"
 msgstr "Вибрати токен"
 
@@ -832,7 +856,7 @@ msgid "From"
 msgstr "Від"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
 msgid "To"
 msgstr "На"
 
@@ -896,69 +920,64 @@ msgid "Theme"
 msgstr "Тема"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Duplicate Token"
 msgstr "Duplicate Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "The address you entered is duplicate, please enter a new address."
 msgstr "Уведена вами адреса дублюється, будь ласка, введіть нову адресу."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:61
 msgid "Token Already Exists"
 msgstr "Токен вже існує"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:62
 msgid "There's no need to add this token again because it already exists and is supported by us."
 msgstr "Немає потреби знову додавати цей токен, тому що він вже існує і підтримується нами."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:69
 msgid "Token Not Found"
 msgstr "Маркер не знайдено"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:70
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 msgstr "На жаль, в ланцюжку {blockchain} не знайдено жодного токена. Переконайтеся, що ви ввели правильну адресу токену."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
-msgid "Network Error"
-msgstr "Помилка мережі"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
-#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
 msgstr "Додати користувацький токен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
 msgid "Select chain"
 msgstr "Виберіть ланцюжок"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
 msgid "Enter Address"
 msgstr "Введіть адресу"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
 msgid "Enter token address"
 msgstr "Введіть адресу маркера"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
 msgid "Failed Network, Please retry."
 msgstr "Невдала мережа, спробуйте ще раз."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
 msgid "Add another custom token"
 msgstr "Додати інший користувацький токен"
 
@@ -979,27 +998,27 @@ msgstr "Ви отримуєте"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
 msgid "Search Token"
 msgstr "Пошук маркер"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "No custom tokens"
 msgstr "Немає власних токенів"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "press the button to add your custom token"
 msgstr "натисніть кнопку, щоб додати свій власний токен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+#: widget/embedded/src/pages/CustomTokensPage.tsx:159
 msgid "Delete Custom Token"
 msgstr "Видалити користувацький токен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Are you sure you want to Delete this Token?"
 msgstr "Ви впевнені, що хочете видалити цей токен?"
 
@@ -1085,17 +1104,17 @@ msgid "Search Chain"
 msgstr "Шукати ланцюжок"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:86
 msgid "Source"
 msgstr "Джерело"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:87
 msgid "Destination"
 msgstr "Пункт призначення"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:105
 msgid "Swap {type}"
 msgstr "Поміняти {type}"
 
@@ -1156,37 +1175,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Обов'язково: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:629
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for network fee"
 msgstr " за збір мережі"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for swap"
 msgstr " для свопа"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for input and network fee"
 msgstr " за вхідний та мережевий збір"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Необхідний TrueCon {requiredAmount} {symbol}{reason}, але ви маєте {currentAmount} {symbol} в гаманці {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:688
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for connecting wallet"
 msgstr "Очікування підключення гаманця"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:692
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for other running tasks to be finished"
 msgstr "Очікуємо завершення інших запущених задач"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:698
 msgid "Waiting for changing wallet network"
 msgstr "Очікування зміни мережі гаманця"
 
@@ -1262,7 +1281,7 @@ msgid "In progress"
 msgstr "Обробка"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
 msgid "Waiting for bridge transaction"
 msgstr "Очікування операції з мостом"
 
