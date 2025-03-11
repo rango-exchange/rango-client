@@ -122,21 +122,24 @@ async function getNamespacesAvailableForEagerConnect(
   namespaces: LegacyNamespaceInputForConnect[],
   wallet: Provider
 ) {
-  const canEagerConnectNamespacesPromises = namespaces.map((namespace) => {
-    const namespaceInstance = wallet.findByNamespace(namespace.namespace);
-    return async () => await namespaceInstance?.canEagerConnect();
-  });
+  const canEagerConnectNamespacesPromises = namespaces.reduce(
+    (acc, namespace) => {
+      const namespaceInstance = wallet.findByNamespace(namespace.namespace);
+      if (namespaceInstance) {
+        acc.push(async () => await namespaceInstance.canEagerConnect());
+      }
+      return acc;
+    },
+    [] as (() => Promise<boolean>)[]
+  );
 
   const canEagerConnectNamespacesResult = await runSequentiallyWithoutFailure(
     canEagerConnectNamespacesPromises
   );
 
-  const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
-  canEagerConnectNamespacesResult.forEach((result, index) => {
-    if (!result.ok) {
-      failedNamespaces.push(namespaces[index]);
-    }
-  });
+  const failedNamespaces = namespaces.filter(
+    (_, index) => !canEagerConnectNamespacesResult[index].ok
+  );
 
   if (failedNamespaces.length > 0) {
     lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
