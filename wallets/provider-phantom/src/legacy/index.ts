@@ -12,15 +12,11 @@ import type {
   SignerFactory,
 } from 'rango-types';
 
-import {
-  BASE,
-  BTC,
-  COSMOS,
-  ETH,
-  POLYGON,
-  SOLANA,
-} from '@rango-dev/wallets-core/chains';
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { chains as cosmosChains } from '@rango-dev/wallets-core/namespaces/cosmos';
+import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
+import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
+import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
 import {
   chooseInstance,
   getSolanaAccounts,
@@ -123,25 +119,25 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
-          chains: [ETH, BASE, POLYGON],
+          chains: [evmChains.ethereum, evmChains.base, evmChains.polygon],
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
-          chains: [SOLANA],
+          chains: [solanaChains.solana],
         },
         {
           label: 'BTC',
           value: 'UTXO',
           id: 'BTC',
-          chains: [BTC],
+          chains: [utxoChains.bitcoin],
         },
         {
           label: 'Cosmos',
           value: 'Cosmos',
           id: 'COSMOS',
-          chains: [COSMOS],
+          chains: [cosmosChains.cosmos],
           unsupported: true,
         },
       ],

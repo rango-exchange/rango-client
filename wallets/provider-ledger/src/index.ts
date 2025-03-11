@@ -5,7 +5,8 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
-import { ETH, SOLANA } from '@rango-dev/wallets-core/chains';
+import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
+import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
@@ -141,13 +142,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
-          chains: [ETH],
+          chains: [evmChains.ethereum],
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
-          chains: [SOLANA],
+          chains: [solanaChains.solana],
         },
       ],
     },

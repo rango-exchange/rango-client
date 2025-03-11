@@ -1,6 +1,8 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
-import type { Chain } from '@rango-dev/wallets-core/dist/chains/types';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type {
+  Chain,
+  Namespace,
+} from '@rango-dev/wallets-core/namespaces/common';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;
