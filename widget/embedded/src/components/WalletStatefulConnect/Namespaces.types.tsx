@@ -14,7 +14,7 @@ export type NamespaceItemPropTypes = {
     label: string;
     id: string;
     value: Namespace;
-    networks: Chain[];
+    chains: Chain[];
     unsupported?: boolean;
   };
   checked: boolean;

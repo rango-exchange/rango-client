@@ -39,7 +39,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
     );
   }
 
-  const showSupportedChains = namespace.networks.length > 1;
+  const showSupportedChains = namespace.chains.length > 1;
   return (
     <NamespaceItemContainer onClick={onClick}>
       <NamespaceLogo
@@ -51,7 +51,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
           {namespace.label}
         </Typography>
         {showSupportedChains && (
-          <SupportedChainsList chains={namespace.networks} />
+          <SupportedChainsList chains={namespace.chains} />
         )}
       </NamespaceItemContent>
       {type === 'radio' ? (

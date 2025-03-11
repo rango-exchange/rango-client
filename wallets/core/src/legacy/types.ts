@@ -97,7 +97,7 @@ interface NeedsNamespace {
     id: string;
     value: Namespace;
     unsupported?: boolean;
-    networks: Chain[];
+    chains: Chain[];
   }[];
 }
 

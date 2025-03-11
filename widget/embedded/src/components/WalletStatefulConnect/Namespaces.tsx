@@ -76,8 +76,8 @@ export function Namespaces(props: PropTypes) {
       } else {
         const namespacesContainingPreselectChains = supportedNamespaces.filter(
           (namespace) =>
-            namespace.networks.some((network) =>
-              props.value.preselectChains?.includes(network.name)
+            namespace.chains.some((chain) =>
+              props.value.preselectChains?.includes(chain.name)
             )
         );
         setSelectedNamespaces(
