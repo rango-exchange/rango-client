@@ -1,0 +1,37 @@
+{
+  "name": "@rango-dev/signer-sui",
+  "version": "0.1.1-next.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-sui",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "rango-types": "^0.1.81"
+  },
+  "devDependencies": {
+    "@mysten/sui": "^1.21.2",
+    "@mysten/wallet-standard": "^0.13.26"
+  },
+  "peerDependencies": {
+    "@mysten/sui": "^1.21.2",
+    "@mysten/wallet-standard": "^0.13.26"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

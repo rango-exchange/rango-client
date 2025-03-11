@@ -8,6 +8,9 @@ import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
 export type {
   LegacyNetwork as Network,
   LegacyConnect as Connect,
@@ -121,8 +124,8 @@ export const namespaces: Record<
     title: 'Cosmos',
   },
   UTXO: {
+    title: 'UTXO',
     mainBlockchain: 'BTC',
-    title: 'Utxo',
   },
   Starknet: {
     title: 'Starknet',
@@ -135,6 +138,10 @@ export const namespaces: Record<
   Ton: {
     title: 'Ton',
     mainBlockchain: 'TON',
+  },
+  Sui: {
+    mainBlockchain: 'SUI',
+    title: 'Sui',
   },
 };
 
@@ -216,7 +223,7 @@ export interface WalletConfig {
 
 export type GetInstanceOptions = {
   network?: Network;
-  currentProvider: any;
+  currentProvider: InstanceType;
   meta: BlockchainMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
@@ -224,12 +231,14 @@ export type GetInstanceOptions = {
 };
 
 export type TryGetInstance =
-  | (() => any)
-  | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+  | (() => InstanceType)
+  | ((
+      options: Pick<GetInstanceOptions, 'force' | 'network'>
+    ) => Promise<InstanceType>);
 
 export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+  | (() => InstanceType)
+  | ((options: GetInstanceOptions) => Promise<InstanceType>);
 
 export type ProviderConnectResult = {
   accounts: string[];
@@ -243,4 +252,4 @@ export interface Wallet {
   info: Omit<WalletInfo, 'color'>;
 }
 
-export type Providers = { [type in WalletType]?: any };
+export type Providers = { [type in WalletType]?: InstanceType };

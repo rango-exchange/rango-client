@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/sui",
+  "type": "module",
+  "main": "../../dist/namespaces/sui/mod.js",
+  "module": "../../dist/namespaces/sui/mod.js",
+  "types": "../../dist/namespaces/sui/mod.d.ts",
+  "sideEffects": false
+}

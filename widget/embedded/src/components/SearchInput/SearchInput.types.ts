@@ -1,5 +1,6 @@
+import type { TextField } from '@rango-dev/ui';
 import type * as Stitches from '@stitches/react';
-import type React from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 
 export type PropTypes = {
   variant?: 'contained' | 'outlined' | 'ghost';
@@ -9,4 +10,5 @@ export type PropTypes = {
   value: string;
   setValue?: (value: string) => void;
   style?: Stitches.CSS;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'value'>;
+  suffix?: ReactElement;
+} & ComponentProps<typeof TextField>;

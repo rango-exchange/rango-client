@@ -26,6 +26,11 @@ export const Container = styled('div', {
         height: WIDGET_HEIGHT,
       },
     },
+    showBanner: {
+      true: {
+        overflow: 'visible',
+      },
+    },
   },
 });
 
@@ -54,4 +59,11 @@ export const Footer = styled('div', {
       visibility: 'hidden',
     },
   },
+});
+
+export const BannerContainer = styled('div', {
+  width: '100%',
+  position: 'absolute',
+  bottom: '-$10',
+  transform: 'translateY(100%)',
 });

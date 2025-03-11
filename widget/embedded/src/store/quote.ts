@@ -1,3 +1,4 @@
+import type { TokenData } from '../components/TokenList/TokenList.types';
 import type {
   BlockchainMeta,
   MetaResponse,
@@ -35,7 +36,9 @@ export const getUsdValue = (
 
 export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 
-export type SetTokenParams = { token: Token; meta: Meta } | { token: null };
+export type SetTokenParams =
+  | { token: TokenData; meta: { blockchains: BlockchainMeta[] } }
+  | { token: null };
 
 type SomeQuoteState = {
   quotes: MultiRouteResponse | null;
@@ -58,9 +61,9 @@ export interface QuoteState {
   inputUsdValue: BigNumber | null;
   outputAmount: BigNumber | null;
   outputUsdValue: BigNumber | null;
-  fromToken: Token | null;
+  fromToken: TokenData | null;
   sortStrategy: PreferenceType;
-  toToken: Token | null;
+  toToken: TokenData | null;
   quoteWalletsConfirmed: boolean;
   selectedWallets: Wallet[];
   quoteWarningsConfirmed: boolean;

@@ -31,7 +31,6 @@ export function useSyncUrlAndStore() {
   } = useQuoteStore();
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
   const isInRouterContext = useInRouterContext();
   const { updateIframe, updateCampaignMode } = useAppStore();
   const campaignMode = useAppStore().isInCampaignMode();
@@ -157,7 +156,6 @@ export function useSyncUrlAndStore() {
             token: fromToken,
             meta: {
               blockchains: blockchains,
-              tokens: tokens,
             },
           });
         }
@@ -168,7 +166,7 @@ export function useSyncUrlAndStore() {
         if (!!toToken) {
           setToToken({
             token: toToken,
-            meta: { blockchains: blockchains, tokens: tokens },
+            meta: { blockchains: blockchains },
           });
         }
       }

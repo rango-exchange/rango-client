@@ -6,6 +6,7 @@ import type {
 import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
+import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import { CAIP } from '@rango-dev/wallets-core/utils';
 import { Err, Ok } from 'ts-results';
 
@@ -23,6 +24,12 @@ export function mapCaipNamespaceToLegacyNetworkName(
 
   if (chainId.namespace.toLowerCase() === 'eip155') {
     return 'ETH';
+  } else if (chainId.reference === CAIP_BITCOIN_CHAIN_ID) {
+    return 'BTC';
+  }
+
+  if (chainId.namespace === 'move') {
+    return chainId.reference.toUpperCase();
   }
 
   return chainId.reference;

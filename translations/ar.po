@@ -8,7 +8,7 @@ msgstr ""
 "Language: ar\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-23 11:46\n"
+"PO-Revision-Date: 2025-03-11 11:00\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
@@ -19,13 +19,43 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "هذا الرمز ليس جزءًا من قائمة الرموز التي تم التحقق منها. يرجى التحقق من مصدره والتأكد من فهم جميع المخاطر المرتبطة به قبل المتابعة."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+msgid "Import Anyway"
+msgstr "استيراد على أية حال"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+msgid "Learn More"
+msgstr "يتعلم أكثر"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "خطأ في الشبكة"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "حدث خطأ أثناء استرداد بيانات الرمز."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "قد ينطوي هذا الرمز على مخاطر أمنية محتملة؛ لذا يجب استخدامه بحذر."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "تم تغيير كمية الإخراج بمقدار {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:375
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -33,7 +63,7 @@ msgstr "لم يتم العثور على نتائج"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:264
+#: widget/embedded/src/components/TokenList/TokenList.tsx:376
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -43,7 +73,7 @@ msgstr "حاول استخدام كلمات رئيسية مختلفة"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
 msgid "Select Chain"
 msgstr "اختر السلسلة"
 
@@ -133,18 +163,12 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "العنوان {destination} لا يتطابق مع نمط عنوان blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
 msgid "via"
 msgstr "عبر"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "لا يظهر هذا الرمز في قائمة الرموز النشطة. تأكد من أن هذا هو الرمز الذي تريد تداوله."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
 msgid "Import"
 msgstr "يستورد"
 
@@ -210,8 +234,8 @@ msgid "Swaps steps"
 msgstr "خطوات المبادلة"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "إعادة المحاولة"
 
@@ -581,7 +605,7 @@ msgstr "نعم، قم بإلغائه"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+#: widget/embedded/src/pages/CustomTokensPage.tsx:182
 msgid "No, Continue"
 msgstr "لا، استمر"
 
@@ -597,7 +621,7 @@ msgstr "هل أنت متأكد أنك تريد حذف هذه المبادلة؟"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+#: widget/embedded/src/pages/CustomTokensPage.tsx:172
 msgid "Yes, Delete it"
 msgstr "نعم، احذفه"
 
@@ -618,8 +642,8 @@ msgid "Network Changed"
 msgstr "تم تغيير الشبكة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:248
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
 msgid "Select Token"
 msgstr "حدد الرمز"
 
@@ -832,7 +856,7 @@ msgid "From"
 msgstr "من"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
 msgid "To"
 msgstr "ل"
 
@@ -896,69 +920,64 @@ msgid "Theme"
 msgstr "سمة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Duplicate Token"
 msgstr "رمز مكرر"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "The address you entered is duplicate, please enter a new address."
 msgstr "العنوان الذي أدخلته مكرر، يرجى إدخال عنوان جديد."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:61
 msgid "Token Already Exists"
 msgstr "الرمز موجود بالفعل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:62
 msgid "There's no need to add this token again because it already exists and is supported by us."
 msgstr "ليست هناك حاجة لإضافة هذا الرمز مرة أخرى لأنه موجود بالفعل ويدعمه فريقنا."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:69
 msgid "Token Not Found"
 msgstr "لم يتم العثور على الرمز"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:70
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 msgstr "عذراً، لم يتم العثور على رمز مميز على سلسلة {blockchain} بالعنوان المقدم. يرجى التأكد من إدخال عنوان الرمز المميز الصحيح."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
-msgid "Network Error"
-msgstr "خطأ في الشبكة"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
-#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
 msgstr "إضافة رمز مخصص"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
 msgid "Select chain"
 msgstr "اختر السلسلة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
 msgid "Enter Address"
 msgstr "أدخل العنوان"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
 msgid "Enter token address"
 msgstr "أدخل عنوان الرمز"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
 msgid "Failed Network, Please retry."
 msgstr "فشلت الشبكة، يرجى المحاولة مرة أخرى."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
 msgid "Add another custom token"
 msgstr "إضافة رمز مخصص آخر"
 
@@ -979,27 +998,27 @@ msgstr "لقد حصلت"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
 msgid "Search Token"
 msgstr "رمز البحث"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "No custom tokens"
 msgstr "لا توجد رموز مخصصة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "press the button to add your custom token"
 msgstr "اضغط على الزر لإضافة الرمز المخصص الخاص بك"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+#: widget/embedded/src/pages/CustomTokensPage.tsx:159
 msgid "Delete Custom Token"
 msgstr "حذف الرمز المخصص"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Are you sure you want to Delete this Token?"
 msgstr "هل أنت متأكد أنك تريد حذف هذا الرمز؟"
 
@@ -1085,17 +1104,17 @@ msgid "Search Chain"
 msgstr "سلسلة البحث"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:86
 msgid "Source"
 msgstr "مصدر"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:87
 msgid "Destination"
 msgstr "وجهة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:105
 msgid "Swap {type}"
 msgstr "مبادلة {type}"
 
@@ -1156,37 +1175,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "المطلوب: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:629
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for network fee"
 msgstr " مقابل رسوم الشبكة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for swap"
 msgstr " للتبادل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for input and network fee"
 msgstr " مقابل رسوم الإدخال والشبكة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "يحتاج ≈ {requiredAmount} {symbol}{reason}، ولكن لديك {currentAmount} {symbol} في محفظتك {blockchain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:688
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for connecting wallet"
 msgstr "في انتظار ربط المحفظة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:692
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for other running tasks to be finished"
 msgstr "في انتظار الانتهاء من المهام الأخرى الجارية"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:698
 msgid "Waiting for changing wallet network"
 msgstr "في انتظار تغيير شبكة المحفظة"
 
@@ -1262,7 +1281,7 @@ msgid "In progress"
 msgstr "في تَقَدم"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
 msgid "Waiting for bridge transaction"
 msgstr "في انتظار معاملة الجسر"
 
