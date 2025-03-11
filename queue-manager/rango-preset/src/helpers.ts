@@ -45,8 +45,11 @@ import {
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { TransactionType } from 'rango-sdk';
-import { PendingSwapNetworkStatus, SignerError } from 'rango-types';
+import {
+  PendingSwapNetworkStatus,
+  SignerError,
+  TransactionType,
+} from 'rango-types';
 
 import {
   DEFAULT_ERROR_CODE,
@@ -167,6 +170,7 @@ export const getCurrentStepTx = (
     tronApprovalTransaction,
     tronTransaction,
     tonTransaction,
+    moveTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -178,7 +182,8 @@ export const getCurrentStepTx = (
     starknetTransaction ||
     tronApprovalTransaction ||
     tronTransaction ||
-    tonTransaction
+    tonTransaction ||
+    moveTransaction
   );
 };
 
@@ -201,6 +206,7 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
   currentStep.tonTransaction = null;
+  currentStep.moveTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -236,6 +242,9 @@ export const setCurrentStepTx = (
       break;
     case TransactionType.TON:
       currentStep.tonTransaction = transaction;
+      break;
+    case TransactionType.MOVE:
+      currentStep.moveTransaction = transaction;
       break;
     default:
       ((x: never) => {
@@ -523,7 +532,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -733,6 +742,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
+    swap.wallets[step.moveTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
@@ -1036,6 +1046,8 @@ export async function signTransaction(
         type: StepEventType.FAILED,
         reason: extraMessage,
         reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -1096,6 +1108,8 @@ export async function signTransaction(
         type: eventType,
         reason: message,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
@@ -1177,6 +1191,8 @@ export async function signTransaction(
           type: StepEventType.FAILED,
           reason: extraMessage,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+          inputAmount: getLastFinishedStepInput(swap),
+          inputAmountUsd: getLastFinishedStepInputUsd(swap),
         },
         ...updateResult,
       });
@@ -1485,6 +1501,8 @@ export function cancelSwap(
       type: StepEventType.FAILED,
       reasonCode: 'USER_CANCEL',
       reason: updateResult.swap.extraMessage ?? undefined,
+      inputAmount: getLastFinishedStepInput(updateResult.swap),
+      inputAmountUsd: getLastFinishedStepInputUsd(updateResult.swap),
     },
 
     swap: updateResult.swap,
@@ -1555,26 +1573,41 @@ export function getSwapOutputUsd(swap: PendingSwap): string {
   );
 }
 
-export function getLastSuccessfulStepInput(swap: PendingSwap): string {
-  const lastSuccessfulStepIndex = swap.steps.findLastIndex(
-    (step) => step.status === 'success'
+export function getLastFinishedStep(
+  swap: PendingSwap
+): { step: PendingSwapStep; index: number } | undefined {
+  const FINISHED_STATUS: PendingSwap['steps'][number]['status'][] = [
+    'success',
+    'failed',
+  ];
+
+  const lastFinishedStepIndex = swap.steps.findLastIndex((step) =>
+    FINISHED_STATUS.includes(step.status)
   );
 
-  if (lastSuccessfulStepIndex < 0) {
+  return lastFinishedStepIndex < 0
+    ? undefined
+    : { step: swap.steps[lastFinishedStepIndex], index: lastFinishedStepIndex };
+}
+
+export function getLastFinishedStepInput(swap: PendingSwap): string {
+  const lastFinishedStep = getLastFinishedStep(swap);
+
+  if (!lastFinishedStep) {
     return '';
   }
 
-  return lastSuccessfulStepIndex === 0
+  return lastFinishedStep.index === 0
     ? swap.inputAmount
-    : swap.steps[lastSuccessfulStepIndex - 1].outputAmount ?? '';
+    : swap.steps[lastFinishedStep.index - 1].outputAmount ?? '';
 }
 
-export function getLastSuccessfulStepInputUsd(swap: PendingSwap): string {
-  const lastSuccessfulStep = getLastSuccessfulStep(swap.steps);
+export function getLastFinishedStepInputUsd(swap: PendingSwap): string {
+  const lastSuccessfulStep = getLastFinishedStep(swap);
 
   return getTokenAmountInUsd(
-    getLastSuccessfulStepInput(swap),
-    lastSuccessfulStep?.fromUsdPrice ?? ''
+    getLastFinishedStepInput(swap),
+    lastSuccessfulStep?.step?.fromUsdPrice ?? ''
   );
 }
 

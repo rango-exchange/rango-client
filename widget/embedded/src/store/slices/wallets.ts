@@ -1,6 +1,6 @@
 import type { AppStoreState } from './types';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { Token, WalletDetail } from 'rango-sdk';
+import type { Asset, Token, WalletDetail } from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';
 
@@ -24,6 +24,7 @@ import {
   extractAssetFromBalanceKey,
   removeBalanceFromAggregatedBalance,
   updateAggregatedBalanceStateForNewAccount,
+  updateBalancesWithNewPrices,
 } from '../utils/wallets';
 
 type WalletAddress = string;
@@ -124,6 +125,10 @@ export interface WalletsSlice {
     accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
   ) => Promise<void>;
+  fetchCustomTokensBalance: (params: {
+    tokens: Asset[];
+    connectedWallets: Wallet[];
+  }) => Promise<void>;
   getBalanceFor: (token: Token) => Balance | null;
   getBalances: () => BalanceState;
   getBalancesForWalletAddress: (address: string) => BalanceState;
@@ -259,6 +264,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
             return {
               address: account.address,
               chain: account.chain,
+              isContractWallet: account.isContractWallet,
               explorerUrl: null,
               walletType: account.walletType,
               selected: shouldMarkWalletAsSelected,
@@ -293,6 +299,98 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           };
         });
       }
+    },
+    fetchCustomTokensBalance: async (params) => {
+      const { tokens, connectedWallets } = params;
+
+      const tokensByBlockchain = tokens.reduce<{ [key: string]: Asset[] }>(
+        (acc, asset) => {
+          (acc[asset.blockchain] ||= []).push(asset);
+          return acc;
+        },
+        {}
+      );
+
+      const addedWallets = new Set<string>();
+
+      const tokensByWalletAddress = connectedWallets.reduce<{
+        [key: string]: Asset[];
+      }>((acc, wallet) => {
+        const key = `${wallet.address}-${wallet.chain}`;
+        if (addedWallets.has(key)) {
+          return acc;
+        }
+
+        addedWallets.add(key);
+        if (tokensByBlockchain[wallet.chain]) {
+          if (!acc[wallet.address]) {
+            acc[wallet.address] = [];
+          }
+          acc[wallet.address].push(...tokensByBlockchain[wallet.chain]);
+        }
+        return acc;
+      }, {});
+
+      Object.entries(tokensByWalletAddress).forEach(
+        async ([walletAddress, tokens]) => {
+          try {
+            const { balances } = await httpService().getMultipleTokenBalance({
+              assets: tokens.map(({ symbol, address, blockchain }) => ({
+                symbol,
+                address,
+                blockchain,
+              })),
+              walletAddress,
+            });
+
+            if (balances) {
+              let nextBalances: BalanceState = get()._balances;
+              let nextAggregatedBalances: AggregatedBalanceState =
+                get()._aggregatedBalances;
+
+              balances.forEach((balance) => {
+                if (parseFloat(balance.amount.amount) === 0) {
+                  return;
+                }
+
+                const WalletDetail = {
+                  blockChain: balance.asset.blockchain,
+                  balances: [balance],
+                  address: walletAddress,
+                };
+
+                updateBalancesWithNewPrices(WalletDetail, nextBalances, get);
+
+                const balancesForWallet = createBalanceStateForNewAccount(
+                  WalletDetail,
+                  get
+                );
+
+                nextAggregatedBalances =
+                  updateAggregatedBalanceStateForNewAccount(
+                    nextAggregatedBalances,
+                    balancesForWallet
+                  );
+
+                nextBalances = {
+                  ...nextBalances,
+                  ...balancesForWallet,
+                };
+              });
+
+              set((state) => ({
+                _balances: {
+                  ...state._balances,
+                  ...nextBalances,
+                },
+                _aggregatedBalances: nextAggregatedBalances,
+              }));
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      );
     },
     setWalletsAsSelected: (wallets) => {
       const nextConnectedWalletsWithUpdatedSelectedStatus =
@@ -331,6 +429,10 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       get().addConnectedWallet(accounts, namespace);
 
       void get().fetchBalances(accounts);
+      void get().fetchCustomTokensBalance({
+        tokens: get().customTokens(),
+        connectedWallets: accounts,
+      });
     },
     removeBalancesForWallet: (walletType, options) => {
       let walletsNeedsToBeRemoved = get().connectedWallets.filter(
@@ -561,13 +663,15 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           }
         }
 
-        let nextBalances: BalanceState = {};
+        let nextBalances: BalanceState = get()._balances;
         let nextAggregatedBalances: AggregatedBalanceState =
           get()._aggregatedBalances;
         walletsDetails.forEach((wallet) => {
           if (wallet.failed) {
             return;
           }
+
+          updateBalancesWithNewPrices(wallet, nextBalances, get);
 
           // Remove old balances for current wallet and blockchain
           get().removeBalancesForWallet(walletType, {

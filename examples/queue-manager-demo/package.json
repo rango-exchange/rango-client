@@ -16,18 +16,18 @@
   },
   "devDependencies": {
     "process": "^0.11.10",
-    "rango-sdk": "^0.1.62"
+    "rango-sdk": "^0.1.64"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.43.0",
-    "@rango-dev/provider-xdefi": "^0.43.0",
-    "@rango-dev/queue-manager-rango-preset": "^0.43.0",
-    "@rango-dev/queue-manager-react": "^0.28.0",
-    "@rango-dev/wallets-react": "^0.28.0",
-    "@rango-dev/wallets-shared": "^0.42.0",
+    "@rango-dev/provider-all": "^0.43.1-next.5",
+    "@rango-dev/provider-xdefi": "^0.43.1-next.4",
+    "@rango-dev/queue-manager-rango-preset": "^0.43.1-next.5",
+    "@rango-dev/queue-manager-react": "^0.28.1-next.0",
+    "@rango-dev/wallets-react": "^0.28.1-next.4",
+    "@rango-dev/wallets-shared": "^0.42.1-next.4",
     "bignumber.js": "^9.1.1",
     "ethers": "^6.13.2",
-    "rango-sdk-basic": "^0.1.57",
-    "rango-types": "^0.1.78"
+    "rango-sdk-basic": "^0.1.64",
+    "rango-types": "^0.1.81"
   }
 }

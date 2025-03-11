@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-23 11:46\n"
+"PO-Revision-Date: 2025-03-11 11:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,13 +19,43 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "此令牌不屬於我們驗證的令牌清單的一部分。請核實其來源並確保在繼續之前了解所有相關風險。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+msgid "Import Anyway"
+msgstr "仍然導入"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+msgid "Learn More"
+msgstr "了解更多"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "網路錯誤"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "檢索令牌資料時發生錯誤。"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "該令牌可能涉及潛在的安全風險；謹慎行事。"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "輸出量改變了 {percentageChange}% (${usdValueChange})。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:375
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -33,7 +63,7 @@ msgstr "沒有找到結果"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:264
+#: widget/embedded/src/components/TokenList/TokenList.tsx:376
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -43,7 +73,7 @@ msgstr "嘗試使用不同的關鍵字"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
 msgid "Select Chain"
 msgstr "選擇鏈條"
 
@@ -133,18 +163,12 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "位址 {destination} 與區塊鏈位址模式不符。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
 msgid "via"
 msgstr "透過"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "此令牌不會出現在活動令牌清單中。確保這是您要交易的代幣。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
 msgid "Import"
 msgstr "進口"
 
@@ -210,8 +234,8 @@ msgid "Swaps steps"
 msgstr "交換步驟"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "重試"
 
@@ -581,7 +605,7 @@ msgstr "是的，取消它"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+#: widget/embedded/src/pages/CustomTokensPage.tsx:182
 msgid "No, Continue"
 msgstr "不，繼續"
 
@@ -597,7 +621,7 @@ msgstr "您確定要刪除此交換嗎？"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+#: widget/embedded/src/pages/CustomTokensPage.tsx:172
 msgid "Yes, Delete it"
 msgstr "是的，刪除它"
 
@@ -618,8 +642,8 @@ msgid "Network Changed"
 msgstr "網路已更改"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:248
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
 msgid "Select Token"
 msgstr "選擇代幣"
 
@@ -832,7 +856,7 @@ msgid "From"
 msgstr "從"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
 msgid "To"
 msgstr "到"
 
@@ -896,69 +920,64 @@ msgid "Theme"
 msgstr "主題"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Duplicate Token"
 msgstr "重複令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "The address you entered is duplicate, please enter a new address."
 msgstr "您輸入的地址重複，請輸入新地址。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:61
 msgid "Token Already Exists"
 msgstr "令牌已存在"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:62
 msgid "There's no need to add this token again because it already exists and is supported by us."
 msgstr "無需再次添加此令牌，因為它已經存在並且受到我們的支持。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:69
 msgid "Token Not Found"
 msgstr "未找到令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:70
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 msgstr "抱歉，在 {blockchain} 鏈上找不到具有所提供地址的代幣。請確保您輸入了正確的代幣地址。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
-msgid "Network Error"
-msgstr "網路錯誤"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
-#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
 msgstr "新增自訂令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
 msgid "Select chain"
 msgstr "選擇鏈條"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
 msgid "Enter Address"
 msgstr "輸入地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
 msgid "Enter token address"
 msgstr "輸入代幣地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
 msgid "Failed Network, Please retry."
 msgstr "網路故障，請重試。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
 msgid "Add another custom token"
 msgstr "新增另一個自訂令牌"
 
@@ -979,27 +998,27 @@ msgstr "你得到"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
 msgid "Search Token"
 msgstr "搜尋令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "No custom tokens"
 msgstr "沒有自訂令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "press the button to add your custom token"
 msgstr "按下按鈕新增您的自訂令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+#: widget/embedded/src/pages/CustomTokensPage.tsx:159
 msgid "Delete Custom Token"
 msgstr "刪除自訂令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Are you sure you want to Delete this Token?"
 msgstr "您確定要刪除此令牌嗎？"
 
@@ -1085,17 +1104,17 @@ msgid "Search Chain"
 msgstr "搜尋鏈"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:86
 msgid "Source"
 msgstr "來源"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:87
 msgid "Destination"
 msgstr "目的地"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:105
 msgid "Swap {type}"
 msgstr "交換 {type}"
 
@@ -1156,37 +1175,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "必填：< {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:629
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for network fee"
 msgstr " 收取網路費"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for swap"
 msgstr " 用於交換"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for input and network fee"
 msgstr " 輸入費和網路費"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "需要 ≈ {requiredAmount} {symbol}{reason}，但你的 {blockchain} 錢包裡有 {currentAmount} {symbol}。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:688
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for connecting wallet"
 msgstr "等待連接錢包"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:692
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for other running tasks to be finished"
 msgstr "等待其他正在運行的任務完成"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:698
 msgid "Waiting for changing wallet network"
 msgstr "等待更改錢包網絡"
 
@@ -1262,7 +1281,7 @@ msgid "In progress"
 msgstr "進行中"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
 msgid "Waiting for bridge transaction"
 msgstr "等待橋接交易"
 

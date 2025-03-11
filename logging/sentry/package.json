@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/logging-sentry",
-  "version": "0.9.0",
+  "version": "0.9.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "dependencies": {
-    "@rango-dev/logging-types": "^0.7.0"
+    "@rango-dev/logging-types": "^0.7.1-next.0"
   },
   "devDependencies": {
     "@sentry/browser": "^7.119.1"

@@ -256,7 +256,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       wallet.getAll().forEach((namespace) => {
-        return namespace.disconnect();
+        if (namespace.state()[0]().connected) {
+          return namespace.disconnect();
+        }
       });
 
       if (params.autoConnect) {

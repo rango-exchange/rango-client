@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-23 11:46\n"
+"PO-Revision-Date: 2025-03-11 11:00\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,13 +19,43 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "このトークンは、検証済みトークン リストに含まれていません。続行する前に、そのソースを確認し、関連するすべてのリスクを理解してください。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+msgid "Import Anyway"
+msgstr "とにかくインポート"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+msgid "Learn More"
+msgstr "もっと詳しく知る"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "ネットワークエラー"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "トークン データの取得中にエラーが発生しました。"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "このトークンには潜在的なセキュリティリスクが伴う可能性がありますので、注意して進めてください。"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "出力量が {percentageChange}% (${usdValueChange}) 変化しました。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:375
 #: widget/embedded/src/pages/HistoryPage.tsx:186
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
 msgid "No results found"
@@ -33,7 +63,7 @@ msgstr "結果が見つかりませんでした"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:264
+#: widget/embedded/src/components/TokenList/TokenList.tsx:376
 #: widget/embedded/src/pages/HistoryPage.tsx:193
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
 msgid "Try using different keywords"
@@ -43,7 +73,7 @@ msgstr "別のキーワードを使用してみてください"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:61
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
 msgid "Select Chain"
 msgstr "チェーンを選択"
 
@@ -133,18 +163,12 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "アドレス {destination} はブロックチェーンアドレスパターンと一致しません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:59
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
 msgid "via"
 msgstr "経由:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:74
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "このトークンはアクティブなトークンリストに表示されません。これが取引したいトークンであることを確認してください。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:89
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:164
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
 msgid "Import"
 msgstr "インポート"
 
@@ -210,8 +234,8 @@ msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:191
 msgid "Retry"
 msgstr "再試行する"
 
@@ -581,7 +605,7 @@ msgstr "はい、キャンセルします"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:181
+#: widget/embedded/src/pages/CustomTokensPage.tsx:182
 msgid "No, Continue"
 msgstr "いいえ、続行します"
 
@@ -597,7 +621,7 @@ msgstr "このスワップを削除してもよろしいですか？"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:171
+#: widget/embedded/src/pages/CustomTokensPage.tsx:172
 msgid "Yes, Delete it"
 msgstr "はい、削除します"
 
@@ -618,8 +642,8 @@ msgid "Network Changed"
 msgstr "ネットワークを変更しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:248
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
 msgid "Select Token"
 msgstr "トークンを選択"
 
@@ -832,7 +856,7 @@ msgid "From"
 msgstr "差出人:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:131
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
 msgid "To"
 msgstr "終了日"
 
@@ -896,69 +920,64 @@ msgid "Theme"
 msgstr "テーマ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:39
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
 msgid "Duplicate Token"
 msgstr "Duplicate Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:40
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
 msgid "The address you entered is duplicate, please enter a new address."
 msgstr "入力したアドレスが重複しています。新しいアドレスを入力してください。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:46
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:61
 msgid "Token Already Exists"
 msgstr "トークンは既に存在します"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:47
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:62
 msgid "There's no need to add this token again because it already exists and is supported by us."
 msgstr "すでに存在し、私たちがサポートしているため、このトークンをもう一度追加する必要はありません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:53
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:69
 msgid "Token Not Found"
 msgstr "トークンが見つかりません"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:54
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:70
 msgid "Sorry, no token was found on {blockchain} chain with the provided address. please make sure you have entered the right token address."
 msgstr "申し訳ありませんが、指定されたアドレスの {blockchain} チェーンでトークンが見つかりませんでした。正しいトークンアドレスを入力していることを確認してください。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:78
-msgid "Network Error"
-msgstr "ネットワークエラー"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:109
-#: widget/embedded/src/pages/CustomTokensPage.tsx:149
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
 msgstr "カスタムトークンを追加"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:127
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:128
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
 msgid "Select chain"
 msgstr "チェーンを選択"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
 msgid "Enter Address"
 msgstr "住所を入力"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:139
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
 msgid "Enter token address"
 msgstr "トークンアドレスを入力してください"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:176
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
 msgid "Failed Network, Please retry."
 msgstr "ネットワークに失敗しました。再試行してください。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:192
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
 msgid "Add another custom token"
 msgstr "別のカスタムトークンを追加"
 
@@ -979,27 +998,27 @@ msgstr "あなたは"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:89
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
 msgid "Search Token"
 msgstr "トークンを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:134
+#: widget/embedded/src/pages/CustomTokensPage.tsx:135
 msgid "No custom tokens"
 msgstr "カスタムトークンはありません"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "press the button to add your custom token"
 msgstr "カスタムトークンを追加するにはボタンを押してください"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:158
+#: widget/embedded/src/pages/CustomTokensPage.tsx:159
 msgid "Delete Custom Token"
 msgstr "カスタムトークンを削除"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:160
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Are you sure you want to Delete this Token?"
 msgstr "このトークンを削除してもよろしいですか？"
 
@@ -1085,17 +1104,17 @@ msgid "Search Chain"
 msgstr "検索チェーン"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:66
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:86
 msgid "Source"
 msgstr "ソース"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:87
 msgid "Destination"
 msgstr "保存先"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:105
 msgid "Swap {type}"
 msgstr "{type} を入れ替え"
 
@@ -1156,37 +1175,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "必須: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:629
+#: widget/embedded/src/utils/swap.ts:632
 msgid " for network fee"
 msgstr " ネットワーク料金で"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for swap"
 msgstr " スワップ用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for input and network fee"
 msgstr " 入力とネットワーク料金について"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "必要額は ≈ {requiredAmount} {symbol}{reason}ですが、あなたの {blockchain} ウォレットには {currentAmount} {symbol} があります。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:688
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for connecting wallet"
 msgstr "ウォレットの接続を待っています"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:692
+#: widget/embedded/src/utils/swap.ts:695
 msgid "Waiting for other running tasks to be finished"
 msgstr "他の実行中のタスクが完了するのを待っています"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:698
 msgid "Waiting for changing wallet network"
 msgstr "ウォレットネットワークの変更を待っています"
 
@@ -1262,7 +1281,7 @@ msgid "In progress"
 msgstr "進行中"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
 msgid "Waiting for bridge transaction"
 msgstr "ブリッジトランザクションを待っています"
 

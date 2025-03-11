@@ -21,7 +21,7 @@ export const info: ProviderInfo = {
     {
       name: 'detached',
       // if you are adding a new namespace, don't forget to also update `getWalletInfo`
-      value: ['Solana', 'EVM'],
+      value: ['Solana', 'EVM', 'UTXO'],
     },
   ],
 };
