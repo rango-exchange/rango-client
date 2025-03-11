@@ -118,40 +118,58 @@ async function eagerConnect(
 /**
  * Run `.canEagerConnect` action on some selected namespaces of a wallet.
  */
-async function getNamespacesAvailableForEagerConnect(
+async function separateAvailableNamespacesForEagerConnect(
   namespaces: LegacyNamespaceInputForConnect[],
   wallet: Provider
-) {
-  const canEagerConnectNamespacesPromises = namespaces.reduce(
-    (acc, namespace) => {
-      const namespaceInstance = wallet.findByNamespace(namespace.namespace);
-      if (namespaceInstance) {
-        acc.push(async () => await namespaceInstance.canEagerConnect());
+): Promise<
+  [LegacyNamespaceInputForConnect[], LegacyNamespaceInputForConnect[]]
+> {
+  const { foundNamespaces, unavailableNamespaces, canEagerConnectPromises } =
+    namespaces.reduce(
+      (acc, namespace) => {
+        const namespaceInstance = wallet.findByNamespace(namespace.namespace);
+        if (namespaceInstance) {
+          acc.foundNamespaces.push(namespace);
+          acc.canEagerConnectPromises.push(
+            async () => await namespaceInstance.canEagerConnect()
+          );
+        } else {
+          acc.unavailableNamespaces.push(namespace);
+        }
+
+        return acc;
+      },
+      {
+        foundNamespaces: [],
+        unavailableNamespaces: [],
+        canEagerConnectPromises: [],
+      } as {
+        foundNamespaces: LegacyNamespaceInputForConnect[];
+        unavailableNamespaces: LegacyNamespaceInputForConnect[];
+        canEagerConnectPromises: (() => Promise<boolean>)[];
       }
-      return acc;
-    },
-    [] as (() => Promise<boolean>)[]
-  );
-
-  const canEagerConnectNamespacesResult = await runSequentiallyWithoutFailure(
-    canEagerConnectNamespacesPromises
-  );
-
-  const failedNamespaces = namespaces.filter(
-    (_, index) => !canEagerConnectNamespacesResult[index].ok
-  );
-
-  if (failedNamespaces.length > 0) {
-    lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
-      wallet.id,
-      failedNamespaces.map((namespace) => namespace.namespace)
     );
-  }
 
-  const resolvedNamespaces = namespaces.filter(
-    (_, index) => !!canEagerConnectNamespacesResult[index]
+  const canEagerConnectResults = await runSequentiallyWithoutFailure(
+    canEagerConnectPromises
   );
-  return resolvedNamespaces;
+
+  const [availableNamespaces, failedNamespaces] = foundNamespaces.reduce(
+    ([available, failed], namespace, index) => {
+      if (canEagerConnectResults[index].ok) {
+        available.push(namespace);
+      } else {
+        failed.push(namespace);
+      }
+      return [available, failed];
+    },
+    [[], []] as [
+      LegacyNamespaceInputForConnect[],
+      LegacyNamespaceInputForConnect[]
+    ]
+  );
+
+  return [availableNamespaces, [...unavailableNamespaces, ...failedNamespaces]];
 }
 
 /*
@@ -167,9 +185,9 @@ export async function autoConnect(deps: {
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
   const walletIds = Object.keys(lastConnectedWallets);
 
-  const walletsToRemoveFromPersistance: string[] = [];
+  const walletsToRemoveFromPersistence: string[] = [];
 
-  if (walletIds.length && Object.keys(lastConnectedWallets).length > 0) {
+  if (walletIds.length) {
     const eagerConnectQueue: Promise<unknown>[] = [];
 
     // Run `.connect` if `.canEagerConnect` returns `true`.
@@ -179,7 +197,7 @@ export async function autoConnect(deps: {
           'Trying to run auto connect for a wallet which is not included in config. Desired wallet:',
           providerName
         );
-        walletsToRemoveFromPersistance.push(providerName);
+        walletsToRemoveFromPersistence.push(providerName);
         return;
       }
 
@@ -192,32 +210,37 @@ export async function autoConnect(deps: {
         }));
 
       if (!lastConnectedNamespaces.length || !wallet) {
-        walletsToRemoveFromPersistance.push(providerName);
+        walletsToRemoveFromPersistence.push(providerName);
         return;
       }
 
-      const namespacesAvailableForEagerConnect =
-        await getNamespacesAvailableForEagerConnect(
+      const [availableNamespaces, unavailableNamespaces] =
+        await separateAvailableNamespacesForEagerConnect(
           lastConnectedNamespaces,
           wallet
         );
 
-      if (!namespacesAvailableForEagerConnect.length) {
-        walletsToRemoveFromPersistance.push(providerName);
+      if (!availableNamespaces.length) {
+        walletsToRemoveFromPersistence.push(providerName);
         return;
+      } else if (unavailableNamespaces.length) {
+        lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+          wallet.id,
+          unavailableNamespaces.map((namespace) => namespace.namespace)
+        );
       }
       eagerConnectQueue.push(
-        eagerConnect(providerName, namespacesAvailableForEagerConnect, {
+        eagerConnect(providerName, availableNamespaces, {
           allBlockChains,
           getHub,
         }).catch((error) => console.warn(error))
       );
     });
 
-    await Promise.all(eagerConnectQueue);
-
     lastConnectedWalletsFromStorage.removeWallets(
-      walletsToRemoveFromPersistance
+      walletsToRemoveFromPersistence
     );
+
+    await Promise.all(eagerConnectQueue);
   }
 }
