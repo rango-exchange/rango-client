@@ -150,7 +150,7 @@ async function tryRunCanEagerConnect(
 
   // 3. Separate success and failed namespaces based on canEagerConnect result
   foundNamespaces.forEach((namespace, index) => {
-    if (canEagerConnectResults[index].ok) {
+    if (canEagerConnectResults[index].ok && canEagerConnectResults[index].val) {
       successNamespaces.push(namespace);
     } else {
       failedNamespaces.push(namespace);
