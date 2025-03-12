@@ -118,58 +118,46 @@ async function eagerConnect(
 /**
  * Run `.canEagerConnect` action on some selected namespaces of a wallet.
  */
-async function separateAvailableNamespacesForEagerConnect(
+async function tryRunCanEagerConnect(
   namespaces: LegacyNamespaceInputForConnect[],
   wallet: Provider
-): Promise<
-  [LegacyNamespaceInputForConnect[], LegacyNamespaceInputForConnect[]]
-> {
-  const { foundNamespaces, unavailableNamespaces, canEagerConnectPromises } =
-    namespaces.reduce(
-      (acc, namespace) => {
-        const namespaceInstance = wallet.findByNamespace(namespace.namespace);
-        if (namespaceInstance) {
-          acc.foundNamespaces.push(namespace);
-          acc.canEagerConnectPromises.push(
-            async () => await namespaceInstance.canEagerConnect()
-          );
-        } else {
-          acc.unavailableNamespaces.push(namespace);
-        }
+): Promise<{
+  successNamespaces: LegacyNamespaceInputForConnect[];
+  failedNamespaces: LegacyNamespaceInputForConnect[];
+}> {
+  const foundNamespaces: LegacyNamespaceInputForConnect[] = [];
+  const successNamespaces: LegacyNamespaceInputForConnect[] = [];
+  const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
+  const canEagerConnectPromises: (() => Promise<boolean>)[] = [];
 
-        return acc;
-      },
-      {
-        foundNamespaces: [],
-        unavailableNamespaces: [],
-        canEagerConnectPromises: [],
-      } as {
-        foundNamespaces: LegacyNamespaceInputForConnect[];
-        unavailableNamespaces: LegacyNamespaceInputForConnect[];
-        canEagerConnectPromises: (() => Promise<boolean>)[];
-      }
-    );
+  // 1. Try find namespace instances and create canEagerConnect promises
+  namespaces.forEach((namespace) => {
+    const namespaceInstance = wallet.findByNamespace(namespace.namespace);
+    if (namespaceInstance) {
+      foundNamespaces.push(namespace);
+      canEagerConnectPromises.push(
+        async () => await namespaceInstance.canEagerConnect()
+      );
+    } else {
+      failedNamespaces.push(namespace);
+    }
+  });
 
+  // 2. Run canEagerConnect sequentially on namespaces
   const canEagerConnectResults = await runSequentiallyWithoutFailure(
     canEagerConnectPromises
   );
 
-  const [availableNamespaces, failedNamespaces] = foundNamespaces.reduce(
-    ([available, failed], namespace, index) => {
-      if (canEagerConnectResults[index].ok) {
-        available.push(namespace);
-      } else {
-        failed.push(namespace);
-      }
-      return [available, failed];
-    },
-    [[], []] as [
-      LegacyNamespaceInputForConnect[],
-      LegacyNamespaceInputForConnect[]
-    ]
-  );
+  // 3. Separate success and failed namespaces based on canEagerConnect result
+  foundNamespaces.forEach((namespace, index) => {
+    if (canEagerConnectResults[index].ok) {
+      successNamespaces.push(namespace);
+    } else {
+      failedNamespaces.push(namespace);
+    }
+  });
 
-  return [availableNamespaces, [...unavailableNamespaces, ...failedNamespaces]];
+  return { successNamespaces, failedNamespaces };
 }
 
 /*
@@ -214,23 +202,20 @@ export async function autoConnect(deps: {
         return;
       }
 
-      const [availableNamespaces, unavailableNamespaces] =
-        await separateAvailableNamespacesForEagerConnect(
-          lastConnectedNamespaces,
-          wallet
-        );
+      const { successNamespaces, failedNamespaces } =
+        await tryRunCanEagerConnect(lastConnectedNamespaces, wallet);
 
-      if (!availableNamespaces.length) {
+      if (!successNamespaces.length) {
         walletsToRemoveFromPersistence.push(providerName);
         return;
-      } else if (unavailableNamespaces.length) {
+      } else if (failedNamespaces.length) {
         lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
           wallet.id,
-          unavailableNamespaces.map((namespace) => namespace.namespace)
+          failedNamespaces.map((namespace) => namespace.namespace)
         );
       }
       eagerConnectQueue.push(
-        eagerConnect(providerName, availableNamespaces, {
+        eagerConnect(providerName, successNamespaces, {
           allBlockChains,
           getHub,
         }).catch((error) => console.warn(error))
