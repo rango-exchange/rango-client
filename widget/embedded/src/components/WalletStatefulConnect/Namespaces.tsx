@@ -69,21 +69,21 @@ export function Namespaces(props: PropTypes) {
   useEffect(() => {
     // Initially select supported and required namespaces
     if (!singleNamespace && supportedNamespaces) {
-      if (props.value.defaultSelectedChains) {
-        setSelectedNamespaces(
-          supportedNamespaces.map((namespace) => namespace.value)
-        );
-      } else {
-        const namespacesContainingPreselectChains = supportedNamespaces.filter(
-          (namespace) =>
+      if (!!props.value.defaultSelectedChains) {
+        const namespacesContainingDefaultSelectedChains =
+          supportedNamespaces.filter((namespace) =>
             namespace.chains.some((chain) =>
               props.value.defaultSelectedChains?.includes(chain.name)
             )
-        );
+          );
         setSelectedNamespaces(
-          namespacesContainingPreselectChains.map(
+          namespacesContainingDefaultSelectedChains.map(
             (namespace) => namespace.value
           )
+        );
+      } else {
+        setSelectedNamespaces(
+          supportedNamespaces.map((namespace) => namespace.value)
         );
       }
     }
