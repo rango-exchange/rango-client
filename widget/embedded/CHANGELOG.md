@@ -1,3 +1,19 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.40.1...widget-embedded@0.41.0) (2025-03-11)
+
+
+### Bug Fixes
+
+* avoid problematic routes for contract wallets ([0c82a83](https://github.com/rango-exchange/rango-client/commit/0c82a83008de6fe22f3685f1d22ab54bd59e5362))
+
+
+### Features
+
+* add functionality to display a banner at the bottom of the swap box ([8f4893e](https://github.com/rango-exchange/rango-client/commit/8f4893e26d383552bb5b3cb6188c9b12206abb12))
+* fetch balance for custom tokens ([1676730](https://github.com/rango-exchange/rango-client/commit/1676730960ef56374ad632a95011b8da0a102792))
+* implement search functionality for custom tokens ([d479cc6](https://github.com/rango-exchange/rango-client/commit/d479cc64ab122a65f87a8ee46e8c27dabe7a71c1))
+
+
+
 ## [0.40.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.40.0...widget-embedded@0.40.1) (2025-02-25)
 
 
