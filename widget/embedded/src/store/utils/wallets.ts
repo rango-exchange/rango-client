@@ -1,17 +1,20 @@
 import type { Balance } from '../../types';
 import type { AppStoreState } from '../app';
+import type { FindToken } from '../slices/data';
+import type {
+  AggregatedBalanceState,
+  AssetKey,
+  BalanceKey,
+  BalanceState,
+  ConnectedWallet,
+} from '../slices/wallets';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 
 import { ZERO } from '../../constants/numbers';
 import { BALANCE_SEPARATOR } from '../../constants/wallets';
-import {
-  type AggregatedBalanceState,
-  type AssetKey,
-  type BalanceKey,
-  type BalanceState,
-} from '../slices/wallets';
 
 /**
  * Note: We need to use `symbol` as well since native coins and cosmos blockchains don't have `address`
@@ -44,16 +47,19 @@ export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
   };
 }
 
-export function updateBalancesWithNewPrices(
+export function computeNextBalancesWithNewPrices(
+  paritalCurrentState: {
+    findToken: FindToken;
+    _aggregatedBalances: AggregatedBalanceState;
+  },
   wallet: Omit<WalletDetail, 'failed' | 'explorerUrl'>,
-  balanceState: BalanceState,
-  store: () => AppStoreState
+  balanceState: BalanceState
 ): BalanceState {
   wallet.balances?.forEach((balance) => {
     const usdPrice =
-      balance.price ?? store().findToken(balance.asset)?.usdPrice;
+      balance.price ?? paritalCurrentState.findToken(balance.asset)?.usdPrice;
     const balancesToUpdate =
-      store()._aggregatedBalances[createAssetKey(balance.asset)];
+      paritalCurrentState._aggregatedBalances[createAssetKey(balance.asset)];
 
     balancesToUpdate?.forEach((balanceKey) => {
       if (balanceState[balanceKey]) {
@@ -138,4 +144,90 @@ export function removeBalanceFromAggregatedBalance(
   }
 
   return aggregatedBalances;
+}
+
+/**
+ * We made a util to remvoe balances to be able batch with other state updates.
+ */
+export function computeNextStateAfterWalletBalanceRemoval(
+  paritalCurrentState: {
+    _balances: BalanceState;
+    _aggregatedBalances: AggregatedBalanceState;
+    connectedWallets: ConnectedWallet[];
+  },
+  walletType: string,
+  options?: {
+    chains?: string[];
+    namespaces?: Namespace[];
+  }
+) {
+  let walletsNeedsToBeRemoved = paritalCurrentState.connectedWallets.filter(
+    (connectedWallet) => connectedWallet.walletType === walletType
+  );
+
+  /*
+   * We only need to delete balances where there is no connected wallets with same chain and address for that balance.
+   * Consider both Metamask and Solana having support for `0xblahblahblahblah` for Ethereum.
+   * If Phantom is disconnecting, we should keep the balance since Metamask has access to same address yet.
+   * So we only delete balance when there is no connected wallet that has access to that specific chain and address.
+   */
+  paritalCurrentState.connectedWallets.forEach((connectedWallet) => {
+    if (connectedWallet.walletType !== walletType) {
+      walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+        const isAnotherWalletHasSameAddressAndChain =
+          wallet.chain === connectedWallet.chain &&
+          wallet.address === connectedWallet.address;
+        return !isAnotherWalletHasSameAddressAndChain;
+      });
+    }
+  });
+
+  if (!!options?.chains && options.chains.length > 0) {
+    walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+      return options.chains?.includes(wallet.chain);
+    });
+  }
+
+  if (!!options?.namespaces && options.namespaces.length > 0) {
+    walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
+      if (wallet.namespace) {
+        return options.namespaces?.includes(wallet.namespace);
+      }
+      return false;
+    });
+  }
+
+  const nextBalancesState: BalanceState = {};
+  let nextAggregatedBalanceState: AggregatedBalanceState =
+    paritalCurrentState._aggregatedBalances;
+  const currentBalancesState = paritalCurrentState._balances;
+  const balanceKeys = Object.keys(currentBalancesState) as BalanceKey[];
+
+  balanceKeys.forEach((key) => {
+    const asset = extractAssetFromBalanceKey(key);
+
+    const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
+      (wallet) =>
+        createBalanceKey(wallet.address, {
+          address: asset.address,
+          blockchain: wallet.chain,
+          symbol: asset.symbol,
+        }) === key
+    );
+
+    // if a balance should be removed, we need to remove its caches in _aggregatedBalances as wel.
+    if (shouldBalanceBeRemoved) {
+      nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
+        nextAggregatedBalanceState,
+        key
+      );
+    } else {
+      nextBalancesState[key] = currentBalancesState[key];
+    }
+  });
+
+  return {
+    _balances: nextBalancesState,
+    _aggregatedBalances: nextAggregatedBalanceState,
+  };
 }
