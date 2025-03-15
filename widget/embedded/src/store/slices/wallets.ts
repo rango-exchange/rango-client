@@ -641,7 +641,8 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         response = await httpService().getWalletsDetails(addressesToFetch);
       } catch (e) {
         get().setConnectedWalletHasError(accounts);
-        throw new Error(`Request for fetching balances failed.`, { cause: e });
+        console.error(`Request for fetching balances failed. cause: ${e}`);
+        return;
       }
 
       const walletsDetails = response.wallets;
@@ -720,8 +721,8 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         get().setConnectedWalletRetrievedData(accounts, walletsDetails);
       } else {
         get().setConnectedWalletHasError(accounts);
-        throw new Error(
-          `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
+        console.error(
+          "We couldn't fetch your account balances. Seem there is no information on blockchain for them yet."
         );
       }
     },
