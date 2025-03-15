@@ -18,13 +18,12 @@ import { memoizedResult } from '../../utils/common';
 import { isAccountAndWalletMatched } from '../../utils/wallets';
 import { keepLastUpdated } from '../middlewares/keepLastUpdated';
 import {
+  computeNextBalancesWithNewPrices,
+  computeNextStateAfterWalletBalanceRemoval,
   createAssetKey,
-  createBalanceKey,
   createBalanceStateForNewAccount,
   extractAssetFromBalanceKey,
-  removeBalanceFromAggregatedBalance,
   updateAggregatedBalanceStateForNewAccount,
-  updateBalancesWithNewPrices,
 } from '../utils/wallets';
 
 type WalletAddress = string;
@@ -353,16 +352,24 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
                   return;
                 }
 
-                const WalletDetail = {
+                const walletDetail = {
                   blockChain: balance.asset.blockchain,
                   balances: [balance],
                   address: walletAddress,
                 };
 
-                updateBalancesWithNewPrices(WalletDetail, nextBalances, get);
+                const partialCurrentState = {
+                  _aggregatedBalances: get()._aggregatedBalances,
+                  findToken: get().findToken,
+                };
+                computeNextBalancesWithNewPrices(
+                  partialCurrentState,
+                  walletDetail,
+                  nextBalances
+                );
 
                 const balancesForWallet = createBalanceStateForNewAccount(
-                  WalletDetail,
+                  walletDetail,
                   get
                 );
 
@@ -435,73 +442,21 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       });
     },
     removeBalancesForWallet: (walletType, options) => {
-      let walletsNeedsToBeRemoved = get().connectedWallets.filter(
-        (connectedWallet) => connectedWallet.walletType === walletType
-      );
-      /*
-       * We only need to delete balances where there is no connected wallets with same chain and address for that balance.
-       * Consider both Metamask and Solana having support for `0xblahblahblahblah` for Ethereum.
-       * If Phantom is disconnecting, we should keep the balance since Metamask has access to same address yet.
-       * So we only delete balance when there is no connected wallet that has access to that specific chain and address.
-       */
-      get().connectedWallets.forEach((connectedWallet) => {
-        if (connectedWallet.walletType !== walletType) {
-          walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
-            const isAnotherWalletHasSameAddressAndChain =
-              wallet.chain === connectedWallet.chain &&
-              wallet.address === connectedWallet.address;
-            return !isAnotherWalletHasSameAddressAndChain;
-          });
-        }
-      });
-
-      if (!!options?.chains && options.chains.length > 0) {
-        walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
-          return options.chains?.includes(wallet.chain);
-        });
-      }
-
-      if (!!options?.namespaces && options.namespaces.length > 0) {
-        walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
-          if (wallet.namespace) {
-            return options.namespaces?.includes(wallet.namespace);
-          }
-          return false;
-        });
-      }
-
-      const nextBalancesState: BalanceState = {};
-      let nextAggregatedBalanceState: AggregatedBalanceState =
-        get()._aggregatedBalances;
-      const currentBalancesState = get()._balances;
-      const balanceKeys = Object.keys(currentBalancesState) as BalanceKey[];
-
-      balanceKeys.forEach((key) => {
-        const asset = extractAssetFromBalanceKey(key);
-
-        const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
-          (wallet) =>
-            createBalanceKey(wallet.address, {
-              address: asset.address,
-              blockchain: wallet.chain,
-              symbol: asset.symbol,
-            }) === key
+      const partialCurrentState = {
+        _balances: get()._balances,
+        _aggregatedBalances: get()._aggregatedBalances,
+        connectedWallets: get().connectedWallets,
+      };
+      const { _balances, _aggregatedBalances } =
+        computeNextStateAfterWalletBalanceRemoval(
+          partialCurrentState,
+          walletType,
+          options
         );
 
-        // if a balance should be removed, we need to remove its caches in _aggregatedBalances as wel.
-        if (shouldBalanceBeRemoved) {
-          nextAggregatedBalanceState = removeBalanceFromAggregatedBalance(
-            nextAggregatedBalanceState,
-            key
-          );
-        } else {
-          nextBalancesState[key] = currentBalancesState[key];
-        }
-      });
-
       set({
-        _balances: nextBalancesState,
-        _aggregatedBalances: nextAggregatedBalanceState,
+        _balances,
+        _aggregatedBalances,
       });
     },
     disconnectNamespaces: (walletType, requestedNamesapces) => {
@@ -643,7 +598,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         get().setConnectedWalletHasError(accounts);
         throw new Error(`Request for fetching balances failed.`, { cause: e });
       }
-
       const walletsDetails = response.wallets;
 
       if (walletsDetails) {
@@ -671,12 +625,30 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
             return;
           }
 
-          updateBalancesWithNewPrices(wallet, nextBalances, get);
+          const partialCurrentState = {
+            _balances: nextBalances,
+            _aggregatedBalances: nextAggregatedBalances,
+            connectedWallets: get().connectedWallets,
+            findToken: get().findToken,
+          };
+
+          computeNextBalancesWithNewPrices(
+            partialCurrentState,
+            wallet,
+            nextBalances
+          );
 
           // Remove old balances for current wallet and blockchain
-          get().removeBalancesForWallet(walletType, {
-            chains: [wallet.blockChain],
-          });
+          const { _balances, _aggregatedBalances } =
+            computeNextStateAfterWalletBalanceRemoval(
+              partialCurrentState,
+              walletType,
+              {
+                chains: [wallet.blockChain],
+              }
+            );
+          nextAggregatedBalances = _aggregatedBalances;
+          nextBalances = _balances;
 
           /*
            * Check if after fetching balance for an account, the account still exists.

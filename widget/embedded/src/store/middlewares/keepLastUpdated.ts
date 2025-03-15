@@ -7,13 +7,20 @@ export const keepLastUpdated: <Store, Slice extends { lastUpdatedAt: number }>(
   config: StateCreator<Store, [], [], Slice>
 ) => StateCreator<Store, [], [], Slice> = (slice) => (set, get, api) => {
   const modifedSet: typeof set = (...params) => {
+    const [partial, ...restParams] = params;
     set((state) => {
+      // @see https://github.com/pmndrs/zustand/blob/90f8d592d4cde9aa15f236e320f17ccbc86cf0fb/src/vanilla.ts#L69-L72
+      type State = ReturnType<typeof get>;
+      const nextState =
+        typeof partial === 'function'
+          ? (partial as (s: State) => State)(state)
+          : partial;
+
       return {
-        ...state,
+        ...nextState,
         lastUpdatedAt: +new Date(),
       };
-    });
-    set(...params);
+    }, ...restParams);
   };
   return slice(modifedSet, get, api);
 };
