@@ -122,9 +122,13 @@ export interface WalletsSlice {
   clearConnectedWallet: () => void;
   fetchBalances: (
     accounts: Wallet[],
+    options?: { customTokens: Asset[] }
+  ) => Promise<void>;
+  fetchMainTokensBalances: (
+    accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
   ) => Promise<void>;
-  fetchCustomTokensBalance: (params: {
+  fetchCustomTokensBalances: (params: {
     tokens: Asset[];
     connectedWallets: Wallet[];
   }) => Promise<void>;
@@ -299,7 +303,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         });
       }
     },
-    fetchCustomTokensBalance: async (params) => {
+    fetchCustomTokensBalances: async (params) => {
       const { tokens, connectedWallets } = params;
 
       const tokensByBlockchain = tokens.reduce<{ [key: string]: Asset[] }>(
@@ -436,10 +440,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       get().addConnectedWallet(accounts, namespace);
 
       void get().fetchBalances(accounts);
-      void get().fetchCustomTokensBalance({
-        tokens: get().customTokens(),
-        connectedWallets: accounts,
-      });
     },
     removeBalancesForWallet: (walletType, options) => {
       const partialCurrentState = {
@@ -581,6 +581,19 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     },
     clearConnectedWallet: () => set({ connectedWallets: [] }),
     fetchBalances: async (accounts, options) => {
+      await get().fetchMainTokensBalances(accounts);
+      /*
+       * - If `options.customTokens` is not provided, fetch all custom tokens.
+       * - If `options.customTokens` is provided and not empty, fetch only those tokens.
+       */
+      if (!options?.customTokens || options.customTokens.length > 0) {
+        void get().fetchCustomTokensBalances({
+          tokens: options?.customTokens ?? get().customTokens(),
+          connectedWallets: accounts,
+        });
+      }
+    },
+    fetchMainTokensBalances: async (accounts, options) => {
       // All the `accounts` have same `walletType` so we can pick the first one.
       const walletType = accounts[0].walletType;
 
@@ -612,7 +625,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               address: wallet.address,
             }));
           if (failedWallets.length > 0) {
-            void get().fetchBalances(failedWallets, {
+            await get().fetchMainTokensBalances(failedWallets, {
               retryOnFailedBalances: false,
             });
           }
