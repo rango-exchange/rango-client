@@ -121,11 +121,12 @@ export interface WalletsSlice {
     options?: { namespaces?: Namespace[] }
   ) => void;
   clearConnectedWallet: () => void;
-  fetchBalances: (
+  fetchBalances: (accounts: Wallet[]) => Promise<void>;
+  fetchMainTokensBalances: (
     accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
   ) => Promise<void>;
-  fetchCustomTokensBalance: (params: {
+  fetchCustomTokensBalances: (params: {
     tokens: Asset[];
     connectedWallets: Wallet[];
   }) => Promise<void>;
@@ -300,7 +301,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         });
       }
     },
-    fetchCustomTokensBalance: async (params) => {
+    fetchCustomTokensBalances: async (params) => {
       const { tokens, connectedWallets } = params;
 
       const tokensByBlockchain = tokens.reduce<{ [key: string]: Asset[] }>(
@@ -621,7 +622,14 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       }
     },
     clearConnectedWallet: () => set({ connectedWallets: [] }),
-    fetchBalances: async (accounts, options) => {
+    fetchBalances: async (accounts) => {
+      await get().fetchMainTokensBalances(accounts);
+      void get().fetchCustomTokensBalances({
+        tokens: get().customTokens(),
+        connectedWallets: accounts,
+      });
+    },
+    fetchMainTokensBalances: async (accounts, options) => {
       // All the `accounts` have same `walletType` so we can pick the first one.
       const walletType = accounts[0].walletType;
 
@@ -653,7 +661,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               address: wallet.address,
             }));
           if (failedWallets.length > 0) {
-            await get().fetchBalances(failedWallets, {
+            await get().fetchMainTokensBalances(failedWallets, {
               retryOnFailedBalances: false,
             });
           }
@@ -720,11 +728,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
         );
       }
-
-      void get().fetchCustomTokensBalance({
-        tokens: get().customTokens(),
-        connectedWallets: accounts,
-      });
     },
     getBalances: () => {
       return get()._balances;
