@@ -429,10 +429,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       get().addConnectedWallet(accounts, namespace);
 
       void get().fetchBalances(accounts);
-      void get().fetchCustomTokensBalance({
-        tokens: get().customTokens(),
-        connectedWallets: accounts,
-      });
     },
     removeBalancesForWallet: (walletType, options) => {
       let walletsNeedsToBeRemoved = get().connectedWallets.filter(
@@ -657,7 +653,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               address: wallet.address,
             }));
           if (failedWallets.length > 0) {
-            void get().fetchBalances(failedWallets, {
+            await get().fetchBalances(failedWallets, {
               retryOnFailedBalances: false,
             });
           }
@@ -724,6 +720,11 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           `We couldn't fetch your account balances. Seem there is no information on blockchain for them yet.`
         );
       }
+
+      void get().fetchCustomTokensBalance({
+        tokens: get().customTokens(),
+        connectedWallets: accounts,
+      });
     },
     getBalances: () => {
       return get()._balances;
