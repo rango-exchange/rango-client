@@ -1,7 +1,7 @@
 import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
+import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import {
   actions,
@@ -12,7 +12,7 @@ import {
 import { CAIP } from '@rango-dev/wallets-core/utils';
 
 import { WALLET_ID } from '../constants.js';
-import { getSolanaAccounts, solanaCoinbase } from '../utils.js';
+import { evmCoinbase, getSolanaAccounts, solanaCoinbase } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaCoinbase);
@@ -45,9 +45,31 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
-const canEagerConnect = builders
-  .canEagerConnect()
-  .action(actions.canEagerConnect(solanaCoinbase))
+export const canEagerConnectAction = async () => {
+  const evmInstance = evmCoinbase();
+
+  if (!evmInstance) {
+    throw new Error(
+      'Trying to eagerly connect to your EVM wallet, but seems its instance is not available.'
+    );
+  }
+
+  try {
+    const accounts: string[] = await evmInstance.request({
+      method: 'eth_accounts',
+    });
+    if (accounts.length) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+};
+const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
+  'canEagerConnect'
+)
+  .action(canEagerConnectAction)
   .build();
 
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
