@@ -627,6 +627,10 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     clearConnectedWallet: () => set({ connectedWallets: [] }),
     fetchBalances: async (accounts, options) => {
       await get().fetchMainTokensBalances(accounts);
+      /*
+       * - If `options.customTokens` is not provided, fetch all custom tokens.
+       * - If `options.customTokens` is provided and not empty, fetch only those tokens.
+       */
       if (!options?.customTokens || options.customTokens.length > 0) {
         void get().fetchCustomTokensBalances({
           tokens: options?.customTokens ?? get().customTokens(),
