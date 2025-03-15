@@ -1,6 +1,7 @@
 import type { PropTypes } from './HistoryGroupedList.types';
 
 import { i18n } from '@lingui/core';
+import { getCurrentStep } from '@rango-dev/queue-manager-rango-preset';
 import {
   Divider,
   GroupedVirtualizedList,
@@ -102,6 +103,7 @@ export function HistoryGroupedList(props: PropTypes) {
       }}
       itemContent={(index, groupIndex) => {
         const swap = swaps[index];
+        const currentStep = getCurrentStep(swap);
         if (!swap) {
           return null;
         }
@@ -114,6 +116,7 @@ export function HistoryGroupedList(props: PropTypes) {
               creationTime={swap.creationTime}
               status={swap.status}
               onClick={onSwapClick}
+              currentStep={currentStep}
               tooltipContainer={getContainer()}
               onlyShowTime={groups[groupIndex] === i18n.t('Today')}
               swapTokenData={{
