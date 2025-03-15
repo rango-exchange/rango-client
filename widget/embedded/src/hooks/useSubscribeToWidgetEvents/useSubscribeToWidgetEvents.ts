@@ -1,4 +1,5 @@
-import type { RouteEventData, StepEventData } from '../..';
+import type { ConnectedWallet, RouteEventData, StepEventData } from '../..';
+import type { Asset } from 'rango-types';
 
 import {
   isApprovalTX,
@@ -15,7 +16,11 @@ import { useNotificationStore } from '../../store/notification';
 
 export function useSubscribeToWidgetEvents() {
   const setNotification = useNotificationStore.use.setNotification();
-  const { connectedWallets, fetchBalances } = useAppStore();
+  const {
+    connectedWallets,
+    fetchBalances,
+    customTokens: getCustomTokens,
+  } = useAppStore();
 
   useEffect(() => {
     const handleStepEvent = (widgetEvent: StepEventData) => {
@@ -27,6 +32,18 @@ export function useSubscribeToWidgetEvents() {
         event.type === StepEventType.SUCCEEDED;
 
       if (shouldRefetchBalance) {
+        const fromToken: Asset = {
+          blockchain: step.fromBlockchain,
+          address: step.fromSymbol,
+          symbol: step.fromSymbol,
+        };
+        const toToken: Asset = {
+          blockchain: step.toBlockchain,
+          address: step.toSymbol,
+          symbol: step.toSymbol,
+        };
+        const accountForFetchBalances: ConnectedWallet[] = [];
+        const customTokens: Asset[] = [];
         const fromWallet = route.wallets[step?.fromBlockchain];
         if (fromWallet) {
           const fromAccount = connectedWallets.find(
@@ -37,7 +54,7 @@ export function useSubscribeToWidgetEvents() {
               connectedWallet.chain === step?.fromBlockchain
           );
           if (fromAccount) {
-            void fetchBalances([fromAccount]);
+            accountForFetchBalances.push(fromAccount);
           }
         }
 
@@ -52,10 +69,28 @@ export function useSubscribeToWidgetEvents() {
                 connectedWallet.chain === step?.toBlockchain
             );
             if (toAccount) {
-              void fetchBalances([toAccount]);
+              accountForFetchBalances.push(toAccount);
             }
           }
         }
+        getCustomTokens().forEach((token) => {
+          if (
+            token.blockchain === fromToken.blockchain &&
+            token.symbol === fromToken.symbol &&
+            token.address === fromToken.address
+          ) {
+            customTokens.push(fromToken);
+          }
+          if (
+            token.blockchain === toToken.blockchain &&
+            token.symbol === toToken.symbol &&
+            token.address === toToken.address
+          ) {
+            customTokens.push(toToken);
+          }
+        });
+
+        void fetchBalances(accountForFetchBalances, { customTokens });
       }
 
       setNotification(event, route);

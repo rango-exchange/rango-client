@@ -121,7 +121,10 @@ export interface WalletsSlice {
     options?: { namespaces?: Namespace[] }
   ) => void;
   clearConnectedWallet: () => void;
-  fetchBalances: (accounts: Wallet[]) => Promise<void>;
+  fetchBalances: (
+    accounts: Wallet[],
+    options?: { customTokens: Asset[] }
+  ) => Promise<void>;
   fetchMainTokensBalances: (
     accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
@@ -622,12 +625,14 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       }
     },
     clearConnectedWallet: () => set({ connectedWallets: [] }),
-    fetchBalances: async (accounts) => {
+    fetchBalances: async (accounts, options) => {
       await get().fetchMainTokensBalances(accounts);
-      void get().fetchCustomTokensBalances({
-        tokens: get().customTokens(),
-        connectedWallets: accounts,
-      });
+      if (!options?.customTokens || options.customTokens.length > 0) {
+        void get().fetchCustomTokensBalances({
+          tokens: options?.customTokens ?? get().customTokens(),
+          connectedWallets: accounts,
+        });
+      }
     },
     fetchMainTokensBalances: async (accounts, options) => {
       // All the `accounts` have same `walletType` so we can pick the first one.
