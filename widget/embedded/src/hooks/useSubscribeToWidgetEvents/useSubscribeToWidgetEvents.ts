@@ -28,28 +28,32 @@ export function useSubscribeToWidgetEvents() {
 
       if (shouldRefetchBalance) {
         const fromWallet = route.wallets[step?.fromBlockchain];
-        const fromAccount = connectedWallets.find(
-          (connectedWallet) =>
-            connectedWallet.address?.toLocaleLowerCase() ===
-              fromWallet.address?.toLocaleLowerCase() &&
-            connectedWallet.walletType === fromWallet.walletType &&
-            connectedWallet.chain === step?.fromBlockchain
-        );
-        if (fromAccount) {
-          void fetchBalances([fromAccount]);
+        if (fromWallet) {
+          const fromAccount = connectedWallets.find(
+            (connectedWallet) =>
+              connectedWallet.address?.toLocaleLowerCase() ===
+                fromWallet.address?.toLocaleLowerCase() &&
+              connectedWallet.walletType === fromWallet.walletType &&
+              connectedWallet.chain === step?.fromBlockchain
+          );
+          if (fromAccount) {
+            void fetchBalances([fromAccount]);
+          }
         }
 
         if (step?.fromBlockchain !== step?.toBlockchain) {
           const toWallet = route.wallets[step?.toBlockchain];
-          const toAccount = connectedWallets.find(
-            (connectedWallet) =>
-              connectedWallet.address?.toLocaleLowerCase() ===
-                toWallet.address?.toLocaleLowerCase() &&
-              connectedWallet.walletType === toWallet.walletType &&
-              connectedWallet.chain === step?.toBlockchain
-          );
-          if (toAccount) {
-            void fetchBalances([toAccount]);
+          if (toWallet) {
+            const toAccount = connectedWallets.find(
+              (connectedWallet) =>
+                connectedWallet.address?.toLocaleLowerCase() ===
+                  toWallet.address?.toLocaleLowerCase() &&
+                connectedWallet.walletType === toWallet.walletType &&
+                connectedWallet.chain === step?.toBlockchain
+            );
+            if (toAccount) {
+              void fetchBalances([toAccount]);
+            }
           }
         }
       }
