@@ -1,7 +1,10 @@
 import type { EIP1193EventMap } from './eip1193.js';
 import type { EvmActions, ProviderAPI } from './types.js';
 import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
-import type { SubscriberCleanUp } from '../../hub/namespaces/types.js';
+import type {
+  CanEagerConnect,
+  SubscriberCleanUp,
+} from '../../hub/namespaces/types.js';
 import type { CaipAccount } from '../../types/accounts.js';
 import type { FunctionWithContext } from '../../types/actions.js';
 
@@ -145,4 +148,30 @@ export function changeChainSubscriber(
       }
     },
   ];
+}
+
+export function canEagerConnect(
+  instance: () => ProviderAPI | undefined
+): CanEagerConnect<EvmActions> {
+  return async () => {
+    const evmInstance = instance();
+
+    if (!evmInstance) {
+      throw new Error(
+        'Trying to eagerly connect to your EVM wallet, but seems its instance is not available.'
+      );
+    }
+
+    try {
+      const accounts: string[] = await evmInstance.request({
+        method: 'eth_accounts',
+      });
+      if (accounts.length) {
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
 }
