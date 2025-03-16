@@ -9,6 +9,7 @@ export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   connect: (chain?: Chain | ChainId) => Promise<AccountsWithActiveChain>;
+  canEagerConnect: () => Promise<boolean>;
 }
 
 export type { EIP1193Provider as ProviderAPI } from './eip1193.js';
