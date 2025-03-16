@@ -72,12 +72,12 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     color: '#fff',
     supportedChains: evms,
     needsNamespace: {
-      selection: 'single',
+      selection: 'multiple',
       data: [
         {
           id: 'ETH',
           value: 'EVM',
-          label: 'Ethereum',
+          label: 'Evm',
         },
       ],
     },
