@@ -19,7 +19,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { type Provider, rabby as rabby_instance } from '../utils.js';
+import { type Provider, rabby as rabbyInstance } from '../utils.js';
 
 import signer from './signer.js';
 
@@ -27,7 +27,7 @@ export const config = {
   type: WalletTypes.Rabby,
 };
 
-export const getInstance = rabby_instance;
+export const getInstance = rabbyInstance;
 export const connect: Connect = async ({ instance }) => {
   /*
    * Note: We need to get `chainId` here, because for the first time
