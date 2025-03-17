@@ -1,10 +1,12 @@
 import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
+import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type {
   ProviderAPI,
   UtxoActions,
 } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
+  ActionBuilder,
   NamespaceBuilder,
   type Subscriber,
   type SubscriberCleanUp,
@@ -23,6 +25,8 @@ import {
 
 import { WALLET_ID } from '../constants.js';
 import { bitcoinPhantom } from '../utils.js';
+
+import { canEagerConnectAction as solanaCanEagerConnectAction } from './solana.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyFunction = (...args: any[]) => any;
@@ -144,9 +148,21 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
+/*
+ * TODO: We are currently using `solanaCanEagerConnectAction` to establish an eager connection to the BTC instance.
+ * This is a temporary workaround due to Phantom's limitation in silently connecting to a BTC account.
+ * Once Phantom introduces support for silent BTC connections, this implementation should be updated accordingly.
+ */
+const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
+  'canEagerConnect'
+)
+  .action(solanaCanEagerConnectAction)
+  .build();
+
 const utxo = new NamespaceBuilder<UtxoActions>('UTXO', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(canEagerConnect)
   .build();
 
 export { utxo };

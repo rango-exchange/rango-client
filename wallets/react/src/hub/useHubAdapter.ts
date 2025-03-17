@@ -111,10 +111,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allBlockChains: params.allBlockChains,
     autoConnectHandler: () => {
       void autoConnect({
-        getLegacyProvider: getLegacyProvider.bind(
-          null,
-          params.allVersionedProviders
-        ),
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,
@@ -195,6 +191,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
                   input: {
                     namespace: namespaceInput.namespace,
                     network: namespaceInput.network,
+                    supportsEagerConnect: !!namespace.canEagerConnect,
                   },
                 };
               });
@@ -209,29 +206,20 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         connectResultFromTargetNamespaces
       );
 
-      // Keeping only namespaces that connected successfully, then we'll store them on storage for auto connect functionality.
-      const successfullyConnectedNamespaces = connectResultWithLegacyFormat
-        .filter(<T, E>(result: Result<T, E>): result is Ok<T> => result.ok)
-        .map((result) => {
-          return {
+      // Keeping only namespaces that connected successfully and support eager connect, then we'll store them on storage for auto connect functionality.
+      const successfullyConnectedSupportingEagerConnectNamespaces =
+        connectResultWithLegacyFormat
+          .filter(<T, E>(result: Result<T, E>): result is Ok<T> => result.ok)
+          .filter((result) => result.val.input.supportsEagerConnect)
+          .map((result) => ({
             namespace: result.val.input.namespace,
             network: result.val.input.network,
-          };
-        });
+          }));
 
-      // If Provider has support for auto connect, we will add the wallet to storage.
-      const legacyProvider = getLegacyProvider(
-        params.allVersionedProviders,
-        type
-      );
-
-      if (
-        legacyProvider.canEagerConnect &&
-        successfullyConnectedNamespaces.length > 0
-      ) {
+      if (successfullyConnectedSupportingEagerConnectNamespaces.length > 0) {
         lastConnectedWalletsFromStorage.addWallet(
           type,
-          successfullyConnectedNamespaces
+          successfullyConnectedSupportingEagerConnectNamespaces
         );
       }
 
