@@ -5,24 +5,16 @@ import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/c
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { WALLET_ID } from '../constants.js';
-import { solanaPhantom } from '../utils.js';
+import { solanaSafepal } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber(solanaPhantom);
-
-/*
- * TODO: If user imported a private key for EVM, it hasn't solana.
- * when trying to connect to solana for this user we go through `-32603` which is an internal error.
- * If phantom added an specific error code for this situation, we can consider handling the error here.
- * @see https://docs.phantom.app/solana/errors
- */
+  actions.changeAccountSubscriber(solanaSafepal);
 const connect = builders
   .connect()
-  .action(actions.connect(solanaPhantom))
+  .action(actions.connect(solanaSafepal))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .build();
-
 const disconnect = commonBuilders
   .disconnect<SolanaActions>()
   .after(changeAccountCleanup)
