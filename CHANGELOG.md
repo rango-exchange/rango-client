@@ -1,3 +1,15 @@
+## Widget [0.31.0] (2025-03-17)
+
+_includes `@rango-dev/widget-embedded@0.41.1`_
+
+## Bug Fixes
+
+- Resolve the issue with the custom tokens balance state ([86722e8dc](https://github.com/rango-exchange/rango-client/commit/86722e8dcb946196d5247c93b454b39733af0a4e))
+- Fix banner not showing on initial page load ([8683a607e](https://github.com/rango-exchange/rango-client/commit/8683a607ec4cf3487c7ac674f0582dd57c01d7a0))
+- Batching state updates for fetchBalances ([32f055f9e](https://github.com/rango-exchange/rango-client/commit/32f055f9e2fb7672f221ad52a9bc83bd1b0a25af))
+- Fix swap-box banner overflow ([8a01c95c7](https://github.com/rango-exchange/rango-client/commit/8a01c95c701f65f28323c5ea7dc5b0c83dd0239b))
+- Resolve wallet is possibly undefined error in useSubscribeToWidgetEvents ([6231d4610](https://github.com/rango-exchange/rango-client/commit/6231d4610e9967840236e23ee45b9263adfa4c53))
+
 ## Widget [0.30.0] (2025-03-11)
 
 _includes `@rango-dev/widget-embedded@0.41.0`_
