@@ -189,7 +189,7 @@ export const createSettingsSlice: StateCreator<
     });
   },
   setCustomToken: (token) => {
-    void get().fetchCustomTokensBalance({
+    void get().fetchCustomTokensBalances({
       tokens: [token],
       connectedWallets: get().connectedWallets,
     });

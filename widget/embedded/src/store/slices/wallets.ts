@@ -122,9 +122,16 @@ export interface WalletsSlice {
   clearConnectedWallet: () => void;
   fetchBalances: (
     accounts: Wallet[],
+    options?: {
+      shouldFetchCustomTokens?: boolean;
+      selectedCustomTokens?: Asset[];
+    }
+  ) => Promise<void>;
+  fetchMainTokensBalances: (
+    accounts: Wallet[],
     options?: { retryOnFailedBalances?: boolean }
   ) => Promise<void>;
-  fetchCustomTokensBalance: (params: {
+  fetchCustomTokensBalances: (params: {
     tokens: Asset[];
     connectedWallets: Wallet[];
   }) => Promise<void>;
@@ -299,7 +306,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         });
       }
     },
-    fetchCustomTokensBalance: async (params) => {
+    fetchCustomTokensBalances: async (params) => {
       const { tokens, connectedWallets } = params;
 
       const tokensByBlockchain = tokens.reduce<{ [key: string]: Asset[] }>(
@@ -436,10 +443,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       get().addConnectedWallet(accounts, namespace);
 
       void get().fetchBalances(accounts);
-      void get().fetchCustomTokensBalance({
-        tokens: get().customTokens(),
-        connectedWallets: accounts,
-      });
     },
     removeBalancesForWallet: (walletType, options) => {
       const partialCurrentState = {
@@ -581,6 +584,20 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     },
     clearConnectedWallet: () => set({ connectedWallets: [] }),
     fetchBalances: async (accounts, options) => {
+      const { shouldFetchCustomTokens = true, selectedCustomTokens } =
+        options || {};
+      await get().fetchMainTokensBalances(accounts);
+      if (shouldFetchCustomTokens) {
+        void get().fetchCustomTokensBalances({
+          tokens: selectedCustomTokens ?? get().customTokens(),
+          connectedWallets: accounts,
+        });
+      }
+    },
+    fetchMainTokensBalances: async (accounts, options) => {
+      if (accounts.length === 0) {
+        return;
+      }
       // All the `accounts` have same `walletType` so we can pick the first one.
       const walletType = accounts[0].walletType;
 
@@ -602,22 +619,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       const walletsDetails = response.wallets;
 
       if (walletsDetails) {
-        const { retryOnFailedBalances = true } = options || {};
-        if (retryOnFailedBalances) {
-          const failedWallets: Wallet[] = walletsDetails
-            .filter((wallet) => wallet.failed)
-            .map((wallet) => ({
-              chain: wallet.blockChain,
-              walletType: walletType,
-              address: wallet.address,
-            }));
-          if (failedWallets.length > 0) {
-            void get().fetchBalances(failedWallets, {
-              retryOnFailedBalances: false,
-            });
-          }
-        }
-
         let nextBalances: BalanceState = get()._balances;
         let nextAggregatedBalances: AggregatedBalanceState =
           get()._aggregatedBalances;
@@ -691,6 +692,27 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         }));
 
         get().setConnectedWalletRetrievedData(accounts, walletsDetails);
+        /*
+         * We handle failed balance fetches after updating the state with successful ones.
+         * This ensures that successful balance updates are immediately available to the UI,
+         * while failed ones are retried in the background without blocking the main flow.
+         * The retry is only attempted once to prevent infinite loops.
+         */
+        const { retryOnFailedBalances = true } = options || {};
+        if (retryOnFailedBalances) {
+          const failedWallets: Wallet[] = walletsDetails
+            .filter((wallet) => wallet.failed)
+            .map((wallet) => ({
+              chain: wallet.blockChain,
+              walletType: walletType,
+              address: wallet.address,
+            }));
+          if (failedWallets.length > 0) {
+            await get().fetchMainTokensBalances(failedWallets, {
+              retryOnFailedBalances: false,
+            });
+          }
+        }
       } else {
         get().setConnectedWalletHasError(accounts);
         console.error(
