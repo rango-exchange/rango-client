@@ -11,4 +11,5 @@ export const connect = () =>
   new ActionBuilder<SolanaActions, 'connect'>('connect')
     .and(connectAndUpdateStateForSingleNetwork)
     .before(intoConnecting)
+    .or(intoConnectionFinished)
     .after(intoConnectionFinished);
