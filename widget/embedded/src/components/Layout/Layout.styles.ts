@@ -66,4 +66,5 @@ export const BannerContainer = styled('div', {
   position: 'absolute',
   bottom: '-$10',
   transform: 'translateY(100%)',
+  overflow: 'hidden',
 });

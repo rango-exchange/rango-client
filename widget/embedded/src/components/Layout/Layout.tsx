@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
@@ -46,6 +46,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
 
   const hasWatermark = watermark === 'FULL';
   const { activeTheme } = useTheme(theme || {});
+  const [showBanner, setShowBanner] = useState(false);
 
   const isConnectWalletHidden = isFeatureHidden(
     'connectWalletButton',
@@ -78,20 +79,21 @@ function Layout(props: PropsWithChildren<PropTypes>) {
 
   const scrollViewRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const showBanner = useMemo(() => {
-    const anyRouteExists =
+
+  useEffect(() => {
+    const noRoutesAvailable =
       (__UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.length ?? 0) === 0;
     const routesMatched =
       !!__UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.some((route) =>
         location.pathname.endsWith(route)
       );
 
-    return (
-      __UNSTABLE_OR_INTERNAL__?.swapBoxBanner &&
-      (anyRouteExists || routesMatched)
+    setShowBanner(
+      !!__UNSTABLE_OR_INTERNAL__?.swapBoxBanner &&
+        (noRoutesAvailable || routesMatched)
     );
   }, [
-    __UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.length,
+    __UNSTABLE_OR_INTERNAL__?.swapBoxBanner?.routes?.toString(),
     location.pathname,
   ]);
 
