@@ -34,7 +34,7 @@ export async function switchOrAddNetwork(
     const chainId = typeof chain === 'string' ? chain : chain.chainId;
     await switchNetwork(instance, chainId);
   } catch (switchError) {
-    const error = switchError as { code: number };
+    const error = switchError as { code: number; message: string };
 
     const NOT_FOUND_CHAIN_ERROR_CODE = 4902;
     if (
@@ -47,6 +47,12 @@ export async function switchOrAddNetwork(
        */
       await suggestNetwork(instance, chain);
     }
-    throw switchError;
+
+    /*
+     * Wrap the error to ensure it's an instance of Error.
+     * In the `connect` flow, we rethrow the error in `cleanAccountSubscriber` only if it's an instance of Error.
+     * If it's not, the error gets swallowed. This ensures proper error propagation.
+     */
+    throw new Error(error.message || 'Error encountered during network switch');
   }
 }
