@@ -48,6 +48,10 @@ export async function switchOrAddNetwork(
       await suggestNetwork(instance, chain);
     }
 
+    if (error instanceof Error) {
+      throw error;
+    }
+
     /*
      * Wrap the error to ensure it's an instance of Error.
      * In the `connect` flow, we rethrow the error in `cleanAccountSubscriber` only if it's an instance of Error.
