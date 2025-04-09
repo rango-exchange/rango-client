@@ -2,6 +2,10 @@ import type { WalletStateContentProps } from './SwapDetailsModal.types';
 import type { WalletInfoWithExtra } from '../../types';
 
 import { warn } from '@rango-dev/logging-core';
+import {
+  getCurrentStep,
+  getRelatedWalletOrNull,
+} from '@rango-dev/queue-manager-rango-preset';
 import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
@@ -14,17 +18,17 @@ import { StatefulConnectModal } from '../StatefulConnectModal';
 import { WalletContainer } from './SwapDetailsModal.styles';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
-  const {
-    type,
-    title,
-    currentStepWallet,
-    message,
-    showWalletButton,
-    walletButtonDisabled,
-  } = props;
+  const { type, title, swap, message, showWalletButton, walletButtonDisabled } =
+    props;
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<WalletInfoWithExtra>();
   const { getWalletInfo, state } = useWallets();
+
+  const currentStep = getCurrentStep(swap);
+  const currentStepWallet = currentStep
+    ? getRelatedWalletOrNull(swap, currentStep)
+    : null;
+  const currentStepFromBlockchain = currentStep?.fromBlockchain;
   const walletType = currentStepWallet?.walletType;
   const walletState = walletType
     ? mapStatusToWalletState(state(walletType))
@@ -72,6 +76,11 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         wallet={selectedWalletToConnect}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
+        }}
+        options={{
+          defaultSelectedChains: currentStepFromBlockchain
+            ? [currentStepFromBlockchain]
+            : undefined,
         }}
       />
     </>
