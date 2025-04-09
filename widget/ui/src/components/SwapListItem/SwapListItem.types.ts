@@ -1,3 +1,5 @@
+import type { PendingSwapStep } from 'rango-types';
+
 export type Status = 'running' | 'failed' | 'success';
 
 export interface SwapListItemProps {
@@ -8,6 +10,7 @@ export interface SwapListItemProps {
   swapTokenData: SwapTokenData;
   onlyShowTime?: boolean;
   tooltipContainer?: HTMLElement;
+  currentStep: PendingSwapStep | null;
 }
 
 export interface LoadingProps {
