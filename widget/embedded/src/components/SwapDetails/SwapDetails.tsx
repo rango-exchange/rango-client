@@ -465,7 +465,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         onCancel={onCancel}
         onDelete={onDelete}
         message={stepMessage.detailedMessage.content}
-        currentStepWallet={currentStepWallet}
+        swap={swap}
         walletButtonDisabled={!isActiveTab}
       />
       <SwapDetailsCompleteModal
