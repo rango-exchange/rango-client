@@ -32,26 +32,35 @@ export function connect(
     if (chain) {
       await switchOrAddNetwork(evmInstance, chain);
     }
+    try {
+      const chainId = await evmInstance.request({ method: 'eth_chainId' });
 
-    const chainId = await evmInstance.request({ method: 'eth_chainId' });
+      const result = await getAccounts(evmInstance);
 
-    const result = await getAccounts(evmInstance);
+      const formatAccounts = result.accounts.map(
+        (account) =>
+          AccountId.format({
+            address: account,
+            chainId: {
+              namespace: CAIP_NAMESPACE,
+              reference: chainId,
+            },
+          }) as CaipAccount
+      );
 
-    const formatAccounts = result.accounts.map(
-      (account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: chainId,
-          },
-        }) as CaipAccount
-    );
-
-    return {
-      accounts: formatAccounts,
-      network: result.chainId,
-    };
+      return {
+        accounts: formatAccounts,
+        network: result.chainId,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(
+        (error as { message: string }).message ||
+          'Error encountered during connecting to wallet'
+      );
+    }
   };
 }
 
