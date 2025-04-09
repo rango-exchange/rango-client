@@ -41,6 +41,7 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
     status,
     swapTokenData,
     tooltipContainer,
+    currentStep,
   } = props;
   return (
     <Main onClick={onClick.bind(null, requestId)}>
@@ -62,6 +63,7 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
           data={swapTokenData}
           status={status}
           tooltipContainer={tooltipContainer}
+          currentStep={currentStep}
         />
       </Container>
     </Main>
