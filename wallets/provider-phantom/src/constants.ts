@@ -8,6 +8,7 @@ export const EVM_SUPPORTED_CHAINS = [
 ];
 
 export const WALLET_ID = 'phantom';
+export const WALLET_NAME_IN_WALLET_STANDARD = 'Phantom';
 
 export const info: ProviderInfo = {
   name: 'Phantom',
@@ -21,7 +22,7 @@ export const info: ProviderInfo = {
     {
       name: 'detached',
       // if you are adding a new namespace, don't forget to also update `getWalletInfo`
-      value: ['Solana', 'EVM', 'UTXO'],
+      value: ['Solana', 'EVM', 'UTXO', 'Sui'],
     },
   ],
 };

@@ -1,5 +1,6 @@
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
+import type { ProviderAPI as SuiProviderApi } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
@@ -12,7 +13,7 @@ export function phantom(): Provider | null {
     return null;
   }
 
-  const { solana, ethereum, bitcoin } = phantom;
+  const { solana, ethereum, bitcoin, sui } = phantom;
 
   const instances: Provider = new Map();
 
@@ -26,6 +27,9 @@ export function phantom(): Provider | null {
 
   if (bitcoin && bitcoin.isPhantom) {
     instances.set(LegacyNetworks.BTC, bitcoin);
+  }
+  if (sui && sui.isPhantom) {
+    instances.set(LegacyNetworks.SUI, sui);
   }
 
   return instances;
@@ -69,4 +73,16 @@ export function bitcoinPhantom(): SolanaProviderApi {
   }
 
   return bitcoinInstance;
+}
+export function suiPhantom(): SuiProviderApi {
+  const instance = phantom();
+  const suiInstance = instance?.get(LegacyNetworks.SUI);
+
+  if (!suiInstance) {
+    throw new Error(
+      'Phantom not injected or Sui not enabled. Please check your wallet.'
+    );
+  }
+
+  return suiInstance;
 }
