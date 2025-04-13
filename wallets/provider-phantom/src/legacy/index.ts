@@ -15,13 +15,18 @@ import type {
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
 import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
 import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
+import { chains as suiChains } from '@rango-dev/wallets-core/namespaces/sui';
 import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
 import {
   chooseInstance,
   getSolanaAccounts,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain, solanaBlockchain } from 'rango-types';
+import {
+  isEvmBlockchain,
+  solanaBlockchain,
+  TransactionType,
+} from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
 import { phantom as phantom_instance, type Provider } from '../utils.js';
@@ -88,6 +93,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   let supportedChains: BlockchainMeta[] = [];
+  const sui = allBlockChains.filter(
+    (blockchain) => blockchain.type === TransactionType.SUI
+  );
   const solana = solanaBlockchain(allBlockChains);
   const evms = allBlockChains.filter(
     (chain): chain is EvmBlockchainMeta =>
@@ -95,7 +103,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
   );
   const btc = allBlockChains.find((chain) => chain.name === Networks.BTC);
-  supportedChains = supportedChains.concat(solana).concat(evms);
+  supportedChains = supportedChains.concat(solana, evms, sui);
   if (btc) {
     supportedChains.push(btc);
   }
@@ -131,6 +139,12 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'UTXO',
           id: 'BTC',
           chains: [utxoChains.bitcoin],
+        },
+        {
+          label: 'Sui',
+          value: 'Sui',
+          id: 'SUI',
+          chains: [suiChains.sui],
         },
       ],
     },
