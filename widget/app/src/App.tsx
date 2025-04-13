@@ -27,7 +27,7 @@ export function App() {
           return value;
         });
       } catch (error) {
-        console.error('Widget config param is invalid!');
+        console.error('Widget config param is invalid!', error);
       }
     } else {
       /*
