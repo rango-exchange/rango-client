@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.81"
+    "rango-types": "^0.1.82"
   },
   "publishConfig": {
     "access": "public"
