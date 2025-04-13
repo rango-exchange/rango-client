@@ -170,7 +170,7 @@ export const getCurrentStepTx = (
     tronApprovalTransaction,
     tronTransaction,
     tonTransaction,
-    moveTransaction,
+    suiTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -183,7 +183,7 @@ export const getCurrentStepTx = (
     tronApprovalTransaction ||
     tronTransaction ||
     tonTransaction ||
-    moveTransaction
+    suiTransaction
   );
 };
 
@@ -206,7 +206,7 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
   currentStep.tonTransaction = null;
-  currentStep.moveTransaction = null;
+  currentStep.suiTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -243,8 +243,8 @@ export const setCurrentStepTx = (
     case TransactionType.TON:
       currentStep.tonTransaction = transaction;
       break;
-    case TransactionType.MOVE:
-      currentStep.moveTransaction = transaction;
+    case TransactionType.SUI:
+      currentStep.suiTransaction = transaction;
       break;
     default:
       ((x: never) => {
@@ -742,7 +742,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
-    swap.wallets[step.moveTransaction?.blockChain || ''] ||
+    swap.wallets[step.suiTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 

@@ -1,5 +1,5 @@
 import type { GenericSigner } from 'rango-types';
-import type { MoveTransaction } from 'rango-types/mainApi';
+import type { SuiTransaction } from 'rango-types/mainApi';
 
 import { Transaction } from '@mysten/sui/transactions';
 import {
@@ -11,7 +11,7 @@ import { SignerError } from 'rango-types';
 
 export type SuiWalletStandard = WalletWithFeatures<SuiFeatures>;
 
-export class DefaultSuiSigner implements GenericSigner<MoveTransaction> {
+export class DefaultSuiSigner implements GenericSigner<SuiTransaction> {
   private provider: SuiWalletStandard;
 
   constructor(provider: SuiWalletStandard) {
@@ -26,8 +26,8 @@ export class DefaultSuiSigner implements GenericSigner<MoveTransaction> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: MoveTransaction): Promise<{ hash: string }> {
-    const transaction = Transaction.from(tx.transactionData);
+  async signAndSendTx(tx: SuiTransaction): Promise<{ hash: string }> {
+    const transaction = Transaction.from(tx.unsignedPbtBase64);
 
     // TODO: Double check with team to ensure this assumption is correct
     const senderAddress = transaction.getData().sender;
