@@ -171,7 +171,7 @@ export function SwapDetails(props: SwapDetailsProps) {
       ])
     : undefined;
 
-  const stepMessage = getSwapMessages(swap, currentStep);
+  const stepMessage = getSwapMessages(swap, currentStep, getWalletInfo);
   const steps = getSteps({
     swap,
     switchNetwork,
