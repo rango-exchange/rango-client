@@ -9,6 +9,7 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
+import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
@@ -22,6 +23,7 @@ import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import {
+  getRelatedWalletOrNull,
   type RouteEvent,
   RouteEventType,
   type StepEvent,
@@ -666,7 +668,8 @@ export function isNetworkStatusInWarningState(
 
 export function getSwapMessages(
   pendingSwap: PendingSwap,
-  currentStep: PendingSwapStep | null
+  currentStep: PendingSwapStep | null,
+  getWalletInfo?: (type: WalletType) => ExtendedWalletInfo
 ): {
   shortMessage: string;
   detailedMessage: { content: string; long: boolean };
@@ -685,10 +688,20 @@ export function getSwapMessages(
   if (networkWarningState) {
     message = pendingSwap.networkStatusExtraMessage || '';
     detailedMessage = pendingSwap.networkStatusExtraMessageDetail || '';
+
+    const currentStepWallet = currentStep
+      ? getRelatedWalletOrNull(pendingSwap, currentStep)
+      : null;
+    const walletType = currentStepWallet?.walletType;
+    const walletName = walletType ? getWalletInfo?.(walletType)?.name : null;
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (currentStep?.networkStatus) {
       case PendingSwapNetworkStatus.WaitingForConnectingWallet:
-        message = message || i18n.t('Waiting for connecting wallet');
+        message = walletName
+          ? i18n.t('Connect {wallet}', {
+              wallet: walletName,
+            })
+          : message;
         break;
       case PendingSwapNetworkStatus.WaitingForQueue:
         message =
