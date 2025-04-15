@@ -1,5 +1,5 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
-import type { Providers } from '../index.js';
+import type { ProviderContext, Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
@@ -11,7 +11,6 @@ import { Ok, Result } from 'ts-results';
 import {
   type ConnectResult,
   HUB_LAST_CONNECTED_WALLETS,
-  type ProviderContext,
   type ProviderProps,
 } from '../legacy/mod.js';
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
@@ -235,7 +234,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       return allResult.unwrap();
     },
-    async disconnect(type) {
+    async disconnect(type, namespaces) {
       const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(
@@ -244,13 +243,24 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       wallet.getAll().forEach((namespace) => {
-        if (namespace.state()[0]().connected) {
+        const namespaceShouldBeDisconnected =
+          !namespaces || namespaces.includes(namespace.namespaceId);
+        const namespaceIsConnected = namespace.state()[0]().connected;
+        if (namespaceShouldBeDisconnected && namespaceIsConnected) {
           return namespace.disconnect();
         }
       });
 
       if (params.autoConnect) {
-        lastConnectedWalletsFromStorage.removeWallets([type]);
+        if (namespaces) {
+          namespaces.forEach((namespace) =>
+            lastConnectedWalletsFromStorage.removeNamespacesFromWallet(type, [
+              namespace,
+            ])
+          );
+        } else {
+          lastConnectedWalletsFromStorage.removeWallets([type]);
+        }
       }
     },
     async disconnectAll() {
@@ -341,29 +351,38 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       return output;
     },
     state(type) {
-      const result = getHub().state();
-      const provider = result[type];
+      const hubState = getHub().state();
+      const wallet = getHub().get(type);
+      const walletState = hubState[type];
 
-      if (!provider) {
+      if (!walletState || !wallet) {
         throw new Error(
           `It seems your requested provider doesn't exist in hub. Provider Id: ${type}`
         );
       }
 
-      const accounts = provider.namespaces
+      const accounts = walletState.namespaces
         .filter((namespace) => namespace.connected)
         .flatMap((namespace) =>
           namespace.accounts?.map(fromAccountIdToLegacyAddressFormat)
         )
         .filter((account): account is string => !!account);
 
+      const namespacesState = new Map(
+        Array.from(wallet.getAll(), ([_, value]) => [
+          value.namespaceId,
+          value.state()[0](),
+        ])
+      );
+
       const coreState = {
-        connected: provider.connected,
-        connecting: provider.connecting,
-        installed: provider.installed,
+        connected: walletState.connected,
+        connecting: walletState.connecting,
+        installed: walletState.installed,
         reachable: true,
         accounts: accounts,
         network: null,
+        namespaces: namespacesState,
       };
       return coreState;
     },
