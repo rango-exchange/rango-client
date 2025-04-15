@@ -2,6 +2,9 @@ import { Image, styled } from '@rango-dev/ui';
 
 export const NamespaceList = styled('ul', {
   padding: 0,
+  paddingTop: '$10',
+  paddingBottom: '$20',
+  margin: 0,
 });
 
 export const NamespaceItemContainer = styled('li', {
