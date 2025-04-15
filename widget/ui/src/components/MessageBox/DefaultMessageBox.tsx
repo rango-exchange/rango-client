@@ -28,7 +28,11 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
       <Divider size={4} />
       <Description>
         {typeof description === 'string' ? (
-          <Typography color="neutral700" variant="body" size="medium">
+          <Typography
+            color="neutral700"
+            variant="body"
+            size="medium"
+            className="_message_box_description">
             {description}
           </Typography>
         ) : (
