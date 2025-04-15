@@ -38,6 +38,7 @@ export function reducer(state: State, action: Actions): State {
       return {
         ...state,
         status: 'detached',
+        namespace: { targetWallet: action.payload.targetWallet },
         selectedNamespaces: action.payload.selectedNamespaces,
       };
     case 'reset':

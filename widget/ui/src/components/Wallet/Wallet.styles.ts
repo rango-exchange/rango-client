@@ -30,7 +30,7 @@ export const WalletButton = styled('button', {
   backgroundColor: '$$color',
   alignItems: 'center',
   cursor: 'pointer',
-  width: 100,
+  width: 108,
   position: 'relative',
   fontFamily: 'inherit',
   '&:hover': {
@@ -65,6 +65,11 @@ export const WalletButton = styled('button', {
       },
     },
   },
+});
+
+export const SelectableWalletButton = styled(WalletButton, {
+  paddingRight: '$6',
+  paddingLeft: '$6',
 });
 
 export const LoadingButton = styled('div', {

@@ -6,6 +6,7 @@ import { i18n } from '@lingui/core';
 import { warn } from '@rango-dev/logging-core';
 import {
   Divider,
+  makeInfo,
   SelectableWallet,
   Typography,
   WalletState,
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
 import { WIDGET_UI_ID } from '../../constants';
-import { useStatefulConnect } from '../../hooks/useStatefulConnect';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
@@ -49,7 +49,6 @@ export function WalletList(props: PropTypes) {
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const { suggestAndConnect } = useWallets();
-  const { handleDisconnect } = useStatefulConnect();
   const { list } = useWalletList({
     chain,
   });
@@ -119,9 +118,13 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
+        const isConnected = wallet.state === WalletState.CONNECTED;
         const conciseAddress = address
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
+        const isConnectedButDifferentThanTargetNamespace = wallet.isHub
+          ? isConnected && !conciseAddress
+          : isConnected && !!wallet.needsNamespace && !conciseAddress;
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 
@@ -136,25 +139,10 @@ export function WalletList(props: PropTypes) {
           experimentalChainNotAdded &&
           wallet.state === WalletState.CONNECTED;
 
-        const connectedWalletDescription = couldAddExperimentalChain
-          ? i18n.t({
-              id: 'Add {chain} chain',
-              values: { chain },
-            })
-          : conciseAddress;
-
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
-          const isConnectedButDifferentThanTargetNamespace = wallet.isHub
-            ? !conciseAddress
-            : !!wallet.needsNamespace && !conciseAddress;
 
-          if (isDisconnected) {
-            setSelectedWalletToConnect(wallet);
-          } else if (isConnectedButDifferentThanTargetNamespace) {
-            // wallet is connected on a different namespace
-            await handleDisconnect(wallet.type);
-
+          if (isDisconnected || isConnectedButDifferentThanTargetNamespace) {
             setSelectedWalletToConnect(wallet);
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({
@@ -170,6 +158,34 @@ export function WalletList(props: PropTypes) {
               address: address ?? '',
             });
           }
+        };
+
+        const info = makeInfo(wallet.state);
+
+        const getWalletDescription = () => {
+          if (couldAddExperimentalChain) {
+            return i18n.t({
+              id: 'Add {chain} chain',
+              values: { chain },
+            });
+          }
+          if (isConnectedButDifferentThanTargetNamespace) {
+            return i18n.t('Chain not connected');
+          }
+          if (conciseAddress) {
+            return conciseAddress;
+          }
+          return info.description;
+        };
+
+        const getWalletDescriptionColor = () => {
+          if (wallet.state === WalletState.CONNECTED) {
+            if (isConnectedButDifferentThanTargetNamespace) {
+              return 'neutral600';
+            }
+            return 'neutral700';
+          }
+          return info.color;
         };
 
         const blockchainDisplayName: string | undefined =
@@ -211,7 +227,8 @@ export function WalletList(props: PropTypes) {
             )}
             <SelectableWallet
               key={wallet.type}
-              description={connectedWalletDescription}
+              description={getWalletDescription()}
+              descriptionColor={getWalletDescriptionColor()}
               onClick={onSelectableWalletClick}
               selected={isSelected(wallet.type, chain)}
               disabled={!isActiveTab}
