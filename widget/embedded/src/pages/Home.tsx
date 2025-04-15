@@ -10,6 +10,7 @@ import { HeaderButtons } from '../components/HeaderButtons';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SameTokensWarning } from '../components/SameTokensWarning';
+import { SwapMetrics } from '../components/SwapMetrics';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
@@ -206,6 +207,19 @@ export function Home() {
               }
             />
           ) : null}
+          {!!fromToken && !!toToken && (
+            <>
+              <Divider size={8} />
+              <SwapMetrics
+                quoteError={quoteError}
+                quoteWarning={quoteWarning}
+                fromToken={fromToken}
+                toToken={toToken}
+                quote={selectedQuote}
+                loading={fetchingQuote}
+              />
+            </>
+          )}
 
           {showMessages ? (
             <>

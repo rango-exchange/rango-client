@@ -46,6 +46,7 @@ export function createAppStore(initialData?: WidgetConfig) {
             infiniteApprove: state.infiniteApprove,
             preferredBlockchains: state.preferredBlockchains,
             disabledLiquiditySources: state.disabledLiquiditySources,
+            quoteTokensRate: state.quoteTokensRate,
           };
         },
         version: 1,
