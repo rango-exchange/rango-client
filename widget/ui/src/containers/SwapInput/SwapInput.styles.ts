@@ -86,6 +86,10 @@ export const formStyles = css({
   alignItems: 'center',
 });
 
+export const TokenSectionContainer = styled('div', {
+  width: '60%',
+});
+
 export const labelStyles = css({
   display: 'flex',
   justifyContent: 'space-between',

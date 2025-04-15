@@ -1,11 +1,15 @@
 import { ChainImageContainer } from '../../components/ChainToken/ChainToken.styles.js';
-import { Button } from '../../components/index.js';
+import {
+  Button,
+  type TooltipPropTypes,
+  Typography,
+} from '../../components/index.js';
 import { css, darkTheme, styled } from '../../theme.js';
 
 export const Container = styled(Button, {
+  width: '100%',
   maxWidth: '180px',
   minWidth: '130px',
-  flexGrow: 1,
   backgroundColor: 'transparent',
   borderRadius: '$xs',
 
@@ -39,11 +43,16 @@ export const Container = styled(Button, {
       backgroundColor: '$$color !important',
     },
   },
+
+  '& > span': {
+    width: '100%',
+  },
 });
 
 export const chainNameStyles = css();
 
 export const TokenSectionContainer = styled('div', {
+  width: '100%',
   maxWidth: '170px',
   padding: '$2 $5',
   display: 'flex',
@@ -68,6 +77,8 @@ export const tokenChainStyles = css({
   paddingLeft: '$10',
   flexGrow: 1,
   textAlign: 'left',
+  width: '100%',
+  overflow: 'hidden',
 });
 
 export const skeletonStyles = css({
@@ -76,8 +87,30 @@ export const skeletonStyles = css({
 });
 
 export const TitleContainer = styled('div', {
+  width: '100%',
   display: 'flex',
-  justifyContent: 'center',
   alignItems: 'center',
-  flexWrap: 'wrap',
+});
+
+export const Title = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
+export const SymbolTooltipStyles: TooltipPropTypes['styles'] = {
+  content: {
+    padding: '$10',
+  },
+  root: {
+    zIndex: 10,
+    width: 'calc(100% - 18px)',
+    display: 'flex',
+    justifyContent: 'start',
+  },
+};
+
+export const SymbolTooltipContent = styled(Typography, {
+  maxWidth: 217,
+  lineBreak: 'anywhere',
 });

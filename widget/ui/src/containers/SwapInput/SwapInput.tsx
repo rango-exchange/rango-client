@@ -22,6 +22,7 @@ import {
   labelStyles,
   MaxButton,
   textStyles,
+  TokenSectionContainer,
   UsdPrice,
   ValueTypography,
 } from './SwapInput.styles.js';
@@ -83,22 +84,24 @@ export function SwapInput(props: SwapInputPropTypes) {
         </div>
       </div>
       <div className={formStyles()}>
-        <TokenSection
-          chain={props.chain.displayName}
-          chianImageId={
-            props.mode === 'To'
-              ? UI_ID.SWAP_TO_CHAIN_IMAGE_ID
-              : UI_ID.SWAP_FROM_CHAIN_IMAGE_ID
-          }
-          tokenSymbol={props.token.displayName}
-          error={props.error}
-          chainImage={props.chain.image}
-          tokenImage={props.token.image}
-          onClick={props.onClickToken}
-          loading={props.loading}
-          warning={props.token.securityWarning}
-          tooltipContainer={props.tooltipContainer}
-        />
+        <TokenSectionContainer>
+          <TokenSection
+            chain={props.chain.displayName}
+            chianImageId={
+              props.mode === 'To'
+                ? UI_ID.SWAP_TO_CHAIN_IMAGE_ID
+                : UI_ID.SWAP_FROM_CHAIN_IMAGE_ID
+            }
+            tokenSymbol={props.token.displayName}
+            error={props.error}
+            chainImage={props.chain.image}
+            tokenImage={props.token.image}
+            onClick={props.onClickToken}
+            loading={props.loading}
+            warning={props.token.securityWarning}
+            tooltipContainer={props.tooltipContainer}
+          />
+        </TokenSectionContainer>
         <div className={amountStyles()}>
           {props.loading || (props.mode === 'To' && props.fetchingQuote) ? (
             <>
