@@ -1,4 +1,4 @@
-import { Image, styled } from '@rango-dev/ui';
+import { darkTheme, Image, styled, Typography } from '@rango-dev/ui';
 
 export const NamespaceList = styled('ul', {
   padding: 0,
@@ -10,12 +10,21 @@ export const NamespaceList = styled('ul', {
 export const NamespaceItemContainer = styled('li', {
   backgroundColor: '$neutral200',
   padding: '$16',
-  display: 'flex',
-  gap: '$8',
-  cursor: 'pointer',
   borderRadius: '$sm',
-  alignItems: 'center',
   variants: {
+    clickable: {
+      true: {
+        cursor: 'pointer',
+      },
+    },
+    hasError: {
+      true: {
+        background: '$error300',
+        [`.${darkTheme} &`]: {
+          backgroundColor: '$error700',
+        },
+      },
+    },
     unsupported: {
       true: {
         cursor: 'not-allowed',
@@ -27,6 +36,12 @@ export const NamespaceItemContainer = styled('li', {
 });
 
 export const NamespaceItemContent = styled('div', {
+  display: 'flex',
+  gap: '$8',
+  alignItems: 'center',
+});
+
+export const NamespaceItemInnerContent = styled('div', {
   flex: '1',
   display: 'flex',
   flexDirection: 'column',
@@ -43,7 +58,7 @@ export const NamespaceItemContent = styled('div', {
   },
 });
 
-export const NotSupportedNamespaceItemContent = styled('div', {
+export const UnsupportedNamespaceItemInnerContent = styled('div', {
   flex: '1',
   display: 'flex',
   alignItems: 'center',
@@ -59,4 +74,26 @@ export const NamespaceLogo = styled(Image, {
       },
     },
   },
+});
+
+export const NamespaceAccountAddress = styled(Typography, {
+  maxWidth: '100px',
+});
+
+export const NamespaceItemError = styled('div', {
+  paddingLeft: '48px',
+});
+
+export const NamespaceItemErrorDropdownToggle = styled('div', {
+  display: 'flex',
+  gap: '2px',
+  cursor: 'pointer',
+  alignItems: 'center',
+  width: 'fit-content',
+});
+
+export const NamespaceDetachedItemInfo = styled('div', {
+  display: 'flex',
+  gap: '6px',
+  alignItems: 'center',
 });
