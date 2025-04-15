@@ -25,7 +25,7 @@ export const Rate = styled('div', {
 });
 
 export const TokenName = styled(Typography, {
-  width: '$32',
+  maxWidth: '$32',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',

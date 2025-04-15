@@ -1,0 +1,2 @@
+export const USD_FORMAT_DECIMALS = 4;
+export const USD_EXCHANGE_RATE_DECIMALS = 5;

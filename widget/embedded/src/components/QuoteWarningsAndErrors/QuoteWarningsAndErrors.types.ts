@@ -12,7 +12,7 @@ export interface PropTypes {
   onCloseWarningModal: () => void;
   onConfirmWarningModal: () => void;
   onChangeSettings: () => void;
-  onChangeSlipPage?: (slippage: number | null) => void;
+  onChangeSlippage?: (slippage: number | null) => void;
 }
 
 type ModalPropTypesKeys = keyof Omit<PropTypes, 'extraSpace' | 'loading'>;

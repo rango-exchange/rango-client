@@ -1,18 +1,17 @@
-import type { QuoteError, QuoteWarning } from '../../types';
+import type { SlippageColorParams } from './SwapMetrics.types';
+import type { QuoteTokensRate } from '../../store/slices/settings';
 
 import BigNumber from 'bignumber.js';
 
 import { QuoteErrorType, QuoteWarningType } from '../../types';
-import { numberToString } from '../../utils/numbers';
 
-export const getSlippageColor = (
-  error: { quoteError: QuoteError | null; slippageError: string | null },
-  warning: {
-    quoteWarning: QuoteWarning | null;
-    slippageWarning: string | null;
-  },
-  isDarkTheme: boolean
-) => {
+import {
+  USD_EXCHANGE_RATE_DECIMALS,
+  USD_FORMAT_DECIMALS,
+} from './SwapMetrics.constants';
+
+export function getSlippageColor(params: SlippageColorParams) {
+  const { error, isDarkTheme, warning } = params;
   const { quoteError, slippageError } = error;
   const { quoteWarning, slippageWarning } = warning;
   const hasSlippageError =
@@ -31,28 +30,35 @@ export const getSlippageColor = (
     return '$neutral600';
   }
   return '$neutral700';
-};
+}
 
-export const getUsdExchangeRate = (
-  toTokenUsdPrice: number | null,
-  fromTokenUsdPrice: number | null
-): number => {
-  const MAX_DECIMALS = 5;
-
+export function getUsdExchangeRate(params: {
+  toTokenUsdPrice: number | null;
+  fromTokenUsdPrice: number | null;
+  quoteTokensRate: QuoteTokensRate;
+}): number {
+  const { toTokenUsdPrice, fromTokenUsdPrice, quoteTokensRate } = params;
   if (toTokenUsdPrice && fromTokenUsdPrice) {
     const toPrice = new BigNumber(toTokenUsdPrice);
     const fromPrice = new BigNumber(fromTokenUsdPrice);
-    return Number(toPrice.dividedBy(fromPrice).toFixed(MAX_DECIMALS));
+    return quoteTokensRate === 'default'
+      ? Number(toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS))
+      : Number(
+          fromPrice.dividedBy(toPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
+        );
   }
   return 0;
-};
+}
 
-export const formatTokenValueInUsd = (
+export function formatTokenValueInUsd(
   usdExchangeRate: number,
   tokenUsdPrice: number
-): string => {
-  const MAX_DECIMALS = 2;
-
+): string {
   const value = usdExchangeRate * tokenUsdPrice;
-  return `$${numberToString(value.toFixed(MAX_DECIMALS))}`;
-};
+
+  const result = new BigNumber(value)
+    .decimalPlaces(USD_FORMAT_DECIMALS, BigNumber.ROUND_DOWN)
+    .toFormat(USD_FORMAT_DECIMALS);
+
+  return `$${result}`;
+}

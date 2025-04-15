@@ -15,3 +15,12 @@ export type Tokens = {
   to: TokenData | SwapResultAsset;
   from: TokenData | SwapResultAsset;
 };
+
+export type SlippageColorParams = {
+  error: { quoteError: QuoteError | null; slippageError: string | null };
+  warning: {
+    quoteWarning: QuoteWarning | null;
+    slippageWarning: string | null;
+  };
+  isDarkTheme: boolean;
+};

@@ -20,7 +20,7 @@ export type AlertInfo = {
   alertType: 'error' | 'warning';
   title: string;
   action: ActionType;
-  titleActionButton: string | null;
+  actionButtonTitle: string | null;
 };
 
 export function makeAlerts(
@@ -31,7 +31,7 @@ export function makeAlerts(
     alertType: 'warning',
     title: '',
     action: null,
-    titleActionButton: null,
+    actionButtonTitle: null,
   };
 
   if (error) {
@@ -48,7 +48,7 @@ export function makeAlerts(
         },
       });
       alertInfo.action = 'change-slippage';
-      alertInfo.titleActionButton = i18n.t('Increase');
+      alertInfo.actionButtonTitle = i18n.t('Increase');
     }
 
     return alertInfo;
@@ -86,7 +86,7 @@ export function makeAlerts(
           },
         });
         alertInfo.action = 'change-slippage';
-        alertInfo.titleActionButton = i18n.t('Increase');
+        alertInfo.actionButtonTitle = i18n.t('Increase');
 
         break;
       }
@@ -105,10 +105,10 @@ export function makeAlerts(
   return null;
 }
 
-export const getRequiredSlippage = (
+export function getRequiredSlippage(
   warning: QuoteWarning | null,
   error: BridgeLimitError | InsufficientSlippageError | null
-) => {
+) {
   if (error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE) {
     return Number(error.minRequiredSlippage);
   }
@@ -116,4 +116,4 @@ export const getRequiredSlippage = (
     return Number(warning.minRequiredSlippage);
   }
   return null;
-};
+}

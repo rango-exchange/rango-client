@@ -16,7 +16,7 @@ import { isFeatureHidden } from '../../utils/settings';
 import { getSupportedBlockchainsFromConfig } from '../utils';
 
 export type ThemeMode = 'auto' | 'dark' | 'light';
-export type QuoteTokensRateType = 'default' | 'reverse';
+export type QuoteTokensRate = 'default' | 'reversed';
 
 export interface SettingsSlice {
   theme: ThemeMode;
@@ -31,7 +31,7 @@ export interface SettingsSlice {
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
   _customTokens: Token[];
-  quoteTokensRate: QuoteTokensRateType;
+  quoteTokensRate: QuoteTokensRate;
 
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
@@ -78,7 +78,7 @@ export const createSettingsSlice: StateCreator<
   changeQuoteTokensRate: () =>
     set((state) => ({
       quoteTokensRate:
-        state.quoteTokensRate === 'default' ? 'reverse' : 'default',
+        state.quoteTokensRate === 'default' ? 'reversed' : 'default',
     })),
   addPreferredBlockchain: (blockchain) => {
     const currentPreferredBlockchains = get().preferredBlockchains;

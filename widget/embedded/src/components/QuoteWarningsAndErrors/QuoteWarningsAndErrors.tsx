@@ -2,7 +2,7 @@ import type { ActionType } from './QuoteWarningsAndErrors.helpers';
 import type { PropTypes } from './QuoteWarningsAndErrors.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button, InfoIcon } from '@rango-dev/ui';
+import { Alert, Button, Divider, InfoIcon } from '@rango-dev/ui';
 import React from 'react';
 
 import { QuoteErrorType, QuoteWarningType } from '../../types';
@@ -30,7 +30,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
     onCloseWarningModal,
     onConfirmWarningModal,
     onChangeSettings,
-    onChangeSlipPage,
+    onChangeSlippage,
   } = props;
 
   const warningModalHandlers = {
@@ -65,7 +65,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
           ? error
           : null;
       const requestedSlippage = getRequiredSlippage(warning, quoteError);
-      onChangeSlipPage?.(requestedSlippage);
+      onChangeSlippage?.(requestedSlippage);
     } else if (action === 'change-settings') {
       onChangeSettings();
     }
@@ -74,11 +74,19 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
   return (
     <>
       {showNoResultMessage && (
-        <NoResult skipAlerts={skipAlerts} error={error} fetch={refetchQuote} />
+        <>
+          <Divider size={10} />
+          <NoResult
+            skipAlerts={skipAlerts}
+            error={error}
+            fetch={refetchQuote}
+          />
+        </>
       )}
 
       {showAlerts && (
         <Alerts>
+          <Divider size={10} />
           <Alert
             title={alertInfo.title}
             type={alertInfo.alertType}
@@ -98,7 +106,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
                   size="xxsmall"
                   type={alertInfo.alertType}
                   onClick={() => onclickActionButton(alertInfo.action)}>
-                  {alertInfo.titleActionButton || i18n.t('Change')}
+                  {alertInfo.actionButtonTitle || i18n.t('Change')}
                 </Button>
               ),
             })}

@@ -10,13 +10,8 @@ import { useAppStore } from '../../store/AppStore';
 import { makeAlerts } from './SlippageWarningsAndErrors.helpers';
 
 export function SlippageWarningsAndErrors(props: PropTypes) {
-  const {
-    slippage,
-    customSlippage,
-    setSlippage,
-    setCustomSlippage,
-    setSlippageError,
-  } = useAppStore();
+  const { slippage, customSlippage, setSlippage, setCustomSlippage } =
+    useAppStore();
   const { onChangeSettings } = props;
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
 
@@ -26,7 +21,6 @@ export function SlippageWarningsAndErrors(props: PropTypes) {
     if (action === 'reset-slippage') {
       setSlippage(DEFAULT_SLIPPAGE);
       setCustomSlippage(null);
-      setSlippageError(null);
     } else if (action === 'change-settings') {
       onChangeSettings();
     }
@@ -46,7 +40,7 @@ export function SlippageWarningsAndErrors(props: PropTypes) {
           size="xxsmall"
           type={alertInfo.alertType}
           onClick={() => onClickActionButton(alertInfo.action)}>
-          {alertInfo.titleActionButton}
+          {alertInfo.actionButtonTitle}
         </Button>
       }
     />

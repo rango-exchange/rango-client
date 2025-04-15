@@ -24,6 +24,7 @@ import { useUiStore } from '../store/ui';
 import { UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
 import { emitPreventableEvent } from '../utils/events';
+import { getSlippageValidation } from '../utils/settings';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
 const MainContainer = styled('div', {
@@ -52,6 +53,7 @@ export function Home() {
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
   } = useQuoteStore();
+
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
@@ -60,14 +62,17 @@ export function Home() {
     config,
     fetchStatus: fetchMetaStatus,
     connectedWallets,
-    slippageError,
-    slippageWarning,
+    customSlippage,
+    slippage,
     setSlippage,
     setCustomSlippage,
   } = useAppStore();
 
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
+  const currentSlippage = customSlippage !== null ? customSlippage : slippage;
+
+  const slippageValidation = getSlippageValidation(currentSlippage);
 
   const needsToWarnEthOnPath = false;
 
@@ -103,8 +108,7 @@ export function Home() {
   const showMessages = hasValidQuotes && hasWarningOrError;
 
   const showSwapMetrics = !!fromToken && !!toToken;
-  const showSlippageAlerts =
-    showSwapMetrics && (!!slippageError || !!slippageWarning);
+  const showSlippageAlerts = showSwapMetrics && !!slippageValidation;
 
   useEffect(() => {
     resetQuoteWallets();
@@ -137,7 +141,7 @@ export function Home() {
     }
   };
 
-  const onChangeSlipPage = (slippage: number | null) => {
+  const onChangeSlippage = (slippage: number | null) => {
     if (slippage) {
       setSlippage(slippage);
       setCustomSlippage(null);
@@ -239,18 +243,17 @@ export function Home() {
 
           {showMessages ? (
             <>
-              <Divider size="10" />
               <QuoteWarningsAndErrors
                 warning={quoteWarning}
                 error={quoteError}
-                skipAlerts={!!slippageError || !!slippageWarning}
+                skipAlerts={!!slippageValidation}
                 couldChangeSettings={true}
                 refetchQuote={fetchQuote}
                 showWarningModal={showQuoteWarningModal}
                 confirmationDisabled={!isActiveTab}
                 onOpenWarningModal={() => setShowQuoteWarningModal(true)}
                 onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-                onChangeSlipPage={onChangeSlipPage}
+                onChangeSlippage={onChangeSlippage}
                 onConfirmWarningModal={() => {
                   setShowQuoteWarningModal(false);
                   setQuoteWarningsConfirmed(true);
@@ -265,6 +268,7 @@ export function Home() {
 
           {showSlippageAlerts && (
             <>
+              <Divider size="10" />
               <SlippageWarningsAndErrors
                 onChangeSettings={() =>
                   onHandleNavigation(navigationRoutes.settings)

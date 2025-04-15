@@ -16,7 +16,7 @@ export function makeAlerts(slippage: number): Alert | null {
     alertInfo = {
       alertType: 'error',
       action: 'reset-slippage',
-      titleActionButton: i18n.t('Reset'),
+      actionButtonTitle: i18n.t('Reset'),
       title: i18n.t('Slippage cannot be set lower than 0.01%.'),
     };
     return alertInfo;
@@ -24,7 +24,7 @@ export function makeAlerts(slippage: number): Alert | null {
     alertInfo = {
       alertType: 'warning',
       action: 'change-settings',
-      titleActionButton: i18n.t('Change'),
+      actionButtonTitle: i18n.t('Change'),
       title: i18n.t('Caution, your slippage is high!'),
     };
     return alertInfo;

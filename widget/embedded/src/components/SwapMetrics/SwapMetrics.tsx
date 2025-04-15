@@ -1,11 +1,12 @@
-import type { PropTypes, Tokens } from './SwapMetrics.types';
+import type { PropTypes } from './SwapMetrics.types';
 
 import { i18n } from '@lingui/core';
 import { IconButton, ReverseIcon, Skeleton, Typography } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
+import { getSlippageValidation } from '../../utils/settings';
 
 import {
   formatTokenValueInUsd,
@@ -15,60 +16,42 @@ import {
 import { Container, Rate, TokenName } from './SwapMetrics.styles';
 
 export function SwapMetrics(props: PropTypes) {
-  const {
-    slippage,
-    customSlippage,
-    slippageError,
-    slippageWarning,
-    quoteTokensRate,
-    changeQuoteTokensRate,
-  } = useAppStore();
+  const { slippage, customSlippage, quoteTokensRate, changeQuoteTokensRate } =
+    useAppStore();
   const { quoteError, quoteWarning, fromToken, toToken, quote, loading } =
     props;
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
   const { mode } = useTheme({});
-  const [tokens, setTokens] = useState<Tokens>({
-    to: toToken,
-    from: fromToken,
-  });
-  useEffect(() => {
-    if (quote) {
-      const from = quote.swaps[0].from;
-      const to = quote.swaps[quote.swaps.length - 1].to;
-      setTokens({
-        from: quoteTokensRate === 'default' ? from : to,
-        to: quoteTokensRate === 'default' ? to : from,
-      });
-    } else {
-      setTokens({
-        from: quoteTokensRate === 'default' ? fromToken : toToken,
-        to: quoteTokensRate === 'default' ? toToken : fromToken,
-      });
-    }
-  }, [fromToken, toToken, quote, quoteTokensRate]);
-
+  const slippageValidation = getSlippageValidation(currentSlippage);
   const isDarkTheme = mode === 'dark';
 
   const error = {
     quoteError,
-    slippageError,
+    slippageError:
+      slippageValidation?.type === 'error' ? slippageValidation.message : null,
   };
-  const Warning = {
+  const warning = {
     quoteWarning,
-    slippageWarning,
+    slippageWarning:
+      slippageValidation?.type === 'warning'
+        ? slippageValidation.message
+        : null,
   };
 
-  const usdExchangeRate = getUsdExchangeRate(
-    tokens.to.usdPrice,
-    tokens.from.usdPrice
-  );
+  const usdExchangeRate = getUsdExchangeRate({
+    fromTokenUsdPrice: Number(quote?.outputAmount) || fromToken.usdPrice,
+    toTokenUsdPrice: Number(quote?.requestAmount) || toToken.usdPrice,
+    quoteTokensRate,
+  });
+  const currentToToken = quoteTokensRate === 'default' ? toToken : fromToken;
+  const currentFromToken = quoteTokensRate === 'default' ? fromToken : toToken;
 
   return (
     <Container>
       <Typography
         variant="body"
         size="small"
-        color={getSlippageColor(error, Warning, isDarkTheme)}>
+        color={getSlippageColor({ error, warning, isDarkTheme })}>
         {i18n.t('Slippage:')} {currentSlippage}%
       </Typography>
       {loading ? (
@@ -79,10 +62,10 @@ export function SwapMetrics(props: PropTypes) {
             1
           </Typography>
           <TokenName className="rate-text" variant="body" size="small">
-            {tokens.to.symbol}
+            {currentToToken.symbol}
           </TokenName>
           <IconButton
-            id="widget-change-rate-button"
+            id="widget-home-page-change-rate-button"
             onClick={changeQuoteTokensRate}>
             <ReverseIcon size={14} color="secondary" />
           </IconButton>
@@ -90,11 +73,15 @@ export function SwapMetrics(props: PropTypes) {
             {usdExchangeRate}
           </Typography>
           <TokenName className="rate-text" variant="body" size="small">
-            {tokens.from.symbol}
+            {currentFromToken.symbol}
           </TokenName>
-          {tokens.from.usdPrice && (
+          {currentFromToken.usdPrice && (
             <Typography color="neutral600" variant="body" size="small">
-              ~{formatTokenValueInUsd(usdExchangeRate, tokens.from.usdPrice)}
+              ~
+              {formatTokenValueInUsd(
+                usdExchangeRate,
+                currentFromToken.usdPrice
+              )}
             </Typography>
           )}
         </Rate>
