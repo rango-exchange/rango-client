@@ -12,7 +12,11 @@ import {
   getSlippageColor,
   getUsdExchangeRate,
 } from './SwapMetrics.helpers';
-import { Container, Rate } from './SwapMetrics.styles';
+import {
+  Container,
+  Rate,
+  ROTATE_ANIMATION_DURATION,
+} from './SwapMetrics.styles';
 
 export function SwapMetrics(props: PropTypes) {
   const {
@@ -80,7 +84,14 @@ export function SwapMetrics(props: PropTypes) {
           </Typography>
           <IconButton
             id="widget-change-rate-button"
-            onClick={changeQuoteTokensRate}>
+            onClick={(event) => {
+              const button = event.currentTarget;
+              button.classList.add('rotate');
+              setTimeout(() => {
+                button.classList.remove('rotate');
+              }, ROTATE_ANIMATION_DURATION);
+              changeQuoteTokensRate();
+            }}>
             <ReverseIcon size={14} color="secondary" />
           </IconButton>
           <Typography className="rate-text" variant="body" size="small">

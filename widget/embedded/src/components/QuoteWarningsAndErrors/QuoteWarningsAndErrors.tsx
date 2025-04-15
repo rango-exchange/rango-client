@@ -1,3 +1,4 @@
+import type { ActionType } from './QuoteWarningsAndErrors.helpers';
 import type { PropTypes } from './QuoteWarningsAndErrors.types';
 
 import { i18n } from '@lingui/core';
@@ -8,7 +9,10 @@ import { QuoteErrorType, QuoteWarningType } from '../../types';
 import { NoResult } from '../NoResult';
 
 import { HighValueLossWarningModal } from './HighValueLossWarningModal';
-import { makeAlerts } from './QuoteWarningsAndErrors.helpers';
+import {
+  getRequiredSlippage,
+  makeAlerts,
+} from './QuoteWarningsAndErrors.helpers';
 import { Action, Alerts } from './QuoteWarningsAndErrors.styles';
 import { SlippageWarningModal } from './SlippageWariningModal';
 import { UnknownPriceWarningModal } from './UnknownPriceWarningModal';
@@ -20,11 +24,13 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
     couldChangeSettings,
     showWarningModal,
     confirmationDisabled,
+    skipAlerts,
     refetchQuote,
     onOpenWarningModal,
     onCloseWarningModal,
     onConfirmWarningModal,
     onChangeSettings,
+    onChangeSlipPage,
   } = props;
 
   const warningModalHandlers = {
@@ -49,11 +55,27 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
     alertInfo.action = null;
   }
 
-  const showAlerts = !!alertInfo;
+  const showAlerts = !!alertInfo && !skipAlerts;
+
+  const onclickActionButton = (action: ActionType) => {
+    if (action === 'change-slippage') {
+      const quoteError =
+        error?.type === QuoteErrorType.BRIDGE_LIMIT ||
+        error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE
+          ? error
+          : null;
+      const requestedSlippage = getRequiredSlippage(warning, quoteError);
+      onChangeSlipPage?.(requestedSlippage);
+    } else if (action === 'change-settings') {
+      onChangeSettings();
+    }
+  };
 
   return (
     <>
-      {showNoResultMessage && <NoResult error={error} fetch={refetchQuote} />}
+      {showNoResultMessage && (
+        <NoResult skipAlerts={skipAlerts} error={error} fetch={refetchQuote} />
+      )}
 
       {showAlerts && (
         <Alerts>
@@ -68,14 +90,15 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
                 </Action>
               ),
             })}
-            {...(alertInfo.action === 'change-settings' && {
+            {...((alertInfo.action === 'change-settings' ||
+              alertInfo.action === 'change-slippage') && {
               action: (
                 <Button
                   id="widget-quote-warning-error-change-settings-btn"
                   size="xxsmall"
                   type={alertInfo.alertType}
-                  onClick={onChangeSettings}>
-                  {i18n.t('Change')}
+                  onClick={() => onclickActionButton(alertInfo.action)}>
+                  {alertInfo.titleActionButton || i18n.t('Change')}
                 </Button>
               ),
             })}

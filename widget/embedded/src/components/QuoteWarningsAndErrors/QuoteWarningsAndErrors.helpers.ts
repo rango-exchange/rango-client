@@ -10,10 +10,17 @@ import { errorMessages } from '../../constants/errors';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
 import { getPriceImpactLevel } from '../../utils/quote';
 
-type AlertInfo = {
+export type ActionType =
+  | 'show-info'
+  | 'change-settings'
+  | 'change-slippage'
+  | null;
+
+export type AlertInfo = {
   alertType: 'error' | 'warning';
   title: string;
-  action: 'show-info' | 'change-settings' | null;
+  action: ActionType;
+  titleActionButton: string | null;
 };
 
 export function makeAlerts(
@@ -24,7 +31,9 @@ export function makeAlerts(
     alertType: 'warning',
     title: '',
     action: null,
+    titleActionButton: null,
   };
+
   if (error) {
     alertInfo.alertType = 'error';
     if (error.type === QuoteErrorType.BRIDGE_LIMIT) {
@@ -38,7 +47,8 @@ export function makeAlerts(
           minRequiredSlippage: error.minRequiredSlippage,
         },
       });
-      alertInfo.action = 'change-settings';
+      alertInfo.action = 'change-slippage';
+      alertInfo.titleActionButton = i18n.t('Increase');
     }
 
     return alertInfo;
@@ -75,7 +85,9 @@ export function makeAlerts(
             minRequiredSlippage: warning.minRequiredSlippage,
           },
         });
-        alertInfo.action = 'change-settings';
+        alertInfo.action = 'change-slippage';
+        alertInfo.titleActionButton = i18n.t('Increase');
+
         break;
       }
       case QuoteWarningType.HIGH_SLIPPAGE: {
@@ -92,3 +104,16 @@ export function makeAlerts(
   }
   return null;
 }
+
+export const getRequiredSlippage = (
+  warning: QuoteWarning | null,
+  error: BridgeLimitError | InsufficientSlippageError | null
+) => {
+  if (error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE) {
+    return Number(error.minRequiredSlippage);
+  }
+  if (warning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE) {
+    return Number(warning.minRequiredSlippage);
+  }
+  return null;
+};

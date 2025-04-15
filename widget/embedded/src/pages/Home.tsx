@@ -10,6 +10,7 @@ import { HeaderButtons } from '../components/HeaderButtons';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SameTokensWarning } from '../components/SameTokensWarning';
+import { SlippageWarningsAndErrors } from '../components/SlippageWarningsAndErrors/SlippageWarningsAndErrors';
 import { SwapMetrics } from '../components/SwapMetrics';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
@@ -59,6 +60,10 @@ export function Home() {
     config,
     fetchStatus: fetchMetaStatus,
     connectedWallets,
+    slippageError,
+    slippageWarning,
+    setSlippage,
+    setCustomSlippage,
   } = useAppStore();
 
   const { isActiveTab } = useUiStore();
@@ -97,6 +102,10 @@ export function Home() {
   const hasWarningOrError = quoteWarning || quoteError;
   const showMessages = hasValidQuotes && hasWarningOrError;
 
+  const showSwapMetrics = !!fromToken && !!toToken;
+  const showSlippageAlerts =
+    showSwapMetrics && (!!slippageError || !!slippageWarning);
+
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
@@ -125,6 +134,13 @@ export function Home() {
     if (selectedQuote?.requestId !== quote.requestId) {
       setShowQuoteWarningModal(false);
       setSelectedQuote(quote);
+    }
+  };
+
+  const onChangeSlipPage = (slippage: number | null) => {
+    if (slippage) {
+      setSlippage(slippage);
+      setCustomSlippage(null);
     }
   };
 
@@ -207,7 +223,7 @@ export function Home() {
               }
             />
           ) : null}
-          {!!fromToken && !!toToken && (
+          {showSwapMetrics && (
             <>
               <Divider size={8} />
               <SwapMetrics
@@ -227,12 +243,14 @@ export function Home() {
               <QuoteWarningsAndErrors
                 warning={quoteWarning}
                 error={quoteError}
+                skipAlerts={!!slippageError || !!slippageWarning}
                 couldChangeSettings={true}
                 refetchQuote={fetchQuote}
                 showWarningModal={showQuoteWarningModal}
                 confirmationDisabled={!isActiveTab}
                 onOpenWarningModal={() => setShowQuoteWarningModal(true)}
                 onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+                onChangeSlipPage={onChangeSlipPage}
                 onConfirmWarningModal={() => {
                   setShowQuoteWarningModal(false);
                   setQuoteWarningsConfirmed(true);
@@ -244,6 +262,16 @@ export function Home() {
               />
             </>
           ) : null}
+
+          {showSlippageAlerts && (
+            <>
+              <SlippageWarningsAndErrors
+                onChangeSettings={() =>
+                  onHandleNavigation(navigationRoutes.settings)
+                }
+              />
+            </>
+          )}
           <SameTokensWarning />
         </PageContainer>
       </Layout>
