@@ -79,18 +79,37 @@ export class LastConnectedWalletsFromStorage {
   }
   #addWalletToHub(providerId: string, namespaces: NamespaceInput[]): void {
     const storage = new Persistor<LastConnectedWalletsStorage>();
-    const data = storage.getItem(this.#storageKey) || {};
+    const storageState = storage.getItem(this.#storageKey) || {};
+
+    let toBeAddedNamespaces = namespaces;
+
+    // If provider already exits in the storage, we should just add new namespaces to the previously added namespaces.
+    if (!!storageState[providerId]) {
+      const storedNamespaces = storageState[providerId];
+      toBeAddedNamespaces = storedNamespaces.concat(
+        namespaces.filter(
+          (namespace) =>
+            !storedNamespaces.some(
+              (storedNamespace) =>
+                storedNamespace.namespace === namespace.namespace
+            )
+        )
+      );
+    }
 
     storage.setItem(this.#storageKey, {
-      ...data,
-      [providerId]: namespaces,
+      ...storageState,
+      [providerId]: toBeAddedNamespaces,
     });
   }
   #addWalletToLegacy(providerId: string): void {
     const storage = new Persistor<LegacyLastConnectedWalletsStorage>();
-    const data = storage.getItem(this.#storageKey) || [];
+    const storageState = storage.getItem(this.#storageKey) || [];
 
-    storage.setItem(LEGACY_LAST_CONNECTED_WALLETS, data.concat(providerId));
+    storage.setItem(
+      LEGACY_LAST_CONNECTED_WALLETS,
+      storageState.concat(providerId)
+    );
   }
   #removeWalletsFromHub(providerIds?: string[]): void {
     const persistor = new Persistor<LastConnectedWalletsStorage>();

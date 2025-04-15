@@ -8,6 +8,8 @@ import type {
   LegacyState as WalletState,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { NamespaceData } from '@rango-dev/wallets-core/store';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
@@ -38,10 +40,12 @@ export type ProviderContext = {
     type: WalletType,
     namespaces?: LegacyNamespaceInputForConnect[]
   ): Promise<ConnectResult[]>;
-  disconnect(type: WalletType): Promise<void>;
+  disconnect(type: WalletType, namespaces?: Namespace[]): Promise<void>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
-  state(type: WalletType): WalletState;
+  state(
+    type: WalletType
+  ): WalletState & { namespaces?: Map<Namespace, NamespaceData> };
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   /**
    * `Provider` in legacy terms means injected instances by wallets into window (e.g. window.ethereum)
