@@ -52,7 +52,6 @@ export function StatefulConnectModal(props: PropTypes) {
     handleConnect,
     handleDerivationPath,
     handleNamespace,
-    handleDetached,
     getState,
     resetState,
   } = useStatefulConnect();
@@ -61,6 +60,10 @@ export function StatefulConnectModal(props: PropTypes) {
     handleNamespace(props.wallet!, selectedNamespaces)
       .then(afterConnected)
       .catch(catchErrorOnHandle);
+  };
+
+  const handleDetachedConfirm = () => {
+    handleClosingModal();
   };
 
   const handleDerivationPathConfirm = (derivationPath: string) => {
@@ -143,6 +146,7 @@ export function StatefulConnectModal(props: PropTypes) {
         .then((result) => {
           const resultIsNeedMoreStepsToConnect = [
             ResultStatus.Namespace,
+            ResultStatus.Detached,
             ResultStatus.DerivationPath,
           ].includes(result.status);
 
@@ -193,7 +197,7 @@ export function StatefulConnectModal(props: PropTypes) {
       )}
       {isOnDetached(getState) && (
         <Detached
-          onConfirm={handleDetached}
+          onConfirm={handleDetachedConfirm}
           value={getState().namespace}
           selectedNamespaces={getState().selectedNamespaces}
         />
