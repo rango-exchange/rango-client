@@ -253,10 +253,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       if (params.autoConnect) {
         if (namespaces) {
-          namespaces.forEach((namespace) =>
-            lastConnectedWalletsFromStorage.removeNamespacesFromWallet(type, [
-              namespace,
-            ])
+          lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+            type,
+            namespaces
           );
         } else {
           lastConnectedWalletsFromStorage.removeWallets([type]);

@@ -5,6 +5,7 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Network,
@@ -509,4 +510,21 @@ export function filterWalletsByCategory(
     }
     return false;
   });
+}
+
+export function checkIsWalletPartiallyConnected(
+  wallet: ExtendedModalWalletInfo,
+  namespacesState?: Map<Namespace, { connected: boolean }>
+) {
+  if (wallet.state !== WalletStatus.CONNECTED || !wallet.needsNamespace) {
+    return false;
+  }
+  const namespaces = wallet.needsNamespace.data;
+  const supportedNamespaces = namespaces.filter(
+    (namespace) => !namespace.unsupported
+  );
+
+  return supportedNamespaces.some(
+    (namespace) => !namespacesState?.get(namespace.value)?.connected
+  );
 }

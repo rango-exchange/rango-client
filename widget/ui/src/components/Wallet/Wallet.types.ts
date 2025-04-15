@@ -7,6 +7,7 @@ export enum WalletState {
   DISCONNECTED = 'disconnected',
   CONNECTING = 'connecting',
   CONNECTED = 'connected',
+  PARTIALLY_CONNECTED = 'partially_connected',
 }
 
 export type WalletInfo = {
@@ -51,4 +52,5 @@ export interface WalletPropTypes {
 export type SelectablePropTypes = WalletPropTypes & {
   selected: boolean;
   disabled?: boolean;
+  descriptionColor: string;
 };

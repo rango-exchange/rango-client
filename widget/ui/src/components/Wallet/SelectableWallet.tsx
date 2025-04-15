@@ -4,11 +4,10 @@ import React from 'react';
 import { Image } from '../common/index.js';
 import { Typography } from '../Typography/index.js';
 
-import { makeInfo } from './Wallet.helpers.js';
 import {
+  SelectableWalletButton,
   Text,
   Title,
-  WalletButton,
   WalletImageContainer,
 } from './Wallet.styles.js';
 import { type SelectablePropTypes, WalletState } from './Wallet.types.js';
@@ -21,12 +20,12 @@ export function SelectableWallet(props: SelectablePropTypes) {
     onClick,
     selected,
     description,
-    state,
+    descriptionColor,
     disabled = false,
   } = props;
-  const info = makeInfo(props.state);
+
   return (
-    <WalletButton
+    <SelectableWalletButton
       selected={selected}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
@@ -49,10 +48,10 @@ export function SelectableWallet(props: SelectablePropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={state === WalletState.CONNECTED ? 'neutral700' : info.color}>
-          {description || info.description}
+          color={descriptionColor}>
+          {description}
         </Typography>
       </Text>
-    </WalletButton>
+    </SelectableWalletButton>
   );
 }
