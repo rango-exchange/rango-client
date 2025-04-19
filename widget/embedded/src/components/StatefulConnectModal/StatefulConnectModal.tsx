@@ -79,7 +79,7 @@ export function StatefulConnectModal(props: PropTypes) {
       );
     }
 
-    handleDerivationPath(props.wallet, derivationPath)
+    handleDerivationPath(derivationPath)
       .then(afterConnected)
       .catch(catchErrorOnHandle);
   };
