@@ -28,10 +28,7 @@ interface UseStatefulConnect {
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
   ) => Promise<Result>;
-  handleDerivationPath: (
-    wallet: WalletInfoWithExtra,
-    path: string
-  ) => Promise<Result>;
+  handleDerivationPath: (path: string) => Promise<Result>;
   handleDisconnect: (type: WalletType) => Promise<Result>;
   getState(): State;
   resetState(section?: 'derivation'): void;
@@ -53,38 +50,27 @@ export function useStatefulConnect(): UseStatefulConnect {
   const [connectState, dispatch] = useReducer(reducer, initState);
 
   const runConnect = async (
-    wallet: ExtendedModalWalletInfo,
+    type: WalletType,
     namespaces?: NamespaceData[],
     _options?: HandleConnectOptions
   ): Promise<{ status: ResultStatus }> => {
-    if (wallet.isHub) {
-      dispatch({
-        type: 'detached',
-        payload: {
-          targetWallet: wallet,
-          selectedNamespaces:
-            namespaces?.map((namespace) => namespace.namespace) || null,
-        },
-      });
-      return { status: ResultStatus.Detached };
-    }
+    /*
+     * When running this function, it means all optional steps (like namespace and derivation path) has passed, or wallet doesn't need them at all.
+     * By resetting state, we will make sure when user tries to connect other wallets, it doesn't have unexpected states.
+     */
+    dispatch({
+      type: 'reset',
+    });
 
     try {
       const legacyNamespacesInput = namespaces?.map((namespaceInput) => ({
         ...namespaceInput,
         network: undefined,
       }));
-      await connect(wallet.type, legacyNamespacesInput);
-      dispatch({
-        type: 'reset',
-      });
+      await connect(type, legacyNamespacesInput);
       return { status: ResultStatus.Connected };
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      dispatch({
-        type: 'reset',
-      });
       const message = e?.message
         ? `Error: ${e.message}`
         : 'An unknown error happened during connecting wallet.';
@@ -120,7 +106,7 @@ export function useStatefulConnect(): UseStatefulConnect {
         (isHub && !detachedInstances?.length) ||
         (!isHub && !wallet.needsNamespace)
       ) {
-        return await runConnect(wallet, undefined, options);
+        return await runConnect(wallet.type, undefined, options);
       }
 
       // 2. Target wallet contains more than one namespace
@@ -159,7 +145,7 @@ export function useStatefulConnect(): UseStatefulConnect {
           return { status: ResultStatus.DerivationPath };
         }
         return await runConnect(
-          wallet,
+          wallet.type,
           wallet.needsNamespace?.data.map((namespace) => ({
             namespace: namespace.value,
           })),
@@ -196,7 +182,7 @@ export function useStatefulConnect(): UseStatefulConnect {
   };
 
   const handleNamespace = async (
-    wallet: ExtendedModalWalletInfo,
+    wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
   ): Promise<Result> => {
     const isSingleNamespace = wallet.needsNamespace?.selection === 'single';
@@ -243,11 +229,18 @@ export function useStatefulConnect(): UseStatefulConnect {
       namespace,
     }));
 
-    return await runConnect(wallet, namespaces);
+    dispatch({
+      type: 'detached',
+      payload: {
+        targetWallet: wallet,
+        selectedNamespaces:
+          namespaces?.map((namespace) => namespace.namespace) || null,
+      },
+    });
+    return { status: ResultStatus.Detached };
   };
 
   const handleDerivationPath = async (
-    wallet: ExtendedModalWalletInfo,
     derivationPath: string
   ): Promise<Result> => {
     if (!derivationPath) {
@@ -261,10 +254,11 @@ export function useStatefulConnect(): UseStatefulConnect {
         'It seems you are filling derivation path without setting namespace before doing that. Please retry to connect.'
       );
     }
+    const type = connectState.derivationPath.providerType;
     const selectedNamespace = connectState.derivationPath.namespace;
     const namespaces = [{ namespace: selectedNamespace, derivationPath }];
 
-    return await runConnect(wallet, namespaces);
+    return await runConnect(type, namespaces);
   };
 
   const handleDisconnect = async (type: WalletType): Promise<Result> => {
