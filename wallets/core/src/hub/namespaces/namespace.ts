@@ -19,9 +19,13 @@ import { generateStoreId, isAsync } from '../helpers.js';
 
 import {
   ACTION_NOT_FOUND_ERROR,
+  BEFORE_ACTION_FAILED_ERROR,
   NO_STORE_FOUND_ERROR,
   OR_ELSE_ACTION_FAILED_ERROR,
 } from './errors.js';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Params = any[];
 
 /**
  *
@@ -50,8 +54,7 @@ class Namespace<T extends Actions<T>> {
   #initiated = false;
   #store: Store | undefined;
   // Namespace doesn't has any configs now, but we will need the feature in future
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore noUnusedParameters
+  // eslint-disable-next-line no-unused-private-class-members
   #configs: NamespaceConfig;
 
   constructor(
@@ -294,7 +297,7 @@ class Namespace<T extends Actions<T>> {
    */
   public run<K extends keyof T>(
     actionName: K,
-    ...args: any[]
+    ...args: Params
   ): unknown | Promise<unknown> {
     const action = this.#actions.get(actionName);
     if (!action) {
@@ -316,8 +319,15 @@ class Namespace<T extends Actions<T>> {
     return result;
   }
 
-  #tryRunAction<K extends keyof T>(actionName: K, params: any[]): unknown {
-    this.#tryRunBeforeHooks(actionName);
+  #tryRunAction<K extends keyof T>(actionName: K, params: Params): unknown {
+    try {
+      this.#tryRunBeforeHooks(actionName);
+    } catch (error) {
+      this.#tryRunAfterHooks(actionName);
+      throw new Error(BEFORE_ACTION_FAILED_ERROR(actionName.toString()), {
+        cause: error,
+      });
+    }
 
     const action = this.#actions.get(actionName);
     if (!action) {
@@ -341,9 +351,16 @@ class Namespace<T extends Actions<T>> {
 
   async #tryRunAsyncAction<K extends keyof T>(
     actionName: K,
-    params: any[]
+    params: Params
   ): Promise<unknown> {
-    this.#tryRunBeforeHooks(actionName);
+    try {
+      this.#tryRunBeforeHooks(actionName);
+    } catch (error) {
+      this.#tryRunAfterHooks(actionName);
+      throw new Error(BEFORE_ACTION_FAILED_ERROR(actionName.toString()), {
+        cause: error,
+      });
+    }
 
     const action = this.#actions.get(actionName);
     if (!action) {
@@ -405,7 +422,7 @@ class Namespace<T extends Actions<T>> {
         return orActions.reduce((prev, orAction) => {
           return orAction(context, prev);
         }, actionError);
-      } catch (orError) {
+      } catch {
         const errorMessage = OR_ELSE_ACTION_FAILED_ERROR(
           `${actionName.toString()} for ${this.namespaceId} namespace.`
         );
