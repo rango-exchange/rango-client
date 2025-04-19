@@ -532,7 +532,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.namespace}.`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
