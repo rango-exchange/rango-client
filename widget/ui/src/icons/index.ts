@@ -49,6 +49,7 @@ export { default as LightModeIcon } from './LightMode.js';
 export { default as LinkIcon } from './Link.js';
 export { default as LoadingIcon } from './Loading.js';
 export { default as LogoWithTextIcon } from './LogoWithText.js';
+export { default as LoginIcon } from './Login.js';
 export { default as LogoutIcon } from './Logout.js';
 export { default as MenuIcon } from './Menu.js';
 export { default as MoneyBagIcon } from './MoneyBag.js';
