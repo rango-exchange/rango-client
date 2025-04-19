@@ -163,7 +163,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
           <Divider size={4} />
           <NamespaceItemError>
             <Typography variant="body" size="small" color="neutral700">
-              {error.message}
+              {(error.cause as Error)?.message || error.message}
             </Typography>
           </NamespaceItemError>
         </>
