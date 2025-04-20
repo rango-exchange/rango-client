@@ -73,12 +73,6 @@ export function StatefulConnectModal(props: PropTypes) {
       );
     }
 
-    if (!props.wallet) {
-      throw new Error(
-        "Target wallet can not be 'undefined' on confirming derivation path."
-      );
-    }
-
     handleDerivationPath(derivationPath)
       .then(afterConnected)
       .catch(catchErrorOnHandle);

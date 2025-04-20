@@ -91,9 +91,10 @@ export function WalletsPage() {
             const walletState = state(wallet.type);
             const namespacesState = walletState.namespaces;
             const key = `wallet-${index}-${wallet.type}`;
-            const isWalletPartiallyConnected =
-              wallet.isHub &&
-              checkIsWalletPartiallyConnected(wallet, namespacesState);
+            const isWalletPartiallyConnected = checkIsWalletPartiallyConnected(
+              wallet,
+              namespacesState
+            );
             return (
               <Wallet
                 key={key}

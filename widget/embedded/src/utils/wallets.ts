@@ -516,7 +516,11 @@ export function checkIsWalletPartiallyConnected(
   wallet: ExtendedModalWalletInfo,
   namespacesState?: Map<Namespace, { connected: boolean }>
 ) {
-  if (wallet.state !== WalletStatus.CONNECTED || !wallet.needsNamespace) {
+  if (
+    !wallet.isHub ||
+    !wallet.needsNamespace ||
+    wallet.state !== WalletStatus.CONNECTED
+  ) {
     return false;
   }
   const namespaces = wallet.needsNamespace.data;

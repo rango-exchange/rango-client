@@ -122,9 +122,10 @@ export function WalletList(props: PropTypes) {
         const conciseAddress = address
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
-        const isConnectedButDifferentThanTargetNamespace = wallet.isHub
-          ? isConnected && !conciseAddress
-          : isConnected && !!wallet.needsNamespace && !conciseAddress;
+        const isConnectedButDifferentThanTargetNamespace =
+          isConnected && wallet.isHub
+            ? !conciseAddress
+            : !!wallet.needsNamespace && !conciseAddress;
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 
@@ -168,11 +169,9 @@ export function WalletList(props: PropTypes) {
               id: 'Add {chain} chain',
               values: { chain },
             });
-          }
-          if (isConnectedButDifferentThanTargetNamespace) {
+          } else if (isConnectedButDifferentThanTargetNamespace) {
             return i18n.t('Chain not connected');
-          }
-          if (conciseAddress) {
+          } else if (conciseAddress) {
             return conciseAddress;
           }
           return info.description;
