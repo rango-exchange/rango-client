@@ -1,4 +1,4 @@
-import { css, darkTheme, IconButton, styled } from '@rango-dev/ui';
+import { css, IconButton, SelectableWalletButton, styled } from '@rango-dev/ui';
 
 export const Title = styled('div', {
   display: 'flex',
@@ -18,52 +18,8 @@ export const ListContainer = styled('div', {
   height: '100%',
 });
 
-export const WalletButton = styled('button', {
-  borderRadius: '$xm',
-  padding: '$10',
-  border: '0',
-  display: 'flex',
+export const ShowMoreWallets = styled(SelectableWalletButton, {
   justifyContent: 'center',
-  $$color: '$colors$neutral100',
-  [`.${darkTheme} &`]: {
-    $$color: '$colors$neutral300',
-  },
-  backgroundColor: '$$color',
-  alignItems: 'center',
-  cursor: 'pointer',
-  width: 110,
-  position: 'relative',
-
-  '&:hover': {
-    $$color: '$colors$secondary100',
-    [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral100',
-    },
-    backgroundColor: '$$color',
-  },
-
-  '&:focus-visible': {
-    $$color: '$colors$secondary100',
-    [`.${darkTheme} &`]: {
-      $$color: '$colors$info700',
-    },
-    backgroundColor: '$$color',
-    outline: 0,
-  },
-  variants: {
-    selected: {
-      true: {
-        outlineWidth: 1,
-        outlineColor: '$secondary',
-        outlineStyle: 'solid',
-      },
-    },
-  },
-});
-
-export const ShowMoreWallets = styled(WalletButton, {
-  alignSelf: 'stretch',
-  minHeight: '93px',
 });
 export const ShowMoreHeader = styled('div', {
   padding: '$20 $20 $15 $20',
