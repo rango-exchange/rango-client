@@ -68,8 +68,13 @@ export const WalletButton = styled('button', {
 });
 
 export const SelectableWalletButton = styled(WalletButton, {
+  width: 'auto',
   paddingRight: '$6',
   paddingLeft: '$6',
+  flex: 1,
+  minWidth: '98px',
+  maxWidth: '110px',
+  minHeight: '93px',
 });
 
 export const LoadingButton = styled('div', {
