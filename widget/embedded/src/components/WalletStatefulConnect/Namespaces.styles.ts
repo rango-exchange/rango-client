@@ -45,6 +45,7 @@ export const NamespaceItemInnerContent = styled('div', {
   flex: '1',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   height: '$40',
   variants: {
     showSupportedChains: {
