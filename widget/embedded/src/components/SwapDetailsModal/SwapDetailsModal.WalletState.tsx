@@ -6,7 +6,7 @@ import {
   getCurrentStep,
   getRelatedWalletOrNull,
 } from '@rango-dev/queue-manager-rango-preset';
-import { MessageBox, Wallet } from '@rango-dev/ui';
+import { MessageBox, Wallet, WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
@@ -15,6 +15,7 @@ import { getContainer } from '../../utils/common';
 import { mapStatusToWalletState } from '../../utils/wallets';
 import { StatefulConnectModal } from '../StatefulConnectModal';
 
+import { InstallWalletContent } from './SwapDetailsModal.InstallWallet';
 import { WalletContainer } from './SwapDetailsModal.styles';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
@@ -53,6 +54,10 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
       }
     }
   };
+
+  if (walletState === WalletState.NOT_INSTALLED && walletInfo) {
+    return <InstallWalletContent walletInfo={walletInfo} />;
+  }
 
   return (
     <>
