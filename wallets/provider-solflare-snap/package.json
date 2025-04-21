@@ -27,7 +27,7 @@
     "@solana/web3.js": "^1.91.4",
     "@solflare-wallet/metamask-sdk": "^1.0.3",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.82"
+    "rango-types": "^0.1.83"
   },
   "publishConfig": {
     "access": "public"
