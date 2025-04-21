@@ -54,10 +54,18 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     };
   }, [params]);
 
+  const providersHash = params.providers
+    .map((provider) => provider.info.name)
+    .sort()
+    .toString();
+
   // Initialize instances
   useEffect(() => {
+    const hub = getHub();
+    const store = getStore();
+
     const runOnInit = () => {
-      getHub().init();
+      hub.init();
 
       rerender((currentRender) => currentRender + 1);
     };
@@ -77,21 +85,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
     };
 
-    // Try to run, maybe it's ready.
-    runOnInit();
-
-    /*
-     * Try again when the page has been completely loaded.
-     * Some of wallets, take some time to be fully injected and loaded.
-     */
-    document.addEventListener('readystatechange', initHubWhenPageIsReady);
-
-    getStore()
+    store
       .subscribe((event) => {
         if (dataRef.current.onUpdateState) {
           try {
             mapHubEventsToLegacy(
-              getHub(),
+              hub,
               event,
               dataRef.current.onUpdateState,
               dataRef.current.allVersionedProviders,
@@ -104,7 +103,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         rerender((currentRender) => currentRender + 1);
       })
       .flushEvents();
-  }, []);
+
+    // Try to run, maybe it's ready.
+    runOnInit();
+
+    /*
+     * Try again when the page has been completely loaded.
+     * Some of wallets, take some time to be fully injected and loaded.
+     */
+    document.addEventListener('readystatechange', initHubWhenPageIsReady);
+  }, [providersHash]);
 
   useAutoConnect({
     autoConnect: params.autoConnect,
