@@ -8,6 +8,8 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
+import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
+import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
 import {
   canSwitchNetworkToEvm,
   getEvmAccounts,
@@ -75,11 +77,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
+          chains: Object.values(evmChains),
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+          chains: [solanaChains.solana],
         },
       ],
     },
