@@ -25,7 +25,7 @@
     "@rango-dev/signer-solana": "^0.38.1-next.0",
     "@rango-dev/wallets-shared": "^0.43.1-next.4",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.82"
+    "rango-types": "^0.1.83"
   },
   "publishConfig": {
     "access": "public"
