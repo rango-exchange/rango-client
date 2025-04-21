@@ -1,8 +1,6 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
-import type {
-  Chain,
-  Namespace,
-} from '@rango-dev/wallets-core/namespaces/common';
+import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;
@@ -12,13 +10,7 @@ export interface PropTypes {
 interface NamespaceItemSharedPropTypes {
   onClick: () => void;
   type: 'radio' | 'checkbox';
-  namespace: {
-    label: string;
-    id: string;
-    value: Namespace;
-    chains: Chain[];
-    unsupported?: boolean;
-  };
+  namespace: LegacyNamespaceMeta;
 }
 
 interface RadioNamespaceItemPropTypes extends NamespaceItemSharedPropTypes {
@@ -37,21 +29,9 @@ export type NamespaceItemPropTypes =
 export type NamespaceDetachedItemPropTypes = {
   walletType: string;
   initialConnect?: boolean;
-  namespace: {
-    label: string;
-    id: string;
-    value: Namespace;
-    chains: Chain[];
-    unsupported?: boolean;
-  };
+  namespace: LegacyNamespaceMeta;
 };
 
 export type NamespaceUnsupportedItemPropTypes = {
-  namespace: {
-    label: string;
-    id: string;
-    value: Namespace;
-    chains: Chain[];
-    unsupported?: boolean;
-  };
+  namespace: LegacyNamespaceMeta;
 };
