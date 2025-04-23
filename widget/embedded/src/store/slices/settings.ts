@@ -30,7 +30,6 @@ export interface SettingsSlice {
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
   _customTokens: Token[];
-
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
@@ -70,7 +69,6 @@ export const createSettingsSlice: StateCreator<
   affiliatePercent: null,
   affiliateWallets: null,
   _customTokens: [],
-
   addPreferredBlockchain: (blockchain) => {
     const currentPreferredBlockchains = get().preferredBlockchains;
 

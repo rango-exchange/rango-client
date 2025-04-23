@@ -1,5 +1,6 @@
 import { i18n } from '@lingui/core';
 import {
+  Alert,
   Divider,
   InfoIcon,
   SlippageIcon,
@@ -9,13 +10,10 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import {
-  MAX_SLIPPAGE,
-  MIN_SLIPPGAE,
-  SLIPPAGES,
-} from '../../constants/swapSettings';
+import { MAX_SLIPPAGE, SLIPPAGES } from '../../constants/swapSettings';
 import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
+import { getSlippageValidation } from '../../utils/settings';
 
 import {
   BaseContainer,
@@ -28,6 +26,40 @@ import { SlippageTooltipContent } from './SlippageTooltipContent';
 export function Slippage() {
   const { slippage, setSlippage, customSlippage, setCustomSlippage } =
     useAppStore();
+
+  const slippageValidation =
+    customSlippage !== null ? getSlippageValidation(customSlippage) : null;
+
+  const onSlippageValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+      return setCustomSlippage(null);
+    }
+    let slippage = parsedValue;
+    if (parsedValue > MAX_SLIPPAGE) {
+      slippage = MAX_SLIPPAGE;
+    }
+    setCustomSlippage(slippage);
+  };
+
+  const onClickSlippageChip = (slippageItem: number) => {
+    if (customSlippage !== null) {
+      setCustomSlippage(null);
+    }
+    setSlippage(slippageItem);
+  };
+
+  const onInput = (event: React.FormEvent<HTMLInputElement>) => {
+    const input = event.target as HTMLInputElement;
+    const regex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
+    const value = input.value;
+    if (!regex.test(value)) {
+      input.value = value.slice(0, -1);
+    }
+  };
 
   return (
     <BaseContainer>
@@ -52,13 +84,8 @@ export function Slippage() {
           return (
             <SlippageChip
               key={key}
-              onClick={() => {
-                if (customSlippage) {
-                  setCustomSlippage(null);
-                }
-                setSlippage(slippageItem);
-              }}
-              selected={!customSlippage && slippageItem === slippage}
+              onClick={() => onClickSlippageChip(slippageItem)}
+              selected={customSlippage === null && slippageItem === slippage}
               label={`${slippageItem.toString()}%`}
             />
           );
@@ -68,19 +95,12 @@ export function Slippage() {
           min="0.01"
           max="30"
           step="0.01"
+          onInput={onInput}
           fullWidth
           variant="contained"
           value={customSlippage === null ? '' : customSlippage}
           color="dark"
-          onChange={(event) => {
-            const value = event.target.value;
-            const parsedValue = parseFloat(value);
-            if (parsedValue >= MIN_SLIPPGAE && parsedValue <= MAX_SLIPPAGE) {
-              setCustomSlippage(parsedValue);
-            } else {
-              setCustomSlippage(null);
-            }
-          }}
+          onChange={onSlippageValueChange}
           suffix={
             customSlippage && (
               <Typography variant="body" size="small">
@@ -91,6 +111,17 @@ export function Slippage() {
           placeholder={i18n.t('Custom')}
         />
       </SlippageChipsContainer>
+
+      {slippageValidation && (
+        <>
+          <Divider size={10} />
+          <Alert
+            variant="alarm"
+            type={slippageValidation.type}
+            title={slippageValidation.message}
+          />
+        </>
+      )}
     </BaseContainer>
   );
 }
