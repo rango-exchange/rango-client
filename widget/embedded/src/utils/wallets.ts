@@ -417,20 +417,42 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: ExtendedModalWalletInfo[]
+  wallets: ExtendedModalWalletInfo[],
+  state: (type: WalletType) => {
+    namespaces?: Map<Namespace, { connected: boolean }>;
+  }
 ): ExtendedModalWalletInfo[] {
-  return wallets.sort(
-    (a, b) =>
-      Number(b.state === WalletStatus.CONNECTED) -
-        Number(a.state === WalletStatus.CONNECTED) ||
-      Number(
-        b.state === WalletStatus.DISCONNECTED ||
-          b.state === WalletStatus.CONNECTING
-      ) -
-        Number(
-          a.state === WalletStatus.DISCONNECTED ||
-            a.state === WalletStatus.CONNECTING
-        )
+  return (
+    wallets
+      .map((wallet) => ({
+        // add isPartiallyConnected to wallet items
+        isPartiallyConnected: checkIsWalletPartiallyConnected(
+          wallet,
+          state(wallet.type).namespaces
+        ),
+        ...wallet,
+      }))
+      .sort(
+        (a, b) =>
+          Number(
+            b.state === WalletStatus.CONNECTED && !b.isPartiallyConnected
+          ) -
+            Number(
+              a.state === WalletStatus.CONNECTED && !a.isPartiallyConnected
+            ) ||
+          Number(b.state === WalletStatus.CONNECTED) -
+            Number(a.state === WalletStatus.CONNECTED) ||
+          Number(
+            b.state === WalletStatus.DISCONNECTED ||
+              b.state === WalletStatus.CONNECTING
+          ) -
+            Number(
+              a.state === WalletStatus.DISCONNECTED ||
+                a.state === WalletStatus.CONNECTING
+            )
+      )
+      // remove isPartiallyConnected from wallet items
+      .map(({ isPartiallyConnected, ...wallet }) => wallet)
   );
 }
 

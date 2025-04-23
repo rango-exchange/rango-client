@@ -64,7 +64,7 @@ export function useWalletList(params?: Params): API {
       )
     : wallets;
 
-  const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
+  const sortedWallets = sortWalletsBasedOnConnectionState(wallets, state);
 
   const isExperimentalChainNotAdded = (walletType: string) =>
     !connectedWallets.find(
