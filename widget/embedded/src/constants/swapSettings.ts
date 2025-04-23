@@ -8,6 +8,6 @@ export const DEFAULT_SLIPPAGE = 1;
 
 export const HIGH_SLIPPAGE = 5;
 
-export const MAX_SLIPPAGE = 100;
+export const MAX_SLIPPAGE = 30;
 
-export const MIN_SLIPPGAE = 0;
+export const MIN_SLIPPAGE = 0;
