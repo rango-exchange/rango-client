@@ -42,9 +42,9 @@ export function getUsdExchangeRate(params: {
     const toPrice = new BigNumber(toTokenUsdPrice);
     const fromPrice = new BigNumber(fromTokenUsdPrice);
     return quoteTokensRate === 'default'
-      ? Number(toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS))
+      ? Number(fromPrice.dividedBy(toPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS))
       : Number(
-          fromPrice.dividedBy(toPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
+          toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
         );
   }
   return 0;

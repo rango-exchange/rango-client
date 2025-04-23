@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { MAX_SLIPPAGE, SLIPPAGES } from '../../constants/swapSettings';
 import { useAppStore } from '../../store/AppStore';

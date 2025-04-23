@@ -4,7 +4,7 @@ import type {
 } from '../../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
+import { Button, Divider, MessageBox } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,17 +32,6 @@ export function SlippageWarningModal(props: PropsTypes) {
     <WatermarkedModal
       anchor="bottom"
       open={open}
-      prefix={
-        <Button
-          size="small"
-          id="widget-slippage-warning-modal-change-settings-btn"
-          variant="ghost"
-          onClick={() => navigate('../' + navigationRoutes.settings)}>
-          <Typography variant="label" size="medium" color="$neutral900">
-            {i18n.t('Change settings')}
-          </Typography>
-        </Button>
-      }
       container={getContainer()}
       onClose={onClose}>
       <MessageBox
@@ -76,6 +65,17 @@ export function SlippageWarningModal(props: PropsTypes) {
           disabled={confirmationDisabled}
           onClick={onConfirm}>
           {i18n.t('Confirm anyway')}
+        </Button>
+        <Divider size={10} />
+        <Button
+          id="widget-slippage-warning-modal-change-slippage-btn"
+          size="large"
+          type="primary"
+          variant="outlined"
+          fullWidth
+          disabled={confirmationDisabled}
+          onClick={() => navigate('../' + navigationRoutes.settings)}>
+          {i18n.t('Change Slippage')}
         </Button>
       </MessageBox>
     </WatermarkedModal>

@@ -39,12 +39,18 @@ export function SwapMetrics(props: PropTypes) {
   };
 
   const usdExchangeRate = getUsdExchangeRate({
-    fromTokenUsdPrice: Number(quote?.outputAmount) || fromToken.usdPrice,
-    toTokenUsdPrice: Number(quote?.requestAmount) || toToken.usdPrice,
+    fromTokenUsdPrice: Number(quote?.requestAmount) || fromToken.usdPrice,
+    toTokenUsdPrice: Number(quote?.outputAmount) || toToken.usdPrice,
     quoteTokensRate,
   });
-  const currentToToken = quoteTokensRate === 'default' ? toToken : fromToken;
-  const currentFromToken = quoteTokensRate === 'default' ? fromToken : toToken;
+
+  const sourceToken = quote?.swaps[0].from || fromToken;
+  const destinationToken = quote?.swaps[quote.swaps.length - 1].to || toToken;
+
+  const currentToToken =
+    quoteTokensRate === 'default' ? destinationToken : sourceToken;
+  const currentFromToken =
+    quoteTokensRate === 'default' ? sourceToken : destinationToken;
 
   return (
     <Container>
