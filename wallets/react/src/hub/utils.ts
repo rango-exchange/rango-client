@@ -331,18 +331,19 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function checkProviderListsEquality(
-  providerList1: Provider[],
-  providerList2: Provider[]
+export function ensureProvidersRegistered(
+  getHub: () => Hub,
+  providers: Provider[]
 ) {
-  const providerIds1 = providerList1
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
-  const providerIds2 = providerList2
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
+  const hub = getHub();
+  const existingProviders = hub.getAll();
 
-  return providerIds1 === providerIds2;
+  const missingProviders = providers.filter(
+    (provider) => !existingProviders.get(provider.id)
+  );
+
+  missingProviders.forEach((provider) => {
+    const newProvider = hub.add(provider.id, provider);
+    newProvider.init();
+  });
 }

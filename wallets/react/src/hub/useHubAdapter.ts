@@ -24,6 +24,7 @@ import {
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
+  ensureProvidersRegistered,
   getLegacyProvider,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
@@ -53,11 +54,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       allBlockChains: params.allBlockChains,
     };
   }, [params]);
-
-  const providersHash = params.providers
-    .map((provider) => provider.info.name)
-    .sort()
-    .toString();
 
   // Initialize instances
   useEffect(() => {
@@ -112,7 +108,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
      * Some of wallets, take some time to be fully injected and loaded.
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
-  }, [providersHash]);
+  }, []);
 
   useAutoConnect({
     autoConnect: params.autoConnect,
@@ -335,16 +331,22 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       };
     },
     providers() {
+      ensureProvidersRegistered(getHub, params.providers);
       const output: Providers = {};
 
-      Array.from(getHub().getAll().keys()).forEach((id) => {
-        try {
-          const provider = getLegacyProvider(params.allVersionedProviders, id);
-          output[id] = provider.getInstance();
-        } catch (e) {
-          console.warn(e);
-        }
-      });
+      Array.from(getHub().getAll().keys())
+        .filter((id) => params.providers.some((provider) => provider.id === id))
+        .forEach((id) => {
+          try {
+            const provider = getLegacyProvider(
+              params.allVersionedProviders,
+              id
+            );
+            output[id] = provider.getInstance();
+          } catch (e) {
+            console.warn(e);
+          }
+        });
 
       return output;
     },
