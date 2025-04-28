@@ -56,9 +56,7 @@ export function changeAccountSubscriber(
         unsubscriber();
       }
 
-      if (err instanceof Error) {
-        throw err;
-      }
+      return err;
     },
   ];
 }

@@ -111,9 +111,7 @@ export function changeAccountSubscriber(
         evmInstance.removeListener('accountsChanged', eventCallback);
       }
 
-      if (err instanceof Error) {
-        throw err;
-      }
+      return err;
     },
   ];
 }
