@@ -2,7 +2,10 @@ import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import {
+  builders as commonBuilders,
+  standardizeAndThrowError,
+} from '@rango-dev/wallets-core/namespaces/common';
 import {
   actions,
   builders,
@@ -53,6 +56,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders

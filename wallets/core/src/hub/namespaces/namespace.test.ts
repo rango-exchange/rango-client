@@ -5,10 +5,60 @@ import { createStore } from '../mod.js';
 import { OR_ELSE_ACTION_FAILED_ERROR } from './errors.js';
 import { Namespace } from './namespace.js';
 
+interface CustomMatchers<R = unknown> {
+  toThrowErrorWithCause: (expectedError: unknown, expectedCause: unknown) => R;
+}
+
+declare module 'vitest' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-object-type
+  interface Assertion<T = any> extends CustomMatchers<T> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface AsymmetricMatchersContaining extends CustomMatchers {}
+}
+
 interface TestNamespaceActions {
   connect: () => void;
   disconnect: () => void;
 }
+
+expect.extend({
+  toThrowErrorWithCause(actualFunction, expectedError, expectedCause) {
+    try {
+      actualFunction();
+    } catch (error) {
+      const isExactError = error === expectedError;
+      const hasExpectedCause =
+        error instanceof Error && error.cause === expectedCause;
+
+      if (isExactError) {
+        return {
+          pass: true,
+          message: () => `Expected function to throw the exact error.`,
+        };
+      }
+
+      if (hasExpectedCause) {
+        return {
+          pass: true,
+          message: () =>
+            `Expected function to throw an error with the exact cause.`,
+        };
+      }
+
+      return {
+        pass: false,
+        message: () =>
+          `Expected function to throw the exact error with the expected cause, but got a different error.`,
+      };
+    }
+
+    return {
+      pass: false,
+      message: () =>
+        `Expected function to throw an Error, but it did not throw.`,
+    };
+  },
+});
 
 describe('check initializing Namespace', () => {
   const NAMESPACE = 'evm';
@@ -260,7 +310,7 @@ describe('check actions with hooks and operators', () => {
       configs: {},
     });
 
-    ns.or_else('connect', (_ctx: any, err: any) => {
+    ns.or_else('connect', (_ctx: unknown, err: unknown) => {
       return err instanceof Error;
     });
 
@@ -301,14 +351,17 @@ describe('check actions with hooks and operators', () => {
     expect(orActionFirst).toBeCalledTimes(2);
     expect(orActionSecond).toBeCalledTimes(2);
   });
-  test('throw error if `or_else` itself failed to run.', () => {
+  test('throw a wrapped error if `or_else` handler fails to run.', () => {
     const orActionFirst = vi.fn((_ctx, _err) => 1);
+    const orActionSecondError = 'This is actually a bad situation';
     const orActionSecond = vi.fn((_ctx, _err) => {
-      throw new Error('This is actually a bad situation');
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
+      throw orActionSecondError;
     });
+    const connectActionError = new Error('Oops!');
 
     const connectAction = vi.fn(() => {
-      throw new Error('Oops!');
+      throw connectActionError;
     });
 
     const actions = new Map();
@@ -323,11 +376,47 @@ describe('check actions with hooks and operators', () => {
     ns.or_else('connect', orActionFirst);
     ns.or_else('connect', orActionSecond);
 
-    expect(() => {
-      ns.run('connect');
-    }).toThrowError(OR_ELSE_ACTION_FAILED_ERROR('connect'));
+    expect(() => ns.run('connect')).toThrowError(
+      expect.objectContaining({
+        message: OR_ELSE_ACTION_FAILED_ERROR(
+          `connect for ${ns.namespaceId} namespace.`
+        ),
+        cause: expect.objectContaining({
+          message: orActionSecondError,
+          cause: connectActionError,
+        }),
+      })
+    );
+
     expect(orActionFirst).toBeCalledTimes(1);
     expect(connectAction).toBeCalledTimes(1);
     expect(orActionSecond).toBeCalledTimes(1);
+  });
+
+  test('throw the exact error if `or_else` handler fails and the error is an instance of Error.', () => {
+    const orActionError = new Error('Or action error');
+    const orAction = vi.fn((_ctx, _err) => {
+      throw orActionError;
+    });
+    const connectActionError = new Error('Oops!');
+    const connectAction = vi.fn(() => {
+      throw connectActionError;
+    });
+    const actions = new Map();
+    actions.set('connect', connectAction);
+
+    const ns = new Namespace<{
+      connect: () => void;
+    }>(NAMESPACE, PROVIDER_ID, {
+      actions: actions,
+    });
+    ns.or_else('connect', orAction);
+
+    expect(() => {
+      ns.run('connect');
+    }).toThrowErrorWithCause(orActionError, connectActionError);
+
+    expect(orAction).toBeCalledTimes(1);
+    expect(connectAction).toBeCalledTimes(1);
   });
 });

@@ -53,9 +53,7 @@ export function changeAccountSubscriber(
       };
       solanaInstance.on('accountChanged', eventCallback);
 
-      if (err instanceof Error) {
-        throw err;
-      }
+      return err;
     },
     (_context, err) => {
       const solanaInstance = instance();
@@ -64,9 +62,7 @@ export function changeAccountSubscriber(
         solanaInstance.off('accountChanged', eventCallback);
       }
 
-      if (err instanceof Error) {
-        throw err;
-      }
+      return err;
     },
   ];
 }
