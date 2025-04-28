@@ -102,22 +102,16 @@ export function Home() {
 
   const fetchingQuote = hasInputs && fetchMetaStatus === 'success' && loading;
 
+  const currentQuoteWarning =
+    slippageValidation?.quoteValidation || quoteWarning;
+
   const hasValidQuotes =
     !isExpandable || (isExpandable && quotes?.results.length);
-  const hasWarningOrError = quoteWarning || quoteError;
+  const hasWarningOrError = currentQuoteWarning || quoteError;
   const showMessages = hasValidQuotes && hasWarningOrError;
 
   const showSwapMetrics = !!fromToken && !!toToken;
   const showSlippageAlerts = showSwapMetrics && !!slippageValidation;
-
-  useEffect(() => {
-    resetQuoteWallets();
-    updateQuotePartialState('refetchQuote', true);
-  }, []);
-
-  useEffect(() => {
-    setIsVisibleExpanded(hasInputs);
-  }, [hasInputs]);
 
   const onClickRefresh =
     (!!selectedQuote || quoteError) && !showQuoteWarningModal
@@ -147,6 +141,15 @@ export function Home() {
       setCustomSlippage(null);
     }
   };
+
+  useEffect(() => {
+    resetQuoteWallets();
+    updateQuotePartialState('refetchQuote', true);
+  }, []);
+
+  useEffect(() => {
+    setIsVisibleExpanded(hasInputs);
+  }, [hasInputs]);
 
   return (
     <MainContainer>
@@ -215,7 +218,7 @@ export function Home() {
               loading={fetchingQuote}
               error={quoteError}
               tagHidden={false}
-              warning={quoteWarning}
+              warning={currentQuoteWarning}
               type="basic"
               onClickAllRoutes={
                 !!quotes && quotes.results.length > 1
@@ -232,7 +235,7 @@ export function Home() {
               <Divider size={8} />
               <SwapMetrics
                 quoteError={quoteError}
-                quoteWarning={quoteWarning}
+                quoteWarning={currentQuoteWarning}
                 fromToken={fromToken}
                 toToken={toToken}
                 quote={selectedQuote}
@@ -244,7 +247,7 @@ export function Home() {
           {showMessages ? (
             <>
               <QuoteWarningsAndErrors
-                warning={quoteWarning}
+                warning={currentQuoteWarning}
                 error={quoteError}
                 skipAlerts={!!slippageValidation}
                 couldChangeSettings={true}

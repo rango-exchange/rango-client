@@ -55,8 +55,8 @@ export function SwapMetrics(props: PropTypes) {
   return (
     <Container>
       <Typography
-        variant="body"
-        size="small"
+        variant={!!error || !!warning ? 'label' : 'body'}
+        size={!!error || !!warning ? 'medium' : 'small'}
         color={getSlippageColor({ error, warning, isDarkTheme })}>
         {i18n.t('Slippage:')} {currentSlippage}%
       </Typography>
