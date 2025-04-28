@@ -1,7 +1,10 @@
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import {
+  builders as commonBuilders,
+  standardizeAndThrowError,
+} from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { WALLET_ID } from '../constants.js';
@@ -15,6 +18,7 @@ const connect = builders
   .action(actions.connect(solanaTrustWallet))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders
