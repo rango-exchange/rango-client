@@ -422,13 +422,18 @@ class Namespace<T extends Actions<T>> {
         return orActions.reduce((prev, orAction) => {
           return orAction(context, prev);
         }, actionError);
-      } catch {
+      } catch (orActionError) {
+        if (orActionError instanceof Error) {
+          orActionError.cause = actionError;
+          throw orActionError;
+        }
         const errorMessage = OR_ELSE_ACTION_FAILED_ERROR(
           `${actionName.toString()} for ${this.namespaceId} namespace.`
         );
-        throw new Error(errorMessage, {
+        const standardOrActionError = new Error(String(orActionError), {
           cause: actionError,
         });
+        throw new Error(errorMessage, { cause: standardOrActionError });
       }
     } else {
       throw actionError;

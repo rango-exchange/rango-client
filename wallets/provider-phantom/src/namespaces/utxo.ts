@@ -1,4 +1,3 @@
-import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type {
   ProviderAPI,
@@ -11,6 +10,10 @@ import {
   type Subscriber,
   type SubscriberCleanUp,
 } from '@rango-dev/wallets-core';
+import {
+  type CaipAccount,
+  standardizeAndThrowError,
+} from '@rango-dev/wallets-core/namespaces/common';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import {
   builders,
@@ -106,9 +109,7 @@ function getChangeAccountSubscriber(
         bitcoinInstance.off('accountsChanged', eventCallback);
       }
 
-      if (err instanceof Error) {
-        throw err;
-      }
+      return err;
     },
   ];
 }
@@ -141,6 +142,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders
