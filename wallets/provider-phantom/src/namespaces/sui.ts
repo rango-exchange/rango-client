@@ -2,7 +2,10 @@ import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import {
+  builders as commonBuilders,
+  standardizeAndThrowError,
+} from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
@@ -20,6 +23,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders
