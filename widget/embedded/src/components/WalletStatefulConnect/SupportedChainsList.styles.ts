@@ -22,4 +22,5 @@ export const SupportedChainItem = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  userSelect: 'none',
 });
