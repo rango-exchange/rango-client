@@ -24,6 +24,8 @@ import {
   tokensStyles,
 } from './StepDetails.styles.js';
 
+const HIGHT_OF_STICKY_HEADER = 45;
+
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
   (props, parentRef) => {
     const {
@@ -55,7 +57,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         ?.current;
       if (isFocused && childElement && parentElement) {
         parentElement.scrollTop =
-          childElement.offsetTop - parentElement.offsetTop;
+          childElement.offsetTop - HIGHT_OF_STICKY_HEADER;
       }
     }, [isFocused, childElement]);
 
