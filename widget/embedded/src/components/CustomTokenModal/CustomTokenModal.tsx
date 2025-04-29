@@ -1,13 +1,7 @@
 import type { PropTypes } from './CustomTokenModal.types';
 
 import { i18n } from '@lingui/core';
-import {
-  Button,
-  Divider,
-  ExternalLinkIcon,
-  Image,
-  Typography,
-} from '@rango-dev/ui';
+import { Divider, ExternalLinkIcon, Image, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
@@ -16,7 +10,7 @@ import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CUSTOM_TOKEN_LEARN_MORE_LINK } from './CustomTokenModal.constants';
 import { generateExplorerLink } from './CustomTokenModal.helpers';
-import { Container, StyledLink } from './CustomTokenModal.styles';
+import { Container, StyledButton, StyledLink } from './CustomTokenModal.styles';
 
 export function CustomTokenModal(props: PropTypes) {
   const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
@@ -90,7 +84,7 @@ export function CustomTokenModal(props: PropTypes) {
       <Divider size={40} />
       <Divider size={10} />
 
-      <Button
+      <StyledButton
         id="widget-custom-token-modal-import-btn"
         variant="contained"
         size="large"
@@ -98,9 +92,9 @@ export function CustomTokenModal(props: PropTypes) {
         fullWidth
         onClick={onSubmitClick}>
         {i18n.t('Import Anyway')}
-      </Button>
+      </StyledButton>
       <Divider size={10} />
-      <Button
+      <StyledButton
         id="widget-custom-token-modal-learn-more-btn"
         variant="outlined"
         size="large"
@@ -108,7 +102,7 @@ export function CustomTokenModal(props: PropTypes) {
         fullWidth
         onClick={onClickLearnMore}>
         {i18n.t('Learn More')}
-      </Button>
+      </StyledButton>
     </WatermarkedModal>
   );
 }
