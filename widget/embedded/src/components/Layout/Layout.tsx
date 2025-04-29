@@ -22,7 +22,10 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
-import { WIDGET_MAX_HEIGHT } from './Layout.constants';
+import {
+  COMPACT_TOKEN_SELECTOR_THRESHOLD,
+  WIDGET_MAX_HEIGHT,
+} from './Layout.constants';
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import {
   BannerContainer,
@@ -44,7 +47,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   const {
     config: { features, theme },
   } = useAppStore();
-  const { watermark } = useUiStore();
+  const { watermark, setShowCompactTokenSelector } = useUiStore();
 
   const hasWatermark = watermark === 'FULL';
   const { activeTheme } = useTheme(theme || {});
@@ -144,10 +147,14 @@ function Layout(props: PropsWithChildren<PropTypes>) {
         containerRef.current.style.height = `${
           window.innerHeight - containerRef.current.offsetTop
         }px`;
-        return;
+      } else {
+        containerRef.current.style.height = `${WIDGET_MAX_HEIGHT}px`;
       }
 
-      containerRef.current.style.height = `${WIDGET_MAX_HEIGHT}px`;
+      setShowCompactTokenSelector(
+        parseFloat(containerRef.current.style.height) <
+          COMPACT_TOKEN_SELECTOR_THRESHOLD
+      );
     };
 
     handler();
