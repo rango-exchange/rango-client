@@ -24,8 +24,6 @@ export interface SettingsSlice {
   /** Keeping a history of blockchains that user has selected (in Swap process) */
   preferredBlockchains: string[];
   slippage: number;
-  slippageError: string | null;
-  slippageWarning: string | null;
   customSlippage: number | null;
   infiniteApprove: boolean;
   affiliateRef: string | null;
@@ -52,8 +50,6 @@ export interface SettingsSlice {
   setCustomToken: (token: TokenData) => void;
   deleteCustomToken: (token: Token) => void;
   customTokens: () => Token[];
-  setSlippageError: (error: string | null) => void;
-  setSlippageWarning: (warning: string | null) => void;
 }
 
 export const createSettingsSlice: StateCreator<
@@ -67,8 +63,6 @@ export const createSettingsSlice: StateCreator<
   language: null,
   preferredBlockchains: [],
   slippage: DEFAULT_SLIPPAGE,
-  slippageError: null,
-  slippageWarning: null,
   customSlippage: null,
   infiniteApprove: false,
   affiliateRef: null,
@@ -110,15 +104,6 @@ export const createSettingsSlice: StateCreator<
   setCustomSlippage: (customSlippage) =>
     set(() => ({
       customSlippage: customSlippage,
-    })),
-
-  setSlippageError: (slippageError) =>
-    set(() => ({
-      slippageError,
-    })),
-  setSlippageWarning: (slippageWarning) =>
-    set(() => ({
-      slippageWarning,
     })),
   setAffiliateRef: (affiliateRef) =>
     set(() => ({
