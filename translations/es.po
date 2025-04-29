@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-11 11:01\n"
+"PO-Revision-Date: 2025-04-29 12:43\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,17 +19,58 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(Actualmente no compatible)"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "Conectar {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "Esta billetera admite múltiples cadenas. Elige a qué cadenas quieres conectarte."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "Esta billetera solo puede conectarse a una cadena a la vez. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "El deslizamiento debe ser mayor o igual a 0,01"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "Su transacción corre el riesgo de ser adelantada debido a la alta tolerancia al deslizamiento."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "Esperando la transacción de intercambio"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "Esperando la transacción del puente"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Este token no es parte de nuestra lista de tokens verificados. Verifique su fuente y asegúrese de comprender todos los riesgos asociados antes de continuar."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
 msgid "Import Anyway"
 msgstr "Importar de todos modos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
 msgid "Learn More"
 msgstr "Más información"
 
@@ -71,19 +112,19 @@ msgstr "Intenta usar diferentes palabras clave"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
 msgid "Select Chain"
 msgstr "Seleccionar cadena"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
 msgid "All"
 msgstr "Todos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
 msgid "More +{count}"
 msgstr "Más +{count}"
 
@@ -110,15 +151,14 @@ msgstr "Actualmente, algunas transacciones se están ejecutando y siendo manejad
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 msgid "Confirm"
 msgstr "Confirmar"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:428
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
 msgid "Your {blockchainName} wallets"
 msgstr "Tus billeteras {blockchainName}"
 
@@ -133,17 +173,17 @@ msgid "Proceed anyway"
 msgstr "Proceda de todos modos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:437
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Necesitas conectar un monedero {blockchainName}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:139
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
 msgid "Add {chain} chain"
 msgstr "Añadir cadena {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
 msgid "Show more wallets"
 msgstr "Mostrar más carteras"
 
@@ -163,7 +203,7 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "La dirección {destination} no coincide con el patrón de dirección de la cadena de bloques."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
 msgid "via"
 msgstr "vía"
 
@@ -221,7 +261,7 @@ msgid "Connect Wallet"
 msgstr "Conectar cartera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -229,7 +269,7 @@ msgstr "Hoy"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:432
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
 msgid "Swaps steps"
 msgstr "Intercambiar pasos"
 
@@ -455,12 +495,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "No puedes utilizar el mismo token para Desde y Hasta."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Tolerancia de deslizamiento por intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+#: widget/embedded/src/components/Slippage/Slippage.tsx:111
 msgid "Custom"
 msgstr "Personalizado"
 
@@ -481,49 +521,49 @@ msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meani
 msgstr "Este ajuste se aplica a cada paso (por ejemplo, 1Inch, Thorchain, etc.), lo que significa que sólo se revertirá un paso específico, no toda la ruta."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Swap Details"
 msgstr "Detalles de intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "ID de Solicitud"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
 msgid "Not found"
 msgstr "No encontrado"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "Intercambio con ID de solicitud = {requestId} no encontrado."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Ha recibido {amount} {token} en el monedero {conciseAddress} de la cadena {chain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
 msgid "Transaction was not sent."
 msgstr "La transacción no fue enviada."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} en {blockchain} permanece en tu cartera."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:289
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
 msgid "Delete"
 msgstr "Eliminar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
 msgid "Try again"
 msgstr "Inténtalo de nuevo"
 
@@ -559,6 +599,7 @@ msgstr "Ver transacción"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
 msgstr "Conectar"
@@ -643,7 +684,7 @@ msgstr "Red cambiada"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
 msgid "Select Token"
 msgstr "Seleccionar token"
 
@@ -678,27 +719,27 @@ msgid "Click connect in your wallet popup."
 msgstr "Haga clic en conectar en su ventana emergente."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "Select Derivation Path"
 msgstr "Seleccionar ruta de derivación"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Para conectarse a {type}, primero debe seleccionar una Ruta de Derivación"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "Choose Derivation Path Template"
 msgstr "Elegir plantilla de ruta de derivación"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
 msgid "Enter Path"
 msgstr "Introducir ruta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Index"
 msgstr "Introducir índice"
 
@@ -737,16 +778,6 @@ msgstr "Solicitud rechazada"
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Has rechazado añadir la cadena {blockchainDisplayName} a tu cartera."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:58
-msgid "Select chain types"
-msgstr "Seleccionar tipos de cadena"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:59
-msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "Esta cartera soporta múltiples cadenas. Selecciona a qué cadena quieres conectar."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -1084,11 +1115,13 @@ msgid "language"
 msgstr "idioma"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Deselect all"
 msgstr "Deseleccionar todo"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Select all"
 msgstr "Seleccionar todo"
@@ -1155,57 +1188,52 @@ msgid "This year"
 msgstr "Este año"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:139
+#: widget/embedded/src/utils/swap.ts:141
 msgid "Required: >= {min} {symbol}"
 msgstr "Requerido: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:152
+#: widget/embedded/src/utils/swap.ts:154
 msgid "Required: > {min} {symbol}"
 msgstr "Requerido: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:167
+#: widget/embedded/src/utils/swap.ts:169
 msgid "Required: <= {max} {symbol}"
 msgstr "Requerido: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:180
+#: widget/embedded/src/utils/swap.ts:182
 msgid "Required: < {max} {symbol}"
 msgstr "Requerido: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:634
 msgid " for network fee"
 msgstr " por comisión de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:637
 msgid " for swap"
 msgstr " para intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for input and network fee"
 msgstr " por entrada y tarifa de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:642
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Necesitas {requiredAmount} {symbol}{reason}, pero tienes {currentAmount} {symbol} en tu monedero {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:691
-msgid "Waiting for connecting wallet"
-msgstr "Esperando por conectar cartera"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:708
 msgid "Waiting for other running tasks to be finished"
 msgstr "Esperando a que finalicen otras tareas en ejecución"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:698
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for changing wallet network"
 msgstr "Esperando a cambiar la red del monedero"
 
@@ -1260,13 +1288,13 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Intercambiar por {fromChain} vía {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Puente a {toChain} a través de {swapper}"
 
@@ -1279,11 +1307,6 @@ msgstr "Completado"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
 msgstr "En progreso"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
-msgid "Waiting for bridge transaction"
-msgstr "Esperando una transacción de puente"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
@@ -1332,12 +1355,12 @@ msgid "Clear all"
 msgstr "Limpiar todo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
 msgid "Max"
 msgstr "Máx"
 
