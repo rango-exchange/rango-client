@@ -1,6 +1,6 @@
 import { css, styled } from '@rango-dev/ui';
 
-const WIDGET_HEIGHT = '700px';
+import { WIDGET_MAX_HEIGHT, WIDGET_MIN_HEIGHT } from './Layout.constants';
 
 export const LayoutContainer = css({
   borderRadius: '$primary',
@@ -20,10 +20,14 @@ export const Container = styled('div', {
     height: {
       auto: {
         height: 'auto',
-        maxHeight: WIDGET_HEIGHT,
+        maxHeight: WIDGET_MAX_HEIGHT,
       },
       fixed: {
-        height: WIDGET_HEIGHT,
+        minHeight: WIDGET_MIN_HEIGHT,
+        maxHeight: WIDGET_MAX_HEIGHT,
+        '@sm': {
+          height: WIDGET_MAX_HEIGHT,
+        },
       },
     },
     showBanner: {

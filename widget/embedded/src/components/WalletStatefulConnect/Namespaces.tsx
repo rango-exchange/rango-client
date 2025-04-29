@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { NamespaceListItem } from './NamespaceListItem';
-import { NamespaceList } from './Namespaces.styles';
+import { NamespaceList, StyledButton } from './Namespaces.styles';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
@@ -148,13 +148,13 @@ export function Namespaces(props: PropTypes) {
         )}
       </NamespaceList>
       <Divider size={20} />
-      <Button
+      <StyledButton
         id="widget-name-space-confirm-btn"
         type="primary"
         disabled={!selectedNamespaces.length}
         onClick={() => props.onConfirm(selectedNamespaces)}>
         {i18n.t('Connect')}
-      </Button>
+      </StyledButton>
     </>
   );
 }

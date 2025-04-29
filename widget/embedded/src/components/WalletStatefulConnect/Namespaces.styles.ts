@@ -1,4 +1,4 @@
-import { Image, styled } from '@rango-dev/ui';
+import { Button, Image, styled } from '@rango-dev/ui';
 
 export const NamespaceList = styled('ul', {
   padding: 0,
@@ -59,4 +59,8 @@ export const NamespaceLogo = styled(Image, {
       },
     },
   },
+});
+
+export const StyledButton = styled(Button, {
+  minHeight: '$40',
 });
