@@ -42,6 +42,8 @@ export function createAppStore(initialData?: WidgetConfig) {
             affiliateRef: state.affiliateRef,
             affiliateWallets: state.affiliateWallets,
             slippage: state.slippage,
+            slippageError: state.slippageError,
+            slippageWarning: state.slippageWarning,
             customSlippage: state.customSlippage,
             infiniteApprove: state.infiniteApprove,
             preferredBlockchains: state.preferredBlockchains,
