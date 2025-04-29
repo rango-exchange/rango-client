@@ -125,7 +125,27 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 - Demo for wallets: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
 
-# Supported Wallets
+# Wallets API Status
+
+**Status:** ✅ Support, ⚠️ Partial Support, ❌ Unsupported, 🚧 Not Implemented
+
+## By Group 
+|Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
+|--|--|--|--|--|--|--|
+| [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
+
+
+
+
+## By Feature
+|Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
+|--|--|--|--|--|--|
+| Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
+
+
+
+
+# Supported Wallets (Legacy)
 
 | Wallet        | Supported Chains                                             | Not Implemented                                   | Auto Connect Support | Source                               |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------- | -------------------- | ------------------------------------ |
@@ -147,7 +167,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Math Wallet   | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                    | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
 | Metamask      | EVM                                                          | -                                                 | &check;              | -                                    |
 | OKX           | EVM,Solana,Cosmos                                            | Cosmos                                            | &check;              | https://www.okx.com/web3             |
-| Phantom       | Solana,Ethereum,Polygon                                      | Ethereum,Polygon                                  | &check;              | -                                    |
 | Rabby         | EVM                                                          | -                                                 | &check;              | https://rabby.io/                    |
 | Safe          | EVM                                                          | -                                                 | &check;              | https://safe.global/                 |
 | SafePal       | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                       | BTC,Tron,LTC,Doge,Aptos,TON                       | &cross;              | https://www.safepal.com/             |
@@ -158,7 +177,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TokenPocket   | EVM                                                          | -                                                 | &check;              | https://extension.tokenpocket.pro/#/ |
 | Tomo          | EVM,Cosmos,BTC                                               | Cosmos,BTC                                        | &check;              | https://tomo.inc/                    |
 | Trezor        | Ethereum,Solana                                              | Solana                                            | &cross;              | https://trezor.io/                   |
-
 | TronLink | Tron | - | &cross; | - |
 | Trust Wallet | EVM,Solana | Solana | &check; | https://trustwallet.com/ |
 | Wallet Connect | Evm,Solana,Cosmos | Solana,Cosmos | &cross; | - |
