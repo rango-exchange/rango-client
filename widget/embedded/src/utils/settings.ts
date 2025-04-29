@@ -1,9 +1,4 @@
-import type {
-  type Features,
-  HighSlippageWarning,
-  QuoteWarningType,
-  type Routing,
-} from '../types';
+import type { Features, HighSlippageWarning, Routing } from '../types';
 import type { SwapperMeta, SwapperType, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
@@ -13,6 +8,7 @@ import {
   MAX_SLIPPAGE,
   MIN_SLIPPAGE,
 } from '../constants/swapSettings';
+import { QuoteWarningType } from '../types';
 
 import { removeDuplicateFrom } from './common';
 
