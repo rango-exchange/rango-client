@@ -38,6 +38,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
 
     const { from, to, swapper } = step;
     const containerRef = useRef<HTMLDivElement>(null);
+    const childElement = containerRef.current;
     const isCompleted = state === 'completed' || state === 'error';
     const swappers: InternalSwap[] = step.internalSwaps?.length
       ? step.internalSwaps
@@ -52,12 +53,11 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
     useEffect(() => {
       const parentElement = (parentRef as React.RefObject<HTMLDivElement>)
         ?.current;
-      const childElement = containerRef.current;
       if (isFocused && childElement && parentElement) {
         parentElement.scrollTop =
           childElement.offsetTop - parentElement.offsetTop;
       }
-    }, [isFocused]);
+    }, [isFocused, childElement]);
 
     return (
       <Container

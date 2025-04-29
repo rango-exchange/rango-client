@@ -4,12 +4,13 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
 import { isAppLoadedIntoIframe } from '../../hooks/useIframe/useIframe.helpers';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
+import useScreenDetect from '../../hooks/useScreenDetect';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
 import { tabManager, useUiStore } from '../../store/ui';
@@ -21,6 +22,7 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
+import { WIDGET_MAX_HEIGHT } from './Layout.constants';
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import {
   BannerContainer,
@@ -62,6 +64,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   } = useUiStore();
   const navigateBack = useNavigateBack();
   const { manager } = useManager();
+  const { isTablet, isMobile } = useScreenDetect();
   const pendingSwaps: PendingSwap[] = getPendingSwaps(manager).map(
     ({ swap }) => swap
   );
@@ -126,6 +129,33 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   useEffect(() => {
     setOpenRefreshModal(fetchStatus === 'failed');
   }, [fetchStatus]);
+
+  useLayoutEffect(() => {
+    const isFixedHeight =
+      height === 'auto' || !containerRef.current || isAppLoadedIntoIframe();
+    const isSmallScreen = isMobile || isTablet;
+
+    const handler = () => {
+      if (isFixedHeight) {
+        return;
+      }
+
+      if (isSmallScreen) {
+        containerRef.current.style.height = `${
+          window.innerHeight - containerRef.current.offsetTop
+        }px`;
+        return;
+      }
+
+      containerRef.current.style.height = `${WIDGET_MAX_HEIGHT}px`;
+    };
+
+    handler();
+
+    window.addEventListener('resize', handler);
+
+    return () => window.removeEventListener('resize', handler);
+  }, [height, isMobile, isTablet]);
 
   return (
     <Container
