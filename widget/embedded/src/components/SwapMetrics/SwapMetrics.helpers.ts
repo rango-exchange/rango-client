@@ -1,11 +1,11 @@
 import type { SlippageColorParams } from './SwapMetrics.types';
-import type { QuoteTokensRate } from '../../store/slices/settings';
 
 import BigNumber from 'bignumber.js';
 
 import { QuoteErrorType, QuoteWarningType } from '../../types';
 
 import {
+  USD_EXCHANGE_MINIMUM,
   USD_EXCHANGE_RATE_DECIMALS,
   USD_FORMAT_DECIMALS,
 } from './SwapMetrics.constants';
@@ -35,17 +35,15 @@ export function getSlippageColor(params: SlippageColorParams) {
 export function getUsdExchangeRate(params: {
   toTokenUsdPrice: number | null;
   fromTokenUsdPrice: number | null;
-  quoteTokensRate: QuoteTokensRate;
 }): number {
-  const { toTokenUsdPrice, fromTokenUsdPrice, quoteTokensRate } = params;
+  const { toTokenUsdPrice, fromTokenUsdPrice } = params;
+
   if (toTokenUsdPrice && fromTokenUsdPrice) {
     const toPrice = new BigNumber(toTokenUsdPrice);
     const fromPrice = new BigNumber(fromTokenUsdPrice);
-    return quoteTokensRate === 'default'
-      ? Number(fromPrice.dividedBy(toPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS))
-      : Number(
-          toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
-        );
+    return Number(
+      toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
+    );
   }
   return 0;
 }
@@ -60,5 +58,5 @@ export function formatTokenValueInUsd(
     .decimalPlaces(USD_FORMAT_DECIMALS, BigNumber.ROUND_DOWN)
     .toFormat(USD_FORMAT_DECIMALS);
 
-  return `$${result}`;
+  return `$${Number(result) < USD_EXCHANGE_MINIMUM ? '0' : result}`;
 }

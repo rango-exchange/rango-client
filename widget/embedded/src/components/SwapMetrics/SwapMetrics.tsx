@@ -38,12 +38,6 @@ export function SwapMetrics(props: PropTypes) {
         : null,
   };
 
-  const usdExchangeRate = getUsdExchangeRate({
-    fromTokenUsdPrice: Number(quote?.requestAmount) || fromToken.usdPrice,
-    toTokenUsdPrice: Number(quote?.outputAmount) || toToken.usdPrice,
-    quoteTokensRate,
-  });
-
   const sourceToken = quote?.swaps[0].from || fromToken;
   const destinationToken = quote?.swaps[quote.swaps.length - 1].to || toToken;
 
@@ -51,6 +45,20 @@ export function SwapMetrics(props: PropTypes) {
     quoteTokensRate === 'default' ? destinationToken : sourceToken;
   const currentFromToken =
     quoteTokensRate === 'default' ? sourceToken : destinationToken;
+  const requestAmount =
+    quoteTokensRate === 'default'
+      ? Number(quote?.outputAmount)
+      : Number(quote?.requestAmount);
+
+  const outputAmount =
+    quoteTokensRate === 'default'
+      ? Number(quote?.requestAmount)
+      : Number(quote?.outputAmount);
+
+  const usdExchangeRate = getUsdExchangeRate({
+    fromTokenUsdPrice: requestAmount || currentFromToken.usdPrice,
+    toTokenUsdPrice: outputAmount || currentToToken.usdPrice,
+  });
 
   return (
     <Container>
