@@ -104,7 +104,7 @@ export const SymbolTooltipStyles: TooltipPropTypes['styles'] = {
   },
   root: {
     zIndex: 10,
-    width: 'calc(100% - 18px)',
+    maxWidth: 'calc(100% - 18px)',
     display: 'flex',
     justifyContent: 'start',
   },
