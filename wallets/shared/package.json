@@ -29,7 +29,7 @@
   "dependencies": {
     "@rango-dev/wallets-core": "^0.42.1-next.6",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.83"
+    "rango-types": "^0.1.84"
   },
   "publishConfig": {
     "access": "public"

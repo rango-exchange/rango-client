@@ -27,7 +27,7 @@ export class DefaultSuiSigner implements GenericSigner<SuiTransaction> {
   }
 
   async signAndSendTx(tx: SuiTransaction): Promise<{ hash: string }> {
-    const transaction = Transaction.from(tx.unsignedPbtBase64);
+    const transaction = Transaction.from(tx.unsignedPtbBase64);
 
     // TODO: Double check with team to ensure this assumption is correct
     const senderAddress = transaction.getData().sender;
