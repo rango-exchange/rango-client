@@ -1,3 +1,22 @@
+# [0.45.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.44.0...provider-phantom@0.45.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* error rethrow in or action ([61bc658](https://github.com/rango-exchange/rango-client/commit/61bc658f6a0dab513bb595e2943c85b675c65ada))
+* rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+
+
+### Features
+
+* add can eager connect to namespaces ([16b4792](https://github.com/rango-exchange/rango-client/commit/16b4792f877b565ccf767be22ebe14fa79ddd8c6))
+* implement updated design for initial connect modal ([2873c63](https://github.com/rango-exchange/rango-client/commit/2873c630de0740bb3b9f4e52bfa018857bd54dcd))
+* Sui support for Phantom ([3769b8b](https://github.com/rango-exchange/rango-client/commit/3769b8ba174783190e242103548bcf4da28cff14))
+* update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+* update wallets readme ([0d52ecb](https://github.com/rango-exchange/rango-client/commit/0d52ecbee31b0d3241be71a6f77d508e4a15d3c4))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.43.0...provider-phantom@0.44.0) (2025-03-11)
 
 
