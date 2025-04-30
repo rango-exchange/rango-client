@@ -35,7 +35,8 @@ const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 const TIME_TO_CLOSE_MODAL = 3_000;
 
 export function WalletList(props: PropTypes) {
-  const { chain, isSelected, selectWallet, limit, onShowMore } = props;
+  const { chain, quoteChains, isSelected, selectWallet, limit, onShowMore } =
+    props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
   const { blockchains, connectedWallets } = useAppStore();
@@ -221,6 +222,7 @@ export function WalletList(props: PropTypes) {
       })}
       <StatefulConnectModal
         wallet={selectedWalletToConnect}
+        options={{ defaultSelectedChains: quoteChains || [chain] }}
         onClose={() => {
           setSelectedWalletToConnect(undefined);
         }}

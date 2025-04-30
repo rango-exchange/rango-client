@@ -2,21 +2,9 @@ import type { PropTypes } from './DerivationPath.types';
 import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
-import {
-  Button,
-  Divider,
-  Image,
-  MessageBox,
-  Select,
-  TextField,
-} from '@rango-dev/ui';
+import { Divider, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
-import {
-  LogoContainer,
-  Spinner,
-  WalletImageContainer,
-} from './ConnectStatus.styles';
 import {
   CUSTOM_DERIVATION_PATH,
   getDerivationPaths,
@@ -26,6 +14,7 @@ import {
   InputLabel,
   InputsContainer,
 } from './DerivationPath.styles';
+import { StyledButton } from './Namespaces.styles';
 
 const DEFAULT_DERIVATION_PATH_INDEX = '0';
 
@@ -103,14 +92,7 @@ export function DerivationPath(props: PropTypes) {
             type,
           },
         })}
-        icon={
-          <LogoContainer>
-            <WalletImageContainer>
-              <Image src={image} size={45} />
-            </WalletImageContainer>
-            <Spinner />
-          </LogoContainer>
-        }
+        icon={<Image src={image} size={45} />}
       />
 
       <InputsContainer>
@@ -142,7 +124,7 @@ export function DerivationPath(props: PropTypes) {
         />
       </InputsContainer>
 
-      <Button
+      <StyledButton
         id="widget-derivation-path-confirm-btn"
         type="primary"
         onClick={handleConfirm}
@@ -150,7 +132,7 @@ export function DerivationPath(props: PropTypes) {
           !derivationPaths || !selectedDerivationPathId || !derivationPathIndex
         }>
         {i18n.t('Confirm')}
-      </Button>
+      </StyledButton>
     </>
   );
 }

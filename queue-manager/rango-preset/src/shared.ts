@@ -117,7 +117,7 @@ export const getCurrentNamespaceOf = (
   const cosmosNetwork = step.cosmosTransaction?.blockChain;
   const solanaNetwork = step.solanaTransaction?.blockChain;
   const tonNetwork = step.tonTransaction?.blockChain;
-  const moveNetwork = step.moveTransaction?.blockChain;
+  const suiNetwork = step.suiTransaction?.blockChain;
 
   if (evmNetwork) {
     return {
@@ -149,10 +149,10 @@ export const getCurrentNamespaceOf = (
       namespace: 'Ton',
       network: tonNetwork,
     };
-  } else if (moveNetwork) {
+  } else if (suiNetwork) {
     return {
-      namespace: 'Move',
-      network: moveNetwork,
+      namespace: 'Sui',
+      network: suiNetwork,
     };
   } else if (!!step.transferTransaction) {
     const transferAddress = step.transferTransaction.fromWalletAddress;
@@ -227,7 +227,7 @@ export const getCurrentAddressOf = (
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
-    swap.wallets[step.moveTransaction?.blockChain || ''] ||
+    swap.wallets[step.suiTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? { address: step.transferTransaction?.fromWalletAddress }
       : null) ||
@@ -428,7 +428,7 @@ export function calculatePendingSwap(
           solanaTransaction: null,
           transferTransaction: null,
           tonTransaction: null,
-          moveTransaction: null,
+          suiTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,

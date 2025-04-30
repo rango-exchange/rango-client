@@ -1,4 +1,4 @@
-import { styled, Typography } from '@rango-dev/ui';
+import { Button, styled, Typography } from '@rango-dev/ui';
 
 export const InputsContainer = styled('div', {
   paddingTop: '$30',
@@ -15,3 +15,7 @@ export const derivationPathInputStyles = {
   backgroundColor: '$neutral200',
   borderRadius: '$sm',
 };
+
+export const StyledButton = styled(Button, {
+  minHeight: '$40',
+});

@@ -1,6 +1,14 @@
 import type { Features, Routing } from '../types';
 import type { SwapperMeta, SwapperType, Token } from 'rango-sdk';
 
+import { i18n } from '@lingui/core';
+
+import {
+  HIGH_SLIPPAGE,
+  MAX_SLIPPAGE,
+  MIN_SLIPPAGE,
+} from '../constants/swapSettings';
+
 import { removeDuplicateFrom } from './common';
 
 export type UniqueSwappersGroupType = {
@@ -87,3 +95,23 @@ export const addCustomTokensToSupportedTokens = (
     ? supportedTokens
     : supportedTokens.concat(customTokens);
 };
+
+export function getSlippageValidation(
+  slippage: number
+): { type: 'error' | 'warning'; message: string } | null {
+  if (slippage == MIN_SLIPPAGE) {
+    return {
+      type: 'error',
+      message: i18n.t('Slippage must be greater than or equal to 0.01'),
+    };
+  } else if (slippage > HIGH_SLIPPAGE && slippage <= MAX_SLIPPAGE) {
+    return {
+      type: 'warning',
+      message: i18n.t(
+        'Your transaction is at risk of being frontrun due to high slippage tolerance.'
+      ),
+    };
+  }
+
+  return null;
+}

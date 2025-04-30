@@ -8,7 +8,7 @@ msgstr ""
 "Language: sw\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-11 11:01\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,41 +17,6 @@ msgstr ""
 "X-Crowdin-Language: sw\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "Tokeni hii si sehemu ya orodha yetu ya tokeni iliyothibitishwa. tafadhali thibitisha chanzo chake na uhakikishe kuwa umeelewa hatari zote zinazohusiana kabla ya kuendelea."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
-msgid "Import Anyway"
-msgstr "Ingiza Hata hivyo"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
-msgid "Learn More"
-msgstr "Jifunze Zaidi"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "Hitilafu ya mtandao"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "Hitilafu ilitokea wakati wa kurejesha data ya tokeni."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "Tokeni hii inaweza kuhusisha hatari zinazowezekana za usalama; endelea kwa tahadhari."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "Kiasi cha pato kimebadilishwa na {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -71,19 +36,19 @@ msgstr "Jaribu kutumia maneno muhimu tofauti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
 msgid "Select Chain"
 msgstr "Chagua Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
 msgid "All"
 msgstr "Wote"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
 msgid "More +{count}"
 msgstr "Zaidi +{count}"
 
@@ -110,15 +75,14 @@ msgstr "Hivi sasa, baadhi ya miamala inaendelea na inashughulikiwa na kichupo ki
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 msgid "Confirm"
 msgstr "Thibitisha"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:428
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
 msgid "Your {blockchainName} wallets"
 msgstr "Pochi zako {blockchainName}"
 
@@ -133,17 +97,17 @@ msgid "Proceed anyway"
 msgstr "Endelea hata hivyo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:437
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Unahitaji kuunganisha mkoba {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:139
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
 msgid "Add {chain} chain"
 msgstr "Ongeza {chain} mnyororo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
 msgid "Show more wallets"
 msgstr "Onyesha pochi zaidi"
 
@@ -163,14 +127,24 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Anwani {destination} hailingani na muundo wa anwani ya blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
 msgid "via"
 msgstr "kupitia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "Ingiza"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Tokeni hii si sehemu ya orodha yetu ya tokeni iliyothibitishwa. tafadhali thibitisha chanzo chake na uhakikishe kuwa umeelewa hatari zote zinazohusiana kabla ya kuendelea."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "Ingiza Hata hivyo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "Jifunze Zaidi"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -221,23 +195,33 @@ msgid "Connect Wallet"
 msgstr "Unganisha Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
 msgstr "Leo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:432
-msgid "Swaps steps"
-msgstr "Hubadilisha hatua"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "Mtandao Umeshindwa, Tafadhali jaribu tena."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "Jaribu tena"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "Ongeza tokeni nyingine maalum"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "Hubadilisha hatua"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -393,6 +377,11 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Unahitaji kuongeza utelezi hadi angalau {minRequiredSlippage} kwa njia hii."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "Kiasi cha pato kimebadilishwa na {percentageChange}% (${usdValueChange})."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
@@ -455,12 +444,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "Huwezi kutumia tokeni sawa kwa From na To."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Uvumilivu wa kuteleza kwa ubadilishaji"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+#: widget/embedded/src/components/Slippage/Slippage.tsx:111
 msgid "Custom"
 msgstr "Desturi"
 
@@ -481,49 +470,49 @@ msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meani
 msgstr "Mpangilio huu unatumika kwa kila hatua (km 1Inch, Thorchain, n.k.), ikimaanisha tu hatua hiyo mahususi itarejeshwa, si njia nzima."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Swap Details"
 msgstr "Badilisha Maelezo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "Ombi la kitambulisho"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
 msgid "Not found"
 msgstr "Haijapatikana"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "Badili na ID ya ombi = {requestId} haijapatikana."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Umepokea {amount} {token} in {conciseAddress} wallet kwenye {chain} mnyororo."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
 msgid "Transaction was not sent."
 msgstr "Muamala haukutumwa."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} on {blockchain} inabaki kwenye pochi yako."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:289
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
 msgid "Delete"
 msgstr "Futa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
 msgid "Try again"
 msgstr "Jaribu tena"
 
@@ -559,6 +548,7 @@ msgstr "Tazama muamala"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
 msgstr "Unganisha"
@@ -643,7 +633,7 @@ msgstr "Mtandao Umebadilishwa"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
 msgid "Select Token"
 msgstr "Chagua Tokeni"
 
@@ -678,27 +668,27 @@ msgid "Click connect in your wallet popup."
 msgstr "Bofya unganisha kwenye dirisha ibukizi la mkoba wako."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "Select Derivation Path"
 msgstr "Chagua Njia ya Utoaji"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Ili kuunganisha kwa {type}, lazima kwanza uchague Njia ya Utokaji"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "Choose Derivation Path Template"
 msgstr "Chagua Kiolezo cha Njia ya Utoaji"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
 msgid "Enter Path"
 msgstr "Ingiza Njia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Index"
 msgstr "Ingiza Index"
 
@@ -739,14 +729,37 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Umekataa kuongeza {blockchainDisplayName} mnyororo kwenye pochi yako."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:58
-msgid "Select chain types"
-msgstr "Chagua aina za mnyororo"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(Kwa sasa haitumiki)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:59
-msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "Mkoba huu unasaidia minyororo mingi. Chagua ni msururu gani ungependa kuunganisha."
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "Unganisha {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "Mkoba huu unasaidia minyororo mingi. Chagua minyororo ambayo ungependa kuunganisha."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "Mkoba huu unaweza tu kuunganishwa kwa mnyororo mmoja kwa wakati mmoja. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "Acha kuchagua zote"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "Chagua zote"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -950,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "Samahani, hakuna tokeni iliyopatikana kwenye mnyororo wa {blockchain} na anwani iliyotolewa. tafadhali hakikisha kuwa umeingiza anwani sahihi ya tokeni."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Hitilafu ya mtandao"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "Hitilafu ilitokea wakati wa kurejesha data ya tokeni."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -972,14 +995,9 @@ msgid "Enter token address"
 msgstr "Weka anwani ya ishara"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "Mtandao Umeshindwa, Tafadhali jaribu tena."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "Ongeza tokeni nyingine maalum"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "Ingiza"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1084,16 +1102,6 @@ msgid "language"
 msgstr "lugha"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "Acha kuchagua zote"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "Chagua zote"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Tafuta {sourceType}"
@@ -1155,57 +1163,62 @@ msgid "This year"
 msgstr "Mwaka huu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:139
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "Utelezi lazima uwe mkubwa kuliko au sawa na 0.01"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "Muamala wako uko katika hatari ya kuwa mstari wa mbele kwa sababu ya uvumilivu wa juu wa kuteleza."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:141
 msgid "Required: >= {min} {symbol}"
 msgstr "Inahitajika: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:152
+#: widget/embedded/src/utils/swap.ts:154
 msgid "Required: > {min} {symbol}"
 msgstr "Inahitajika: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:167
+#: widget/embedded/src/utils/swap.ts:169
 msgid "Required: <= {max} {symbol}"
 msgstr "Inahitajika: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:180
+#: widget/embedded/src/utils/swap.ts:182
 msgid "Required: < {max} {symbol}"
 msgstr "Inahitajika: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:634
 msgid " for network fee"
 msgstr " kwa ada ya mtandao"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:637
 msgid " for swap"
 msgstr " kwa kubadilishana"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for input and network fee"
 msgstr " kwa pembejeo na ada ya mtandao"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:642
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Inahitaji ≈ {requiredAmount} {symbol}{reason}, lakini unayo {currentAmount} {symbol} kwenye mkoba wako wa {blockchain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:691
-msgid "Waiting for connecting wallet"
-msgstr "Inasubiri kuunganisha pochi"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:708
 msgid "Waiting for other running tasks to be finished"
 msgstr "Inasubiri kazi zingine zinazoendeshwa zikamilike"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:698
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for changing wallet network"
 msgstr "Inasubiri kubadilisha mtandao wa pochi"
 
@@ -1250,6 +1263,11 @@ msgid "Powered By"
 msgstr "Inaendeshwa Na"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Tokeni hii inaweza kuhusisha hatari zinazowezekana za usalama; endelea kwa tahadhari."
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "Muamala Uliojumlishwa"
@@ -1260,13 +1278,13 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Badili kwa {fromChain} kupitia {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Daraja hadi {toChain} kupitia {swapper}"
 
@@ -1281,9 +1299,14 @@ msgid "In progress"
 msgstr "Inaendelea"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
-msgid "Waiting for bridge transaction"
-msgstr "Inasubiri muamala wa daraja"
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "Inasubiri shughuli ya kubadilishana"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "Inasubiri shughuli ya daraja"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
@@ -1332,12 +1355,12 @@ msgid "Clear all"
 msgstr "Futa zote"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Balance"
 msgstr "Mizani"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
 msgid "Max"
 msgstr "Max"
 

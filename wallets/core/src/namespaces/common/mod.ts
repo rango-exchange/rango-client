@@ -1,5 +1,6 @@
 export * as actions from './actions.js';
 export * as builders from './builders.js';
+export { standardizeAndThrowError } from './or.js';
 export {
   intoConnectionFinished,
   recommended as afterRecommended,
@@ -17,4 +18,4 @@ export type {
   AccountsWithActiveChain,
 } from '../../types/accounts.js';
 
-export type { Namespace } from './types.js';
+export type { Namespace, Chain } from './types.js';

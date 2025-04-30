@@ -1,21 +1,16 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
-import type { PendingSwapNetworkStatus } from 'rango-types';
+import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =
   | Exclude<PendingSwapNetworkStatus, PendingSwapNetworkStatus.WaitingForQueue>
   | 'delete'
   | 'cancel'
   | null;
-type WalletTypeAndAddress = {
-  walletType: WalletType;
-  address: string;
-};
 export interface ModalPropTypes {
   onClose: () => void;
   onCancel: () => void;
   onDelete: () => void;
   state: ModalState;
-  currentStepWallet: WalletTypeAndAddress | null;
+  swap: PendingSwap;
   message: string;
   walletButtonDisabled: boolean;
 }
@@ -47,7 +42,7 @@ export interface ModalNetworkValueTypes {
 }
 
 export interface WalletStateContentProps extends ModalNetworkValueTypes {
-  currentStepWallet: WalletTypeAndAddress | null;
+  swap: PendingSwap;
   message: string;
   showWalletButton: boolean;
   walletButtonDisabled: boolean;

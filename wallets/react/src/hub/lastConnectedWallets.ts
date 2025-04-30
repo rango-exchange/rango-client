@@ -119,12 +119,14 @@ export class LastConnectedWalletsFromStorage {
     const storageState = persistor.getItem(this.#storageKey) || {};
 
     const currentProviderNamespaces = storageState[providerId];
-    const newProviderNamespaces = currentProviderNamespaces.filter(
+    const newProviderNamespaces = currentProviderNamespaces?.filter(
       (namespace) => !namespaceIds.includes(namespace.namespace)
     );
 
     this.#removeWalletsFromHub([providerId]);
-    this.#addWalletToHub(providerId, newProviderNamespaces);
+    if (newProviderNamespaces?.length > 0) {
+      this.#addWalletToHub(providerId, newProviderNamespaces);
+    }
   }
   #removeWalletsFromLegacy(providerIds?: string[]): void {
     const persistor = new Persistor<LegacyLastConnectedWalletsStorage>();

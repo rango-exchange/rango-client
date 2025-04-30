@@ -21,13 +21,18 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
       <Typography
         color={type === 'loading' ? 'info500' : `${type}500`}
         variant="title"
-        size="medium">
+        size="medium"
+        className="_message_box_title">
         {title}
       </Typography>
-      <Divider size={16} />
+      <Divider size={4} />
       <Description>
         {typeof description === 'string' ? (
-          <Typography color="neutral700" variant="body" size="medium">
+          <Typography
+            color="neutral700"
+            variant="body"
+            size="medium"
+            className="_message_box_description">
             {description}
           </Typography>
         ) : (

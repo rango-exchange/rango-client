@@ -5,6 +5,8 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
+import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
+import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
@@ -16,6 +18,9 @@ import {
 } from './helpers.js';
 import signer from './signer.js';
 import { setDerivationPath } from './state.js';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
 
 export const config = {
   type: WalletTypes.LEDGER,
@@ -63,7 +68,8 @@ export const disconnect: Disconnect = async () => {
   void transportDisconnect();
 };
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: InstanceType) => Promise<SignerFactory> =
+  signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
@@ -136,11 +142,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
+          chains: [evmChains.ethereum],
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+          chains: [solanaChains.solana],
         },
       ],
     },
