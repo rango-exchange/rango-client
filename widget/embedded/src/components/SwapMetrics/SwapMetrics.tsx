@@ -1,11 +1,18 @@
 import type { PropTypes } from './SwapMetrics.types';
 
 import { i18n } from '@lingui/core';
-import { IconButton, ReverseIcon, Skeleton, Typography } from '@rango-dev/ui';
+import {
+  IconButton,
+  ReverseIcon,
+  Skeleton,
+  Tooltip,
+  Typography,
+} from '@rango-dev/ui';
 import React from 'react';
 
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
+import { getContainer } from '../../utils/common';
 import { getSlippageValidation } from '../../utils/settings';
 
 import {
@@ -55,7 +62,7 @@ export function SwapMetrics(props: PropTypes) {
       ? Number(quote?.requestAmount)
       : Number(quote?.outputAmount);
 
-  const usdExchangeRate = getUsdExchangeRate({
+  const { rawValue, displayValue } = getUsdExchangeRate({
     fromTokenUsdPrice: requestAmount || currentFromToken.usdPrice,
     toTokenUsdPrice: outputAmount || currentToToken.usdPrice,
   });
@@ -83,9 +90,20 @@ export function SwapMetrics(props: PropTypes) {
             onClick={changeQuoteTokensRate}>
             <ReverseIcon size={14} color="secondary" />
           </IconButton>
-          <Typography className="rate-text" variant="body" size="small">
-            {usdExchangeRate}
-          </Typography>
+          <Tooltip
+            container={getContainer()}
+            side="top"
+            sideOffset={4}
+            content={
+              <Typography className="rate-text" variant="body" size="small">
+                {rawValue}
+              </Typography>
+            }>
+            <Typography className="rate-text" variant="body" size="small">
+              {displayValue}
+            </Typography>
+          </Tooltip>
+
           <TokenName className="rate-text" variant="body" size="small">
             {currentFromToken.symbol}
           </TokenName>
@@ -93,7 +111,7 @@ export function SwapMetrics(props: PropTypes) {
             <Typography color="neutral600" variant="body" size="small">
               ~
               {formatTokenValueInUsd(
-                usdExchangeRate,
+                Number(displayValue),
                 currentFromToken.usdPrice
               )}
             </Typography>

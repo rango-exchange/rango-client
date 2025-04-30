@@ -5,8 +5,9 @@ import BigNumber from 'bignumber.js';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
 
 import {
+  LARGE_VALUE_MAX_DIGITS,
+  SMALL_VALUE_DECIMALS,
   USD_EXCHANGE_MINIMUM,
-  USD_EXCHANGE_RATE_DECIMALS,
   USD_FORMAT_DECIMALS,
 } from './SwapMetrics.constants';
 
@@ -35,17 +36,28 @@ export function getSlippageColor(params: SlippageColorParams) {
 export function getUsdExchangeRate(params: {
   toTokenUsdPrice: number | null;
   fromTokenUsdPrice: number | null;
-}): number {
+}) {
   const { toTokenUsdPrice, fromTokenUsdPrice } = params;
 
   if (toTokenUsdPrice && fromTokenUsdPrice) {
     const toPrice = new BigNumber(toTokenUsdPrice);
     const fromPrice = new BigNumber(fromTokenUsdPrice);
-    return Number(
-      toPrice.dividedBy(fromPrice).toFixed(USD_EXCHANGE_RATE_DECIMALS)
-    );
+    const rawValue = toPrice.dividedBy(fromPrice);
+    let displayValue: string;
+
+    if (rawValue.isLessThan(1)) {
+      displayValue = rawValue.toFixed(SMALL_VALUE_DECIMALS);
+    } else if (rawValue.toFixed(0).length > LARGE_VALUE_MAX_DIGITS) {
+      displayValue = rawValue.toFixed(0).slice(0, LARGE_VALUE_MAX_DIGITS);
+    } else {
+      displayValue = rawValue.toFixed(USD_FORMAT_DECIMALS);
+    }
+    return {
+      displayValue,
+      rawValue: rawValue.toFixed(),
+    };
   }
-  return 0;
+  return { rawValue: '0', displayValue: '0' };
 }
 
 export function formatTokenValueInUsd(
