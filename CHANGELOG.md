@@ -1,3 +1,32 @@
+## Widget [0.32.0] (2025-04-30)
+
+_includes `@rango-dev/widget-embedded@0.42.0`_
+
+### Features
+
+- Update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+- Add can eager connect to namespaces ([16b4792](https://github.com/rango-exchange/rango-client/commit/16b4792f877b565ccf767be22ebe14fa79ddd8c6))
+- Implement updated design for initial connect modal ([2873c63](https://github.com/rango-exchange/rango-client/commit/2873c630de0740bb3b9f4e52bfa018857bd54dcd))
+- Sui support for Phantom ([3769b8b](https://github.com/rango-exchange/rango-client/commit/3769b8ba174783190e242103548bcf4da28cff14))
+- Update wallets readme ([0d52ecb](https://github.com/rango-exchange/rango-client/commit/0d52ecbee31b0d3241be71a6f77d508e4a15d3c4))
+- Add slippage validation on Settings page ([e65caab](https://github.com/rango-exchange/rango-client/commit/e65caab8d5a547405728c7e2d44da9a90b0ba770))
+- Add wallet name to waiting for connect wallet warning message ([68695c1](https://github.com/rango-exchange/rango-client/commit/68695c1e7e0dc904f6490a8dccee377ced56cd3c))
+- Adjust the number of blockchains in the token selector based on widget height changes ([1fcc81a](https://github.com/rango-exchange/rango-client/commit/1fcc81a7e4f62e0c9fd52f631b9421d428b6b395))
+- Handle connecting wallet with exactly one namespace for hub ([bbeca1d](https://github.com/rango-exchange/rango-client/commit/bbeca1dc28c0b6049463446c8045dfaf3cd53def))
+- Improve widget ux on small devices with dynamic height ([47275b0](https://github.com/rango-exchange/rango-client/commit/47275b01001a953b8aee218aa0429bbf3307ba3b))
+- Make the swap header scrollable on the swap details page ([7f10f49](https://github.com/rango-exchange/rango-client/commit/7f10f49b3e859c9432d86164166b75428ed169f0))
+
+### Bug Fixes
+
+- Rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+- Show network name instead of namespace ([0d46834](https://github.com/rango-exchange/rango-client/commit/0d46834cc820ff93165279d655a7d80b469320d8))
+- Error rethrow in or action ([61bc658](https://github.com/rango-exchange/rango-client/commit/61bc658f6a0dab513bb595e2943c85b675c65ada))
+- Optional namespace removal to prevent error for wallets without autoconnect ([2d20f87](https://github.com/rango-exchange/rango-client/commit/2d20f87820f59abb082770731ee0c64b309d800e))
+- Swap subtitle for history page ([320d095](https://github.com/rango-exchange/rango-client/commit/320d095e60acf17d1a4a7d713b38569d3f9e8feb))
+- Adjust the warning alert position for custom tokens on the homepage ([cdb5815](https://github.com/rango-exchange/rango-client/commit/cdb5815f4860e9ebde7bd0745566c71eb9a9fdab))
+- Fix long token names in widget home page ([0a16339](https://github.com/rango-exchange/rango-client/commit/0a163391f2a1f1b00ac2b259a1130ef38839d4b9))
+
+
 ## Widget [0.31.0] (2025-03-17)
 
 _includes `@rango-dev/widget-embedded@0.41.1`_
