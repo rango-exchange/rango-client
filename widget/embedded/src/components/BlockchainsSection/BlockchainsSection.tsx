@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes } from './BlockchainsSection.types';
 
 import { i18n } from '@lingui/core';
@@ -12,20 +11,28 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
+import {
+  BLOCKCHAIN_LIST_SIZE,
+  BLOCKCHAIN_LIST_SIZE_COMPACT_MODE,
+} from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 
 import { Blockchains } from './BlockchainsSection.styles';
 
+const NUMBER_OF_LOADING_COMPACT_MODE = 6;
 const NUMBER_OF_LOADING = 12;
 
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
+  const { showCompactTokenSelector } = useUiStore();
   const blockchainsList = usePrepareBlockchainList(blockchains, {
-    limit: BLOCKCHAIN_LIST_SIZE,
+    limit: showCompactTokenSelector
+      ? BLOCKCHAIN_LIST_SIZE_COMPACT_MODE
+      : BLOCKCHAIN_LIST_SIZE,
     selected: blockchain?.name,
   });
 
@@ -41,16 +48,25 @@ export function BlockchainsSection(props: PropTypes) {
 
   return (
     <>
-      <Divider size={12} />
-      <Typography variant="label" size="large">
-        {i18n.t('Select Chain')}
-      </Typography>
+      {!showCompactTokenSelector && (
+        <>
+          <Divider size={12} />
+          <Typography variant="label" size="large">
+            {i18n.t('Select Chain')}
+          </Typography>
+        </>
+      )}
       <Divider size={12} />
       <Blockchains>
         {fetchStatus === 'loading' &&
-          Array.from(Array(NUMBER_OF_LOADING), (e) => (
-            <Skeleton key={e} variant="rounded" height={50} />
-          ))}
+          Array.from(
+            Array(
+              showCompactTokenSelector
+                ? NUMBER_OF_LOADING_COMPACT_MODE
+                : NUMBER_OF_LOADING
+            ),
+            (_, index) => <Skeleton key={index} variant="rounded" height={50} />
+          )}
         {fetchStatus === 'success' && (
           <>
             <BlockchainsChip

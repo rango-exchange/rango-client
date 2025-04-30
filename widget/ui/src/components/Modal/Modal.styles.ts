@@ -27,6 +27,7 @@ export const BackDrop = styled('div', {
 export const ModalContainer = styled('div', {
   backgroundColor: '$background',
   width: '100%',
+  maxHeight: '100%',
   borderRadius: '$primary',
   display: 'flex',
   flexDirection: 'column',

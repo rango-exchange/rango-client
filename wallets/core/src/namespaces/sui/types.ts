@@ -8,6 +8,7 @@ export interface SuiActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   connect: () => Promise<Accounts>;
+  canEagerConnect: () => Promise<boolean>;
 }
 
 // eslint-disable-next-line

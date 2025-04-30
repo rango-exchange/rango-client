@@ -8,7 +8,7 @@ msgstr ""
 "Language: ar\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-11 11:00\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
@@ -17,41 +17,6 @@ msgstr ""
 "X-Crowdin-Language: ar\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "هذا الرمز ليس جزءًا من قائمة الرموز التي تم التحقق منها. يرجى التحقق من مصدره والتأكد من فهم جميع المخاطر المرتبطة به قبل المتابعة."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
-msgid "Import Anyway"
-msgstr "استيراد على أية حال"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
-msgid "Learn More"
-msgstr "يتعلم أكثر"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "خطأ في الشبكة"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "حدث خطأ أثناء استرداد بيانات الرمز."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "قد ينطوي هذا الرمز على مخاطر أمنية محتملة؛ لذا يجب استخدامه بحذر."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "تم تغيير كمية الإخراج بمقدار {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -71,19 +36,19 @@ msgstr "حاول استخدام كلمات رئيسية مختلفة"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
 msgid "Select Chain"
 msgstr "اختر السلسلة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
 msgid "All"
 msgstr "الجميع"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
 msgid "More +{count}"
 msgstr "المزيد +{count}"
 
@@ -110,15 +75,14 @@ msgstr "حاليًا، يتم تشغيل بعض المعاملات ومعالج�
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 msgid "Confirm"
 msgstr "يتأكد"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:428
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
 msgid "Your {blockchainName} wallets"
 msgstr "محفظتك {blockchainName}"
 
@@ -133,17 +97,17 @@ msgid "Proceed anyway"
 msgstr "المضي قدما على أية حال"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:437
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "يجب عليك توصيل محفظة {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:139
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
 msgid "Add {chain} chain"
 msgstr "أضف سلسلة {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
 msgid "Show more wallets"
 msgstr "عرض المزيد من المحافظ"
 
@@ -163,14 +127,24 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "العنوان {destination} لا يتطابق مع نمط عنوان blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
 msgid "via"
 msgstr "عبر"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "يستورد"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "هذا الرمز ليس جزءًا من قائمة الرموز التي تم التحقق منها. يرجى التحقق من مصدره والتأكد من فهم جميع المخاطر المرتبطة به قبل المتابعة."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "استيراد على أية حال"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "يتعلم أكثر"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -221,23 +195,33 @@ msgid "Connect Wallet"
 msgstr "ربط المحفظة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
 msgstr "اليوم"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:432
-msgid "Swaps steps"
-msgstr "خطوات المبادلة"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "فشلت الشبكة، يرجى المحاولة مرة أخرى."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "إعادة المحاولة"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "إضافة رمز مخصص آخر"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "خطوات المبادلة"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -393,6 +377,11 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "يجب عليك زيادة الانزلاق إلى {minRequiredSlippage} على الأقل لهذا الطريق."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "تم تغيير كمية الإخراج بمقدار {percentageChange}% (${usdValueChange})."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
@@ -455,12 +444,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "لا يمكنك استخدام نفس الرمز لـ \"من\" و\"إلى\"."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "تحمل الانزلاق لكل مبادلة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+#: widget/embedded/src/components/Slippage/Slippage.tsx:111
 msgid "Custom"
 msgstr "مخصص"
 
@@ -481,49 +470,49 @@ msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meani
 msgstr "يتم تطبيق هذا الإعداد على كل خطوة (على سبيل المثال 1Inch، Thorchain، وما إلى ذلك)، مما يعني أنه سيتم التراجع عن هذه الخطوة المحددة فقط، وليس المسار بالكامل."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Swap Details"
 msgstr "تفاصيل المبادلة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "معرف الطلب"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
 msgid "Not found"
 msgstr "لم يتم العثور عليه"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "لم يتم العثور على التبادل مع معرف الطلب = {requestId} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "لقد تلقيت {amount} {token} في محفظة {conciseAddress} على سلسلة {chain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
 msgid "Transaction was not sent."
 msgstr "لم يتم ارسال المعاملة."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} على {blockchain} يبقى في محفظتك."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:289
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
 msgid "Delete"
 msgstr "يمسح"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
 msgid "Try again"
 msgstr "حاول ثانية"
 
@@ -559,6 +548,7 @@ msgstr "عرض المعاملة"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
 msgstr "يتصل"
@@ -643,7 +633,7 @@ msgstr "تم تغيير الشبكة"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
 msgid "Select Token"
 msgstr "حدد الرمز"
 
@@ -678,27 +668,27 @@ msgid "Click connect in your wallet popup."
 msgstr "انقر فوق الاتصال في النافذة المنبثقة لمحفظتك."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "Select Derivation Path"
 msgstr "حدد مسار الاشتقاق"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "للاتصال بـ {type}، يجب عليك أولاً تحديد مسار الاشتقاق"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "Choose Derivation Path Template"
 msgstr "اختر قالب مسار الاشتقاق"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
 msgid "Enter Path"
 msgstr "أدخل المسار"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Index"
 msgstr "أدخل الفهرس"
 
@@ -739,14 +729,37 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "لقد رفضت إضافة سلسلة {blockchainDisplayName} إلى محفظتك."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:58
-msgid "Select chain types"
-msgstr "اختر أنواع السلسلة"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(غير مدعوم حاليًا)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:59
-msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "تدعم هذه المحفظة سلاسل متعددة. حدد السلسلة التي ترغب في الاتصال بها."
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "تواصل {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "تدعم هذه المحفظة سلاسل متعددة. اختر السلاسل التي ترغب في ربطها."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "لا يمكن لهذه المحفظة الاتصال إلا بسلسلة واحدة في كل مرة. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "إلغاء تحديد الكل"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "حدد الكل"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -950,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "عذراً، لم يتم العثور على رمز مميز على سلسلة {blockchain} بالعنوان المقدم. يرجى التأكد من إدخال عنوان الرمز المميز الصحيح."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "خطأ في الشبكة"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "حدث خطأ أثناء استرداد بيانات الرمز."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -972,14 +995,9 @@ msgid "Enter token address"
 msgstr "أدخل عنوان الرمز"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "فشلت الشبكة، يرجى المحاولة مرة أخرى."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "إضافة رمز مخصص آخر"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "يستورد"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1084,16 +1102,6 @@ msgid "language"
 msgstr "لغة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "إلغاء تحديد الكل"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "حدد الكل"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "بحث {sourceType}"
@@ -1155,57 +1163,62 @@ msgid "This year"
 msgstr "هذا العام"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:139
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "يجب أن يكون الانزلاق أكبر من أو يساوي 0.01"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "معاملتك معرضة لخطر التقدم بسبب القدرة العالية على تحمل الانزلاق."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:141
 msgid "Required: >= {min} {symbol}"
 msgstr "المطلوب: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:152
+#: widget/embedded/src/utils/swap.ts:154
 msgid "Required: > {min} {symbol}"
 msgstr "المطلوب: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:167
+#: widget/embedded/src/utils/swap.ts:169
 msgid "Required: <= {max} {symbol}"
 msgstr "المطلوب: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:180
+#: widget/embedded/src/utils/swap.ts:182
 msgid "Required: < {max} {symbol}"
 msgstr "المطلوب: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:634
 msgid " for network fee"
 msgstr " مقابل رسوم الشبكة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:637
 msgid " for swap"
 msgstr " للتبادل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for input and network fee"
 msgstr " مقابل رسوم الإدخال والشبكة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:642
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "يحتاج ≈ {requiredAmount} {symbol}{reason}، ولكن لديك {currentAmount} {symbol} في محفظتك {blockchain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:691
-msgid "Waiting for connecting wallet"
-msgstr "في انتظار ربط المحفظة"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:708
 msgid "Waiting for other running tasks to be finished"
 msgstr "في انتظار الانتهاء من المهام الأخرى الجارية"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:698
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for changing wallet network"
 msgstr "في انتظار تغيير شبكة المحفظة"
 
@@ -1250,6 +1263,11 @@ msgid "Powered By"
 msgstr "مدعوم بواسطة"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "قد ينطوي هذا الرمز على مخاطر أمنية محتملة؛ لذا يجب استخدامه بحذر."
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "المعاملات المجمعة"
@@ -1260,13 +1278,13 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "قم بالتبديل على {fromChain} عبر {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "جسر إلى {toChain} عبر {swapper}"
 
@@ -1281,8 +1299,13 @@ msgid "In progress"
 msgstr "في تَقَدم"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
-msgid "Waiting for bridge transaction"
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "في انتظار معاملة المبادلة"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
 msgstr "في انتظار معاملة الجسر"
 
 #. js-lingui-explicit-id
@@ -1332,12 +1355,12 @@ msgid "Clear all"
 msgstr "مسح الكل"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Balance"
 msgstr "توازن"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
 msgid "Max"
 msgstr "الأعلى"
 

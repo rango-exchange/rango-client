@@ -24,6 +24,8 @@ import {
   tokensStyles,
 } from './StepDetails.styles.js';
 
+const HIGHT_OF_STICKY_HEADER = 45;
+
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
   (props, parentRef) => {
     const {
@@ -38,6 +40,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
 
     const { from, to, swapper } = step;
     const containerRef = useRef<HTMLDivElement>(null);
+    const childElement = containerRef.current;
     const isCompleted = state === 'completed' || state === 'error';
     const swappers: InternalSwap[] = step.internalSwaps?.length
       ? step.internalSwaps
@@ -52,12 +55,11 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
     useEffect(() => {
       const parentElement = (parentRef as React.RefObject<HTMLDivElement>)
         ?.current;
-      const childElement = containerRef.current;
       if (isFocused && childElement && parentElement) {
         parentElement.scrollTop =
-          childElement.offsetTop - parentElement.offsetTop;
+          childElement.offsetTop - HIGHT_OF_STICKY_HEADER;
       }
-    }, [isFocused]);
+    }, [isFocused, childElement]);
 
     return (
       <Container

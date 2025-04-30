@@ -28,7 +28,7 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'BTC';
   }
 
-  if (chainId.namespace === 'move') {
+  if (chainId.namespace === 'sui') {
     return chainId.reference.toUpperCase();
   }
 

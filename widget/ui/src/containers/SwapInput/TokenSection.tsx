@@ -8,6 +8,7 @@ import {
   ChainToken,
   Divider,
   Skeleton,
+  Tooltip,
   Typography,
 } from '../../components/index.js';
 
@@ -15,6 +16,9 @@ import {
   chainNameStyles,
   Container,
   skeletonStyles,
+  SymbolTooltipContent,
+  SymbolTooltipStyles,
+  Title,
   TitleContainer,
   tokenChainStyles,
   TokenSectionContainer,
@@ -33,6 +37,9 @@ export function TokenSection(props: TokenSectionProps) {
     warning,
     tooltipContainer,
   } = props;
+
+  const tokenSelected = !error && !loading && !!tokenSymbol;
+
   return (
     <Container variant="default" disabled={error || loading} onClick={onClick}>
       <TokenSectionContainer>
@@ -54,11 +61,28 @@ export function TokenSection(props: TokenSectionProps) {
           ) : (
             <>
               <TitleContainer>
-                <Typography variant="title" size="medium">
-                  {error || (!loading && !tokenSymbol)
-                    ? i18n.t('Select Token')
-                    : tokenSymbol}
-                </Typography>
+                {tokenSelected ? (
+                  <Tooltip
+                    styles={SymbolTooltipStyles}
+                    align="start"
+                    side="bottom"
+                    alignOffset={-15}
+                    sideOffset={15}
+                    container={tooltipContainer}
+                    content={
+                      <SymbolTooltipContent variant="body" size="xsmall">
+                        {tokenSymbol}
+                      </SymbolTooltipContent>
+                    }>
+                    <Title variant="title" size="medium">
+                      {tokenSymbol}
+                    </Title>
+                  </Tooltip>
+                ) : (
+                  <Typography variant="title" size="medium">
+                    {i18n.t('Select Token')}
+                  </Typography>
+                )}
                 {warning && (
                   <>
                     <Divider size={4} direction="horizontal" />

@@ -21,7 +21,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
-import { getQuoteWallets } from '../../utils/wallets';
+import { getQuoteChains } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomDestination } from '../CustomDestination/CustomDestination';
 
@@ -62,16 +62,16 @@ export function ConfirmWalletsModal(props: PropTypes) {
     !!customDestination
   );
 
-  const quoteWallets = useMemo(
+  const quoteChains = useMemo(
     () =>
-      getQuoteWallets({
+      getQuoteChains({
         filter: 'all',
         quote: selectedQuote,
       }),
     [selectedQuote]
   );
 
-  const requiredWallets = getQuoteWallets({
+  const requiredChains = getQuoteChains({
     filter: 'required',
     quote: selectedQuote,
   });
@@ -82,17 +82,17 @@ export function ConfirmWalletsModal(props: PropTypes) {
       selectedQuote?.swaps[selectedQuote?.swaps.length - 1].to.blockchain
   );
   const isWalletRequiredFor = (blockchain: string) =>
-    requiredWallets.includes(blockchain);
+    requiredChains.includes(blockchain);
 
   const getInitialSelectableWallets = useCallback(
     () =>
       connectedWallets.filter((connectedWallet) => {
         return (
           connectedWallet.selected &&
-          quoteWallets.includes(connectedWallet.chain)
+          quoteChains.includes(connectedWallet.chain)
         );
       }),
-    [connectedWallets, quoteWallets]
+    [connectedWallets, quoteChains]
   );
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
@@ -273,13 +273,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
           return (
             !anyWalletSelected &&
             connectedWallet.selected &&
-            quoteWallets.includes(connectedWallet.chain)
+            quoteChains.includes(connectedWallet.chain)
           );
         })
       );
       return nextState;
     });
-  }, [connectedWallets, quoteWallets]);
+  }, [connectedWallets, quoteChains]);
 
   useEffect(() => {
     const nextState: typeof nextSelectedWallets = [];
@@ -391,6 +391,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           <div className={walletsListStyles()}>
             <WalletList
               chain={showMoreWalletFor}
+              quoteChains={quoteChains}
               isSelected={isSelected}
               selectWallet={onChange}
               onShowMore={() => setShowMoreWalletFor(showMoreWalletFor)}
@@ -410,13 +411,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
             </>
           )}
           <Wallets>
-            {quoteWallets.map((requiredWallet, index) => {
+            {quoteChains.map((requiredWallet, index) => {
               const blockchain = blockchains.find(
                 (blockchain) => blockchain.name === requiredWallet
               );
 
               const key = `wallet-${index}`;
-              const isLastWallet = index === quoteWallets.length - 1;
+              const isLastWallet = index === quoteChains.length - 1;
               const showCustomDestination =
                 isLastWallet &&
                 lastStepToBlockchain &&
@@ -444,6 +445,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   <ListContainer>
                     <WalletList
                       chain={requiredWallet}
+                      quoteChains={quoteChains}
                       isSelected={isSelected}
                       selectWallet={onChange}
                       limit={NUMBER_OF_WALLETS_TO_DISPLAY}

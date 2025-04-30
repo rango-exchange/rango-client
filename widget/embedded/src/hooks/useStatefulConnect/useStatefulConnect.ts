@@ -85,72 +85,70 @@ export function useStatefulConnect(): UseStatefulConnect {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
     if (isDisconnected) {
-      // Legacy and hub have different structure to check wether we need to show namespace or not.
-
-      // Hub
-      const isHub = !!wallet.isHub;
-      if (isHub) {
-        const detachedInstances = wallet.properties?.find(
-          (item) => item.name === 'detached'
-        );
-        const needsNamespace =
-          detachedInstances && wallet.state !== 'connected';
-
-        if (needsNamespace) {
-          dispatch({
-            type: 'needsNamespace',
-            payload: {
-              targetWallet: wallet,
-            },
-          });
-          return { status: ResultStatus.Namespace };
-        }
-      }
-
       /*
-       * Legacy
-       *
-       * For legacy there are 3 states:
-       * 1. a wallet doesn't have any namespace defined, we call the connect.
-       * 2. a wallet has more than two namespaces, we should show namepsace modal, and in that place user will be checked to needs derivation path or not.
-       * 3. a wallet has exactly one namespacesape, in this case we check if that needs derivation or not, if it needs we will do it here by dispatching the action accordingly.
+       * Currently, handling connect should be covered for 3 different types of target wallet:
+       * 1. Target wallet does not contain any namespaces, in this situation we should just try to connect to the related provider.
+       * 2. Target wallet contains more than one namespace, in this situation we should display namespaces modal to allow the user to choose from available namespaces.
+       * 3. Target wallet contains only one namespace, in this situation we should check if that namespace needs derivation path and based on that, try to connect to the related provider or display derivation path modal.
        */
-      if (!wallet.needsNamespace) {
+
+      // Legacy and hub have different structure to handle each situation.
+      const isHub = !!wallet.isHub;
+      const detachedInstances = wallet.properties?.find(
+        (item) => item.name === 'detached'
+      )?.value;
+
+      // 1. Target wallet does not contain any namespaces
+      if (
+        (isHub && !detachedInstances?.length) ||
+        (!isHub && !wallet.needsNamespace)
+      ) {
         return await runConnect(wallet.type, undefined, options);
       }
 
-      const needsNamespace = wallet.needsNamespace.data.length > 1;
-      const needsDerivationPath = wallet.needsDerivationPath;
-
-      if (needsNamespace) {
+      // 2. Target wallet contains more than one namespace
+      if (
+        (isHub && detachedInstances?.length && detachedInstances.length > 1) ||
+        (!isHub &&
+          wallet.needsNamespace?.data.length &&
+          wallet.needsNamespace.data.length > 1)
+      ) {
         dispatch({
           type: 'needsNamespace',
           payload: {
             targetWallet: wallet,
+            defaultSelectedChains: options?.defaultSelectedChains,
           },
         });
         return { status: ResultStatus.Namespace };
-      } else if (needsDerivationPath) {
-        const namespace = wallet.needsNamespace.data[0];
-
-        dispatch({
-          type: 'needsDerivationPath',
-          payload: {
-            providerType: wallet.type,
-            providerImage: wallet.image,
-            namespace: namespace.value,
-          },
-        });
-        return { status: ResultStatus.DerivationPath };
       }
 
-      return await runConnect(
-        wallet.type,
-        wallet.needsNamespace?.data.map((namespace) => ({
-          namespace: namespace.value,
-        })),
-        options
-      );
+      // 3. Target wallet contains only one namespace
+      if (
+        (isHub && detachedInstances?.length === 1) ||
+        (!isHub && wallet.needsNamespace?.data.length === 1)
+      ) {
+        if (wallet.needsNamespace && wallet.needsDerivationPath) {
+          const namespace = wallet.needsNamespace.data[0];
+
+          dispatch({
+            type: 'needsDerivationPath',
+            payload: {
+              providerType: wallet.type,
+              providerImage: wallet.image,
+              namespace: namespace.value,
+            },
+          });
+          return { status: ResultStatus.DerivationPath };
+        }
+        return await runConnect(
+          wallet.type,
+          wallet.needsNamespace?.data.map((namespace) => ({
+            namespace: namespace.value,
+          })),
+          options
+        );
+      }
     }
 
     if (options?.disconnectIfConnected) {

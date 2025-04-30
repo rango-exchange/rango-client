@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled } from '@rango-dev/ui';
 
 export const StyledLink = styled('a', {
   textDecoration: 'none',
@@ -54,4 +54,8 @@ export const Container = styled('div', {
       color: '$colors$neutral900',
     },
   },
+});
+
+export const StyledButton = styled(Button, {
+  minHeight: '$40',
 });

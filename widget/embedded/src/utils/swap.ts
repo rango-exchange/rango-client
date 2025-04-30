@@ -9,6 +9,7 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
+import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
@@ -22,6 +23,7 @@ import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import {
+  getRelatedWalletOrNull,
   type RouteEvent,
   RouteEventType,
   type StepEvent,
@@ -50,7 +52,7 @@ import {
 import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
 import { getRequiredBalanceOfWallet } from './quote';
-import { getQuoteWallets } from './wallets';
+import { getQuoteChains } from './wallets';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber | null,
@@ -601,7 +603,7 @@ export function generateBalanceWarnings(
   blockchains: BlockchainMeta[]
 ) {
   const fee = quote.validationStatus;
-  const requiredWallets = getQuoteWallets({ filter: 'required', quote });
+  const requiredWallets = getQuoteChains({ filter: 'required', quote });
   const walletsSortedByRequiredWallets = selectedWallets.sort(
     (selectedWallet1, selectedWallet2) =>
       requiredWallets.indexOf(selectedWallet1.chain) -
@@ -666,7 +668,8 @@ export function isNetworkStatusInWarningState(
 
 export function getSwapMessages(
   pendingSwap: PendingSwap,
-  currentStep: PendingSwapStep | null
+  currentStep: PendingSwapStep | null,
+  getWalletInfo?: (type: WalletType) => ExtendedWalletInfo
 ): {
   shortMessage: string;
   detailedMessage: { content: string; long: boolean };
@@ -685,10 +688,20 @@ export function getSwapMessages(
   if (networkWarningState) {
     message = pendingSwap.networkStatusExtraMessage || '';
     detailedMessage = pendingSwap.networkStatusExtraMessageDetail || '';
+
+    const currentStepWallet = currentStep
+      ? getRelatedWalletOrNull(pendingSwap, currentStep)
+      : null;
+    const walletType = currentStepWallet?.walletType;
+    const walletName = walletType ? getWalletInfo?.(walletType)?.name : null;
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (currentStep?.networkStatus) {
       case PendingSwapNetworkStatus.WaitingForConnectingWallet:
-        message = message || i18n.t('Waiting for connecting wallet');
+        message = walletName
+          ? i18n.t('Connect {wallet}', {
+              wallet: walletName,
+            })
+          : message;
         break;
       case PendingSwapNetworkStatus.WaitingForQueue:
         message =
@@ -751,18 +764,16 @@ export function isConfirmSwapDisabled(
     return true;
   }
 
-  const allWallets = getQuoteWallets({ filter: 'all', quote });
+  const allChains = getQuoteChains({ filter: 'all', quote });
 
-  const requiredWallets = getQuoteWallets({ filter: 'required', quote });
+  const requiredChains = getQuoteChains({ filter: 'required', quote });
 
-  const everyWalletSelected = allWallets.every((blockchain) =>
-    selectedWallets.some(
-      (selectedWallet) => selectedWallet.chain === blockchain
-    )
+  const everyWalletSelected = allChains.every((chain) =>
+    selectedWallets.some((selectedWallet) => selectedWallet.chain === chain)
   );
 
-  const everyRequiredWalletSelected = requiredWallets.every((wallet) =>
-    selectedWallets.some((selectedWallet) => selectedWallet.chain === wallet)
+  const everyRequiredWalletSelected = requiredChains.every((chain) =>
+    selectedWallets.some((selectedWallet) => selectedWallet.chain === chain)
   );
 
   const customDestinationIsValid =

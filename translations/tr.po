@@ -8,7 +8,7 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-11 11:01\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,41 +17,6 @@ msgstr ""
 "X-Crowdin-Language: tr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:85
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "Bu token doğrulanmış token listemizin bir parçası değil. Lütfen kaynağını doğrulayın ve devam etmeden önce tüm ilişkili riskleri anladığınızdan emin olun."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:100
-msgid "Import Anyway"
-msgstr "Her neyse, içe aktar"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:110
-msgid "Learn More"
-msgstr "Daha fazla bilgi edin"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "Ağ hatası"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "Jeton verileri alınırken bir hata oluştu."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "Bu token potansiyel güvenlik riskleri içerebilir; dikkatli olun."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "Çıktı miktarı {percentageChange}% (${usdValueChange}) oranında değiştirildi."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -71,19 +36,19 @@ msgstr "Farklı anahtar kelimeler kullanmayı deneyin"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:73
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
 msgid "Select Chain"
 msgstr "Zincir Seç"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
 msgid "All"
 msgstr "Tüm"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
 msgid "More +{count}"
 msgstr "Daha Fazla +{count}"
 
@@ -110,15 +75,14 @@ msgstr "Şu anda bazı işlemler çalışıyor ve başka bir tarayıcı sekmesi 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:152
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 msgid "Confirm"
 msgstr "Onaylamak"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:428
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
 msgid "Your {blockchainName} wallets"
 msgstr "{blockchainName} cüzdanlarınız"
 
@@ -133,17 +97,17 @@ msgid "Proceed anyway"
 msgstr "Yine de devam et"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:437
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "{blockchainName} cüzdanını bağlamanız gerekiyor."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:139
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
 msgid "Add {chain} chain"
 msgstr "{chain} zincirini ekle"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
 msgid "Show more wallets"
 msgstr "Daha fazla cüzdan göster"
 
@@ -163,14 +127,24 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "{destination} adresi blockchain adres örüntüsüyle uyuşmuyor."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:70
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
 msgid "via"
 msgstr "aracılığıyla"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "İçe aktarmak"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Bu token doğrulanmış token listemizin bir parçası değil. Lütfen kaynağını doğrulayın ve devam etmeden önce tüm ilişkili riskleri anladığınızdan emin olun."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "Her neyse, içe aktar"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "Daha fazla bilgi edin"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -221,23 +195,33 @@ msgid "Connect Wallet"
 msgstr "Cüzdanı Bağla"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
 msgstr "Bugün"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:432
-msgid "Swaps steps"
-msgstr "Değişim adımları"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "Ağ başarısız, lütfen tekrar deneyin."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "Tekrar dene"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "Başka bir özel belirteç ekle"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "Değişim adımları"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -393,6 +377,11 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Bu rota için kaymayı en az {minRequiredSlippage} 'a çıkarmanız gerekiyor."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "Çıktı miktarı {percentageChange}% (${usdValueChange}) oranında değiştirildi."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
@@ -455,12 +444,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "From ve To için aynı token'ı kullanamazsınız."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:38
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Swap başına kayma toleransı"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:91
+#: widget/embedded/src/components/Slippage/Slippage.tsx:111
 msgid "Custom"
 msgstr "Gelenek"
 
@@ -481,49 +470,49 @@ msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meani
 msgstr "Bu ayar her bir adıma uygulanır (örneğin 1Inch, Thorchain, vb.), yani yalnızca o belirli adım geri alınır, tüm rota geri alınmaz."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Swap Details"
 msgstr "Takas Detayları"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "İstek Kimliği"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
 msgid "Not found"
 msgstr "Bulunamadı"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "İstek ID'si = {requestId} olan takas bulunamadı."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "{chain} zincirindeki {conciseAddress} cüzdanında {amount} {token} aldınız."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
 msgid "Transaction was not sent."
 msgstr "İşlem gönderilemedi."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} on {blockchain} cüzdanınızda kalır."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:289
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
 msgid "Delete"
 msgstr "Silmek"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:312
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
 msgid "Try again"
 msgstr "Tekrar deneyin"
 
@@ -559,6 +548,7 @@ msgstr "İşlemi görüntüle"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
 msgstr "Bağlamak"
@@ -643,7 +633,7 @@ msgstr "Ağ Değişti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:59
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
 msgid "Select Token"
 msgstr "Jeton Seç"
 
@@ -678,27 +668,27 @@ msgid "Click connect in your wallet popup."
 msgstr "Cüzdanınızdaki açılır pencerede bağlan'a tıklayın."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:99
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "Select Derivation Path"
 msgstr "Türetme Yolunu Seçin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "{type}'a bağlanmak için öncelikle bir Türetme Yolu seçmelisiniz"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:118
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
 msgid "Choose Derivation Path Template"
 msgstr "Türetme Yolu Şablonunu Seçin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:133
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
 msgid "Enter Path"
 msgstr "Yola Girin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Index"
 msgstr "Dizin'e Girin"
 
@@ -739,14 +729,37 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Cüzdanınıza {blockchainDisplayName} zincirinin eklenmesini reddettiniz."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:58
-msgid "Select chain types"
-msgstr "Zincir tiplerini seçin"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(Şu anda desteklenmiyor)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:59
-msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
-msgstr "Bu cüzdan birden fazla zinciri destekler. Hangi zincire bağlanmak istediğinizi seçin."
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "Bağlan {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "Bu cüzdan birden fazla zinciri destekler. Hangi zincirlere bağlanmak istediğinizi seçin."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "Bu cüzdan aynı anda yalnızca bir zincire bağlanabilir. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "Tümünü seçimi kaldır"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "Tümünü seç"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -950,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "Üzgünüz, {blockchain} zincirinde belirtilen adresle bir token bulunamadı. Lütfen doğru token adresini girdiğinizden emin olun."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Ağ hatası"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "Jeton verileri alınırken bir hata oluştu."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -972,14 +995,9 @@ msgid "Enter token address"
 msgstr "Jeton adresini girin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "Ağ başarısız, lütfen tekrar deneyin."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "Başka bir özel belirteç ekle"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "İçe aktarmak"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1084,16 +1102,6 @@ msgid "language"
 msgstr "dil"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "Tümünü seçimi kaldır"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "Tümünü seç"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Ara {sourceType}"
@@ -1155,57 +1163,62 @@ msgid "This year"
 msgstr "Bu yıl"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:139
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "Kayma 0,01'den büyük veya eşit olmalıdır"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "Yüksek kayma toleransı nedeniyle işleminiz önden işlem görme riski altındadır."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:141
 msgid "Required: >= {min} {symbol}"
 msgstr "Gerekli: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:152
+#: widget/embedded/src/utils/swap.ts:154
 msgid "Required: > {min} {symbol}"
 msgstr "Gerekli: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:167
+#: widget/embedded/src/utils/swap.ts:169
 msgid "Required: <= {max} {symbol}"
 msgstr "Gerekli: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:180
+#: widget/embedded/src/utils/swap.ts:182
 msgid "Required: < {max} {symbol}"
 msgstr "Gerekli: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:632
+#: widget/embedded/src/utils/swap.ts:634
 msgid " for network fee"
 msgstr " ağ ücreti için"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:637
 msgid " for swap"
 msgstr " takas için"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for input and network fee"
 msgstr " giriş ve ağ ücreti için"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:642
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "≈ {requiredAmount} {symbol}{reason}gerekiyor, ancak cüzdanınızda {blockchain} {currentAmount} {symbol} var."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:691
-msgid "Waiting for connecting wallet"
-msgstr "Cüzdanın bağlanmasını bekliyorum"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:695
+#: widget/embedded/src/utils/swap.ts:708
 msgid "Waiting for other running tasks to be finished"
 msgstr "Diğer çalışan görevlerin bitmesini bekliyorum"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:698
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for changing wallet network"
 msgstr "Cüzdan ağının değiştirilmesi bekleniyor"
 
@@ -1250,6 +1263,11 @@ msgid "Powered By"
 msgstr "Tarafından desteklenmektedir"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Bu token potansiyel güvenlik riskleri içerebilir; dikkatli olun."
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "Toplu İşlem"
@@ -1260,13 +1278,13 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "{fromChain} üzerinden {swapper}ile takas yapın"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "{swapper}üzerinden {toChain} 'a köprü"
 
@@ -1281,9 +1299,14 @@ msgid "In progress"
 msgstr "Devam etmekte"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:112
-msgid "Waiting for bridge transaction"
-msgstr "Köprü işlemi bekleniyor"
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "Takas işlemini bekliyorum"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "Köprü işleminin beklenmesi"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
@@ -1332,12 +1355,12 @@ msgid "Clear all"
 msgstr "Hepsini temizle"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:65
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Balance"
 msgstr "Denge"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:73
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
 msgid "Max"
 msgstr "Maksimum"
 
