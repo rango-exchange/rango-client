@@ -1,3 +1,19 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.29.0...wallets-react@0.30.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* optional namespace removal to prevent error for wallets without autoconnect ([2d20f87](https://github.com/rango-exchange/rango-client/commit/2d20f87820f59abb082770731ee0c64b309d800e))
+* rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+
+
+### Features
+
+* add can eager connect to namespaces ([16b4792](https://github.com/rango-exchange/rango-client/commit/16b4792f877b565ccf767be22ebe14fa79ddd8c6))
+* update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.28.0...wallets-react@0.29.0) (2025-03-11)
 
 

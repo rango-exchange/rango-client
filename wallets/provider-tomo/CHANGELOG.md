@@ -1,3 +1,17 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/provider-tomo@0.10.0...provider-tomo@0.11.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+
+
+### Features
+
+* update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/provider-tomo@0.9.0...provider-tomo@0.10.0) (2025-03-11)
 
 

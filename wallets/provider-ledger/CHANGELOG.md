@@ -1,3 +1,18 @@
+# [0.15.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.14.0...provider-ledger@0.15.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+
+
+### Features
+
+* implement updated design for initial connect modal ([2873c63](https://github.com/rango-exchange/rango-client/commit/2873c630de0740bb3b9f4e52bfa018857bd54dcd))
+* update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.13.0...provider-ledger@0.14.0) (2025-03-11)
 
 
