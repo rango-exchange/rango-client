@@ -1,3 +1,23 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/ui@0.45.0...ui@0.46.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* adjust the warning alert position for custom tokens on the homepage ([cdb5815](https://github.com/rango-exchange/rango-client/commit/cdb5815f4860e9ebde7bd0745566c71eb9a9fdab))
+* fix long token names in widget home page ([0a16339](https://github.com/rango-exchange/rango-client/commit/0a163391f2a1f1b00ac2b259a1130ef38839d4b9))
+* rename pbt to ptb for sui ([3d6d89f](https://github.com/rango-exchange/rango-client/commit/3d6d89f2265766607a15d61e0df92643fb33072b))
+* swap subtitle for history page ([320d095](https://github.com/rango-exchange/rango-client/commit/320d095e60acf17d1a4a7d713b38569d3f9e8feb))
+
+
+### Features
+
+* implement updated design for initial connect modal ([2873c63](https://github.com/rango-exchange/rango-client/commit/2873c630de0740bb3b9f4e52bfa018857bd54dcd))
+* improve widget ux on small devices with dynamic height ([47275b0](https://github.com/rango-exchange/rango-client/commit/47275b01001a953b8aee218aa0429bbf3307ba3b))
+* make the swap header scrollable on the swap details page ([7f10f49](https://github.com/rango-exchange/rango-client/commit/7f10f49b3e859c9432d86164166b75428ed169f0))
+* update sui to consider recent api changes ([d764b25](https://github.com/rango-exchange/rango-client/commit/d764b2501df9bb295f63cdbc0b05acd4a3abb4b9))
+
+
+
 # [0.45.0](https://github.com/rango-exchange/rango-client/compare/ui@0.44.0...ui@0.45.0) (2025-03-11)
 
 
