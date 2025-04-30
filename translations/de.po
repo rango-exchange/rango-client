@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-29 12:43\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,82 +17,6 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
-msgid "(Currently not supported)"
-msgstr "(Derzeit nicht unterstützt)"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
-msgid "Connect {wallet}"
-msgstr "Verbinden {wallet}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "Dieses Wallet unterstützt mehrere Chains. Wählen Sie die Chains aus, mit denen Sie sich verbinden möchten."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
-msgid "This wallet can only connect to one chain at a time. "
-msgstr "Diese Brieftasche kann jeweils nur mit einer Kette verbunden werden. "
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
-msgid "Slippage must be greater than or equal to 0.01"
-msgstr "Der Schlupf muss größer oder gleich 0,01 sein"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
-msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
-msgstr "Aufgrund der hohen Slippage-Toleranz besteht bei Ihrer Transaktion das Risiko eines Frontruns."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
-msgid "Waiting for the swap transaction"
-msgstr "Warten auf die Swap-Transaktion"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
-msgid "Waiting for the bridge transaction"
-msgstr "Warten auf die Brückentransaktion"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "Dieses Token ist nicht Teil unserer Liste verifizierter Token. Bitte überprüfen Sie die Quelle und stellen Sie sicher, dass Sie alle damit verbundenen Risiken verstehen, bevor Sie fortfahren."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
-msgid "Import Anyway"
-msgstr "Trotzdem importieren"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
-msgid "Learn More"
-msgstr "Mehr erfahren"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "Netzwerkfehler"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "Beim Abrufen der Tokendaten ist ein Fehler aufgetreten."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "Dieses Token kann potenzielle Sicherheitsrisiken bergen. Gehen Sie daher vorsichtig vor."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "Ausgabemenge um {percentageChange}% (${usdValueChange}) geändert."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -208,9 +132,19 @@ msgid "via"
 msgstr "über"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "Importieren"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Dieses Token ist nicht Teil unserer Liste verifizierter Token. Bitte überprüfen Sie die Quelle und stellen Sie sicher, dass Sie alle damit verbundenen Risiken verstehen, bevor Sie fortfahren."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "Trotzdem importieren"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "Mehr erfahren"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -268,16 +202,26 @@ msgid "Today"
 msgstr "Heute"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
-msgid "Swaps steps"
-msgstr "Swaps Schritte"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "Fehlgeschlagenes Netzwerk, bitte erneut versuchen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "Wiederholen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "Neues benutzerdefiniertes Token hinzufügen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "Swaps Schritte"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -431,6 +375,11 @@ msgstr "Preisauswirkung"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Sie müssen den Slippage für diese Route auf mindestens {minRequiredSlippage} erhöhen."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "Ausgabemenge um {percentageChange}% (${usdValueChange}) geändert."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
@@ -780,6 +729,39 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Sie haben das Hinzufügen von {blockchainDisplayName} Kette zu Ihrer Brieftasche abgelehnt."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(Derzeit nicht unterstützt)"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "Verbinden {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "Dieses Wallet unterstützt mehrere Chains. Wählen Sie die Chains aus, mit denen Sie sich verbinden möchten."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "Diese Brieftasche kann jeweils nur mit einer Kette verbunden werden. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "Alle abwählen"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "Alles auswählen"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Netzwerk fehlgeschlagen, bitte versuche deinen Swap."
@@ -981,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "Leider wurde kein Token in der {blockchain} Kette mit der angegebenen Adresse gefunden. Bitte stellen Sie sicher, dass Sie die richtige Token-Adresse eingegeben haben."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Netzwerkfehler"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "Beim Abrufen der Tokendaten ist ein Fehler aufgetreten."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -1003,14 +995,9 @@ msgid "Enter token address"
 msgstr "Token Adresse eingeben"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "Fehlgeschlagenes Netzwerk, bitte erneut versuchen."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "Neues benutzerdefiniertes Token hinzufügen"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "Importieren"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1115,18 +1102,6 @@ msgid "language"
 msgstr "sprache"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "Alle abwählen"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "Alles auswählen"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Suche {sourceType}"
@@ -1186,6 +1161,16 @@ msgstr "Diesen Monat"
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
 msgstr "Dieses Jahr"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "Der Schlupf muss größer oder gleich 0,01 sein"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "Aufgrund der hohen Slippage-Toleranz besteht bei Ihrer Transaktion das Risiko eines Frontruns."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:141
@@ -1278,6 +1263,11 @@ msgid "Powered By"
 msgstr "Powered by"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Dieses Token kann potenzielle Sicherheitsrisiken bergen. Gehen Sie daher vorsichtig vor."
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "Gesamte Transaktion"
@@ -1307,6 +1297,16 @@ msgstr "Abgeschlossen"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
 msgstr "In Bearbeitung"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "Warten auf die Swap-Transaktion"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "Warten auf die Brückentransaktion"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12

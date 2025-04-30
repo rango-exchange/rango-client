@@ -8,7 +8,7 @@ msgstr ""
 "Language: af\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-29 12:43\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,82 +17,6 @@ msgstr ""
 "X-Crowdin-Language: af\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
-msgid "(Currently not supported)"
-msgstr "(Tans nie ondersteun nie)"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
-msgid "Connect {wallet}"
-msgstr "Verbind {wallet}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "Hierdie beursie ondersteun verskeie kettings. Kies aan watter kettings jy wil koppel."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
-msgid "This wallet can only connect to one chain at a time. "
-msgstr "Hierdie beursie kan slegs aan een ketting op 'n slag koppel. "
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
-msgid "Slippage must be greater than or equal to 0.01"
-msgstr "Gly moet groter as of gelyk aan 0.01 wees"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
-msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
-msgstr "Jou transaksie loop die risiko om voorop te loop as gevolg van hoë glytoleransie."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
-msgid "Waiting for the swap transaction"
-msgstr "Wag vir die ruiltransaksie"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
-msgid "Waiting for the bridge transaction"
-msgstr "Wag vir die brugtransaksie"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "Hierdie teken is nie deel van ons geverifieerde tekenlys nie. Verifieer asseblief die bron daarvan en maak seker dat u alle gepaardgaande risiko's verstaan voordat u voortgaan."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
-msgid "Import Anyway"
-msgstr "Voer in elk geval in"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
-msgid "Learn More"
-msgstr "Kom meer te wete"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "Netwerkfout"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "'n Fout het voorgekom tydens die herwinning van tokendata."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "Hierdie teken kan moontlike sekuriteitsrisiko's inhou; gaan met omsigtigheid voort."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "Uitsetbedrag verander met {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -208,9 +132,19 @@ msgid "via"
 msgstr "via"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "Invoer"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "Hierdie teken is nie deel van ons geverifieerde tekenlys nie. Verifieer asseblief die bron daarvan en maak seker dat u alle gepaardgaande risiko's verstaan voordat u voortgaan."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "Voer in elk geval in"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "Kom meer te wete"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -268,16 +202,26 @@ msgid "Today"
 msgstr "Vandag"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
-msgid "Swaps steps"
-msgstr "Ruil trappe om"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "Mislukte netwerk, probeer asseblief weer."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "Probeer weer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "Voeg nog 'n pasgemaakte teken by"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "Ruil trappe om"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -431,6 +375,11 @@ msgstr "Prys impak"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Jy moet glip verhoog tot minstens {minRequiredSlippage} vir hierdie roete."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "Uitsetbedrag verander met {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
@@ -780,6 +729,39 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Jy het geweier om {blockchainDisplayName} -ketting by jou beursie te voeg."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(Tans nie ondersteun nie)"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "Verbind {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "Hierdie beursie ondersteun verskeie kettings. Kies aan watter kettings jy wil koppel."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "Hierdie beursie kan slegs aan een ketting op 'n slag koppel. "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "Ontkies almal"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "Kies alles"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Mislukte netwerk, probeer asseblief weer jou ruil."
@@ -981,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "Jammer, geen teken is op {blockchain} -ketting met die verskafde adres gevind nie. maak asseblief seker dat jy die regte tokenadres ingevoer het."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "Netwerkfout"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "'n Fout het voorgekom tydens die herwinning van tokendata."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -1003,14 +995,9 @@ msgid "Enter token address"
 msgstr "Voer tokenadres in"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "Mislukte netwerk, probeer asseblief weer."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "Voeg nog 'n pasgemaakte teken by"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "Invoer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1115,18 +1102,6 @@ msgid "language"
 msgstr "taal"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "Ontkies almal"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "Kies alles"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "Soek {sourceType}"
@@ -1186,6 +1161,16 @@ msgstr "Hierdie maand"
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
 msgstr "Hierdie jaar"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "Gly moet groter as of gelyk aan 0.01 wees"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "Jou transaksie loop die risiko om voorop te loop as gevolg van hoë glytoleransie."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:141
@@ -1278,6 +1263,11 @@ msgid "Powered By"
 msgstr "Aangedryf deur"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "Hierdie teken kan moontlike sekuriteitsrisiko's inhou; gaan met omsigtigheid voort."
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "Geaggregeerde transaksie"
@@ -1307,6 +1297,16 @@ msgstr "Voltooi"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
 msgstr "Aan die gang"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "Wag vir die ruiltransaksie"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "Wag vir die brugtransaksie"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12

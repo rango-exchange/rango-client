@@ -8,7 +8,7 @@ msgstr ""
 "Language: bn\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-29 12:43\n"
+"PO-Revision-Date: 2025-04-30 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,82 +17,6 @@ msgstr ""
 "X-Crowdin-Language: bn\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
-msgid "(Currently not supported)"
-msgstr "(বর্তমানে সমর্থিত নয়)"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
-msgid "Connect {wallet}"
-msgstr "সংযোগ করুন {wallet}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "এই ওয়ালেটটি একাধিক চেইন সমর্থন করে। আপনি কোন চেইনের সাথে সংযোগ করতে চান তা চয়ন করুন।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
-msgid "This wallet can only connect to one chain at a time. "
-msgstr "এই ওয়ালেটটি একবারে কেবল একটি চেইনে সংযোগ করতে পারে। "
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
-msgid "Slippage must be greater than or equal to 0.01"
-msgstr "স্লিপেজ অবশ্যই ০.০১ এর চেয়ে বেশি বা সমান হতে হবে"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
-msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
-msgstr "উচ্চ স্লিপেজ সহনশীলতার কারণে আপনার লেনদেন অগ্রিম লেনদেনের ঝুঁকিতে রয়েছে।"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
-msgid "Waiting for the swap transaction"
-msgstr "সোয়াপ লেনদেনের জন্য অপেক্ষা করছি"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
-msgid "Waiting for the bridge transaction"
-msgstr "সেতু লেনদেনের জন্য অপেক্ষা করছি"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
-msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
-msgstr "এই টোকেনটি আমাদের যাচাইকৃত টোকেন তালিকার অংশ নয়। অনুগ্রহ করে এর উৎস যাচাই করুন এবং এগিয়ে যাওয়ার আগে সমস্ত সম্পর্কিত ঝুঁকিগুলি বুঝতে ভুলবেন না।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
-msgid "Import Anyway"
-msgstr "যাই হোক আমদানি করুন"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
-msgid "Learn More"
-msgstr "আরও জানুন"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
-msgid "Network error"
-msgstr "নেটওয়ার্ক ত্রুটি"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
-msgid "An error occurred while retrieving token data."
-msgstr "টোকেন ডেটা পুনরুদ্ধার করার সময় একটি ত্রুটি ঘটেছে।"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
-msgid "This token may involve potential security risks; proceed with caution."
-msgstr "এই টোকেনটি সম্ভাব্য নিরাপত্তা ঝুঁকির সাথে জড়িত থাকতে পারে; সাবধানতার সাথে এগিয়ে যান।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
-msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
-msgstr "আউটপুট পরিমাণ {percentageChange}% (${usdValueChange}) দ্বারা পরিবর্তিত হয়েছে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -208,9 +132,19 @@ msgid "via"
 msgstr "মাধ্যমে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
-msgid "Import"
-msgstr "আমদানি"
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
+msgstr "এই টোকেনটি আমাদের যাচাইকৃত টোকেন তালিকার অংশ নয়। অনুগ্রহ করে এর উৎস যাচাই করুন এবং এগিয়ে যাওয়ার আগে সমস্ত সম্পর্কিত ঝুঁকিগুলি বুঝতে ভুলবেন না।"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+msgid "Import Anyway"
+msgstr "যাই হোক আমদানি করুন"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+msgid "Learn More"
+msgstr "আরও জানুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:26
@@ -268,16 +202,26 @@ msgid "Today"
 msgstr "আজ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
-msgid "Swaps steps"
-msgstr "ধাপগুলি অদলবদল করে"
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
+msgid "Failed Network, Please retry."
+msgstr "নেটওয়ার্ক ব্যর্থ হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:104
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
 msgid "Retry"
 msgstr "আবার চেষ্টা করুন"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
+msgid "Add another custom token"
+msgstr "আরেকটি কাস্টম টোকেন যোগ করুন"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+msgid "Swaps steps"
+msgstr "ধাপগুলি অদলবদল করে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -431,6 +375,11 @@ msgstr "দামের প্রভাব"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "এই রুটের জন্য আপনাকে অন্তত {minRequiredSlippage} স্লিপেজ বাড়াতে হবে।"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
+msgstr "আউটপুট পরিমাণ {percentageChange}% (${usdValueChange}) দ্বারা পরিবর্তিত হয়েছে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
@@ -780,6 +729,39 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "আপনি আপনার ওয়ালেটে {blockchainDisplayName} চেইন যোগ করা প্রত্যাখ্যান করেছেন৷"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+msgid "(Currently not supported)"
+msgstr "(বর্তমানে সমর্থিত নয়)"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
+#: widget/embedded/src/utils/swap.ts:701
+msgid "Connect {wallet}"
+msgstr "সংযোগ করুন {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
+msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+msgstr "এই ওয়ালেটটি একাধিক চেইন সমর্থন করে। আপনি কোন চেইনের সাথে সংযোগ করতে চান তা চয়ন করুন।"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+msgid "This wallet can only connect to one chain at a time. "
+msgstr "এই ওয়ালেটটি একবারে কেবল একটি চেইনে সংযোগ করতে পারে। "
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Deselect all"
+msgstr "সব বাদ দিন"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+msgid "Select all"
+msgstr "সব নির্বাচন করুন"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "ব্যর্থ নেটওয়ার্ক, আপনার অদলবদল পুনরায় চেষ্টা করুন."
@@ -981,6 +963,16 @@ msgid "Sorry, no token was found on {blockchain} chain with the provided address
 msgstr "দুঃখিত, প্রদত্ত ঠিকানা সহ {blockchain} চেইনে কোনো টোকেন পাওয়া যায়নি৷ দয়া করে নিশ্চিত করুন যে আপনি সঠিক টোকেন ঠিকানাটি প্রবেশ করেছেন।"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:80
+msgid "Network error"
+msgstr "নেটওয়ার্ক ত্রুটি"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/hooks/useFetchCustomToken.ts:81
+msgid "An error occurred while retrieving token data."
+msgstr "টোকেন ডেটা পুনরুদ্ধার করার সময় একটি ত্রুটি ঘটেছে।"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
 #: widget/embedded/src/pages/CustomTokensPage.tsx:150
 msgid "Add Custom Token"
@@ -1003,14 +995,9 @@ msgid "Enter token address"
 msgstr "টোকেন ঠিকানা লিখুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:89
-msgid "Failed Network, Please retry."
-msgstr "নেটওয়ার্ক ব্যর্থ হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ImportCustomToken/ImportCustomToken.tsx:105
-msgid "Add another custom token"
-msgstr "আরেকটি কাস্টম টোকেন যোগ করুন"
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+msgid "Import"
+msgstr "আমদানি"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
@@ -1115,18 +1102,6 @@ msgid "language"
 msgstr "ভাষা"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Deselect all"
-msgstr "সব বাদ দিন"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
-msgid "Select all"
-msgstr "সব নির্বাচন করুন"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "Search {sourceType}"
 msgstr "{sourceType}অনুসন্ধান করুন৷"
@@ -1186,6 +1161,16 @@ msgstr "এই মাসে"
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
 msgstr "এই বছর"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:105
+msgid "Slippage must be greater than or equal to 0.01"
+msgstr "স্লিপেজ অবশ্যই ০.০১ এর চেয়ে বেশি বা সমান হতে হবে"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/settings.ts:110
+msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
+msgstr "উচ্চ স্লিপেজ সহনশীলতার কারণে আপনার লেনদেন অগ্রিম লেনদেনের ঝুঁকিতে রয়েছে।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:141
@@ -1278,6 +1263,11 @@ msgid "Powered By"
 msgstr "দ্বারা চালিত"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/CustomTokenWarning/CustomTokenWarning.tsx:33
+msgid "This token may involve potential security risks; proceed with caution."
+msgstr "এই টোকেনটি সম্ভাব্য নিরাপত্তা ঝুঁকির সাথে জড়িত থাকতে পারে; সাবধানতার সাথে এগিয়ে যান।"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
 msgid "Aggregated Transaction"
 msgstr "সমষ্টিগত লেনদেন"
@@ -1307,6 +1297,16 @@ msgstr "সম্পন্ন"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
 msgstr "চলছে"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+msgid "Waiting for the swap transaction"
+msgstr "সোয়াপ লেনদেনের জন্য অপেক্ষা করছি"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+msgid "Waiting for the bridge transaction"
+msgstr "সেতু লেনদেনের জন্য অপেক্ষা করছি"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
