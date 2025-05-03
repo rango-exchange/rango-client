@@ -24,7 +24,6 @@ import {
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
-  ensureProvidersRegistered,
   getLegacyProvider,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
@@ -331,7 +330,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       };
     },
     providers() {
-      ensureProvidersRegistered(getHub, params.providers);
       const output: Providers = {};
 
       Array.from(getHub().getAll().keys())

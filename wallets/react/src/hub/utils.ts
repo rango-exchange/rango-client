@@ -331,11 +331,7 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function ensureProvidersRegistered(
-  getHub: () => Hub,
-  providers: Provider[]
-) {
-  const hub = getHub();
+export function ensureProvidersRegistered(hub: Hub, providers: Provider[]) {
   const existingProviders = hub.getAll();
 
   const missingProviders = providers.filter(
