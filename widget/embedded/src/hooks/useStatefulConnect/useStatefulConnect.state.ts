@@ -3,17 +3,20 @@ import type {
   NeedsDerivationPathState,
   NeedsNamespacesState,
 } from './useStatefulConnect.types';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 export interface State {
-  status: 'init' | 'namespace' | 'derivationPath';
+  status: 'init' | 'namespace' | 'derivationPath' | 'detached';
   namespace: NeedsNamespacesState | null;
   derivationPath: NeedsDerivationPathState | null;
+  selectedNamespaces: Namespace[] | null;
 }
 
 export const initState: State = {
   status: 'init',
   namespace: null,
   derivationPath: null,
+  selectedNamespaces: null,
 };
 
 export function reducer(state: State, action: Actions): State {
@@ -30,6 +33,12 @@ export function reducer(state: State, action: Actions): State {
         ...state,
         status: 'derivationPath',
         derivationPath: action.payload,
+      };
+    case 'detached':
+      return {
+        ...state,
+        status: 'detached',
+        selectedNamespaces: action.payload.selectedNamespaces,
       };
     case 'reset':
       return initState;

@@ -21,3 +21,9 @@ export function isOnDerivationPath(
 } {
   return getState().status === 'derivationPath';
 }
+
+export function isOnDetached(
+  getState: () => State
+): getState is () => State & { namespace: NonNullable<State['namespace']> } {
+  return getState().status === 'detached';
+}

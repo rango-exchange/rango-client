@@ -33,3 +33,25 @@ interface CheckboxNamespaceItemPropTypes extends NamespaceItemSharedPropTypes {
 export type NamespaceItemPropTypes =
   | RadioNamespaceItemPropTypes
   | CheckboxNamespaceItemPropTypes;
+
+export type NamespaceDetachedItemPropTypes = {
+  walletType: string;
+  initialConnect?: boolean;
+  namespace: {
+    label: string;
+    id: string;
+    value: Namespace;
+    chains: Chain[];
+    unsupported?: boolean;
+  };
+};
+
+export type NamespaceUnsupportedItemPropTypes = {
+  namespace: {
+    label: string;
+    id: string;
+    value: Namespace;
+    chains: Chain[];
+    unsupported?: boolean;
+  };
+};
