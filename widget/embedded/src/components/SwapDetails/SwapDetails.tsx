@@ -40,7 +40,6 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
-import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import {
   numberToString,
@@ -82,31 +81,36 @@ import {
 } from './SwapDetails.styles';
 
 export function SwapDetails(props: SwapDetailsProps) {
-  const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
+  const { swap, requestId, onDelete, onCancel } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
   const { findToken } = useAppStore();
   const retry = useQuoteStore.use.retry();
-  const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
   const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState<ModalState>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
-
-  const onCancel = () => {
-    onCancelProps();
-    setModalState(null);
-  };
+  const showSwitchNetworkRef = useRef(false);
 
   const getNotifications = useNotificationStore.use.getNotifications();
   const removeNotification = useNotificationStore.use.removeNotification();
   const notifications = getNotifications();
   const currentStep = getCurrentStep(swap);
   const currentStepNetworkStatus = currentStep?.networkStatus;
+
+  const handleChangeModalState = (state: ModalState) => {
+    setIsModalOpen(true);
+    setModalState(state);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const existNotification = notifications.find(
@@ -116,6 +120,7 @@ export function SwapDetails(props: SwapDetailsProps) {
       if (swap.status === 'success' || swap.status === 'failed') {
         setShowCompletedModal(swap.status);
         removeNotification(swap.requestId);
+        handleCloseModal();
       } else if (showCompletedModal) {
         setShowCompletedModal(null);
       }
@@ -124,16 +129,24 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   useEffect(() => {
     if (showSwitchNetwork) {
-      setModalState(PendingSwapNetworkStatus.WaitingForNetworkChange);
+      handleChangeModalState(PendingSwapNetworkStatus.WaitingForNetworkChange);
     } else if (
       currentStepNetworkStatus ===
-        PendingSwapNetworkStatus.WaitingForConnectingWallet ||
+      PendingSwapNetworkStatus.WaitingForConnectingWallet
+    ) {
+      handleChangeModalState(
+        PendingSwapNetworkStatus.WaitingForConnectingWallet
+      );
+    } else if (
       currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged
     ) {
-      setModalState(currentStepNetworkStatus);
-    } else {
-      setModalState(null);
+      handleChangeModalState(PendingSwapNetworkStatus.NetworkChanged);
     }
+
+    if (!showSwitchNetwork && showSwitchNetworkRef.current) {
+      handleCloseModal();
+    }
+    showSwitchNetworkRef.current = showSwitchNetwork;
   }, [currentStepNetworkStatus]);
 
   const lastConvertedTokenInFailedSwap =
@@ -177,7 +190,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     swap,
     switchNetwork,
     showNetworkModal: currentStepNetworkStatus,
-    setNetworkModal: setModalState,
+    setNetworkModal: handleChangeModalState,
     message: stepMessage,
     blockchains: blockchains,
     swappers,
@@ -277,7 +290,9 @@ export function SwapDetails(props: SwapDetailsProps) {
       header={{
         title: i18n.t('Swap Details'),
         onCancel:
-          swap.status === 'running' ? () => setModalState('cancel') : undefined,
+          swap.status === 'running'
+            ? () => handleChangeModalState('cancel')
+            : undefined,
         suffix: swap.status !== 'running' && (
           <SuffixContainer>
             <Button
@@ -285,7 +300,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               variant="ghost"
               type="error"
               size="xsmall"
-              onClick={() => setModalState('delete')}>
+              onClick={() => handleChangeModalState('delete')}>
               <Typography size="medium" variant="label" color="error">
                 {i18n.t('Delete')}
               </Typography>
@@ -459,13 +474,13 @@ export function SwapDetails(props: SwapDetailsProps) {
       </Container>
 
       <SwapDetailsModal
+        isOpen={isModalOpen}
         state={modalState}
-        onClose={() => setModalState(null)}
+        onClose={handleCloseModal}
         onCancel={onCancel}
         onDelete={onDelete}
         message={stepMessage.detailedMessage.content}
         swap={swap}
-        walletButtonDisabled={!isActiveTab}
       />
       <SwapDetailsCompleteModal
         open={!!showCompletedModal}
