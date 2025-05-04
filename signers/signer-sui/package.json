@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-sui",
-  "version": "0.3.0",
+  "version": "0.3.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
