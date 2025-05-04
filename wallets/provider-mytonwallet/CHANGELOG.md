@@ -1,3 +1,7 @@
+## [0.29.1](https://github.com/rango-exchange/rango-client/compare/provider-mytonwallet@0.29.0...provider-mytonwallet@0.29.1) (2025-05-04)
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/provider-mytonwallet@0.28.0...provider-mytonwallet@0.29.0) (2025-04-30)
 
 
