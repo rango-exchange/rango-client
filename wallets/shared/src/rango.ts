@@ -169,7 +169,8 @@ export const KEPLR_COMPATIBLE_WALLETS: string[] = [
 
 export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
 export const ETHEREUM_CHAIN_ID = '0x1';
-export const DEFAULT_ETHEREUM_RPC_URL = 'https://rpc.ankr.com/eth';
+export const DEFAULT_ETHEREUM_RPC_URL =
+  'https://rpc.ankr.com/eth/e21edd59bd22b103d89a51758a563ad2c7c33f5455eba21aa15251a42ff3645d';
 
 export type Asset = {
   blockchain: Network;
