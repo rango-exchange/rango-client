@@ -1,3 +1,12 @@
+## [0.44.1](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.44.0...wallets-shared@0.44.1) (2025-05-04)
+
+
+### Bug Fixes
+
+* add api key to ethereum rpc url ([1591335](https://github.com/rango-exchange/rango-client/commit/159133507fb0f85f045b1f4104ad9b1d6846bb2c))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.43.0...wallets-shared@0.44.0) (2025-04-30)
 
 
