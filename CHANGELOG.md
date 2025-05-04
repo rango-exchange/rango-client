@@ -1,3 +1,11 @@
+## Widget [0.33.0] (2025-05-04)
+
+_includes `@rango-dev/widget-embedded@0.42.1`_
+
+### Bug Fixes
+
+- Add api key to ethereum rpc url ([1591335](https://github.com/rango-exchange/rango-client/commit/159133507fb0f85f045b1f4104ad9b1d6846bb2c))
+
 ## Widget [0.32.0] (2025-04-30)
 
 _includes `@rango-dev/widget-embedded@0.42.0`_
@@ -25,7 +33,6 @@ _includes `@rango-dev/widget-embedded@0.42.0`_
 - Swap subtitle for history page ([320d095](https://github.com/rango-exchange/rango-client/commit/320d095e60acf17d1a4a7d713b38569d3f9e8feb))
 - Adjust the warning alert position for custom tokens on the homepage ([cdb5815](https://github.com/rango-exchange/rango-client/commit/cdb5815f4860e9ebde7bd0745566c71eb9a9fdab))
 - Fix long token names in widget home page ([0a16339](https://github.com/rango-exchange/rango-client/commit/0a163391f2a1f1b00ac2b259a1130ef38839d4b9))
-
 
 ## Widget [0.31.0] (2025-03-17)
 
