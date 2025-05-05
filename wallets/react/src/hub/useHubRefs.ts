@@ -3,7 +3,7 @@ import type { Provider, Store } from '@rango-dev/wallets-core';
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { useRef } from 'react';
 
-import { ensureProvidersRegistered } from './utils.js';
+import { registerMissingProvidersAndInit } from './utils.js';
 
 export function useHubRefs(providers: Provider[]) {
   const store = useRef<Store | null>(null);
@@ -42,7 +42,7 @@ export function useHubRefs(providers: Provider[]) {
       return createHub();
     }
 
-    ensureProvidersRegistered(hub.current, providers);
+    registerMissingProvidersAndInit(hub.current, providers);
     return hub.current;
   }
 

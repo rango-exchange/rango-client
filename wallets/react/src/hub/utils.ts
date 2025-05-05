@@ -331,7 +331,10 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function ensureProvidersRegistered(hub: Hub, providers: Provider[]) {
+export function registerMissingProvidersAndInit(
+  hub: Hub,
+  providers: Provider[]
+) {
   const existingProviders = hub.getAll();
 
   const missingProviders = providers.filter(
@@ -339,7 +342,7 @@ export function ensureProvidersRegistered(hub: Hub, providers: Provider[]) {
   );
 
   missingProviders.forEach((provider) => {
-    const newProvider = hub.add(provider.id, provider);
-    newProvider.init();
+    const hubWithRegisteredProvider = hub.add(provider.id, provider);
+    hubWithRegisteredProvider.get(provider.id)?.init();
   });
 }
