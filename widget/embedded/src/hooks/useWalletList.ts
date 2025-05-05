@@ -41,7 +41,7 @@ interface API {
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
   const { connectedWallets, getAvailableProviders } = useAppStore();
-  const { state, getWalletInfo, generateDeepLink } = useWallets();
+  const { state, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
 
@@ -53,7 +53,6 @@ export function useWalletList(params?: Params): API {
   let wallets = mapWalletTypesToWalletInfo(
     state,
     getWalletInfo,
-    generateDeepLink,
     listAvailableWalletTypes,
     chain
   );

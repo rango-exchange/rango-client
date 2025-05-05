@@ -2,7 +2,12 @@ export type { Subscriber, SubscriberCleanUp } from './namespaces/mod.js';
 export { Namespace } from './namespaces/mod.js';
 
 export { Provider } from './provider/mod.js';
-export type { CommonNamespaces, CommonNamespaceKeys } from './provider/mod.js';
+export type {
+  CommonNamespaces,
+  CommonNamespaceKeys,
+  GenerateDeepLink,
+  DeeplinkContext,
+} from './provider/mod.js';
 
 export { Hub } from './hub.js';
 export type { Store, State, ProviderInfo } from './store/mod.js';

@@ -1,4 +1,3 @@
-import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -52,10 +51,6 @@ export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
-
-export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
-  return `trust://open_url?coin_id=60&url=${targetUrl}?autoConnect=${config.type}`;
-};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

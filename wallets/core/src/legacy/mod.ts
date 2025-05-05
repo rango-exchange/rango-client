@@ -16,7 +16,6 @@ export type {
   SwitchNetwork as LegacySwitchNetwork,
   Suggest as LegacySuggest,
   CanSwitchNetwork as LegacyCanSwitchNetwork,
-  GenerateDeepLink,
   NamespaceData as LegacyNamespaceData,
   ProviderInterface as LegacyProviderInterface,
   Network as LegacyNetwork,
