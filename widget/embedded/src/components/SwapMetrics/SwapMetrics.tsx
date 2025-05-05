@@ -62,9 +62,12 @@ export function SwapMetrics(props: PropTypes) {
       ? Number(quote?.requestAmount)
       : Number(quote?.outputAmount);
 
+  const fromTokenUsdPrice = requestAmount || currentFromToken.usdPrice;
+  const toTokenUsdPrice = outputAmount || currentToToken.usdPrice;
+
   const { rawValue, displayValue } = getUsdExchangeRate({
-    fromTokenUsdPrice: requestAmount || currentFromToken.usdPrice,
-    toTokenUsdPrice: outputAmount || currentToToken.usdPrice,
+    fromTokenUsdPrice,
+    toTokenUsdPrice,
   });
 
   return (
@@ -78,45 +81,48 @@ export function SwapMetrics(props: PropTypes) {
       {loading ? (
         <Skeleton height={16} width={104} variant="rounded" />
       ) : (
-        <Rate>
-          <Typography className="rate-text" variant="body" size="small">
-            1
-          </Typography>
-          <TokenName className="rate-text" variant="body" size="small">
-            {currentToToken.symbol}
-          </TokenName>
-          <IconButton
-            id="widget-home-page-change-rate-button"
-            onClick={changeQuoteTokensRate}>
-            <ReverseIcon size={14} color="secondary" />
-          </IconButton>
-          <Tooltip
-            container={getContainer()}
-            side="top"
-            sideOffset={4}
-            content={
-              <Typography className="rate-text" variant="body" size="small">
-                {rawValue}
-              </Typography>
-            }>
+        fromTokenUsdPrice &&
+        toTokenUsdPrice && (
+          <Rate>
             <Typography className="rate-text" variant="body" size="small">
-              {displayValue}
+              1
             </Typography>
-          </Tooltip>
+            <TokenName className="rate-text" variant="body" size="small">
+              {currentToToken.symbol}
+            </TokenName>
+            <IconButton
+              id="widget-home-page-change-rate-button"
+              onClick={changeQuoteTokensRate}>
+              <ReverseIcon size={14} color="secondary" />
+            </IconButton>
+            <Tooltip
+              container={getContainer()}
+              side="top"
+              sideOffset={4}
+              content={
+                <Typography className="rate-text" variant="body" size="small">
+                  {rawValue}
+                </Typography>
+              }>
+              <Typography className="rate-text" variant="body" size="small">
+                {displayValue}
+              </Typography>
+            </Tooltip>
 
-          <TokenName className="rate-text" variant="body" size="small">
-            {currentFromToken.symbol}
-          </TokenName>
-          {currentFromToken.usdPrice && (
-            <Typography color="neutral600" variant="body" size="small">
-              ~
-              {formatTokenValueInUsd(
-                Number(displayValue),
-                currentFromToken.usdPrice
-              )}
-            </Typography>
-          )}
-        </Rate>
+            <TokenName className="rate-text" variant="body" size="small">
+              {currentFromToken.symbol}
+            </TokenName>
+            {currentFromToken.usdPrice && (
+              <Typography color="neutral600" variant="body" size="small">
+                ~
+                {formatTokenValueInUsd(
+                  Number(displayValue),
+                  currentFromToken.usdPrice
+                )}
+              </Typography>
+            )}
+          </Rate>
+        )
       )}
     </Container>
   );
