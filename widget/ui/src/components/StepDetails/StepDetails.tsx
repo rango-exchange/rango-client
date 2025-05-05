@@ -74,13 +74,21 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             </SwapperImage>
             <Divider direction="horizontal" size={8} />
             <Typography size="medium" variant="label">
-              {i18n.t({
-                id: 'Swap on {fromChain} via {swapper}',
-                values: {
-                  fromChain: step.from.chain.displayName,
-                  swapper: step.swapper.displayName,
-                },
-              })}
+              {step.from.chain.displayName === step.to.chain.displayName
+                ? i18n.t({
+                    id: 'Swap on {fromChain} via {swapper}',
+                    values: {
+                      fromChain: step.from.chain.displayName,
+                      swapper: step.swapper.displayName,
+                    },
+                  })
+                : i18n.t({
+                    id: 'Bridge from {fromChain} via {swapper}',
+                    values: {
+                      fromChain: step.from.chain.displayName,
+                      swapper: step.swapper.displayName,
+                    },
+                  })}
             </Typography>
           </div>
         )}
