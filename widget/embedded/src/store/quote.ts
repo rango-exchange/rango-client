@@ -11,13 +11,7 @@ import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
-import {
-  ALL_ZERO_REGEX,
-  ALLOWABLE_ZERO_INPUT_REGEX,
-  LEADING_DOT_REGEX,
-  LEADING_ZEROS_REGEX,
-  ZERO,
-} from '../constants/numbers';
+import { ZERO } from '../constants/numbers';
 import { eventEmitter } from '../services/eventEmitter';
 import {
   type QuoteError,
@@ -31,6 +25,7 @@ import { isPositiveNumber } from '../utils/numbers';
 import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
 
 import createSelectors from './selectors';
+import { sanitizeInputNumber } from './utils/number';
 
 export const getUsdValue = (
   token: Token | null,
@@ -230,20 +225,7 @@ export const useQuoteStore = createSelectors(
         }));
       },
       setInputAmount: (amount) => {
-        let sanitized = amount;
-
-        // if the input is all zeros (e.g. "0000", "0.0000", "0.00000")
-        if (ALL_ZERO_REGEX.test(amount)) {
-          // block input if it exceeds allowed decimal precision (e.g. "0.00000")
-          if (!ALLOWABLE_ZERO_INPUT_REGEX.test(amount)) {
-            return;
-          }
-        } else {
-          // sanitize once a meaningful digit is entered (e.g. "00001" → "1")
-          sanitized = amount.replace(LEADING_ZEROS_REGEX, '');
-          sanitized = sanitized.replace(LEADING_DOT_REGEX, '0.$1');
-        }
-
+        const sanitized = sanitizeInputNumber(amount);
         set((state) => ({
           inputAmount: sanitized,
           ...(!sanitized && {
