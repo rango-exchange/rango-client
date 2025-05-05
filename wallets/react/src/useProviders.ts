@@ -5,7 +5,10 @@ import type {
   Providers,
 } from './index.js';
 import type { ConnectResult } from './legacy/mod.js';
-import type { LegacyState } from '@rango-dev/wallets-core/legacy';
+import type {
+  GenerateDeepLink,
+  LegacyState,
+} from '@rango-dev/wallets-core/legacy';
 import type { SignerFactory } from 'rango-types';
 
 import {
@@ -70,6 +73,14 @@ function useProviders(props: ProviderProps) {
         return hubApi.getSigners(type);
       }
       return legacyApi.getSigners(type);
+    },
+    generateDeepLink(type): GenerateDeepLink | null {
+      const hubProvider = findProviderByType(hubProviders, type);
+      if (hubProvider) {
+        return hubApi.generateDeepLink(type);
+      }
+
+      return legacyApi.generateDeepLink(type);
     },
     getWalletInfo(type): ExtendedWalletInfo {
       const hubProvider = findProviderByType(hubProviders, type);

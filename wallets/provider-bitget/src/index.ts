@@ -1,3 +1,4 @@
+import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -21,7 +22,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain, tronBlockchain } from 'rango-types';
 
-import { bitgetInstances } from './helpers.js';
+import { bitgetInstances, type Provider } from './helpers.js';
 import signer from './signer.js';
 
 const WALLET = WalletTypes.BITGET;
@@ -118,7 +119,12 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
+
+export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
+  return `https://bkcode.vip?action=dapp&url=${targetUrl}?autoConnect=${config.type}`;
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

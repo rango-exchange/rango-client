@@ -1,3 +1,4 @@
+import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -24,6 +25,7 @@ import {
   getSolanaAccounts,
   okx_instance,
   OKX_WALLET_SUPPORTED_CHAINS,
+  type Provider,
 } from './helpers.js';
 import signer from './signer.js';
 
@@ -35,6 +37,7 @@ export const config = {
 };
 
 export const getInstance = okx_instance;
+
 export const connect: Connect = async ({ instance, meta }) => {
   let results: ProviderConnectResult[] = [];
 
@@ -84,7 +87,8 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -92,6 +96,16 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
   }
   return Promise.resolve(false);
+};
+
+export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
+  const deepLinkDestination = encodeURIComponent(
+    `${targetUrl}?autoConnect=${config.type}`
+  );
+  const deepLink = `okx://wallet/dapp/url?dappUrl=${deepLinkDestination}`;
+  return `https://www.okx.com/download?deeplink=${encodeURIComponent(
+    deepLink
+  )}`;
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
@@ -105,6 +119,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     BRAVE:
       'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
     FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/okexwallet',
+    DEEP_LINK:
+      'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3Dhttps%253A%252F%252Fapp.rango.exchange%252Fbridge%253FautoConnect%253Dokx',
     DEFAULT: 'https://www.okx.com/web3',
   },
   color: 'white',

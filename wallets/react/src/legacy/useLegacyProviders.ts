@@ -86,7 +86,7 @@ export function useLegacyProviders(
       }
     },
     async disconnectAll() {
-      const disconnect_promises: Promise<any>[] = [];
+      const disconnect_promises: Promise<unknown>[] = [];
 
       /*
        * When a wallet is initializing, a record will be added to `providersState`
@@ -134,7 +134,7 @@ export function useLegacyProviders(
         : false;
     },
     providers() {
-      const providers: { [type in WalletType]?: any } = {};
+      const providers: { [type in WalletType]?: unknown } = {};
       availableWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
         if (wallet) {
@@ -144,6 +144,13 @@ export function useLegacyProviders(
       });
 
       return providers;
+    },
+    generateDeepLink(type) {
+      const wallet = wallets.get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
+      return wallet.actions.generateDeepLink || null;
     },
     getWalletInfo(type) {
       const wallet = wallets.get(type);

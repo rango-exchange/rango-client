@@ -21,21 +21,31 @@ export function SelectableWallet(props: SelectablePropTypes) {
     onClick,
     selected,
     description,
+    canOpenDeepLink,
+    deepLink,
     state,
     disabled = false,
   } = props;
-  const info = makeInfo(props.state);
+  const info = makeInfo(props.state, canOpenDeepLink);
+
   return (
     <WalletButton
       selected={selected}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
-        if (props.state === WalletState.NOT_INSTALLED) {
+        if (
+          props.state === WalletState.NOT_INSTALLED &&
+          canOpenDeepLink &&
+          deepLink
+        ) {
+          window.open(deepLink, '_blank');
+        } else if (props.state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(props.link), '_blank');
         } else {
           onClick(type);
         }
-      }}>
+      }}
+    >
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -49,7 +59,8 @@ export function SelectableWallet(props: SelectablePropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={state === WalletState.CONNECTED ? 'neutral700' : info.color}>
+          color={state === WalletState.CONNECTED ? 'neutral700' : info.color}
+        >
           {description || info.description}
         </Typography>
       </Text>
