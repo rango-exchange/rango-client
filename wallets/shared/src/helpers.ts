@@ -39,6 +39,7 @@ export function deepCopy(obj: any): any {
 
   // Handle Object
   if (obj instanceof Object) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     copy = {} as any;
     for (const attr in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, attr)) {
@@ -52,6 +53,7 @@ export function deepCopy(obj: any): any {
 }
 
 export async function switchOrAddNetworkForMetamaskCompatibleWallets(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   instance: any,
   network: Network,
   evmNetworksChainInfo: EvmNetworksChainInfo
@@ -64,7 +66,6 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
       params: [{ chainId: targetChain?.chainId }],
     });
   } catch (switchError) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     /*
      * @ts-ignore
      * To resolve this error: Catch clause variable type annotation must be any or unknown if specified
@@ -90,7 +91,9 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function timeout<T = any>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forPromise: Promise<any>,
   time: number
 ): Promise<T> {
@@ -171,6 +174,7 @@ export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
 
 function isBrave() {
   let isBrave = false;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nav: any = navigator;
   if (nav.brave && nav.brave.isBrave) {
     nav.brave.isBrave().then((res: boolean) => {
@@ -204,27 +208,4 @@ export function detectMobileScreens(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
-}
-
-/**
- * Sample inputs are:
- *  - "metamask-ETH"
- *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
- *  - "token-pocket-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
- * Returns "wallet and network" separately, even if the wallet is dashed inside.
- *
- */
-
-export function splitWalletNetwork(input: string): string[] {
-  const removedAddressInput = input?.split(':')[0] || '';
-  const splittedInput = removedAddressInput.split('-');
-  const network = splittedInput[splittedInput.length - 1];
-  const walletNetwork = splittedInput.slice(0, -1);
-
-  if (walletNetwork[walletNetwork.length - 1] === network) {
-    walletNetwork.pop();
-  }
-  const wallet = walletNetwork.join('-');
-
-  return [wallet, network];
 }
