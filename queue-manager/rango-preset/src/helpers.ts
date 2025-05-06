@@ -4,6 +4,7 @@
 import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
   ArrayElement,
+  LastConnectedWallet,
   Step,
   SwapQueueContext,
   SwapQueueDef,
@@ -42,7 +43,6 @@ import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/walle
 import {
   getBlockChainNameFromId,
   getEvmProvider,
-  splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import {
@@ -973,11 +973,17 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(
-        `${type}-${namespace?.network}:${address}`,
-        manager,
-        context.canSwitchNetworkTo
-      );
+      if (type) {
+        retryOn(
+          {
+            walletType: type,
+            network: namespace?.network,
+            accounts: address ? [address] : [],
+          },
+          manager,
+          context.canSwitchNetworkTo
+        );
+      }
     },
   });
 }
@@ -1203,12 +1209,12 @@ export async function signTransaction(
 }
 
 export function checkWaitingForConnectWalletChange(params: {
-  wallet_network: string;
+  lastConnectedWallet: LastConnectedWallet;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
 }): void {
-  const { wallet_network, evmChains, manager } = params;
-  const [wallet, network] = splitWalletNetwork(wallet_network);
+  const { lastConnectedWallet, evmChains, manager } = params;
+  const { walletType: wallet, network } = lastConnectedWallet;
   // We only need change network for EVM chains.
   if (!evmChains.some((chain) => chain.name == network)) {
     return;
@@ -1240,6 +1246,11 @@ export function checkWaitingForConnectWalletChange(params: {
           swap,
           currentStep
         )?.network;
+
+        // We only need change network for EVM chains.
+        if (!evmChains.some((chain) => chain.name == requiredNetwork)) {
+          return;
+        }
 
         if (
           currentStepRequiredWallet === wallet &&
@@ -1387,13 +1398,13 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
  * @returns
  */
 export function retryOn(
-  wallet_network: string,
+  lastConnectedWallet: LastConnectedWallet,
   manager?: Manager,
   canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
   options = { fallbackToOnlyWallet: true }
 ): void {
-  const [wallet, network] = splitWalletNetwork(wallet_network);
-  if (!wallet || !network) {
+  const { walletType: wallet, network } = lastConnectedWallet;
+  if (!wallet) {
     return;
   }
 
@@ -1410,6 +1421,7 @@ export function retryOn(
         const currentStep = getCurrentStep(swap);
         if (currentStep) {
           if (
+            network &&
             getCurrentNamespaceOfOrNull(swap, currentStep)?.network ==
               network &&
             queueStorage?.swapDetails.wallets[network]?.walletType === wallet
@@ -1444,7 +1456,7 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!canSwitchNetworkTo?.(wallet, network)) {
+  if (!network || !canSwitchNetworkTo?.(wallet, network)) {
     finalQueueToBeRun?.unblock();
   } else {
     finalQueueToBeRun?.checkBlock();
