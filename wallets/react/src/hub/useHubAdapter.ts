@@ -122,17 +122,21 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
   const api: ProviderContext = {
     canSwitchNetworkTo(type, network) {
-      const provider = getLegacyProvider(params.allVersionedProviders, type);
-      const switchTo = provider.canSwitchNetworkTo;
+      const provider = getHub().get(type);
 
-      if (!switchTo) {
+      const evmNamespace = provider?.findByNamespace('EVM' as 'evm');
+      if (!evmNamespace) {
+        return false;
+      }
+      const canSwitchNetwork = evmNamespace.canSwitchNetwork;
+      if (!canSwitchNetwork) {
         return false;
       }
 
-      return switchTo({
+      return canSwitchNetwork({
         network,
         meta: params.allBlockChains || [],
-        provider: provider.getInstance(),
+        provider,
       });
     },
     async connect(type, namespaces) {
@@ -156,7 +160,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         const targetNamespace = namespace.namespace;
 
         const result = wallet.findByNamespace(targetNamespace);
-
         if (!result) {
           throw new Error(
             `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
