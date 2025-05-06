@@ -51,7 +51,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
       supportedChainNames: Network[] | null;
     }
   ) => {
-    const [type, , value, , info] = event;
+    const [type, , value, state, info] = event;
 
     const data = prepareAccountsForWalletStore(
       type,
@@ -62,7 +62,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     );
 
     if (data.length) {
-      void newWalletConnected(data, info.namespace);
+      void newWalletConnected(data, info.namespace, state.derivationPath);
     }
   };
 
