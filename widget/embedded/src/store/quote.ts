@@ -92,6 +92,7 @@ export interface QuoteState {
     value: SomeQuoteState[K]
   ) => void;
   setInputAmount: (amount: string) => void;
+  sanitizeInputAmount: (amount: string) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: () => void;
@@ -226,6 +227,15 @@ export const useQuoteStore = createSelectors(
                 (blockchain) => blockchain.name === params.token.blockchain
               ) ?? null,
           }),
+        }));
+      },
+      sanitizeInputAmount: (amount) => {
+        let sanitized = amount;
+        if (isZeroValue(sanitized)) {
+          sanitized = '0';
+        }
+        set(() => ({
+          inputAmount: sanitized,
         }));
       },
       setInputAmount: (amount) => {
