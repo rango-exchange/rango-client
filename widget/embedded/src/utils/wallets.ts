@@ -40,6 +40,7 @@ import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
+import { formatThousandsWithCommas } from './sanitizers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
@@ -294,7 +295,7 @@ export const calculateWalletUsdValue = (balances: BalanceState) => {
 
 function numberWithThousandSeparator(number: string | number): string {
   const parts = number.toString().split('.');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  parts[0] = formatThousandsWithCommas(parts[0]);
   return parts.join('.');
 }
 

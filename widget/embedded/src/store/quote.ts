@@ -22,10 +22,14 @@ import {
   WidgetEvents,
 } from '../types';
 import { isPositiveNumber } from '../utils/numbers';
+import {
+  ensureLeadingZeroForDecimal,
+  removeLeadingZeros,
+} from '../utils/sanitizers';
 import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
+import { isZeroValue } from '../utils/validation';
 
 import createSelectors from './selectors';
-import { sanitizeInputNumber } from './utils/number';
 
 export const getUsdValue = (
   token: Token | null,
@@ -225,7 +229,12 @@ export const useQuoteStore = createSelectors(
         }));
       },
       setInputAmount: (amount) => {
-        const sanitized = sanitizeInputNumber(amount);
+        let sanitized = amount;
+        if (!isZeroValue(amount)) {
+          // sanitize once a meaningful digit is entered (e.g. "00001" → "1")
+          sanitized = removeLeadingZeros(sanitized);
+          sanitized = ensureLeadingZeroForDecimal(sanitized);
+        }
         set((state) => ({
           inputAmount: sanitized,
           ...(!sanitized && {
