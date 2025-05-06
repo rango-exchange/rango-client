@@ -19,6 +19,10 @@ export type CanEagerConnect<C extends Actions<C>> = (
   context: Context<C>,
   ...args: Args
 ) => void;
+export type CanSwitchNetwork<C extends Actions<C>> = (
+  context: Context<C>,
+  ...args: Args
+) => void;
 export type State = NamespaceData;
 export type SetState = <K extends keyof State>(
   name: K,
