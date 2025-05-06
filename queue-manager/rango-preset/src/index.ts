@@ -26,6 +26,7 @@ export type {
   StepCheckStatusEvent,
   StepApprovalTxSucceededEvent,
   StepOutputRevealedEvent,
+  LastConnectedWallet,
 } from './types';
 export {
   WidgetEvents,
