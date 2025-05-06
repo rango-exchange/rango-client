@@ -332,19 +332,14 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     providers() {
       const output: Providers = {};
 
-      Array.from(getHub().getAll().keys())
-        .filter((id) => params.providers.some((provider) => provider.id === id))
-        .forEach((id) => {
-          try {
-            const provider = getLegacyProvider(
-              params.allVersionedProviders,
-              id
-            );
-            output[id] = provider.getInstance();
-          } catch (e) {
-            console.warn(e);
-          }
-        });
+      Array.from(getHub().getAll().keys()).forEach((id) => {
+        try {
+          const provider = getLegacyProvider(params.allVersionedProviders, id);
+          output[id] = provider.getInstance();
+        } catch (e) {
+          console.warn(e);
+        }
+      });
 
       return output;
     },

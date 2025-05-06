@@ -331,18 +331,35 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function registerMissingProvidersAndInit(
+/**
+ * Synchronizes providers in the hub with the configuration providers.
+ * - Registers and initializes any configuration providers not yet in the hub
+ * - Removes providers from the hub that aren't in the configuration
+ */
+export function synchronizeHubWithConfigProviders(
   hub: Hub,
-  providers: Provider[]
+  configurationProviders: Provider[]
 ) {
-  const existingProviders = hub.getAll();
+  const registeredProviders = hub.getAll();
 
-  const missingProviders = providers.filter(
-    (provider) => !existingProviders.get(provider.id)
+  // Register and initialize providers that exist in config but not in hub
+  const providersToRegister = configurationProviders.filter(
+    (configProvider) => !registeredProviders.get(configProvider.id)
   );
 
-  missingProviders.forEach((provider) => {
-    const hubWithRegisteredProvider = hub.add(provider.id, provider);
-    hubWithRegisteredProvider.get(provider.id)?.init();
+  providersToRegister.forEach((providerToRegister) => {
+    const updatedHub = hub.add(providerToRegister.id, providerToRegister);
+    updatedHub.get(providerToRegister.id)?.init();
+  });
+
+  // Remove providers that exist in hub but not in config
+  registeredProviders.forEach((registeredProvider) => {
+    const isProviderInConfig = configurationProviders.some(
+      (configProvider) => configProvider.id === registeredProvider.id
+    );
+
+    if (!isProviderInConfig) {
+      hub.remove(registeredProvider.id);
+    }
   });
 }

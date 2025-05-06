@@ -80,6 +80,18 @@ export class Hub {
     this.#providers.set(id, provider);
     return this;
   }
+  remove(id: string) {
+    const providerToRemove = this.#providers.get(id);
+
+    if (!providerToRemove) {
+      throw new Error(`Provider not found: No provider exists with ID "${id}"`);
+    }
+
+    providerToRemove.destroy();
+    this.#providers.delete(id);
+
+    return this;
+  }
 
   get(providerId: string): Provider | undefined {
     return this.#providers.get(providerId);
@@ -96,7 +108,7 @@ export class Hub {
     output.forEach((result) => {
       const namespaces: NamespaceState[] = [];
       result.namespaces.forEach((b) => {
-        const [getNamespaceState] = b as ReturnType<Namespace<any>['state']>;
+        const [getNamespaceState] = b as ReturnType<Namespace<never>['state']>;
 
         namespaces.push(getNamespaceState());
       });

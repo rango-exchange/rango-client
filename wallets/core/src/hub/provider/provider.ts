@@ -164,6 +164,13 @@ export class Provider {
     this.#setupStore();
     return this;
   }
+  destroy(): void {
+    const store = this.#store;
+    if (!store) {
+      return;
+    }
+    store.getState().providers.removeProvider(this.id);
+  }
 
   /**
    * Getting information about a provider which has been set on constructing Provider.
@@ -296,11 +303,11 @@ export class Provider {
 
     this.#namespaces.forEach((namespace) => {
       if (hookName === 'after') {
-        namespace.after(actionName as any, cb, {
+        namespace.after(actionName as never, cb, {
           context,
         });
       } else if (hookName === 'before') {
-        namespace.before(actionName as any, cb, {
+        namespace.before(actionName as never, cb, {
           context,
         });
       } else {
