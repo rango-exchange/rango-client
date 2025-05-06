@@ -22,7 +22,12 @@ import {
   WidgetEvents,
 } from '../types';
 import { isPositiveNumber } from '../utils/numbers';
+import {
+  ensureLeadingZeroForDecimal,
+  removeLeadingZeros,
+} from '../utils/sanitizers';
 import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
+import { isZeroValue } from '../utils/validation';
 
 import createSelectors from './selectors';
 
@@ -87,6 +92,7 @@ export interface QuoteState {
     value: SomeQuoteState[K]
   ) => void;
   setInputAmount: (amount: string) => void;
+  sanitizeInputAmount: (amount: string) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: () => void;
@@ -223,16 +229,31 @@ export const useQuoteStore = createSelectors(
           }),
         }));
       },
+      sanitizeInputAmount: (amount) => {
+        let sanitized = amount;
+        if (isZeroValue(sanitized)) {
+          sanitized = '0';
+        }
+        set(() => ({
+          inputAmount: sanitized,
+        }));
+      },
       setInputAmount: (amount) => {
+        let sanitized = amount;
+        if (!isZeroValue(amount)) {
+          // sanitize once a meaningful digit is entered (e.g. "00001" → "1")
+          sanitized = removeLeadingZeros(sanitized);
+          sanitized = ensureLeadingZeroForDecimal(sanitized);
+        }
         set((state) => ({
-          inputAmount: amount,
-          ...(!amount && {
+          inputAmount: sanitized,
+          ...(!sanitized && {
             outputAmount: null,
             outputUsdValue: new BigNumber(0),
             selectedQuote: null,
           }),
           ...(!!state.fromToken && {
-            inputUsdValue: getUsdValue(state.fromToken, amount),
+            inputUsdValue: getUsdValue(state.fromToken, sanitized),
           }),
         }));
       },

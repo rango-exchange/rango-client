@@ -83,6 +83,7 @@ export function useSyncUrlAndStore() {
   useEffect(() => {
     const { autoConnect, clientUrl, utmQueryParams, blockchain } =
       getUrlSearchParams();
+
     if (isInRouterContext && fetchMetaStatus === 'success') {
       updateUrlSearchParams({
         [SearchParams.FROM_BLOCKCHAIN]: fromBlockchain?.name,
@@ -107,6 +108,7 @@ export function useSyncUrlAndStore() {
     toBlockchain,
     toToken,
     campaignMode,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {
