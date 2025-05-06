@@ -108,6 +108,7 @@ export function useSyncUrlAndStore() {
     toBlockchain,
     toToken,
     campaignMode,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {
