@@ -21,6 +21,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as ledger from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
+import { versions as mobileWalletAdapter } from '@rango-dev/provider-mobile-wallet-adapter';
 import * as mytonwallet from '@rango-dev/provider-mytonwallet';
 import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
@@ -115,6 +116,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
     lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
     phantom,
+    mobileWalletAdapter,
     lazyProvider(legacyProviderImportsToVersionsInterface(argentx)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     lazyProvider(legacyProviderImportsToVersionsInterface(trustwallet)),
