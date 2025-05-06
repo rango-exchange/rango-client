@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-solana": "^0.38.1-next.1",
-    "@rango-dev/wallets-shared": "^0.43.1-next.5",
+    "@rango-dev/signer-solana": "^0.39.1-next.0",
+    "@rango-dev/wallets-shared": "^0.44.2-next.0",
     "@solana/web3.js": "^1.98.2",
     "@solana/wallet-adapter-base": "^0.9.26",
     "@solana-mobile/wallet-adapter-mobile": "^2.2.0",
