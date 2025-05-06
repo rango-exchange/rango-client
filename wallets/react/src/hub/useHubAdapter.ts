@@ -54,11 +54,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     };
   }, [params]);
 
-  const providersHash = params.providers
-    .map((provider) => provider.info.name)
-    .sort()
-    .toString();
-
   // Initialize instances
   useEffect(() => {
     const hub = getHub();
@@ -112,7 +107,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
      * Some of wallets, take some time to be fully injected and loaded.
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
-  }, [providersHash]);
+  }, []);
 
   useAutoConnect({
     autoConnect: params.autoConnect,
