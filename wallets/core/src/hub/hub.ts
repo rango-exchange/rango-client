@@ -87,7 +87,6 @@ export class Hub {
       throw new Error(`Provider not found: No provider exists with ID "${id}"`);
     }
 
-    providerToRemove.destroy();
     this.#providers.delete(id);
 
     return this;
@@ -108,7 +107,8 @@ export class Hub {
     output.forEach((result) => {
       const namespaces: NamespaceState[] = [];
       result.namespaces.forEach((b) => {
-        const [getNamespaceState] = b as ReturnType<Namespace<never>['state']>;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [getNamespaceState] = b as ReturnType<Namespace<any>['state']>;
 
         namespaces.push(getNamespaceState());
       });

@@ -16,6 +16,7 @@ describe('check providers', () => {
     evm: NamespaceBuilder<EvmActions>;
     solana: NamespaceBuilder<SolanaActions>;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let namespacesMap: Map<any, any>;
   let store: Store;
 
@@ -39,6 +40,7 @@ describe('check providers', () => {
     return () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore-next-line
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       (store = undefined), (namespaces = undefined);
     };
   });
@@ -52,7 +54,22 @@ describe('check providers', () => {
 
     expect(allNamespaces.size).toBe(2);
   });
+  test('Provider gets destoryed correctly', () => {
+    const providerId = 'garbage';
+    const provider = new Provider(providerId, namespacesMap, {
+      info: garbageWalletInfo,
+    });
+    const store = createStore();
+    provider.store(store);
 
+    expect(store.getState().providers.list[providerId]).toBeDefined();
+    expect(Object.entries(store.getState().providers.list).length).toBe(1);
+
+    provider.destroy();
+
+    expect(store.getState().providers.list[providerId]).toBeUndefined();
+    expect(Object.entries(store.getState().providers.list).length).toBe(0);
+  });
   test("throw an error if store hasn't set and try to access .state() and .info()", () => {
     const provider = new Provider('garbage', namespacesMap, {
       info: garbageWalletInfo,

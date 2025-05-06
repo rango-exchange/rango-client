@@ -19,6 +19,7 @@ export class Provider {
 
   #namespaces: RegisteredNamespaces<keyof CommonNamespaces, CommonNamespaces>;
   #initiated = false;
+  #destroyed = false;
   #extendInternalActions: ExtendableInternalActions = {};
   #store: Store | undefined;
   #configs: ProviderConfig;
@@ -164,12 +165,17 @@ export class Provider {
     this.#setupStore();
     return this;
   }
+
   destroy(): void {
+    if (this.#destroyed) {
+      return;
+    }
     const store = this.#store;
     if (!store) {
       return;
     }
     store.getState().providers.removeProvider(this.id);
+    this.#destroyed = true;
   }
 
   /**
@@ -303,11 +309,13 @@ export class Provider {
 
     this.#namespaces.forEach((namespace) => {
       if (hookName === 'after') {
-        namespace.after(actionName as never, cb, {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        namespace.after(actionName as any, cb, {
           context,
         });
       } else if (hookName === 'before') {
-        namespace.before(actionName as never, cb, {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        namespace.before(actionName as any, cb, {
           context,
         });
       } else {

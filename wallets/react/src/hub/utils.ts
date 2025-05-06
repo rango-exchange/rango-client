@@ -348,8 +348,8 @@ export function synchronizeHubWithConfigProviders(
   );
 
   providersToRegister.forEach((providerToRegister) => {
-    const updatedHub = hub.add(providerToRegister.id, providerToRegister);
-    updatedHub.get(providerToRegister.id)?.init();
+    hub.add(providerToRegister.id, providerToRegister);
+    providerToRegister.init();
   });
 
   // Remove providers that exist in hub but not in config
@@ -360,6 +360,7 @@ export function synchronizeHubWithConfigProviders(
 
     if (!isProviderInConfig) {
       hub.remove(registeredProvider.id);
+      registeredProvider.destroy();
     }
   });
 }
