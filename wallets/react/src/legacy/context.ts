@@ -2,34 +2,34 @@ import type { ProviderContext } from './types.js';
 
 import { createContext } from 'react';
 
-const defaultErrorMesssage = "Context hasn't been initialized yet.";
+const defaultErrorMessage = "Context hasn't been initialized yet.";
 const defaultContext: ProviderContext = {
   async connect() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   async disconnect() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   async disconnectAll() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   async suggestAndConnect() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   state() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   canSwitchNetworkTo() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   providers() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   getWalletInfo() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
   getSigners() {
-    throw new Error(defaultErrorMesssage);
+    throw new Error(defaultErrorMessage);
   },
 };
 

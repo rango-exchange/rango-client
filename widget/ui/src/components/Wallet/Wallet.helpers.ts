@@ -12,6 +12,12 @@ export function makeInfo(state: WalletState): Info {
         description: i18n.t('Connected'),
         tooltipText: i18n.t('Disconnect'),
       };
+    case WalletState.PARTIALLY_CONNECTED:
+      return {
+        color: 'warning500',
+        description: i18n.t('Connected Partially'),
+        tooltipText: i18n.t('Connect other chains'),
+      };
     case WalletState.NOT_INSTALLED:
       return {
         color: 'info500',

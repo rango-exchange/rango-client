@@ -1,12 +1,16 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
-import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
+
+import {
+  checkIsWalletPartiallyConnected,
+  type ExtendedModalWalletInfo,
+} from '../../utils/wallets';
 
 import {
   isStateOnDerivationPathStep,
@@ -64,7 +68,6 @@ export function useStatefulConnect(): UseStatefulConnect {
         network: undefined,
       }));
       await connect(type, legacyNamespacesInput);
-
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -151,6 +154,25 @@ export function useStatefulConnect(): UseStatefulConnect {
       }
     }
 
+    if (!!wallet.isHub) {
+      const walletState = state(wallet.type);
+      const namespacesState = walletState.namespaces;
+      const isPartiallyConnected = checkIsWalletPartiallyConnected(
+        wallet,
+        namespacesState
+      );
+      if (isPartiallyConnected) {
+        dispatch({
+          type: 'detached',
+          payload: {
+            targetWallet: wallet,
+            selectedNamespaces: null,
+          },
+        });
+        return { status: ResultStatus.Detached };
+      }
+    }
+
     if (options?.disconnectIfConnected) {
       await handleDisconnect(wallet.type);
       return { status: ResultStatus.Disconnected };
@@ -203,12 +225,19 @@ export function useStatefulConnect(): UseStatefulConnect {
       );
     }
 
-    const type = connectState.namespace.targetWallet.type;
     const namespaces = selectedNamespaces.map((namespace) => ({
       namespace,
     }));
 
-    return await runConnect(type, namespaces);
+    dispatch({
+      type: 'detached',
+      payload: {
+        targetWallet: wallet,
+        selectedNamespaces:
+          namespaces?.map((namespace) => namespace.namespace) || null,
+      },
+    });
+    return { status: ResultStatus.Detached };
   };
 
   const handleDerivationPath = async (

@@ -10,7 +10,7 @@ import {
   SupportedChainsContainer,
 } from './SupportedChainsList.styles';
 
-const SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER = 3;
+const SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER = 2;
 
 export function SupportedChainsList(props: PropTypes) {
   const { chains } = props;

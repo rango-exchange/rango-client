@@ -145,6 +145,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'Sui',
           id: 'SUI',
           chains: [suiChains.sui],
+          unsupported: true,
         },
       ],
     },
