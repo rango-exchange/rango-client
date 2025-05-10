@@ -38,37 +38,39 @@ export function getUsdExchangeRate(params: {
   fromTokenUsdPrice: number | null;
 }) {
   const { toTokenUsdPrice, fromTokenUsdPrice } = params;
-
-  if (toTokenUsdPrice && fromTokenUsdPrice) {
-    const toPrice = new BigNumber(toTokenUsdPrice);
-    const fromPrice = new BigNumber(fromTokenUsdPrice);
-    const rawValue = toPrice.dividedBy(fromPrice);
-    let displayValue: string;
-
-    if (rawValue.isLessThan(1)) {
-      displayValue = rawValue.toFixed(SMALL_VALUE_DECIMALS);
-    } else if (rawValue.toFixed(0).length > LARGE_VALUE_MAX_DIGITS) {
-      displayValue = rawValue.toFixed(0).slice(0, LARGE_VALUE_MAX_DIGITS);
-    } else {
-      displayValue = rawValue.toFixed(USD_FORMAT_DECIMALS);
-    }
-    return {
-      displayValue,
-      rawValue: rawValue.toFixed(),
-    };
+  if (!toTokenUsdPrice || !fromTokenUsdPrice) {
+    return { rawValue: '0', displayValue: '0' };
   }
-  return { rawValue: '0', displayValue: '0' };
+
+  const toPrice = new BigNumber(toTokenUsdPrice);
+  const fromPrice = new BigNumber(fromTokenUsdPrice);
+  const rawValue = toPrice.dividedBy(fromPrice);
+  let displayValue: string;
+
+  if (rawValue.isLessThan(1)) {
+    displayValue = rawValue.toFixed(SMALL_VALUE_DECIMALS);
+  } else if (rawValue.toFixed(0).length > LARGE_VALUE_MAX_DIGITS) {
+    displayValue = rawValue.toFixed(0).slice(0, LARGE_VALUE_MAX_DIGITS);
+  } else {
+    displayValue = rawValue.toFixed(USD_FORMAT_DECIMALS);
+  }
+  return {
+    displayValue,
+    rawValue: rawValue.toFixed(),
+  };
 }
 
 export function formatTokenValueInUsd(
   usdExchangeRate: number,
   tokenUsdPrice: number
 ): string {
-  const value = usdExchangeRate * tokenUsdPrice;
-
-  const result = new BigNumber(value)
+  const value = new BigNumber(usdExchangeRate).multipliedBy(tokenUsdPrice);
+  if (value.isLessThan(USD_EXCHANGE_MINIMUM)) {
+    return '$0';
+  }
+  const result = value
     .decimalPlaces(USD_FORMAT_DECIMALS, BigNumber.ROUND_DOWN)
     .toFormat(USD_FORMAT_DECIMALS);
 
-  return `$${Number(result) < USD_EXCHANGE_MINIMUM ? '0' : result}`;
+  return `$${result}`;
 }
