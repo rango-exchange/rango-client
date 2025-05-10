@@ -17,7 +17,14 @@ const buildProvider = () =>
         console.debug('[phantom] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', info)
+    .config('deepLink', (context) => {
+      const ref = `https://${context.appHost}`;
+      const deepLinkDestination = `${context.targetUrl}?autoConnect=phantom`;
+      return `https://phantom.app/ul/browse/${encodeURIComponent(
+        deepLinkDestination
+      )}?ref=${encodeURIComponent(ref)}`;
+    })
     .add('solana', solana)
     .add('evm', evm)
     .add('utxo', utxo)

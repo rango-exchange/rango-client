@@ -176,15 +176,16 @@ export class Provider {
    * provider.info();
    * ```
    */
-  public info(): ProviderConfig['info'] | undefined {
+  public info(): ProviderConfig | undefined {
     const store = this.#store;
     if (!store) {
       throw new Error(
         'You need to set your store using `.store` method first.'
       );
     }
+    const config = store.getState().providers.list[this.id].config;
 
-    return store.getState().providers.list[this.id].config.info;
+    return { metadata: config.metadata, deepLink: config.deepLink };
   }
 
   /**
@@ -296,10 +297,12 @@ export class Provider {
 
     this.#namespaces.forEach((namespace) => {
       if (hookName === 'after') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         namespace.after(actionName as any, cb, {
           context,
         });
       } else if (hookName === 'before') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         namespace.before(actionName as any, cb, {
           context,
         });

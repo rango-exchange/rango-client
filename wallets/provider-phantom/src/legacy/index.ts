@@ -89,6 +89,7 @@ const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
     return false;
   }
 };
+
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
@@ -114,7 +115,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
-
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',

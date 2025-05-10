@@ -1,4 +1,8 @@
-import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
+import type {
+  GenerateDeepLink,
+  ProviderInfo,
+  VersionedProviders,
+} from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
@@ -155,6 +159,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
+  generateDeepLink?: GenerateDeepLink;
   getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;

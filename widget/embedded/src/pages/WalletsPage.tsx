@@ -13,6 +13,10 @@ import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
+import {
+  DEEP_LINK_DEFAULT_APP_HOST,
+  DEEP_LINK_DEFAULT_TARGET_URL,
+} from '../constants';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -65,7 +69,8 @@ export function WalletsPage() {
     <Layout
       header={{
         title: i18n.t('Connect Wallets'),
-      }}>
+      }}
+    >
       <Container>
         {showCategory && (
           <>
@@ -84,10 +89,17 @@ export function WalletsPage() {
         <ListContainer>
           {filteredWallets.map((wallet, index) => {
             const key = `wallet-${index}-${wallet.type}`;
+            const deepLink = wallet.generateDeepLink?.({
+              appHost:
+                config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST,
+              targetUrl:
+                config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL,
+            });
             return (
               <Wallet
                 key={key}
                 {...wallet}
+                deepLink={deepLink}
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}

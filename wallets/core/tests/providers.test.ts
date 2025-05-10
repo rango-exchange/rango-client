@@ -53,7 +53,7 @@ describe('check Provider works with Blockchain correctly', () => {
       .build();
 
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     garbageWalletBuilder.add('evm', evmNamespace);
@@ -117,7 +117,7 @@ describe('check Provider works with Blockchain correctly', () => {
       .build();
 
     const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     garbageWalletBuilder.add('evm', evmNamespace);

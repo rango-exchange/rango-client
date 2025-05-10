@@ -41,6 +41,10 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        deepLinking: {
+          appDomain: 'app.rango.exchange',
+          targetUrl: 'https://app.rango.exchange/bridge',
+        },
       };
     }
     if (!!config) {

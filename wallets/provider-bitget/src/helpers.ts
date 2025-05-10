@@ -1,8 +1,6 @@
-import type { Network } from '@rango-dev/wallets-shared';
-
 import { Networks } from '@rango-dev/wallets-shared';
 
-type Provider = Map<Network, any>;
+export type Provider = Map<string, unknown>;
 
 export function bitgetInstances(): Provider | null {
   const instances: Provider = new Map();

@@ -4,7 +4,7 @@ import { i18n } from '@lingui/core';
 
 import { WalletState } from './Wallet.types.js';
 
-export function makeInfo(state: WalletState): Info {
+export function makeInfo(state: WalletState, hasDeepLink: boolean): Info {
   switch (state) {
     case WalletState.CONNECTED:
       return {
@@ -13,6 +13,13 @@ export function makeInfo(state: WalletState): Info {
         tooltipText: i18n.t('Disconnect'),
       };
     case WalletState.NOT_INSTALLED:
+      if (hasDeepLink) {
+        return {
+          color: 'info500',
+          description: i18n.t('Open'),
+          tooltipText: i18n.t('Open'),
+        };
+      }
       return {
         color: 'info500',
         description: i18n.t('Install'),
