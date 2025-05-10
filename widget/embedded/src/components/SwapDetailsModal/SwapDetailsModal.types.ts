@@ -1,3 +1,4 @@
+import type { WalletInfo } from '@rango-dev/wallets-shared';
 import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =
@@ -46,6 +47,10 @@ export interface WalletStateContentProps extends ModalNetworkValueTypes {
   message: string;
   showWalletButton: boolean;
   walletButtonDisabled: boolean;
+}
+
+export interface InstallWalletContentProps {
+  walletInfo: WalletInfo;
 }
 
 export type CancelContentProps = Pick<ModalPropTypes, 'onClose' | 'onCancel'>;
