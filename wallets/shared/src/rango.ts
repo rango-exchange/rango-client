@@ -42,6 +42,7 @@ export enum WalletTypes {
   DEFAULT = 'default',
   META_MASK = 'metamask',
   WALLET_CONNECT_2 = 'wallet-connect-2',
+  MOBILE_WALLET_ADAPTER = 'mobile-wallet-adapter',
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
