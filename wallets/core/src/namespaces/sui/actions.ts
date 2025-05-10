@@ -1,6 +1,9 @@
 import type { SuiActions } from './types.js';
 import type { Subscriber } from '../../hub/namespaces/mod.js';
-import type { SubscriberCleanUp } from '../../hub/namespaces/types.js';
+import type {
+  CanEagerConnect,
+  SubscriberCleanUp,
+} from '../../hub/namespaces/types.js';
 import type { StandardEventsChangeProperties } from '@mysten/wallet-standard';
 
 import { AccountId } from 'caip';
@@ -59,4 +62,32 @@ export function changeAccountSubscriber(
       return err;
     },
   ];
+}
+interface CanEagerConnectParams {
+  name: string;
+}
+export function canEagerConnect(
+  params: CanEagerConnectParams
+): CanEagerConnect<SuiActions> {
+  return async () => {
+    const wallet = getInstanceOrThrow(params.name);
+
+    if (!wallet) {
+      throw new Error(
+        'Trying to eagerly connect to your Sui wallet, but seems its instance is not available.'
+      );
+    }
+
+    try {
+      const result = await wallet.features['standard:connect'].connect({
+        silent: true,
+      });
+      if (result.accounts.length) {
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
 }
