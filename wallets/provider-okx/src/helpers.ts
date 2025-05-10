@@ -23,15 +23,20 @@ export async function getSolanaAccounts(
 ): Promise<ProviderConnectResult[]> {
   const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
-
   if (solanaInstance) {
     const solanaResponse = await solanaInstance.connect();
-    const account = solanaResponse.publicKey.toString();
+    if (!!solanaResponse) {
+      const account = solanaResponse.publicKey.toString();
 
-    results.push({
-      accounts: account ? [account] : [],
-      chainId: Networks.SOLANA,
-    });
+      results.push({
+        accounts: account ? [account] : [],
+        chainId: Networks.SOLANA,
+      });
+    } else {
+      throw new Error(
+        'Failed to connect to Solana wallet or publicKey is missing.'
+      );
+    }
   }
 
   return results;
