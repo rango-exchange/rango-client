@@ -1,5 +1,7 @@
 import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
+import type { WalletError } from '@solana/wallet-adapter-base';
+import type { PublicKey } from '@solana/web3.js';
 
 import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
@@ -18,20 +20,29 @@ const connect = builders
   .action(async function () {
     const phantomInstance = mobileWalletAdapter();
     await phantomInstance.connect();
+    return new Promise((resolve, reject) => {
+      const handleConnect = (publicKey: PublicKey) => {
+        const account = publicKey?.toString();
 
-    const account = phantomInstance.publicKey?.toString();
-    if (!account) {
-      throw new Error('Connected account is not found!');
-    }
-    return [
-      CAIP.AccountId.format({
-        address: account,
-        chainId: {
-          namespace: CAIP_NAMESPACE,
-          reference: CAIP_SOLANA_CHAIN_ID,
-        },
-      }) as CaipAccount,
-    ];
+        if (!account) {
+          return reject(new Error('Connected account is not found!'));
+        }
+        return resolve([
+          CAIP.AccountId.format({
+            address: account,
+            chainId: {
+              namespace: CAIP_NAMESPACE,
+              reference: CAIP_SOLANA_CHAIN_ID,
+            },
+          }) as CaipAccount,
+        ]);
+      };
+      const handleError = (error: WalletError) => {
+        return reject(error);
+      };
+      phantomInstance.on('connect', handleConnect);
+      phantomInstance.on('error', handleError);
+    });
   })
   .build();
 

@@ -1,3 +1,5 @@
+import type { Adapter } from '@solana/wallet-adapter-base';
+
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   type Cluster,
@@ -13,7 +15,7 @@ import {
 } from '@solana-mobile/wallet-adapter-mobile';
 
 export type Provider = Map<string, unknown>;
-let _mobileWalletAdapter: SolanaMobileWalletAdapter;
+let _mobileWalletAdapter: Adapter;
 const CLUSTER = WalletAdapterNetwork.Mainnet;
 const CONNECTION_CONFIG: ConnectionConfig = { commitment: 'processed' };
 const ENDPOINT = /*#__PURE__*/ clusterApiUrl(CLUSTER);
@@ -24,7 +26,7 @@ export function connection(): Connection {
   }
   return _connection;
 }
-export function mobileWalletAdapter(): SolanaMobileWalletAdapter {
+export function mobileWalletAdapter(): Adapter {
   if (!_mobileWalletAdapter) {
     _mobileWalletAdapter = new SolanaMobileWalletAdapter({
       addressSelector: createDefaultAddressSelector(),
