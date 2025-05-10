@@ -205,7 +205,7 @@ export function useSwapInput({
       }
       return;
     }
-    if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
+    if (!isPositiveNumber(inputAmount) && inputUsdValue?.eq(0)) {
       resetState(false);
       cancelFetch();
       return;

@@ -4,15 +4,16 @@ import type {
 } from '../../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, WarningIcon } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
-import { useAppStore } from '../../store/AppStore';
 import { QuoteWarningType } from '../../types';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
+
+import { SwapButton } from './QuoteWarningsAndErrors.styles';
 
 type PropsTypes = {
   open: boolean;
@@ -23,26 +24,13 @@ type PropsTypes = {
 };
 
 export function SlippageWarningModal(props: PropsTypes) {
-  const { customSlippage, slippage } = useAppStore();
   const { open, onClose, onConfirm, warning, confirmationDisabled } = props;
   const navigate = useNavigate();
-  const userSlippage = customSlippage ?? slippage;
 
   return (
     <WatermarkedModal
       anchor="bottom"
       open={open}
-      prefix={
-        <Button
-          size="small"
-          id="widget-slippage-warning-modal-change-settings-btn"
-          variant="ghost"
-          onClick={() => navigate('../' + navigationRoutes.settings)}>
-          <Typography variant="label" size="medium" color="$neutral900">
-            {i18n.t('Change settings')}
-          </Typography>
-        </Button>
-      }
       container={getContainer()}
       onClose={onClose}>
       <MessageBox
@@ -54,10 +42,9 @@ export function SlippageWarningModal(props: PropsTypes) {
         }
         description={
           warning.type === QuoteWarningType.HIGH_SLIPPAGE
-            ? i18n.t({
-                id: ' Caution, your slippage is high (={userSlippage}). Your trade may be front run.',
-                values: { userSlippage },
-              })
+            ? i18n.t(
+                'Caution, your slippage is high. Your trade may be front run.'
+              )
             : i18n.t({
                 id: 'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
                 values: {
@@ -67,7 +54,7 @@ export function SlippageWarningModal(props: PropsTypes) {
         }>
         <Divider size={18} />
         <Divider size={32} />
-        <Button
+        <SwapButton
           id="widget-slippage-warning-modal-confirm-anyway-btn"
           size="large"
           type="primary"
@@ -75,7 +62,19 @@ export function SlippageWarningModal(props: PropsTypes) {
           fullWidth
           disabled={confirmationDisabled}
           onClick={onConfirm}>
-          {i18n.t('Confirm anyway')}
+          <WarningIcon color="white" size={16} />
+          {i18n.t('Swap anyway')}
+        </SwapButton>
+        <Divider size={10} />
+        <Button
+          id="widget-slippage-warning-modal-change-slippage-btn"
+          size="large"
+          type="primary"
+          variant="outlined"
+          fullWidth
+          disabled={confirmationDisabled}
+          onClick={() => navigate('../' + navigationRoutes.settings)}>
+          {i18n.t('Change Slippage')}
         </Button>
       </MessageBox>
     </WatermarkedModal>
