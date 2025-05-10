@@ -27,6 +27,7 @@ import { versions as phantom } from '@rango-dev/provider-phantom';
 import * as rabby from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
+import { versions as slush } from '@rango-dev/provider-slush';
 import * as solflare from '@rango-dev/provider-solflare';
 import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
@@ -141,6 +142,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
+    slush,
     lazyProvider(legacyProviderImportsToVersionsInterface(mytonwallet)),
   ];
 };
