@@ -25,12 +25,19 @@ import { Container, Rate, TokenName } from './SwapMetrics.styles';
 export function SwapMetrics(props: PropTypes) {
   const { slippage, customSlippage, quoteTokensRate, changeQuoteTokensRate } =
     useAppStore();
-  const { quoteError, quoteWarning, fromToken, toToken, quote, loading } =
-    props;
+  const {
+    quoteError,
+    quoteWarning,
+    fromToken: initialFromToken,
+    toToken: initialToToken,
+    quote,
+    loading,
+  } = props;
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
   const { mode } = useTheme({});
   const slippageValidation = getSlippageValidation(currentSlippage);
   const isDarkTheme = mode === 'dark';
+  const isDefaultRate = quoteTokensRate === 'default';
 
   const error = {
     quoteError,
@@ -45,30 +52,28 @@ export function SwapMetrics(props: PropTypes) {
         : null,
   };
 
-  const sourceToken = quote?.swaps[0].from || fromToken;
-  const destinationToken = quote?.swaps[quote.swaps.length - 1].to || toToken;
+  const sourceToken = quote?.swaps[0].from || initialFromToken;
+  const destinationToken =
+    quote?.swaps[quote?.swaps.length - 1].to || initialToToken;
 
-  const currentToToken =
-    quoteTokensRate === 'default' ? destinationToken : sourceToken;
-  const currentFromToken =
-    quoteTokensRate === 'default' ? sourceToken : destinationToken;
-  const requestAmount =
-    quoteTokensRate === 'default'
-      ? Number(quote?.outputAmount)
-      : Number(quote?.requestAmount);
+  const fromToken = isDefaultRate ? sourceToken : destinationToken;
+  const toToken = isDefaultRate ? destinationToken : sourceToken;
 
-  const outputAmount =
-    quoteTokensRate === 'default'
-      ? Number(quote?.requestAmount)
-      : Number(quote?.outputAmount);
+  const fromAmount = Number(
+    isDefaultRate ? quote?.outputAmount : quote?.requestAmount
+  );
+  const toAmount = Number(
+    isDefaultRate ? quote?.requestAmount : quote?.outputAmount
+  );
 
-  const fromTokenUsdPrice = requestAmount || currentFromToken.usdPrice;
-  const toTokenUsdPrice = outputAmount || currentToToken.usdPrice;
+  const fromTokenUsdPrice = fromAmount || fromToken.usdPrice;
+  const toTokenUsdPrice = toAmount || toToken.usdPrice;
 
-  const { rawValue, displayValue } = getUsdExchangeRate({
-    fromTokenUsdPrice,
-    toTokenUsdPrice,
-  });
+  const { rawValue: exchangeRateRaw, displayValue: exchangeRateDisplay } =
+    getUsdExchangeRate({
+      toTokenUsdPrice,
+      fromTokenUsdPrice,
+    });
 
   return (
     <Container>
@@ -88,7 +93,7 @@ export function SwapMetrics(props: PropTypes) {
               1
             </Typography>
             <TokenName className="rate-text" variant="body" size="small">
-              {currentToToken.symbol}
+              {toToken.symbol}
             </TokenName>
             <IconButton
               id="widget-home-page-change-rate-button"
@@ -101,23 +106,23 @@ export function SwapMetrics(props: PropTypes) {
               sideOffset={4}
               content={
                 <Typography className="rate-text" variant="body" size="small">
-                  {rawValue}
+                  {exchangeRateRaw}
                 </Typography>
               }>
               <Typography className="rate-text" variant="body" size="small">
-                {displayValue}
+                {exchangeRateDisplay}
               </Typography>
             </Tooltip>
 
             <TokenName className="rate-text" variant="body" size="small">
-              {currentFromToken.symbol}
+              {fromToken.symbol}
             </TokenName>
-            {currentFromToken.usdPrice && (
+            {fromToken.usdPrice && (
               <Typography color="neutral600" variant="body" size="small">
                 ~
                 {formatTokenValueInUsd(
-                  Number(displayValue),
-                  currentFromToken.usdPrice
+                  Number(exchangeRateRaw),
+                  fromToken.usdPrice
                 )}
               </Typography>
             )}
