@@ -278,7 +278,9 @@ class Namespace<T extends Actions<T>> {
 
     return this;
   }
-
+  public hasAction<K extends keyof T>(actionName: K): boolean {
+    return !!this.#actions.get(actionName);
+  }
   /**
    *
    * Registered actions will be called using `run`. it will run an action and all the operators or hooks that assigned.

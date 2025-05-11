@@ -19,6 +19,7 @@ export const allowedMethods = [
   'or_else',
   'store',
 ] as const;
+const allowedPublicValues = ['string', 'number'] as const;
 
 export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
@@ -192,6 +193,21 @@ export class NamespaceBuilder<T extends Actions<T>> {
     this.#addHooksFromActionBuilders(namespace);
 
     const api = new Proxy(namespace, {
+      has: (_, property) => {
+        if (
+          allowedMethods.includes(property as (typeof allowedMethods)[number])
+        ) {
+          return true;
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        if (allowedPublicValues.includes(typeof namespace[property])) {
+          return true;
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        return namespace.hasAction(property);
+      },
       get: (_, property) => {
         if (typeof property !== 'string') {
           throw new Error(
@@ -208,12 +224,11 @@ export class NamespaceBuilder<T extends Actions<T>> {
           return targetValue.bind(namespace);
         }
 
-        /*
-         * This is useful accessing values like `version`, If we don't do this, we should whitelist
-         * All the values as well, So it can be confusing for someone that only wants to add a public value to `Namespace`
-         */
-        const allowedPublicValues = ['string', 'number'];
-        if (allowedPublicValues.includes(typeof targetValue)) {
+        if (
+          allowedPublicValues.includes(
+            typeof targetValue as (typeof allowedPublicValues)[number]
+          )
+        ) {
           return targetValue;
         }
 
