@@ -52,7 +52,6 @@ export function StatefulConnectModal(props: PropTypes) {
     handleConnect,
     handleDerivationPath,
     handleNamespace,
-    handleDetached,
     getState,
     resetState,
   } = useStatefulConnect();
@@ -63,16 +62,14 @@ export function StatefulConnectModal(props: PropTypes) {
       .catch(catchErrorOnHandle);
   };
 
+  const handleDetachedConfirm = () => {
+    handleClosingModal();
+  };
+
   const handleDerivationPathConfirm = (derivationPath: string) => {
     if (!derivationPath) {
       throw new Error(
         "Derivation path is empty. Please make sure you've filled the field correctly."
-      );
-    }
-
-    if (!props.wallet) {
-      throw new Error(
-        "Target wallet can not be 'undefined' on confirming derivation path."
       );
     }
 
@@ -143,6 +140,7 @@ export function StatefulConnectModal(props: PropTypes) {
         .then((result) => {
           const resultIsNeedMoreStepsToConnect = [
             ResultStatus.Namespace,
+            ResultStatus.Detached,
             ResultStatus.DerivationPath,
           ].includes(result.status);
 
@@ -193,7 +191,7 @@ export function StatefulConnectModal(props: PropTypes) {
       )}
       {isOnDetached(getState) && (
         <Detached
-          onConfirm={handleDetached}
+          onConfirm={handleDetachedConfirm}
           value={getState().namespace}
           selectedNamespaces={getState().selectedNamespaces}
         />

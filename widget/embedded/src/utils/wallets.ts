@@ -5,6 +5,7 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Network,
@@ -416,20 +417,42 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: ExtendedModalWalletInfo[]
+  wallets: ExtendedModalWalletInfo[],
+  state: (type: WalletType) => {
+    namespaces?: Map<Namespace, { connected: boolean }>;
+  }
 ): ExtendedModalWalletInfo[] {
-  return wallets.sort(
-    (a, b) =>
-      Number(b.state === WalletStatus.CONNECTED) -
-        Number(a.state === WalletStatus.CONNECTED) ||
-      Number(
-        b.state === WalletStatus.DISCONNECTED ||
-          b.state === WalletStatus.CONNECTING
-      ) -
-        Number(
-          a.state === WalletStatus.DISCONNECTED ||
-            a.state === WalletStatus.CONNECTING
-        )
+  return (
+    wallets
+      .map((wallet) => ({
+        // add isPartiallyConnected to wallet items
+        isPartiallyConnected: checkIsWalletPartiallyConnected(
+          wallet,
+          state(wallet.type).namespaces
+        ),
+        ...wallet,
+      }))
+      .sort(
+        (a, b) =>
+          Number(
+            b.state === WalletStatus.CONNECTED && !b.isPartiallyConnected
+          ) -
+            Number(
+              a.state === WalletStatus.CONNECTED && !a.isPartiallyConnected
+            ) ||
+          Number(b.state === WalletStatus.CONNECTED) -
+            Number(a.state === WalletStatus.CONNECTED) ||
+          Number(
+            b.state === WalletStatus.DISCONNECTED ||
+              b.state === WalletStatus.CONNECTING
+          ) -
+            Number(
+              a.state === WalletStatus.DISCONNECTED ||
+                a.state === WalletStatus.CONNECTING
+            )
+      )
+      // remove isPartiallyConnected from wallet items
+      .map(({ isPartiallyConnected, ...wallet }) => wallet)
   );
 }
 
@@ -509,4 +532,25 @@ export function filterWalletsByCategory(
     }
     return false;
   });
+}
+
+export function checkIsWalletPartiallyConnected(
+  wallet: ExtendedModalWalletInfo,
+  namespacesState?: Map<Namespace, { connected: boolean }>
+) {
+  if (
+    !wallet.isHub ||
+    !wallet.needsNamespace ||
+    wallet.state !== WalletStatus.CONNECTED
+  ) {
+    return false;
+  }
+  const namespaces = wallet.needsNamespace.data;
+  const supportedNamespaces = namespaces.filter(
+    (namespace) => !namespace.unsupported
+  );
+
+  return supportedNamespaces.some(
+    (namespace) => !namespacesState?.get(namespace.value)?.connected
+  );
 }
