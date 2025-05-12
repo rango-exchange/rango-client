@@ -1,10 +1,6 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
-import {
-  type Context,
-  type FunctionWithContext,
-  NamespaceBuilder,
-} from '@rango-dev/wallets-core';
+import { NamespaceBuilder } from '@rango-dev/wallets-core';
 import {
   builders as commonBuilders,
   standardizeAndThrowError,
@@ -42,11 +38,7 @@ const canEagerConnect = builders
   .build();
 const canSwitchNetwork = builders
   .canSwitchNetwork()
-  .action((): FunctionWithContext<EvmActions['canSwitchNetwork'], Context> => {
-    return (context, params) => {
-      return EVM_SUPPORTED_CHAINS.some((chain) => chain === params.network);
-    };
-  })
+  .action(actions.canSwitchNetwork(EVM_SUPPORTED_CHAINS))
   .build();
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)

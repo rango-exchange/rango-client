@@ -42,7 +42,11 @@ export type ProviderContext = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;
-  canSwitchNetworkTo(type: WalletType, network: Network): boolean;
+  canSwitchNetworkTo(
+    type: WalletType,
+    network: Network,
+    namespace: LegacyNamespaceInputForConnect
+  ): boolean;
   /**
    * `Provider` in legacy terms means injected instances by wallets into window (e.g. window.ethereum)
    * that can be retrieved by `getInstance`.
