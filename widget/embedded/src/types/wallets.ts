@@ -6,6 +6,7 @@ export interface Wallet {
   address: string;
   walletType: WalletType;
   isContractWallet?: boolean;
+  derivationPath?: string;
 }
 
 export type Balance = {
