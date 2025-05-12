@@ -86,19 +86,21 @@ export type InstallObjects = {
   DEFAULT: string;
 };
 
+export type NamespaceMeta = {
+  label: string;
+  /**
+   * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
+   * e.g. ETH
+   */
+  id: string;
+  value: Namespace;
+  unsupported?: boolean;
+  chains: Chain[];
+};
+
 interface NeedsNamespace {
   selection: 'single' | 'multiple';
-  data: {
-    label: string;
-    /**
-     * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
-     * e.g. ETH
-     */
-    id: string;
-    value: Namespace;
-    unsupported?: boolean;
-    chains: Chain[];
-  }[];
+  data: NamespaceMeta[];
 }
 
 interface NeedsDerivationPath {

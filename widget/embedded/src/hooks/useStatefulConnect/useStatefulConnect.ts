@@ -64,7 +64,6 @@ export function useStatefulConnect(): UseStatefulConnect {
         network: undefined,
       }));
       await connect(type, legacyNamespacesInput);
-
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -203,12 +202,19 @@ export function useStatefulConnect(): UseStatefulConnect {
       );
     }
 
-    const type = connectState.namespace.targetWallet.type;
     const namespaces = selectedNamespaces.map((namespace) => ({
       namespace,
     }));
 
-    return await runConnect(type, namespaces);
+    dispatch({
+      type: 'detached',
+      payload: {
+        targetWallet: wallet,
+        selectedNamespaces:
+          namespaces?.map((namespace) => namespace.namespace) || null,
+      },
+    });
+    return { status: ResultStatus.Detached };
   };
 
   const handleDerivationPath = async (
@@ -232,6 +238,12 @@ export function useStatefulConnect(): UseStatefulConnect {
     return await runConnect(type, namespaces);
   };
 
+  const handleDetached = () => {
+    dispatch({
+      type: 'reset',
+    });
+  };
+
   const handleDisconnect = async (type: WalletType): Promise<Result> => {
     const wallet = state(type);
     if (wallet.connected || wallet.connecting) {
@@ -247,6 +259,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     handleDisconnect,
     handleNamespace,
     handleDerivationPath,
+    handleDetached,
     getState: () => connectState,
     resetState: (section?: 'derivation') => {
       if (section === 'derivation') {
