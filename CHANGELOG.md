@@ -1,3 +1,11 @@
+## Widget [0.34.0] (2025-05-12)
+
+_includes `@rango-dev/widget-embedded@0.42.2`_
+
+### Bug Fixes
+
+- Resolve widget height issues in iframe ([2fb4aa9](https://github.com/rango-exchange/rango-client/commit/2fb4aa99b5562183a9623d0a9ca219919a316c5e))
+
 ## Widget [0.33.0] (2025-05-04)
 
 _includes `@rango-dev/widget-embedded@0.42.1`_
