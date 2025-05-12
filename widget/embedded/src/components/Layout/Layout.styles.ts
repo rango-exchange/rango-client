@@ -25,9 +25,7 @@ export const Container = styled('div', {
       fixed: {
         minHeight: WIDGET_MIN_HEIGHT,
         maxHeight: WIDGET_MAX_HEIGHT,
-        '@sm': {
-          height: WIDGET_MAX_HEIGHT,
-        },
+        height: WIDGET_MAX_HEIGHT,
       },
     },
     showBanner: {
