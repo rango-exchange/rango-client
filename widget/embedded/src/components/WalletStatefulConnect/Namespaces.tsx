@@ -14,6 +14,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
+import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
@@ -97,7 +98,7 @@ export function Namespaces(props: PropTypes) {
           wallet: targetWallet.title,
         })}
         description={i18n.t(
-          "This wallet supports multiple chains. Choose which chains you'd like to connect to."
+          'This wallet supports multiple chains. Choose which chains you’d like to connect.'
         )}
         icon={<Image src={providerImage} size={45} />}
       />
@@ -134,12 +135,16 @@ export function Namespaces(props: PropTypes) {
             {targetWallet.needsNamespace?.data.map(
               (namespace, index, array) => (
                 <React.Fragment key={namespace.id}>
-                  <NamespaceListItem
-                    value={selectedNamespaces.includes(namespace.value)}
-                    namespace={namespace}
-                    type={singleNamespace ? 'radio' : 'checkbox'}
-                    onClick={() => onSelect(namespace.value)}
-                  />
+                  {namespace.unsupported ? (
+                    <NamespaceUnsupportedItem namespace={namespace} />
+                  ) : (
+                    <NamespaceListItem
+                      value={selectedNamespaces.includes(namespace.value)}
+                      namespace={namespace}
+                      type={singleNamespace ? 'radio' : 'checkbox'}
+                      onClick={() => onSelect(namespace.value)}
+                    />
+                  )}
                   {index !== array.length - 1 && <Divider size={10} />}
                 </React.Fragment>
               )

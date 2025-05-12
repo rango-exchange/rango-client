@@ -17,8 +17,14 @@ import {
   DerivationPath,
   Namespaces,
 } from '../WalletStatefulConnect';
+import { Detached } from '../WalletStatefulConnect/Detached';
 
-import { isOnDerivationPath, isOnNamespace, isOnStatus } from './helpers';
+import {
+  isOnDerivationPath,
+  isOnDetached,
+  isOnNamespace,
+  isOnStatus,
+} from './helpers';
 
 const KEEP_SUCCESS_MODAL_FOR = 3_000;
 const DELAY_SHOWING_MODAL_FOR = 300;
@@ -46,6 +52,7 @@ export function StatefulConnectModal(props: PropTypes) {
     handleConnect,
     handleDerivationPath,
     handleNamespace,
+    handleDetached,
     getState,
     resetState,
   } = useStatefulConnect();
@@ -60,6 +67,12 @@ export function StatefulConnectModal(props: PropTypes) {
     if (!derivationPath) {
       throw new Error(
         "Derivation path is empty. Please make sure you've filled the field correctly."
+      );
+    }
+
+    if (!props.wallet) {
+      throw new Error(
+        "Target wallet can not be 'undefined' on confirming derivation path."
       );
     }
 
@@ -176,6 +189,13 @@ export function StatefulConnectModal(props: PropTypes) {
         <DerivationPath
           onConfirm={handleDerivationPathConfirm}
           value={getState().derivationPath}
+        />
+      )}
+      {isOnDetached(getState) && (
+        <Detached
+          onConfirm={handleDetached}
+          value={getState().namespace}
+          selectedNamespaces={getState().selectedNamespaces}
         />
       )}
     </WatermarkedModal>
