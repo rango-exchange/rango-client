@@ -24,6 +24,7 @@ export type {
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,
   NamespaceInputForConnect as LegacyNamespaceInputForConnect,
+  NamespaceMeta as LegacyNamespaceMeta,
 } from './types.js';
 
 export { Events as LegacyEvents, Networks as LegacyNetworks } from './types.js';

@@ -1,2 +1,2 @@
 export { StatefulConnectModal } from './StatefulConnectModal';
-export { isOnNamespace, isOnDerivationPath } from './helpers';
+export { isOnNamespace, isOnDerivationPath, isOnDetached } from './helpers';
