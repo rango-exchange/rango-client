@@ -1,12 +1,16 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
-import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
+
+import {
+  checkIsWalletPartiallyConnected,
+  type ExtendedModalWalletInfo,
+} from '../../utils/wallets';
 
 import {
   isStateOnDerivationPathStep,
@@ -150,6 +154,25 @@ export function useStatefulConnect(): UseStatefulConnect {
       }
     }
 
+    if (!!wallet.isHub) {
+      const walletState = state(wallet.type);
+      const namespacesState = walletState.namespaces;
+      const isPartiallyConnected = checkIsWalletPartiallyConnected(
+        wallet,
+        namespacesState
+      );
+      if (isPartiallyConnected) {
+        dispatch({
+          type: 'detached',
+          payload: {
+            targetWallet: wallet,
+            selectedNamespaces: null,
+          },
+        });
+        return { status: ResultStatus.Detached };
+      }
+    }
+
     if (options?.disconnectIfConnected) {
       await handleDisconnect(wallet.type);
       return { status: ResultStatus.Disconnected };
@@ -238,12 +261,6 @@ export function useStatefulConnect(): UseStatefulConnect {
     return await runConnect(type, namespaces);
   };
 
-  const handleDetached = () => {
-    dispatch({
-      type: 'reset',
-    });
-  };
-
   const handleDisconnect = async (type: WalletType): Promise<Result> => {
     const wallet = state(type);
     if (wallet.connected || wallet.connecting) {
@@ -259,7 +276,6 @@ export function useStatefulConnect(): UseStatefulConnect {
     handleDisconnect,
     handleNamespace,
     handleDerivationPath,
-    handleDetached,
     getState: () => connectState,
     resetState: (section?: 'derivation') => {
       if (section === 'derivation') {
