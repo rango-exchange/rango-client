@@ -1,6 +1,10 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
-import { ETHEREUM_CHAIN_ID, Networks } from '@rango-dev/wallets-shared';
+import {
+  ETHEREUM_CHAIN_ID,
+  Networks,
+  type ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 
 import { getDerivationPath } from './state.js';
 
@@ -34,13 +38,11 @@ export function getTrezorInstance() {
   return instances;
 }
 
-export async function getEthereumAccounts(): Promise<{
-  accounts: string[];
-  chainId: string;
-}> {
+export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   const TrezorConnect = await getTrezorModule();
+  const derivationPath = getDerivationPath();
   const result = await TrezorConnect.ethereumGetAddress({
-    path: getDerivationPath(),
+    path: derivationPath,
   });
 
   if (!result.success) {
@@ -50,6 +52,7 @@ export async function getEthereumAccounts(): Promise<{
   return {
     accounts: [result.payload.address],
     chainId: ETHEREUM_CHAIN_ID,
+    derivationPath,
   };
 }
 

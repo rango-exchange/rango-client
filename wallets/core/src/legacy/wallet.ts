@@ -35,6 +35,7 @@ export type EventInfo = {
   isHub: boolean;
   // will be set alongside ACCOUNT event
   namespace?: Namespace;
+  derivationPath?: string;
 };
 
 export interface State {
@@ -47,6 +48,7 @@ export interface State {
   installed: boolean;
   accounts: string[] | null;
   network: Network | null;
+  derivationPath?: string;
 }
 
 export interface Options {
@@ -205,6 +207,7 @@ class Wallet<InstanceType = any> {
     // Inserting accounts into our state.
     let nextAccounts: string[] = [];
     let nextNetwork: Network | null | undefined = null;
+    let nextDerivationPath: string | undefined = undefined;
     if (Array.isArray(connectResult)) {
       let activeEvmNetwork: Network | null = null;
       const accounts = connectResult.flatMap((blockchain) => {
@@ -213,6 +216,9 @@ class Wallet<InstanceType = any> {
         const network =
           getBlockChainNameFromId(chainId, this.info.supportedBlockchains) ||
           Networks.Unknown;
+        nextDerivationPath = blockchain.derivationPath
+          ? blockchain.derivationPath
+          : nextDerivationPath;
 
         /*
          * When connecting to an evm instance, it will return address and wallet's active chain.
@@ -240,6 +246,7 @@ class Wallet<InstanceType = any> {
       const network =
         getBlockChainNameFromId(chainId, this.info.supportedBlockchains) ||
         Networks.Unknown;
+      const derivationPath = connectResult.derivationPath;
 
       // We fallback to current active network if `chainId` not provided.
       nextAccounts = accountAddressesWithNetwork(
@@ -247,12 +254,14 @@ class Wallet<InstanceType = any> {
         network
       );
       nextNetwork = network;
+      nextDerivationPath = derivationPath;
     }
 
     if (nextAccounts.length > 0) {
       this.updateState({
         accounts: nextAccounts,
         network: nextNetwork,
+        derivationPath: nextDerivationPath,
       });
     }
 
@@ -421,6 +430,7 @@ class Wallet<InstanceType = any> {
     }
     if (typeof states.accounts !== 'undefined') {
       this.state.accounts = states.accounts;
+      this.state.derivationPath = states.derivationPath;
       updates.push([Events.ACCOUNTS, states.accounts]);
     }
     if (typeof states.network !== 'undefined') {
