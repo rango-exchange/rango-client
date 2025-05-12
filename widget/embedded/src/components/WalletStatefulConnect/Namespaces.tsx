@@ -17,15 +17,21 @@ import { NamespaceList, StyledButton } from './Namespaces.styles';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
-  const singleNamespace = targetWallet.needsNamespace?.selection === 'single';
+  const namespacesProperty = targetWallet.properties?.find(
+    (property) => property.name === 'namespaces'
+  );
+  const isHub = targetWallet.isHub;
+  const singleNamespace = targetWallet.isHub
+    ? namespacesProperty?.value.selection === 'single'
+    : targetWallet.needsNamespace?.selection === 'single';
+  const needsNamespace = isHub
+    ? namespacesProperty?.value
+    : targetWallet.needsNamespace;
   const providerImage = targetWallet.image;
 
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
   const supportedNamespaces = useMemo(
-    () =>
-      targetWallet.needsNamespace?.data.filter(
-        (namespace) => !namespace.unsupported
-      ),
+    () => needsNamespace?.data.filter((namespace) => !namespace.unsupported),
     [targetWallet?.type]
   );
 
@@ -131,19 +137,17 @@ export function Namespaces(props: PropTypes) {
       <NamespaceList>
         {wrapRadioRoot(
           <>
-            {targetWallet.needsNamespace?.data.map(
-              (namespace, index, array) => (
-                <React.Fragment key={namespace.id}>
-                  <NamespaceListItem
-                    value={selectedNamespaces.includes(namespace.value)}
-                    namespace={namespace}
-                    type={singleNamespace ? 'radio' : 'checkbox'}
-                    onClick={() => onSelect(namespace.value)}
-                  />
-                  {index !== array.length - 1 && <Divider size={10} />}
-                </React.Fragment>
-              )
-            )}
+            {needsNamespace?.data.map((namespace, index, array) => (
+              <React.Fragment key={namespace.id}>
+                <NamespaceListItem
+                  value={selectedNamespaces.includes(namespace.value)}
+                  namespace={namespace}
+                  type={singleNamespace ? 'radio' : 'checkbox'}
+                  onClick={() => onSelect(namespace.value)}
+                />
+                {index !== array.length - 1 && <Divider size={10} />}
+              </React.Fragment>
+            ))}
           </>
         )}
       </NamespaceList>
