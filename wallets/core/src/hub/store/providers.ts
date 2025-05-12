@@ -1,4 +1,4 @@
-import type { Namespace } from '../../namespaces/common/types.js';
+import type { Chain, Namespace } from '../../namespaces/common/types.js';
 import type { State as InternalProviderState } from '../provider/mod.js';
 import type { StateCreator } from 'zustand';
 
@@ -9,13 +9,46 @@ import { guessProviderStateSelector, type State } from './mod.js';
 
 type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
 type Property<N extends string, V> = { name: N; value: V };
-type DetachedInstances = Property<'detached', Namespace[]>;
+type NamespacesProperty = Property<
+  'namespaces',
+  {
+    selection: 'single' | 'multiple';
+    data: {
+      label: string;
+      id: string;
+      value: Namespace;
+      unsupported?: boolean;
+      chains: Chain[];
+    }[];
+  }
+>;
+type DerivationPathProperty = Property<
+  'derivationPath',
+  {
+    data: {
+      id: string;
+      label: string;
+      namespace: Namespace;
+      generateDerivationPath: (index: string) => string;
+    }[];
+  }
+>;
+type DetailsProperty = Property<
+  'details',
+  {
+    mobileWallet?: boolean;
+    showOnMobile?: boolean;
+    isContractWallet?: boolean;
+  }
+>;
 
 export type ProviderInfo = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
-  properties?: DetachedInstances[];
+  properties?: Array<
+    NamespacesProperty | DerivationPathProperty | DetailsProperty
+  >;
 };
 
 export interface ProviderConfig {

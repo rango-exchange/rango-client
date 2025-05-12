@@ -1,5 +1,9 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
+import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
+import { chains as suiChains } from '@rango-dev/wallets-core/namespaces/sui';
+import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
 
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
@@ -20,9 +24,36 @@ export const info: ProviderInfo = {
   },
   properties: [
     {
-      name: 'detached',
-      // if you are adding a new namespace, don't forget to also update `getWalletInfo`
-      value: ['Solana', 'EVM', 'UTXO', 'Sui'],
+      name: 'namespaces',
+      value: {
+        selection: 'multiple',
+        data: [
+          {
+            label: 'EVM',
+            value: 'EVM',
+            id: 'ETH',
+            chains: [evmChains.ethereum, evmChains.base, evmChains.polygon],
+          },
+          {
+            label: 'Solana',
+            value: 'Solana',
+            id: 'SOLANA',
+            chains: [solanaChains.solana],
+          },
+          {
+            label: 'BTC',
+            value: 'UTXO',
+            id: 'BTC',
+            chains: [utxoChains.bitcoin],
+          },
+          {
+            label: 'Sui',
+            value: 'Sui',
+            id: 'SUI',
+            chains: [suiChains.sui],
+          },
+        ],
+      },
     },
   ],
 };
