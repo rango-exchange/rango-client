@@ -534,13 +534,18 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   const wallets = selectedWallets.reduce(
     (
       selectedWalletsMap: {
-        [p: string]: { address: string; walletType: WalletType };
+        [p: string]: {
+          address: string;
+          walletType: WalletType;
+          derivationPath?: string;
+        };
       },
       selectedWallet
     ) => (
       (selectedWalletsMap[selectedWallet.chain] = {
         address: selectedWallet.address,
         walletType: selectedWallet.walletType,
+        derivationPath: selectedWallet.derivationPath,
       }),
       selectedWalletsMap
     ),
