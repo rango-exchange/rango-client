@@ -17,6 +17,7 @@ export type WalletInfo = {
   image: string;
   type: string;
   showOnMobile?: boolean;
+  showOnDesktop?: boolean;
   blockchainTypes: TransactionType[];
   needsNamespace?: LegacyWalletInfo['needsNamespace'];
   needsDerivationPath?: LegacyWalletInfo['needsDerivationPath'];

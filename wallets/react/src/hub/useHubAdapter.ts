@@ -326,6 +326,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         supportedChains: walletInfoFromLegacy.supportedChains,
         isContractWallet: false,
         mobileWallet: false,
+        showOnDesktop: info.showOnDesktop,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.
         showOnMobile: undefined,
         needsNamespace: walletInfoFromLegacy.needsNamespace,

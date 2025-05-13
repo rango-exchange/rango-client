@@ -15,6 +15,7 @@ export type ProviderInfo = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
+  showOnDesktop?: boolean;
   properties?: DetachedInstances[];
 };
 
