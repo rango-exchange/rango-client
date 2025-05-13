@@ -1,0 +1,35 @@
+{
+  "name": "@rango-dev/provider-mobile-wallet-adapter",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-mobile-wallet-adapter --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/signer-solana": "^0.39.1-next.0",
+    "@rango-dev/wallets-shared": "^0.44.2-next.0",
+    "@solana/web3.js": "^1.98.2",
+    "@solana/wallet-adapter-base": "^0.9.26",
+    "@solana-mobile/wallet-adapter-mobile": "^2.2.0",
+    "@solana/wallet-standard": "^1.1.4",
+    "rango-types": "^0.1.84"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

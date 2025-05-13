@@ -124,6 +124,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
+  showOnDesktop?: boolean;
 
   needsDerivationPath?: NeedsDerivationPath;
   needsNamespace?: NeedsNamespace;

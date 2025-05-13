@@ -62,7 +62,7 @@ export function useWalletList(params?: Params): API {
         (wallet) =>
           wallet.showOnMobile !== false && state(wallet.type).installed
       )
-    : wallets;
+    : wallets.filter((wallet) => wallet.showOnDesktop !== false);
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets, state);
 

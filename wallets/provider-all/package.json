@@ -57,7 +57,8 @@
     "@rango-dev/provider-walletconnect-2": "^0.38.2-next.3",
     "@rango-dev/provider-xdefi": "^0.45.2-next.3",
     "@rango-dev/wallets-react": "^0.30.2-next.3",
-    "@rango-dev/wallets-shared": "^0.44.2-next.3"
+    "@rango-dev/wallets-shared": "^0.44.2-next.3",
+    "@rango-dev/provider-mobile-wallet-adapter": "^0.0.1"
   },
   "publishConfig": {
     "access": "public"
