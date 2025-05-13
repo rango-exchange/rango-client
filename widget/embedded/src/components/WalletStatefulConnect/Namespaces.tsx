@@ -12,9 +12,10 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
+
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
-import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;

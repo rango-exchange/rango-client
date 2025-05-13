@@ -1,6 +1,5 @@
 import type { ModalPropTypes } from './SwapDetailsModal.types';
 
-import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -8,49 +7,42 @@ import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CancelContent } from './SwapDetailsModal.Cancel';
 import { DeleteContent } from './SwapDetailsModal.Delete';
-import { modalNetworkValues } from './SwapDetailsModal.helpers';
+import { NetworkStateContent } from './SwapDetailsModal.NetworkState';
 import { WalletStateContent } from './SwapDetailsModal.WalletState';
 
 export function SwapDetailsModal(props: ModalPropTypes) {
-  const {
-    state,
-    onClose,
-    onDelete,
-    onCancel,
-    swap,
-    message,
-    walletButtonDisabled,
-  } = props;
-
-  const showWalletStateContent =
-    state === PendingSwapNetworkStatus.WaitingForNetworkChange ||
-    state === PendingSwapNetworkStatus.WaitingForConnectingWallet ||
-    state === PendingSwapNetworkStatus.NetworkChanged;
+  const { isOpen, state, onClose, onDelete, onCancel, swap, message } = props;
 
   return (
     <WatermarkedModal
-      open={!!state}
+      open={isOpen}
       onClose={onClose}
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
       }>
-      {showWalletStateContent && (
-        <WalletStateContent
-          type={modalNetworkValues[state].type}
-          title={modalNetworkValues[state].title}
-          swap={swap}
-          message={message}
-          walletButtonDisabled={walletButtonDisabled}
-          showWalletButton={
-            state !== PendingSwapNetworkStatus.WaitingForNetworkChange
-          }
-        />
+      {state === 'waitingForConnectingWallet' && (
+        <WalletStateContent swap={swap} message={message} onClose={onClose} />
+      )}
+      {(state === 'waitingForNetworkChange' || state === 'networkChanged') && (
+        <NetworkStateContent message={message} status={state} />
       )}
       {state === 'delete' && (
-        <DeleteContent onClose={onClose} onDelete={onDelete} />
+        <DeleteContent
+          onClose={onClose}
+          onDelete={() => {
+            onClose();
+            onDelete();
+          }}
+        />
       )}
       {state === 'cancel' && (
-        <CancelContent onClose={onClose} onCancel={onCancel} />
+        <CancelContent
+          onClose={onClose}
+          onCancel={() => {
+            onClose();
+            onCancel();
+          }}
+        />
       )}
     </WatermarkedModal>
   );
