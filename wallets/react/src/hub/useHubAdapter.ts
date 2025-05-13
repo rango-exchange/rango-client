@@ -94,8 +94,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              dataRef.current.allVersionedProviders,
-              dataRef.current.allBlockChains
+              api
             );
           } catch (e) {
             console.error(e);
