@@ -19,7 +19,17 @@ export const allowedMethods = [
   'or_else',
   'store',
 ] as const;
-const allowedPublicValues = ['string', 'number'] as const;
+/**
+ * List of value types that are considered safe to return directly when
+ * accessing properties on a proxied `Namespace`.
+ *
+ * This is useful for allowing public values like `version` to be accessed.
+ * If a property's value is of one of these types (e.g.,`'string'`, `'number'`),
+ * it will be returned as-is.
+ *
+ * @const {Array<'string' | 'number'>} allowedPublicValues
+ */
+const allowedPublicValues = ['string', 'number'];
 
 export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
@@ -194,9 +204,14 @@ export class NamespaceBuilder<T extends Actions<T>> {
 
     const api = new Proxy(namespace, {
       has: (_, property) => {
-        if (
-          allowedMethods.includes(property as (typeof allowedMethods)[number])
-        ) {
+        if (typeof property !== 'string') {
+          throw new Error(
+            'You can use string as your property on Namespace instance.'
+          );
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        if (allowedMethods.includes(property)) {
           return true;
         }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -206,7 +221,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
         }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore-next-line
-        return namespace.hasAction(property);
+        return namespace.has(property);
       },
       get: (_, property) => {
         if (typeof property !== 'string') {
@@ -223,12 +238,11 @@ export class NamespaceBuilder<T extends Actions<T>> {
         ) {
           return targetValue.bind(namespace);
         }
-
-        if (
-          allowedPublicValues.includes(
-            typeof targetValue as (typeof allowedPublicValues)[number]
-          )
-        ) {
+        /*
+         * This is useful accessing values like `version`, If we don't do this, we should whitelist
+         * All the values as well, So it can be confusing for someone that only wants to add a public value to `Namespace`
+         */
+        if (allowedPublicValues.includes(typeof targetValue)) {
           return targetValue;
         }
 

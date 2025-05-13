@@ -278,7 +278,7 @@ class Namespace<T extends Actions<T>> {
 
     return this;
   }
-  public hasAction<K extends keyof T>(actionName: K): boolean {
+  public has<K extends keyof T>(actionName: K): boolean {
     return !!this.#actions.get(actionName);
   }
   /**
