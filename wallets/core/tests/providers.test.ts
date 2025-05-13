@@ -138,7 +138,74 @@ describe('check Provider works with Blockchain correctly', () => {
     expect(evmDisconnect).toBeCalledTimes(1);
     expect(afterDisconnect).toBeCalledTimes(1);
   });
+  test('check action builder works with namespace correctly.', async () => {
+    const spyOnSuccessAndAction = vi.fn((_ctx, value) => value);
+    const spyOnThrowAndAction = vi.fn();
+    const spyOnThrowAndActionWithOr = vi.fn();
 
+    const spyOnSuccessOrAction = vi.fn();
+    const spyOnThrowOrAction = vi.fn();
+
+    interface GarbageActions {
+      successfulAction: () => string;
+      throwErrorAction: () => void;
+      throwErrorActionWithOr: () => void;
+    }
+
+    const successfulAction = new ActionBuilder<
+      GarbageActions,
+      'successfulAction'
+    >('successfulAction')
+      .action(() => {
+        return 'yay!';
+      })
+      .and(spyOnSuccessAndAction)
+      .or(spyOnSuccessOrAction)
+      .build();
+
+    const throwErrorAction = new ActionBuilder<
+      GarbageActions,
+      'throwErrorAction'
+    >('throwErrorAction')
+      .action(() => {
+        throw new Error('whatever');
+      })
+      .and(spyOnThrowAndAction)
+      .build();
+
+    const throwErrorActionWithOr = new ActionBuilder<
+      GarbageActions,
+      'throwErrorActionWithOr'
+    >('throwErrorActionWithOr')
+      .action(() => {
+        throw new Error('whatever');
+      })
+      .and(spyOnThrowAndActionWithOr)
+      .or(spyOnThrowOrAction)
+      .build();
+
+    const garbageNamespace = new NamespaceBuilder<{
+      successfulAction: () => string;
+      throwErrorAction: () => void;
+      throwErrorActionWithOr: () => void;
+    }>('eip155', walletName)
+      .action(successfulAction)
+      .action(throwErrorAction)
+      .action(throwErrorActionWithOr)
+      .build();
+
+    garbageNamespace.successfulAction();
+    expect(spyOnSuccessAndAction).toBeCalledTimes(1);
+    expect(spyOnSuccessAndAction).toHaveLastReturnedWith('yay!');
+
+    expect(() => garbageNamespace.throwErrorAction()).toThrowError();
+    expect(spyOnThrowAndAction).toBeCalledTimes(0);
+
+    garbageNamespace.throwErrorActionWithOr();
+    expect(spyOnThrowAndActionWithOr).toBeCalledTimes(0);
+    expect(spyOnSuccessOrAction).toBeCalledTimes(0);
+    expect(spyOnThrowOrAction).toBeCalledTimes(1);
+  });
   test('checking if an action exists on a namespace should return true', async () => {
     interface GarbageActions {
       garbageAction: () => string;
