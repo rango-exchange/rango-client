@@ -296,10 +296,12 @@ export class Provider {
 
     this.#namespaces.forEach((namespace) => {
       if (hookName === 'after') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         namespace.after(actionName as any, cb, {
           context,
         });
       } else if (hookName === 'before') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         namespace.before(actionName as any, cb, {
           context,
         });

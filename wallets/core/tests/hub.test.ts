@@ -60,4 +60,25 @@ describe('check hub', () => {
       'eip155:0x1:0x0000000000000000000000000000000000000000',
     ]);
   });
+  test('should remove wallet from both hub and store', async () => {
+    const garbageWalletBuilder = new ProviderBuilder(walletName).config(
+      'info',
+      garbageWalletInfo
+    );
+    const garbageWallet = garbageWalletBuilder.build();
+
+    const myHub = new Hub({
+      store,
+    }).add(garbageWallet.id, garbageWallet);
+
+    expect(myHub.get(garbageWallet.id)).toBe(garbageWallet);
+    expect(Object.entries(store.getState().providers.list)).toHaveLength(1);
+    expect(store.getState().providers.list[garbageWallet.id]).toBeTruthy();
+
+    myHub.remove(garbageWallet.id);
+
+    expect(myHub.get(garbageWallet.id)).toBeUndefined();
+    expect(Object.entries(store.getState().providers.list)).toHaveLength(0);
+    expect(store.getState().providers.list[garbageWallet.id]).toBeUndefined();
+  });
 });
