@@ -74,7 +74,6 @@ describe('check sanitization behaviors', () => {
 
     test('should convert tabs and newlines into dashes', () => {
       const words = faker.lorem.words(WORD_COUNT).split(' ');
-      console.log(replaceSpacesWithDash(words.join('\t')));
       expect(replaceSpacesWithDash(words.join('\t'))).toBe(words.join('-'));
       expect(replaceSpacesWithDash(words.join('\n'))).toBe(words.join('-'));
     });
