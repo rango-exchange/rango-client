@@ -65,6 +65,7 @@ export function CustomDestination(props: PropTypes) {
       return (
         <IconButton
           id="widget-custom-destination-close-icon-btn"
+          testId="widget-custom-destination-close-btn"
           onClick={handleClear}
           variant="ghost">
           <CloseIcon size={12} color="gray" />
@@ -74,6 +75,7 @@ export function CustomDestination(props: PropTypes) {
       return (
         <IconButton
           id="widget-custom-destination-paste-icon-btn"
+          testId="widget-custom-destination-paste-btn"
           onClick={handlePaste}
           variant="ghost">
           <PasteIcon size={16} />
@@ -102,7 +104,7 @@ export function CustomDestination(props: PropTypes) {
         open={open}
         triggerAnchor="top"
         trigger={
-          <CustomDestinationButton>
+          <CustomDestinationButton data-testid="widget-custom-destination-custom-collapsible-btn">
             <div className="button__content">
               <WalletIcon size={18} color="info" />
               <Divider size={4} direction="horizontal" />
@@ -120,6 +122,7 @@ export function CustomDestination(props: PropTypes) {
         }
         onClickTrigger={() => handleOpenChange(!open)}>
         <StyledTextField
+          testId="widget-custom-destination-blockchain-address-input"
           ref={inputRef}
           style={{
             padding: 0,

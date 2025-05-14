@@ -83,6 +83,7 @@ export function Slippage() {
           const key = `slippage-${index}`;
           return (
             <SlippageChip
+              testId={`widget-slippage-chip-${slippageItem.toString()}%`}
               key={key}
               onClick={() => onClickSlippageChip(slippageItem)}
               selected={customSlippage === null && slippageItem === slippage}
@@ -96,6 +97,7 @@ export function Slippage() {
           max="30"
           step="0.01"
           onInput={onInput}
+          testId={`widget-slippage-chip-text-input`}
           fullWidth
           variant="contained"
           value={customSlippage === null ? '' : customSlippage}
@@ -116,6 +118,7 @@ export function Slippage() {
         <>
           <Divider size={10} />
           <Alert
+            testId="widget-slippage-alert"
             variant="alarm"
             type={slippageValidation.type}
             title={slippageValidation.message}

@@ -35,6 +35,7 @@ function WalletButton(props: PropTypes) {
       <HeaderButton
         id="widget-header-wallet-icon-btn"
         variant="ghost"
+        testId="widget-header-wallet-btn"
         size="small"
         onClick={props.onClick}>
         {props.isConnected && <ConnectedIcon />}

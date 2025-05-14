@@ -27,6 +27,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
   return (
     <SelectableWalletButton
       selected={selected}
+      data-testid="ui-selectable-wallet-btn"
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
         if (props.state === WalletState.NOT_INSTALLED) {

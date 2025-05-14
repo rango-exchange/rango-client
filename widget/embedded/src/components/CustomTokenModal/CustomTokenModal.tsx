@@ -23,6 +23,7 @@ export function CustomTokenModal(props: PropTypes) {
   return (
     <WatermarkedModal
       open={open}
+      testId="custom-token-watermarked-modal"
       dismissible
       onClose={onClose}
       onExit={onExit}
@@ -86,6 +87,7 @@ export function CustomTokenModal(props: PropTypes) {
 
       <StyledButton
         id="widget-custom-token-modal-import-btn"
+        testId="widget-custom-token-modal-import-btn"
         variant="contained"
         size="large"
         type="primary"
@@ -96,6 +98,7 @@ export function CustomTokenModal(props: PropTypes) {
       <Divider size={10} />
       <StyledButton
         id="widget-custom-token-modal-learn-more-btn"
+        testId="widget-custom-token-modal-learn-more-btn"
         variant="outlined"
         size="large"
         type="primary"

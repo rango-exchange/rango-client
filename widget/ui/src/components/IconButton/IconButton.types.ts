@@ -7,6 +7,7 @@ export type IconButtonPropTypes = {
   type?: ButtonPropTypes['type'];
   variant?: ButtonPropTypes['variant'];
   onClick?: ButtonPropTypes['onClick'];
+  testId: string;
   style?: CSSProperties;
   loading?: boolean;
   disabled?: boolean;

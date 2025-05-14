@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
   ConfirmSwap,
   ConfirmSwapFetchResult,
@@ -121,7 +120,7 @@ export function ConfirmSwapPage() {
           setInputAmount('');
         }, 0);
       } catch (e) {
-        setDbErrorMessage('Error: ' + (e as any)?.message);
+        setDbErrorMessage('Error: ' + (e as Error)?.message);
       }
     }
   };
@@ -198,7 +197,14 @@ export function ConfirmSwapPage() {
   const quoteError = confirmSwapResult.error;
   const alerts = [];
   if (dbErrorMessage) {
-    alerts.push(<Alert type="error" variant="alarm" title={dbErrorMessage} />);
+    alerts.push(
+      <Alert
+        testId="widget-confirm-swap-db-error-alert"
+        type="error"
+        variant="alarm"
+        title={dbErrorMessage}
+      />
+    );
   }
 
   if (quoteWarning || quoteError) {
@@ -236,6 +242,7 @@ export function ConfirmSwapPage() {
           <div className={confirmBtnStyles()}>
             <Button
               id="widget-confirm-swap-start-btn"
+              testId="widget-confirm-swap-start-btn"
               variant="contained"
               type="primary"
               size="large"
@@ -248,6 +255,7 @@ export function ConfirmSwapPage() {
           </div>
           <IconButton
             id="widget-confirm-swap-wallet-icon-btn"
+            testId="widget-confirm-swap-wallet-icon-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -299,6 +307,7 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
+          testId="widget-confirm-swap-quote"
           expanded
           tagHidden
           error={confirmSwapResult.error}

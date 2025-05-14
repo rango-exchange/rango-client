@@ -100,6 +100,7 @@ export function DerivationPath(props: PropTypes) {
           {i18n.t('Choose Derivation Path Template')}
         </InputLabel>
         <Select
+          testId="widget-derivation-path-template-select"
           value={selectedDerivationPathId || ''}
           options={derivationPaths.map((derivationPath) => ({
             value: derivationPath.id,
@@ -116,6 +117,7 @@ export function DerivationPath(props: PropTypes) {
             : i18n.t('Enter Index')}
         </InputLabel>
         <TextField
+          testId="widget-derivation-path-template-input"
           type={isCustomOptionSelected ? 'text' : 'number'}
           variant="contained"
           value={derivationPathIndex}
@@ -126,6 +128,7 @@ export function DerivationPath(props: PropTypes) {
 
       <StyledButton
         id="widget-derivation-path-confirm-btn"
+        testId="widget-derivation-path-confirm-btn"
         type="primary"
         onClick={handleConfirm}
         disabled={

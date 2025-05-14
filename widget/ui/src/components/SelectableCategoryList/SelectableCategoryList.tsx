@@ -43,6 +43,7 @@ export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
           return (
             hasBlockchain && (
               <BlockchainsChip
+                testId={'ui-selectable-category-list-blockchians-chip'}
                 selected={category === blockchainCategory}
                 key={blockchainCategory}
                 onClick={() => setCategory(blockchainCategory)}>

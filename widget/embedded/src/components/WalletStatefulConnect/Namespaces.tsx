@@ -106,6 +106,7 @@ export function Namespaces(props: PropTypes) {
         <>
           <Divider size={20} />
           <Alert
+            testId="widget-wallet-stateful-connect-alert"
             variant="alarm"
             type="info"
             title={i18n.t(
@@ -119,6 +120,7 @@ export function Namespaces(props: PropTypes) {
           <Button
             style={{ marginLeft: 'auto' }}
             id="widget-name-space-select-all-btn"
+            testId="widget-name-space-select-all-btn"
             size="xsmall"
             variant="ghost"
             type="primary"
@@ -155,6 +157,7 @@ export function Namespaces(props: PropTypes) {
       <Divider size={20} />
       <StyledButton
         id="widget-name-space-confirm-btn"
+        testId="widget-name-space-confirm-btn"
         type="primary"
         disabled={!selectedNamespaces.length}
         onClick={() => props.onConfirm(selectedNamespaces)}>

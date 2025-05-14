@@ -307,6 +307,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
   return (
     <WatermarkedModal
+      testId="widget-confirm-wallets-modal"
       open={open}
       onClose={() => {
         if (!quoteWalletsConfirmed) {
@@ -322,6 +323,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         footer: (
           <ConfirmButton>
             <Button
+              testId="widget-confirm-wallet-modal-confirm-btn"
               id="widget-confirm-wallet-modal-confirm-btn"
               loading={loading}
               disabled={isConfirmSwapDisabled(
@@ -348,6 +350,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           <ShowMoreHeader>
             <NavigateBack
               id="widget-confirm-wallet-modal-navigate-back-icon-btn"
+              testId="widget-confirm-wallet-modal-navigate-back-icon-btn"
               variant="ghost"
               onClick={setShowMoreWalletFor.bind(null, '')}>
               <ChevronLeftIcon size={16} />
@@ -368,6 +371,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       })}
       anchor="center">
       <WatermarkedModal
+        testId='"widget-confirm-wallets-insufficiecnt-account-balance-modal'
         open={isInsufficientBalanceModalOpen}
         onClose={setBalanceWarnings.bind(null, [])}
         container={modalContainer}>
@@ -377,6 +381,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           description={<BalanceErrors messages={balanceWarnings ?? []} />}>
           <Button
             id="widget-confirm-wallet-modal-proceed-anyway-btn"
+            testId="widget-confirm-wallet-modal-proceed-anyway-btn"
             variant="outlined"
             size="large"
             type="primary"
@@ -406,7 +411,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
         <>
           {error && (
             <>
-              <Alert variant="alarm" type="error" title={i18n.t(error)} />
+              <Alert
+                testId="widget-confirm-wallet-modal-error-alert"
+                variant="alarm"
+                type="error"
+                title={i18n.t(error)}
+              />
               <Divider size={12} />
             </>
           )}

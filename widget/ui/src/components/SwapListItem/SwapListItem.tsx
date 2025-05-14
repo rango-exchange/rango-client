@@ -42,9 +42,10 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
     swapTokenData,
     tooltipContainer,
     currentStep,
+    testId,
   } = props;
   return (
-    <Main onClick={onClick.bind(null, requestId)}>
+    <Main onClick={onClick.bind(null, requestId)} data-testid={testId}>
       <Container>
         <Header>
           <Date>

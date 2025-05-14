@@ -69,10 +69,11 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
 
   const list = liquiditySources.map((sourceItem) => {
     const { selected, groupTitle, logo, id, ...restSourceItem } = sourceItem;
+    const liquiditySourceButtonId = `widget-setting-liquidity-source-${id
+      .toLowerCase()
+      .replace(/\s+/g, '-')}-item-btn`;
     return {
-      id: `widget-setting-liquidity-source-${id
-        .toLowerCase()
-        .replace(/\s+/g, '-')}-item-btn`,
+      id: liquiditySourceButtonId,
       start: <Image src={logo} size={22} type="circular" />,
       onClick: () => {
         if (!campaignMode) {
@@ -81,7 +82,10 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
       },
       end: <Checkbox checked={selected} disabled={campaignMode} />,
       title: (
-        <Typography variant="title" size="xmedium">
+        <Typography
+          variant="title"
+          size="xmedium"
+          testId={liquiditySourceButtonId}>
           {i18n.t(groupTitle)}
         </Typography>
       ),
@@ -115,6 +119,9 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
               id={`widget-liquidity-source-${
                 hasSelectAll ? 'deselect-all' : 'select-all'
               }-btn`}
+              testId={`widget-liquidity-source-${
+                hasSelectAll ? 'deselect-all' : 'select-all'
+              }-btn`}
               variant="ghost"
               size="xsmall"
               onClick={toggleAllSources}>
@@ -127,6 +134,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
         <SearchInput
           value={searchedFor}
           setValue={setSearchedFor}
+          testId="widget-liquidity-source-search-input"
           fullWidth
           color="light"
           variant="contained"
@@ -146,7 +154,9 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           </NotFoundContainer>
         ) : (
           fetchStatus === 'success' && (
-            <LiquiditySourceList disabled={campaignMode}>
+            <LiquiditySourceList
+              disabled={campaignMode}
+              data-testid="widget-liquidity-source-list">
               {filteredList.map((sourceItem) => {
                 const { groupTitle, ...otherProps } = sourceItem;
 
@@ -156,6 +166,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
                       style={{ height: '61px' }}
                       {...otherProps}
                       selected={false}
+                      testId="widget-liquidity-source-list-item-btn"
                       hasDivider
                     />
                   </React.Fragment>

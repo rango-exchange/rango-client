@@ -8,6 +8,7 @@ interface ChipProps {
   selected?: boolean;
   className?: string;
   style?: CSSProperties;
+  testId: string;
   prefix?: ReactNode;
   suffix?: ReactNode;
 }
