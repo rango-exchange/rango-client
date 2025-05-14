@@ -75,6 +75,7 @@ export { Events };
 export type ProviderConnectResult = {
   accounts: string[];
   chainId: string;
+  derivationPath?: string;
 };
 
 export type GetInstanceOptions = {
