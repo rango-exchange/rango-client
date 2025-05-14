@@ -190,7 +190,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
                   input: {
                     namespace: namespaceInput.namespace,
                     network: namespaceInput.network,
-                    supportsEagerConnect: !!namespace.canEagerConnect,
+                    supportsEagerConnect: 'canEagerConnect' in namespace,
                   },
                 };
               });
