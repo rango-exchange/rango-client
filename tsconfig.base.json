@@ -24,6 +24,7 @@
     "isolatedModules": true,
     // interop between ESM and CJS modules. Recommended by TS
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noUncheckedIndexedAccess": true
   }
 }
