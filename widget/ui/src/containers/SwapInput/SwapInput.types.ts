@@ -33,6 +33,7 @@ type FromProps = {
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
   anyWalletConnected: boolean;
+  onInputBlur?: (inputAmount: string) => void;
 };
 
 type ToProps = {

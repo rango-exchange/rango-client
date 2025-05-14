@@ -2,6 +2,8 @@
 // Types
 import type { ThemeColors, WidgetColors, WidgetColorsKeys } from '../types';
 
+import { isColorKeyOverridden } from './validation';
+
 type RGB = {
   red: number;
   green: number;
@@ -38,15 +40,6 @@ function expandShortHexColor(hexColor: string) {
 
   // Return the original hexColor if it's not 3 characters
   return `#${hexColor}`;
-}
-
-/*
- * We letting users to override some specific colors (e.g. `primary550`, `secondary100`).
- * So we are generating a range of colors if `primary` (or other keys) has passed but if user is passing a specific color,
- * we will override the user color to generated range.
- */
-function isOverridingColor(colorKey: string): boolean {
-  return /[0-9]+$/.test(colorKey);
 }
 
 // pad a hexadecimal string with zeros if it needs it
@@ -171,7 +164,7 @@ export function expandToGenerateThemeColors(
      */
     const isSingleColor = ['background', 'foreground'].includes(colorKey);
 
-    if (!isSingleColor && !isOverridingColor(colorKey)) {
+    if (!isSingleColor && !isColorKeyOverridden(colorKey)) {
       const expandedHexColor = expandShortHexColor(expandColor);
       Object.assign(
         output,
