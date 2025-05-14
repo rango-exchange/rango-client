@@ -72,7 +72,7 @@ export function useConfirmSwap(): ConfirmSwap {
         const { result } = response;
 
         if (!result) {
-          throw new Error('Error fetching updated route');
+          throw new Error(response.error ?? 'Error fetching updated quote');
         }
 
         throwErrorIfResponseIsNotValid({

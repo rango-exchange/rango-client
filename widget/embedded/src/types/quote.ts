@@ -36,7 +36,10 @@ export type InsufficientSlippageError = {
   minRequiredSlippage: string | null;
 };
 
-export type QuoteRequestFailed = { type: QuoteErrorType.REQUEST_FAILED };
+export type QuoteRequestFailed = {
+  type: QuoteErrorType.REQUEST_FAILED;
+  diagnosisMessage?: string;
+};
 export type QuoteRequestCanceled = { type: QuoteErrorType.REQUEST_CANCELED };
 
 export type QuoteError =
