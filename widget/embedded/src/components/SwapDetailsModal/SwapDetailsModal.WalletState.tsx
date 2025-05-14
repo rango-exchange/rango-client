@@ -73,6 +73,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
         </WalletContainer>
       )}
       <StatefulConnectModal
+        testId="widget-swap-details-modal"
         wallet={selectedWalletToConnect}
         onClose={() => {
           setSelectedWalletToConnect(undefined);

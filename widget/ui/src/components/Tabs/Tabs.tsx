@@ -25,6 +25,7 @@ export function TabsComponent(props: TabsPropTypes) {
     type,
     className,
     scrollable,
+    testId,
     scrollButtons = true,
   } = props;
   const [tabWidth, setTabWidth] = useState(0);
@@ -156,17 +157,19 @@ export function TabsComponent(props: TabsPropTypes) {
   }, [containerRef.current, showArrows, currentIndex]);
 
   return (
-    <Container hasPadding={scrollButtons && showArrows}>
+    <Container hasPadding={scrollButtons && showArrows} data-testid={testId}>
       {scrollable && showArrows && scrollButtons && (
         <>
           <ArrowLeft
             ref={leftArrowRef}
             hidden={leftArrowDisabled}
+            testId={`${testId}-right-scroll`}
             onClick={() => handleScroll('right')}>
             <ChevronLeftIcon size={16} color="secondary" />
           </ArrowLeft>
           <ArrowRight
             hidden={rightArrowDisabled}
+            testId={`${testId}-left-scroll`}
             onClick={() => handleScroll('left')}>
             <ChevronRightIcon size={16} color="secondary" />
           </ArrowRight>
@@ -190,6 +193,7 @@ export function TabsComponent(props: TabsPropTypes) {
               content={item.tooltip}
               open={!item.tooltip ? false : undefined}>
               <Tab
+                testId={`${testId}-tab`}
                 className="_tab"
                 ref={index === currentIndex ? tabRef : null}
                 type={type}

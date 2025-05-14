@@ -15,6 +15,7 @@ export function SwitchFromAndToButton() {
   return (
     <SwitchButtonContainer>
       <StyledButton
+        data-testid="widget-switch-from-and-to-btn"
         onClick={(event) => {
           const button = event.currentTarget;
 

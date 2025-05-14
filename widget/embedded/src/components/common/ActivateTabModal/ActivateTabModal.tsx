@@ -24,6 +24,7 @@ export function ActivateTabModal(props: PropTypes) {
         )}>
         <Divider size={20} />
         <Button
+          testId="widget-activate-tab-modal-btn"
           id="widget-modal-confirm-activate-tab-btn"
           variant="contained"
           size="large"

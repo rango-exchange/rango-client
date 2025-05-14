@@ -48,6 +48,7 @@ export function ExpandedQuotes(props: PropTypes) {
     <Container
       expandMode={config?.variant === 'full-expanded' ? 'full' : 'default'}
       className={`${containerClass} ${LayoutContainer()}`}
+      data-testid="widget-expanded-quotes-container"
       id={WIDGET_UI_ID.EXPANDED_BOX_ID}>
       <Header
         title={i18n.t('Routes')}

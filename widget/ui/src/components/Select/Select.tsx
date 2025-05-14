@@ -43,6 +43,7 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
     <div ref={selectRef}>
       <Select.Root value={value} open={open}>
         <SelectTrigger
+          data-testid={props.testId}
           variant={variant}
           onKeyDown={(event) => event.key === 'Enter' && handleToggle()}
           onClick={handleToggle}
@@ -69,7 +70,7 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
                 {options.map((option) => (
                   <SelectItem
                     onClick={() => {
-                      handleItemClick && handleItemClick(option);
+                      handleItemClick?.(option);
                       handleToggle();
                     }}
                     key={option.value}

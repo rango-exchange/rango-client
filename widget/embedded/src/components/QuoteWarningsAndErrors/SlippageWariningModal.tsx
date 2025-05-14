@@ -32,10 +32,12 @@ export function SlippageWarningModal(props: PropsTypes) {
     <WatermarkedModal
       anchor="bottom"
       open={open}
+      testId="widget-slippage-warning-modal"
       prefix={
         <Button
           size="small"
           id="widget-slippage-warning-modal-change-settings-btn"
+          testId="widget-slippage-warning-modal-change-settings-btn"
           variant="ghost"
           onClick={() => navigate('../' + navigationRoutes.settings)}>
           <Typography variant="label" size="medium" color="$neutral900">
@@ -69,6 +71,7 @@ export function SlippageWarningModal(props: PropsTypes) {
         <Divider size={32} />
         <Button
           id="widget-slippage-warning-modal-confirm-anyway-btn"
+          testId="widget-slippage-warning-modal-confirm-anyway-btn"
           size="large"
           type="primary"
           variant="contained"

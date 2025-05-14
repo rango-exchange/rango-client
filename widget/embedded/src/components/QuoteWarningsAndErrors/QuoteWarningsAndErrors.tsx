@@ -58,6 +58,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
       {showAlerts && (
         <Alerts>
           <Alert
+            testId="widget-quote-warning-and-errors-alert"
             title={alertInfo.title}
             type={alertInfo.alertType}
             variant="alarm"
@@ -72,6 +73,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
               action: (
                 <Button
                   id="widget-quote-warning-error-change-settings-btn"
+                  testId="widget-quote-warning-error-change-settings-btn"
                   size="xxsmall"
                   type={alertInfo.alertType}
                   onClick={onChangeSettings}>

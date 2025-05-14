@@ -69,6 +69,7 @@ export function SwapInput(props: SwapInputPropTypes) {
               <MaxButton
                 variant="default"
                 size="xsmall"
+                testId="widget-swap-input-max-btn"
                 onClick={props.onSelectMaxBalance}>
                 <Typography variant="body" size="xsmall">
                   {i18n.t('Max')}
@@ -124,6 +125,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                   disabled={props.disabled || props.mode === 'To'}
                   style={{ padding: 0 }}
                   value={price.value}
+                  testId={props.testId}
                   type={'onInputChange' in props ? 'number' : 'text'}
                   step="any"
                   size="large"

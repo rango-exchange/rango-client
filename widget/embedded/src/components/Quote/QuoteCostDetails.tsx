@@ -93,6 +93,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
       />
 
       <WatermarkedModal
+        testId="widget-qoute-cost-details-gas-and-fee-explanation-modal"
         container={container}
         open={open}
         anchor={fullExpandedMode ? 'center' : 'bottom'}
@@ -111,6 +112,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             </Typography>
 
             <IconButton
+              testId="widget-quote-cost-details-modal-close-btn"
               id="widget-quote-cost-details-modal-close-icon-btn"
               onClick={() => setOpen(false)}
               variant="ghost">

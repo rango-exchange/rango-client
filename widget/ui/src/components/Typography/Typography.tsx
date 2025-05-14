@@ -9,6 +9,7 @@ export function Typography({
   children,
   className,
   color,
+  testId,
   ...props
 }: PropsWithChildren<TypographyPropTypes>) {
   const customCss = color
@@ -20,6 +21,7 @@ export function Typography({
       };
   return (
     <TypographyContainer
+      data-testid={testId}
       className={`_typography _text ${className || ''}`}
       css={customCss}
       {...props}>
