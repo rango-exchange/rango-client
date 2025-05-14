@@ -15,7 +15,7 @@ type SuiWalletStandard = WalletWithFeatures<
 /**
  * @param name each wallet has a name in WalletStandard. you should pass that value
  */
-export function getInstanceOrThrow(name: string): SuiWalletStandard {
+export function getInstance(name: string): SuiWalletStandard | undefined {
   const wallet = getWallets()
     .get()
     .find(
@@ -23,11 +23,20 @@ export function getInstanceOrThrow(name: string): SuiWalletStandard {
         wallet.name === name && wallet.chains.includes(SUI_MAINNET_CHAIN)
     );
 
+  return wallet as SuiWalletStandard;
+}
+
+/**
+ * @param name each wallet has a name in WalletStandard. you should pass that value
+ */
+export function getInstanceOrThrow(name: string): SuiWalletStandard {
+  const wallet = getInstance(name);
+
   if (!wallet) {
     throw new Error(
       "We couldn't find the Sui instance on your wallet. It may be fixed by refreshing the page."
     );
   }
 
-  return wallet as SuiWalletStandard;
+  return wallet;
 }
