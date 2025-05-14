@@ -4,6 +4,7 @@ export interface PropTypes {
   fetch: () => void;
   error: NoResultError | QuoteRequestFailed | null;
   size?: 'small' | 'large';
+  skipAlerts?: boolean;
 }
 
 type AlertAction = {
