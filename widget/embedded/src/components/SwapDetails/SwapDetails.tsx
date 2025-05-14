@@ -9,16 +9,10 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 import {
   Button,
-  CopyIcon,
   Divider,
-  DoneIcon,
-  IconButton,
   QuoteCost,
-  RangoExplorerIcon,
   StepDetails,
-  Tooltip,
   Typography,
-  useCopyToClipboard,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
@@ -26,7 +20,6 @@ import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SCANNER_BASE_URL } from '../../constants';
 import {
   GAS_FEE_MAX_DECIMALS,
   GAS_FEE_MIN_DECIMALS,
@@ -66,17 +59,15 @@ import {
   SwapDetailsModal,
 } from '../SwapDetailsModal';
 
-import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
+import { RequestIdRow } from './RequestIdRow';
+import { SwapDateRow } from './SwapDateRow';
+import { getSteps, getStepState } from './SwapDetails.helpers';
 import {
   Container,
   ErrorMessages,
   MessageText,
   outputStyles,
-  RequestIdContainer,
-  requestIdStyles,
-  rowStyles,
   StepsList,
-  StyledLink,
   titleStepsStyles,
 } from './SwapDetails.styles';
 
@@ -88,7 +79,6 @@ export function SwapDetails(props: SwapDetailsProps) {
   const { findToken } = useAppStore();
   const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
-  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState<ModalState>(null);
@@ -330,57 +320,8 @@ export function SwapDetails(props: SwapDetailsProps) {
         )
       }>
       <Container compact ref={containerRef}>
-        <RequestIdContainer className={rowStyles()}>
-          <Typography variant="label" size="large" color="neutral700">
-            {`${i18n.t('Request ID')}`}
-          </Typography>
-          <div className={requestIdStyles()}>
-            <Typography variant="label" size="small" color="neutral700">
-              {requestId}
-            </Typography>
-            <Tooltip
-              container={getContainer()}
-              content={
-                isCopied
-                  ? i18n.t('Copied To Clipboard')
-                  : i18n.t('Copy Request ID')
-              }
-              open={isCopied || undefined}
-              side="bottom"
-              alignOffset={-16}
-              align="end">
-              <IconButton
-                id="widget-swap-details-done-copy-icon-btn"
-                variant="ghost"
-                onClick={handleCopy.bind(null, requestId || '')}>
-                {isCopied ? (
-                  <DoneIcon size={16} color="secondary" />
-                ) : (
-                  <CopyIcon size={16} color="gray" />
-                )}
-              </IconButton>
-            </Tooltip>
-
-            <StyledLink
-              target="_blank"
-              href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
-              <Tooltip
-                container={getContainer()}
-                content={i18n.t('View on Rango Explorer')}
-                side="bottom">
-                <RangoExplorerIcon size={20} />
-              </Tooltip>
-            </StyledLink>
-          </div>
-        </RequestIdContainer>
-        <div className={rowStyles()}>
-          <Typography variant="label" size="large" color="neutral700">
-            {swap.finishTime ? i18n.t('Finished at') : i18n.t('Created at')}
-          </Typography>
-          <Typography variant="label" size="small" color="neutral700">
-            {swapDate}
-          </Typography>
-        </div>
+        <RequestIdRow requestId={requestId} />
+        <SwapDateRow date={swapDate} isFinished={!!swap.finishTime} />
 
         <div className={outputStyles()}>
           <QuoteCost

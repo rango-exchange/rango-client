@@ -2,7 +2,7 @@ import type { ModalPropTypes } from './SwapDetailsModal.types';
 
 import React from 'react';
 
-import { WIDGET_UI_ID } from '../../constants';
+import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CancelContent } from './SwapDetailsModal.Cancel';
@@ -17,9 +17,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
     <WatermarkedModal
       open={isOpen}
       onClose={onClose}
-      container={
-        document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
-      }>
+      container={getContainer()}>
       {state === 'waitingForConnectingWallet' && (
         <WalletStateContent swap={swap} message={message} onClose={onClose} />
       )}
