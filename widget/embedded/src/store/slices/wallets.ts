@@ -60,6 +60,7 @@ interface DeprecatedTokenBalance {
   rawAmount: string;
   decimal: number | null;
   amount: string;
+  isSupported: boolean;
   logo: string | null;
   usdPrice: number | null;
 }
@@ -807,6 +808,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
                   rawAmount: balance.amount,
                   decimal: balance.decimals,
                   amount: amount.toString(),
+                  isSupported: !!token,
                   logo: token?.image || null,
                   usdPrice: token?.usdPrice || null,
                 });
