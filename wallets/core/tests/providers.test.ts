@@ -138,7 +138,6 @@ describe('check Provider works with Blockchain correctly', () => {
     expect(evmDisconnect).toBeCalledTimes(1);
     expect(afterDisconnect).toBeCalledTimes(1);
   });
-
   test('check action builder works with namespace correctly.', async () => {
     const spyOnSuccessAndAction = vi.fn((_ctx, value) => value);
     const spyOnThrowAndAction = vi.fn();
@@ -206,5 +205,27 @@ describe('check Provider works with Blockchain correctly', () => {
     expect(spyOnThrowAndActionWithOr).toBeCalledTimes(0);
     expect(spyOnSuccessOrAction).toBeCalledTimes(0);
     expect(spyOnThrowOrAction).toBeCalledTimes(1);
+  });
+  test('checking if an action exists on a namespace should return true', async () => {
+    interface GarbageActions {
+      garbageAction: () => string;
+    }
+
+    const garbageAction = new ActionBuilder<GarbageActions, 'garbageAction'>(
+      'garbageAction'
+    )
+      .action(() => {
+        return 'yay!';
+      })
+      .build();
+
+    const garbageNamespace = new NamespaceBuilder<{
+      garbageAction: () => string;
+    }>('eip155', walletName)
+      .action(garbageAction)
+      .build();
+
+    expect('garbageAction' in garbageNamespace).toBe(true);
+    expect('init' in garbageNamespace).toBe(true);
   });
 });
