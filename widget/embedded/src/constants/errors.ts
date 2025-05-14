@@ -52,12 +52,11 @@ export const errorMessages = () => {
 };
 
 export function getQuoteErrorMessage(error: QuoteError) {
-  switch (error.type) {
-    case QuoteErrorType.NO_RESULT:
-      return error.diagnosisMessage ?? errorMessages().noResultError.title;
-    case QuoteErrorType.REQUEST_FAILED:
-      return errorMessages().genericServerError;
-    default:
-      return '';
+  if (error.type === QuoteErrorType.NO_RESULT) {
+    return error.diagnosisMessage ?? errorMessages().noResultError.title;
+  } else if (error.type === QuoteErrorType.REQUEST_FAILED) {
+    return error.diagnosisMessage ?? errorMessages().genericServerError;
   }
+
+  return '';
 }
