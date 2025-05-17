@@ -150,7 +150,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                           fee.amount,
                           GAS_FEE_MIN_DECIMALS,
                           GAS_FEE_MAX_DECIMALS
-                        )}{' '}
+                        )}
                         {fee.asset.symbol} ($
                         {numberToString(
                           usdValue,
