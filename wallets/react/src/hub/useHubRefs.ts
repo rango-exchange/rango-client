@@ -3,7 +3,7 @@ import type { Provider, Store } from '@rango-dev/wallets-core';
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { useRef } from 'react';
 
-import { checkProviderListsEquality } from './utils.js';
+import { synchronizeHubWithConfigProviders } from './utils.js';
 
 export function useHubRefs(providers: Provider[]) {
   const store = useRef<Store | null>(null);
@@ -38,14 +38,11 @@ export function useHubRefs(providers: Provider[]) {
   function getHub(): Hub {
     const hubProviders = hub.current?.getAll();
 
-    if (
-      !hub.current ||
-      !hubProviders ||
-      // If hub does not contain a provider, it should be added
-      !checkProviderListsEquality(Array.from(hubProviders.values()), providers)
-    ) {
+    if (!hub.current || !hubProviders) {
       return createHub();
     }
+
+    synchronizeHubWithConfigProviders(hub.current, providers);
     return hub.current;
   }
 
