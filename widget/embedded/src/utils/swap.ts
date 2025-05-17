@@ -305,8 +305,9 @@ export function getTotalFeeInUsd(
 
 export function getUsdFee(fee: SwapFee): BigNumber {
   let totalFeeInUsd = ZERO;
+  const price = new BigNumber(fee.price || 0);
   totalFeeInUsd = totalFeeInUsd.plus(
-    new BigNumber(fee.amount).multipliedBy(fee.price || 0)
+    new BigNumber(fee.amount).multipliedBy(price)
   );
 
   return totalFeeInUsd;
