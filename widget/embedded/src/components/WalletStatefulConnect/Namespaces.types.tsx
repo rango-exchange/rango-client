@@ -28,7 +28,6 @@ export type NamespaceItemPropTypes =
 
 export type NamespaceDetachedItemPropTypes = {
   walletType: string;
-  initialConnect?: boolean;
   namespace: LegacyNamespaceMeta;
 };
 

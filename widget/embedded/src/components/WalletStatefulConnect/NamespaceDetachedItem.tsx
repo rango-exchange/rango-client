@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { getConciseAddress } from '../../utils/wallets';
@@ -33,7 +33,7 @@ import { SupportedChainsList } from './SupportedChainsList';
 export const NamespaceDetachedItem = function NamespaceDetachedItem(
   props: NamespaceDetachedItemPropTypes
 ) {
-  const { walletType, namespace, initialConnect } = props;
+  const { walletType, namespace } = props;
   const blockchains = useAppStore().blockchains();
   const { connect, disconnect, state } = useWallets();
   const [error, setError] = useState<Error | null>(null);
@@ -45,12 +45,6 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
   const firstAccountArray = namespaceState.accounts?.[0]?.split(':');
 
   useEffect(() => setErrorIsExpanded(false), [error]);
-
-  useLayoutEffect(() => {
-    if (initialConnect) {
-      void handleConnectNamespace(walletType, namespace.value);
-    }
-  }, []);
 
   const handleConnectNamespace = async (
     walletType: string,

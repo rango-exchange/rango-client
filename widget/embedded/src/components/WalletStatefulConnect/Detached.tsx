@@ -2,7 +2,8 @@ import type { PropTypes } from './Detached.types';
 
 import { i18n } from '@lingui/core';
 import { Divider, Image, MessageBox } from '@rango-dev/ui';
-import React from 'react';
+import { useWallets } from '@rango-dev/wallets-react';
+import React, { useEffect } from 'react';
 
 import { NamespaceDetachedItem } from './NamespaceDetachedItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
@@ -11,7 +12,29 @@ import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 export function Detached(props: PropTypes) {
   const { selectedNamespaces, value } = props;
   const { targetWallet } = value;
+  const { connect } = useWallets();
 
+  const initialConnect = async () => {
+    // Filter selected namespaces that are supported by the target wallet
+    const supportedNamespaces = targetWallet.needsNamespace?.data
+      .filter(
+        (namespace) =>
+          !namespace.unsupported &&
+          selectedNamespaces?.includes(namespace.value)
+      )
+      .map((namespace) => ({
+        namespace: namespace.value,
+        network: '',
+      }));
+
+    // Only attempt connection if there are supported namespaces
+    if (supportedNamespaces?.length) {
+      await connect(targetWallet.type, supportedNamespaces);
+    }
+  };
+  useEffect(() => {
+    void initialConnect();
+  }, []);
   return (
     <>
       <MessageBox
@@ -34,7 +57,6 @@ export function Detached(props: PropTypes) {
               <NamespaceDetachedItem
                 walletType={targetWallet.type}
                 namespace={namespace}
-                initialConnect={selectedNamespaces?.includes(namespace.value)}
               />
             )}
             {index !== array.length - 1 && <Divider size={10} />}
