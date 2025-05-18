@@ -31,7 +31,7 @@ export function getWalletsList(
   const allProviders = getAllProviders(envs);
   const allBuiltProviders = allProviders.map((build) => build());
   const walletsList: MapSupportedList[] = [];
-  allBuiltProviders.map((versionedProvider: VersionedProviders) => {
+  allBuiltProviders.forEach((versionedProvider: VersionedProviders) => {
     let provider;
     try {
       provider = pickVersion(versionedProvider, '1.0.0')[1];
