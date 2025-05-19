@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled } from '@rango-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',
@@ -31,4 +31,13 @@ export const Action = styled('div', {
   padding: '$2',
   alignSelf: 'flex-start',
   cursor: 'pointer',
+});
+
+export const SwapButton = styled(Button, {
+  '& ._text': {
+    gap: '$5',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

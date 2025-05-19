@@ -26,7 +26,7 @@ import {
 } from './NoResult.styles';
 
 export function NoResult(props: PropTypes) {
-  const { fetch, error, size = 'small' } = props;
+  const { fetch, error, size = 'small', skipAlerts } = props;
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const toggleAllLiquiditySources = useAppStore().toggleAllLiquiditySources;
 
@@ -37,6 +37,9 @@ export function NoResult(props: PropTypes) {
     () => toggleAllLiquiditySources(swappers, true),
     fetch
   );
+  if (skipAlerts) {
+    info.alert = null;
+  }
 
   return (
     <Container>
