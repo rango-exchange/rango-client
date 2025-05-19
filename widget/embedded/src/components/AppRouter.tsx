@@ -5,6 +5,7 @@ import { MemoryRouter, useInRouterContext } from 'react-router';
 
 export function AppRouter({ children }: PropsWithChildren) {
   const isRouterInContext = useInRouterContext();
+
   const Router = isRouterInContext ? Fragment : MemoryRouter;
 
   return <Router>{children}</Router>;
