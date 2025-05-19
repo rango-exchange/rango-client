@@ -4,6 +4,9 @@ import type { BestRouteResponse } from 'rango-sdk';
 
 import { BigNumber } from 'bignumber.js';
 
+import { stripTrailingZeros } from './sanitizers';
+import { isZeroValue } from './validation';
+
 /*
  * if time > 1h -> rounded with 5 minutes precision
  * if time < 1h -> rounded with 15 seconds precision
@@ -125,3 +128,11 @@ export const containsText = (text: string, searchText: string) =>
 
 export const isPositiveNumber = (text?: string) =>
   !!text && parseFloat(text) > 0;
+
+export function sanitizeInputAmount(amount: string): string {
+  if (isZeroValue(amount)) {
+    return '0';
+  }
+
+  return stripTrailingZeros(amount);
+}
