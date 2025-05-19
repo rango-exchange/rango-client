@@ -129,6 +129,10 @@ export function SwapInput(props: SwapInputPropTypes) {
                   size="large"
                   placeholder="0"
                   variant="ghost"
+                  {...('onInputBlur' in props && {
+                    onBlur: (event: React.ChangeEvent<HTMLInputElement>) =>
+                      props.onInputBlur?.(event.target.value),
+                  })}
                   min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
