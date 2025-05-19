@@ -263,7 +263,7 @@ export function Quote(props: QuoteProps) {
                             variant="body"
                             color="neutral900">
                             {i18n.t({
-                              id: 'Minimum required slippage: {minRequiredSlippage}',
+                              id: 'Minimum suggested slippage: {minRequiredSlippage}',
                               values: {
                                 ...(error?.type ===
                                   QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
