@@ -20,6 +20,7 @@ import {
   Head,
   SlippageChip,
   SlippageChipsContainer,
+  SlippageTextFieldContainer,
 } from './Slippage.styles';
 import { SlippageTooltipContent } from './SlippageTooltipContent';
 
@@ -90,26 +91,31 @@ export function Slippage() {
             />
           );
         })}
-        <TextField
-          type="number"
-          min="0.01"
-          max="30"
-          step="0.01"
-          onInput={onInput}
-          fullWidth
-          variant="contained"
-          value={customSlippage === null ? '' : customSlippage}
-          color="dark"
-          onChange={onSlippageValueChange}
-          suffix={
-            customSlippage && (
-              <Typography variant="body" size="small">
-                %
-              </Typography>
-            )
-          }
-          placeholder={i18n.t('Custom')}
-        />
+        <SlippageTextFieldContainer
+          status={
+            slippageValidation?.type || (customSlippage ? 'safe' : 'empty')
+          }>
+          <TextField
+            type="number"
+            min="0.01"
+            max="30"
+            step="0.01"
+            onInput={onInput}
+            fullWidth
+            variant="contained"
+            value={customSlippage === null ? '' : customSlippage}
+            color="dark"
+            onChange={onSlippageValueChange}
+            suffix={
+              customSlippage && (
+                <Typography variant="body" size="small">
+                  %
+                </Typography>
+              )
+            }
+            placeholder={i18n.t('Custom')}
+          />
+        </SlippageTextFieldContainer>
       </SlippageChipsContainer>
 
       {slippageValidation && (
