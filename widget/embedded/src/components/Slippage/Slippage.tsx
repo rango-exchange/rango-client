@@ -14,6 +14,7 @@ import { MAX_SLIPPAGE, SLIPPAGES } from '../../constants/swapSettings';
 import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
 import { getSlippageValidation } from '../../utils/settings';
+import { isValidCurrencyFormat } from '../../utils/validation';
 
 import {
   BaseContainer,
@@ -55,9 +56,8 @@ export function Slippage() {
 
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const input = event.target as HTMLInputElement;
-    const regex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const value = input.value;
-    if (!regex.test(value)) {
+    if (!isValidCurrencyFormat(value)) {
       input.value = value.slice(0, -1);
     }
   };

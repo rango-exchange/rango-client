@@ -34,6 +34,7 @@ export function Inputs(props: PropTypes) {
     toToken,
     toBlockchain,
     setInputAmount,
+    sanitizeInputAmount,
     inputAmount,
     inputUsdValue,
     outputAmount,
@@ -79,6 +80,7 @@ export function Inputs(props: PropTypes) {
           label={i18n.t('From')}
           mode="From"
           onInputChange={setInputAmount}
+          onInputBlur={sanitizeInputAmount}
           balance={fromTokenFormattedBalance}
           chain={{
             displayName: fromBlockchain?.displayName || '',
