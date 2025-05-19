@@ -1,5 +1,6 @@
 import type { QuoteError, QuoteWarning, SelectedQuote } from '../../types';
 import type { Step } from '@rango-dev/ui';
+import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 
 export type QuoteProps = {
@@ -45,7 +46,7 @@ export type QuoteTriggerImagesProps = {
 export type QuoteCostDetailsProps = {
   quote: SelectedQuote | null;
   steps: number;
-  fee: string;
+  fee: BigNumber;
   time: string;
   feeWarning?: boolean;
   timeWarning?: boolean;

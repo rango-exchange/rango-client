@@ -71,6 +71,11 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const container = fullExpandedMode ? getExpanded() : getContainer();
 
   const feesGroup = getFeesGroup(swaps);
+  const roundedFee = numberToString(
+    fee,
+    GAS_FEE_MIN_DECIMALS,
+    GAS_FEE_MAX_DECIMALS
+  );
 
   return (
     <>
@@ -83,7 +88,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
               }
             : undefined
         }
-        fee={fee}
+        fee={roundedFee}
         feeWarning={feeWarning}
         timeWarning={timeWarning}
         time={time}
@@ -145,7 +150,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                           fee.amount,
                           GAS_FEE_MIN_DECIMALS,
                           GAS_FEE_MAX_DECIMALS
-                        )}{' '}
+                        )}
                         {fee.asset.symbol} ($
                         {numberToString(
                           usdValue,
