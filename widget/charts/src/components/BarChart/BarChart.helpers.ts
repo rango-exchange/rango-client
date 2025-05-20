@@ -146,3 +146,8 @@ export const prepareBarChartData = (chartOption: ChartOptionsType) => {
   });
   return { chartData, colorBucketMap, buckets };
 };
+
+export const getEvenlySpacedNumber = (max: number, count: number) => {
+  const interval = max / count;
+  return Math.round(interval);
+};
