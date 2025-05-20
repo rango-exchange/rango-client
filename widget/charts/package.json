@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/charts",
-  "version": "0.8.2-next.7",
+  "version": "0.8.2-next.8",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
