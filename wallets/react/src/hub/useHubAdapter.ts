@@ -16,10 +16,7 @@ import {
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
-import {
-  fromAccountIdToLegacyAddressFormat,
-  runSequentiallyWithoutFailure,
-} from './helpers.js';
+import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
@@ -44,6 +41,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
+
+  const queueTask = createQueue();
 
   useEffect(() => {
     dataRef.current = {
@@ -169,7 +168,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
-        ([namespaceInput, namespace]) => {
+        async ([namespaceInput, namespace]) => {
           const network = tryConvertNamespaceNetworkToChainInfo(
             namespaceInput,
             params.allBlockChains || []
@@ -180,7 +179,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
            * our assumption here is all the `connect` hasn't chain or if they have, they will accept it in first argument.
            * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
            */
-          return async () =>
+          const connectNamespaceProcess = async () =>
             namespace
               .connect(network)
               .then<ConnectResult>(transformHubResultToLegacyResult)
@@ -194,6 +193,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
                   },
                 };
               });
+          return queueTask(connectNamespaceProcess, type);
         }
       );
 
@@ -201,7 +201,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
        * We need to connect to namespace one after another, sending multiple requests at the same time may be failed.
        * e.g. when wallet popup opens and asking for the password from the user, it should be resolved first, then other request will be resolved.
        */
-      const connectResultWithLegacyFormat = await runSequentiallyWithoutFailure(
+      const connectResultWithLegacyFormat = await Promise.all(
         connectResultFromTargetNamespaces
       );
 
