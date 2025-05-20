@@ -1,7 +1,7 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 
 export const WALLET_ID = 'slush';
-export const WALLET_NAME_IN_WALLET_STANDARD = 'Slush — A Sui wallet';
+export const WALLET_NAME_IN_WALLET_STANDARD = 'Slush';
 
 export const info: ProviderInfo = {
   name: 'Slush',
@@ -9,7 +9,10 @@ export const info: ProviderInfo = {
   extensions: {
     chrome:
       'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil',
-    homepage: 'https://slush.app/',
+    edge: 'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil',
+    brave:
+      'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil',
+    homepage: 'https://slush.app/download',
   },
   properties: [
     {
