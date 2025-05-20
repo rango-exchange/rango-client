@@ -77,3 +77,59 @@ export function isConnectResultSolana(
 ): result is Accounts {
   return Array.isArray(result);
 }
+
+type QueueItem<T> = {
+  task: () => Promise<T>;
+  resolve: (value: Result<T, unknown>) => void;
+  key: string;
+};
+/**
+ * Creates a queue manager that ensures sequential execution of tasks by key.
+ * When multiple tasks with the same key are queued, they are executed one at a time
+ * in the order they were added. This prevents race conditions and ensures
+ * predictable task execution order.
+ *
+ */
+export function createQueue() {
+  const processingKeys = new Set<string>();
+  const queue: QueueItem<unknown>[] = [];
+
+  const processQueue = async () => {
+    const currentItem = queue.find((item) => !processingKeys.has(item.key));
+    if (!currentItem) {
+      return;
+    }
+
+    const { task, resolve, key } = currentItem;
+    processingKeys.add(key);
+
+    try {
+      const result = await task();
+      resolve(new Ok(result));
+    } catch (error) {
+      resolve(new Err(error));
+    } finally {
+      const indexOfCurrentItem = queue.findIndex((item) => item.key === key);
+      if (indexOfCurrentItem >= 0) {
+        queue.splice(indexOfCurrentItem, 1);
+      }
+      processingKeys.delete(key);
+      void processQueue();
+    }
+  };
+
+  const queueTask = async <T>(
+    task: () => Promise<T>,
+    key: string
+  ): Promise<Result<T, unknown>> =>
+    new Promise((resolve) => {
+      queue.push({
+        task,
+        resolve: resolve as (value: Result<unknown, unknown>) => void,
+        key,
+      });
+      void processQueue();
+    });
+
+  return queueTask;
+}
