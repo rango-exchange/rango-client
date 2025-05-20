@@ -1,9 +1,13 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
-import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
-import { chains as suiChains } from '@rango-dev/wallets-core/namespaces/sui';
-import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
+import { Networks } from '@rango-dev/wallets-shared';
+import {
+  type BlockchainMeta,
+  type EvmBlockchainMeta,
+  isEvmBlockchain,
+  solanaBlockchain,
+  TransactionType,
+} from 'rango-types';
 
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
@@ -32,25 +36,37 @@ export const info: ProviderInfo = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            chains: [evmChains.ethereum, evmChains.base, evmChains.polygon],
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is EvmBlockchainMeta =>
+                  isEvmBlockchain(chain) &&
+                  EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+              ),
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            chains: [solanaChains.solana],
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              solanaBlockchain(allBlockchains),
           },
           {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            chains: [utxoChains.bitcoin],
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter((chain) => chain.name === Networks.BTC),
           },
           {
             label: 'Sui',
             value: 'Sui',
             id: 'SUI',
-            chains: [suiChains.sui],
+            getSupportedChains: <T extends BlockchainMeta>(
+              allBlockchains: T[]
+            ) =>
+              allBlockchains.filter(
+                (chain) => chain.type === TransactionType.SUI
+              ),
           },
         ],
       },

@@ -1,5 +1,6 @@
-import type { Chain, Namespace } from '../../namespaces/common/types.js';
+import type { Namespace } from '../../namespaces/common/types.js';
 import type { State as InternalProviderState } from '../provider/mod.js';
+import type { BlockchainMeta } from 'rango-types';
 import type { StateCreator } from 'zustand';
 
 import { produce } from 'immer';
@@ -9,6 +10,7 @@ import { guessProviderStateSelector, type State } from './mod.js';
 
 type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
 type Property<N extends string, V> = { name: N; value: V };
+
 type NamespacesProperty = Property<
   'namespaces',
   {
@@ -18,7 +20,7 @@ type NamespacesProperty = Property<
       id: string;
       value: Namespace;
       unsupported?: boolean;
-      chains: Chain[];
+      getSupportedChains: (chains: BlockchainMeta[]) => BlockchainMeta[];
     }[];
   }
 >;

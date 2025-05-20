@@ -12,6 +12,8 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { useAppStore } from '../../store/AppStore';
+
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
 import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
@@ -30,6 +32,7 @@ export function Namespaces(props: PropTypes) {
     : targetWallet.needsNamespace;
   const providerImage = targetWallet.image;
 
+  const blockchains = useAppStore().blockchains();
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
   const supportedNamespaces = useMemo(
     () => needsNamespace?.data.filter((namespace) => !namespace.unsupported),
@@ -79,9 +82,11 @@ export function Namespaces(props: PropTypes) {
       if (!!props.value.defaultSelectedChains?.length) {
         const namespacesContainingDefaultSelectedChains =
           supportedNamespaces.filter((namespace) =>
-            namespace.chains.some((chain) =>
-              props.value.defaultSelectedChains?.includes(chain.name)
-            )
+            namespace
+              .getSupportedChains(blockchains)
+              .some((chain) =>
+                props.value.defaultSelectedChains?.includes(chain.name)
+              )
           );
         setSelectedNamespaces(
           namespacesContainingDefaultSelectedChains.map(

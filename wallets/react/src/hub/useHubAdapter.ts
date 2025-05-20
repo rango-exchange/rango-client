@@ -322,13 +322,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         (property) => property.name === 'details'
       );
 
-      const supportedChainsNames = namespacesProperty?.value.data
-        .flatMap((obj) => obj.chains)
-        .map((chain) => chain.name);
-
-      const supportedChains = params.allBlockChains?.filter((blockchain) =>
-        supportedChainsNames?.includes(blockchain.name)
-      );
+      const supportedChains =
+        namespacesProperty?.value.data.flatMap((namespace) =>
+          namespace.getSupportedChains(params.allBlockChains || [])
+        ) || [];
 
       return {
         name: info.name,
@@ -336,7 +333,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains: supportedChains || [],
+        supportedChains,
         isContractWallet: detailsProperty?.value?.isContractWallet,
         mobileWallet: detailsProperty?.value?.mobileWallet,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.

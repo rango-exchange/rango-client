@@ -44,6 +44,8 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
   const namespaceState = walletState.namespaces?.get(namespace.value);
   const firstAccountArray = namespaceState.accounts?.[0]?.split(':');
 
+  const supportedChains = namespace.getSupportedChains(blockchains);
+
   useEffect(() => setErrorIsExpanded(false), [error]);
 
   useLayoutEffect(() => {
@@ -145,8 +147,8 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
           )}
           {!namespaceState.connected &&
             !error &&
-            namespace.chains.length > 1 && (
-              <SupportedChainsList chains={namespace.chains} />
+            supportedChains.length > 1 && (
+              <SupportedChainsList chains={supportedChains} />
             )}
         </NamespaceItemInnerContent>
         {namespaceState.connecting ? (
