@@ -133,6 +133,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
 |--|--|--|--|--|--|--|
 | [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
+| [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
 
 
 
@@ -141,7 +142,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
-
+| Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
 
 
 
@@ -180,6 +181,5 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Trezor         | Ethereum,Solana                                                                                                         | Solana                                            | &cross;              | https://trezor.io/                   |
 | Trezor         | Ethereum,Solana                                                                                                         | Solana                                            | &cross;              | https://trezor.io/                   |
 | TronLink       | Tron                                                                                                                    | -                                                 | &cross;              | -                                    |
-| Trust Wallet   | Ethereum,Solana                                                                                                         | Cosmos, TON                                       | &cross;              | https://trustwallet.com/             |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |
