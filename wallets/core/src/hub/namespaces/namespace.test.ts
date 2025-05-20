@@ -133,6 +133,27 @@ describe('check initializing Namespace', () => {
     expect(currentState('connecting')).toBe(true);
   });
 
+  test('has method returns true when namespace contains the specified action', () => {
+    const connectAction = vi.fn((context) => {
+      const [, setState] = context.state();
+      setState('connected', true);
+    });
+
+    const actionsMap = new Map([['connect', connectAction]]);
+
+    const store = createStore();
+    const namespace = new Namespace<TestNamespaceActions>(
+      NAMESPACE,
+      PROVIDER_ID,
+      {
+        actions: actionsMap,
+        store,
+      }
+    );
+
+    expect(namespace.has('connect')).toBe(true);
+    expect(namespace.has('disconnect')).toBe(false);
+  });
   test("throw an error if store doesn't set", () => {
     const ns = new Namespace<TestNamespaceActions>(NAMESPACE, PROVIDER_ID, {
       actions: new Map(),
