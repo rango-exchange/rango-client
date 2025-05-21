@@ -22,7 +22,6 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
-  detectMobileScreens,
   getCosmosExperimentalChainInfo,
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
@@ -104,7 +103,6 @@ export function mapWalletTypesToWalletInfo(
         image,
         link: detectInstallLink(installLink),
         generateDeepLink,
-        canOpenDeepLink: !!generateDeepLink && detectMobileScreens(),
         state,
         type,
         showOnMobile,

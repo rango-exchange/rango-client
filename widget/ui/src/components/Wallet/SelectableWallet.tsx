@@ -1,4 +1,7 @@
-import { detectInstallLink } from '@rango-dev/wallets-shared';
+import {
+  detectInstallLink,
+  detectMobileScreens,
+} from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import { Image } from '../common/index.js';
@@ -22,10 +25,9 @@ export function SelectableWallet(props: SelectablePropTypes) {
     description,
     descriptionColor,
     deepLink,
-    state,
     disabled = false,
   } = props;
-  const info = makeInfo(props.state, canOpenDeepLink);
+  const isMobileScreen = detectMobileScreens();
 
   return (
     <SelectableWalletButton
@@ -34,7 +36,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
       onClick={() => {
         if (
           props.state === WalletState.NOT_INSTALLED &&
-          canOpenDeepLink &&
+          isMobileScreen &&
           deepLink
         ) {
           window.open(deepLink, '_blank');

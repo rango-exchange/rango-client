@@ -290,7 +290,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         DEFAULT: '',
       };
 
-      const { metadata } = info;
+      const { metadata, deepLink } = info;
       const { extensions } = metadata;
       // `extensions` in legacy format was uppercase and also `DEFAULT` was used instead of `homepage`
       Object.keys(extensions).forEach((k) => {
@@ -332,7 +332,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         showOnMobile: undefined,
         needsNamespace: walletInfoFromLegacy.needsNamespace,
         needsDerivationPath: walletInfoFromLegacy.needsDerivationPath,
-        generateDeepLink: info.deepLink,
+        generateDeepLink: deepLink,
         isHub: true,
         properties: metadata.properties,
       };
