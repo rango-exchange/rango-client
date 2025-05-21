@@ -32,7 +32,8 @@ export function NamespaceItem(props: PropTypes) {
 
   useEffect(() => setErrorIsExpanded(false), [error]);
 
-  const isSupportedChainsDisplayed = !error && namespace.chains.length > 1;
+  const isSupportedChainsDisplayed =
+    !error && !connected && namespace.chains.length > 1;
 
   return (
     <NamespaceItemContainer
