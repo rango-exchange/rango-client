@@ -16,6 +16,7 @@ export const DeleteContent = ({ onDelete, onClose }: DeleteContentProps) => {
       <Divider size={32} />
       <Button
         id="widget-swap-details-modal-delete-swap-yes-btn"
+        testId="widget-swap-details-modal-delete-swap-yes-btn"
         variant="contained"
         type="primary"
         size="large"
@@ -25,6 +26,7 @@ export const DeleteContent = ({ onDelete, onClose }: DeleteContentProps) => {
       <Divider size={12} />
       <Button
         id="widget-swap-details-modal-delete-swap-no-btn"
+        testId="widget-swap-details-modal-delete-swap-no-btn"
         variant="outlined"
         type="primary"
         size="large"

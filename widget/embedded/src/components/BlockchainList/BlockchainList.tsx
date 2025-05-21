@@ -44,10 +44,14 @@ export function BlockchainList(props: PropTypes) {
       );
     }
     return (
-      <List as="ul" key={`${blockchainCategory}-${searchedFor}`}>
+      <List
+        as="ul"
+        key={`${blockchainCategory}-${searchedFor}`}
+        data-testid="widget-blockchain-list-container">
         {blockchains.map((item) => (
           <ListItemButton
             key={`${item.name}-${item.chainId}`}
+            testId="widget-blockchain-list-item-btn"
             className={`widget-blockchain-list-item-btn`}
             hasDivider
             onClick={() => onChange(item)}

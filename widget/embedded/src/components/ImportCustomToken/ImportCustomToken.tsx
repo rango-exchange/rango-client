@@ -73,12 +73,12 @@ export function ImportCustomToken(props: PropTypes) {
       setShowImportModal(true);
     }
   }, [blockchain, token]);
-
   return (
     <>
       <WatermarkedModal
         open={showErrorModal}
         dismissible
+        testId="widget-add-custom-token-modal"
         onClose={closeErrorModal}
         onExit={handleExit}
         container={getContainer()}>
@@ -93,6 +93,9 @@ export function ImportCustomToken(props: PropTypes) {
           {/* eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids */}
           <Button
             id={`widget-add-custom-token-${
+              error?.type === 'network-error' ? 'retry' : 'add-another'
+            }-btn`}
+            testId={`widget-add-custom-token-${
               error?.type === 'network-error' ? 'retry' : 'add-another'
             }-btn`}
             variant="contained"

@@ -32,6 +32,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     prefix,
     header,
     dismissible = true,
+    testId,
     children,
     suffix,
     footer,
@@ -116,6 +117,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   return createPortal(
     <BackDrop active={active} onClick={handleBackDropClick} css={styles?.root}>
       <ModalContainer
+        data-testid={testId}
         active={active}
         css={styles?.container}
         anchor={anchor}
@@ -131,7 +133,11 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             <Flex>
               {suffix}
               {dismissible && hasCloseIcon && (
-                <IconButton onClick={onClose} variant="ghost">
+                <IconButton
+                  testId="widget-modal-close-btn"
+                  id="modal-close-btn"
+                  onClick={onClose}
+                  variant="ghost">
                   <CloseIcon color="gray" size={14} />
                 </IconButton>
               )}

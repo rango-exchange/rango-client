@@ -15,7 +15,7 @@ const SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER = 3;
 export function SupportedChainsList(props: PropTypes) {
   const { chains } = props;
   return (
-    <SupportedChainsContainer>
+    <SupportedChainsContainer data-testid="widget-wallet-stateful-connect-supported-chains-container">
       {chains
         .slice(0, SUPPORTED_CHAINS_MAX_DISPLAYED_NUMBER)
         .map((chain, index) => (

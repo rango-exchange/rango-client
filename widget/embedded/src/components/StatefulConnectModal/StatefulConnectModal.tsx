@@ -31,6 +31,7 @@ const DELAY_SHOWING_MODAL_FOR = 300;
 
 interface PropTypes {
   wallet: WalletInfoWithExtra | undefined;
+  testId: string;
   onClose: () => void;
   // When connecting wallet is executed **successfully**, this will be called afterwards.
   onConnect?: () => void;
@@ -155,6 +156,7 @@ export function StatefulConnectModal(props: PropTypes) {
 
   return (
     <WatermarkedModal
+      testId={props.testId}
       open={isConnecting}
       onClose={handleClosingModal}
       onExit={() => {

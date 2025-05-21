@@ -5,13 +5,15 @@ import React from 'react';
 interface PropTypes {
   displayName?: string;
   onConfirm: () => void;
+  testId: string;
 }
 
 export function ExperimentalChain(props: PropTypes) {
-  const { displayName, onConfirm } = props;
+  const { displayName, onConfirm, testId } = props;
 
   return (
     <MessageBox
+      data-testid={testId}
       title={i18n.t({
         id: 'Add {blockchainDisplayName} Chain',
         values: { blockchainDisplayName: displayName },
@@ -25,6 +27,7 @@ export function ExperimentalChain(props: PropTypes) {
       <Divider size={32} />
       <Button
         id="widget-experimental-chain-confirm-btn"
+        testId="widget-experimental-chain-confirm-btn"
         onClick={onConfirm}
         variant="outlined"
         type="primary"

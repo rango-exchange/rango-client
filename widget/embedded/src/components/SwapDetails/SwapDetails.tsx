@@ -282,6 +282,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           <SuffixContainer>
             <Button
               id="widget-swap-details-delete-btn"
+              testId="widget-swap-details-delete-btn"
               variant="ghost"
               type="error"
               size="xsmall"
@@ -299,6 +300,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           <Button
             fullWidth
             id="widget-swap-details-try-again-btn"
+            testId="widget-swap-details-try-again-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -314,7 +316,10 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Button>
         )
       }>
-      <Container compact ref={containerRef}>
+      <Container
+        compact
+        ref={containerRef}
+        data-testid="widget-swap-details-container">
         <RequestIdContainer className={rowStyles()}>
           <Typography variant="label" size="large" color="neutral700">
             {`${i18n.t('Request ID')}`}
@@ -336,6 +341,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               align="end">
               <IconButton
                 id="widget-swap-details-done-copy-icon-btn"
+                testId="widget-swap-details-done-copy-icon-btn"
                 variant="ghost"
                 onClick={handleCopy.bind(null, requestId || '')}>
                 {isCopied ? (
@@ -443,6 +449,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               (state === 'completed' && index === steps.length - 1);
             return (
               <StepDetails
+                testId={'widget-swap-details-step-item'}
                 key={key}
                 step={step}
                 type="swap-progress"

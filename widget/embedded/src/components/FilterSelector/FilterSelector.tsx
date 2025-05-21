@@ -29,6 +29,7 @@ export function FilterSelector(props: FilterSelectorPropTypes) {
         }>
         <FilterButton
           id="widget-filter-selector-filter-icon-btn"
+          testId="widget-filter-selector-filter-icon-btn"
           variant="default"
           isSelect={!!filterBy}
           onClick={() => onOpenChange(!props.open)}>

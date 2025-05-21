@@ -13,6 +13,7 @@ export function ActivateTabAlert(props: PropTypes) {
           onClick={props.onActivateTab}
           variant="contained"
           size="xxsmall"
+          testId="widget-activate-tab-alert-btn"
           type="warning">
           {i18n.t('Activate this tab')}
         </Button>

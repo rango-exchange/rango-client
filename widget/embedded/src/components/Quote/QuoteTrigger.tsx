@@ -53,6 +53,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
 
   return (
     <Trigger
+      data-testid="widget-quote-trigger-btn"
       listItem={type === 'list-item'}
       ref={(ref) => (quoteRef.current = ref)}
       selected={selected}

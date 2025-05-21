@@ -44,6 +44,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     <WatermarkedModal
       open={open}
       onClose={onClose}
+      testId="widget-swap-detials-complete-modal"
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
       }>
@@ -52,6 +53,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           <TokenAmount
             direction="vertical"
             tooltipContainer={getContainer()}
+            testId="widget-swap-detials-complete-modal-success-token-amount"
             type="output"
             centerAlign={true}
             price={{
@@ -97,6 +99,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           )}
           <Button
             id="widget-swap-details-modal-done-btn"
+            testId="widget-swap-details-modal-done-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -114,6 +117,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           <Button
             variant="contained"
             id="widget-swap-detail-modal-diagnosis-btn"
+            testId="widget-swap-detail-modal-diagnosis-btn"
             type="primary"
             size="large"
             onClick={() => window.open(diagnosisUrl, '_blank')}>
@@ -124,6 +128,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
       )}
       <Button
         id="widget-swap-details-modal-see-details-btn"
+        testId="widget-swap-details-modal-see-details-btn"
         variant="outlined"
         type="primary"
         size="large"

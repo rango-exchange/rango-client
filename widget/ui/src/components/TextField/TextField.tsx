@@ -19,6 +19,7 @@ function TextFieldComponent(
     size = 'small',
     style,
     variant,
+    testId,
     fullWidth,
     labelProps,
     ...inputAttributes
@@ -68,6 +69,7 @@ function TextFieldComponent(
         <Input
           {...inputAttributes}
           onKeyDown={handleKeyDown}
+          data-testid={testId}
           onPaste={handlePaste}
           spellCheck={false}
           suffix={!!suffix}
