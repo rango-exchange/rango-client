@@ -17,7 +17,7 @@ export function RefreshModal(props: PropTypes) {
       open={open}
       dismissible
       onClose={onClose}
-      testId="widget-refresh-modal"
+      id="widget-refresh-modal"
       container={getContainer()}>
       <MessageBox
         title={i18n.t('Something went wrong')}
@@ -26,7 +26,7 @@ export function RefreshModal(props: PropTypes) {
         <Divider size={30} />
         <RefreshButton
           variant="outlined"
-          testId="widget-refresh-modal-refresh-btn"
+          id="widget-refresh-modal-refresh-btn"
           size="large"
           type="primary"
           fullWidth

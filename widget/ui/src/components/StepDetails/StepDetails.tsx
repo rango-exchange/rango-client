@@ -36,7 +36,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
       isFocused,
       tabIndex,
       tooltipContainer,
-      testId,
+      className,
     } = props;
 
     const { from, to, swapper } = step;
@@ -67,8 +67,9 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         type={type}
         state={state}
         ref={containerRef}
-        data-testid={testId}
-        tabIndex={tabIndex}>
+        className={className}
+        tabIndex={tabIndex}
+      >
         {type === 'quote-details' && (
           <div className={swapperItemStyles()}>
             <SwapperImage state={state}>
@@ -104,7 +105,8 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 <Fragment key={key}>
                   <div
                     id={swapperItem.swapper.displayName}
-                    className={swapperItemStyles()}>
+                    className={swapperItemStyles()}
+                  >
                     <SwapperImage state={state}>
                       <Image size={22} src={swapperItem.swapper.image} />
                     </SwapperImage>
@@ -147,12 +149,14 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
               />
               <NumericTooltip
                 content={step.from.price.realValue}
-                container={tooltipContainer}>
+                container={tooltipContainer}
+              >
                 <Divider direction="horizontal" size={4} />
                 <Typography
                   size="small"
                   color="$neutral700"
-                  variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
+                  variant="body"
+                >{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
               </NumericTooltip>
               <Divider direction="horizontal" size={4} />
 
@@ -165,7 +169,8 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
               />
               <NumericTooltip
                 content={step.to.price.realValue}
-                container={tooltipContainer}>
+                container={tooltipContainer}
+              >
                 <Divider direction="horizontal" size={4} />
 
                 <Typography size="small" color="$neutral700" variant="body">{`${

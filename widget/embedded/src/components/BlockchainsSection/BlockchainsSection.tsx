@@ -57,7 +57,7 @@ export function BlockchainsSection(props: PropTypes) {
         </>
       )}
       <Divider size={12} />
-      <Blockchains data-testid="widget-blockchains-section-list">
+      <Blockchains id="widget-blockchains-section-list">
         {fetchStatus === 'loading' &&
           Array.from(
             Array(
@@ -70,7 +70,7 @@ export function BlockchainsSection(props: PropTypes) {
         {fetchStatus === 'success' && (
           <>
             <BlockchainsChip
-              testId="widget-blockchains-section-all-chip"
+              className="widget-blockchains-section-all-chip"
               selected={!blockchain}
               onClick={() => {
                 if (type === 'from') {
@@ -91,7 +91,7 @@ export function BlockchainsSection(props: PropTypes) {
                 sideOffset={2}
                 container={getContainer()}>
                 <BlockchainsChip
-                  testId="widget-blockchains-section-item-chip"
+                  className="widget-blockchains-section-item-chip"
                   key={item.name}
                   selected={!!blockchain && blockchain.name === item.name}
                   onClick={() => onChange(item)}>
@@ -102,7 +102,7 @@ export function BlockchainsSection(props: PropTypes) {
 
             {onlyOneItemInList ? (
               <BlockchainsChip
-                testId="widget-blockchains-section-only-item-chip"
+                className="widget-blockchains-section-only-item-chip"
                 key={blockchainsList.more[0].name}
                 selected={
                   !!blockchain &&
@@ -117,7 +117,7 @@ export function BlockchainsSection(props: PropTypes) {
               <BlockchainsChip
                 onClick={onMoreClick}
                 key="more-blockchains"
-                testId="widget-blockchs-section-more-items-chip">
+                className="widget-blockchs-section-more-items-chip">
                 <Typography variant="body" size="xsmall" color="secondary500">
                   {i18n._('More +{count}', {
                     count: blockchainsList.more.length,

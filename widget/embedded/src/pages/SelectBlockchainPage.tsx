@@ -58,7 +58,7 @@ export function SelectBlockchainPage(props: PropTypes) {
           value={searchedFor}
           autoFocus
           placeholder={i18n.t('Search Chain')}
-          testId="widget-select-blockchain-search-input"
+          id="widget-select-blockchain-search-input"
           color="light"
           variant="contained"
           size="large"

@@ -11,7 +11,7 @@ export interface ModalPropTypes {
   onClose: () => void;
   onExit?: () => void;
   anchor?: BaseAnchor;
-  testId?: string;
+  id?: string;
   dismissible?: boolean;
   header?: React.ReactNode;
   prefix?: React.ReactNode;

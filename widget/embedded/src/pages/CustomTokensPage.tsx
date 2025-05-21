@@ -94,7 +94,7 @@ export function CustomTokensPage() {
           {!!customTokens.length ? (
             <>
               <SearchInput
-                testId="widget-custom-tokens-search-token-input"
+                id="widget-custom-tokens-search-token-input"
                 value={searchedFor}
                 setValue={setSearchedFor}
                 fullWidth
@@ -113,7 +113,6 @@ export function CustomTokensPage() {
                 action={(token) => (
                   <DeleteIconButton
                     id="widget-custom-token-delete-icon-btn"
-                    testId="widget-custom-token-delete-icon-btn"
                     variant="ghost"
                     onClick={() => {
                       setIsDeleteModalOpen(true);
@@ -145,7 +144,6 @@ export function CustomTokensPage() {
 
           <Button
             id="widget-custom-token-add-btn"
-            testId="widget-custom-token-add-btn"
             type="primary"
             variant="contained"
             size="large"
@@ -155,7 +153,7 @@ export function CustomTokensPage() {
         </Content>
         <WatermarkedModal
           open={isDeleteModalOpen}
-          testId="widget-custom-tokens-delete-modal"
+          id="widget-custom-tokens-delete-modal"
           dismissible
           onClose={() => setIsDeleteModalOpen(false)}
           container={getContainer()}>
@@ -169,7 +167,6 @@ export function CustomTokensPage() {
             <Button
               fullWidth
               id="widget-custom-token-delete-modal-yes-btn"
-              testId="widget-custom-token-delete-modal-yes-btn"
               variant="contained"
               type="primary"
               size="large"
@@ -179,7 +176,6 @@ export function CustomTokensPage() {
             <Divider size={12} />
             <Button
               id="widget-custom-token-delete-modal-no-btn"
-              testId="widget-custom-token-delete-modal-no-btn"
               fullWidth
               variant="outlined"
               type="primary"

@@ -1,6 +1,5 @@
 export type ListItemPropTypes = {
   id?: string;
-  testId?: string;
   title?: string | React.ReactElement;
   description?: string | React.ReactElement;
   start?: React.ReactNode;

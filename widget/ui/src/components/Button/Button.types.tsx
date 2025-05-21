@@ -22,7 +22,6 @@ export type ButtonPropTypes = ButtonElement & {
   loading?: boolean;
   disabled?: boolean;
   prefix?: React.ReactNode;
-  testId: string;
   suffix?: React.ReactNode;
   fullWidth?: boolean;
   disableRipple?: boolean;

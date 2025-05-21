@@ -42,7 +42,7 @@ export function NoResult(props: PropTypes) {
   }
 
   return (
-    <Container data-testid="widget-no-result-container">
+    <Container id="widget-no-result-container">
       <NoRouteIcon size={NoRouteIconSize[size]} color="gray" />
       <Divider size={4} />
       <Typography variant="title" size={NoRouteTitleSize[size]}>
@@ -64,7 +64,7 @@ export function NoResult(props: PropTypes) {
       {!!info.alert && (
         <Footer size={size}>
           <Alert
-            testId="widget-no-result-alert"
+            id="widget-no-result-alert"
             type={info.alert.type}
             title={info.alert.text}
             titleAlign={'left'}
@@ -73,7 +73,6 @@ export function NoResult(props: PropTypes) {
                 <Button
                   size="xsmall"
                   id="widget-no-result-alert-btn"
-                  testId="widget-no-result-alert-btn"
                   type={info.alert.type}
                   prefix={
                     <PrefixIcon>

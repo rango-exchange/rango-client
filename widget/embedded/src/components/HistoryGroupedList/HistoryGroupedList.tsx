@@ -110,11 +110,9 @@ export function HistoryGroupedList(props: PropTypes) {
         const firstStep = swap.steps[0];
         const lastStep = swap.steps[swap.steps.length - 1];
         return (
-          <SwapItemContainer
-            data-testid="widget-history-group-list-swap-item-container"
-            key={swap.requestId}>
+          <SwapItemContainer key={swap.requestId}>
             <SwapListItem
-              testId="widget-history-group-list-swap-item"
+              className="widget-history-group-list-swap-item"
               requestId={swap.requestId}
               creationTime={swap.creationTime}
               status={swap.status}

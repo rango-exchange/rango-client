@@ -19,11 +19,10 @@ export function UnknownPriceWarningModal(props: Props) {
   const { open, onClose, onConfirm, confirmationDisabled } = props;
   return (
     <WatermarkedModal
-      testId="widget-unknown-price-warning-modal"
+      id="widget-unknown-price-warning-modal"
       footer={
         <Button
           id="widget-unknown-price-warning-modal-confirm-btn"
-          testId="widget-unknown-price-warning-modal-confirm-btn"
           type="primary"
           size="large"
           prefix={<WarningIcon />}

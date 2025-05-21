@@ -17,8 +17,8 @@ export type TextFieldPropTypes = {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   size?: BaseSizes;
-  testId: string;
   variant?: BaseVariants;
+  id: string;
   fullWidth?: boolean;
   labelProps?: TypographyPropTypes;
   style?: Stitches.CSS;

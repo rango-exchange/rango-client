@@ -42,7 +42,7 @@ export function SettingsPage() {
           <Alert
             type="info"
             variant="alarm"
-            testId="widget-settings-campign-mode-alert"
+            id="widget-settings-campign-mode-alert"
             title={i18n.t(
               "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
             )}
@@ -50,7 +50,6 @@ export function SettingsPage() {
               <ResetAction>
                 <Button
                   id="widget-setting-exit-campaign-mode-btn"
-                  testId="widget-setting-exit-campaign-mode-btn"
                   type="secondary"
                   size="small"
                   onClick={onClick}>

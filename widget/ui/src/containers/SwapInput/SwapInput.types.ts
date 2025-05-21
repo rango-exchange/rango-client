@@ -1,7 +1,7 @@
 import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types.js';
 
 export type BaseProps = {
-  testId: string;
+  id: string;
   chain: {
     displayName: string;
     image?: string;

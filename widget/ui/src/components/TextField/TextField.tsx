@@ -19,7 +19,6 @@ function TextFieldComponent(
     size = 'small',
     style,
     variant,
-    testId,
     fullWidth,
     labelProps,
     ...inputAttributes
@@ -50,7 +49,8 @@ function TextFieldComponent(
         <>
           <Label
             className="_text"
-            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}
+          >
             <Typography variant="label" size="large" {...labelProps}>
               {label}
             </Typography>
@@ -64,12 +64,12 @@ function TextFieldComponent(
         variant={variant}
         size={size}
         css={style}
-        className="_text-field">
+        className="_text-field"
+      >
         {prefix || null}
         <Input
           {...inputAttributes}
           onKeyDown={handleKeyDown}
-          data-testid={testId}
           onPaste={handlePaste}
           spellCheck={false}
           suffix={!!suffix}

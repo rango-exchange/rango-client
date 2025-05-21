@@ -29,10 +29,7 @@ export function CustomCollapsible(props: PropsWithChildren<PropTypes>) {
       open={open}
       onOpenChange={onOpenChange}>
       {triggerAnchor === 'top' && (
-        <Trigger
-          className="collapsible_trigger"
-          data-testid="widget-collapsible-root-trigger-top-btn"
-          onClick={onClickTrigger}>
+        <Trigger className="collapsible_trigger" onClick={onClickTrigger}>
           {trigger}
         </Trigger>
       )}
@@ -40,10 +37,7 @@ export function CustomCollapsible(props: PropsWithChildren<PropTypes>) {
         {children}
       </CollapsibleContent>
       {triggerAnchor === 'bottom' && (
-        <Trigger
-          className="collapsible_trigger"
-          data-testid="widget-collapsible-root-trigger-bottom-btn"
-          onClick={onClickTrigger}>
+        <Trigger className="collapsible_trigger" onClick={onClickTrigger}>
           {trigger}
         </Trigger>
       )}

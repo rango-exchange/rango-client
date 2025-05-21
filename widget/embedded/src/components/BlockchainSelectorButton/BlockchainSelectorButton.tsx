@@ -21,7 +21,7 @@ export function BlockchainSelectorButton(props: PropTypes) {
       <InputContainer
         onClick={disabled ? undefined : onClick}
         disabled={disabled}
-        data-testid="widget-blockchain-selector-btn">
+        id="widget-blockchain-selector-btn">
         <FlexContainer>
           {hasLogo && (
             <>

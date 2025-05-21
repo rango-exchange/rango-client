@@ -23,7 +23,7 @@ export function QuoteSummary(props: PropTypes) {
       <TokenAmount
         direction="horizontal"
         label={i18n.t('Swap input')}
-        testId="widget-quote-summary-swap-input"
+        id="widget-quote-summary-swap-input"
         type="input"
         tooltipContainer={getContainer()}
         price={{
@@ -40,7 +40,7 @@ export function QuoteSummary(props: PropTypes) {
       />
       <div className={separatorStyles()} />
       <TokenAmount
-        testId="widget-quote-summary-estimated-input"
+        id="widget-quote-summary-estimated-input"
         direction="horizontal"
         tooltipContainer={getContainer()}
         label={i18n.t('Estimated output')}

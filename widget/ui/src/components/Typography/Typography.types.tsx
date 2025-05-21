@@ -11,7 +11,7 @@ export interface TypographyPropTypes {
   size: BaseSizes;
   align?: BaseAlign;
   noWrap?: boolean;
-  testId?: string;
+  id?: string;
   className?: string;
   style?: Stitches.CSSProperties;
   color?: string;

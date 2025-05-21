@@ -201,7 +201,7 @@ export function ConfirmSwapPage() {
   if (dbErrorMessage) {
     alerts.push(
       <Alert
-        testId="widget-confirm-swap-db-error-alert"
+        id="widget-confirm-swap-db-error-alert"
         type="error"
         variant="alarm"
         title={dbErrorMessage}
@@ -248,7 +248,6 @@ export function ConfirmSwapPage() {
           <div className={confirmBtnStyles()}>
             <Button
               id="widget-confirm-swap-start-btn"
-              testId="widget-confirm-swap-start-btn"
               variant="contained"
               type="primary"
               size="large"
@@ -261,7 +260,6 @@ export function ConfirmSwapPage() {
           </div>
           <IconButton
             id="widget-confirm-swap-wallet-icon-btn"
-            testId="widget-confirm-swap-wallet-icon-btn"
             variant="contained"
             type="primary"
             size="large"
@@ -313,7 +311,7 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
-          testId="widget-confirm-swap-quote"
+          id="widget-confirm-swap-quote"
           expanded
           tagHidden
           error={confirmSwapResult.error}

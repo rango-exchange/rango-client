@@ -16,14 +16,13 @@ export function SearchInput(props: PropTypes) {
     style,
     setValue,
     suffix,
-    testId,
+    id,
     ...inputAttributes
   } = props;
 
   let inputSuffix = !!value.length ? (
-    // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
     <IconButton
-      testId={`${testId}-btn`}
+      id={`${id}-btn`}
       variant="ghost"
       onClick={() => setValue?.('')}
       size="small">
@@ -42,7 +41,7 @@ export function SearchInput(props: PropTypes) {
           <SearchIcon color="black" />
         </IconWrapper>
       }
-      testId={testId}
+      id={id}
       suffix={inputSuffix}
       fullWidth={fullWidth}
       color={color}

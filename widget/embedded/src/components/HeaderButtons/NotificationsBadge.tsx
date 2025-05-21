@@ -24,7 +24,7 @@ export function NotificationsBadge() {
         variant="body"
         size="xsmall"
         color="$background"
-        testId="widget-header-notifications-badge">
+        id="widget-header-notifications-badge">
         {notificationsCount}
       </Typography>
     </NotificationsBadgeContainer>

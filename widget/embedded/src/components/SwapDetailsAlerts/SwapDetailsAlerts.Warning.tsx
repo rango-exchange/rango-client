@@ -11,12 +11,11 @@ export function WarningAlert(props: WaningAlertsProps) {
     return (
       <Alert
         type="warning"
-        testId="widget-swap-detilas-change-network-alert"
+        id="widget-swap-detilas-change-network-alert"
         title={message.shortMessage}
         action={
           <Button
             id="widget-swap-details-warning-alert-change-network-btn"
-            testId="widget-swap-details-warning-alert-change-network-btn"
             size="xxsmall"
             type="warning"
             onClick={() => {
@@ -38,11 +37,10 @@ export function WarningAlert(props: WaningAlertsProps) {
       <Alert
         type="warning"
         title={message.shortMessage}
-        testId="widget-swap-details-warning-alert-connect-wallet-alert"
+        id="widget-swap-details-warning-alert-connect-wallet-alert"
         action={
           <Button
             id="widget-swap-details-warning-alert-connect-wallet-btn"
-            testId="widget-swap-details-warning-alert-connect-wallet-btn"
             size="xxsmall"
             type="warning"
             onClick={() => {
@@ -59,7 +57,7 @@ export function WarningAlert(props: WaningAlertsProps) {
 
   return (
     <Alert
-      testId="widget-swap-details-short-alrt"
+      id="widget-swap-details-short-alert"
       type="warning"
       title={message.shortMessage}
     />

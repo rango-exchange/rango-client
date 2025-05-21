@@ -6,7 +6,7 @@ import { List } from './BlockchainList.styles';
 const ITEM_SKELETON_COUNT = 20;
 export function LoadingBlockchainList() {
   return (
-    <List data-testid="widget-blockchain-loading-list">
+    <List id="widget-blockchain-loading-list">
       {Array.from(Array(ITEM_SKELETON_COUNT), (e) => (
         <ListItem
           key={e}

@@ -4,7 +4,7 @@ import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types.js';
 type BaseProps = Pick<SwapInputPropTypes, 'token' | 'price'> & {
   chain: Pick<SwapInputPropTypes['chain'], 'image'>;
   direction?: 'vertical' | 'horizontal';
-  testId: string;
+  id: string;
   centerAlign?: boolean;
   label?: string;
   tooltipContainer?: HTMLElement;

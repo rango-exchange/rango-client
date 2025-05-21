@@ -153,7 +153,6 @@ export function SettingsLists() {
 
   const bridgeItem = {
     id: 'widget-setting-bridge-item-btn',
-    testId: 'widget-settings-bridges-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Bridges')}
@@ -172,7 +171,6 @@ export function SettingsLists() {
 
   const exchangeItem = {
     id: 'widget-setting-exchange-item-btn',
-    testId: 'widget-setttings-exchange-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Exchanges')}
@@ -194,7 +192,6 @@ export function SettingsLists() {
 
   const customTokensItem = {
     id: 'widget-setting-custom-tokens-item-btn',
-    testId: 'widget-setting-custom-tokens-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Custom Tokens')}
@@ -214,7 +211,6 @@ export function SettingsLists() {
   };
   const languageItem = {
     id: 'widget-setting-language-item-btn',
-    testId: 'widget-setting-language-item-btn',
     title: (
       <Typography variant="title" size="xmedium">
         {i18n.t('Language')}
@@ -235,7 +231,6 @@ export function SettingsLists() {
 
   const infiniteApprovalItem = {
     id: 'widget-setting-infinite-approval-item-btn',
-    testId: 'widget-setting-infinite-approval-item-btn',
     title: (
       <React.Fragment>
         <Typography variant="title" size="xmedium">
@@ -267,7 +262,6 @@ export function SettingsLists() {
 
   const themeItem = {
     id: 'widget-setting-theme-item-btn',
-    testId: 'widget-setting-theme-item-btn',
     type: <ListItem />,
     title: (
       <Typography variant="title" size="xmedium">
@@ -280,7 +274,7 @@ export function SettingsLists() {
           container={getContainer()}
           items={themesList}
           value={theme}
-          testId="widget-setting-theme-item-tabs"
+          className="widget-setting-theme-item-tabs"
           onChange={(item) => setTheme(item.id as ThemeMode)}
           type="primary"
           borderRadius="small"
@@ -309,7 +303,7 @@ export function SettingsLists() {
     <List
       type={
         <ListItemButton
-          testId="widget-settings-list-item-buttom"
+          className="widget-settings-list-item-buttom"
           hasDivider
           id="_"
           onClick={() => console.log()}

@@ -27,7 +27,6 @@ export function FilterSelectorContent(props: PropTypes) {
         </Typography>
         <Button
           id="widget-filter-selector-reset-btn"
-          testId="widget-filter-selector-reset-btn"
           variant="ghost"
           size="xxsmall"
           onClick={() => onClickItem('')}>
@@ -41,7 +40,7 @@ export function FilterSelectorContent(props: PropTypes) {
             return (
               <ListItemButton
                 key={item.id}
-                testId="widget-filter-selector-list-item-btn"
+                className="widget-filter-selector-list-item-btn"
                 style={{ height: '40px', width: '100%' }}
                 selected={false}
                 hasDivider={props.list.length - 1 != index}

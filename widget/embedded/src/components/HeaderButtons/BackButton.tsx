@@ -10,7 +10,6 @@ function BackButton(props: PropTypes) {
     <HeaderButton
       id="widget-header-back-icon-btn"
       variant="ghost"
-      testId="widget-header-back-btn"
       size="small"
       onClick={props.onClick}>
       <ChevronLeftIcon color="black" size={16} />

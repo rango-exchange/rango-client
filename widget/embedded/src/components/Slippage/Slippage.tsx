@@ -84,7 +84,7 @@ export function Slippage() {
           const key = `slippage-${index}`;
           return (
             <SlippageChip
-              testId={`widget-slippage-chip-${slippageItem.toString()}%`}
+              id={`widget-slippage-chip-${slippageItem.toString()}%`}
               key={key}
               onClick={() => onClickSlippageChip(slippageItem)}
               selected={customSlippage === null && slippageItem === slippage}
@@ -124,7 +124,7 @@ export function Slippage() {
         <>
           <Divider size={10} />
           <Alert
-            testId="widget-slippage-alert"
+            id="widget-slippage-alert"
             variant="alarm"
             type={slippageValidation.type}
             title={slippageValidation.message}

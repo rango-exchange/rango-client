@@ -8,7 +8,6 @@ export type PropTypes = {
   color?: 'dark' | 'light';
   size?: 'small' | 'large';
   value: string;
-  testId: string;
   setValue?: (value: string) => void;
   style?: Stitches.CSS;
   suffix?: ReactElement;

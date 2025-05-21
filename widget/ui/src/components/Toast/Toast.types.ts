@@ -25,7 +25,6 @@ export type ToastType = {
 
 export type ToastPropTypes = ToastType & {
   id: number | string;
-  testId?: string;
 };
 
 export type ProviderContext = {

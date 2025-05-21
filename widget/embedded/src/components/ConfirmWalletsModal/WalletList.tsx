@@ -198,14 +198,14 @@ export function WalletList(props: PropTypes) {
           <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
             {!!experimentalChainWallet && (
               <WatermarkedModal
-                testId="widget-wallets-list-watermarked-modal"
+                id="widget-wallets-list-watermarked-modal"
                 open={!!experimentalChainWallet && showExperimentalChainModal}
                 container={modalContainer}
                 onClose={() => {
                   setExperimentalChainWallet(null);
                 }}>
                 <ExperimentalChain
-                  testId="widget-wallets-list-exprimental-chain"
+                  id="widget-wallets-list-exprimental-chain"
                   displayName={blockchainDisplayName}
                   onConfirm={() => {
                     void addExperimentalChain(experimentalChainWallet);
@@ -215,7 +215,7 @@ export function WalletList(props: PropTypes) {
             )}
             {addingExperimentalChainStatus && (
               <WatermarkedModal
-                testId="widget-wallets-list-exprimental-chain-watermarked-modal"
+                id="widget-wallets-list-exprimental-chain-watermarked-modal"
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
@@ -229,7 +229,7 @@ export function WalletList(props: PropTypes) {
             )}
             <SelectableWallet
               key={wallet.type}
-              data-testid="widget-wallets-list-selectable-wallet-btn"
+              id="widget-wallets-list-selectable-wallet-btn"
               description={getWalletDescription()}
               descriptionColor={getWalletDescriptionColor()}
               onClick={onSelectableWalletClick}
@@ -241,7 +241,7 @@ export function WalletList(props: PropTypes) {
         );
       })}
       <StatefulConnectModal
-        testId="widget-wallets-list-stateful-connect-modal"
+        id="widget-wallets-list-stateful-connect-modal"
         wallet={selectedWalletToConnect}
         options={{ defaultSelectedChains: quoteChains || [chain] }}
         onClose={() => {
@@ -265,7 +265,7 @@ export function WalletList(props: PropTypes) {
         <ShowMoreWallets
           selected={false}
           onClick={onShowMore}
-          data-testid="widget-wallets-list-show-more-wallets-btn">
+          id="widget-wallets-list-show-more-wallets-btn">
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">

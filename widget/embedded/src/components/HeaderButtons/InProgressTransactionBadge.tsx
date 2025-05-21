@@ -17,7 +17,7 @@ const InProgressTransactionBadge = () => {
   }
 
   return (
-    <InProgressTransactionBadgeContainer data-testid="widget-header-history-badge">
+    <InProgressTransactionBadgeContainer id="widget-header-history-badge">
       <InProgressIcon color="info" size={6} />
     </InProgressTransactionBadgeContainer>
   );

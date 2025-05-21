@@ -16,7 +16,6 @@ function ListItemButton(props: ListItemButtonProps) {
     <BaseListItemButton
       onClick={onClickWithKey}
       id={id}
-      data-testid={props.testId}
       aria-label="button"
       selected={selected}
       onKeyUp={(e: { key: string }) => {

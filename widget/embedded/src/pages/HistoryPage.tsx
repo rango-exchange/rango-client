@@ -141,7 +141,6 @@ export function HistoryPage() {
           <SuffixContainer>
             <Button
               id="widget-history-clear-btn"
-              testId="widget-history-clear-btn"
               disabled={isClearButtonDisabled}
               variant="ghost"
               size="xsmall"
@@ -160,7 +159,7 @@ export function HistoryPage() {
             fullWidth
             variant="contained"
             placeholder={i18n.t('Search Transaction')}
-            testId="widget-history-search-transaction-input"
+            id="widget-history-search-transaction-input"
             autoFocus
             onChange={handleSearch}
             style={{ height: 36 }}
@@ -213,7 +212,7 @@ export function HistoryPage() {
       <WatermarkedModal
         open={openClearModal}
         onClose={onCloseModal}
-        testId='"widget-history-clear-modal'
+        id="widget-history-clear-modal"
         container={getContainer()}>
         <Divider size={20} />
         <MessageBox
@@ -239,7 +238,6 @@ export function HistoryPage() {
         <Divider size={30} />
         <Button
           id="widget-history-clear-modal-yes-btn"
-          testId="widget-history-clear-modal-yes-btn"
           variant="contained"
           type="primary"
           size="large"
@@ -249,7 +247,6 @@ export function HistoryPage() {
         <Divider size={10} />
         <Button
           id="widget-history-clear-modal-no-btn"
-          testId="widget-history-clear-modal-no-btn"
           variant="outlined"
           type="primary"
           size="large"

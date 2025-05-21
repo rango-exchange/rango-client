@@ -25,7 +25,7 @@ export function Detached(props: PropTypes) {
         icon={<Image src={targetWallet.image} size={45} />}
       />
       <Divider size={20} />
-      <NamespaceList data-testid="widget-wallet-stateful-connect-detached-namespace-list">
+      <NamespaceList id="widget-detached-namespace-list">
         {targetWallet.needsNamespace?.data.map((namespace, index, array) => (
           <React.Fragment key={namespace.id}>
             {namespace.unsupported ? (
@@ -44,7 +44,6 @@ export function Detached(props: PropTypes) {
       <Divider size={20} />
       <StyledButton
         id="widget-name-space-confirm-btn"
-        testId="widget-name-space-confirm-btn"
         type="primary"
         onClick={props.onConfirm}>
         {i18n.t('Done')}

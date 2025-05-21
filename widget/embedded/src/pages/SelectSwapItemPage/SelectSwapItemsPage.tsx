@@ -117,7 +117,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
         <Divider size={24} />
         <SearchInput
           value={searchedFor}
-          testId="widget-select-swap-item-search-input"
+          id="widget-select-swap-item-search-input"
           autoFocus
           placeholder={i18n.t('Search Token')}
           color="light"

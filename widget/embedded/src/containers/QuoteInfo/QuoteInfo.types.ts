@@ -9,7 +9,7 @@ export type PropTypes = {
   tagHidden?: boolean;
   error: QuoteError | null;
   warning: QuoteWarning | null;
-  testId: string;
+  id: string;
   autoScrollOnExpanding?: boolean;
   expanded?: boolean;
   onClickAllRoutes?: () => void;

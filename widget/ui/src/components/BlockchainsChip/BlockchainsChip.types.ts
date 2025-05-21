@@ -1,5 +1,5 @@
 export interface PropTypes {
   selected?: boolean;
-  testId: string;
+  className: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

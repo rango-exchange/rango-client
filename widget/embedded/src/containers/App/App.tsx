@@ -17,10 +17,7 @@ export function Main() {
 
   return (
     <I18nManager language={activeLanguage}>
-      <MainContainer
-        id="swap-container"
-        data-testid="swap-container"
-        className={activeTheme()}>
+      <MainContainer id="swap-container" className={activeTheme()}>
         <AppRoutes />
       </MainContainer>
     </I18nManager>

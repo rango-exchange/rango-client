@@ -95,7 +95,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
           size={40}
         />
         <NamespaceItemInnerContent>
-          <NamespaceDetachedItemInfo data-testid="widget-namespace-detached-item-info">
+          <NamespaceDetachedItemInfo className="widget-namespace-detached-item-info">
             <Typography variant="label" size="large">
               {namespace.label}
             </Typography>
@@ -122,7 +122,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
           )}
           {!namespaceState.connected && error && (
             <NamespaceItemErrorDropdownToggle
-              data-testid="widget-namespace-detached-item-error-toggle"
+              className="widget-namespace-detached-item-error-toggle-btn"
               onClick={() =>
                 setErrorIsExpanded((errorIsExpanded) => !errorIsExpanded)
               }>
@@ -155,7 +155,6 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
         ) : (
           <Button
             id="widget-name-space-connect-btn"
-            testId="widget-name-space-connect-btn"
             variant="ghost"
             type={namespaceState.connected ? 'error' : 'primary'}
             size="small"
@@ -167,7 +166,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
       {!namespaceState.connected && !!error && errorIsExpanded && (
         <>
           <Divider size={4} />
-          <NamespaceItemError data-testid="widget-namespace-item-error">
+          <NamespaceItemError id="widget-namespace-item-error">
             <Typography variant="body" size="small" color="neutral700">
               {(error.cause as Error)?.message || error.message}
             </Typography>

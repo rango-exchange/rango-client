@@ -13,7 +13,7 @@ export function FailedAlert(props: FailedAlertsProps) {
 
   return (
     <Alert
-      testId="widget-failed-swap-details-alert"
+      id="widget-failed-swap-details-alert"
       type="error"
       title={message.shortMessage}
       containerStyles={{
@@ -25,7 +25,6 @@ export function FailedAlert(props: FailedAlertsProps) {
         message.detailedMessage.content && (
           <IconButton
             id="widget-swap-details-failed-btn"
-            testId="widget-swap-details-failed-btn"
             onClick={() => setShowContentError((prev) => !prev)}
             variant="ghost"
             size="xsmall">

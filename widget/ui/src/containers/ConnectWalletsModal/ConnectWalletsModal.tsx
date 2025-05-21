@@ -8,14 +8,14 @@ import { Modal, Wallet } from '../../components/index.js';
 import { ModalContent } from './ConnectWalletsModal.styles.js';
 
 export function ConnectWalletsModal(props: ConnectWalletsModalPropTypes) {
-  const { open, list, onSelect, onClose, testId } = props;
+  const { open, list, onSelect, onClose, id } = props;
 
   return (
     <Modal
       title={i18n.t('Connect Wallets')}
       open={open}
       onClose={onClose}
-      testId={testId}
+      id={id}
       styles={{
         container: { width: '75%', maxWidth: '30rem', height: '60%' },
       }}>

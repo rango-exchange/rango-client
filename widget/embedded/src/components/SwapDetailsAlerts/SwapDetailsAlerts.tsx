@@ -40,7 +40,7 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
         return (
           <Fragment key={key}>
             <Alert
-              testId="widget-swap-detials-tx-alert"
+              id="widget-swap-detials-tx-alert"
               type={
                 lastUrl
                   ? (loading && 'loading') || (error && 'error') || 'success'
@@ -55,7 +55,6 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
                 explorerUrl.url && (
                   <IconButton
                     id="widget-swap-details-tx-link-icon-btn"
-                    testId="widget-swap-details-tx-link-icon-btn"
                     variant="ghost"
                     size="xsmall"
                     onClick={() => window.open(explorerUrl.url, '_blank')}>
@@ -69,7 +68,7 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
       })}
       {waitingProgress && (
         <Alert
-          testId="widget-swap-details-loading-alert"
+          id="widget-swap-details-loading-alert"
           type="loading"
           title={message.shortMessage}
         />

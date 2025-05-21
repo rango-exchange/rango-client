@@ -23,7 +23,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
     <NamespaceItemContainer
       onClick={onClick}
       clickable
-      data-testid="widget-wallet-stateful-connect-namespace-list-item">
+      className="widget-namespace-list-item">
       <NamespaceItemContent>
         <NamespaceLogo
           src={getBlockchainLogo(blockchains, namespace.id)}

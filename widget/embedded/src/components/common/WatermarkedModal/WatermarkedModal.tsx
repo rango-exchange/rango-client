@@ -11,10 +11,7 @@ export function WatermarkedModal(props: PropsWithChildren<ModalPropTypes>) {
 
   const hasWatermark = watermark === 'FULL';
   return (
-    <Modal
-      hasWatermark={hasWatermark}
-      {...props}
-      testId="widget-watermarked-modal">
+    <Modal hasWatermark={hasWatermark} {...props} id="widget-watermarked-modal">
       {props.children}
     </Modal>
   );

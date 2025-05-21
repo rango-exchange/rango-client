@@ -42,7 +42,7 @@ export function TokenSection(props: TokenSectionProps) {
 
   return (
     <Container
-      testId="ui-token-section-container-btn"
+      id="widget-token-section-container-btn"
       variant="default"
       disabled={error || loading}
       onClick={onClick}>

@@ -151,7 +151,6 @@ export function TokenList(props: PropTypes) {
           type="primary"
           size="small"
           className="widget-token-list-item-import-btn"
-          testId="widget-token-list-item-import-btn"
           onClick={handleClick}>
           <Typography variant="body" size="xsmall" color="background">
             {t('import')}
@@ -264,7 +263,6 @@ export function TokenList(props: PropTypes) {
                 key={`${token.symbol}${token.address}`}
                 id={`${token.symbol}${token.address}`}
                 className="widget-token-list-item-btn"
-                testId="widget-token-list-item-btn"
                 hasDivider
                 customToken={token.customToken}
                 onClick={handleClick}

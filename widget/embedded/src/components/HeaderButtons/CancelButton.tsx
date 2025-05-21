@@ -12,7 +12,6 @@ function CancelButton(props: PropTypes) {
       <Button
         id="widget-header-cancel-btn"
         variant="ghost"
-        testId="widget-header-cancel-btn"
         onClick={props.onClick}
         size="xsmall">
         <Typography variant="label" size="medium" color="error500">

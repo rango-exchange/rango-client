@@ -159,7 +159,6 @@ export function Home() {
           // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
           <Button
             id={`widget-swap-${swapButtonState.action}-btn`}
-            testId={`widget-swap-${swapButtonState.action}-btn`}
             type="primary"
             size="large"
             disabled={swapButtonState.disabled || !isActiveTab}
@@ -218,7 +217,7 @@ export function Home() {
               quote={selectedQuote}
               loading={fetchingQuote}
               error={quoteError}
-              testId="widget-home-expandble-quote"
+              id="widget-home-expandble-quote"
               tagHidden={false}
               warning={currentQuoteWarning}
               type="basic"

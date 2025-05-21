@@ -35,7 +35,7 @@ export function Notifications(props: PropTypes) {
               {i18n.t('Notifications')}
             </Typography>
             <ClearAllButton
-              testId={'ui-notifications-clear-all-btn'}
+              id={'widget-notifications-clear-all-btn'}
               variant="ghost"
               size="xsmall"
               onClick={onClearAll}>
@@ -65,7 +65,7 @@ export function Notifications(props: PropTypes) {
               <React.Fragment key={requestId}>
                 {index > 0 && <Divider size={4} />}
                 <ListItem
-                  testId="ui-notifications-list-item"
+                  className="widget-notifications-list-item"
                   onClick={() => onClickItem(requestId)}
                   actionRequired={event.messageSeverity === 'warning'}
                   title={

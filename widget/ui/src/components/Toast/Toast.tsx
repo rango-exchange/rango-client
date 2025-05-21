@@ -26,7 +26,6 @@ export const Toast = (props: ToastPropTypes) => {
     onClose,
     type,
     title,
-    testId,
     position,
     hasCloseIcon = true,
     hideOnTap = true,
@@ -93,11 +92,10 @@ export const Toast = (props: ToastPropTypes) => {
               type={type}
               variant="alarm"
               titleAlign="left"
-              testId={`${testId}-alert-container`}
+              id={id.toString()}
               action={
                 hasCloseIcon ? (
                   <IconButton
-                    testId={`${testId ? testId + '-' : ''}toast-close-btn`}
                     id="toast-close-btn"
                     variant="ghost"
                     size="xsmall"

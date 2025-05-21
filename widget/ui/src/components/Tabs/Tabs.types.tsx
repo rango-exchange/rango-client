@@ -25,7 +25,6 @@ export interface TabsPropTypes {
   items: Item[];
   container?: HTMLElement;
   onChange: (item: Item) => void;
-  testId: string;
   value: string;
   type: BaseType;
   borderRadius?: BaseBorderRadius;

@@ -7,23 +7,11 @@ import { Typography } from '../Typography/index.js';
 import { BaseListItem } from './ListItem.styles.js';
 
 function ListItem(props: ListItemPropTypes) {
-  const {
-    start,
-    title,
-    description,
-    end,
-    onClick,
-    hasDivider,
-    testId,
-    ...restProps
-  } = props;
+  const { start, title, description, end, onClick, hasDivider, ...restProps } =
+    props;
 
   return (
-    <BaseListItem
-      hasDivider={hasDivider}
-      onClick={onClick}
-      data-testid={testId}
-      {...restProps}>
+    <BaseListItem hasDivider={hasDivider} onClick={onClick} {...restProps}>
       {start && <div className="item-start-container">{start}</div>}
       <div className="item-text-container">
         {title && <div className="item-text-title">{title}</div>}

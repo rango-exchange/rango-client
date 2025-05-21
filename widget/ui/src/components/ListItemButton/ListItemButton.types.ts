@@ -3,7 +3,6 @@ import type { CSSProperties } from '@stitches/react';
 
 export type ListItemButtonProps = Omit<ListItemPropTypes, 'onClick'> & {
   id: string;
-  testId: string;
   onClick: (id: string) => void;
   style?: CSSProperties;
   selected?: boolean;

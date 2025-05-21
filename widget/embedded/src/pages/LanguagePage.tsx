@@ -45,7 +45,7 @@ export function LanguagePage() {
       <PageContainer>
         <Alert
           type="warning"
-          testId="widget-language-machine-translation-alarm"
+          id="widget-language-machine-translation-alarm"
           variant="alarm"
           title="Warning: We are using machine translation, so the translations may be inaccurate."
         />
@@ -55,7 +55,7 @@ export function LanguagePage() {
             type={
               <ListItemButton
                 title={i18n.t('language')}
-                testId="widget-language-list-item-button"
+                className="widget-language-list-item-button"
                 id="_"
                 onClick={() => console.log()}
               />

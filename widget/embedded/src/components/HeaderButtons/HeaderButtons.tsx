@@ -62,7 +62,6 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
               side="top"
               content={i18n.t('Notifications')}>
               <HeaderButton
-                testId="widget-header-notification-btn"
                 id="widget-header-notification-icon-btn"
                 size="small"
                 variant="ghost">
@@ -82,7 +81,6 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
             id="widget-header-setting-icon-btn"
             size="small"
             variant="ghost"
-            testId="widget-header-settings-btn"
             onClick={onClickSettings}>
             <SettingsIcon size={18} color="black" />
           </HeaderButton>
@@ -95,7 +93,6 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
           content={i18n.t('History')}>
           <HeaderButton
             id="widget-header-history-icon-btn"
-            testId="widget-header-history-btn"
             size="small"
             variant="ghost"
             onClick={onClickHistory}>
