@@ -1,3 +1,11 @@
+## Widget [0.35.0] (2025-05-21)
+
+_includes `@rango-dev/widget-embedded@0.42.3`_
+
+### Bug Fixes
+
+- Prevent crash in search history by moving currentStep after swap check ([5a520f0](https://github.com/rango-exchange/rango-client/commit/5a520f0750700f70a50c7f35e73c3c401d7755f5))
+
 ## Widget [0.34.0] (2025-05-12)
 
 _includes `@rango-dev/widget-embedded@0.42.2`_
