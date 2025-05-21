@@ -67,7 +67,9 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             type={walletType}
             state={walletState}
             link={walletInfo.installLink}
-            canOpenDeepLink={!!walletInfo.deepLink && detectMobileScreens()}
+            canOpenDeepLink={
+              !!walletInfo.generateDeepLink && detectMobileScreens()
+            }
             disabled={walletButtonDisabled}
             // TODO we need to show an error modal when user reject the connection
             onClick={handleWalletItemClick}

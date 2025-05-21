@@ -14,7 +14,7 @@ describe('checking store', () => {
   test('new providers can be added to store', () => {
     const id = 'sol-or-something';
     const info = {
-      info: {
+      metadata: {
         name: 'sol grabage wallet',
         icon: 'http://somewhere.world',
         extensions: {

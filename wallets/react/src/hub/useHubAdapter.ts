@@ -273,13 +273,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const provider = getLegacyProvider(params.allVersionedProviders, type);
       return provider.getSigners(provider.getInstance());
     },
-    generateDeepLink(type) {
-      const wallet = getHub().get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
-      }
-      return wallet.generateDeepLink() || null;
-    },
     getWalletInfo(type) {
       const wallet = getHub().get(type);
       if (!wallet) {
@@ -297,12 +290,14 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         DEFAULT: '',
       };
 
+      const { metadata } = info;
+      const { extensions } = metadata;
       // `extensions` in legacy format was uppercase and also `DEFAULT` was used instead of `homepage`
-      Object.keys(info.extensions).forEach((k) => {
+      Object.keys(extensions).forEach((k) => {
         const key = k as ExtensionLink;
 
         if (key === 'homepage') {
-          installLink.DEFAULT = info.extensions[key] || '';
+          installLink.DEFAULT = extensions[key] || '';
         }
 
         const allowedKeys: ExtensionLink[] = [
@@ -316,7 +311,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             WalletInfo['installLink'],
             string
           >;
-          installLink[upperCasedKey] = info.extensions[key] || '';
+          installLink[upperCasedKey] = extensions[key] || '';
         }
       });
 
@@ -325,8 +320,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       );
 
       return {
-        name: info.name,
-        img: info.icon,
+        name: metadata.name,
+        img: metadata.icon,
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
@@ -337,9 +332,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         showOnMobile: undefined,
         needsNamespace: walletInfoFromLegacy.needsNamespace,
         needsDerivationPath: walletInfoFromLegacy.needsDerivationPath,
-
+        generateDeepLink: info.deepLink,
         isHub: true,
-        properties: wallet.info()?.properties,
+        properties: metadata.properties,
       };
     },
     providers() {

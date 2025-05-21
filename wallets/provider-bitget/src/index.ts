@@ -1,4 +1,3 @@
-import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -121,10 +120,6 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 };
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
-
-export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
-  return `https://bkcode.vip?action=dapp&url=${targetUrl}?autoConnect=${config.type}`;
-};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
