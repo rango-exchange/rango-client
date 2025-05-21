@@ -103,10 +103,10 @@ export function HistoryGroupedList(props: PropTypes) {
       }}
       itemContent={(index, groupIndex) => {
         const swap = swaps[index];
-        const currentStep = getCurrentStep(swap);
         if (!swap) {
           return null;
         }
+        const currentStep = getCurrentStep(swap);
         const firstStep = swap.steps[0];
         const lastStep = swap.steps[swap.steps.length - 1];
         return (
