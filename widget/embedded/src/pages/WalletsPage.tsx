@@ -15,6 +15,10 @@ import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
+import {
+  DEEP_LINK_DEFAULT_APP_DOMAIN,
+  DEEP_LINK_DEFAULT_TARGET_URL,
+} from '../constants';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -95,6 +99,10 @@ export function WalletsPage() {
               wallet,
               namespacesState
             );
+            const deepLink = wallet.generateDeepLink?.(
+              config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL,
+              config.deepLinking?.appDomain || DEEP_LINK_DEFAULT_APP_DOMAIN
+            );
             return (
               <Wallet
                 key={key}
@@ -104,6 +112,7 @@ export function WalletsPage() {
                     ? WalletState.PARTIALLY_CONNECTED
                     : wallet.state
                 }
+                deepLink={deepLink}
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}

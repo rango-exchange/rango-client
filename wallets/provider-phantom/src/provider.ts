@@ -1,6 +1,7 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { info, WALLET_ID } from './constants.js';
+import { generateDeepLink } from './legacy/index.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
 import { sui } from './namespaces/sui.js';
@@ -18,6 +19,7 @@ const buildProvider = () =>
       }
     })
     .config('info', info)
+    .config('generateDeepLink', generateDeepLink)
     .add('solana', solana)
     .add('evm', evm)
     .add('utxo', utxo)

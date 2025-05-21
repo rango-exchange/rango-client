@@ -5,6 +5,7 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
@@ -22,6 +23,7 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
+  detectMobileScreens,
   getCosmosExperimentalChainInfo,
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
@@ -60,6 +62,7 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
+  generateDeepLink: (type: WalletType) => GenerateDeepLink | null,
   list: WalletType[],
   chain?: string
 ): ExtendedModalWalletInfo[] {
@@ -96,12 +99,14 @@ export function mapWalletTypesToWalletInfo(
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
       );
-
+      const deepLinkGenerator = generateDeepLink(type);
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
         image,
         link: detectInstallLink(installLink),
+        generateDeepLink: deepLinkGenerator,
+        canOpenDeepLink: !!deepLinkGenerator && detectMobileScreens(),
         state,
         type,
         showOnMobile,
@@ -113,7 +118,6 @@ export function mapWalletTypesToWalletInfo(
       };
     });
 }
-
 export function walletAndSupportedChainsNames(
   supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {

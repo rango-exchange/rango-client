@@ -1,10 +1,11 @@
+import type { Provider } from './helpers.js';
 import type { SignerFactory } from 'rango-types';
 
 import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
-  provider: any
+  provider: Provider
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const signers = new DefaultSignerFactory();

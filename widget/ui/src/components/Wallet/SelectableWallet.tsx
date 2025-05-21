@@ -21,15 +21,24 @@ export function SelectableWallet(props: SelectablePropTypes) {
     selected,
     description,
     descriptionColor,
+    deepLink,
+    state,
     disabled = false,
   } = props;
+  const info = makeInfo(props.state, canOpenDeepLink);
 
   return (
     <SelectableWalletButton
       selected={selected}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
-        if (props.state === WalletState.NOT_INSTALLED) {
+        if (
+          props.state === WalletState.NOT_INSTALLED &&
+          canOpenDeepLink &&
+          deepLink
+        ) {
+          window.open(deepLink, '_blank');
+        } else if (props.state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(props.link), '_blank');
         } else {
           onClick(type);
