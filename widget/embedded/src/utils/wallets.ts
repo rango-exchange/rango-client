@@ -92,16 +92,17 @@ export function mapWalletTypesToWalletInfo(
         needsDerivationPath,
         properties,
         isHub,
+        generateDeepLink,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
       );
-
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
         image,
         link: detectInstallLink(installLink),
+        generateDeepLink,
         state,
         type,
         showOnMobile,
@@ -113,7 +114,6 @@ export function mapWalletTypesToWalletInfo(
       };
     });
 }
-
 export function walletAndSupportedChainsNames(
   supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {

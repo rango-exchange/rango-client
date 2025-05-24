@@ -1,6 +1,9 @@
 import type { WalletPropTypes } from './Wallet.types.js';
 
-import { detectInstallLink } from '@rango-dev/wallets-shared';
+import {
+  detectInstallLink,
+  detectMobileScreens,
+} from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import { Image } from '../common/index.js';
@@ -20,8 +23,17 @@ import {
 import { WalletState } from './Wallet.types.js';
 
 function Wallet(props: WalletPropTypes) {
-  const { title, type, image, onClick, isLoading, disabled = false } = props;
-  const info = makeInfo(props.state);
+  const {
+    title,
+    type,
+    image,
+    onClick,
+    isLoading,
+    disabled = false,
+    deepLink,
+  } = props;
+  const isMobileScreen = detectMobileScreens();
+  const info = makeInfo(props.state, !!deepLink && isMobileScreen);
 
   if (isLoading) {
     return (
@@ -53,7 +65,13 @@ function Wallet(props: WalletPropTypes) {
     <WalletButton
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
-        if (props.state === WalletState.NOT_INSTALLED) {
+        if (
+          props.state === WalletState.NOT_INSTALLED &&
+          isMobileScreen &&
+          deepLink
+        ) {
+          window.open(deepLink, '_blank');
+        } else if (props.state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(props.link), '_blank');
         } else {
           onClick(type);

@@ -18,7 +18,10 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { trustWallet as trustwallet_instance } from './helpers.js';
+import {
+  type Provider,
+  trustWallet as trustwallet_instance,
+} from './helpers.js';
 import signer from './signer.js';
 
 const WALLET = WalletTypes.TRUST_WALLET;
@@ -44,7 +47,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 

@@ -60,7 +60,8 @@ export function useWalletList(params?: Params): API {
   wallets = detectMobileScreens()
     ? wallets.filter(
         (wallet) =>
-          wallet.showOnMobile !== false && state(wallet.type).installed
+          wallet.showOnMobile !== false &&
+          (state(wallet.type).installed || !!wallet.generateDeepLink)
       )
     : wallets;
 
