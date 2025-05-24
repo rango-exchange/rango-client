@@ -24,6 +24,7 @@ export type DataLoadedProps = {
   time: QuoteCostProps['time'];
   fee: QuoteCostProps['fee'];
   outputPrice: SwapInputPropTypes['price'];
+  id?: string;
   loading?: false;
   quoteCost: React.ReactElement;
 };

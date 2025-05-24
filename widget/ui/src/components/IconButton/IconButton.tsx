@@ -14,6 +14,7 @@ function IconButtonComponent(
   return (
     <Button
       className="_icon-button"
+      id={'icon-button'}
       ref={ref}
       {...otherProps}
       style={{

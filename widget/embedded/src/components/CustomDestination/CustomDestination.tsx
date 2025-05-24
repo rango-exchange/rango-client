@@ -102,7 +102,7 @@ export function CustomDestination(props: PropTypes) {
         open={open}
         triggerAnchor="top"
         trigger={
-          <CustomDestinationButton>
+          <CustomDestinationButton id="widget-custom-destination-collapsible-btn">
             <div className="button__content">
               <WalletIcon size={18} color="info" />
               <Divider size={4} direction="horizontal" />
@@ -120,6 +120,7 @@ export function CustomDestination(props: PropTypes) {
         }
         onClickTrigger={() => handleOpenChange(!open)}>
         <StyledTextField
+          id="widget-custom-destination-blockchain-address-input"
           ref={inputRef}
           style={{
             padding: 0,

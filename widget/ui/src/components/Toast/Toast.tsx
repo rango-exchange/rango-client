@@ -92,9 +92,11 @@ export const Toast = (props: ToastPropTypes) => {
               type={type}
               variant="alarm"
               titleAlign="left"
+              id={id.toString()}
               action={
                 hasCloseIcon ? (
                   <IconButton
+                    id="toast-close-btn"
                     variant="ghost"
                     size="xsmall"
                     onClick={handleClose}>

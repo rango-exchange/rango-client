@@ -42,9 +42,10 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
     swapTokenData,
     tooltipContainer,
     currentStep,
+    className,
   } = props;
   return (
-    <Main onClick={onClick.bind(null, requestId)}>
+    <Main onClick={onClick.bind(null, requestId)} className={className}>
       <Container>
         <Header>
           <Date>
@@ -55,7 +56,8 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
           <Typography
             variant="label"
             size="medium"
-            color={StatusColors[status]}>
+            color={StatusColors[status]}
+          >
             {getStatus(status)}
           </Typography>
         </Header>

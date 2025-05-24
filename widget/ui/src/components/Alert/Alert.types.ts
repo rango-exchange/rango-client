@@ -11,5 +11,6 @@ export interface AlertPropTypes {
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
   containerStyles?: CSS;
+  id?: string;
   titleAlign?: BaseAlign;
 }

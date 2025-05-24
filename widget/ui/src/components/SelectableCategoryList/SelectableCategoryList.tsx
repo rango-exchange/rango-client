@@ -43,9 +43,11 @@ export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
           return (
             hasBlockchain && (
               <BlockchainsChip
+                className={'widget-selectable-category-list-blockchians-chip'}
                 selected={category === blockchainCategory}
                 key={blockchainCategory}
-                onClick={() => setCategory(blockchainCategory)}>
+                onClick={() => setCategory(blockchainCategory)}
+              >
                 {Logo && (
                   <>
                     <Logo size={28} />
@@ -59,7 +61,8 @@ export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
                     blockchainCategory === BlockchainCategories.ALL
                       ? 'secondary500'
                       : undefined
-                  }>
+                  }
+                >
                   {i18n.t({
                     id: '{blockchainCategory}',
                     values: {

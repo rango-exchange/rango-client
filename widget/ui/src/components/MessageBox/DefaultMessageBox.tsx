@@ -10,10 +10,10 @@ import { Container, Description, IconHighlight } from './MessageBox.styles.js';
 import StatusIcon from './StatusIcon.js';
 
 export function MessageBox(props: PropsWithChildren<PropTypes>) {
-  const { type, title, description, children, icon } = props;
+  const { type, title, description, children, icon, id } = props;
 
   return (
-    <Container>
+    <Container id={id}>
       <IconHighlight type={type}>
         {icon || <StatusIcon type={type} />}
       </IconHighlight>
@@ -22,7 +22,8 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
         color={type === 'loading' ? 'info500' : `${type}500`}
         variant="title"
         size="medium"
-        className="_message_box_title">
+        className="_message_box_title"
+      >
         {title}
       </Typography>
       <Divider size={4} />
@@ -32,7 +33,8 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
             color="neutral700"
             variant="body"
             size="medium"
-            className="_message_box_description">
+            className="_message_box_description"
+          >
             {description}
           </Typography>
         ) : (

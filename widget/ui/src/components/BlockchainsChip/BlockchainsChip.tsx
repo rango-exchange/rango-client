@@ -6,9 +6,9 @@ import React from 'react';
 import { Chip } from './BlockchainsChip.styles.js';
 
 export function BlockchainsChip(props: PropsWithChildren<PropTypes>) {
-  const { children, selected, onClick } = props;
+  const { children, selected, onClick, className } = props;
   return (
-    <Chip selected={selected} onClick={onClick}>
+    <Chip selected={selected} onClick={onClick} className={className}>
       {children}
     </Chip>
   );

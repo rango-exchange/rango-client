@@ -16,7 +16,7 @@ export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
       <Divider size={32} />
       <Button
         variant="contained"
-        id="widget-swap-details-modal-cancel-swap-yes-btn"
+        id="widget-swap-modal-cancel-swap-yes-btn"
         type="primary"
         size="large"
         onClick={onCancel}>
@@ -24,7 +24,7 @@ export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
       </Button>
       <Divider size={12} />
       <Button
-        id="widget-swap-details-modal-cancel-swap-no-btn"
+        id="widget-swap-modal-cancel-swap-no-btn"
         variant="outlined"
         type="primary"
         size="large"

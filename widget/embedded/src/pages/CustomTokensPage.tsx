@@ -94,6 +94,7 @@ export function CustomTokensPage() {
           {!!customTokens.length ? (
             <>
               <SearchInput
+                id="widget-custom-tokens-search-token-input"
                 value={searchedFor}
                 setValue={setSearchedFor}
                 fullWidth
@@ -152,6 +153,7 @@ export function CustomTokensPage() {
         </Content>
         <WatermarkedModal
           open={isDeleteModalOpen}
+          id="widget-custom-tokens-delete-modal"
           dismissible
           onClose={() => setIsDeleteModalOpen(false)}
           container={getContainer()}>

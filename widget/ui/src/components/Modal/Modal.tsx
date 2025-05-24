@@ -32,6 +32,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
     prefix,
     header,
     dismissible = true,
+    id,
     children,
     suffix,
     footer,
@@ -116,10 +117,12 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   return createPortal(
     <BackDrop active={active} onClick={handleBackDropClick} css={styles?.root}>
       <ModalContainer
+        id={id}
         active={active}
         css={styles?.container}
         anchor={anchor}
-        ref={(ref) => (modalContainerRef.current = ref)}>
+        ref={(ref) => (modalContainerRef.current = ref)}
+      >
         {header ?? (
           <ModalHeader noTitle={!title && dismissible && !prefix}>
             {prefix}
@@ -131,7 +134,11 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
             <Flex>
               {suffix}
               {dismissible && hasCloseIcon && (
-                <IconButton onClick={onClose} variant="ghost">
+                <IconButton
+                  id="widget-modal-close-btn"
+                  onClick={onClose}
+                  variant="ghost"
+                >
                   <CloseIcon color="gray" size={14} />
                 </IconButton>
               )}
@@ -146,7 +153,8 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
           <div
             className={`footer__logo ${
               hasWatermark ? 'logo__show' : 'logo__hidden'
-            }`}>
+            }`}
+          >
             <Divider size={12} />
             <BottomLogo />
           </div>

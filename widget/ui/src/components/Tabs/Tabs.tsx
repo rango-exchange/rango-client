@@ -156,18 +156,20 @@ export function TabsComponent(props: TabsPropTypes) {
   }, [containerRef.current, showArrows, currentIndex]);
 
   return (
-    <Container hasPadding={scrollButtons && showArrows}>
+    <Container hasPadding={scrollButtons && showArrows} className={className}>
       {scrollable && showArrows && scrollButtons && (
         <>
           <ArrowLeft
             ref={leftArrowRef}
             hidden={leftArrowDisabled}
-            onClick={() => handleScroll('right')}>
+            onClick={() => handleScroll('right')}
+          >
             <ChevronLeftIcon size={16} color="secondary" />
           </ArrowLeft>
           <ArrowRight
             hidden={rightArrowDisabled}
-            onClick={() => handleScroll('left')}>
+            onClick={() => handleScroll('left')}
+          >
             <ChevronRightIcon size={16} color="secondary" />
           </ArrowRight>
         </>
@@ -177,7 +179,8 @@ export function TabsComponent(props: TabsPropTypes) {
         className={`_tabs ${className || ''}`}
         type={type}
         borderRadius={borderRadius}
-        scrollable={scrollable}>
+        scrollable={scrollable}
+      >
         {tabItems.map((item, index) => {
           const isActive = item.id === value;
           return (
@@ -188,7 +191,8 @@ export function TabsComponent(props: TabsPropTypes) {
               side="bottom"
               sideOffset={2}
               content={item.tooltip}
-              open={!item.tooltip ? false : undefined}>
+              open={!item.tooltip ? false : undefined}
+            >
               <Tab
                 className="_tab"
                 ref={index === currentIndex ? tabRef : null}
@@ -200,7 +204,8 @@ export function TabsComponent(props: TabsPropTypes) {
                 size="small"
                 isActive={isActive}
                 data-active={isActive}
-                variant="default">
+                variant="default"
+              >
                 {item.icon}
                 {!!item.icon && !!item.title && (
                   <Divider direction="horizontal" size="2" />
