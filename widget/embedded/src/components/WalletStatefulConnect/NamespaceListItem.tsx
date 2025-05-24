@@ -18,7 +18,8 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
   const { onClick, type, namespace } = props;
   const blockchains = useAppStore().blockchains();
 
-  const showSupportedChains = namespace.chains.length > 1;
+  const supportedChains = namespace.getSupportedChains(blockchains);
+  const showSupportedChains = supportedChains.length > 1;
   return (
     <NamespaceItemContainer onClick={onClick} clickable>
       <NamespaceItemContent>
@@ -31,7 +32,7 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
             {namespace.label}
           </Typography>
           {showSupportedChains && (
-            <SupportedChainsList chains={namespace.chains} />
+            <SupportedChainsList chains={supportedChains} />
           )}
         </NamespaceItemInnerContent>
         {type === 'radio' ? (

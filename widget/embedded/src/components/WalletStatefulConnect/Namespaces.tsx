@@ -12,21 +12,30 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { useAppStore } from '../../store/AppStore';
+
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
 import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
-  const singleNamespace = targetWallet.needsNamespace?.selection === 'single';
+  const namespacesProperty = targetWallet.properties?.find(
+    (property) => property.name === 'namespaces'
+  );
+  const isHub = targetWallet.isHub;
+  const singleNamespace = targetWallet.isHub
+    ? namespacesProperty?.value.selection === 'single'
+    : targetWallet.needsNamespace?.selection === 'single';
+  const needsNamespace = isHub
+    ? namespacesProperty?.value
+    : targetWallet.needsNamespace;
   const providerImage = targetWallet.image;
 
+  const blockchains = useAppStore().blockchains();
   const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
   const supportedNamespaces = useMemo(
-    () =>
-      targetWallet.needsNamespace?.data.filter(
-        (namespace) => !namespace.unsupported
-      ),
+    () => needsNamespace?.data.filter((namespace) => !namespace.unsupported),
     [targetWallet?.type]
   );
 
@@ -73,9 +82,11 @@ export function Namespaces(props: PropTypes) {
       if (!!props.value.defaultSelectedChains?.length) {
         const namespacesContainingDefaultSelectedChains =
           supportedNamespaces.filter((namespace) =>
-            namespace.chains.some((chain) =>
-              props.value.defaultSelectedChains?.includes(chain.name)
-            )
+            namespace
+              .getSupportedChains(blockchains)
+              .some((chain) =>
+                props.value.defaultSelectedChains?.includes(chain.name)
+              )
           );
         setSelectedNamespaces(
           namespacesContainingDefaultSelectedChains.map(
@@ -132,23 +143,21 @@ export function Namespaces(props: PropTypes) {
       <NamespaceList>
         {wrapRadioRoot(
           <>
-            {targetWallet.needsNamespace?.data.map(
-              (namespace, index, array) => (
-                <React.Fragment key={namespace.id}>
-                  {namespace.unsupported ? (
-                    <NamespaceUnsupportedItem namespace={namespace} />
-                  ) : (
-                    <NamespaceListItem
-                      value={selectedNamespaces.includes(namespace.value)}
-                      namespace={namespace}
-                      type={singleNamespace ? 'radio' : 'checkbox'}
-                      onClick={() => onSelect(namespace.value)}
-                    />
-                  )}
-                  {index !== array.length - 1 && <Divider size={10} />}
-                </React.Fragment>
-              )
-            )}
+            {needsNamespace?.data.map((namespace, index, array) => (
+              <React.Fragment key={namespace.id}>
+                {namespace.unsupported ? (
+                  <NamespaceUnsupportedItem namespace={namespace} />
+                ) : (
+                  <NamespaceListItem
+                    value={selectedNamespaces.includes(namespace.value)}
+                    namespace={namespace}
+                    type={singleNamespace ? 'radio' : 'checkbox'}
+                    onClick={() => onSelect(namespace.value)}
+                  />
+                )}
+                {index !== array.length - 1 && <Divider size={10} />}
+              </React.Fragment>
+            ))}
           </>
         )}
       </NamespaceList>

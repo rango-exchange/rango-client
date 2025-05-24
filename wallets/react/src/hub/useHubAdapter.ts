@@ -92,8 +92,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              dataRef.current.allVersionedProviders,
-              dataRef.current.allBlockChains
+              api
             );
           } catch (e) {
             console.error(e);
@@ -284,8 +283,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         throw new Error('Your provider should have required `info`.');
       }
 
-      const provider = getLegacyProvider(params.allVersionedProviders, type);
-
       const installLink: Exclude<WalletInfo['installLink'], string> = {
         DEFAULT: '',
       };
@@ -313,9 +310,22 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         }
       });
 
-      const walletInfoFromLegacy = provider.getWalletInfo(
-        params.allBlockChains || []
+      const providerProperties = info.properties;
+
+      const namespacesProperty = providerProperties?.find(
+        (property) => property.name === 'namespaces'
       );
+      const derivationPathProperty = providerProperties?.find(
+        (property) => property.name === 'derivationPath'
+      );
+      const detailsProperty = providerProperties?.find(
+        (property) => property.name === 'details'
+      );
+
+      const supportedChains =
+        namespacesProperty?.value.data.flatMap((namespace) =>
+          namespace.getSupportedChains(params.allBlockChains || [])
+        ) || [];
 
       return {
         name: info.name,
@@ -323,13 +333,13 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains: walletInfoFromLegacy.supportedChains,
-        isContractWallet: false,
-        mobileWallet: false,
+        supportedChains,
+        isContractWallet: detailsProperty?.value?.isContractWallet,
+        mobileWallet: detailsProperty?.value?.mobileWallet,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.
-        showOnMobile: undefined,
-        needsNamespace: walletInfoFromLegacy.needsNamespace,
-        needsDerivationPath: walletInfoFromLegacy.needsDerivationPath,
+        showOnMobile: detailsProperty?.value?.showOnMobile,
+        needsNamespace: namespacesProperty?.value,
+        needsDerivationPath: derivationPathProperty?.value,
 
         isHub: true,
         properties: wallet.info()?.properties,

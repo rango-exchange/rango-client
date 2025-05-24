@@ -5,7 +5,6 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
-import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
@@ -109,7 +108,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           id: 'ETH',
           value: 'EVM',
           label: 'Ethereum',
-          chains: [evmChains.ethereum],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            allBlockchains.filter((chain) => chain.name === Networks.ETHEREUM),
         },
       ],
     },
