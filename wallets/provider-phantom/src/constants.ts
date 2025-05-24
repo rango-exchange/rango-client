@@ -6,7 +6,9 @@ import {
   type EvmBlockchainMeta,
   isEvmBlockchain,
   solanaBlockchain,
+  type SuiBlockchainMeta,
   TransactionType,
+  type TransferBlockchainMeta,
 } from 'rango-types';
 
 export const EVM_SUPPORTED_CHAINS = [
@@ -55,17 +57,19 @@ export const info: ProviderInfo = {
             value: 'UTXO',
             id: 'BTC',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter((chain) => chain.name === Networks.BTC),
+              allBlockchains.filter(
+                (chain): chain is TransferBlockchainMeta =>
+                  chain.name === Networks.BTC
+              ),
           },
           {
             label: 'Sui',
             value: 'Sui',
             id: 'SUI',
-            getSupportedChains: <T extends BlockchainMeta>(
-              allBlockchains: T[]
-            ) =>
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               allBlockchains.filter(
-                (chain) => chain.type === TransactionType.SUI
+                (chain): chain is SuiBlockchainMeta =>
+                  chain.type === TransactionType.SUI
               ),
           },
         ],

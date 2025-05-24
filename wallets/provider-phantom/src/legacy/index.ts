@@ -10,6 +10,8 @@ import type {
   BlockchainMeta,
   EvmBlockchainMeta,
   SignerFactory,
+  SuiBlockchainMeta,
+  TransferBlockchainMeta,
 } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
@@ -141,15 +143,19 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           value: 'UTXO',
           id: 'BTC',
           getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-            allBlockchains.filter((chain) => chain.name === Networks.BTC),
+            allBlockchains.filter(
+              (chain): chain is TransferBlockchainMeta =>
+                chain.name === Networks.BTC
+            ),
         },
         {
           label: 'Sui',
           value: 'Sui',
           id: 'SUI',
-          getSupportedChains: <T extends BlockchainMeta>(allBlockchains: T[]) =>
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
             allBlockchains.filter(
-              (chain) => chain.type === TransactionType.SUI
+              (chain): chain is SuiBlockchainMeta =>
+                chain.type === TransactionType.SUI
             ),
         },
       ],
