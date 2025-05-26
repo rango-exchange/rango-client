@@ -130,7 +130,7 @@ export function Quote(props: QuoteProps) {
       let stepState: 'error' | 'warning' | undefined = undefined;
       const hasBridgeLimitError =
         error?.type === QuoteErrorType.BRIDGE_LIMIT &&
-        error.swap.swapperId === swap.swapperId;
+        error?.swap?.swapperId === swap.swapperId;
 
       const hasSlippageError =
         error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
@@ -423,7 +423,7 @@ export function Quote(props: QuoteProps) {
             </FrameIcon>
             <ContainerInfoOutput>
               <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${steps[0].from.token.displayName} = `}
+                {`${roundedInput} ${steps[0]?.from.token.displayName} = `}
               </BasicInfoOutput>
               <NumericTooltip
                 content={output.value}
@@ -432,7 +432,7 @@ export function Quote(props: QuoteProps) {
                 <BasicInfoOutput size="small" variant="body">
                   &nbsp;
                   {`${roundedOutput} ${
-                    steps[steps.length - 1].to.token.displayName
+                    steps[steps.length - 1]?.to.token.displayName
                   }`}
                 </BasicInfoOutput>
               </NumericTooltip>
@@ -457,10 +457,10 @@ export function Quote(props: QuoteProps) {
               realUsdValue: output.usdValue,
             }}
             token={{
-              displayName: steps[numberOfSteps - 1].to.token.displayName,
-              image: steps[numberOfSteps - 1].to.token.image,
+              displayName: steps[numberOfSteps - 1]?.to.token.displayName || '',
+              image: steps[numberOfSteps - 1]?.to.token.image,
             }}
-            chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+            chain={{ image: steps[numberOfSteps - 1]?.to.chain.image }}
             percentageChange={percentageChange}
             warningLevel={priceImpactWarningLevel}
           />
@@ -468,8 +468,8 @@ export function Quote(props: QuoteProps) {
         {type === 'swap-preview' && (
           <>
             <QuoteSummary
-              from={steps[0].from}
-              to={steps[numberOfSteps - 1].to}
+              from={steps[0]?.from}
+              to={steps[numberOfSteps - 1]?.to}
               percentageChange={percentageChange}
               warningLevel={priceImpactWarningLevel}
             />

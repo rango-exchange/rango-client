@@ -39,11 +39,12 @@ export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
   const [assetChain, assetAddress, assetSymbol] = key.split(BALANCE_SEPARATOR);
 
   // null will be serialized to 'null', we need to make it back to a null type
-  const address = assetAddress === 'null' ? null : assetAddress;
+  const address =
+    assetAddress === 'null' || !assetAddress ? null : assetAddress;
   return {
     address,
-    blockchain: assetChain,
-    symbol: assetSymbol,
+    blockchain: assetChain || '',
+    symbol: assetSymbol || '',
   };
 }
 
@@ -222,7 +223,7 @@ export function computeNextStateAfterWalletBalanceRemoval(
         key
       );
     } else {
-      nextBalancesState[key] = currentBalancesState[key];
+      nextBalancesState[key] = currentBalancesState[key]!;
     }
   });
 

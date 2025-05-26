@@ -186,7 +186,7 @@ export const getScannerUrl = (
   blockchainMetaMap: { [key: string]: BlockchainMeta }
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
-  const baseUrl = blockchainMeta.info?.transactionUrl;
+  const baseUrl = blockchainMeta?.info?.transactionUrl;
   if (!baseUrl) {
     return;
   }
@@ -246,7 +246,7 @@ export function getRelatedWallet(
   const walletKV =
     Object.keys(swap.wallets)
       .map((k) => ({ k, v: swap.wallets[k] }))
-      .find(({ v }) => v.address === walletAddress) || null;
+      .find(({ v }) => v?.address === walletAddress) || null;
   const blockchain = walletKV?.k || null;
   const wallet = walletKV?.v || null;
 
@@ -295,7 +295,7 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = new BigNumber(0);
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') {
+    if (!fee || fee?.expenseType === 'DECREASE_FROM_OUTPUT') {
       continue;
     }
 

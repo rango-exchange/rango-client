@@ -139,7 +139,7 @@ export function useStatefulConnect(): UseStatefulConnect {
             payload: {
               providerType: wallet.type,
               providerImage: wallet.image,
-              namespace: namespace.value,
+              namespace: namespace?.value || '',
             },
           });
           return { status: ResultStatus.DerivationPath };

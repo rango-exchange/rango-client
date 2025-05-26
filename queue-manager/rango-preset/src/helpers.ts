@@ -123,8 +123,7 @@ export function inMemoryTransactionsData() {
     getTransactionDataByHash: (hash: string) =>
       swapTransactionToDataMap[hash] || {},
     setTransactionDataByHash: (hash: string, data: TransactionData) => {
-      const r = swapTransactionToDataMap[hash];
-      if (!r) {
+      if (!swapTransactionToDataMap[hash]) {
         swapTransactionToDataMap[hash] = {};
       }
       swapTransactionToDataMap[hash].response =
@@ -608,7 +607,7 @@ export async function delay(ms: number): Promise<unknown> {
 export const getSwapWalletType = (
   swap: PendingSwap,
   network: Network
-): WalletType => {
+): WalletType | undefined => {
   return swap.wallets[network]?.walletType;
 };
 
@@ -959,33 +958,32 @@ export function onDependsOnOtherQueues(
   if (!task) {
     const firstBlockedTask = blockedTasks[0];
     task = firstBlockedTask;
+  } else {
+    setClaimer(task.queue_id);
+    const claimedStorage = task.storage.get() as SwapStorage;
+    const { type, namespace, address } = getRequiredWallet(
+      claimedStorage.swapDetails
+    );
+    // Run
+    forceExecute(task.queue_id, {
+      claimedBy: claimedBy(),
+      resetClaimedBy: () => {
+        reset();
+        // TODO: Use key generator
+        if (type) {
+          retryOn(
+            {
+              walletType: type,
+              network: namespace?.network,
+              accounts: address ? [address] : [],
+            },
+            manager,
+            context.canSwitchNetworkTo
+          );
+        }
+      },
+    });
   }
-
-  setClaimer(task.queue_id);
-  const claimedStorage = task.storage.get() as SwapStorage;
-  const { type, namespace, address } = getRequiredWallet(
-    claimedStorage.swapDetails
-  );
-
-  // Run
-  forceExecute(task.queue_id, {
-    claimedBy: claimedBy(),
-    resetClaimedBy: () => {
-      reset();
-      // TODO: Use key generator
-      if (type) {
-        retryOn(
-          {
-            walletType: type,
-            network: namespace?.network,
-            accounts: address ? [address] : [],
-          },
-          manager,
-          context.canSwitchNetworkTo
-        );
-      }
-    },
-  });
 }
 
 export function isRequiredWalletConnected(
@@ -1061,7 +1059,7 @@ export async function signTransaction(
     return onFinish();
   }
 
-  const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
+  const chainId = meta.blockchains?.[tx.blockChain]?.chainId || null;
 
   const hasAlreadyProceededToSign =
     typeof swap.hasAlreadyProceededToSign === 'boolean';
@@ -1233,7 +1231,7 @@ export function checkWaitingForConnectWalletChange(params: {
           (taskId) => {
             const task = q.list.state.tasks[taskId];
             return (
-              task.status === Status.BLOCKED &&
+              task?.status === Status.BLOCKED &&
               // TODO double check later
               [BlockReason.WAIT_FOR_CONNECT_WALLET].includes(
                 task.blockedFor?.reason
@@ -1299,7 +1297,7 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
       (taskId) => {
         const task = q.list.state.tasks[taskId];
         return (
-          task.status === Status.BLOCKED &&
+          task?.status === Status.BLOCKED &&
           [
             BlockReason.WAIT_FOR_NETWORK_CHANGE,
             BlockReason.DEPENDS_ON_OTHER_QUEUES,
@@ -1445,11 +1443,12 @@ export function retryOn(
     if (walletAndNetworkMatched.length > 1) {
       for (let i = 1; i < walletAndNetworkMatched.length; i++) {
         const currentQueue = walletAndNetworkMatched[i];
-
-        markRunningSwapAsDependsOnOtherQueues({
-          getStorage: currentQueue.getStorage.bind(currentQueue),
-          setStorage: currentQueue.setStorage.bind(currentQueue),
-        });
+        if (currentQueue) {
+          markRunningSwapAsDependsOnOtherQueues({
+            getStorage: currentQueue.getStorage.bind(currentQueue),
+            setStorage: currentQueue.setStorage.bind(currentQueue),
+          });
+        }
       }
     }
   } else if (onlyWalletMatched.length > 0 && options.fallbackToOnlyWallet) {
@@ -1572,7 +1571,7 @@ export function getTokenAmountInUsd(
 export function getSwapInputUsd(swap: PendingSwap): string {
   return getTokenAmountInUsd(
     swap.inputAmount,
-    swap.steps[0].fromUsdPrice ?? ''
+    swap?.steps[0]?.fromUsdPrice ?? ''
   );
 }
 
@@ -1580,14 +1579,14 @@ export function getSwapOutputUsd(swap: PendingSwap): string {
   const lastStep = swap.steps[swap.steps.length - 1];
 
   return getTokenAmountInUsd(
-    lastStep.outputAmount ?? '',
-    lastStep.toUsdPrice ?? ''
+    lastStep?.outputAmount ?? '',
+    lastStep?.toUsdPrice ?? ''
   );
 }
 
 export function getLastFinishedStep(
   swap: PendingSwap
-): { step: PendingSwapStep; index: number } | undefined {
+): { step?: PendingSwapStep; index: number } | undefined {
   const FINISHED_STATUS: PendingSwap['steps'][number]['status'][] = [
     'success',
     'failed',
@@ -1611,7 +1610,7 @@ export function getLastFinishedStepInput(swap: PendingSwap): string {
 
   return lastFinishedStep.index === 0
     ? swap.inputAmount
-    : swap.steps[lastFinishedStep.index - 1].outputAmount ?? '';
+    : swap?.steps[lastFinishedStep.index - 1]?.outputAmount ?? '';
 }
 
 export function getLastFinishedStepInputUsd(swap: PendingSwap): string {

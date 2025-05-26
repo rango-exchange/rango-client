@@ -109,7 +109,7 @@ export function hasLimitError(swaps: SwapResult[]): boolean {
 }
 
 export function getLimitErrorMessage(swaps: SwapResult[]): {
-  swap: SwapResult;
+  swap?: SwapResult;
   fromAmountRangeError: string;
   recommendation: string;
 } {
@@ -127,17 +127,17 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
     return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
   })[0];
 
-  const minimum = !!swap.fromAmountMinValue
+  const minimum = !!swap?.fromAmountMinValue
     ? new BigNumber(swap.fromAmountMinValue)
     : null;
-  const maximum = !!swap.fromAmountMaxValue
+  const maximum = !!swap?.fromAmountMaxValue
     ? new BigNumber(swap.fromAmountMaxValue)
     : null;
-  const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
+  const isExclusive = swap?.fromAmountRestrictionType === 'EXCLUSIVE';
 
   let fromAmountRangeError = '';
   let recommendation = '';
-  if (!isExclusive && !!minimum && minimum.gt(swap.fromAmount)) {
+  if (!isExclusive && !!minimum && minimum.gt(swap?.fromAmount || '')) {
     fromAmountRangeError = i18n.t({
       id: 'Required: >= {min} {symbol}',
       values: {
@@ -146,7 +146,7 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
           TOKEN_AMOUNT_MIN_DECIMALS,
           TOKEN_AMOUNT_MAX_DECIMALS
         ),
-        symbol: swap.from.symbol,
+        symbol: swap?.from.symbol,
       },
     });
     recommendation = errorMessages().bridgeLimitErrors.increaseAmount;
@@ -159,13 +159,13 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
           TOKEN_AMOUNT_MIN_DECIMALS,
           TOKEN_AMOUNT_MAX_DECIMALS
         ),
-        symbol: swap.from.symbol,
+        symbol: swap?.from.symbol,
       },
     });
     recommendation = errorMessages().bridgeLimitErrors.increaseAmount;
   }
 
-  if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
+  if (!isExclusive && !!maximum && maximum.lt(swap?.fromAmount || '')) {
     fromAmountRangeError = i18n.t({
       id: 'Required: <= {max} {symbol}',
       values: {
@@ -174,7 +174,7 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
           TOKEN_AMOUNT_MIN_DECIMALS,
           TOKEN_AMOUNT_MAX_DECIMALS
         ),
-        symbol: swap.from.symbol,
+        symbol: swap?.from.symbol,
       },
     });
     recommendation = errorMessages().bridgeLimitErrors.decreaseAmount;
@@ -279,13 +279,13 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') {
+    if (fee?.expenseType === 'DECREASE_FROM_OUTPUT') {
       continue;
     }
 
-    const unitPrice = findToken(fee.asset)?.usdPrice || null;
+    const unitPrice = (fee && findToken(fee.asset)?.usdPrice) || null;
     totalFeeInUsd = totalFeeInUsd.plus(
-      new BigNumber(fee.amount).multipliedBy(unitPrice || 0)
+      new BigNumber(fee?.amount || '').multipliedBy(unitPrice || 0)
     );
   }
 
@@ -551,7 +551,7 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
 
 export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
   const inputAmount = quote.requestAmount;
-  const inputTokenUsdPrice = quote.swaps[0].from.usdPrice;
+  const inputTokenUsdPrice = quote.swaps[0]?.from.usdPrice;
   if (!inputAmount || !inputTokenUsdPrice) {
     return;
   }
@@ -560,7 +560,7 @@ export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
 
 export function getUsdOutputFrom(quote: SelectedQuote): BigNumber | undefined {
   const outputAmount = quote?.outputAmount || null;
-  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1].to.usdPrice;
+  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1]?.to.usdPrice;
   if (!outputAmount || !outputTokenUsdPrice) {
     return;
   }

@@ -103,10 +103,10 @@ export function HistoryGroupedList(props: PropTypes) {
       }}
       itemContent={(index, groupIndex) => {
         const swap = swaps[index];
-        const currentStep = getCurrentStep(swap);
         if (!swap) {
           return null;
         }
+        const currentStep = getCurrentStep(swap);
         const firstStep = swap.steps[0];
         const lastStep = swap.steps[swap.steps.length - 1];
         return (
@@ -122,11 +122,11 @@ export function HistoryGroupedList(props: PropTypes) {
               swapTokenData={{
                 from: {
                   token: {
-                    image: firstStep.fromLogo,
-                    displayName: firstStep.fromSymbol,
+                    image: firstStep?.fromLogo,
+                    displayName: firstStep?.fromSymbol || '',
                   },
                   blockchain: {
-                    image: firstStep.fromBlockchainLogo || '',
+                    image: firstStep?.fromBlockchainLogo || '',
                   },
                   amount: numberToString(
                     swap.inputAmount,
@@ -137,22 +137,22 @@ export function HistoryGroupedList(props: PropTypes) {
                 },
                 to: {
                   token: {
-                    image: lastStep.toLogo,
-                    displayName: lastStep.toSymbol,
+                    image: lastStep?.toLogo,
+                    displayName: lastStep?.toSymbol || '',
                   },
                   blockchain: {
-                    image: lastStep.toBlockchainLogo || '',
+                    image: lastStep?.toBlockchainLogo || '',
                   },
                   amount: numberToString(
-                    lastStep.outputAmount ||
-                      lastStep.expectedOutputAmountHumanReadable ||
+                    lastStep?.outputAmount ||
+                      lastStep?.expectedOutputAmountHumanReadable ||
                       '',
                     TOKEN_AMOUNT_MIN_DECIMALS,
                     TOKEN_AMOUNT_MAX_DECIMALS
                   ),
                   realAmount:
-                    lastStep.outputAmount ||
-                    lastStep.expectedOutputAmountHumanReadable ||
+                    lastStep?.outputAmount ||
+                    lastStep?.expectedOutputAmountHumanReadable ||
                     '',
                 },
               }}

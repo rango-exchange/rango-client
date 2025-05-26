@@ -38,14 +38,14 @@ export const useNotificationStore = createSelectors(
             route: {
               creationTime: parseInt(route.creationTime),
               from: {
-                blockchain: fromStep.fromBlockchain,
-                address: fromStep.fromSymbolAddress,
-                symbol: fromStep.fromSymbol,
+                blockchain: fromStep?.fromBlockchain || '',
+                address: fromStep?.fromSymbolAddress || null,
+                symbol: fromStep?.fromSymbol || '',
               },
               to: {
-                blockchain: toStep.toBlockchain,
-                address: toStep.toSymbolAddress,
-                symbol: toStep.toSymbol,
+                blockchain: toStep?.toBlockchain || '',
+                address: toStep?.toSymbolAddress || null,
+                symbol: toStep?.toSymbol || '',
               },
             },
           };

@@ -144,18 +144,21 @@ export function createRetryQuote(
   const lastSuccessfulStep = getLastSuccessfulStep(pendingSwap.steps);
 
   const toToken = {
-    blockchain: lastStep.toBlockchain,
-    symbol: lastStep.toSymbol,
-    address: lastStep.toSymbolAddress,
+    blockchain: lastStep?.toBlockchain || '',
+    symbol: lastStep?.toSymbol || '',
+    address: lastStep?.toSymbolAddress || '',
   };
 
   const fromBlockchainMeta = findBlockchain(
     lastSuccessfulStep
       ? lastSuccessfulStep.toBlockchain
-      : firstStep.fromBlockchain,
+      : firstStep?.fromBlockchain || '',
     blockchains
   );
-  const toBlockchainMeta = findBlockchain(lastStep.toBlockchain, blockchains);
+  const toBlockchainMeta = findBlockchain(
+    lastStep?.toBlockchain || '',
+    blockchains
+  );
   const fromTokenMeta = findToken(
     lastSuccessfulStep
       ? {
@@ -165,8 +168,8 @@ export function createRetryQuote(
         }
       : {
           blockchain: fromBlockchainMeta?.name ?? '',
-          symbol: firstStep.fromSymbol,
-          address: firstStep.fromSymbolAddress,
+          symbol: firstStep?.fromSymbol || '',
+          address: firstStep?.fromSymbolAddress || '',
         }
   );
   const toTokenMeta = findToken(toToken);
@@ -336,15 +339,18 @@ export const getDefaultQuote = (
   quotes: MultiRouteSimulationResult[],
   requestAmount: string
 ): SelectedQuote | null => {
+  let quote = quotes[0]; // Return the first quote from the quotes array
   if (!quotes.length) {
     return null;
   }
   if (!currentQuote) {
     // Handle the case where currentQuote is null
     return {
-      requestAmount: requestAmount,
+      requestAmount,
       validationStatus: null,
-      ...quotes[0], // Return the first quote from the quotes array
+      ...quote, // Return the first quote from the quotes array
+      swaps: quote?.swaps || [],
+      requestId: quote?.requestId || '',
     };
   }
   // Create a set of swapperIds from the currentQuote swaps
@@ -363,12 +369,18 @@ export const getDefaultQuote = (
     );
   });
 
+  quote = matchedQuote || quotes[0];
+
   // Return the matchedQuote if found, otherwise return the first quote from the quotes array
-  return {
-    requestAmount: requestAmount,
-    validationStatus: null,
-    ...(matchedQuote || quotes[0]),
-  };
+  return quote
+    ? {
+        requestAmount,
+        validationStatus: null,
+        ...quote,
+        swaps: quote?.swaps || [],
+        requestId: quote?.requestId || '',
+      }
+    : null;
 };
 
 export const sortTags = (tags: RouteTag[]): RouteTag[] => {

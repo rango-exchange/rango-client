@@ -108,10 +108,10 @@ class Queue {
    * @param nextState
    */
   private updateTaskState(id: TaskId, nextState: Partial<TaskState>) {
-    if (nextState.status) {
+    if (nextState.status && this.state.tasks[id]) {
       this.state.tasks[id].status = nextState.status;
     }
-    if (nextState.blockedFor) {
+    if (nextState.blockedFor && this.state.tasks[id]) {
       this.state.tasks[id].blockedFor = nextState.blockedFor;
     }
 
@@ -177,11 +177,11 @@ class Queue {
     }
     const { task, state } = currentActiveTask;
 
-    if (state.status === Status.BLOCKED) {
+    if (state?.status === Status.BLOCKED) {
       this.events.onBlock({
         action: task.action,
         id: task.id,
-        reason: state.blockedFor,
+        reason: state?.blockedFor,
       });
     }
   }
@@ -279,7 +279,7 @@ class Queue {
         const state = this.state.tasks[task.id];
 
         // If one item fails, we stop to work on the list.
-        if (state.status === Status.FAILED) {
+        if (state?.status === Status.FAILED) {
           nextListStatus = Status.FAILED;
           break;
         }
@@ -318,13 +318,14 @@ class Queue {
     } = currentActiveTask;
 
     // if `activeTask` is already done, we will go for next one.
-    if (activeTaskState.status === Status.SUCCESS) {
+    if (activeTaskState?.status === Status.SUCCESS) {
       this.updateActiveTaskIndex(activeTaskIndex + 1);
       this.next(params);
       return;
     }
 
     if (
+      activeTaskState &&
       [Status.FAILED, Status.CANCELED, Status.RUNNING].includes(
         activeTaskState.status
       )
@@ -333,8 +334,8 @@ class Queue {
     }
 
     if (
-      activeTaskState.status === Status.PENDING ||
-      activeTaskState.status === Status.BLOCKED
+      activeTaskState?.status === Status.PENDING ||
+      activeTaskState?.status === Status.BLOCKED
     ) {
       // Update task status to `running`
       this.updateTaskState(activeTask.id, {
@@ -344,33 +345,35 @@ class Queue {
 
       // Try to execute task.
       const execute = this.actions[activeTask.action];
-      execute({
-        context: this.getContext(params),
-        next: () => {
-          this.markCurrentTaskAsFinished(params);
-        },
-        retry: () => {
-          this.resume(params);
-        },
-        failed: () => {
-          this.updateTaskState(activeTask.id, {
-            status: Status.FAILED,
-          });
-          this.check();
-        },
-        schedule: (action) => {
-          this.createTask(action);
-          this.check();
-        },
-        getStorage: this.getStorage.bind(this),
-        setStorage: this.setStorage.bind(this),
-        block: (reason: Record<string, unknown>) => {
-          this.block({ reason });
-        },
-        unblock: () => {
-          this.unblock();
-        },
-      });
+      if (execute) {
+        execute({
+          context: this.getContext(params),
+          next: () => {
+            this.markCurrentTaskAsFinished(params);
+          },
+          retry: () => {
+            this.resume(params);
+          },
+          failed: () => {
+            this.updateTaskState(activeTask.id, {
+              status: Status.FAILED,
+            });
+            this.check();
+          },
+          schedule: (action) => {
+            this.createTask(action);
+            this.check();
+          },
+          getStorage: this.getStorage.bind(this),
+          setStorage: this.setStorage.bind(this),
+          block: (reason: Record<string, unknown>) => {
+            this.block({ reason });
+          },
+          unblock: () => {
+            this.unblock();
+          },
+        });
+      }
     }
   }
 
@@ -414,7 +417,7 @@ class Queue {
 
     if (
       !currentActiveTask ||
-      currentActiveTask.state.status !== Status.BLOCKED
+      currentActiveTask?.state?.status !== Status.BLOCKED
     ) {
       throw new Error('Task is not blocked.');
     }
@@ -437,50 +440,52 @@ class Queue {
   public forceRun(params: NextParams) {
     const currentTask = this.getActiveTask();
 
-    if (!currentTask || currentTask.state.status !== Status.BLOCKED) {
+    if (!currentTask || currentTask?.state?.status !== Status.BLOCKED) {
       throw new Error('Task is not blocked.');
     }
 
     // Try to execute task.
     const execute = this.actions[currentTask.task.action];
-    execute({
-      context: this.getContext(params),
-      next: () => {
-        /*
+    if (execute) {
+      execute({
+        context: this.getContext(params),
+        next: () => {
+          /*
           NOTE:
             When running `forceRun`, the status of task can be `BLOCKED`
             So we need to change to `Running` first. 
         */
-        // Update task status to `running`
-        this.updateTaskState(currentTask.task.id, {
-          status: Status.RUNNING,
-        });
-        this.updateQueueStatus(Status.RUNNING);
+          // Update task status to `running`
+          this.updateTaskState(currentTask.task.id, {
+            status: Status.RUNNING,
+          });
+          this.updateQueueStatus(Status.RUNNING);
 
-        this.markCurrentTaskAsFinished(params);
-      },
-      retry: () => {
-        this.resume(params);
-      },
-      failed: () => {
-        this.updateTaskState(currentTask.task.id, {
-          status: Status.FAILED,
-        });
-        this.check();
-      },
-      schedule: (action) => {
-        this.createTask(action);
-        this.check();
-      },
-      getStorage: this.getStorage.bind(this),
-      setStorage: this.setStorage.bind(this),
-      block: (reason: Record<string, unknown>) => {
-        this.block({ reason });
-      },
-      unblock: () => {
-        this.unblock();
-      },
-    });
+          this.markCurrentTaskAsFinished(params);
+        },
+        retry: () => {
+          this.resume(params);
+        },
+        failed: () => {
+          this.updateTaskState(currentTask.task.id, {
+            status: Status.FAILED,
+          });
+          this.check();
+        },
+        schedule: (action) => {
+          this.createTask(action);
+          this.check();
+        },
+        getStorage: this.getStorage.bind(this),
+        setStorage: this.setStorage.bind(this),
+        block: (reason: Record<string, unknown>) => {
+          this.block({ reason });
+        },
+        unblock: () => {
+          this.unblock();
+        },
+      });
+    }
   }
   private markCurrentTaskAsFinished(params: NextParams) {
     this.check();
@@ -490,7 +495,7 @@ class Queue {
     if (!activeTask) return;
 
     const activeTaskState = this.state.tasks[activeTask.id];
-    if (activeTaskState.status === Status.RUNNING) {
+    if (activeTaskState?.status === Status.RUNNING) {
       this.updateTaskState(activeTask.id, {
         status: Status.SUCCESS,
       });
@@ -519,7 +524,7 @@ class Queue {
     if (!activeTask) return;
 
     const activeTaskState = this.state.tasks[activeTask.id];
-    if (activeTaskState.status === Status.RUNNING) {
+    if (activeTaskState?.status === Status.RUNNING) {
       this.updateTaskState(activeTask.id, {
         status: Status.PENDING,
       });
@@ -540,9 +545,10 @@ class Queue {
 
     if (
       !currentActiveTask ||
-      [Status.FAILED, Status.CANCELED, Status.SUCCESS].includes(
-        currentActiveTask.state.status
-      )
+      (currentActiveTask.state &&
+        [Status.FAILED, Status.CANCELED, Status.SUCCESS].includes(
+          currentActiveTask.state.status
+        ))
     ) {
       return;
     }
@@ -571,7 +577,9 @@ class Queue {
     this.state.activeTaskIndex = 0;
     this.state.status = Status.PENDING;
     Object.keys(this.state.tasks).forEach((id) => {
-      this.state.tasks[id].status = Status.PENDING;
+      if (this.state.tasks[id]) {
+        this.state.tasks[id].status = Status.PENDING;
+      }
     });
   }
 

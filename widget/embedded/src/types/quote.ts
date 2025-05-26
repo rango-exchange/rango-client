@@ -25,7 +25,7 @@ export type NoResultError = {
 
 export type BridgeLimitError = {
   type: QuoteErrorType.BRIDGE_LIMIT;
-  swap: SwapResult;
+  swap?: SwapResult;
   recommendation: string;
   fromAmountRangeError: string;
 };
