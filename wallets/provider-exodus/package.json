@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-exodus",
-  "version": "0.45.2-next.7",
+  "version": "0.45.2-next.8",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.35.1-next.3",
     "@rango-dev/signer-solana": "^0.39.1-next.3",
-    "@rango-dev/wallets-shared": "^0.44.2-next.7",
+    "@rango-dev/wallets-shared": "^0.44.2-next.8",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.84"
   },
