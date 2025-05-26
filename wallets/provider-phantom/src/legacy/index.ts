@@ -10,13 +10,11 @@ import type {
   BlockchainMeta,
   EvmBlockchainMeta,
   SignerFactory,
+  SuiBlockchainMeta,
+  TransferBlockchainMeta,
 } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-import { chains as evmChains } from '@rango-dev/wallets-core/namespaces/evm';
-import { chains as solanaChains } from '@rango-dev/wallets-core/namespaces/solana';
-import { chains as suiChains } from '@rango-dev/wallets-core/namespaces/sui';
-import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
 import {
   chooseInstance,
   getSolanaAccounts,
@@ -126,25 +124,39 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
-          chains: [evmChains.ethereum, evmChains.base, evmChains.polygon],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            allBlockchains.filter(
+              (chain): chain is EvmBlockchainMeta =>
+                isEvmBlockchain(chain) &&
+                EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+            ),
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
-          chains: [solanaChains.solana],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            solanaBlockchain(allBlockchains),
         },
         {
           label: 'BTC',
           value: 'UTXO',
           id: 'BTC',
-          chains: [utxoChains.bitcoin],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            allBlockchains.filter(
+              (chain): chain is TransferBlockchainMeta =>
+                chain.name === Networks.BTC
+            ),
         },
         {
           label: 'Sui',
           value: 'Sui',
           id: 'SUI',
-          chains: [suiChains.sui],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            allBlockchains.filter(
+              (chain): chain is SuiBlockchainMeta =>
+                chain.type === TransactionType.SUI
+            ),
         },
       ],
     },

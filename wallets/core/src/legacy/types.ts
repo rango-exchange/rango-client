@@ -1,6 +1,5 @@
 import type { State as WalletState } from './wallet.js';
 import type { Namespace } from '../namespaces/common/mod.js';
-import type { Chain } from '../namespaces/common/types.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export enum Networks {
@@ -95,7 +94,7 @@ export type NamespaceMeta = {
   id: string;
   value: Namespace;
   unsupported?: boolean;
-  chains: Chain[];
+  getSupportedChains: (chains: BlockchainMeta[]) => BlockchainMeta[];
 };
 
 interface NeedsNamespace {
