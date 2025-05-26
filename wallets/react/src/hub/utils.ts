@@ -19,7 +19,7 @@ import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 import {
   type ConnectResult,
   HUB_LAST_CONNECTED_WALLETS,
-  type ProviderProps,
+  type ProviderContext,
 } from '../legacy/mod.js';
 
 import {
@@ -72,19 +72,8 @@ export function mapHubEventsToLegacy(
   hub: Hub,
   event: Event,
   onUpdateState: WalletEventHandler,
-  allProviders: VersionedProviders[],
-  allBlockChains: ProviderProps['allBlockChains']
+  api: ProviderContext
 ): void {
-  let legacyProvider;
-  try {
-    legacyProvider = getLegacyProvider(allProviders, event.provider);
-  } catch (e) {
-    console.warn(
-      'Having legacy provider is required for including some information like supported chain. ',
-      e
-    );
-  }
-
   const provider = hub.get(event.provider);
   if (!provider) {
     throw new Error(
@@ -121,8 +110,7 @@ export function mapHubEventsToLegacy(
   };
 
   const eventInfo = {
-    supportedBlockchains:
-      legacyProvider?.getWalletInfo(allBlockChains || []).supportedChains || [],
+    supportedBlockchains: api.getWalletInfo(provider.id).supportedChains || [],
     isContractWallet: false,
     isHub: true,
     namespace: namespaceId,

@@ -21,8 +21,3 @@ export interface CommonActions {
 export interface AutoImplementedActionsByRecommended {
   disconnect: () => void;
 }
-
-export type Chain = {
-  name: string;
-  logo: string;
-};
