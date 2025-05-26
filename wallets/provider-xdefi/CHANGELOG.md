@@ -1,3 +1,12 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.45.1...provider-xdefi@0.46.0) (2025-05-26)
+
+
+### Features
+
+* use psbt for bitcoin on xdefi/ctrl wallet ([86abfbf](https://github.com/rango-exchange/rango-client/commit/86abfbfe725ce66de5cd344bd7a5c9894271c77e))
+
+
+
 ## [0.45.1](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.45.0...provider-xdefi@0.45.1) (2025-05-04)
 
 
