@@ -22,11 +22,11 @@
     "@types/stringify-object": "^4.0.2"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.45.1",
+    "@rango-dev/provider-all": "^0.46.0",
     "@rango-dev/ui": "^0.46.1",
     "@rango-dev/wallets-react": "^0.30.1",
     "@rango-dev/wallets-shared": "^0.44.1",
-    "@rango-dev/widget-embedded": "^0.42.3",
+    "@rango-dev/widget-embedded": "^0.43.0",
     "rango-sdk": "^0.1.67",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
