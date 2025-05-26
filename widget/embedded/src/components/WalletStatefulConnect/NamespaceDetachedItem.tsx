@@ -67,7 +67,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
     <NamespaceItem
       namespace={namespace}
       connected={namespaceState.connected}
-      error={(error?.cause as Error)?.message || error?.message}
+      error={error?.message}
       address={
         namespaceState.connected
           ? getConciseAddress(

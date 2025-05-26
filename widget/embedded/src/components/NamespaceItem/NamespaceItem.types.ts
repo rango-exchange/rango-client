@@ -5,7 +5,7 @@ export type PropTypes = {
   error?: string;
   suffix?: React.ReactNode;
   connected?: boolean;
-  address?: string;
+  address?: string | null;
   onClick?: () => void;
 };
 

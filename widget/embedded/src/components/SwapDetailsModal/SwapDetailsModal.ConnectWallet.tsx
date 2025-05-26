@@ -39,33 +39,23 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
     (namespaceData) => namespaceData.value === namespace?.namespace
   );
 
-  const walletState = state(currentStepWallet.walletType);
-  const namespaceState =
-    wallet?.isHub && namespace?.namespace
-      ? walletState.namespaces?.get(namespace.namespace)
-      : null;
-  const firstAccountArray = wallet?.isHub
-    ? namespaceState?.accounts?.[0]?.split(':')
-    : walletState?.accounts?.[0]?.split(':');
-  const address = firstAccountArray?.[firstAccountArray?.length - 1];
-
-  const legacyWalletIsConnecting =
-    wallet && !wallet.isHub && walletState.connecting;
-  const legacyWalletIsConnected =
-    wallet && !wallet.isHub && walletState.connected;
-  const hubWalletIsConnecting =
-    wallet && wallet.isHub && namespaceState?.connecting;
-  const hubWalletIsConnected =
-    wallet && wallet.isHub && namespaceState?.connected;
-  const walletOrRequiredNamespaceIsConnected =
-    hubWalletIsConnected || legacyWalletIsConnected;
-
   if (!wallet) {
     return null;
   }
 
+  const walletState = state(currentStepWallet.walletType);
+  const namespaceState =
+    wallet.isHub && namespace?.namespace
+      ? walletState.namespaces?.get(namespace.namespace)
+      : null;
+
+  const connecting = walletState.connecting || namespaceState?.connecting;
+  const connected = wallet.isHub
+    ? namespaceState?.connected
+    : walletState.connected;
+
   const getButtonTitle = () => {
-    if (walletOrRequiredNamespaceIsConnected) {
+    if (connected) {
       return i18n.t('Done');
     }
     if (error) {
@@ -75,20 +65,15 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
   };
 
   const getNamespaceSuffix = () => {
-    if (hubWalletIsConnecting) {
+    if (connecting) {
       return <Spinner color="info" />;
-    } else if (error || hubWalletIsConnected) {
+    } else if (error || connected) {
       return null;
     }
     return <Checkbox checked disabled />;
   };
 
-  const handleClickButton = async () => {
-    if (walletOrRequiredNamespaceIsConnected) {
-      onClose();
-      return;
-    }
-
+  const handleConnect = async () => {
     try {
       setError(null);
       await connect(
@@ -108,6 +93,31 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
     }
   };
 
+  const handleClickButton = async () => {
+    if (connected) {
+      onClose();
+      return;
+    }
+
+    void handleConnect();
+  };
+
+  const getAddress = () => {
+    if (!connected) {
+      return null;
+    }
+    const firstAccountArray = wallet?.isHub
+      ? namespaceState?.accounts?.[0]?.split(':')
+      : walletState?.accounts?.[0]?.split(':');
+    const address = firstAccountArray?.[firstAccountArray?.length - 1];
+
+    if (!address) {
+      return null;
+    }
+
+    return getConciseAddress(address);
+  };
+
   return (
     <>
       <MessageBox
@@ -125,7 +135,7 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
           </WalletIcon>
         }
       />
-      {legacyWalletIsConnected && !namespaceData && (
+      {connected && !namespaceData && (
         <>
           <Divider size={10} />
           <Alert
@@ -134,10 +144,10 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
           />
         </>
       )}
-      {!wallet.isHub && error && !namespaceData && (
+      {error && !namespaceData && (
         <>
           <Divider size={10} />
-          <Alert type="error" title={error.message} />
+          <Alert type="error" title={error?.message} />
         </>
       )}
       {namespaceData && (
@@ -146,19 +156,15 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
           <NamespaceItem
             namespace={namespaceData}
             suffix={getNamespaceSuffix()}
-            error={(error?.cause as Error)?.message || error?.message}
-            connected={walletOrRequiredNamespaceIsConnected}
-            address={
-              walletOrRequiredNamespaceIsConnected && address
-                ? getConciseAddress(address)
-                : ''
-            }
+            error={error?.message}
+            connected={connected}
+            address={getAddress()}
           />
         </>
       )}
       <Divider size="40" />
       <Button
-        loading={legacyWalletIsConnecting}
+        loading={connecting}
         type="primary"
         id="widget-connect-wallet-btn"
         onClick={handleClickButton}
