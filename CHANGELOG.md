@@ -1,5 +1,12 @@
-## Widget [0.35.0] (2025-05-21)
 
+## Widget [0.36.0] (2025-05-26)
+_includes `@rango-dev/widget-embedded@0.43.0`_
+
+### Features
+
+- Use psbt for bitcoin on xdefi/ctrl wallet ([86abfbf](https://github.com/rango-exchange/rango-client/commit/86abfbfe725ce66de5cd344bd7a5c9894271c77e))
+
+## Widget [0.35.0] (2025-05-21)
 _includes `@rango-dev/widget-embedded@0.42.3`_
 
 ### Bug Fixes
