@@ -36,11 +36,11 @@ function useProviders(props: ProviderProps) {
   });
 
   const api: ProviderContext = {
-    canSwitchNetworkTo(type, network): boolean {
+    canSwitchNetworkTo(type, network, namespace): boolean {
       if (findProviderByType(hubProviders, type)) {
-        return hubApi.canSwitchNetworkTo(type, network);
+        return hubApi.canSwitchNetworkTo(type, network, namespace);
       }
-      return legacyApi.canSwitchNetworkTo(type, network);
+      return legacyApi.canSwitchNetworkTo(type, network, namespace);
     },
     async connect(type, namespaces): Promise<ConnectResult[]> {
       const hubProvider = findProviderByType(hubProviders, type);

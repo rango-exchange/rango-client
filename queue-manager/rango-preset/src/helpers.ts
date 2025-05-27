@@ -893,7 +893,7 @@ export function onBlockForChangeNetwork(
   // Try to auto switch
   const { type, namespace } = getRequiredWallet(swap);
   if (!!type && !!namespace?.network) {
-    if (context.canSwitchNetworkTo(type, namespace.network)) {
+    if (context.canSwitchNetworkTo(type, namespace.network, namespace)) {
       const result = context.switchNetwork(type, namespace);
       if (result) {
         result
@@ -1400,7 +1400,11 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
 export function retryOn(
   lastConnectedWallet: LastConnectedWallet,
   manager?: Manager,
-  canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
+  canSwitchNetworkTo?: (
+    type: WalletType,
+    network: Network,
+    namespace: TargetNamespace
+  ) => boolean,
   options = { fallbackToOnlyWallet: true }
 ): void {
   const { walletType: wallet, network } = lastConnectedWallet;
@@ -1456,10 +1460,25 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!network || !canSwitchNetworkTo?.(wallet, network)) {
-    finalQueueToBeRun?.unblock();
-  } else {
-    finalQueueToBeRun?.checkBlock();
+  if (finalQueueToBeRun) {
+    const finalQueueStorage = finalQueueToBeRun.getStorage() as SwapStorage;
+    const currentSwap = getCurrentStep(finalQueueStorage?.swapDetails);
+    if (!currentSwap) {
+      return;
+    }
+    const currentNamespace = getCurrentNamespaceOfOrNull(
+      finalQueueStorage.swapDetails,
+      currentSwap
+    );
+    if (
+      network &&
+      currentNamespace &&
+      !canSwitchNetworkTo?.(wallet, network, currentNamespace)
+    ) {
+      finalQueueToBeRun?.unblock();
+    } else {
+      finalQueueToBeRun?.checkBlock();
+    }
   }
 }
 
