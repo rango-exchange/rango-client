@@ -62,7 +62,7 @@ export const UnsupportedNamespaceItemInnerContent = styled('div', {
 
 export const NamespaceItemInfo = styled('div', {
   display: 'flex',
-  gap: '6px',
+  gap: '$6',
   alignItems: 'center',
 });
 
@@ -72,7 +72,7 @@ export const NamespaceItemError = styled('div', {
 
 export const NamespaceItemErrorDropdownToggle = styled('div', {
   display: 'flex',
-  gap: '2px',
+  gap: '$2',
   cursor: 'pointer',
   alignItems: 'center',
   width: 'fit-content',

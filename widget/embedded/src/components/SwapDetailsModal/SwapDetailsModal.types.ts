@@ -1,4 +1,5 @@
 import type { TargetNamespace } from '@rango-dev/queue-manager-rango-preset';
+import type { LegacyWalletType } from '@rango-dev/wallets-core/legacy';
 import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =
@@ -49,12 +50,12 @@ export interface NetworkStateContentProps {
 }
 
 export interface InstallWalletContentProps {
-  walletType: string;
+  walletType: LegacyWalletType;
 }
 
 export interface ConnectWalletContentProps {
   wallet: {
-    walletType: string;
+    walletType: LegacyWalletType;
     address: string;
     derivationPath?: string;
   };

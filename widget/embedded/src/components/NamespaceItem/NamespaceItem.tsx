@@ -46,12 +46,9 @@ export function NamespaceItem(props: PropTypes) {
           size={40}
         />
         <NamespaceItemInnerContent
-          css={{
-            justifyContent:
-              isSupportedChainsDisplayed || connected || error
-                ? 'space-between'
-                : 'center',
-          }}>
+          showSupportedChains={
+            isSupportedChainsDisplayed || connected || !!error
+          }>
           <NamespaceItemInfo>
             <Typography variant="label" size="large">
               {namespace.label}
