@@ -37,6 +37,7 @@ export function SelectStrategy(props: { container: HTMLElement }) {
   return (
     <SelectContainer>
       <Select
+        id={'widget-quotes-strategy-select'}
         container={props.container}
         options={ROUTE_STRATEGY}
         value={sortStrategy}

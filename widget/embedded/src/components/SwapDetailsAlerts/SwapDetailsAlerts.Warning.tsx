@@ -11,6 +11,7 @@ export function WarningAlert(props: WaningAlertsProps) {
     return (
       <Alert
         type="warning"
+        id="widget-swap-details-change-network-alert"
         title={message.shortMessage}
         action={
           <Button
@@ -36,6 +37,7 @@ export function WarningAlert(props: WaningAlertsProps) {
       <Alert
         type="warning"
         title={message.shortMessage}
+        id="widget-swap-details-warning-alert-connect-wallet-alert"
         action={
           <Button
             id="widget-swap-details-warning-alert-connect-wallet-btn"
@@ -53,5 +55,11 @@ export function WarningAlert(props: WaningAlertsProps) {
     );
   }
 
-  return <Alert type="warning" title={message.shortMessage} />;
+  return (
+    <Alert
+      id="widget-swap-details-short-alert"
+      type="warning"
+      title={message.shortMessage}
+    />
+  );
 }

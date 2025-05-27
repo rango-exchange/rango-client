@@ -54,6 +54,7 @@ export function FullExpandedQuote(props: PropTypes) {
     tooltipContainer,
     onClick,
     selected = false,
+    id,
   } = props;
   const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
 
@@ -64,6 +65,7 @@ export function FullExpandedQuote(props: PropTypes) {
 
   return (
     <RouteContainer
+      id={id}
       selected={selected}
       onClick={onClick}
       hovered={hoveredItemIndex !== null}>

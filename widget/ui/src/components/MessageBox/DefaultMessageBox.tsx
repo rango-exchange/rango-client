@@ -10,10 +10,10 @@ import { Container, Description, IconHighlight } from './MessageBox.styles.js';
 import StatusIcon from './StatusIcon.js';
 
 export function MessageBox(props: PropsWithChildren<PropTypes>) {
-  const { type, title, description, children, icon } = props;
+  const { type, title, description, children, icon, id } = props;
 
   return (
-    <Container>
+    <Container id={id}>
       <IconHighlight type={type}>
         {icon || <StatusIcon type={type} />}
       </IconHighlight>

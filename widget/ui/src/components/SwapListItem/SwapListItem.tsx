@@ -42,9 +42,10 @@ export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
     swapTokenData,
     tooltipContainer,
     currentStep,
+    className,
   } = props;
   return (
-    <Main onClick={onClick.bind(null, requestId)}>
+    <Main onClick={onClick.bind(null, requestId)} className={className}>
       <Container>
         <Header>
           <Date>

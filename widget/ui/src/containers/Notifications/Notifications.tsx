@@ -34,7 +34,11 @@ export function Notifications(props: PropTypes) {
             <Typography variant="label" size="medium">
               {i18n.t('Notifications')}
             </Typography>
-            <ClearAllButton variant="ghost" size="xsmall" onClick={onClearAll}>
+            <ClearAllButton
+              id={'widget-notifications-clear-all-btn'}
+              variant="ghost"
+              size="xsmall"
+              onClick={onClearAll}>
               <Typography variant="body" size="xsmall" color="neutral700">
                 {i18n.t('Clear all')}
               </Typography>
@@ -61,6 +65,7 @@ export function Notifications(props: PropTypes) {
               <React.Fragment key={requestId}>
                 {index > 0 && <Divider size={4} />}
                 <ListItem
+                  className="widget-notifications-list-item"
                   onClick={() => onClickItem(requestId)}
                   actionRequired={event.messageSeverity === 'warning'}
                   title={

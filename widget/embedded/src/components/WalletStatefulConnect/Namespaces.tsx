@@ -117,6 +117,7 @@ export function Namespaces(props: PropTypes) {
         <>
           <Divider size={20} />
           <Alert
+            id="widget-wallet-stateful-connect-alert"
             variant="alarm"
             type="info"
             title={i18n.t(

@@ -42,6 +42,7 @@ export function SettingsPage() {
           <Alert
             type="info"
             variant="alarm"
+            id="widget-settings-campaign-mode-alert"
             title={i18n.t(
               "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
             )}

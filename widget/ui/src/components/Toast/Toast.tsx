@@ -92,9 +92,12 @@ export const Toast = (props: ToastPropTypes) => {
               type={type}
               variant="alarm"
               titleAlign="left"
+              id={id.toString()}
               action={
                 hasCloseIcon ? (
+                  // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
                   <IconButton
+                    className="toast-close-icon-btn"
                     variant="ghost"
                     size="xsmall"
                     onClick={handleClose}>

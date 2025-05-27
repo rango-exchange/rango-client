@@ -12,6 +12,7 @@ export type SelectPropTypes<T> = {
   handleItemClick?: (item: Item<T>) => void;
   value: string;
   container?: HTMLElement;
+  id: string;
   variant: Variant;
   styles?: {
     trigger?: Stitches.CSS;

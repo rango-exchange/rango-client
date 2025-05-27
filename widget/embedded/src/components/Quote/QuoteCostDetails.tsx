@@ -98,6 +98,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
       />
 
       <WatermarkedModal
+        id="widget-quote-cost-explanation-modal"
         container={container}
         open={open}
         anchor={fullExpandedMode ? 'center' : 'bottom'}

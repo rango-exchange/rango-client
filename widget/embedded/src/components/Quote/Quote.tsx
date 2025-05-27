@@ -226,6 +226,7 @@ export function Quote(props: QuoteProps) {
                 variant="alarm"
                 type={stepHasError ? 'error' : 'warning'}
                 title={alertTitle}
+                id="widget-quote-footer-step-alarm-alert"
                 footer={
                   <FooterAlert>
                     {hasBridgeLimitError && (
@@ -336,6 +337,7 @@ export function Quote(props: QuoteProps) {
       tooltipContainer={getExpanded()}
       steps={steps}
       tags={sortedQuoteTags}
+      id="widget-quote-full-expanded-quote-container"
       quoteCost={
         <QuoteCostDetails
           quote={quote}
@@ -359,6 +361,7 @@ export function Quote(props: QuoteProps) {
     />
   ) : (
     <SummaryContainer
+      id="widget-quote-summary-container"
       selected={selected}
       listItem={type === 'list-item'}
       basic={type === 'basic'}>
@@ -397,6 +400,7 @@ export function Quote(props: QuoteProps) {
                 e.stopPropagation();
                 onClickAllRoutes();
               }}
+              id="widget-quote-all-routes-btn"
               size="xxsmall"
               type="secondary"
               variant="default"
@@ -447,6 +451,7 @@ export function Quote(props: QuoteProps) {
         )}
         {type === 'list-item' && (
           <TokenAmount
+            id="widget-quote-token-amount-container"
             tooltipContainer={container}
             type="output"
             direction="vertical"
@@ -500,6 +505,7 @@ export function Quote(props: QuoteProps) {
               return (
                 <StepDetails
                   type="quote-details"
+                  className="widget-quote-step-details-container"
                   key={key}
                   tooltipContainer={container}
                   step={step}

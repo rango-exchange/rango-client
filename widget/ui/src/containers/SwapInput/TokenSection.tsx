@@ -41,7 +41,11 @@ export function TokenSection(props: TokenSectionProps) {
   const tokenSelected = !error && !loading && !!tokenSymbol;
 
   return (
-    <Container variant="default" disabled={error || loading} onClick={onClick}>
+    <Container
+      id="widget-token-section-container-btn"
+      variant="default"
+      disabled={error || loading}
+      onClick={onClick}>
       <TokenSectionContainer>
         <ChainToken
           chianImageId={chianImageId}

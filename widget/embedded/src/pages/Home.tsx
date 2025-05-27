@@ -217,6 +217,7 @@ export function Home() {
               quote={selectedQuote}
               loading={fetchingQuote}
               error={quoteError}
+              id="widget-home-expandable-quote-container"
               tagHidden={false}
               warning={currentQuoteWarning}
               type="basic"

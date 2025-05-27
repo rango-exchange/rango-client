@@ -23,6 +23,7 @@ export function QuoteInfo(props: PropTypes) {
     onClick,
     showModalFee,
     selected,
+    id,
     onClickAllRoutes,
     fullExpandedMode = false,
     container,
@@ -50,7 +51,7 @@ export function QuoteInfo(props: PropTypes) {
   }
 
   return showQuote ? (
-    <QuoteContainer onClick={() => onClick?.(quote)}>
+    <QuoteContainer onClick={() => onClick?.(quote)} id={id}>
       <Quote
         quote={quote}
         error={error}
