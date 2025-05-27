@@ -32,7 +32,7 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       CHROME: info.extensions.chrome,
       DEFAULT: info.extensions.homepage || '',
     },
-    color: '#4d40c6',
+    color: '#e9983d',
     // if you are adding a new namespace, don't forget to also update `properties`
     needsNamespace: {
       selection: 'multiple',

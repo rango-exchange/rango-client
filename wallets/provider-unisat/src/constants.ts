@@ -4,7 +4,7 @@ export const WALLET_ID = 'unisat';
 
 export const info: ProviderInfo = {
   name: 'UniSat',
-  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',
+  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/unisat/icon.svg',
   extensions: {
     chrome:
       'https://chromewebstore.google.com/detail/unisat-wallet/ppbibelpcjmhbdihakflkdcoccbgbkpo',
