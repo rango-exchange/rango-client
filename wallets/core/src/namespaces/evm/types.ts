@@ -5,7 +5,6 @@ import type {
   AutoImplementedActionsByRecommended,
   CommonActions,
 } from '../common/types.js';
-import type { BlockchainMeta } from 'rango-types';
 
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
@@ -15,7 +14,6 @@ export interface EvmActions
   canSwitchNetwork: (params: CanSwitchNetworkParams) => boolean;
 }
 type CanSwitchNetworkParams = {
-  meta: BlockchainMeta[];
   network: string;
   provider?: Provider;
 };
