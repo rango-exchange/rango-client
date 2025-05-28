@@ -35,7 +35,6 @@ declare global {
     enkrypt?: any;
     tally?: any;
     bitkeep?: any;
-    mytonwallet?: any;
     offlineSigner?: any;
     tomo_evm?: any;
     solflare?: any;

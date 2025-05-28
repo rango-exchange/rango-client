@@ -39,7 +39,6 @@
     "@rango-dev/provider-ledger": "^0.15.2-next.8",
     "@rango-dev/provider-math-wallet": "^0.45.2-next.8",
     "@rango-dev/provider-metamask": "^0.44.2-next.8",
-    "@rango-dev/provider-mytonwallet": "^0.29.2-next.8",
     "@rango-dev/provider-okx": "^0.45.2-next.8",
     "@rango-dev/provider-phantom": "^0.45.2-next.8",
     "@rango-dev/provider-rabby": "^0.11.2-next.8",
