@@ -6,8 +6,14 @@ import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 
 export function WarningAlert(props: WaningAlertsProps) {
-  const { switchNetwork, setNetworkModal, message, showNetworkModal } = props;
-  if (!!switchNetwork) {
+  const {
+    switchNetworkIsAvailable,
+    handleSwitchNetworkClick,
+    setNetworkModal,
+    message,
+    showNetworkModal,
+  } = props;
+  if (!!switchNetworkIsAvailable) {
     return (
       <Alert
         type="warning"
@@ -18,10 +24,8 @@ export function WarningAlert(props: WaningAlertsProps) {
             size="xxsmall"
             type="warning"
             onClick={() => {
-              setNetworkModal(PendingSwapNetworkStatus.WaitingForNetworkChange);
-              switchNetwork().catch((e) => {
-                console.log(e);
-              });
+              setNetworkModal('switchNetwork');
+              handleSwitchNetworkClick();
             }}>
             {i18n.t('Change')}
           </Button>
@@ -42,9 +46,7 @@ export function WarningAlert(props: WaningAlertsProps) {
             size="xxsmall"
             type="warning"
             onClick={() => {
-              setNetworkModal(
-                PendingSwapNetworkStatus.WaitingForConnectingWallet
-              );
+              setNetworkModal('connectWallet');
             }}>
             {i18n.t('Connect')}
           </Button>
