@@ -28,7 +28,7 @@ export function guessProviderStateSelector(
   );
 
   // Returning provider state value directly.
-  const installed = state.providers.list[providerId].data.installed;
+  const installed = !!state.providers.list[providerId]?.data.installed;
 
   /*
    * If any namespaces returns `true`, we consider the whole provider for this field to be `true`.
