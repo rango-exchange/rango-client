@@ -73,6 +73,7 @@ type ProviderState = {
 };
 interface ProviderActions {
   addProvider: (id: string, config: ProviderConfig) => void;
+  removeProvider: (id: string) => void;
   updateStatus: <K extends keyof ProviderData>(
     id: string,
     key: K,
@@ -114,6 +115,13 @@ const providersStore: ProvidersStateCreator = (set, get) => ({
     set(
       produce((state: State) => {
         state.providers.list[id] = item;
+      })
+    );
+  },
+  removeProvider: (id) => {
+    set(
+      produce((state: State) => {
+        delete state.providers.list[id];
       })
     );
   },

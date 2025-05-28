@@ -319,18 +319,35 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function checkProviderListsEquality(
-  providerList1: Provider[],
-  providerList2: Provider[]
+/**
+ * Synchronizes providers in the hub with the configuration providers.
+ * - Registers and initializes any configuration providers not yet in the hub
+ * - Removes providers from the hub that aren't in the configuration
+ */
+export function synchronizeHubWithConfigProviders(
+  hub: Hub,
+  configurationProviders: Provider[]
 ) {
-  const providerIds1 = providerList1
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
-  const providerIds2 = providerList2
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
+  const registeredProviders = hub.getAll();
 
-  return providerIds1 === providerIds2;
+  // Register and initialize providers that exist in config but not in hub
+  const providersToRegister = configurationProviders.filter(
+    (configProvider) => !registeredProviders.get(configProvider.id)
+  );
+
+  providersToRegister.forEach((providerToRegister) => {
+    hub.add(providerToRegister.id, providerToRegister);
+    providerToRegister.init();
+  });
+
+  // Remove providers that exist in hub but not in config
+  registeredProviders.forEach((registeredProvider) => {
+    const isProviderInConfig = configurationProviders.some(
+      (configProvider) => configProvider.id === registeredProvider.id
+    );
+
+    if (!isProviderInConfig) {
+      hub.remove(registeredProvider.id);
+    }
+  });
 }
