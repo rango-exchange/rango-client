@@ -68,7 +68,6 @@ export enum WalletTypes {
   STATION = 'station',
   ENKRYPT = 'enkrypt',
   TAHO = 'taho',
-  SOLFLARE_SNAP = 'solflare-snap',
   LEDGER = 'ledger',
   Rabby = 'rabby',
   TOMO = 'tomo',

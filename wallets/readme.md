@@ -171,7 +171,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Safe          | EVM                                                          | -                                                 | &check;              | https://safe.global/                 |
 | SafePal       | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                       | BTC,Tron,LTC,Doge,Aptos,TON                       | &cross;              | https://www.safepal.com/             |
 | Solflare      | Solana                                                       | -                                                 | &cross;              | https://solflare.com                 |
-| Solflare Snap | Solana                                                       | -                                                 | &cross;              | https://solflare.com/metamask        |
 | Station       | Terra Classic, Terra                                         | -                                                 | &cross;              | https://station.terra.money/         |
 | Taho          | ETH,Polygon,Arbitrum,Arbitrum,Avax,Binance,Fantom            | Fantom                                            | &cross;              | https://taho.xyz/                    |
 | TokenPocket   | EVM                                                          | -                                                 | &check;              | https://extension.tokenpocket.pro/#/ |

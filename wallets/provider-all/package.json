@@ -45,7 +45,6 @@
     "@rango-dev/provider-safe": "^0.37.2-next.8",
     "@rango-dev/provider-safepal": "^0.45.2-next.8",
     "@rango-dev/provider-solflare": "^0.11.2-next.8",
-    "@rango-dev/provider-solflare-snap": "^0.16.2-next.8",
     "@rango-dev/provider-taho": "^0.44.2-next.8",
     "@rango-dev/provider-tokenpocket": "^0.44.2-next.8",
     "@rango-dev/provider-tomo": "^0.11.2-next.8",
