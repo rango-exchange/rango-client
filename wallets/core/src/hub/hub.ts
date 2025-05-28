@@ -80,6 +80,18 @@ export class Hub {
     this.#providers.set(id, provider);
     return this;
   }
+  remove(id: string) {
+    const providerToRemove = this.#providers.get(id);
+
+    if (!providerToRemove) {
+      throw new Error(`Provider not found: No provider exists with ID "${id}"`);
+    }
+
+    this.#options.store?.getState().providers.removeProvider(id);
+    this.#providers.delete(id);
+
+    return this;
+  }
 
   get(providerId: string): Provider | undefined {
     return this.#providers.get(providerId);
@@ -96,6 +108,7 @@ export class Hub {
     output.forEach((result) => {
       const namespaces: NamespaceState[] = [];
       result.namespaces.forEach((b) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const [getNamespaceState] = b as ReturnType<Namespace<any>['state']>;
 
         namespaces.push(getNamespaceState());
