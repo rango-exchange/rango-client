@@ -21,6 +21,7 @@ import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   getLegacyProvider,
+  getSupportedChainsFromProvider,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -92,7 +93,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              api
+              dataRef.current.allBlockChains
             );
           } catch (e) {
             console.error(e);
@@ -322,18 +323,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         (property) => property.name === 'details'
       );
 
-      const supportedChains =
-        namespacesProperty?.value.data.flatMap((namespace) =>
-          namespace.getSupportedChains(params.allBlockChains || [])
-        ) || [];
-
       return {
         name: info.name,
         img: info.icon,
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains,
+        supportedChains: getSupportedChainsFromProvider(
+          wallet,
+          dataRef.current.allBlockChains
+        ),
         isContractWallet: detailsProperty?.value?.isContractWallet,
         mobileWallet: detailsProperty?.value?.mobileWallet,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.

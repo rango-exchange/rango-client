@@ -19,7 +19,7 @@ import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 import {
   type ConnectResult,
   HUB_LAST_CONNECTED_WALLETS,
-  type ProviderContext,
+  type ProviderProps,
 } from '../legacy/mod.js';
 
 import {
@@ -68,11 +68,27 @@ const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
   HUB_LAST_CONNECTED_WALLETS
 );
 
+export function getSupportedChainsFromProvider(
+  provider: Provider,
+  allBlockChains: ProviderProps['allBlockChains']
+) {
+  const namespacesProperty = provider
+    .info()
+    ?.properties?.find((property) => property.name === 'namespaces');
+
+  const supportedChains =
+    namespacesProperty?.value.data.flatMap((namespace) =>
+      namespace.getSupportedChains(allBlockChains || [])
+    ) || [];
+
+  return supportedChains;
+}
+
 export function mapHubEventsToLegacy(
   hub: Hub,
   event: Event,
   onUpdateState: WalletEventHandler,
-  api: ProviderContext
+  allBlockChains: ProviderProps['allBlockChains']
 ): void {
   const provider = hub.get(event.provider);
   if (!provider) {
@@ -110,7 +126,10 @@ export function mapHubEventsToLegacy(
   };
 
   const eventInfo = {
-    supportedBlockchains: api.getWalletInfo(provider.id).supportedChains || [],
+    supportedBlockchains: getSupportedChainsFromProvider(
+      provider,
+      allBlockChains
+    ),
     isContractWallet: false,
     isHub: true,
     namespace: namespaceId,
