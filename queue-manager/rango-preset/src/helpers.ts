@@ -15,6 +15,7 @@ import type {
   Manager,
   QueueInfo,
   QueueName,
+  QueueStorage,
   QueueType,
 } from '@rango-dev/queue-manager-core';
 import type {
@@ -532,7 +533,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromNamespace.network}`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromNamespace.network}.`;
+  const reasonDetail = `We’re switching the connected network to ${fromNamespace.network}. Please check your ${type} wallet.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -763,7 +764,10 @@ export function resetNetworkStatus(
 }
 
 export function updateNetworkStatus(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  actions: Pick<
+    ExecuterActions<QueueStorage, SwapActionTypes, SwapQueueContext>,
+    'getStorage' | 'setStorage'
+  >,
   data: {
     message: string;
     details: string;
@@ -901,8 +905,18 @@ export function onBlockForChangeNetwork(
             queue.unblock();
           })
           .catch((error) => {
-            // ignore switch network errors
-            console.log({ error });
+            // Update network to mark it as network changed successfully.
+            updateNetworkStatus(
+              {
+                getStorage: queue.getStorage.bind(queue),
+                setStorage: queue.setStorage.bind(queue),
+              },
+              {
+                message: error.message,
+                details: error.message,
+                status: PendingSwapNetworkStatus.NetworkChangeFailed,
+              }
+            );
           });
       }
     }
