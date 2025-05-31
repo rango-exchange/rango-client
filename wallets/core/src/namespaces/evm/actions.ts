@@ -5,6 +5,7 @@ import type {
   CanEagerConnect,
   SubscriberCleanUp,
 } from '../../hub/namespaces/types.js';
+import type { Network } from '../../legacy/types.js';
 import type { CaipAccount } from '../../types/accounts.js';
 import type { FunctionWithContext } from '../../types/actions.js';
 
@@ -171,5 +172,13 @@ export function canEagerConnect(
     } catch {
       return false;
     }
+  };
+}
+export function canSwitchNetwork(
+  evmSupportedChains: Network[]
+): FunctionWithContext<EvmActions['canSwitchNetwork'], Context> {
+  return (context, params) => {
+    const { network } = params;
+    return evmSupportedChains.includes(network);
   };
 }

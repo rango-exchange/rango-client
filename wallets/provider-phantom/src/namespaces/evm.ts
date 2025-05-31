@@ -7,7 +7,7 @@ import {
 } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { WALLET_ID } from '../constants.js';
+import { EVM_SUPPORTED_CHAINS, WALLET_ID } from '../constants.js';
 import { evmPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -36,11 +36,15 @@ const canEagerConnect = builders
   .canEagerConnect()
   .action(actions.canEagerConnect(evmPhantom))
   .build();
-
+const canSwitchNetwork = builders
+  .canSwitchNetwork()
+  .action(actions.canSwitchNetwork(EVM_SUPPORTED_CHAINS))
+  .build();
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
+  .action(canSwitchNetwork)
   .build();
 
 export { evm };

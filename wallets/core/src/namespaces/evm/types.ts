@@ -1,4 +1,5 @@
 import type { AddEthereumChainParameter } from './eip1193.js';
+import type { Provider } from '../../mod.js';
 import type { AccountsWithActiveChain } from '../../types/accounts.js';
 import type {
   AutoImplementedActionsByRecommended,
@@ -10,7 +11,12 @@ export interface EvmActions
     CommonActions {
   connect: (chain?: Chain | ChainId) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
+  canSwitchNetwork: (params: CanSwitchNetworkParams) => boolean;
 }
+type CanSwitchNetworkParams = {
+  network: string;
+  provider?: Provider;
+};
 
 export type { EIP1193Provider as ProviderAPI } from './eip1193.js';
 
