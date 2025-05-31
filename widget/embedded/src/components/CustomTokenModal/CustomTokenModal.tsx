@@ -23,6 +23,7 @@ export function CustomTokenModal(props: PropTypes) {
   return (
     <WatermarkedModal
       open={open}
+      id="widget-custom-token-watermarked-modal"
       dismissible
       onClose={onClose}
       onExit={onExit}

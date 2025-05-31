@@ -24,12 +24,14 @@ export function Alert(props: PropsWithChildren<AlertPropTypes>) {
     containerStyles,
     variant = 'regular',
     titleAlign,
+    id,
   } = props;
   const isFooterString = typeof footer === 'string';
 
   return (
     <Container
       className="_alert"
+      id={id}
       css={containerStyles}
       type={type}
       variant={variant}>

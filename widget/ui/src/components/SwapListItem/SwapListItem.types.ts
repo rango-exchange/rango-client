@@ -9,6 +9,7 @@ export interface SwapListItemProps {
   onClick: (requestId: string) => void;
   swapTokenData: SwapTokenData;
   onlyShowTime?: boolean;
+  className: string;
   tooltipContainer?: HTMLElement;
   currentStep: PendingSwapStep | null;
 }

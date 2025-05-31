@@ -19,6 +19,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
     image,
     onClick,
     selected,
+    id,
     description,
     descriptionColor,
     disabled = false,
@@ -27,6 +28,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
   return (
     <SelectableWalletButton
       selected={selected}
+      id={id}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
         if (props.state === WalletState.NOT_INSTALLED) {

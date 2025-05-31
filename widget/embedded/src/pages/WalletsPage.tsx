@@ -112,6 +112,7 @@ export function WalletsPage() {
             );
           })}
           <StatefulConnectModal
+            id="widget-wallets-page-modal"
             wallet={selectedWalletToConnect}
             onClose={() => {
               setSelectedWalletToConnect(undefined);

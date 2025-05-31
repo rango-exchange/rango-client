@@ -112,6 +112,7 @@ export function HistoryGroupedList(props: PropTypes) {
         return (
           <SwapItemContainer key={swap.requestId}>
             <SwapListItem
+              className="widget-history-group-list-swap-item-btn"
               requestId={swap.requestId}
               creationTime={swap.creationTime}
               status={swap.status}

@@ -314,7 +314,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Button>
         )
       }>
-      <Container compact ref={containerRef}>
+      <Container compact ref={containerRef} id="widget-swap-details-container">
         <RequestIdContainer className={rowStyles()}>
           <Typography variant="label" size="large" color="neutral700">
             {`${i18n.t('Request ID')}`}
@@ -443,6 +443,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               (state === 'completed' && index === steps.length - 1);
             return (
               <StepDetails
+                className={'widget-swap-details-step-item-container'}
                 key={key}
                 step={step}
                 type="swap-progress"

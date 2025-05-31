@@ -39,5 +39,6 @@ export type StepDetailsProps = {
   state?: 'default' | 'in-progress' | 'completed' | 'warning' | 'error';
   isFocused?: boolean;
   tabIndex?: number;
+  className: string;
   tooltipContainer?: HTMLElement;
 };

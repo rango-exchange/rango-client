@@ -57,7 +57,7 @@ export function BlockchainsSection(props: PropTypes) {
         </>
       )}
       <Divider size={12} />
-      <Blockchains>
+      <Blockchains id="widget-blockchains-section-container">
         {fetchStatus === 'loading' &&
           Array.from(
             Array(
@@ -70,6 +70,7 @@ export function BlockchainsSection(props: PropTypes) {
         {fetchStatus === 'success' && (
           <>
             <BlockchainsChip
+              className="widget-blockchains-section-all-btn"
               selected={!blockchain}
               onClick={() => {
                 if (type === 'from') {
@@ -90,6 +91,7 @@ export function BlockchainsSection(props: PropTypes) {
                 sideOffset={2}
                 container={getContainer()}>
                 <BlockchainsChip
+                  className="widget-blockchains-section-item-btn"
                   key={item.name}
                   selected={!!blockchain && blockchain.name === item.name}
                   onClick={() => onChange(item)}>
@@ -100,6 +102,7 @@ export function BlockchainsSection(props: PropTypes) {
 
             {onlyOneItemInList ? (
               <BlockchainsChip
+                className="widget-blockchains-section-only-item-btn"
                 key={blockchainsList.more[0].name}
                 selected={
                   !!blockchain &&
@@ -111,7 +114,10 @@ export function BlockchainsSection(props: PropTypes) {
             ) : null}
 
             {showMoreButton ? (
-              <BlockchainsChip onClick={onMoreClick} key="more-blockchains">
+              <BlockchainsChip
+                onClick={onMoreClick}
+                key="more-blockchains"
+                className="widget-blockchains-section-more-items-btn">
                 <Typography variant="body" size="xsmall" color="secondary500">
                   {i18n._('More +{count}', {
                     count: blockchainsList.more.length,

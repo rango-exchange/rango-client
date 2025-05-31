@@ -44,6 +44,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     <WatermarkedModal
       open={open}
       onClose={onClose}
+      id="widget-swap-details-complete-modal"
       container={
         document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
       }>
@@ -52,6 +53,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           <TokenAmount
             direction="vertical"
             tooltipContainer={getContainer()}
+            id="widget-swap-details-complete-modal-success-token-amount-container"
             type="output"
             centerAlign={true}
             price={{

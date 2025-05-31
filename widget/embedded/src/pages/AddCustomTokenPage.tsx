@@ -93,6 +93,7 @@ export function AddCustomTokenPage() {
             <Divider size={10} />
             <TextField
               fullWidth
+              id="widget-add-custom-token-token-address-input"
               disabled={!blockchain}
               variant="contained"
               placeholder={i18n.t('Enter token address')}
@@ -107,7 +108,12 @@ export function AddCustomTokenPage() {
             {!isValidAddress && !!address && (
               <>
                 <Divider size={4} />
-                <Alert type="error" variant="alarm" title="Invalid Address" />
+                <Alert
+                  id="widget-add-custom-token-invalid-address-alert"
+                  type="error"
+                  variant="alarm"
+                  title="Invalid Address"
+                />
               </>
             )}
           </div>

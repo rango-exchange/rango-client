@@ -9,6 +9,7 @@ type Notification = {
 
 export type PropTypes = {
   list: Notification[];
+  id: string;
   getBlockchainImage: (blockchain: string) => string | undefined;
   getTokenImage: (token: Asset) => string | undefined;
   onClickItem: (requestId: string) => void;

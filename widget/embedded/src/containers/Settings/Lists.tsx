@@ -73,6 +73,7 @@ const themesList = [
 const getThemeIcon = (theme: ThemeMode) => {
   const iconProps: SvgIconProps = { color: 'gray', size: 16 };
 
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (theme) {
     case 'auto':
       return <AutoThemeIcon {...iconProps} />;
@@ -131,6 +132,7 @@ export function SettingsLists() {
   ).length;
 
   const handleSwapperEndItem = (totalSelected: number, total: number) => {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (fetchStatus) {
       case 'loading':
         return <Skeleton variant="text" size="medium" width={50} />;
@@ -230,7 +232,7 @@ export function SettingsLists() {
   const infiniteApprovalItem = {
     id: 'widget-setting-infinite-approval-item-btn',
     title: (
-      <>
+      <React.Fragment>
         <Typography variant="title" size="xmedium">
           {i18n.t('Infinite approval')}
         </Typography>
@@ -251,7 +253,7 @@ export function SettingsLists() {
           }>
           <InfoIcon color="gray" />
         </Tooltip>
-      </>
+      </React.Fragment>
     ),
     start: <InfinityIcon color="gray" size={16} />,
     end: <Switch checked={infiniteApprove} />,
@@ -272,6 +274,7 @@ export function SettingsLists() {
           container={getContainer()}
           items={themesList}
           value={theme}
+          className="widget-setting-theme-item-tabs-container"
           onChange={(item) => setTheme(item.id as ThemeMode)}
           type="primary"
           borderRadius="small"
@@ -298,7 +301,14 @@ export function SettingsLists() {
 
   return (
     <List
-      type={<ListItemButton hasDivider id="_" onClick={() => console.log()} />}
+      type={
+        <ListItemButton
+          className="widget-settings-list-item-btn"
+          hasDivider
+          id="_"
+          onClick={() => console.log()}
+        />
+      }
       items={settingItems}
     />
   );

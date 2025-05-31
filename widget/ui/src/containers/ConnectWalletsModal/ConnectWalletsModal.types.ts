@@ -5,6 +5,7 @@ export interface ConnectWalletsModalPropTypes {
   open: boolean;
   list: WalletInfo[];
   onSelect: (walletType: WalletType) => void;
+  id: string;
   onClose: () => void;
   error?: string;
 }

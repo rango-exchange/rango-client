@@ -199,7 +199,14 @@ export function ConfirmSwapPage() {
   const quoteError = confirmSwapResult.error;
   const alerts = [];
   if (dbErrorMessage) {
-    alerts.push(<Alert type="error" variant="alarm" title={dbErrorMessage} />);
+    alerts.push(
+      <Alert
+        id="widget-confirm-swap-db-error-alert"
+        type="error"
+        variant="alarm"
+        title={dbErrorMessage}
+      />
+    );
   }
 
   if (quoteWarning || quoteError) {
@@ -304,6 +311,7 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
+          id="widget-confirm-swap-quote-container"
           expanded
           tagHidden
           error={confirmSwapResult.error}

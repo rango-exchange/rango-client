@@ -13,6 +13,7 @@ import type { RouteTag } from 'rango-types/lib/api/main';
 type BaseProps = {
   percentageChange?: PriceImpactPropTypes['percentageChange'];
   warningLevel?: PriceImpactPropTypes['warningLevel'];
+  id?: string;
   tooltipContainer?: HTMLElement;
   onClick?: () => void;
   selected?: boolean;
@@ -24,6 +25,7 @@ export type DataLoadedProps = {
   time: QuoteCostProps['time'];
   fee: QuoteCostProps['fee'];
   outputPrice: SwapInputPropTypes['price'];
+  id?: string;
   loading?: false;
   quoteCost: React.ReactElement;
 };

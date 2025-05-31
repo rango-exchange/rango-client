@@ -25,7 +25,7 @@ export function Detached(props: PropTypes) {
         icon={<Image src={targetWallet.image} size={45} />}
       />
       <Divider size={20} />
-      <NamespaceList>
+      <NamespaceList id="widget-detached-namespace-list" as={'ul'}>
         {targetWallet.needsNamespace?.data.map((namespace, index, array) => (
           <React.Fragment key={namespace.id}>
             {namespace.unsupported ? (
