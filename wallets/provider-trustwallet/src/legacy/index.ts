@@ -1,5 +1,4 @@
 import type {
-  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -8,17 +7,21 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import {
-  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains } from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import { trustWallet as trustwallet_instance } from './helpers.js';
+import {
+  type Provider,
+  trustWallet as trustwallet_instance,
+} from '../utils.js';
+
 import signer from './signer.js';
 
 const WALLET = WalletTypes.TRUST_WALLET;
@@ -44,14 +47,15 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
-
-export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+
   return {
     name: 'Trust Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/trustwallet/icon.svg',
@@ -63,6 +67,38 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://trustwallet.com/browser-extension',
     },
     color: '#ffffff',
-    supportedChains: evms,
+    supportedChains: [...evms, ...solana],
+    needsNamespace: {
+      selection: 'multiple',
+      data: [
+        {
+          label: 'EVM',
+          value: 'EVM',
+          id: 'ETH',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            evmBlockchains(allBlockchains),
+        },
+        {
+          label: 'Solana',
+          value: 'Solana',
+          id: 'SOLANA',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            solanaBlockchain(allBlockchains),
+        },
+      ],
+    },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+});
+
+export { buildLegacyProvider };
