@@ -78,7 +78,7 @@ export function Inputs(props: PropTypes) {
       <FromContainer>
         <SwapInput
           label={i18n.t('From')}
-          id="widget-swap-from-input"
+          id="widget-swap-from"
           mode="From"
           onInputChange={setInputAmount}
           onInputBlur={sanitizeInputAmount}
