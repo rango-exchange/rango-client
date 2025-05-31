@@ -22,4 +22,4 @@ This means if Solana is not connected simultaneously, the auto-connect feature o
 
 ---
 
-More wallet information can be found in [wallets.md](../wallets.md).
+More wallet information can be found in [readme.md](../readme.md).

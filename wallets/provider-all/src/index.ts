@@ -34,7 +34,7 @@ import * as tomo from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
-import * as trustwallet from '@rango-dev/provider-trustwallet';
+import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import {
@@ -104,7 +104,7 @@ export const allProviders = (
     phantom,
     lazyProvider(legacyProviderImportsToVersionsInterface(argentx)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(trustwallet)),
+    trustwallet,
     lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
     lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
