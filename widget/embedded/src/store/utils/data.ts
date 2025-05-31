@@ -78,7 +78,10 @@ export function matchTokensFromConfigWithMeta(params: {
     const configBlockchainsSet = new Set(configBlockchains);
 
     Object.keys(meta.tokensMapByBlockchainName).forEach((blockchain) => {
-      if (!configBlockchainsSet.has(blockchain)) {
+      if (
+        !configBlockchainsSet.has(blockchain) &&
+        meta.tokensMapByBlockchainName[blockchain]
+      ) {
         addTokens(meta.tokensMapByBlockchainName[blockchain]);
       }
     });
@@ -99,7 +102,10 @@ export function matchTokensFromConfigWithMeta(params: {
     }
 
     if (targetTokensForBlockchain) {
-      if (targetTokensForBlockchain.isExcluded) {
+      if (
+        targetTokensForBlockchain.isExcluded &&
+        meta.tokensMapByBlockchainName[blockchain]
+      ) {
         /**
          * If tokens are excluded,
          * we first include all tokens from the meta for that blockchain,

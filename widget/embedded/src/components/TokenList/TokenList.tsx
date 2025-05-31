@@ -66,12 +66,12 @@ const renderDesc = (props: RenderDescProps) => {
       ) : (
         <Title className={tokenTitleStyles()}>
           <Typography variant="title" size="xmedium">
-            {token.symbol}
+            {token?.symbol}
           </Typography>
           <Divider direction="horizontal" size={4} />
           <Tag css={customCssForTag}>
             <TagTitle variant="body" size="xsmall" css={customCssForTagTitle}>
-              {token.blockchain}
+              {token?.blockchain}
             </TagTitle>
           </Tag>
         </Title>
@@ -219,9 +219,9 @@ export function TokenList(props: PropTypes) {
               />
             );
           }
-          const address = token.address || '';
+          const address = token?.address || '';
           const blockchain = blockchains.find(
-            (blockchain) => blockchain.name === token.blockchain
+            (blockchain) => blockchain.name === token?.blockchain
           );
 
           /**
@@ -251,7 +251,7 @@ export function TokenList(props: PropTypes) {
           };
 
           const handleClick = () => {
-            if (typeof token !== 'string' && !token.customToken) {
+            if (token && typeof token !== 'string' && !token?.customToken) {
               onChange?.(token);
             }
           };
@@ -260,23 +260,24 @@ export function TokenList(props: PropTypes) {
             <ListItemContainer>
               <StyledListItemButton
                 tab-index={index}
-                key={`${token.symbol}${token.address}`}
-                id={`${token.symbol}${token.address}`}
+                key={`${token?.symbol}${token?.address}`}
+                id={`${token?.symbol}${token?.address}`}
                 className="widget-token-list-item-btn"
                 hasDivider
-                customToken={token.customToken}
+                customToken={token?.customToken}
                 onClick={handleClick}
                 start={
                   <ImageSection>
                     <Image
                       src={
-                        token.image === ''
+                        token?.image === ''
                           ? DEFAULT_TOKEN_IMAGE_SRC
-                          : token.image
+                          : token?.image
                       }
                       size={30}
                     />
                     {props.type !== 'custom-token' &&
+                      token &&
                       isTokenPinned(token, props.type) && (
                         <Pin>
                           <PinIcon size={12} color="gray" />
@@ -286,11 +287,11 @@ export function TokenList(props: PropTypes) {
                 }
                 title={
                   blockchain?.type === 'COSMOS' ||
-                  !!token.name ||
-                  (!token.name && !address) ? (
+                  !!token?.name ||
+                  (!token?.name && !address) ? (
                     <Title>
                       <Typography variant="title" size="xmedium">
-                        {token.symbol}
+                        {token?.symbol}
                       </Typography>
                       <Divider direction="horizontal" size={4} />
                       <Tag css={customCssForTag}>
@@ -298,10 +299,10 @@ export function TokenList(props: PropTypes) {
                           variant="body"
                           size="xsmall"
                           css={customCssForTagTitle}>
-                          {token.blockchain}
+                          {token?.blockchain}
                         </TagTitle>
                       </Tag>
-                      {showWarning && token.warning && (
+                      {showWarning && token?.warning && (
                         <>
                           <Divider direction="horizontal" size={4} />
                           <CustomTokenWarning container={getContainer()} />
@@ -320,14 +321,14 @@ export function TokenList(props: PropTypes) {
                         token,
                         customCssForTag,
                         customCssForTagTitle,
-                        name: token.name,
+                        name: token?.name,
                         url: blockchain.info.addressUrl
                           .split('{wallet}')
                           .join(address),
                       })
-                    : token.name || undefined
+                    : token?.name || undefined
                 }
-                end={endRenderer(token)}
+                end={token && endRenderer(token)}
               />
             </ListItemContainer>
           );

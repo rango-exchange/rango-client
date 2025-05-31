@@ -52,9 +52,9 @@ export function SwapMetrics(props: PropTypes) {
         : null,
   };
 
-  const sourceToken = quote?.swaps[0].from || initialFromToken;
+  const sourceToken = quote?.swaps[0]?.from || initialFromToken;
   const destinationToken =
-    quote?.swaps[quote?.swaps.length - 1].to || initialToToken;
+    quote?.swaps[quote?.swaps.length - 1]?.to || initialToToken;
 
   const fromToken = isDefaultRate ? sourceToken : destinationToken;
   const toToken = isDefaultRate ? destinationToken : sourceToken;

@@ -23,26 +23,29 @@ export interface RenderDescProps {
   name?: string | null;
   address: string;
   url: string;
-  token: Token;
-  customCssForTag: TagCSS;
-  customCssForTagTitle: TitleCSS;
+  token?: Token;
+  customCssForTag?: TagCSS;
+  customCssForTagTitle?: TitleCSS;
 }
 
 type TagCSS = {
   [x: string]:
     | string
     | {
-        $$color: string;
-      };
-  $$color: string;
+        $$color: string | undefined;
+      }
+    | undefined;
+  $$color: string | undefined;
   backgroundColor: string;
 };
+
 type TitleCSS = {
   [x: string]:
     | string
     | {
-        $$color: string;
-      };
-  $$color: string;
+        $$color: string | undefined;
+      }
+    | undefined;
+  $$color: string | undefined;
   color: string;
 };

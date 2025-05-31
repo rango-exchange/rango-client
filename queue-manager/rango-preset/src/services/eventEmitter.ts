@@ -94,7 +94,7 @@ function getEventPayload(
   swap: PendingSwap,
   type: StepEventType | RouteEventType,
   swapStep?: PendingSwapStep
-): { route: Route; step: Step } {
+): { route: Route; step?: Step } {
   const {
     creationTime,
     finishTime,
@@ -119,7 +119,7 @@ function getEventPayload(
     infiniteApproval: settings.infiniteApprove,
   };
 
-  const result: { route: Route; step: Step } = {
+  const result: { route: Route; step?: Step } = {
     route,
     step: routeSteps[routeSteps.length - 1],
   };
@@ -164,7 +164,7 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route, swap: PendingSwap) {
         type: RouteEventType.SUCCEEDED,
         inputAmount: swap.inputAmount,
         inputAmountUsd: getSwapInputUsd(swap),
-        outputAmount: swap.steps[swap.steps.length - 1].outputAmount ?? '',
+        outputAmount: swap?.steps[swap.steps.length - 1]?.outputAmount ?? '',
         outputAmountUsd: getSwapOutputUsd(swap),
       };
       break;
@@ -191,9 +191,9 @@ export function notifier(params: NotifierParams) {
     type,
     params.step ?? undefined
   );
-  const fromAsset = `${step.fromBlockchain}.${step.fromSymbol}`;
-  const toAsset = `${step.toBlockchain}.${step.toSymbol}`;
-  const outputAmount = step.outputAmount ?? '';
+  const fromAsset = `${step?.fromBlockchain}.${step?.fromSymbol}`;
+  const toAsset = `${step?.toBlockchain}.${step?.toSymbol}`;
+  const outputAmount = step?.outputAmount ?? '';
   const currentFromNamespace = !!params.step
     ? getCurrentNamespaceOfOrNull(params.swap, params.step)
     : null;
@@ -221,7 +221,7 @@ export function notifier(params: NotifierParams) {
         messageSeverity = EventSeverity.INFO;
       } else if (event.status === StepExecutionEventStatus.SEND_TX) {
         if (params.step && isApprovalCurrentStepTx(params.step)) {
-          message = `Please confirm '${step.swapperName}' smart contract access to ${fromAsset}`;
+          message = `Please confirm '${step?.swapperName}' smart contract access to ${fromAsset}`;
         } else {
           message = 'Please confirm transaction request in your wallet';
         }
@@ -279,7 +279,7 @@ export function notifier(params: NotifierParams) {
       break;
   }
 
-  if (params.step) {
+  if (params.step && step) {
     emitStepEvent({ ...event, message, messageSeverity }, route, step);
   }
   if (params.event.type === StepEventType.FAILED || !params.step) {

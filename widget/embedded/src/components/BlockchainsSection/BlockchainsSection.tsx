@@ -100,13 +100,15 @@ export function BlockchainsSection(props: PropTypes) {
 
             {onlyOneItemInList ? (
               <BlockchainsChip
-                key={blockchainsList.more[0].name}
+                key={blockchainsList?.more[0]?.name}
                 selected={
                   !!blockchain &&
-                  blockchain.name === blockchainsList.more[0].name
+                  blockchain.name === blockchainsList?.more[0]?.name
                 }
-                onClick={() => onChange(blockchainsList.more[0])}>
-                <Image src={blockchainsList.more[0].logo} size={30} />
+                onClick={() =>
+                  blockchainsList.more[0] && onChange(blockchainsList.more[0])
+                }>
+                <Image src={blockchainsList?.more[0]?.logo} size={30} />
               </BlockchainsChip>
             ) : null}
 

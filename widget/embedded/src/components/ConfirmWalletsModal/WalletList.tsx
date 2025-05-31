@@ -77,7 +77,7 @@ export function WalletList(props: PropTypes) {
       if (shouldShowMoreWallets && selectedWalletIndex > 1) {
         return [list[selectedWalletIndex]].concat(
           list.filter((_, index) => index !== selectedWalletIndex)
-        );
+        ) as ExtendedModalWalletInfo[];
       }
       return sortedList.map(
         (sortedItem) =>

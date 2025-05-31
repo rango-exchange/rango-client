@@ -581,7 +581,7 @@ class Manager {
     queues.forEach((q, queue_id) => {
       q.list.tasks.forEach((task) => {
         const state = q.list.state.tasks[task.id];
-        if (state.status === Status.BLOCKED) {
+        if (state?.status === Status.BLOCKED) {
           blockedTasks.push({
             task_id: task.id,
             queue_id: queue_id,

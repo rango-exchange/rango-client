@@ -35,7 +35,7 @@ function createMetaForMockData(
     if (!meta.tokensMapByBlockchainName[token.blockchain]) {
       meta.tokensMapByBlockchainName[token.blockchain] = [];
     }
-    meta.tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+    meta.tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
   });
 
   return meta;
@@ -48,7 +48,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       meta: createMetaForMockData(tokens),
       config: {
         blockchains: undefined,
-        tokens: [tokens[0], tokens[1]],
+        tokens: [tokens[0]!, tokens[1]!],
       },
     };
 
@@ -63,7 +63,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: undefined,
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: false },
         },
       },
     };
@@ -94,8 +94,8 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A, BLOCKCHAIN_B],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [tokens[2]] as Token[], isExcluded: false },
         },
       },
     };
@@ -111,7 +111,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [tokens[2]] as Token[], isExcluded: false },
         },
       },
     };
@@ -141,7 +141,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: true },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: true },
         },
       },
     };

@@ -126,14 +126,17 @@ export function TabsComponent(props: TabsPropTypes) {
       updateArrowsVisibility();
 
       const TOTAL_WIDTH_OF_ARROWS = 64;
-      const element = event[0].target;
-      const tabsContainerOverflown =
-        element.scrollWidth - TOTAL_WIDTH_OF_ARROWS > element.clientWidth;
+      const element = event[0]?.target;
 
-      if (showArrows && !tabsContainerOverflown) {
-        setShowArrows(false);
-      } else if (element.scrollWidth > element.clientWidth) {
-        setShowArrows(true);
+      if (element) {
+        const tabsContainerOverflown =
+          element.scrollWidth - TOTAL_WIDTH_OF_ARROWS > element.clientWidth;
+
+        if (showArrows && !tabsContainerOverflown) {
+          setShowArrows(false);
+        } else if (element.scrollWidth > element.clientWidth) {
+          setShowArrows(true);
+        }
       }
     };
 

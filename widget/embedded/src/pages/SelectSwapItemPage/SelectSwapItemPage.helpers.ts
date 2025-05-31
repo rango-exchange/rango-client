@@ -15,7 +15,7 @@ export function shouldSearchForCustomTokens(
   if (
     blockchain &&
     metaSearchResultTokens.length === 1 &&
-    metaSearchResultTokens[0].address === query
+    metaSearchResultTokens[0]?.address === query
   ) {
     return false;
   }

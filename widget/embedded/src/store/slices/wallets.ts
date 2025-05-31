@@ -332,7 +332,9 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           if (!acc[wallet.address]) {
             acc[wallet.address] = [];
           }
-          acc[wallet.address].push(...tokensByBlockchain[wallet.chain]);
+          acc[wallet.address]?.push(
+            ...(tokensByBlockchain[wallet.chain] || [])
+          );
         }
         return acc;
       }, {});
@@ -437,7 +439,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     newWalletConnected: async (accounts, namespace) => {
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
-        payload: { walletType: accounts[0].walletType, accounts },
+        payload: { walletType: accounts[0]?.walletType || '', accounts },
       });
 
       get().addConnectedWallet(accounts, namespace);
@@ -599,7 +601,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         return;
       }
       // All the `accounts` have same `walletType` so we can pick the first one.
-      const walletType = accounts[0].walletType;
+      const walletType = accounts[0]?.walletType;
 
       get().setConnectedWalletAsRefetching(accounts);
 
@@ -644,7 +646,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           const { _balances, _aggregatedBalances } =
             computeNextStateAfterWalletBalanceRemoval(
               partialCurrentState,
-              walletType,
+              walletType || '',
               {
                 chains: [wallet.blockChain],
               }
@@ -699,7 +701,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
          * The retry is only attempted once to prevent infinite loops.
          */
         const { retryOnFailedBalances = true } = options || {};
-        if (retryOnFailedBalances) {
+        if (retryOnFailedBalances && walletType) {
           const failedWallets: Wallet[] = walletsDetails
             .filter((wallet) => wallet.failed)
             .map((wallet) => ({
@@ -741,18 +743,24 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         return null;
       } else if (targetBalanceKeys.length === 1) {
         const targetKey = targetBalanceKeys[0];
-        return balances[targetKey];
+        return targetKey && balances[targetKey] ? balances[targetKey] : null;
       }
 
       // If there are multiple balances for an specific token, we pick the maximum.
-      const firstTargetBalance = balances[targetBalanceKeys[0]];
-      let maxBalance: Balance = firstTargetBalance;
+      const firstTargetBalance =
+        targetBalanceKeys[0] && balances[targetBalanceKeys[0]];
+      let maxBalance: Balance | null = firstTargetBalance || null;
       targetBalanceKeys.forEach((targetBalanceKey) => {
         const currentBalance = balances[targetBalanceKey];
-        const currentBalanceAmount = new BigNumber(currentBalance.amount);
-        const prevBalanceAmount = new BigNumber(maxBalance.amount);
+        const currentBalanceAmount = new BigNumber(
+          currentBalance?.amount || ''
+        );
+        const prevBalanceAmount = new BigNumber(maxBalance?.amount || '');
 
-        if (currentBalanceAmount.isGreaterThan(prevBalanceAmount)) {
+        if (
+          currentBalance &&
+          currentBalanceAmount.isGreaterThan(prevBalanceAmount)
+        ) {
           maxBalance = currentBalance;
         }
       });
@@ -768,7 +776,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
 
           const [, , , balanceWalletAddreess] =
             balanceKey.split(BALANCE_SEPARATOR);
-          if (balanceWalletAddreess === address) {
+          if (balance && balanceWalletAddreess === address) {
             output[balanceKey] = balance;
           }
 
@@ -795,7 +803,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               if (asset.blockchain === wallet.chain) {
                 const token = get().findToken(asset);
 
-                const amount = balance.amount
+                const amount = balance?.amount
                   ? new BigNumber(balance.amount).shiftedBy(-balance.decimals)
                   : ZERO;
 
@@ -804,8 +812,8 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
                   symbol: asset.symbol,
                   ticker: asset.symbol,
                   address: asset.address,
-                  rawAmount: balance.amount,
-                  decimal: balance.decimals,
+                  rawAmount: balance?.amount || '',
+                  decimal: balance?.decimals || 0,
                   amount: amount.toString(),
                   logo: token?.image || null,
                   usdPrice: token?.usdPrice || null,

@@ -22,7 +22,7 @@ const renderToastContainer = (
 ) => (
   <>
     {toasts.length > 0 && (
-      <ToastContainer style={toasts[0].containerStyle} position={position}>
+      <ToastContainer style={toasts[0]?.containerStyle} position={position}>
         {toasts.map((toast) => (
           <Toast {...toast} key={toast.id} />
         ))}
