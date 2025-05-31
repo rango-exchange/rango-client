@@ -1,4 +1,5 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
+import { type BlockchainMeta, evmBlockchains } from 'rango-types';
 
 export const WALLET_ID = 'rabby';
 
@@ -15,9 +16,19 @@ export const info: ProviderInfo = {
   },
   properties: [
     {
-      name: 'detached',
-      // if you are adding a new namespace, don't forget to also update `getWalletInfo`
-      value: ['EVM'],
+      name: 'namespaces',
+      value: {
+        selection: 'multiple',
+        data: [
+          {
+            label: 'EVM',
+            value: 'EVM',
+            id: 'ETH',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              evmBlockchains(allBlockchains),
+          },
+        ],
+      },
     },
   ],
 };
