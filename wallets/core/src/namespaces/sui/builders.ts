@@ -39,3 +39,6 @@ export const connect = (params: ConnectParams) =>
     .and(connectAndUpdateStateForSingleNetwork)
     .before(intoConnecting)
     .after(intoConnectionFinished);
+
+export const canEagerConnect = () =>
+  new ActionBuilder<SuiActions, 'canEagerConnect'>('canEagerConnect');

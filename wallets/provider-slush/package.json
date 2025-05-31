@@ -1,0 +1,33 @@
+{
+  "name": "@rango-dev/provider-slush",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-slush --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/wallets-shared": "^0.44.2-next.1",
+    "@rango-dev/signer-sui": "^0.3.1-next.0",
+    "@mysten/sui": "^1.21.2",
+    "@mysten/wallet-standard": "^0.13.26",
+    "rango-types": "^0.1.84"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
