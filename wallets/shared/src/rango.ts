@@ -73,6 +73,7 @@ export enum WalletTypes {
   TOMO = 'tomo',
   TREZOR = 'trezor',
   SOLFLARE = 'solflare',
+  SLUSH = 'slush',
   TON_CONNECT = 'tonconnect',
 }
 
