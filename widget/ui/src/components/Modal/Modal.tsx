@@ -134,7 +134,7 @@ export function Modal(props: PropsWithChildren<ModalPropTypes>) {
               {suffix}
               {dismissible && hasCloseIcon && (
                 <IconButton
-                  id="widget-modal-close-btn"
+                  id={`${id}-close-btn`}
                   onClick={onClose}
                   variant="ghost">
                   <CloseIcon color="gray" size={14} />
