@@ -52,5 +52,6 @@ export interface WalletPropTypes {
 export type SelectablePropTypes = WalletPropTypes & {
   selected: boolean;
   disabled?: boolean;
+  id: string;
   descriptionColor: string;
 };

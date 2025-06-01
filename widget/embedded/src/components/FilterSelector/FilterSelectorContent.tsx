@@ -40,6 +40,7 @@ export function FilterSelectorContent(props: PropTypes) {
             return (
               <ListItemButton
                 key={item.id}
+                className="widget-filter-selector-list-item-btn"
                 style={{ height: '40px', width: '100%' }}
                 selected={false}
                 hasDivider={props.list.length - 1 != index}

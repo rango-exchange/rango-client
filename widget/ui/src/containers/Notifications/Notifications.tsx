@@ -25,6 +25,7 @@ export function Notifications(props: PropTypes) {
     onClickItem,
     onClearAll,
     containerStyles,
+    id,
   } = props;
   return (
     <Container equalPadding={list.length === 0} css={containerStyles}>
@@ -34,7 +35,11 @@ export function Notifications(props: PropTypes) {
             <Typography variant="label" size="medium">
               {i18n.t('Notifications')}
             </Typography>
-            <ClearAllButton variant="ghost" size="xsmall" onClick={onClearAll}>
+            <ClearAllButton
+              id={`${id}-clear-all-btn`}
+              variant="ghost"
+              size="xsmall"
+              onClick={onClearAll}>
               <Typography variant="body" size="xsmall" color="neutral700">
                 {i18n.t('Clear all')}
               </Typography>
@@ -61,6 +66,7 @@ export function Notifications(props: PropTypes) {
               <React.Fragment key={requestId}>
                 {index > 0 && <Divider size={4} />}
                 <ListItem
+                  className={`${id}-list-item`}
                   onClick={() => onClickItem(requestId)}
                   actionRequired={event.messageSeverity === 'warning'}
                   title={

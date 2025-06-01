@@ -19,6 +19,7 @@ function ListItemButton(props: ListItemButtonProps) {
       aria-label="button"
       selected={selected}
       onKeyUp={(e: { key: string }) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         e.key === 'Enter' && onClickWithKey();
       }}
       tabIndex={0}

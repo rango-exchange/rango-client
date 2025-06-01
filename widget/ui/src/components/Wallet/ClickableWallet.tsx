@@ -51,6 +51,7 @@ function Wallet(props: WalletPropTypes) {
 
   return wrapComponentWithTooltip(
     <WalletButton
+      className={'widget-clickable-wallet-btn'}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
         if (props.state === WalletState.NOT_INSTALLED) {

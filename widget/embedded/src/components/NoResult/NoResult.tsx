@@ -42,7 +42,7 @@ export function NoResult(props: PropTypes) {
   }
 
   return (
-    <Container>
+    <Container id="widget-no-result-container">
       <NoRouteIcon size={NoRouteIconSize[size]} color="gray" />
       <Divider size={4} />
       <Typography variant="title" size={NoRouteTitleSize[size]}>
@@ -64,6 +64,7 @@ export function NoResult(props: PropTypes) {
       {!!info.alert && (
         <Footer size={size}>
           <Alert
+            id="widget-no-result-alert"
             type={info.alert.type}
             title={info.alert.text}
             titleAlign={'left'}

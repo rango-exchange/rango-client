@@ -40,6 +40,7 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
         return (
           <Fragment key={key}>
             <Alert
+              id="widget-swap-details-tx-alert"
               type={
                 lastUrl
                   ? (loading && 'loading') || (error && 'error') || 'success'
@@ -65,7 +66,13 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
           </Fragment>
         );
       })}
-      {waitingProgress && <Alert type="loading" title={message.shortMessage} />}
+      {waitingProgress && (
+        <Alert
+          id="widget-swap-details-loading-alert"
+          type="loading"
+          title={message.shortMessage}
+        />
+      )}
       {step.status !== 'failed' && hasWarning && (
         <WarningAlert
           switchNetwork={switchNetwork}
