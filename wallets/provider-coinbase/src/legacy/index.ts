@@ -154,11 +154,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'EVM',
           value: 'EVM',
           id: 'ETH',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            evmBlockchains(allBlockchains),
         },
         {
           label: 'Solana',
           value: 'Solana',
           id: 'SOLANA',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            solanaBlockchain(allBlockchains),
         },
       ],
     },
