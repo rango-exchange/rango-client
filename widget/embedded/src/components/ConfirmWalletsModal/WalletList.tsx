@@ -198,12 +198,14 @@ export function WalletList(props: PropTypes) {
           <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
             {!!experimentalChainWallet && (
               <WatermarkedModal
+                id="widget-wallets-list-watermarked-modal"
                 open={!!experimentalChainWallet && showExperimentalChainModal}
                 container={modalContainer}
                 onClose={() => {
                   setExperimentalChainWallet(null);
                 }}>
                 <ExperimentalChain
+                  id="widget-wallets-list-experimental-chain-container"
                   displayName={blockchainDisplayName}
                   onConfirm={() => {
                     void addExperimentalChain(experimentalChainWallet);
@@ -213,6 +215,7 @@ export function WalletList(props: PropTypes) {
             )}
             {addingExperimentalChainStatus && (
               <WatermarkedModal
+                id="widget-wallets-list-experimental-chain-watermarked-modal"
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
@@ -226,6 +229,7 @@ export function WalletList(props: PropTypes) {
             )}
             <SelectableWallet
               key={wallet.type}
+              id="widget-wallets-list-selectable-wallet-btn"
               description={getWalletDescription()}
               descriptionColor={getWalletDescriptionColor()}
               onClick={onSelectableWalletClick}
@@ -237,6 +241,7 @@ export function WalletList(props: PropTypes) {
         );
       })}
       <StatefulConnectModal
+        id="widget-wallets-list-stateful-connect-modal"
         wallet={selectedWalletToConnect}
         options={{ defaultSelectedChains: quoteChains || [chain] }}
         onClose={() => {
@@ -257,7 +262,10 @@ export function WalletList(props: PropTypes) {
         }}
       />
       {shouldShowMoreWallets && (
-        <ShowMoreWallets selected={false} onClick={onShowMore}>
+        <ShowMoreWallets
+          selected={false}
+          onClick={onShowMore}
+          id="widget-wallets-list-show-more-wallets-btn">
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">

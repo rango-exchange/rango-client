@@ -5,13 +5,15 @@ import React from 'react';
 interface PropTypes {
   displayName?: string;
   onConfirm: () => void;
+  id: string;
 }
 
 export function ExperimentalChain(props: PropTypes) {
-  const { displayName, onConfirm } = props;
+  const { displayName, onConfirm, id } = props;
 
   return (
     <MessageBox
+      id={id}
       title={i18n.t({
         id: 'Add {blockchainDisplayName} Chain',
         values: { blockchainDisplayName: displayName },

@@ -36,6 +36,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
       isFocused,
       tabIndex,
       tooltipContainer,
+      className,
     } = props;
 
     const { from, to, swapper } = step;
@@ -66,6 +67,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         type={type}
         state={state}
         ref={containerRef}
+        className={className}
         tabIndex={tabIndex}>
         {type === 'quote-details' && (
           <div className={swapperItemStyles()}>

@@ -21,7 +21,10 @@ export function NamespaceListItem(props: NamespaceItemPropTypes) {
   const supportedChains = namespace.getSupportedChains(blockchains);
   const showSupportedChains = supportedChains.length > 1;
   return (
-    <NamespaceItemContainer onClick={onClick} clickable>
+    <NamespaceItemContainer
+      onClick={onClick}
+      clickable
+      className="widget-namespace-list-item">
       <NamespaceItemContent>
         <NamespaceLogo
           src={getBlockchainLogo(blockchains, namespace.id)}

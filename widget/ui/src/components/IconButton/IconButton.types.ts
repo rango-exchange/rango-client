@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 
 export type IconButtonPropTypes = {
   id?: ButtonPropTypes['id'];
+  className?: ButtonPropTypes['className'];
   size?: ButtonPropTypes['size'];
   type?: ButtonPropTypes['type'];
   variant?: ButtonPropTypes['variant'];

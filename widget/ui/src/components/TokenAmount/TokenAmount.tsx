@@ -18,7 +18,10 @@ import {
 
 export function TokenAmount(props: PropTypes) {
   return (
-    <Container direction={props.direction} centerAlign={props.centerAlign}>
+    <Container
+      direction={props.direction}
+      centerAlign={props.centerAlign}
+      id={props.id}>
       <div className={tokenAmountStyles()}>
         <ChainToken
           chainImage={props.chain.image}

@@ -29,6 +29,7 @@ export function SlippageWarningModal(props: PropsTypes) {
 
   return (
     <WatermarkedModal
+      id="widget-slippage-warning-modal"
       anchor="bottom"
       open={open}
       container={getContainer()}

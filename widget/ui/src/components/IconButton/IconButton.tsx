@@ -10,10 +10,11 @@ function IconButtonComponent(
   props: PropsWithChildren<IconButtonPropTypes>,
   ref: Ref<HTMLButtonElement>
 ) {
-  const { style, ...otherProps } = props;
+  const { style, id, className, ...otherProps } = props;
   return (
     <Button
-      className="_icon-button"
+      className={`_icon-button ${className}`}
+      id={id}
       ref={ref}
       {...otherProps}
       style={{
