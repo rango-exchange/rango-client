@@ -133,7 +133,8 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
 |--|--|--|--|--|--|--|
 | [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
-| [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | 
+| [SafePal](provider-safepal/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 
+| [Slush](provider-slush/readme.md) | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | 
 | [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
 
 
@@ -143,6 +144,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
+| SafePal |  ✅ | ✅ | ❌ | Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
 | Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
 
