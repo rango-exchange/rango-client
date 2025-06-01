@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.46.1-next.2",
+  "version": "0.46.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -44,6 +44,7 @@
     "@rango-dev/provider-rabby": "^0.11.2-next.10",
     "@rango-dev/provider-safe": "^0.37.2-next.10",
     "@rango-dev/provider-safepal": "^0.45.2-next.10",
+    "@rango-dev/provider-slush": "^0.0.2-next.0",
     "@rango-dev/provider-solflare": "^0.11.2-next.10",
     "@rango-dev/provider-taho": "^0.44.2-next.10",
     "@rango-dev/provider-tokenpocket": "^0.44.2-next.10",
@@ -55,8 +56,7 @@
     "@rango-dev/provider-walletconnect-2": "^0.38.2-next.10",
     "@rango-dev/provider-xdefi": "^0.46.1-next.3",
     "@rango-dev/wallets-react": "^0.30.2-next.11",
-    "@rango-dev/wallets-shared": "^0.44.2-next.12",
-    "@rango-dev/provider-slush": "^0.0.2-next.0"
+    "@rango-dev/wallets-shared": "^0.44.2-next.12"
   },
   "publishConfig": {
     "access": "public"
