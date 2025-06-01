@@ -1,20 +1,29 @@
 import type { TargetNamespace } from '@rango-dev/queue-manager-rango-preset';
 import type { LegacyWalletType } from '@rango-dev/wallets-core/legacy';
-import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
+import type { PendingSwap } from 'rango-types';
 
 export type ModalState =
-  | Exclude<PendingSwapNetworkStatus, PendingSwapNetworkStatus.WaitingForQueue>
+  | 'connectWallet'
+  | 'switchNetwork'
   | 'delete'
   | 'cancel'
   | null;
+
+export type SwitchNetworkModalState = {
+  type: 'success' | 'loading' | 'error';
+  title: string;
+  description: string;
+};
 export interface ModalPropTypes {
   isOpen: boolean;
   onClose: () => void;
   onCancel: () => void;
   onDelete: () => void;
   state: ModalState;
+  switchNetworkModalState: SwitchNetworkModalState | null;
   swap: PendingSwap;
   message: string;
+  handleSwitchNetwork: () => void;
 }
 
 export interface CompleteModalPropTypes {
@@ -46,7 +55,8 @@ export interface WalletStateContentProps {
 
 export interface NetworkStateContentProps {
   message: string;
-  status: 'networkChanged' | 'waitingForNetworkChange';
+  switchNetworkModalState: SwitchNetworkModalState;
+  handleSwitchNetwork: () => void;
 }
 
 export interface InstallWalletContentProps {
