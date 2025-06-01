@@ -19,4 +19,8 @@ export const modalNetworkValues: Record<
     type: 'success',
     title: i18n.t('Network Changed'),
   },
+  [PendingSwapNetworkStatus.NetworkChangeFailed]: {
+    type: 'warning',
+    title: i18n.t('Network Change Failed'),
+  },
 };
