@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanSwitchNetwork,
   Connect,
@@ -18,7 +19,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import { coin98 as coin98_instances, getSolanaAccounts } from './helpers.js';
+import { coin98 as coin98_instances, getSolanaAccounts } from '../utils.js';
+
 import signer from './signer.js';
 
 const WALLET = WalletTypes.COIN98;
@@ -117,5 +119,33 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#1d1c25',
     supportedChains: [...evms, ...solana],
+    needsNamespace: {
+      selection: 'multiple',
+      data: [
+        {
+          label: 'EVM',
+          value: 'EVM',
+          id: 'ETH',
+        },
+        {
+          label: 'Solana',
+          value: 'Solana',
+          id: 'SOLANA',
+        },
+      ],
+    },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+});
+
+export { buildLegacyProvider };
