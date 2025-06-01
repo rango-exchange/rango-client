@@ -7,6 +7,7 @@ import { TypographyContainer } from './Typography.styles.js';
 
 export function Typography({
   children,
+  id,
   className,
   color,
   ...props

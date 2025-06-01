@@ -9,5 +9,6 @@ export interface PropTypes {
   type: MessageType;
   title: string;
   description?: string | ReactNode;
+  id?: string;
   icon?: ReactNode;
 }

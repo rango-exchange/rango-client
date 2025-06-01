@@ -159,6 +159,7 @@ export function HistoryPage() {
             fullWidth
             variant="contained"
             placeholder={i18n.t('Search Transaction')}
+            id="widget-history-search-transaction-input"
             autoFocus
             onChange={handleSearch}
             style={{ height: 36 }}
@@ -211,6 +212,7 @@ export function HistoryPage() {
       <WatermarkedModal
         open={openClearModal}
         onClose={onCloseModal}
+        id="widget-history-clear-modal"
         container={getContainer()}>
         <Divider size={20} />
         <MessageBox

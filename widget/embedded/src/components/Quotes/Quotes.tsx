@@ -108,6 +108,7 @@ export function Quotes(props: PropTypes) {
                 return (
                   <React.Fragment key={quote.requestId}>
                     <QuoteInfo
+                      id="widget-quotes-quote-info-container"
                       showModalFee={showModalFee}
                       container={container}
                       selected={selectedQuote?.requestId === quote.requestId}

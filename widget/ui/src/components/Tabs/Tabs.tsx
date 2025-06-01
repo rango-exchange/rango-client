@@ -156,7 +156,7 @@ export function TabsComponent(props: TabsPropTypes) {
   }, [containerRef.current, showArrows, currentIndex]);
 
   return (
-    <Container hasPadding={scrollButtons && showArrows}>
+    <Container hasPadding={scrollButtons && showArrows} className={className}>
       {scrollable && showArrows && scrollButtons && (
         <>
           <ArrowLeft

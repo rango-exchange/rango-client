@@ -88,6 +88,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
         <Alerts>
           <Divider size={10} />
           <Alert
+            id="widget-quote-warning-and-errors-alert"
             title={alertInfo.title}
             type={alertInfo.alertType}
             variant="alarm"
