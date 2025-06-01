@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-react",
-  "version": "0.30.2-next.10",
+  "version": "0.30.2-next.11",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

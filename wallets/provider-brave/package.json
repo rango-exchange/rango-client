@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-brave",
-  "version": "0.46.2-next.9",
+  "version": "0.46.2-next.10",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.43.2-next.8",
+  "version": "0.43.2-next.9",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
