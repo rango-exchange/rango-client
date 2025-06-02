@@ -12,7 +12,8 @@ import { WarningAlert } from './SwapDetailsAlerts.Warning';
 
 export function SwapDetailsAlerts(props: SwapAlertsProps) {
   const {
-    switchNetwork,
+    switchNetworkIsAvailable,
+    handleSwitchNetworkClick,
     showNetworkModal,
     setNetworkModal,
     message,
@@ -75,7 +76,8 @@ export function SwapDetailsAlerts(props: SwapAlertsProps) {
       )}
       {step.status !== 'failed' && hasWarning && (
         <WarningAlert
-          switchNetwork={switchNetwork}
+          switchNetworkIsAvailable={switchNetworkIsAvailable}
+          handleSwitchNetworkClick={handleSwitchNetworkClick}
           showNetworkModal={showNetworkModal}
           setNetworkModal={setNetworkModal}
           message={message}
