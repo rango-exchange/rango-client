@@ -8,7 +8,7 @@ msgstr ""
 "Language: ur\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-30 12:48\n"
+"PO-Revision-Date: 2025-06-02 08:24\n"
 "Last-Translator: \n"
 "Language-Team: Urdu (Pakistan)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,36 +19,117 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+msgid "Chain not connected"
+msgstr "سلسلہ منسلک نہیں ہے۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "کم از کم تجویز کردہ slippage: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "اضافہ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "خبردار، آپ کی پھسلن زیادہ ہے۔ آپ کی تجارت آگے چل سکتی ہے۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "Slippage کو تبدیل کریں۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "Slippage کو 0.01% سے کم سیٹ نہیں کیا جا سکتا۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "خبردار، آپ کی پھسلن زیادہ ہے!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "نیٹ ورک کی تبدیلی ناکام ہو گئی۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "پھسلنا:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "یہ پرس متعدد زنجیروں کو سپورٹ کرتا ہے۔ منتخب کریں کہ آپ کن زنجیروں کو جوڑنا یا منقطع کرنا چاہتے ہیں۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "کنکشن ناکام ہو گیا۔"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "دیکھیں کیوں"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "یہ پرس متعدد زنجیروں کو سپورٹ کرتا ہے۔ منتخب کریں کہ آپ کن زنجیروں کو جوڑنا چاہتے ہیں۔"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "{fromChain} سے {swapper}کے ذریعے پل"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "جزوی طور پر منسلک"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "دوسری زنجیروں کو جوڑیں۔"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:186
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
+#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "کوئی نتیجہ نہیں ملا"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:193
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
+#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "مختلف مطلوبہ الفاظ استعمال کرنے کی کوشش کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "چین منتخب کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:83
 msgid "All"
 msgstr "تمام"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:122
 msgid "More +{count}"
 msgstr "مزید +{count}"
 
@@ -63,51 +144,51 @@ msgid "Another tab is open and handles transactions."
 msgstr "ایک اور ٹیب کھلا ہے اور لین دین کو ہینڈل کرتا ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:21
 msgid "Activate current tab"
 msgstr "موجودہ ٹیب کو چالو کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:23
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
 msgstr "فی الحال، کچھ لین دین چل رہے ہیں اور دوسرے براؤزر ٹیب کے ذریعے ہینڈل کیے جا رہے ہیں۔ اگر آپ اس ٹیب کو چالو کرتے ہیں، تو وہ تمام لین دین جو پہلے سے ہی لین دین کے نشان کے مرحلے میں ہیں ختم ہو جائیں گے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "تصدیق کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:357
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:436
 msgid "Your {blockchainName} wallets"
 msgstr "آپ کے {blockchainName} بٹوے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:375
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
 msgid "Insufficient account balance"
 msgstr "ناکافی اکاؤنٹ بیلنس"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:385
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:387
 msgid "Proceed anyway"
 msgstr "بہرحال آگے بڑھیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:445
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "آپ کو ایک {blockchainName} والیٹ جوڑنے کی ضرورت ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "{chain} چین شامل کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
 msgid "Show more wallets"
 msgstr "مزید بٹوے دکھائیں۔"
 
@@ -117,32 +198,32 @@ msgid "Send to a different address"
 msgstr "کسی دوسرے ایڈریس پر بھیجیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:130
 msgid "Enter {blockchainName} address"
 msgstr "{blockchainName} پتہ درج کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:148
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "پتہ {destination} بلاکچین ایڈریس پیٹرن سے مماثل نہیں ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
 msgid "via"
 msgstr "کے ذریعے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "یہ ٹوکن ہماری تصدیق شدہ ٹوکن لسٹ کا حصہ نہیں ہے۔ براہ کرم اس کے ماخذ کی تصدیق کریں اور آگے بڑھنے سے پہلے تمام متعلقہ خطرات کو سمجھنا یقینی بنائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
 msgid "Import Anyway"
 msgstr "ویسے بھی درآمد کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
 msgid "Learn More"
 msgstr "مزید جانیں"
 
@@ -154,7 +235,8 @@ msgstr "حیثیت"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
-#: widget/embedded/src/pages/SettingsPage.tsx:55
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:19
+#: widget/embedded/src/pages/SettingsPage.tsx:56
 msgid "Reset"
 msgstr "دوبارہ ترتیب دیں۔"
 
@@ -165,13 +247,13 @@ msgstr "منسوخ کریں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:36
 msgid "Refresh"
 msgstr "تازہ دم کریں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
-#: widget/ui/src/containers/Notifications/Notifications.tsx:35
+#: widget/ui/src/containers/Notifications/Notifications.tsx:36
 msgid "Notifications"
 msgstr "اطلاعات"
 
@@ -195,7 +277,7 @@ msgid "Connect Wallet"
 msgstr "والیٹ کو جوڑیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:122
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -239,63 +321,58 @@ msgid "Bridge Limit Error"
 msgstr "پل کی حد کی خرابی۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:244
+#: widget/embedded/src/components/Quote/Quote.tsx:245
 msgid "Yours: {amount} {symbol}"
 msgstr "آپ کا: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:265
-msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr "کم از کم مطلوبہ slippage: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:286
+#: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "آپ کا: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:414
+#: widget/embedded/src/components/Quote/Quote.tsx:418
 msgid "See All Routes"
 msgstr "تمام راستے دیکھیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:96
 msgid "View more info"
 msgstr "مزید معلومات دیکھیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:110
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
 msgid "Gas & Fee Explanation"
 msgstr "گیس اور فیس کی وضاحت"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:126
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
 msgid "Details"
 msgstr "تفصیلات"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:171
 msgid "Total Payable Fee"
 msgstr "کل قابل ادائیگی فیس"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:185
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:191
 msgid "Hide non-payable fees"
 msgstr "غیر قابل ادائیگی فیس چھپائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:186
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
 msgid "Show non-payable fees"
 msgstr "غیر قابل ادائیگی فیس دکھائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:196
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:202
 msgid "Description"
 msgstr "تفصیل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:206
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "لین دین کے آؤٹ پٹ میں درج ذیل فیسوں پر غور کیا جاتا ہے اور\n"
@@ -307,17 +384,17 @@ msgid "Swap input"
 msgstr "ان پٹ کو تبدیل کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:46
 msgid "Estimated output"
 msgstr "تخمینی پیداوار"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:66
 msgid "Via:"
 msgstr "بذریعہ:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:151
 msgid "Chains:"
 msgstr "زنجیریں:"
 
@@ -372,64 +449,50 @@ msgid "Price impact"
 msgstr "قیمت کا اثر"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:44
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "اس راستے کے لیے آپ کو پھسلن کو کم از کم {minRequiredSlippage} تک بڑھانا ہوگا۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "آؤٹ پٹ کی رقم {percentageChange}% (${usdValueChange}) سے بدل گئی۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:49
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "ہم آپ کو مشورہ دیتے ہیں کہ اس راستے کے لیے پھسلن کو کم از کم {minRequiredSlippage} تک بڑھا دیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:94
 msgid "Caution, your slippage is high."
 msgstr "خبردار، آپ کی پھسلن زیادہ ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
 msgid "Change"
 msgstr "تبدیلی"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
-msgid "Change settings"
-msgstr "ترتیبات تبدیل کریں۔"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:41
 msgid "High slippage"
 msgstr "اونچی پھسلن"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "کم پھسلنا"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
-msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr " احتیاط، آپ کا پھسلنا زیادہ ہے (={userSlippage})۔ آپ کی تجارت آگے چل سکتی ہے۔"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Confirm anyway"
-msgstr "بہرحال تصدیق کریں۔"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
 msgid "Something went wrong"
 msgstr "کچھ غلط ہو گیا۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:25
 msgid "Something went wrong. Please refresh the app."
 msgstr "کچھ غلط ہو گیا۔ براہ کرم ایپ کو ریفریش کریں۔"
 
@@ -444,12 +507,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "آپ From اور To کے لیے ایک ہی ٹوکن استعمال نہیں کر سکتے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:70
+#: widget/embedded/src/components/Slippage/Slippage.tsx:71
 msgid "Slippage tolerance per swap"
 msgstr "slippage رواداری فی سویپ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:111
+#: widget/embedded/src/components/Slippage/Slippage.tsx:118
 msgid "Custom"
 msgstr "حسب ضرورت"
 
@@ -460,7 +523,7 @@ msgstr "اگر قیمت اس فیصد سے زیادہ ناموافق طور پر
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
-#: widget/embedded/src/containers/Settings/Lists.tsx:245
+#: widget/embedded/src/containers/Settings/Lists.tsx:247
 msgid "Warning"
 msgstr "وارننگ"
 
@@ -513,6 +576,7 @@ msgstr "حذف کریں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
 msgid "Try again"
 msgstr "دوبارہ کوشش کریں۔"
 
@@ -542,39 +606,41 @@ msgid "Created at"
 msgstr "پر تخلیق کیا گیا۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
 msgid "View transaction"
 msgstr "لین دین دیکھیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "جڑیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:51
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:52
 msgid "Swap Successful"
 msgstr "تبادلہ کامیاب"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:79
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
 msgid "Transaction Failed"
 msgstr "لین دین ناکام ہو گیا۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
 msgid "Done"
 msgstr "ہو گیا"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:120
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
 msgid "Diagnosis"
 msgstr "تشخیص"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:132
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
 msgid "See Details"
 msgstr "تفصیلات دیکھیں"
 
@@ -595,7 +661,7 @@ msgstr "ہاں، اسے منسوخ کر دیں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:182
+#: widget/embedded/src/pages/CustomTokensPage.tsx:184
 msgid "No, Continue"
 msgstr "نہیں، جاری رکھیں"
 
@@ -611,13 +677,13 @@ msgstr "کیا آپ واقعی اس تبادلہ کو حذف کرنا چاہتے
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:172
+#: widget/embedded/src/pages/CustomTokensPage.tsx:174
 msgid "Yes, Delete it"
 msgstr "ہاں، اسے حذف کریں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:253
+#: widget/embedded/src/pages/HistoryPage.tsx:255
 msgid "No, Cancel"
 msgstr "نہیں، منسوخ کریں۔"
 
@@ -633,7 +699,7 @@ msgstr "نیٹ ورک بدل گیا۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
 msgid "Select Token"
 msgstr "ٹوکن منتخب کریں۔"
 
@@ -683,23 +749,23 @@ msgid "Choose Derivation Path Template"
 msgstr "اخذ پاتھ ٹیمپلیٹ کا انتخاب کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Path"
 msgstr "راستہ داخل کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
 msgid "Enter Index"
 msgstr "انڈیکس درج کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "{blockchainDisplayName} چین شامل کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
 msgstr "کیا آپ اپنے بٹوے میں {blockchainDisplayName} تجرباتی سلسلہ شامل کرنا چاہیں گے؟"
 
@@ -729,35 +795,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "آپ نے اپنے بٹوے میں {blockchainDisplayName} چین شامل کرنے کو مسترد کر دیا ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(فی الحال تعاون یافتہ نہیں)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
 msgid "Connect {wallet}"
 msgstr "جڑیں {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "یہ پرس متعدد زنجیروں کو سپورٹ کرتا ہے۔ منتخب کریں کہ آپ کن زنجیروں سے جڑنا چاہتے ہیں۔"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "یہ بٹوہ ایک وقت میں صرف ایک چین سے جڑ سکتا ہے۔ "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "سبھی کو غیر منتخب کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "سبھی کو منتخب کریں۔"
 
@@ -843,11 +905,12 @@ msgstr "نامعلوم USD قیمت کی تصدیق کریں۔"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:165
+#: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "تبادلہ"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
 msgstr "بہرحال تبادلہ کریں۔"
@@ -864,12 +927,12 @@ msgid "Routes"
 msgstr "راستے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:79
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
 msgid "From"
 msgstr "سے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
 msgid "To"
 msgstr "کو"
 
@@ -889,46 +952,46 @@ msgid "Auto"
 msgstr "آٹو"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:140
+#: widget/embedded/src/containers/Settings/Lists.tsx:142
 msgid "Loading failed"
 msgstr "لوڈنگ ناکام ہو گئی۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:156
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:158
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Bridges"
 msgstr "پل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:174
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:176
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Exchanges"
 msgstr "تبادلہ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/containers/Settings/Lists.tsx:197
 #: widget/embedded/src/pages/CustomTokensPage.tsx:90
 msgid "Custom Tokens"
 msgstr "حسب ضرورت ٹوکنز"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:214
+#: widget/embedded/src/containers/Settings/Lists.tsx:216
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "زبان"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:235
+#: widget/embedded/src/containers/Settings/Lists.tsx:237
 msgid "Infinite approval"
 msgstr "لامحدود منظوری"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:246
+#: widget/embedded/src/containers/Settings/Lists.tsx:248
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
 msgstr "'لامحدود منظوری' موڈ کو فعال کرنے سے بنیادی سمارٹ معاہدوں تک غیر محدود رسائی حاصل ہوتی ہے، جس سے وہ منظور شدہ ٹوکن رقم کو بغیر کسی پابندی کے استعمال کر سکتے ہیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:266
+#: widget/embedded/src/containers/Settings/Lists.tsx:268
 msgid "Theme"
 msgstr "تھیم"
 
@@ -974,7 +1037,7 @@ msgstr "ٹوکن ڈیٹا بازیافت کرتے وقت ایک خرابی پی�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
-#: widget/embedded/src/pages/CustomTokensPage.tsx:150
+#: widget/embedded/src/pages/CustomTokensPage.tsx:151
 msgid "Add Custom Token"
 msgstr "حسب ضرورت ٹوکن شامل کریں۔"
 
@@ -990,53 +1053,53 @@ msgid "Enter Address"
 msgstr "ایڈریس درج کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:99
 msgid "Enter token address"
 msgstr "ٹوکن ایڈریس درج کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:129
 msgid "Import"
 msgstr "درآمد کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:240
 msgid "Confirm Swap"
 msgstr "تبادلہ کی تصدیق کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:246
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:258
 msgid "Start Swap"
 msgstr "تبادلہ شروع کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:286
 msgid "You get"
 msgstr "آپ حاصل کریں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
+#: widget/embedded/src/pages/CustomTokensPage.tsx:103
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:122
 msgid "Search Token"
 msgstr "ٹوکن تلاش کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "No custom tokens"
 msgstr "کوئی حسب ضرورت ٹوکن نہیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:136
+#: widget/embedded/src/pages/CustomTokensPage.tsx:137
 msgid "press the button to add your custom token"
 msgstr "اپنا حسب ضرورت ٹوکن شامل کرنے کے لیے بٹن دبائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:159
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Delete Custom Token"
 msgstr "حسب ضرورت ٹوکن حذف کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:161
+#: widget/embedded/src/pages/CustomTokensPage.tsx:163
 msgid "Are you sure you want to Delete this Token?"
 msgstr "کیا آپ واقعی اس ٹوکن کو حذف کرنا چاہتے ہیں؟"
 
@@ -1067,42 +1130,42 @@ msgid "Search Transaction"
 msgstr "لین دین تلاش کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 msgid "No transactions"
 msgstr "کوئی لین دین نہیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "آپ کی لین دین کی سرگزشت مقامی طور پر ذخیرہ کی جاتی ہے اور آپ کے تبادلہ شروع کرنے کے بعد یہاں ظاہر ہوگی۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:218
+#: widget/embedded/src/pages/HistoryPage.tsx:220
 msgid "Clear Transaction History"
 msgstr "لین دین کی تاریخ صاف کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:222
+#: widget/embedded/src/pages/HistoryPage.tsx:224
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "آگے بڑھنے سے ویجیٹ سے تمام کامیاب اور ناکام ٹرانزیکشنز ہٹ جائیں گی۔ کیا آپ جاری رکھنا چاہتے ہیں؟"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:229
+#: widget/embedded/src/pages/HistoryPage.tsx:231
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "نوٹ: یہ سلسلہ پر آپ کی لین دین کی تاریخ کو نہیں مٹاتا ہے۔ یہ صرف انہیں یہاں ہٹاتا ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:243
+#: widget/embedded/src/pages/HistoryPage.tsx:245
 msgid "Yes, Clear the history"
 msgstr "ہاں، تاریخ کو صاف کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:56
+#: widget/embedded/src/pages/LanguagePage.tsx:57
 msgid "language"
 msgstr "زبان"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:137
 msgid "Search {sourceType}"
 msgstr "{sourceType}تلاش کریں۔"
 
@@ -1127,7 +1190,7 @@ msgid "Swap {type}"
 msgstr "تبادلہ {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:45
+#: widget/embedded/src/pages/SettingsPage.tsx:46
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "فی الحال، آپ لیکویڈیٹی ذرائع پر پابندیوں کے ساتھ مہم کے موڈ میں ہیں۔ کیا آپ اس موڈ سے باہر نکل کر تمام دستیاب لیکویڈیٹی ذرائع کو استعمال کرنا چاہیں گے؟"
 
@@ -1137,13 +1200,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "تبادلہ کی تفصیلات ظاہر کرنے کے لیے درخواست کی شناخت ضروری ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/embedded/src/pages/WalletsPage.tsx:72
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "بٹوے کو جوڑیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:82
+#: widget/embedded/src/pages/WalletsPage.tsx:87
 msgid "Choose a wallet to connect."
 msgstr "جڑنے کے لیے ایک پرس کا انتخاب کریں۔"
 
@@ -1163,12 +1226,12 @@ msgid "This year"
 msgstr "اس سال"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
+#: widget/embedded/src/utils/settings.ts:108
 msgid "Slippage must be greater than or equal to 0.01"
 msgstr "Slippage 0.01 سے زیادہ یا اس کے برابر ہونا چاہیے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
+#: widget/embedded/src/utils/settings.ts:113
 msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
 msgstr "زیادہ پھسلن برداشت کی وجہ سے آپ کا لین دین سب سے آگے ہونے کا خطرہ ہے۔"
 
@@ -1193,32 +1256,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "مطلوبہ: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:634
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for network fee"
 msgstr " نیٹ ورک فیس کے لیے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for swap"
 msgstr " تبادلہ کے لیے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:641
 msgid " for input and network fee"
 msgstr " ان پٹ اور نیٹ ورک فیس کے لیے"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:643
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "ضرورت ہے ≈ {requiredAmount} {symbol}{reason}، لیکن آپ کے {blockchain} والیٹ میں {currentAmount} {symbol} ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:708
+#: widget/embedded/src/utils/swap.ts:709
 msgid "Waiting for other running tasks to be finished"
 msgstr "دوسرے چلنے والے کاموں کے مکمل ہونے کا انتظار کر رہے ہیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:711
+#: widget/embedded/src/utils/swap.ts:712
 msgid "Waiting for changing wallet network"
 msgstr "بٹوے کے نیٹ ورک کو تبدیل کرنے کا انتظار کر رہے ہیں۔"
 
@@ -1273,18 +1336,18 @@ msgid "Aggregated Transaction"
 msgstr "مجموعی لین دین"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:66
 msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "{swapper}کے ذریعے {fromChain} پر تبادلہ کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "{swapper}کے ذریعے {toChain} پر پل"
 
@@ -1309,38 +1372,40 @@ msgid "Waiting for the bridge transaction"
 msgstr "پل کے لین دین کا انتظار ہے۔"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "جڑا ہوا"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "منقطع کرنا"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "انسٹال کریں۔"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "منسلک ہو رہا ہے..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "جڑ رہا ہے۔"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "منقطع"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "آپ کو Wallet میں ایک درست حالت منتقل کرنے کی ضرورت ہے۔"
 
@@ -1350,7 +1415,7 @@ msgid "There are no notifications."
 msgstr "کوئی اطلاعات نہیں ہیں۔"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Notifications/Notifications.tsx:39
+#: widget/ui/src/containers/Notifications/Notifications.tsx:44
 msgid "Clear all"
 msgstr "سب صاف کریں۔"
 
@@ -1360,7 +1425,7 @@ msgid "Balance"
 msgstr "توازن"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "زیادہ سے زیادہ"
 

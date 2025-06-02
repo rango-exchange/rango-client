@@ -8,7 +8,7 @@ msgstr ""
 "Language: sv\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-30 12:48\n"
+"PO-Revision-Date: 2025-06-02 08:24\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,36 +19,117 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+msgid "Chain not connected"
+msgstr "Kedjan är inte ansluten"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "Minsta föreslagna glidning: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "Öka"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "Varning, din slip är hög. Din handel kan vara en frontrun."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "Ändra glidning"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "Slippage kan inte sättas lägre än 0,01 %."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "Varning, din slip är hög!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "Nätverksbyte misslyckades"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "Slirning:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill ansluta eller koppla från."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "Anslutningen misslyckades"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "Se varför"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill koppla samman."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "Brygga från {fromChain} via {swapper}"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "Delvis ansluten"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "Koppla ihop andra kedjor"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:186
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
+#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Inga resultat hittades"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:193
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
+#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Prova att använda olika sökord"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "Välj kedja"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:83
 msgid "All"
 msgstr "Alla"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:122
 msgid "More +{count}"
 msgstr "Mer +{count}"
 
@@ -63,51 +144,51 @@ msgid "Another tab is open and handles transactions."
 msgstr "En annan flik är öppen och hanterar transaktioner."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:21
 msgid "Activate current tab"
 msgstr "Aktivera aktuell flik"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:23
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
 msgstr "För närvarande körs och hanteras vissa transaktioner av andra webbläsarfliken. Om du aktiverar den här fliken, kommer alla transaktioner som redan finns i transaktionssigneringssteget att upphöra."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Bekräfta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:357
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:436
 msgid "Your {blockchainName} wallets"
 msgstr "Dina {blockchainName} plånböcker"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:375
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
 msgid "Insufficient account balance"
 msgstr "Otillräckligt saldo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:385
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:387
 msgid "Proceed anyway"
 msgstr "Fortsätt ändå"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:445
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Du måste ansluta en {blockchainName} plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "Lägg till {chain} kedja"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
 msgid "Show more wallets"
 msgstr "Visa fler plånböcker"
 
@@ -117,32 +198,32 @@ msgid "Send to a different address"
 msgstr "Skicka till en annan adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:130
 msgid "Enter {blockchainName} address"
 msgstr "Ange {blockchainName} adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:148
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adress {destination} matchar inte blockkedjans adressmönster."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
 msgid "via"
 msgstr "via"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Denna token är inte en del av vår lista över verifierade token. verifiera källan och se till att du förstår alla associerade risker innan du fortsätter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
 msgid "Import Anyway"
 msgstr "Importera ändå"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
 msgid "Learn More"
 msgstr "Läs mer"
 
@@ -154,7 +235,8 @@ msgstr "Status"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
-#: widget/embedded/src/pages/SettingsPage.tsx:55
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:19
+#: widget/embedded/src/pages/SettingsPage.tsx:56
 msgid "Reset"
 msgstr "Reset"
 
@@ -165,13 +247,13 @@ msgstr "Avbryt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:36
 msgid "Refresh"
 msgstr "Uppdatera"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
-#: widget/ui/src/containers/Notifications/Notifications.tsx:35
+#: widget/ui/src/containers/Notifications/Notifications.tsx:36
 msgid "Notifications"
 msgstr "Aviseringar"
 
@@ -195,7 +277,7 @@ msgid "Connect Wallet"
 msgstr "Anslut plånbok"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:122
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -239,63 +321,58 @@ msgid "Bridge Limit Error"
 msgstr "Bridgegräns fel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:244
+#: widget/embedded/src/components/Quote/Quote.tsx:245
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:265
-msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr "Minsta obligatoriska halkning: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:286
+#: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "Er: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:414
+#: widget/embedded/src/components/Quote/Quote.tsx:418
 msgid "See All Routes"
 msgstr "Se alla rutter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:96
 msgid "View more info"
 msgstr "Visa mer information"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:110
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
 msgid "Gas & Fee Explanation"
 msgstr "Förklaring av gas & avgift"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:126
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
 msgid "Details"
 msgstr "Detaljer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:171
 msgid "Total Payable Fee"
 msgstr "Total betalningskostnad"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:185
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:191
 msgid "Hide non-payable fees"
 msgstr "Dölj icke-betalbara avgifter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:186
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
 msgid "Show non-payable fees"
 msgstr "Visa icke-betalbara avgifter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:196
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:202
 msgid "Description"
 msgstr "Beskrivning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:206
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "Följande avgifter beaktas i transaktionen utgång och\n"
@@ -307,17 +384,17 @@ msgid "Swap input"
 msgstr "Swap input"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:46
 msgid "Estimated output"
 msgstr "Uppskattad utdata"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:66
 msgid "Via:"
 msgstr "Via:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:151
 msgid "Chains:"
 msgstr "Kedjor:"
 
@@ -372,64 +449,50 @@ msgid "Price impact"
 msgstr "Pris inverkan"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:44
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Du måste öka halkningen till minst {minRequiredSlippage} för denna rutt."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "Utgångsbeloppet ändrat med {percentageChange}% (${usdValueChange})."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:49
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Vi rekommenderar att du ökar halkningen till minst {minRequiredSlippage} för denna rutt."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:94
 msgid "Caution, your slippage is high."
 msgstr "Varning, din glidning är hög."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
 msgid "Change"
 msgstr "Ändra"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
-msgid "Change settings"
-msgstr "Ändra inställningar"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:41
 msgid "High slippage"
 msgstr "Hög glidning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "Låg glidning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
-msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr " Varning, din glidning är hög (={userSlippage}). Din handel kan köras framifrån."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Confirm anyway"
-msgstr "Bekräfta ändå"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
 msgid "Something went wrong"
 msgstr "Något gick fel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:25
 msgid "Something went wrong. Please refresh the app."
 msgstr "Något gick fel. Vänligen uppdatera appen."
 
@@ -444,12 +507,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "Du kan inte använda samma token för Från och Till."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:70
+#: widget/embedded/src/components/Slippage/Slippage.tsx:71
 msgid "Slippage tolerance per swap"
 msgstr "Slippage tolerans per swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:111
+#: widget/embedded/src/components/Slippage/Slippage.tsx:118
 msgid "Custom"
 msgstr "Anpassad"
 
@@ -460,7 +523,7 @@ msgstr "Din transaktion kommer att återställas om priset ändras ogynnsamt med
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
-#: widget/embedded/src/containers/Settings/Lists.tsx:245
+#: widget/embedded/src/containers/Settings/Lists.tsx:247
 msgid "Warning"
 msgstr "Varning"
 
@@ -513,6 +576,7 @@ msgstr "Radera"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
 msgid "Try again"
 msgstr "Försök igen"
 
@@ -542,39 +606,41 @@ msgid "Created at"
 msgstr "Skapad den"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
 msgid "View transaction"
 msgstr "Visa transaktion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Anslut"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:51
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:52
 msgid "Swap Successful"
 msgstr "Byte lyckades"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:79
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
 msgid "Transaction Failed"
 msgstr "Transaktionen misslyckades"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
 msgid "Done"
 msgstr "Klar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:120
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
 msgid "Diagnosis"
 msgstr "Diagnos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:132
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
 msgid "See Details"
 msgstr "Se detaljer"
 
@@ -595,7 +661,7 @@ msgstr "Ja, Avbryt det"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:182
+#: widget/embedded/src/pages/CustomTokensPage.tsx:184
 msgid "No, Continue"
 msgstr "Nej, fortsätt"
 
@@ -611,13 +677,13 @@ msgstr "Är du säker på att du vill ta bort denna swap?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:172
+#: widget/embedded/src/pages/CustomTokensPage.tsx:174
 msgid "Yes, Delete it"
 msgstr "Ja, ta bort den"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:253
+#: widget/embedded/src/pages/HistoryPage.tsx:255
 msgid "No, Cancel"
 msgstr "Nej, Avbryt"
 
@@ -633,7 +699,7 @@ msgstr "Nätverk ändrat"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
 msgid "Select Token"
 msgstr "Välj token"
 
@@ -683,23 +749,23 @@ msgid "Choose Derivation Path Template"
 msgstr "Välj mall för Derivations sökväg"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Path"
 msgstr "Ange sökväg"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
 msgid "Enter Index"
 msgstr "Ange index"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Lägg till {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
 msgstr "Vill du lägga till den experimentella kedjan {blockchainDisplayName} i din plånbok?"
 
@@ -729,35 +795,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Du har avböjt att lägga till {blockchainDisplayName} kedjan i din plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(Stöds för närvarande inte)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
 msgid "Connect {wallet}"
 msgstr "Anslut {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill ansluta till."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Den här plånboken kan bara ansluta till en kedja åt gången. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Avmarkera alla"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Markera alla"
 
@@ -843,11 +905,12 @@ msgstr "Bekräfta USD pris okänt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:165
+#: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "Byt"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
 msgstr "Byt ändå"
@@ -864,12 +927,12 @@ msgid "Routes"
 msgstr "Rutter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:79
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
 msgid "From"
 msgstr "Från"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
 msgid "To"
 msgstr "Till"
 
@@ -889,46 +952,46 @@ msgid "Auto"
 msgstr "Automatiskt"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:140
+#: widget/embedded/src/containers/Settings/Lists.tsx:142
 msgid "Loading failed"
 msgstr "Laddningen misslyckades"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:156
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:158
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Bridges"
 msgstr "Broar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:174
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:176
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Exchanges"
 msgstr "Byten"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/containers/Settings/Lists.tsx:197
 #: widget/embedded/src/pages/CustomTokensPage.tsx:90
 msgid "Custom Tokens"
 msgstr "Anpassade Tokens"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:214
+#: widget/embedded/src/containers/Settings/Lists.tsx:216
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "Språk"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:235
+#: widget/embedded/src/containers/Settings/Lists.tsx:237
 msgid "Infinite approval"
 msgstr "Oändligt godkännande"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:246
+#: widget/embedded/src/containers/Settings/Lists.tsx:248
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
 msgstr "Aktivering av Oändligt godkännande ger obegränsad åtkomst till underliggande smarta kontrakt, vilket ger dem möjlighet att använda det godkända tokenbeloppet utan begränsningar."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:266
+#: widget/embedded/src/containers/Settings/Lists.tsx:268
 msgid "Theme"
 msgstr "Tema"
 
@@ -974,7 +1037,7 @@ msgstr "Ett fel uppstod vid hämtning av tokendata."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
-#: widget/embedded/src/pages/CustomTokensPage.tsx:150
+#: widget/embedded/src/pages/CustomTokensPage.tsx:151
 msgid "Add Custom Token"
 msgstr "Lägg till anpassad token"
 
@@ -990,53 +1053,53 @@ msgid "Enter Address"
 msgstr "Ange adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:99
 msgid "Enter token address"
 msgstr "Ange token adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:129
 msgid "Import"
 msgstr "Importera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:240
 msgid "Confirm Swap"
 msgstr "Bekräfta byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:246
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:258
 msgid "Start Swap"
 msgstr "Starta byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:286
 msgid "You get"
 msgstr "Du får"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
+#: widget/embedded/src/pages/CustomTokensPage.tsx:103
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:122
 msgid "Search Token"
 msgstr "Sök Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "No custom tokens"
 msgstr "Inga anpassade tokens"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:136
+#: widget/embedded/src/pages/CustomTokensPage.tsx:137
 msgid "press the button to add your custom token"
 msgstr "Tryck på knappen för att lägga till din anpassade token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:159
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Delete Custom Token"
 msgstr "Ta bort anpassad token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:161
+#: widget/embedded/src/pages/CustomTokensPage.tsx:163
 msgid "Are you sure you want to Delete this Token?"
 msgstr "Är du säker på att du vill ta bort detta token?"
 
@@ -1067,42 +1130,42 @@ msgid "Search Transaction"
 msgstr "Sök transaktion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 msgid "No transactions"
 msgstr "Inga transaktioner"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Din transaktionshistorik lagras lokalt och kommer att visas här när du startar ett byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:218
+#: widget/embedded/src/pages/HistoryPage.tsx:220
 msgid "Clear Transaction History"
 msgstr "Rensa transaktionshistorik"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:222
+#: widget/embedded/src/pages/HistoryPage.tsx:224
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Fortsättning kommer att ta bort alla lyckade och misslyckade transaktioner från widget. Vill du fortsätta?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:229
+#: widget/embedded/src/pages/HistoryPage.tsx:231
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Obs: Detta raderar inte din transaktionshistorik i kedjan; det tar bara bort dem här."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:243
+#: widget/embedded/src/pages/HistoryPage.tsx:245
 msgid "Yes, Clear the history"
 msgstr "Ja, Rensa historiken"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:56
+#: widget/embedded/src/pages/LanguagePage.tsx:57
 msgid "language"
 msgstr "språk"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:137
 msgid "Search {sourceType}"
 msgstr "Sök {sourceType}"
 
@@ -1127,7 +1190,7 @@ msgid "Swap {type}"
 msgstr "Byt {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:45
+#: widget/embedded/src/pages/SettingsPage.tsx:46
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "För närvarande är du i kampanjläge med restriktioner för likviditetskällor. Vill du byta ut det här läget och utnyttja alla tillgängliga likviditetskällor?"
 
@@ -1137,13 +1200,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Begäran ID är nödvändigt för att visa swap detaljer."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/embedded/src/pages/WalletsPage.tsx:72
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Anslut plånböcker"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:82
+#: widget/embedded/src/pages/WalletsPage.tsx:87
 msgid "Choose a wallet to connect."
 msgstr "Välj en plånbok att ansluta."
 
@@ -1163,12 +1226,12 @@ msgid "This year"
 msgstr "I år"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
+#: widget/embedded/src/utils/settings.ts:108
 msgid "Slippage must be greater than or equal to 0.01"
 msgstr "Slippage måste vara större än eller lika med 0,01"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
+#: widget/embedded/src/utils/settings.ts:113
 msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
 msgstr "Din transaktion riskerar att bli en \"frontrun\" på grund av hög tolerans mot \"slippage\"."
 
@@ -1193,32 +1256,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "Krävs: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:634
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for network fee"
 msgstr " för nätverksavgift"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for swap"
 msgstr " för byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:641
 msgid " for input and network fee"
 msgstr " för in- och nätverksavgift"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:643
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Behövs ↑ {requiredAmount} {symbol}{reason}, men du har {currentAmount} {symbol} i din {blockchain} plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:708
+#: widget/embedded/src/utils/swap.ts:709
 msgid "Waiting for other running tasks to be finished"
 msgstr "Väntar på att andra pågående uppgifter ska vara klara"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:711
+#: widget/embedded/src/utils/swap.ts:712
 msgid "Waiting for changing wallet network"
 msgstr "Väntar på att byta plånboksnätverk"
 
@@ -1273,18 +1336,18 @@ msgid "Aggregated Transaction"
 msgstr "Aggregerad transaktion"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:66
 msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Byt på {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Bron till {toChain} via {swapper}"
 
@@ -1309,38 +1372,40 @@ msgid "Waiting for the bridge transaction"
 msgstr "Väntar på bryggtransaktionen"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Ansluten"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Koppla från"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "Installera"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "Ansluter ..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "Ansluter"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "du måste skicka ett korrekt tillstånd till plånboken."
 
@@ -1350,7 +1415,7 @@ msgid "There are no notifications."
 msgstr "Det finns inga meddelanden."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Notifications/Notifications.tsx:39
+#: widget/ui/src/containers/Notifications/Notifications.tsx:44
 msgid "Clear all"
 msgstr "Rensa alla"
 
@@ -1360,7 +1425,7 @@ msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "Max"
 
