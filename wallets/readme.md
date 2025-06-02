@@ -135,6 +135,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
 | [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | 
 | [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
+| [UniSat](provider-unisat/readme.md) |  ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | 
 
 
 
@@ -145,6 +146,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
 | Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
+| Unisat |  ✅ | 🚧 | ❌ | Injected | ❌ | 
 
 
 
@@ -185,3 +187,4 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TronLink       | Tron                                                                                                                    | -                                                 | &cross;              | -                                    |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |
+| UniSat          | BTC |   -                                                | &cross;              | https://unisat.io/io/                |

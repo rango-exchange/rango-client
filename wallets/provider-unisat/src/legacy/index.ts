@@ -2,8 +2,11 @@ import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-import { chains as utxoChains } from '@rango-dev/wallets-core/namespaces/utxo';
-import { type BlockchainMeta, type SignerFactory } from 'rango-types';
+import {
+  type BlockchainMeta,
+  type SignerFactory,
+  type TransferBlockchainMeta,
+} from 'rango-types';
 
 import { info, WALLET_ID } from '../constants.js';
 import { type Provider, unisat as unisat_instance } from '../utils.js';
@@ -32,8 +35,7 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       CHROME: info.extensions.chrome,
       DEFAULT: info.extensions.homepage || '',
     },
-    color: '#4d40c6',
-    // if you are adding a new namespace, don't forget to also update `properties`
+    color: '#e9983d',
     needsNamespace: {
       selection: 'multiple',
       data: [
@@ -41,7 +43,11 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           label: 'BTC',
           value: 'UTXO',
           id: 'BTC',
-          chains: [utxoChains.bitcoin],
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            allBlockchains.filter(
+              (chain): chain is TransferBlockchainMeta =>
+                chain.name === Networks.BTC
+            ),
         },
       ],
     },

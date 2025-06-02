@@ -129,11 +129,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
-<<<<<<< HEAD
     slush,
-=======
-    lazyProvider(legacyProviderImportsToVersionsInterface(mytonwallet)),
     unisat,
->>>>>>> 1ee44e5f2 (feat: integrating unisat wallet)
   ];
 };

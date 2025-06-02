@@ -1,10 +1,13 @@
+import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
+
 import { type ProviderInfo } from '@rango-dev/wallets-core';
+import { Networks } from '@rango-dev/wallets-shared';
 
 export const WALLET_ID = 'unisat';
 
 export const info: ProviderInfo = {
   name: 'UniSat',
-  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',
+  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/unisat/icon.svg',
   extensions: {
     chrome:
       'https://chromewebstore.google.com/detail/unisat-wallet/ppbibelpcjmhbdihakflkdcoccbgbkpo',
@@ -12,9 +15,22 @@ export const info: ProviderInfo = {
   },
   properties: [
     {
-      name: 'detached',
-      // if you are adding a new namespace, don't forget to also update `getWalletInfo`
-      value: ['UTXO'],
+      name: 'namespaces',
+      value: {
+        selection: 'single',
+        data: [
+          {
+            label: 'BTC',
+            value: 'UTXO',
+            id: 'BTC',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is TransferBlockchainMeta =>
+                  chain.name === Networks.BTC
+              ),
+          },
+        ],
+      },
     },
   ],
 };
