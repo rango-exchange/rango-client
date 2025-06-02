@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-30 12:48\n"
+"PO-Revision-Date: 2025-06-02 08:24\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,36 +19,117 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+msgid "Chain not connected"
+msgstr "체인이 연결되지 않았습니다"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "제안된 최소 미끄러짐: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "증가하다"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "주의하세요. 슬리피지가 높습니다. 거래가 선행될 수 있습니다."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "변화 미끄러짐"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "미끄러짐은 0.01%보다 낮게 설정할 수 없습니다."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "조심하세요, 미끄러짐 위험이 높습니다!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "네트워크 변경 실패"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "미끄러짐:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "이 지갑은 여러 체인을 지원합니다. 연결하거나 연결 해제할 체인을 선택하세요."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "연결에 실패했습니다"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "이유를 알아보세요"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "이 지갑은 여러 체인을 지원합니다. 연결할 체인을 선택하세요."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "{fromChain} 에서 {swapper}를 거쳐 브리지로 연결"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "부분적으로 연결됨"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "다른 체인을 연결하세요"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:186
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:143
+#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "검색 결과가 없습니다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:193
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:144
+#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "다른 키워드를 사용해 보세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:72
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:97
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "체인 선택"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:82
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:83
 msgid "All"
 msgstr "모두"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:116
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:122
 msgid "More +{count}"
 msgstr "더 보기 +{count}"
 
@@ -63,51 +144,51 @@ msgid "Another tab is open and handles transactions."
 msgstr "또 다른 탭이 열려 거래를 처리합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:21
 msgid "Activate current tab"
 msgstr "현재 탭 활성화"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:23
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
 msgstr "현재 일부 거래가 실행 중이며 다른 브라우저 탭에서 처리되고 있습니다. 이 탭을 활성화하면 이미 거래 서명 단계에 있는 모든 거래가 만료됩니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:33
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:340
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:134
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:33
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "확인하다"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:356
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:429
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:357
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:436
 msgid "Your {blockchainName} wallets"
 msgstr "귀하의 {blockchainName} 지갑"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:375
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
 msgid "Insufficient account balance"
 msgstr "계좌잔액이 부족합니다"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:385
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:387
 msgid "Proceed anyway"
 msgstr "어쨌든 진행하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:438
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:445
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "{blockchainName} 지갑을 연결해야 합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:140
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "{chain} 체인 추가"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:246
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
 msgid "Show more wallets"
 msgstr "더 많은 지갑 보기"
 
@@ -117,32 +198,32 @@ msgid "Send to a different address"
 msgstr "다른 주소로 보내기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:129
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:130
 msgid "Enter {blockchainName} address"
 msgstr "{blockchainName} 주소를 입력하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:147
+#: widget/embedded/src/components/CustomDestination/CustomDestination.tsx:148
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "주소 {destination} 가 블록체인 주소 패턴과 일치하지 않습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:64
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
 msgid "via"
 msgstr "~을 통해"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:79
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "이 토큰은 검증된 토큰 목록에 포함되지 않았습니다. 계속 진행하기 전에 출처를 확인하고 관련된 모든 위험을 이해하세요."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:94
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
 msgid "Import Anyway"
 msgstr "어쨌든 가져오기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:104
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
 msgid "Learn More"
 msgstr "더 알아보기"
 
@@ -154,7 +235,8 @@ msgstr "상태"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/FilterSelector/FilterSelectorContent.tsx:33
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
-#: widget/embedded/src/pages/SettingsPage.tsx:55
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:19
+#: widget/embedded/src/pages/SettingsPage.tsx:56
 msgid "Reset"
 msgstr "다시 놓기"
 
@@ -165,13 +247,13 @@ msgstr "취소"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:36
 msgid "Refresh"
 msgstr "새로 고치다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
-#: widget/ui/src/containers/Notifications/Notifications.tsx:35
+#: widget/ui/src/containers/Notifications/Notifications.tsx:36
 msgid "Notifications"
 msgstr "알림"
 
@@ -195,7 +277,7 @@ msgid "Connect Wallet"
 msgstr "지갑 연결"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:121
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:122
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -239,63 +321,58 @@ msgid "Bridge Limit Error"
 msgstr "브리지 한계 오류"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:244
+#: widget/embedded/src/components/Quote/Quote.tsx:245
 msgid "Yours: {amount} {symbol}"
 msgstr "당신의: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:265
-msgid "Minimum required slippage: {minRequiredSlippage}"
-msgstr "최소 필요 미끄러짐: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:286
+#: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "당신의: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:414
+#: widget/embedded/src/components/Quote/Quote.tsx:418
 msgid "See All Routes"
 msgstr "모든 경로 보기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:96
 msgid "View more info"
 msgstr "더 많은 정보 보기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:110
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
 msgid "Gas & Fee Explanation"
 msgstr "가스 및 수수료 설명"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:126
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:103
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
 msgid "Details"
 msgstr "세부"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:171
 msgid "Total Payable Fee"
 msgstr "총 지불 수수료"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:185
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:191
 msgid "Hide non-payable fees"
 msgstr "지불 불가능한 수수료 숨기기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:186
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
 msgid "Show non-payable fees"
 msgstr "지불 불가능한 수수료 표시"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:196
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:202
 msgid "Description"
 msgstr "설명"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:206
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "다음 수수료는 거래 출력에 고려되며\n"
@@ -307,17 +384,17 @@ msgid "Swap input"
 msgstr "입력 바꾸기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:46
 msgid "Estimated output"
 msgstr "예상 출력"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:66
 msgid "Via:"
 msgstr "을 통해:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:151
 msgid "Chains:"
 msgstr "쇠사슬:"
 
@@ -372,64 +449,50 @@ msgid "Price impact"
 msgstr "가격 영향"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:44
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "이 경로의 경우 미끄러짐을 최소한 {minRequiredSlippage} 까지 높여야 합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:58
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "출력량이 {percentageChange}% (${usdValueChange})만큼 변경되었습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:72
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:61
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:49
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "이 경로의 경우 미끄러짐을 최소한 {minRequiredSlippage} 까지 높이는 것이 좋습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:82
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:94
 msgid "Caution, your slippage is high."
 msgstr "조심하세요, 미끄러짐이 심합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:78
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:26
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
 msgid "Change"
 msgstr "변화"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
-msgid "Change settings"
-msgstr "설정 변경"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:52
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:41
 msgid "High slippage"
 msgstr "높은 미끄러짐"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:53
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "낮은 미끄러짐"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:57
-msgid " Caution, your slippage is high (={userSlippage}). Your trade may be front run."
-msgstr " 주의하세요, 당신의 슬리피지는 높습니다(={userSlippage}). 당신의 거래는 선두일 수 있습니다."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Confirm anyway"
-msgstr "어쨌든 확인"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
 msgid "Something went wrong"
 msgstr "문제가 발생했습니다"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:25
 msgid "Something went wrong. Please refresh the app."
 msgstr "오류가 발생했습니다. 앱을 새로 고침하세요."
 
@@ -444,12 +507,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "From과 To에 동일한 토큰을 사용할 수 없습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:70
+#: widget/embedded/src/components/Slippage/Slippage.tsx:71
 msgid "Slippage tolerance per swap"
 msgstr "스왑당 미끄러짐 허용 범위"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:111
+#: widget/embedded/src/components/Slippage/Slippage.tsx:118
 msgid "Custom"
 msgstr "관습"
 
@@ -460,7 +523,7 @@ msgstr "가격이 이 비율 이상 불리하게 변동될 경우, 귀하의 거
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
-#: widget/embedded/src/containers/Settings/Lists.tsx:245
+#: widget/embedded/src/containers/Settings/Lists.tsx:247
 msgid "Warning"
 msgstr "경고"
 
@@ -513,6 +576,7 @@ msgstr "삭제"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
 msgid "Try again"
 msgstr "다시 시도하세요"
 
@@ -542,39 +606,41 @@ msgid "Created at"
 msgstr "생성됨"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
 msgid "View transaction"
 msgstr "거래 보기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:49
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:156
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "연결하다"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:51
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:52
 msgid "Swap Successful"
 msgstr "스왑 성공"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:79
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
 msgid "Transaction Failed"
 msgstr "거래 실패"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
 msgid "Done"
 msgstr "완료"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:120
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
 msgid "Diagnosis"
 msgstr "진단"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:132
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
 msgid "See Details"
 msgstr "자세한 내용 보기"
 
@@ -595,7 +661,7 @@ msgstr "네, 취소합니다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:32
-#: widget/embedded/src/pages/CustomTokensPage.tsx:182
+#: widget/embedded/src/pages/CustomTokensPage.tsx:184
 msgid "No, Continue"
 msgstr "아니요, 계속하세요"
 
@@ -611,13 +677,13 @@ msgstr "이 스왑을 삭제하시겠습니까?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
-#: widget/embedded/src/pages/CustomTokensPage.tsx:172
+#: widget/embedded/src/pages/CustomTokensPage.tsx:174
 msgid "Yes, Delete it"
 msgstr "네, 삭제합니다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:253
+#: widget/embedded/src/pages/HistoryPage.tsx:255
 msgid "No, Cancel"
 msgstr "아니요, 취소"
 
@@ -633,7 +699,7 @@ msgstr "네트워크가 변경되었습니다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:83
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
 msgid "Select Token"
 msgstr "토큰 선택"
 
@@ -683,23 +749,23 @@ msgid "Choose Derivation Path Template"
 msgstr "파생 경로 템플릿 선택"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:115
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
 msgid "Enter Path"
 msgstr "경로 입력"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
 msgid "Enter Index"
 msgstr "인덱스를 입력하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:15
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "{blockchainDisplayName} 체인 추가"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:20
+#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
 msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
 msgstr "{blockchainDisplayName} 실험적 체인을 지갑에 추가하시겠습니까?"
 
@@ -729,35 +795,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "지갑에 {blockchainDisplayName} 체인을 추가하는 것을 거부했습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceListItem.tsx:35
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(현재 지원되지 않음)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:96
-#: widget/embedded/src/utils/swap.ts:701
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
 msgid "Connect {wallet}"
 msgstr "연결 {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:99
-msgid "This wallet supports multiple chains. Choose which chains you'd like to connect to."
-msgstr "이 지갑은 여러 체인을 지원합니다. 연결할 체인을 선택하세요."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:110
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "이 지갑은 한 번에 하나의 체인에만 연결할 수 있습니다. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:126
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "모두 선택 해제"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:127
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "모두 선택"
 
@@ -843,11 +905,12 @@ msgstr "USD 가격 확인 불명"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:165
+#: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "교환"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
 msgstr "어쨌든 바꿔라"
@@ -864,12 +927,12 @@ msgid "Routes"
 msgstr "경로"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:79
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
 msgid "From"
 msgstr "에서"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:132
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
 msgid "To"
 msgstr "에게"
 
@@ -889,46 +952,46 @@ msgid "Auto"
 msgstr "자동차"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:140
+#: widget/embedded/src/containers/Settings/Lists.tsx:142
 msgid "Loading failed"
 msgstr "로딩 실패"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:156
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:158
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Bridges"
 msgstr "다리"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:174
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/embedded/src/containers/Settings/Lists.tsx:176
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 msgid "Exchanges"
 msgstr "교환"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:195
+#: widget/embedded/src/containers/Settings/Lists.tsx:197
 #: widget/embedded/src/pages/CustomTokensPage.tsx:90
 msgid "Custom Tokens"
 msgstr "사용자 정의 토큰"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:214
+#: widget/embedded/src/containers/Settings/Lists.tsx:216
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "언어"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:235
+#: widget/embedded/src/containers/Settings/Lists.tsx:237
 msgid "Infinite approval"
 msgstr "무한한 승인"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:246
+#: widget/embedded/src/containers/Settings/Lists.tsx:248
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to underlying smart contracts, allowing them to utilize the approved token amount without limitations."
 msgstr "'무한 승인' 모드를 활성화하면 기본 스마트 계약에 제한 없이 액세스할 수 있으므로 승인된 토큰 금액을 제한 없이 활용할 수 있습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:266
+#: widget/embedded/src/containers/Settings/Lists.tsx:268
 msgid "Theme"
 msgstr "주제"
 
@@ -974,7 +1037,7 @@ msgstr "토큰 데이터를 검색하는 동안 오류가 발생했습니다."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
-#: widget/embedded/src/pages/CustomTokensPage.tsx:150
+#: widget/embedded/src/pages/CustomTokensPage.tsx:151
 msgid "Add Custom Token"
 msgstr "사용자 정의 토큰 추가"
 
@@ -990,53 +1053,53 @@ msgid "Enter Address"
 msgstr "주소를 입력하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:98
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:99
 msgid "Enter token address"
 msgstr "토큰 주소를 입력하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:123
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:129
 msgid "Import"
 msgstr "수입"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:228
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:240
 msgid "Confirm Swap"
 msgstr "스왑 확인"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:246
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:258
 msgid "Start Swap"
 msgstr "스왑 시작"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:286
 msgid "You get"
 msgstr "당신은 얻을"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:102
-#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:121
+#: widget/embedded/src/pages/CustomTokensPage.tsx:103
+#: widget/embedded/src/pages/SelectSwapItemPage/SelectSwapItemsPage.tsx:122
 msgid "Search Token"
 msgstr "검색 토큰"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:135
+#: widget/embedded/src/pages/CustomTokensPage.tsx:136
 msgid "No custom tokens"
 msgstr "사용자 정의 토큰 없음"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:136
+#: widget/embedded/src/pages/CustomTokensPage.tsx:137
 msgid "press the button to add your custom token"
 msgstr "버튼을 눌러 사용자 정의 토큰을 추가하세요"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:159
+#: widget/embedded/src/pages/CustomTokensPage.tsx:161
 msgid "Delete Custom Token"
 msgstr "사용자 정의 토큰 삭제"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/CustomTokensPage.tsx:161
+#: widget/embedded/src/pages/CustomTokensPage.tsx:163
 msgid "Are you sure you want to Delete this Token?"
 msgstr "이 토큰을 삭제하시겠습니까?"
 
@@ -1067,42 +1130,42 @@ msgid "Search Transaction"
 msgstr "거래 검색"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 msgid "No transactions"
 msgstr "거래 없음"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "거래 내역은 로컬에 저장되며 스왑을 시작하면 여기에 표시됩니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:218
+#: widget/embedded/src/pages/HistoryPage.tsx:220
 msgid "Clear Transaction History"
 msgstr "거래 내역 지우기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:222
+#: widget/embedded/src/pages/HistoryPage.tsx:224
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "진행하면 위젯에서 모든 성공 및 실패한 거래가 제거됩니다. 계속하시겠습니까?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:229
+#: widget/embedded/src/pages/HistoryPage.tsx:231
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "참고: 이렇게 해도 체인의 거래 내역은 지워지지 않습니다. 단지 여기서만 삭제됩니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:243
+#: widget/embedded/src/pages/HistoryPage.tsx:245
 msgid "Yes, Clear the history"
 msgstr "네, 기록을 지웁니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:56
+#: widget/embedded/src/pages/LanguagePage.tsx:57
 msgid "language"
 msgstr "언어"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:137
 msgid "Search {sourceType}"
 msgstr "검색 {sourceType}"
 
@@ -1127,7 +1190,7 @@ msgid "Swap {type}"
 msgstr "스왑 {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:45
+#: widget/embedded/src/pages/SettingsPage.tsx:46
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "현재 유동성 소스에 제한이 있는 캠페인 모드에 있습니다. 이 모드에서 전환하여 사용 가능한 모든 유동성 소스를 활용하시겠습니까?"
 
@@ -1137,13 +1200,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "스왑 세부 정보를 표시하려면 요청 ID가 필요합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/embedded/src/pages/WalletsPage.tsx:72
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "지갑 연결"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:82
+#: widget/embedded/src/pages/WalletsPage.tsx:87
 msgid "Choose a wallet to connect."
 msgstr "연결할 지갑을 선택하세요."
 
@@ -1163,12 +1226,12 @@ msgid "This year"
 msgstr "올해"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:105
+#: widget/embedded/src/utils/settings.ts:108
 msgid "Slippage must be greater than or equal to 0.01"
 msgstr "미끄러짐은 0.01 이상이어야 합니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/settings.ts:110
+#: widget/embedded/src/utils/settings.ts:113
 msgid "Your transaction is at risk of being frontrun due to high slippage tolerance."
 msgstr "귀하의 거래는 높은 슬리피지 허용 범위로 인해 선행 체결될 위험이 있습니다."
 
@@ -1193,32 +1256,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "필수: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:634
+#: widget/embedded/src/utils/swap.ts:635
 msgid " for network fee"
 msgstr " 네트워크 수수료"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:638
 msgid " for swap"
 msgstr " 스왑을 위해"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:641
 msgid " for input and network fee"
 msgstr " 입력 및 네트워크 요금"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:643
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "≈ {requiredAmount} {symbol}{reason}가 필요한데, {currentAmount} {symbol} 가 {blockchain} 지갑에 있습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:708
+#: widget/embedded/src/utils/swap.ts:709
 msgid "Waiting for other running tasks to be finished"
 msgstr "다른 실행 중인 작업이 완료될 때까지 기다리기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:711
+#: widget/embedded/src/utils/swap.ts:712
 msgid "Waiting for changing wallet network"
 msgstr "지갑 네트워크 변경을 기다리는 중"
 
@@ -1273,18 +1336,18 @@ msgid "Aggregated Transaction"
 msgstr "집계된 거래"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:66
 msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:77
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:104
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "{fromChain} 을 {swapper}을 통해 바꿔주세요"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:111
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "{swapper}를 경유하여 {toChain} 로 연결"
 
@@ -1309,38 +1372,40 @@ msgid "Waiting for the bridge transaction"
 msgstr "브릿지 거래를 기다리는 중"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "연결됨"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "연결 해제"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "설치하다"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "연결 중..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "연결 중"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "연결 끊김"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "Wallet에 올바른 상태를 전달해야 합니다."
 
@@ -1350,7 +1415,7 @@ msgid "There are no notifications."
 msgstr "알림이 없습니다."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Notifications/Notifications.tsx:39
+#: widget/ui/src/containers/Notifications/Notifications.tsx:44
 msgid "Clear all"
 msgstr "모두 지우기"
 
@@ -1360,7 +1425,7 @@ msgid "Balance"
 msgstr "균형"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:74
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "맥스"
 
