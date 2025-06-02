@@ -41,14 +41,18 @@ export function getUsdExchangeRate(params: {
   if (!toTokenUsdPrice || !fromTokenUsdPrice) {
     return { rawValue: '0', displayValue: '0' };
   }
-
   const toPrice = new BigNumber(toTokenUsdPrice);
   const fromPrice = new BigNumber(fromTokenUsdPrice);
   const rawValue = toPrice.dividedBy(fromPrice);
   let displayValue: string;
 
   if (rawValue.isLessThan(1)) {
-    displayValue = rawValue.toFixed(SMALL_VALUE_DECIMALS);
+    /*
+     * Format the number with up to SMALL_VALUE_DECIMALS digits after the decimal point,
+     * then remove any trailing zeros.
+     * Example: "0.120000" → "0.12", "0.00000000000010" → "0.0000000000001"
+     */
+    displayValue = rawValue.toFixed(SMALL_VALUE_DECIMALS).replace(/\.?0+$/, '');
   } else if (rawValue.toFixed(0).length > LARGE_VALUE_MAX_DIGITS) {
     displayValue = rawValue.toFixed(0).slice(0, LARGE_VALUE_MAX_DIGITS);
   } else {
