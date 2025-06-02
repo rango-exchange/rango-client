@@ -104,21 +104,6 @@ export function SwapDetails(props: SwapDetailsProps) {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    const existNotification = notifications.find(
-      (n) => n.requestId === swap.requestId
-    );
-    if (existNotification) {
-      if (swap.status === 'success' || swap.status === 'failed') {
-        setShowCompletedModal(swap.status);
-        removeNotification(swap.requestId);
-        handleCloseModal();
-      } else if (showCompletedModal) {
-        setShowCompletedModal(null);
-      }
-    }
-  }, [swap.status, swap.requestId]);
-
   const handleShowSwitchNetworkLoading = () => {
     setSwitchNetworkModalState({
       type: 'loading',
@@ -141,38 +126,6 @@ export function SwapDetails(props: SwapDetailsProps) {
     });
   };
 
-  useEffect(() => {
-    if (switchNetworkIsAvailable) {
-      handleChangeModalState('switchNetwork');
-      if (
-        currentStepNetworkStatus ===
-        PendingSwapNetworkStatus.WaitingForNetworkChange
-      ) {
-        handleShowSwitchNetworkLoading();
-      } else if (
-        currentStepNetworkStatus ===
-        PendingSwapNetworkStatus.NetworkChangeFailed
-      ) {
-        handleShowSwitchNetworkFailed();
-      }
-    } else if (
-      currentStepNetworkStatus ===
-      PendingSwapNetworkStatus.WaitingForConnectingWallet
-    ) {
-      handleChangeModalState('connectWallet');
-    } else if (
-      currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged
-    ) {
-      handleChangeModalState('switchNetwork');
-      handleShowSwitchNetworkSucceeded();
-    } else if (
-      modalState &&
-      ['connectWallet', 'switchNetwork'].includes(modalState)
-    ) {
-      handleCloseModal();
-    }
-  }, [currentStepNetworkStatus]);
-
   const lastConvertedTokenInFailedSwap =
     getLastConvertedTokenInFailedSwap(swap);
 
@@ -186,21 +139,30 @@ export function SwapDetails(props: SwapDetailsProps) {
   const swapDate = getSwapDate(swap);
   const shouldRetry = shouldRetrySwap(swap);
 
-  const isMobileWallet = (walletType: string): boolean =>
+  const checkIsMobileWallet = (walletType: string): boolean =>
     !!getWalletInfo(walletType)?.mobileWallet;
 
-  const switchNetworkIsAvailable =
-    (currentStepNetworkStatus ===
-      PendingSwapNetworkStatus.WaitingForNetworkChange ||
-      currentStepNetworkStatus ===
-        PendingSwapNetworkStatus.NetworkChangeFailed) &&
-    !!currentStepNamespace &&
+  const stepIsBlockedForSwitchNetwork =
+    !!currentStepNetworkStatus &&
+    [
+      PendingSwapNetworkStatus.WaitingForNetworkChange,
+      PendingSwapNetworkStatus.NetworkChangeFailed,
+    ].includes(currentStepNetworkStatus);
+  const isMobileWallet =
     !!currentStepWallet?.walletType &&
-    (isMobileWallet(currentStepWallet.walletType) ||
-      canSwitchNetworkTo(
-        currentStepWallet.walletType,
-        currentStepNamespace.network
-      ));
+    checkIsMobileWallet(currentStepWallet.walletType);
+  const canSwitchNetworkToRequiredNetwork =
+    !!currentStepWallet &&
+    !!currentStepNamespace &&
+    canSwitchNetworkTo(
+      currentStepWallet.walletType,
+      currentStepNamespace.network
+    );
+
+  const switchNetworkIsAvailable =
+    !!currentStepNamespace &&
+    stepIsBlockedForSwitchNetwork &&
+    (isMobileWallet || canSwitchNetworkToRequiredNetwork);
 
   const handleSwitchNetwork = () => {
     if (switchNetworkIsAvailable) {
@@ -325,6 +287,53 @@ export function SwapDetails(props: SwapDetailsProps) {
         )}
       </ErrorMessages>
     );
+
+  useEffect(() => {
+    const existNotification = notifications.find(
+      (n) => n.requestId === swap.requestId
+    );
+    if (existNotification) {
+      if (swap.status === 'success' || swap.status === 'failed') {
+        setShowCompletedModal(swap.status);
+        removeNotification(swap.requestId);
+        handleCloseModal();
+      } else if (showCompletedModal) {
+        setShowCompletedModal(null);
+      }
+    }
+  }, [swap.status, swap.requestId]);
+
+  useEffect(() => {
+    if (switchNetworkIsAvailable) {
+      handleChangeModalState('switchNetwork');
+      if (
+        currentStepNetworkStatus ===
+        PendingSwapNetworkStatus.WaitingForNetworkChange
+      ) {
+        handleShowSwitchNetworkLoading();
+      } else if (
+        currentStepNetworkStatus ===
+        PendingSwapNetworkStatus.NetworkChangeFailed
+      ) {
+        handleShowSwitchNetworkFailed();
+      }
+    } else if (
+      currentStepNetworkStatus ===
+      PendingSwapNetworkStatus.WaitingForConnectingWallet
+    ) {
+      handleChangeModalState('connectWallet');
+    } else if (
+      currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged
+    ) {
+      handleChangeModalState('switchNetwork');
+      handleShowSwitchNetworkSucceeded();
+    } else if (
+      modalState &&
+      ['connectWallet', 'switchNetwork'].includes(modalState)
+    ) {
+      handleCloseModal();
+    }
+  }, [currentStepNetworkStatus]);
 
   return (
     <Layout
