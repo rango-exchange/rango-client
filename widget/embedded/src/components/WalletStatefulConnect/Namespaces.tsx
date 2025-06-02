@@ -13,10 +13,10 @@ import {
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
+import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
 import { NamespaceListItem } from './NamespaceListItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
-import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 
 export function Namespaces(props: PropTypes) {
   const { targetWallet } = props.value;
