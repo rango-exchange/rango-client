@@ -1,6 +1,6 @@
 import type { Chain, ChainId, ProviderAPI } from './types.js';
 
-import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
+import { type BlockchainMeta, evmBlockchains } from 'rango-types';
 
 export async function getAccounts(provider: ProviderAPI) {
   const [accounts, chainId] = await Promise.all([
@@ -28,7 +28,7 @@ export async function switchNetwork(instance: ProviderAPI, chainId: ChainId) {
   });
 }
 export function evmNetworkNames(meta: BlockchainMeta[]) {
-  return meta.filter(isEvmBlockchain).map((blockchain) => blockchain.name);
+  return evmBlockchains(meta).map((blockchain) => blockchain.name);
 }
 export async function switchOrAddNetwork(
   instance: ProviderAPI,

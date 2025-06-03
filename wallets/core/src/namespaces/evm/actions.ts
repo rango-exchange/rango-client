@@ -5,7 +5,6 @@ import type {
   CanEagerConnect,
   SubscriberCleanUp,
 } from '../../hub/namespaces/types.js';
-import type { Network } from '../../legacy/types.js';
 import type { CaipAccount } from '../../types/accounts.js';
 import type { FunctionWithContext } from '../../types/actions.js';
 
@@ -14,7 +13,7 @@ import { AccountId } from 'caip';
 import { recommended as commonRecommended } from '../common/actions.js';
 
 import { CAIP_NAMESPACE } from './constants.js';
-import { getAccounts, switchOrAddNetwork } from './utils.js';
+import { evmNetworkNames, getAccounts, switchOrAddNetwork } from './utils.js';
 
 export const recommended = [...commonRecommended];
 
@@ -174,11 +173,12 @@ export function canEagerConnect(
     }
   };
 }
-export function canSwitchNetwork(
-  evmSupportedChains: Network[]
-): FunctionWithContext<EvmActions['canSwitchNetwork'], Context> {
+export function canSwitchNetwork(): FunctionWithContext<
+  EvmActions['canSwitchNetwork'],
+  Context
+> {
   return (context, params) => {
-    const { network } = params;
-    return evmSupportedChains.includes(network);
+    const { network, supportedChains } = params;
+    return evmNetworkNames(supportedChains).includes(network);
   };
 }
