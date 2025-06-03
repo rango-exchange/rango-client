@@ -124,13 +124,19 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     canSwitchNetworkTo(type, network, namespace) {
       const provider = getHub().get(type);
 
+      if (!provider) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'canSwitchNetworkTo'.`
+        );
+      }
+
       if (!namespace) {
         throw new Error(
           'Passing namespace to `canSwitchNetworkTo` is required.'
         );
       }
 
-      const proxiedNamespace = provider?.findByNamespace(namespace.namespace);
+      const proxiedNamespace = provider.findByNamespace(namespace.namespace);
       if (!proxiedNamespace) {
         throw new Error(
           `We couldn't find any matched namespace on your request provider. (requested namespace: ${namespace.namespace})`
@@ -142,7 +148,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       return proxiedNamespace.canSwitchNetwork({
         network,
-        provider,
+        supportedChains: getSupportedChainsFromProvider(
+          provider,
+          dataRef.current.allBlockChains
+        ),
       });
     },
     async connect(type, namespaces) {
