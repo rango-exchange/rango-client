@@ -24,6 +24,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@rango-dev/wallets-core": "^0.43.1-next.11",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.85"
   },

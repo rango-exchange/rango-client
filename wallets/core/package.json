@@ -69,7 +69,9 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
+    "@solana/web3.js": "^1.91.4",
     "caip": "^1.1.1",
+    "ethers": "^6.13.2",
     "immer": "^10.0.4",
     "rango-types": "^0.1.85",
     "zustand": "^4.5.2"
