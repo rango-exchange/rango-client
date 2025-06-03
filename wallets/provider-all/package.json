@@ -56,7 +56,8 @@
     "@rango-dev/provider-walletconnect-2": "^0.38.2-next.11",
     "@rango-dev/provider-xdefi": "^0.46.1-next.4",
     "@rango-dev/wallets-react": "^0.30.2-next.12",
-    "@rango-dev/wallets-shared": "^0.44.2-next.13"
+    "@rango-dev/wallets-shared": "^0.44.2-next.13",
+    "@rango-dev/provider-unisat": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"
