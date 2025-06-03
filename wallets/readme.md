@@ -132,6 +132,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 ## By Group 
 |Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
 |--|--|--|--|--|--|--|
+| [CoinBase](provider-coinbase/readme.md) | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | 
 | [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
 | [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | 
 | [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
@@ -142,6 +143,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 ## By Feature
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
+| CoinBase |  ⚠️ | ✅ | ✅ |  Injected | ❌ |
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
 | Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
@@ -158,7 +160,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Brave          | EVM, Solana                                                                                                             | -                                                 | &check;              | https://brave.com/wallet/            |
 | Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge                                                                              | Polkadot,Kadena,Aptos,BTC,Doge                    | &check;              | https://wallet.clover.finance        |
 | Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
-| Coinbase       | EVM,Solana                                                                                                              | -                                                 | &check;              | https://www.coinbase.com/wallet      |
 | Cosmostation   | EVM,Cosmos,Aptos,Sui                                                                                                    | Aptos,Sui                                         | &check;              | https://cosmostation.io/             |
 | Enkrypt        | EVM                                                                                                                     | BTC,Polkadot                                      | &check;              | https://www.enkrypt.com/             |
 | Exodus         | BTC,Evm,Cardano,Solana,Algorand                                                                                         | BTC,Cardano,Algorand                              | &check;              | https://www.exodus.com/              |
