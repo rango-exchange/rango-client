@@ -123,9 +123,7 @@ export function WalletList(props: PropTypes) {
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
         const isConnectedButDifferentThanTargetNamespace =
-          isConnected && wallet.isHub
-            ? !conciseAddress
-            : !!wallet.needsNamespace && !conciseAddress;
+          isConnected && !!wallet.needsNamespace && !conciseAddress;
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 
