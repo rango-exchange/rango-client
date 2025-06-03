@@ -14,7 +14,6 @@ import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
-import { useMetaStore } from '../../store/meta';
 
 import {
   connectButtonStyles,
@@ -27,12 +26,10 @@ import { getWalletsList } from './FunctionalLayout.utils';
 export function WalletSection() {
   const { state, connect, disconnect } = useWallets();
   const { onChangeWallets, onChangeBooleansConfig, config } = useConfigStore();
-  const {
-    meta: { blockchains },
-  } = useMetaStore();
 
   const { externalWallets, wallets, multiWallets } = config;
-  const allWalletList = getWalletsList(config, blockchains);
+  const { getWalletInfo } = useWallets();
+  const allWalletList = getWalletsList(config, getWalletInfo);
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
