@@ -3,12 +3,18 @@ import type {
   AutoImplementedActionsByRecommended,
   CommonActions,
 } from '../common/types.js';
+import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 
 export interface SolanaActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   connect: () => Promise<Accounts>;
   canEagerConnect: () => Promise<boolean>;
+  getInstance: () => ProviderAPI | undefined;
+  signMessage: (message: string) => Promise<string>;
+  signTransaction: (
+    transaction: Transaction | VersionedTransaction
+  ) => Promise<Transaction | VersionedTransaction>;
 }
 
 /*

@@ -13,6 +13,9 @@ import { getAccounts } from './utils.js';
 
 export const recommended = [...commonRecommended];
 
+export { signTransaction } from './actions/signTransaction.js';
+export { signMessage } from './actions/signMessage.js';
+
 export function changeAccountSubscriber(
   instance: () => ProviderAPI | undefined
 ): [Subscriber<SolanaActions>, SubscriberCleanUp<SolanaActions>] {
