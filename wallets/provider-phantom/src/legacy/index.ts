@@ -1,6 +1,7 @@
 import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
+  CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
@@ -69,7 +70,9 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
     instance?.off?.('accountChanged', handleAccountsChanged);
   };
 };
-
+const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
+  return EVM_SUPPORTED_CHAINS.includes(network as Networks);
+};
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 
@@ -166,6 +169,7 @@ const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   subscribe,
   getSigners,
   getWalletInfo,
+  canSwitchNetworkTo,
   canEagerConnect,
 });
 
