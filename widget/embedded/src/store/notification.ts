@@ -30,33 +30,35 @@ export const useNotificationStore = createSelectors(
         setNotification: (event, route) => {
           const fromStep = route.steps[0];
           const toStep = route.steps[route.steps.length - 1];
-
-          const notification: Notification = {
-            event,
-            creationTime: Date.now(),
-            requestId: route.requestId,
-            route: {
-              creationTime: parseInt(route.creationTime),
-              from: {
-                blockchain: fromStep.fromBlockchain,
-                address: fromStep.fromSymbolAddress,
-                symbol: fromStep.fromSymbol,
+          if (fromStep && toStep) {
+            const notification: Notification = {
+              event,
+              creationTime: Date.now(),
+              requestId: route.requestId,
+              route: {
+                creationTime: parseInt(route.creationTime),
+                from: {
+                  blockchain: fromStep.fromBlockchain,
+                  address: fromStep.fromSymbolAddress,
+                  symbol: fromStep.fromSymbol,
+                },
+                to: {
+                  blockchain: toStep.toBlockchain,
+                  address: toStep.toSymbolAddress,
+                  symbol: toStep.toSymbol,
+                },
               },
-              to: {
-                blockchain: toStep.toBlockchain,
-                address: toStep.toSymbolAddress,
-                symbol: toStep.toSymbol,
-              },
-            },
-          };
+            };
 
-          const excludedList = get().notifications.filter(
-            (notificationItem) => notificationItem.requestId !== route.requestId
-          );
+            const excludedList = get().notifications.filter(
+              (notificationItem) =>
+                notificationItem.requestId !== route.requestId
+            );
 
-          set(() => ({
-            notifications: [...excludedList, notification],
-          }));
+            set(() => ({
+              notifications: [...excludedList, notification],
+            }));
+          }
         },
         removeNotification: (requestId) => {
           set((state) => ({
