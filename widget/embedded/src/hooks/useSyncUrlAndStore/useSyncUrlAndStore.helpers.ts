@@ -9,7 +9,7 @@ export function convertTokenSearchParamToAsset(
   return {
     blockchain: chain.name,
     address: symbolAndAddress?.[1] || null,
-    symbol: symbolAndAddress[0],
+    symbol: symbolAndAddress[0] || '',
   };
 }
 
