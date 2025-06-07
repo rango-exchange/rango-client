@@ -130,7 +130,7 @@ export function Quote(props: QuoteProps) {
       let stepState: 'error' | 'warning' | undefined = undefined;
       const hasBridgeLimitError =
         error?.type === QuoteErrorType.BRIDGE_LIMIT &&
-        error.swap.swapperId === swap.swapperId;
+        error?.swap?.swapperId === swap.swapperId;
 
       const hasSlippageError =
         error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
@@ -329,6 +329,9 @@ export function Quote(props: QuoteProps) {
   const timeWarning =
     totalDurationSeconds / SECONDS_IN_MINUTE >= ROUTE_TIME_MAX;
 
+  const lastStep = steps[numberOfSteps - 1];
+  const firstStep = steps[0];
+
   return fullExpandedMode ? (
     <FullExpandedQuote
       selected={selected}
@@ -427,7 +430,7 @@ export function Quote(props: QuoteProps) {
             </FrameIcon>
             <ContainerInfoOutput>
               <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${steps[0].from.token.displayName} = `}
+                {`${roundedInput} ${firstStep?.from.token.displayName} = `}
               </BasicInfoOutput>
               <NumericTooltip
                 content={output.value}
@@ -435,9 +438,7 @@ export function Quote(props: QuoteProps) {
                 open={!output.value ? false : undefined}>
                 <BasicInfoOutput size="small" variant="body">
                   &nbsp;
-                  {`${roundedOutput} ${
-                    steps[steps.length - 1].to.token.displayName
-                  }`}
+                  {`${roundedOutput} ${lastStep?.to.token.displayName}`}
                 </BasicInfoOutput>
               </NumericTooltip>
             </ContainerInfoOutput>
@@ -449,7 +450,7 @@ export function Quote(props: QuoteProps) {
             </NumericTooltip>
           </div>
         )}
-        {type === 'list-item' && (
+        {type === 'list-item' && lastStep && (
           <TokenAmount
             id="widget-quote-token-amount-container"
             tooltipContainer={container}
@@ -462,19 +463,19 @@ export function Quote(props: QuoteProps) {
               realUsdValue: output.usdValue,
             }}
             token={{
-              displayName: steps[numberOfSteps - 1].to.token.displayName,
-              image: steps[numberOfSteps - 1].to.token.image,
+              displayName: lastStep.to.token.displayName,
+              image: lastStep.to.token.image,
             }}
-            chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+            chain={{ image: lastStep.to.chain.image }}
             percentageChange={percentageChange}
             warningLevel={priceImpactWarningLevel}
           />
         )}
-        {type === 'swap-preview' && (
+        {type === 'swap-preview' && lastStep && firstStep && (
           <>
             <QuoteSummary
-              from={steps[0].from}
-              to={steps[numberOfSteps - 1].to}
+              from={firstStep.from}
+              to={lastStep.to}
               percentageChange={percentageChange}
               warningLevel={priceImpactWarningLevel}
             />
