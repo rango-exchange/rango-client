@@ -78,6 +78,7 @@ async function run() {
 
   // 3. Publish
   logAsSection(`::group::🚀 Start publishing...`);
+  let hasPublishError = false;
   try {
     await tryPublish(pkgs, {
       onUpdateState: state.setState.bind(state),
@@ -96,6 +97,7 @@ async function run() {
       // Ignoring error since it's possible to file hasn't changed yet.
       await addPkgFileChangesToStage(pkg).catch(console.warn);
     }
+    hasPublishError = true;
   }
 
   console.log('::endgroup::');
@@ -186,6 +188,10 @@ async function run() {
     }))
   );
   console.log('::endgroup::');
+
+  if(hasPublishError){
+    process.exit(1);
+  }
 }
 
 run().catch((e) => {
