@@ -1,3 +1,20 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/ui@0.46.1...ui@0.47.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* add sanitizeInputAmount for blur normalization of zero values ([9691146](https://github.com/rango-exchange/rango-client/commit/969114619abfc7865b55fa2b003b4d0ce19bc36d))
+* autocomplete off for search inputs ([4b47521](https://github.com/rango-exchange/rango-client/commit/4b475216395fb9c0404fdd28a2f26e2c69c12318))
+* show correct terms in routing section of cross-chain transactions ([0554412](https://github.com/rango-exchange/rango-client/commit/055441200814c904d258158e0e10a14abea7386b))
+
+
+### Features
+
+* add new states for wallet buttons ([d337aee](https://github.com/rango-exchange/rango-client/commit/d337aeed2315173a7820d3adedb412a4a1704fcd))
+* add static test attributes ([51b1433](https://github.com/rango-exchange/rango-client/commit/51b1433ab464a7255ec9f54499df65fbf98aa66b))
+
+
+
 ## [0.46.1](https://github.com/rango-exchange/rango-client/compare/ui@0.46.0...ui@0.46.1) (2025-05-04)
 
 

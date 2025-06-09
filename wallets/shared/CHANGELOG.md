@@ -1,3 +1,17 @@
+# [0.45.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.44.1...wallets-shared@0.45.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* fix retry swap on connect wallet ([f6c45b6](https://github.com/rango-exchange/rango-client/commit/f6c45b6c4a6b92a208e04606b42ed98d327ad349))
+
+
+### Features
+
+* integrate slush wallet ([9e9a5cc](https://github.com/rango-exchange/rango-client/commit/9e9a5ccb802fbd1f9a50322a89f65b557f152c6a))
+
+
+
 ## [0.44.1](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.44.0...wallets-shared@0.44.1) (2025-05-04)
 
 

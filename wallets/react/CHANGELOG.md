@@ -1,3 +1,21 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.30.1...wallets-react@0.31.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* add has method to the namespace proxy ([ee74628](https://github.com/rango-exchange/rango-client/commit/ee7462881c27fbf42fae374064362293f5f92765))
+* avoid hub recreation ([2e5fc07](https://github.com/rango-exchange/rango-client/commit/2e5fc07bc0952d1d98b828d7e70a892034bb99b8))
+* fix incorrect state after connecting evm namespace on hub wallets ([778bba9](https://github.com/rango-exchange/rango-client/commit/778bba9ca33ca8cce1a98bb3dcff81fa55a6d6a9))
+* run connect namespaces sequentially when connect of adapter called separately ([087a94e](https://github.com/rango-exchange/rango-client/commit/087a94e012525609dee75b053db2ce3ee444aa18))
+
+
+### Features
+
+* add namespace connect and disconnect and get state ([dcbabb0](https://github.com/rango-exchange/rango-client/commit/dcbabb0c2b81932312b3b76975af2ad558439869))
+* add new states for wallet buttons ([d337aee](https://github.com/rango-exchange/rango-client/commit/d337aeed2315173a7820d3adedb412a4a1704fcd))
+
+
+
 ## [0.30.1](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.30.0...wallets-react@0.30.1) (2025-05-04)
 
 
