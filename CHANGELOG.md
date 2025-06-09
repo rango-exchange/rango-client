@@ -1,3 +1,38 @@
+## Widget [0.37.0] (2025-06-09)
+_includes `@rango-dev/widget-embedded@0.44.0`_
+
+### Features
+
+- add detached connect wallet modal ([b2d7d6f](https://github.com/rango-exchange/rango-client/commit/b2d7d6fda2bdfe3e9f72baba95a1a7694e3db21a))
+- integrate slush wallet ([9e9a5cc](https://github.com/rango-exchange/rango-client/commit/9e9a5ccb802fbd1f9a50322a89f65b557f152c6a))
+- migrate trust wallet to use hub and add support for solana ([61497fd](https://github.com/rango-exchange/rango-client/commit/61497fd40d48d48030e5a6d7ece53b5b7daf7b09))
+- add namespace connect and disconnect and get state ([dcbabb0](https://github.com/rango-exchange/rango-client/commit/dcbabb0c2b81932312b3b76975af2ad558439869))
+- add new states for wallet buttons ([d337aee](https://github.com/rango-exchange/rango-client/commit/d337aeed2315173a7820d3adedb412a4a1704fcd))
+- add static test attributes ([51b1433](https://github.com/rango-exchange/rango-client/commit/51b1433ab464a7255ec9f54499df65fbf98aa66b))
+- show slippage and rate in swap box ([54aea4e](https://github.com/rango-exchange/rango-client/commit/54aea4e69413bc7383716893f091b2ef1b0ae693))
+
+
+### Bug Fixes
+
+- fix retry swap on connect wallet ([f6c45b6](https://github.com/rango-exchange/rango-client/commit/f6c45b6c4a6b92a208e04606b42ed98d327ad349))
+- add has method to the namespace proxy ([ee74628](https://github.com/rango-exchange/rango-client/commit/ee7462881c27fbf42fae374064362293f5f92765))
+- avoid hub recreation ([2e5fc07](https://github.com/rango-exchange/rango-client/commit/2e5fc07bc0952d1d98b828d7e70a892034bb99b8))
+- fix phantom transaction failure on sui namespace disabled ([213b235](https://github.com/rango-exchange/rango-client/commit/213b23565b2729a48605d3d06ef5dd6daf66900f))
+- if data exceed 90 days, bottom axis should be shown correctly ([34c0606](https://github.com/rango-exchange/rango-client/commit/34c0606986b72aab97e5174a9bce2f1e1e5a159a))
+- fix incorrect state after connecting evm namespace on hub wallets ([778bba9](https://github.com/rango-exchange/rango-client/commit/778bba9ca33ca8cce1a98bb3dcff81fa55a6d6a9))Add commentMore actions
+- run connect namespaces sequentially when connect of adapter called separately ([087a94e](https://github.com/rango-exchange/rango-client/commit/087a94e012525609dee75b053db2ce3ee444aa18))
+- playground crash on filter wallets ([f0e98ce](https://github.com/rango-exchange/rango-client/commit/f0e98cec6377324385e429df1b6f739770eff089))
+- add sanitizeInputAmount for blur normalization of zero values ([9691146](https://github.com/rango-exchange/rango-client/commit/969114619abfc7865b55fa2b003b4d0ce19bc36d))
+- autocomplete off for search inputs ([4b47521](https://github.com/rango-exchange/rango-client/commit/4b475216395fb9c0404fdd28a2f26e2c69c12318))
+- correct the formatting of the total payable fee in the fee details modal ([ee052d3](https://github.com/rango-exchange/rango-client/commit/ee052d3f3e5bd8ab4284a01a6e9d92dc627efb68))
+- correctly display small exchange rate values on the home page ([a3e103f](https://github.com/rango-exchange/rango-client/commit/a3e103f116062f0ebfe4062179ed8794a6f24bc2))
+- display correct state in confirm wallets modal ([46417f1](https://github.com/rango-exchange/rango-client/commit/46417f1b75c4daf3d3cb4d43af8b695cdcc71720))
+- display error message from response instead of default fallback ([188e130](https://github.com/rango-exchange/rango-client/commit/188e130a1603a8533f19db3545a445523187593b))
+- make widget compatible with rango-types ([d8e8ef9](https://github.com/rango-exchange/rango-client/commit/d8e8ef996efc3179932dc91224d97bc7f54ae09f))
+- turn autocomplete off for history search input ([97bc186](https://github.com/rango-exchange/rango-client/commit/97bc18649d0f1ee292c46837db2a1a7f00df97b1))
+- show correct terms in routing section of cross-chain transactions ([0554412](https://github.com/rango-exchange/rango-client/commit/055441200814c904d258158e0e10a14abea7386b))
+
+
 
 ## Widget [0.36.0] (2025-05-26)
 _includes `@rango-dev/widget-embedded@0.43.0`_
