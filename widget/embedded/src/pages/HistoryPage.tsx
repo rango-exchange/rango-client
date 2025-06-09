@@ -161,7 +161,6 @@ export function HistoryPage() {
             placeholder={i18n.t('Search Transaction')}
             id="widget-history-search-transaction-input"
             autoFocus
-            autoComplete="off"
             onChange={handleSearch}
             style={{ height: 36 }}
             value={searchedFor}
