@@ -18,4 +18,4 @@ export type {
   AccountsWithActiveChain,
 } from '../../types/accounts.js';
 
-export type { Namespace, Chain } from './types.js';
+export type { Namespace } from './types.js';

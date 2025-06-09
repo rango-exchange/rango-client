@@ -1,3 +1,5 @@
+import type { BottomAxisData } from './BarChart.types.js';
+
 export const DEFAULT_MARGIN = { top: 40, right: 0, bottom: 0, left: 20 };
 
 export const TOOLTIP_DELAY_MS = 100;
@@ -18,7 +20,11 @@ export const DEFAULT_CHART_COLORS: string[] = [
   '#F4C932',
 ];
 
-export const bottomAxisData = {
+export const bottomAxisData: {
+  [key: string]: {
+    [key: number]: BottomAxisData;
+  };
+} = {
   desktop: {
     7: { numBottomAxis: 7, startBottomAxis: 0, intervalBottomAxis: 1 },
     30: { numBottomAxis: 6, startBottomAxis: 4, intervalBottomAxis: 5 },

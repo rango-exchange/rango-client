@@ -4,11 +4,10 @@ import React from 'react';
 import { Image } from '../common/index.js';
 import { Typography } from '../Typography/index.js';
 
-import { makeInfo } from './Wallet.helpers.js';
 import {
+  SelectableWalletButton,
   Text,
   Title,
-  WalletButton,
   WalletImageContainer,
 } from './Wallet.styles.js';
 import { type SelectablePropTypes, WalletState } from './Wallet.types.js';
@@ -20,14 +19,16 @@ export function SelectableWallet(props: SelectablePropTypes) {
     image,
     onClick,
     selected,
+    id,
     description,
-    state,
+    descriptionColor,
     disabled = false,
   } = props;
-  const info = makeInfo(props.state);
+
   return (
-    <WalletButton
+    <SelectableWalletButton
       selected={selected}
+      id={id}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
         if (props.state === WalletState.NOT_INSTALLED) {
@@ -49,10 +50,10 @@ export function SelectableWallet(props: SelectablePropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={state === WalletState.CONNECTED ? 'neutral700' : info.color}>
-          {description || info.description}
+          color={descriptionColor}>
+          {description}
         </Typography>
       </Text>
-    </WalletButton>
+    </SelectableWalletButton>
   );
 }

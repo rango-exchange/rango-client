@@ -158,6 +158,7 @@ export function handleQuoteErrors(error: any): ConfirmSwapFetchResult {
     swap: null,
     error: {
       type: QuoteErrorType.REQUEST_FAILED,
+      diagnosisMessage: error.message,
     },
     warnings: null,
   };

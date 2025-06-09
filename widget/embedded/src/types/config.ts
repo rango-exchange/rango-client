@@ -200,7 +200,7 @@ export type TonConnectConfig = {
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
  * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
  * as a Trezor Connect integrator,share your e-mail and application url.
- * @property {TonConnectConfig} tonConnect - Configuration for TON Connect compatible providers like MyTonWallet.
+ * @property {TonConnectConfig} tonConnect - Configuration for the TON Connect provider.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.

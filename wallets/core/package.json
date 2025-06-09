@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.43.0",
+  "version": "0.43.1-next.11",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -71,7 +71,7 @@
   "dependencies": {
     "caip": "^1.1.1",
     "immer": "^10.0.4",
-    "rango-types": "^0.1.84",
+    "rango-types": "^0.1.85",
     "zustand": "^4.5.2"
   },
   "publishConfig": {

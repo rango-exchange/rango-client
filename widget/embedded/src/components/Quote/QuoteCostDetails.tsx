@@ -71,6 +71,11 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const container = fullExpandedMode ? getExpanded() : getContainer();
 
   const feesGroup = getFeesGroup(swaps);
+  const roundedFee = numberToString(
+    fee,
+    GAS_FEE_MIN_DECIMALS,
+    GAS_FEE_MAX_DECIMALS
+  );
 
   return (
     <>
@@ -83,7 +88,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
               }
             : undefined
         }
-        fee={fee}
+        fee={roundedFee}
         feeWarning={feeWarning}
         timeWarning={timeWarning}
         time={time}
@@ -93,6 +98,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
       />
 
       <WatermarkedModal
+        id="widget-quote-cost-explanation-modal"
         container={container}
         open={open}
         anchor={fullExpandedMode ? 'center' : 'bottom'}
@@ -145,7 +151,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
                           fee.amount,
                           GAS_FEE_MIN_DECIMALS,
                           GAS_FEE_MAX_DECIMALS
-                        )}{' '}
+                        )}
                         {fee.asset.symbol} ($
                         {numberToString(
                           usdValue,
@@ -174,7 +180,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             </Typography>
           </FeeSection>
           <Line />
-          {Object.keys(feesGroup.nonePayable).length && (
+          {!!Object.keys(feesGroup.nonePayable).length && (
             <CustomCollapsible
               triggerAnchor="bottom"
               onClickTrigger={() => setOpenCollapse((prev) => !prev)}

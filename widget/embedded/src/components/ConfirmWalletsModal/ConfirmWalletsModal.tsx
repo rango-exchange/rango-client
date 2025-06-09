@@ -307,6 +307,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
   return (
     <WatermarkedModal
+      id="widget-confirm-wallets-modal"
       open={open}
       onClose={() => {
         if (!quoteWalletsConfirmed) {
@@ -368,6 +369,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       })}
       anchor="center">
       <WatermarkedModal
+        id='"widget-confirm-wallets-insufficient-account-balance-modal'
         open={isInsufficientBalanceModalOpen}
         onClose={setBalanceWarnings.bind(null, [])}
         container={modalContainer}>
@@ -406,7 +408,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
         <>
           {error && (
             <>
-              <Alert variant="alarm" type="error" title={i18n.t(error)} />
+              <Alert
+                id="widget-confirm-wallet-modal-error-alert"
+                variant="alarm"
+                type="error"
+                title={i18n.t(error)}
+              />
               <Divider size={12} />
             </>
           )}

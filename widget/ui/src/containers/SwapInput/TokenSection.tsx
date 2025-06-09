@@ -36,12 +36,17 @@ export function TokenSection(props: TokenSectionProps) {
     loading,
     warning,
     tooltipContainer,
+    id,
   } = props;
 
   const tokenSelected = !error && !loading && !!tokenSymbol;
 
   return (
-    <Container variant="default" disabled={error || loading} onClick={onClick}>
+    <Container
+      id={`${id}-clear-all-btn`}
+      variant="default"
+      disabled={error || loading}
+      onClick={onClick}>
       <TokenSectionContainer>
         <ChainToken
           chianImageId={chianImageId}

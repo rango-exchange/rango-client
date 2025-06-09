@@ -19,6 +19,7 @@ export function UnknownPriceWarningModal(props: Props) {
   const { open, onClose, onConfirm, confirmationDisabled } = props;
   return (
     <WatermarkedModal
+      id="widget-unknown-price-warning-modal"
       footer={
         <Button
           id="widget-unknown-price-warning-modal-confirm-btn"

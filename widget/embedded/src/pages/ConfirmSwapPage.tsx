@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
   ConfirmSwap,
   ConfirmSwapFetchResult,
@@ -29,6 +28,7 @@ import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
+import { QuoteErrorType, QuoteWarningType } from '../types';
 import { isQuoteWarningConfirmationRequired } from '../utils/quote';
 import { joinList } from '../utils/ui';
 
@@ -121,6 +121,7 @@ export function ConfirmSwapPage() {
           setInputAmount('');
         }, 0);
       } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setDbErrorMessage('Error: ' + (e as any)?.message);
       }
     }
@@ -198,7 +199,14 @@ export function ConfirmSwapPage() {
   const quoteError = confirmSwapResult.error;
   const alerts = [];
   if (dbErrorMessage) {
-    alerts.push(<Alert type="error" variant="alarm" title={dbErrorMessage} />);
+    alerts.push(
+      <Alert
+        id="widget-confirm-swap-db-error-alert"
+        type="error"
+        variant="alarm"
+        title={dbErrorMessage}
+      />
+    );
   }
 
   if (quoteWarning || quoteError) {
@@ -209,6 +217,10 @@ export function ConfirmSwapPage() {
         error={quoteError}
         couldChangeSettings={false}
         refetchQuote={onRefresh}
+        skipAlerts={
+          quoteError?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE ||
+          quoteWarning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE
+        }
         showWarningModal={showQuoteWarningModal}
         confirmationDisabled={!isActiveTab}
         onOpenWarningModal={() => setShowQuoteWarningModal(true)}
@@ -299,6 +311,7 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
+          id="widget-confirm-swap-quote-container"
           expanded
           tagHidden
           error={confirmSwapResult.error}

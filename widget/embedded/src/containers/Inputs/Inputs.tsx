@@ -34,6 +34,7 @@ export function Inputs(props: PropTypes) {
     toToken,
     toBlockchain,
     setInputAmount,
+    sanitizeInputAmount,
     inputAmount,
     inputUsdValue,
     outputAmount,
@@ -77,8 +78,10 @@ export function Inputs(props: PropTypes) {
       <FromContainer>
         <SwapInput
           label={i18n.t('From')}
+          id="widget-swap-from"
           mode="From"
           onInputChange={setInputAmount}
+          onInputBlur={sanitizeInputAmount}
           balance={fromTokenFormattedBalance}
           chain={{
             displayName: fromBlockchain?.displayName || '',
@@ -131,6 +134,7 @@ export function Inputs(props: PropTypes) {
         sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
         label={i18n.t('To')}
         mode="To"
+        id="widget-swap-to-input"
         fetchingQuote={fetchingQuote}
         chain={{
           displayName: toBlockchain?.displayName || '',

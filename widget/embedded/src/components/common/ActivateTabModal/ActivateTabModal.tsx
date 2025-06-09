@@ -15,6 +15,7 @@ export function ActivateTabModal(props: PropTypes) {
       open={open}
       dismissible
       onClose={onClose}
+      id="widget-active-tab-modal"
       container={getContainer()}>
       <MessageBox
         title={i18n.t('Activate current tab')}

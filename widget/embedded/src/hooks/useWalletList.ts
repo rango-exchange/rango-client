@@ -1,4 +1,4 @@
-import type { WalletInfoWithExtra } from '../types';
+import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
 import type { BlockchainMeta } from 'rango-sdk';
 
@@ -27,7 +27,7 @@ interface Params {
 }
 
 interface API {
-  list: WalletInfoWithExtra[];
+  list: ExtendedModalWalletInfo[];
   terminateConnectingWallets: () => void;
 }
 
@@ -64,7 +64,7 @@ export function useWalletList(params?: Params): API {
       )
     : wallets;
 
-  const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
+  const sortedWallets = sortWalletsBasedOnConnectionState(wallets, state);
 
   const isExperimentalChainNotAdded = (walletType: string) =>
     !connectedWallets.find(

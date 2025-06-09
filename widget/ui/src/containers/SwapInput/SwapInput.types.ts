@@ -1,6 +1,7 @@
 import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types.js';
 
 export type BaseProps = {
+  id: string;
   chain: {
     displayName: string;
     image?: string;
@@ -33,6 +34,7 @@ type FromProps = {
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
   anyWalletConnected: boolean;
+  onInputBlur?: (inputAmount: string) => void;
 };
 
 type ToProps = {

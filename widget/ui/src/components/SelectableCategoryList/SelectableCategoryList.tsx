@@ -43,6 +43,9 @@ export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
           return (
             hasBlockchain && (
               <BlockchainsChip
+                className={
+                  'widget-selectable-category-list-blockchains-chip-btn'
+                }
                 selected={category === blockchainCategory}
                 key={blockchainCategory}
                 onClick={() => setCategory(blockchainCategory)}>

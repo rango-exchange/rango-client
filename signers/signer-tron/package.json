@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-tron",
-  "version": "0.34.0",
+  "version": "0.34.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.84"
+    "rango-types": "^0.1.85"
   },
   "publishConfig": {
     "access": "public"

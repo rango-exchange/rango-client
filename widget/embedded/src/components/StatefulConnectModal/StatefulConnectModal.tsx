@@ -17,14 +17,21 @@ import {
   DerivationPath,
   Namespaces,
 } from '../WalletStatefulConnect';
+import { Detached } from '../WalletStatefulConnect/Detached';
 
-import { isOnDerivationPath, isOnNamespace, isOnStatus } from './helpers';
+import {
+  isOnDerivationPath,
+  isOnDetached,
+  isOnNamespace,
+  isOnStatus,
+} from './helpers';
 
 const KEEP_SUCCESS_MODAL_FOR = 3_000;
 const DELAY_SHOWING_MODAL_FOR = 300;
 
 interface PropTypes {
   wallet: WalletInfoWithExtra | undefined;
+  id: string;
   onClose: () => void;
   // When connecting wallet is executed **successfully**, this will be called afterwards.
   onConnect?: () => void;
@@ -54,6 +61,10 @@ export function StatefulConnectModal(props: PropTypes) {
     handleNamespace(props.wallet!, selectedNamespaces)
       .then(afterConnected)
       .catch(catchErrorOnHandle);
+  };
+
+  const handleDetachedConfirm = () => {
+    handleClosingModal();
   };
 
   const handleDerivationPathConfirm = (derivationPath: string) => {
@@ -130,6 +141,7 @@ export function StatefulConnectModal(props: PropTypes) {
         .then((result) => {
           const resultIsNeedMoreStepsToConnect = [
             ResultStatus.Namespace,
+            ResultStatus.Detached,
             ResultStatus.DerivationPath,
           ].includes(result.status);
 
@@ -144,6 +156,7 @@ export function StatefulConnectModal(props: PropTypes) {
 
   return (
     <WatermarkedModal
+      id={props.id}
       open={isConnecting}
       onClose={handleClosingModal}
       onExit={() => {
@@ -176,6 +189,13 @@ export function StatefulConnectModal(props: PropTypes) {
         <DerivationPath
           onConfirm={handleDerivationPathConfirm}
           value={getState().derivationPath}
+        />
+      )}
+      {isOnDetached(getState) && (
+        <Detached
+          onConfirm={handleDetachedConfirm}
+          value={getState().namespace}
+          selectedNamespaces={getState().selectedNamespaces}
         />
       )}
     </WatermarkedModal>

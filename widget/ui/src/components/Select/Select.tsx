@@ -11,7 +11,8 @@ import { SelectContent, SelectItem, SelectTrigger } from './Select.styles.js';
 export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
-  const { options, value, container, handleItemClick, variant, styles } = props;
+  const { options, value, container, handleItemClick, variant, id, styles } =
+    props;
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -43,6 +44,7 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
     <div ref={selectRef}>
       <Select.Root value={value} open={open}>
         <SelectTrigger
+          id={id}
           variant={variant}
           onKeyDown={(event) => event.key === 'Enter' && handleToggle()}
           onClick={handleToggle}
@@ -69,7 +71,7 @@ export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
                 {options.map((option) => (
                   <SelectItem
                     onClick={() => {
-                      handleItemClick && handleItemClick(option);
+                      handleItemClick?.(option);
                       handleToggle();
                     }}
                     key={option.value}

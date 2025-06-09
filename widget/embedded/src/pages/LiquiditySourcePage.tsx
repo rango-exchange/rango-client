@@ -22,6 +22,7 @@ import {
 } from '../components/SettingsContainer';
 import { useAppStore } from '../store/AppStore';
 import { containsText } from '../utils/numbers';
+import { replaceSpacesWithDash } from '../utils/sanitizers';
 import { getUniqueSwappersGroups } from '../utils/settings';
 
 interface PropTypes {
@@ -69,10 +70,12 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
 
   const list = liquiditySources.map((sourceItem) => {
     const { selected, groupTitle, logo, id, ...restSourceItem } = sourceItem;
+
     return {
-      id: `widget-setting-liquidity-source-${id
-        .toLowerCase()
-        .replace(/\s+/g, '-')}-item-btn`,
+      id: `widget-setting-liquidity-source-${replaceSpacesWithDash(
+        id.toLowerCase()
+      )}-item-btn`,
+
       start: <Image src={logo} size={22} type="circular" />,
       onClick: () => {
         if (!campaignMode) {
@@ -127,6 +130,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
         <SearchInput
           value={searchedFor}
           setValue={setSearchedFor}
+          id="widget-liquidity-source-search-input"
           fullWidth
           color="light"
           variant="contained"
@@ -146,7 +150,9 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           </NotFoundContainer>
         ) : (
           fetchStatus === 'success' && (
-            <LiquiditySourceList disabled={campaignMode}>
+            <LiquiditySourceList
+              disabled={campaignMode}
+              className="widget-liquidity-source-list">
               {filteredList.map((sourceItem) => {
                 const { groupTitle, ...otherProps } = sourceItem;
 
@@ -156,6 +162,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
                       style={{ height: '61px' }}
                       {...otherProps}
                       selected={false}
+                      className="widget-liquidity-source-list-item-btn"
                       hasDivider
                     />
                   </React.Fragment>

@@ -1,5 +1,6 @@
 import type {
-  OnWalletConnectionChange,
+  OnWalletConnectHandler,
+  OnWalletDisconnectHandler,
   PropTypes,
   WidgetContextInterface,
 } from './Wallets.types';
@@ -45,8 +46,8 @@ function Main(props: PropsWithChildren<PropTypes>) {
         ?.walletConnectListedDesktopWalletLink,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
-  const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
-  const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();
+  const onConnectWalletHandler = useRef<OnWalletConnectHandler>();
+  const onDisconnectWalletHandler = useRef<OnWalletDisconnectHandler>();
   const { handler: handleEvent } = useUpdates({
     onConnectWalletHandler,
     onDisconnectWalletHandler,
@@ -71,10 +72,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
 
   const handlers = useMemo(
     () => ({
-      onConnectWallet: (handler: OnWalletConnectionChange) => {
+      onConnectWallet: (handler: OnWalletConnectHandler) => {
         onConnectWalletHandler.current = handler;
       },
-      onDisconnectWallet: (handler: OnWalletConnectionChange) => {
+      onDisconnectWallet: (handler: OnWalletDisconnectHandler) => {
         onDisconnectWalletHandler.current = handler;
       },
     }),
