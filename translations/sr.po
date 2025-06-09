@@ -8,7 +8,7 @@ msgstr ""
 "Language: sr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-02 08:24\n"
+"PO-Revision-Date: 2025-06-09 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -19,90 +19,9 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
-msgid "Chain not connected"
-msgstr "Ланац није повезан"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
-msgid "Minimum suggested slippage: {minRequiredSlippage}"
-msgstr "Минимално препоручено клизање: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
-msgid "Increase"
-msgstr "Повећање"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
-msgid "Caution, your slippage is high. Your trade may be front run."
-msgstr "Опрез, ваше клизање је велико. Ваша трговина би могла бити испред трке."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Change Slippage"
-msgstr "Промена проклизавања"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
-msgid "Slippage cannot be set lower than 0.01%."
-msgstr "Клизање не може бити подешено на мање од 0,01%."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
-msgid "Caution, your slippage is high!"
-msgstr "Опрез, ваше клизање је велико!"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Промена мреже није успела"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
-msgid "Slippage:"
-msgstr "Клизање:"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете или искључите."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
-msgid "Connection failed"
-msgstr "Повезивање није успело"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
-msgid "See why"
-msgstr "Погледајте зашто"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
-msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
-msgid "Bridge from {fromChain} via {swapper}"
-msgstr "Мост од {fromChain} преко {swapper}"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-msgid "Connected Partially"
-msgstr "Делимично повезано"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
-msgid "Connect other chains"
-msgstr "Повежите друге ланце"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Нема пронађених резултата"
@@ -110,7 +29,7 @@ msgstr "Нема пронађених резултата"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Покушајте да користите различите кључне речи"
@@ -183,12 +102,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Морате да повежете {blockchainName} новчаник."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
 msgid "Add {chain} chain"
 msgstr "Додајте {chain} ланац"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+msgid "Chain not connected"
+msgstr "Ланац није повезан"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
 msgid "Show more wallets"
 msgstr "Прикажи још новчаника"
 
@@ -326,6 +250,11 @@ msgid "Yours: {amount} {symbol}"
 msgstr "Ваш: {amount} {symbol}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "Минимално препоручено клизање: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "Ваш: {userSlippage}"
@@ -454,6 +383,12 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Морате повећати клизање на најмање {minRequiredSlippage} за ову руту."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "Повећање"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "Излазни износ је промењен за {percentageChange}% (${usdValueChange})."
@@ -485,6 +420,22 @@ msgstr "Високо клизање"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "Ниско клизање"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "Опрез, ваше клизање је велико. Ваша трговина би могла бити испред трке."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
+#: widget/embedded/src/constants/messages.ts:7
+msgid "Swap anyway"
+msgstr "Замени у сваком случају"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "Промена проклизавања"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
@@ -531,6 +482,16 @@ msgstr "Упозорење"
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
 msgstr "Ово подешавање се примењује на сваки корак (нпр. 1 инч, Тхорцхаин, итд.), што значи да ће само тај одређени корак бити враћен, а не цела рута."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "Клизање не може бити подешено на мање од 0,01%."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "Опрез, ваше клизање је велико!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
@@ -683,7 +644,7 @@ msgstr "Да, Избриши"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:256
 msgid "No, Cancel"
 msgstr "Не, откажи"
 
@@ -696,6 +657,16 @@ msgstr "Промените мрежу"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
 msgstr "Мрежа је промењена"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "Промена мреже није успела"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "Клизање:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
@@ -759,6 +730,18 @@ msgid "Enter Index"
 msgstr "Унесите индекс"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
+msgid "Connect {wallet}"
+msgstr "Повежи се {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете или искључите."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
@@ -795,16 +778,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Одбили сте додавање {blockchainDisplayName} ланца у ваш новчаник."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
-msgid "(Currently not supported)"
-msgstr "(Тренутно није подржано)"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
+msgid "Disconnect"
+msgstr "Прекини везу"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
-msgid "Connect {wallet}"
-msgstr "Повежи се {wallet}"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "Повезано"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "Повезивање није успело"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "Погледајте зашто"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
@@ -822,6 +820,11 @@ msgstr "Опозови све"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Изаберите све"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+msgid "(Currently not supported)"
+msgstr "(Тренутно није подржано)"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -908,12 +911,6 @@ msgstr "Потврдите цену у УСД непознато"
 #: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "Свап"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
-#: widget/embedded/src/constants/messages.ts:7
-msgid "Swap anyway"
-msgstr "Замени у сваком случају"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
@@ -1130,32 +1127,32 @@ msgid "Search Transaction"
 msgstr "Трансакција претраге"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:189
 msgid "No transactions"
 msgstr "Нема трансакција"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Ваша историја трансакција се чува локално и појавиће се овде након што започнете замену"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:221
 msgid "Clear Transaction History"
 msgstr "Обриши историју трансакција"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:225
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Настављање ће уклонити све успешне и неуспеле трансакције из виџета. Да ли желите да наставите?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:232
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Напомена: Ово не брише вашу историју трансакција у ланцу; само их овде уклања."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:246
 msgid "Yes, Clear the history"
 msgstr "Да, обришите историју"
 
@@ -1347,6 +1344,11 @@ msgid "Swap on {fromChain} via {swapper}"
 msgstr "Замените на {fromChain} преко {swapper}"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "Мост од {fromChain} преко {swapper}"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Мост до {toChain} преко {swapper}"
@@ -1372,16 +1374,14 @@ msgid "Waiting for the bridge transaction"
 msgstr "Чекање на прелазну трансакцију"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
-msgid "Connected"
-msgstr "Повезано"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "Делимично повезано"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
-msgid "Disconnect"
-msgstr "Прекини везу"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "Повежите друге ланце"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24

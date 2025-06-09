@@ -8,7 +8,7 @@ msgstr ""
 "Language: ms\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-02 08:24\n"
+"PO-Revision-Date: 2025-06-09 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Malay\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,90 +19,9 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
-msgid "Chain not connected"
-msgstr "Rantai tidak bersambung"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
-msgid "Minimum suggested slippage: {minRequiredSlippage}"
-msgstr "Kegelinciran minimum yang dicadangkan: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
-msgid "Increase"
-msgstr "Bertambah"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
-msgid "Caution, your slippage is high. Your trade may be front run."
-msgstr "Awas, gelinciran anda tinggi. Dagangan anda mungkin dijalankan di hadapan."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Change Slippage"
-msgstr "Tukar Slippage"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
-msgid "Slippage cannot be set lower than 0.01%."
-msgstr "Gelinciran tidak boleh ditetapkan lebih rendah daripada 0.01%."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
-msgid "Caution, your slippage is high!"
-msgstr "Awas, gelinciran anda tinggi!"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Perubahan Rangkaian Gagal"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
-msgid "Slippage:"
-msgstr "gelinciran:"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "Dompet ini menyokong berbilang rantai. Pilih rantaian yang anda ingin sambungkan atau putuskan sambungannya."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
-msgid "Connection failed"
-msgstr "Sambungan gagal"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
-msgid "See why"
-msgstr "Lihat sebabnya"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
-msgstr "Dompet ini menyokong berbilang rantai. Pilih rangkaian yang anda ingin sambungkan."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
-msgid "Bridge from {fromChain} via {swapper}"
-msgstr "Jambatan dari {fromChain} melalui {swapper}"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-msgid "Connected Partially"
-msgstr "Disambung Separa"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
-msgid "Connect other chains"
-msgstr "Sambungkan rantai lain"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Tiada hasil ditemui"
@@ -110,7 +29,7 @@ msgstr "Tiada hasil ditemui"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Cuba gunakan kata kunci yang berbeza"
@@ -183,12 +102,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Anda perlu menyambung dompet {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
 msgid "Add {chain} chain"
 msgstr "Tambahkan rantai {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+msgid "Chain not connected"
+msgstr "Rantai tidak bersambung"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
 msgid "Show more wallets"
 msgstr "Tunjukkan lebih banyak dompet"
 
@@ -326,6 +250,11 @@ msgid "Yours: {amount} {symbol}"
 msgstr "Milik anda: {amount} {symbol}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "Kegelinciran minimum yang dicadangkan: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "Milik anda: {userSlippage}"
@@ -454,6 +383,12 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Anda perlu meningkatkan gelinciran kepada sekurang-kurangnya {minRequiredSlippage} untuk laluan ini."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "Bertambah"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "Amaun output diubah sebanyak {percentageChange}% (${usdValueChange})."
@@ -485,6 +420,22 @@ msgstr "gelinciran tinggi"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "gelinciran rendah"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "Awas, gelinciran anda tinggi. Dagangan anda mungkin dijalankan di hadapan."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
+#: widget/embedded/src/constants/messages.ts:7
+msgid "Swap anyway"
+msgstr "Tukar pula"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "Tukar Slippage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
@@ -531,6 +482,16 @@ msgstr "Amaran"
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
 msgstr "Tetapan ini digunakan pada setiap langkah (cth. 1Inch, Thorchain, dsb.), bermakna hanya langkah tertentu itu akan dibalikkan, bukan keseluruhan laluan."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "Gelinciran tidak boleh ditetapkan lebih rendah daripada 0.01%."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "Awas, gelinciran anda tinggi!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
@@ -683,7 +644,7 @@ msgstr "Ya, Padamkannya"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:256
 msgid "No, Cancel"
 msgstr "Tidak, Batal"
 
@@ -696,6 +657,16 @@ msgstr "Tukar Rangkaian"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
 msgstr "Rangkaian Berubah"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "Perubahan Rangkaian Gagal"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "gelinciran:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
@@ -759,6 +730,18 @@ msgid "Enter Index"
 msgstr "Masukkan Indeks"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
+msgid "Connect {wallet}"
+msgstr "Sambung {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Dompet ini menyokong berbilang rantai. Pilih rantaian yang anda ingin sambungkan atau putuskan sambungannya."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
@@ -795,16 +778,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Anda telah menolak menambah rantai {blockchainDisplayName} pada dompet anda."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
-msgid "(Currently not supported)"
-msgstr "(Pada masa ini tidak disokong)"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
+msgid "Disconnect"
+msgstr "Putuskan sambungan"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
-msgid "Connect {wallet}"
-msgstr "Sambung {wallet}"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "Bersambung"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "Sambungan gagal"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "Lihat sebabnya"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "Dompet ini menyokong berbilang rantai. Pilih rangkaian yang anda ingin sambungkan."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
@@ -822,6 +820,11 @@ msgstr "Nyahpilih semua"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Pilih semua"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+msgid "(Currently not supported)"
+msgstr "(Pada masa ini tidak disokong)"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -908,12 +911,6 @@ msgstr "Sahkan Harga USD Tidak Diketahui"
 #: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "Tukar"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
-#: widget/embedded/src/constants/messages.ts:7
-msgid "Swap anyway"
-msgstr "Tukar pula"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
@@ -1130,32 +1127,32 @@ msgid "Search Transaction"
 msgstr "Transaksi Carian"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:189
 msgid "No transactions"
 msgstr "Tiada transaksi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Sejarah transaksi anda disimpan secara setempat dan akan dipaparkan di sini selepas anda memulakan pertukaran"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:221
 msgid "Clear Transaction History"
 msgstr "Kosongkan Sejarah Transaksi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:225
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Prosiding akan mengalih keluar semua transaksi yang berjaya dan gagal daripada widget. Adakah anda mahu meneruskan?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:232
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Nota: Ini tidak memadamkan sejarah transaksi anda pada rantaian; ia hanya membuang mereka di sini."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:246
 msgid "Yes, Clear the history"
 msgstr "Ya, Kosongkan sejarah"
 
@@ -1347,6 +1344,11 @@ msgid "Swap on {fromChain} via {swapper}"
 msgstr "Tukar pada {fromChain} melalui {swapper}"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "Jambatan dari {fromChain} melalui {swapper}"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Jambatan ke {toChain} melalui {swapper}"
@@ -1372,16 +1374,14 @@ msgid "Waiting for the bridge transaction"
 msgstr "Menunggu transaksi jambatan"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
-msgid "Connected"
-msgstr "Bersambung"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "Disambung Separa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
-msgid "Disconnect"
-msgstr "Putuskan sambungan"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "Sambungkan rantai lain"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24

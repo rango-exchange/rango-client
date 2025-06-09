@@ -8,7 +8,7 @@ msgstr ""
 "Language: sv\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-02 08:24\n"
+"PO-Revision-Date: 2025-06-09 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,90 +19,9 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
-msgid "Chain not connected"
-msgstr "Kedjan är inte ansluten"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
-msgid "Minimum suggested slippage: {minRequiredSlippage}"
-msgstr "Minsta föreslagna glidning: {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
-msgid "Increase"
-msgstr "Öka"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
-msgid "Caution, your slippage is high. Your trade may be front run."
-msgstr "Varning, din slip är hög. Din handel kan vara en frontrun."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
-msgid "Change Slippage"
-msgstr "Ändra glidning"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
-msgid "Slippage cannot be set lower than 0.01%."
-msgstr "Slippage kan inte sättas lägre än 0,01 %."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
-msgid "Caution, your slippage is high!"
-msgstr "Varning, din slip är hög!"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Nätverksbyte misslyckades"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
-msgid "Slippage:"
-msgstr "Slirning:"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill ansluta eller koppla från."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
-msgid "Connection failed"
-msgstr "Anslutningen misslyckades"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
-msgid "See why"
-msgstr "Se varför"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
-msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill koppla samman."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
-msgid "Bridge from {fromChain} via {swapper}"
-msgstr "Brygga från {fromChain} via {swapper}"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
-msgid "Connected Partially"
-msgstr "Delvis ansluten"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
-msgid "Connect other chains"
-msgstr "Koppla ihop andra kedjor"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Inga resultat hittades"
@@ -110,7 +29,7 @@ msgstr "Inga resultat hittades"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Prova att använda olika sökord"
@@ -183,12 +102,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Du måste ansluta en {blockchainName} plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
 msgid "Add {chain} chain"
 msgstr "Lägg till {chain} kedja"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+msgid "Chain not connected"
+msgstr "Kedjan är inte ansluten"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
 msgid "Show more wallets"
 msgstr "Visa fler plånböcker"
 
@@ -326,6 +250,11 @@ msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:266
+msgid "Minimum suggested slippage: {minRequiredSlippage}"
+msgstr "Minsta föreslagna glidning: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:287
 msgid "Yours: {userSlippage}"
 msgstr "Er: {userSlippage}"
@@ -454,6 +383,12 @@ msgid "You need to increase slippage to at least {minRequiredSlippage} for this 
 msgstr "Du måste öka halkningen till minst {minRequiredSlippage} för denna rutt."
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:89
+msgid "Increase"
+msgstr "Öka"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Output amount changed by {percentageChange}% (${usdValueChange})."
 msgstr "Utgångsbeloppet ändrat med {percentageChange}% (${usdValueChange})."
@@ -485,6 +420,22 @@ msgstr "Hög glidning"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:42
 msgid "Low slippage"
 msgstr "Låg glidning"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:46
+msgid "Caution, your slippage is high. Your trade may be front run."
+msgstr "Varning, din slip är hög. Din handel kan vara en frontrun."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
+#: widget/embedded/src/constants/messages.ts:7
+msgid "Swap anyway"
+msgstr "Byt ändå"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:78
+msgid "Change Slippage"
+msgstr "Ändra glidning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:23
@@ -531,6 +482,16 @@ msgstr "Varning"
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied to each step (e.g. 1Inch, Thorchain, etc.), meaning only that specific step will be reverted, not the entire route."
 msgstr "Denna inställning tillämpas på varje steg (t.ex. 1Inch, Thorchain, etc.), vilket innebär endast att specifika steg kommer att återställas, inte hela vägen."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:20
+msgid "Slippage cannot be set lower than 0.01%."
+msgstr "Slippage kan inte sättas lägre än 0,01 %."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:28
+msgid "Caution, your slippage is high!"
+msgstr "Varning, din slip är hög!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
@@ -683,7 +644,7 @@ msgstr "Ja, ta bort den"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:256
 msgid "No, Cancel"
 msgstr "Nej, Avbryt"
 
@@ -696,6 +657,16 @@ msgstr "Ändra nätverk"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
 msgstr "Nätverk ändrat"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
+msgid "Network Change Failed"
+msgstr "Nätverksbyte misslyckades"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
+msgid "Slippage:"
+msgstr "Slirning:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:350
@@ -759,6 +730,18 @@ msgid "Enter Index"
 msgstr "Ange index"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:702
+msgid "Connect {wallet}"
+msgstr "Anslut {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill ansluta eller koppla från."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
 msgid "Add {blockchainDisplayName} Chain"
@@ -795,16 +778,31 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Du har avböjt att lägga till {blockchainDisplayName} kedjan i din plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
-msgid "(Currently not supported)"
-msgstr "(Stöds för närvarande inte)"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
+msgid "Disconnect"
+msgstr "Koppla från"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
-msgid "Connect {wallet}"
-msgstr "Anslut {wallet}"
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "Ansluten"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+msgid "Connection failed"
+msgstr "Anslutningen misslyckades"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+msgid "See why"
+msgstr "Se varför"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
+msgstr "Den här plånboken stöder flera kedjor. Välj vilka kedjor du vill koppla samman."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
@@ -822,6 +820,11 @@ msgstr "Avmarkera alla"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Markera alla"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+msgid "(Currently not supported)"
+msgstr "(Stöds för närvarande inte)"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -908,12 +911,6 @@ msgstr "Bekräfta USD pris okänt"
 #: widget/embedded/src/pages/Home.tsx:189
 msgid "Swap"
 msgstr "Byt"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:67
-#: widget/embedded/src/constants/messages.ts:7
-msgid "Swap anyway"
-msgstr "Byt ändå"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
@@ -1130,32 +1127,32 @@ msgid "Search Transaction"
 msgstr "Sök transaktion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:189
 msgid "No transactions"
 msgstr "Inga transaktioner"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Din transaktionshistorik lagras lokalt och kommer att visas här när du startar ett byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:221
 msgid "Clear Transaction History"
 msgstr "Rensa transaktionshistorik"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:225
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Fortsättning kommer att ta bort alla lyckade och misslyckade transaktioner från widget. Vill du fortsätta?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:232
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Obs: Detta raderar inte din transaktionshistorik i kedjan; det tar bara bort dem här."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:246
 msgid "Yes, Clear the history"
 msgstr "Ja, Rensa historiken"
 
@@ -1347,6 +1344,11 @@ msgid "Swap on {fromChain} via {swapper}"
 msgstr "Byt på {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+msgid "Bridge from {fromChain} via {swapper}"
+msgstr "Brygga från {fromChain} via {swapper}"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:121
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Bron till {toChain} via {swapper}"
@@ -1372,16 +1374,14 @@ msgid "Waiting for the bridge transaction"
 msgstr "Väntar på bryggtransaktionen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
-msgid "Connected"
-msgstr "Ansluten"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
+msgid "Connected Partially"
+msgstr "Delvis ansluten"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
-msgid "Disconnect"
-msgstr "Koppla från"
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
+msgid "Connect other chains"
+msgstr "Koppla ihop andra kedjor"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
