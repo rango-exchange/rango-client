@@ -68,23 +68,28 @@ const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
   HUB_LAST_CONNECTED_WALLETS
 );
 
+export function getSupportedChainsFromProvider(
+  provider: Provider,
+  allBlockChains: ProviderProps['allBlockChains']
+) {
+  const namespacesProperty = provider
+    .info()
+    ?.properties?.find((property) => property.name === 'namespaces');
+
+  const supportedChains =
+    namespacesProperty?.value.data.flatMap((namespace) =>
+      namespace.getSupportedChains(allBlockChains || [])
+    ) || [];
+
+  return supportedChains;
+}
+
 export function mapHubEventsToLegacy(
   hub: Hub,
   event: Event,
   onUpdateState: WalletEventHandler,
-  allProviders: VersionedProviders[],
   allBlockChains: ProviderProps['allBlockChains']
 ): void {
-  let legacyProvider;
-  try {
-    legacyProvider = getLegacyProvider(allProviders, event.provider);
-  } catch (e) {
-    console.warn(
-      'Having legacy provider is required for including some information like supported chain. ',
-      e
-    );
-  }
-
   const provider = hub.get(event.provider);
   if (!provider) {
     throw new Error(
@@ -121,8 +126,10 @@ export function mapHubEventsToLegacy(
   };
 
   const eventInfo = {
-    supportedBlockchains:
-      legacyProvider?.getWalletInfo(allBlockChains || []).supportedChains || [],
+    supportedBlockchains: getSupportedChainsFromProvider(
+      provider,
+      allBlockChains
+    ),
     isContractWallet: false,
     isHub: true,
     namespace: namespaceId,
@@ -331,18 +338,35 @@ export function transformHubResultToLegacyResult(
   };
 }
 
-export function checkProviderListsEquality(
-  providerList1: Provider[],
-  providerList2: Provider[]
+/**
+ * Synchronizes providers in the hub with the configuration providers.
+ * - Registers and initializes any configuration providers not yet in the hub
+ * - Removes providers from the hub that aren't in the configuration
+ */
+export function synchronizeHubWithConfigProviders(
+  hub: Hub,
+  configurationProviders: Provider[]
 ) {
-  const providerIds1 = providerList1
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
-  const providerIds2 = providerList2
-    .map((provider) => provider.id)
-    .sort()
-    .toString();
+  const registeredProviders = hub.getAll();
 
-  return providerIds1 === providerIds2;
+  // Register and initialize providers that exist in config but not in hub
+  const providersToRegister = configurationProviders.filter(
+    (configProvider) => !registeredProviders.get(configProvider.id)
+  );
+
+  providersToRegister.forEach((providerToRegister) => {
+    hub.add(providerToRegister.id, providerToRegister);
+    providerToRegister.init();
+  });
+
+  // Remove providers that exist in hub but not in config
+  registeredProviders.forEach((registeredProvider) => {
+    const isProviderInConfig = configurationProviders.some(
+      (configProvider) => configProvider.id === registeredProvider.id
+    );
+
+    if (!isProviderInConfig) {
+      hub.remove(registeredProvider.id);
+    }
+  });
 }

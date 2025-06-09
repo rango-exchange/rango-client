@@ -73,12 +73,12 @@ export function ImportCustomToken(props: PropTypes) {
       setShowImportModal(true);
     }
   }, [blockchain, token]);
-
   return (
     <>
       <WatermarkedModal
         open={showErrorModal}
         dismissible
+        id="widget-add-custom-token-modal"
         onClose={closeErrorModal}
         onExit={handleExit}
         container={getContainer()}>

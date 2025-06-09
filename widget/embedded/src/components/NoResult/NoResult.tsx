@@ -26,7 +26,7 @@ import {
 } from './NoResult.styles';
 
 export function NoResult(props: PropTypes) {
-  const { fetch, error, size = 'small' } = props;
+  const { fetch, error, size = 'small', skipAlerts } = props;
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const toggleAllLiquiditySources = useAppStore().toggleAllLiquiditySources;
 
@@ -37,9 +37,12 @@ export function NoResult(props: PropTypes) {
     () => toggleAllLiquiditySources(swappers, true),
     fetch
   );
+  if (skipAlerts) {
+    info.alert = null;
+  }
 
   return (
-    <Container>
+    <Container id="widget-no-result-container">
       <NoRouteIcon size={NoRouteIconSize[size]} color="gray" />
       <Divider size={4} />
       <Typography variant="title" size={NoRouteTitleSize[size]}>
@@ -61,6 +64,7 @@ export function NoResult(props: PropTypes) {
       {!!info.alert && (
         <Footer size={size}>
           <Alert
+            id="widget-no-result-alert"
             type={info.alert.type}
             title={info.alert.text}
             titleAlign={'left'}

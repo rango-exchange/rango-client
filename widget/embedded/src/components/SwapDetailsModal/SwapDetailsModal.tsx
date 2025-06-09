@@ -29,6 +29,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
 
   return (
     <WatermarkedModal
+      id="widget-swap-details-modal"
       open={!!state}
       onClose={onClose}
       container={

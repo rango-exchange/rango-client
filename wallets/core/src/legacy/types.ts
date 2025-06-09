@@ -1,6 +1,5 @@
 import type { State as WalletState } from './wallet.js';
 import type { Namespace } from '../namespaces/common/mod.js';
-import type { Chain } from '../namespaces/common/types.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export enum Networks {
@@ -86,19 +85,21 @@ export type InstallObjects = {
   DEFAULT: string;
 };
 
+export type NamespaceMeta = {
+  label: string;
+  /**
+   * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
+   * e.g. ETH
+   */
+  id: string;
+  value: Namespace;
+  unsupported?: boolean;
+  getSupportedChains: (chains: BlockchainMeta[]) => BlockchainMeta[];
+};
+
 interface NeedsNamespace {
   selection: 'single' | 'multiple';
-  data: {
-    label: string;
-    /**
-     * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
-     * e.g. ETH
-     */
-    id: string;
-    value: Namespace;
-    unsupported?: boolean;
-    chains: Chain[];
-  }[];
+  data: NamespaceMeta[];
 }
 
 interface NeedsDerivationPath {

@@ -42,3 +42,9 @@ export type ChartOptionsType = {
   barChartColors: string[];
   label?: string;
 };
+
+export interface BottomAxisData {
+  numBottomAxis: number;
+  startBottomAxis: number;
+  intervalBottomAxis: number;
+}

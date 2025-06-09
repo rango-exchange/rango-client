@@ -36,6 +36,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
       isFocused,
       tabIndex,
       tooltipContainer,
+      className,
     } = props;
 
     const { from, to, swapper } = step;
@@ -66,6 +67,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         type={type}
         state={state}
         ref={containerRef}
+        className={className}
         tabIndex={tabIndex}>
         {type === 'quote-details' && (
           <div className={swapperItemStyles()}>
@@ -74,13 +76,21 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             </SwapperImage>
             <Divider direction="horizontal" size={8} />
             <Typography size="medium" variant="label">
-              {i18n.t({
-                id: 'Swap on {fromChain} via {swapper}',
-                values: {
-                  fromChain: step.from.chain.displayName,
-                  swapper: step.swapper.displayName,
-                },
-              })}
+              {step.from.chain.displayName === step.to.chain.displayName
+                ? i18n.t({
+                    id: 'Swap on {fromChain} via {swapper}',
+                    values: {
+                      fromChain: step.from.chain.displayName,
+                      swapper: step.swapper.displayName,
+                    },
+                  })
+                : i18n.t({
+                    id: 'Bridge from {fromChain} via {swapper}',
+                    values: {
+                      fromChain: step.from.chain.displayName,
+                      swapper: step.swapper.displayName,
+                    },
+                  })}
             </Typography>
           </div>
         )}

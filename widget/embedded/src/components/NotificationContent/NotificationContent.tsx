@@ -24,6 +24,7 @@ export function NotificationContent() {
 
   return (
     <Notifications
+      id="widget-notifications-container"
       list={notifications}
       getBlockchainImage={(blockchain) =>
         getBlockchainImage(blockchain, blockchains)

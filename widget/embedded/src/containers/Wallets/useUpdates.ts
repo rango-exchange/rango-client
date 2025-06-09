@@ -1,4 +1,8 @@
-import type { OnWalletConnectionChange } from './Wallets.types';
+import type {
+  OnWalletConnectHandler,
+  OnWalletDisconnectHandler,
+} from './Wallets.types';
+import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 import type {
   LegacyEventHandler as EventHandler,
   LegacyEventHandler,
@@ -20,10 +24,10 @@ import {
 
 interface UseUpdatesParams {
   onConnectWalletHandler: React.MutableRefObject<
-    OnWalletConnectionChange | undefined
+    OnWalletConnectHandler | undefined
   >;
   onDisconnectWalletHandler: React.MutableRefObject<
-    OnWalletConnectionChange | undefined
+    OnWalletDisconnectHandler | undefined
   >;
 }
 interface UseUpdates {
@@ -51,7 +55,18 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
       supportedChainNames: Network[] | null;
     }
   ) => {
-    const [type, , value, , info] = event;
+    const [type, , value, state, info] = event;
+
+    const walletFromEvent: LastConnectedWallet = {
+      walletType: type,
+      network: state.network ?? undefined,
+      accounts: value,
+    };
+    if (!!onConnectWalletHandler.current) {
+      onConnectWalletHandler.current(walletFromEvent);
+    } else {
+      console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
+    }
 
     const data = prepareAccountsForWalletStore(
       type,
@@ -82,16 +97,6 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
         onAccountsEvent([type, event, value, state, info], {
           supportedChainNames,
         });
-      }
-    }
-
-    if (event === Events.CONNECTED) {
-      const key = `${type}-${state.network}-${value}`;
-
-      if (!!onConnectWalletHandler.current) {
-        onConnectWalletHandler.current(key);
-      } else {
-        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
       }
     }
 
@@ -191,33 +196,36 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
         }
       }
     }
-
-    /*
-     * TODO: not sure why we used `Events.Acccounts` for detecting if a provider gets connected or not, if we can use `CONNCECTED` for the legacy
-     * we can only rely Events.Connected and remove the legacy conidition
-     */
-    if (event === Events.ACCOUNTS && state.connected) {
-      const key = `${type}-${state.network}-${value}`;
-
-      if (!!onConnectWalletHandler.current) {
-        onConnectWalletHandler.current(key);
-      } else {
-        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
-      }
-    }
   };
 
   const handleUpdatesForBoth: EventHandler = (
     type,
     event,
-    _value,
+    value,
     state,
     _info
   ) => {
-    if (event === Events.NETWORK && state.network) {
-      const key = `${type}-${state.network}`;
+    if (event === Events.CONNECTED && value) {
+      const walletFromEvent: LastConnectedWallet = {
+        walletType: type,
+        network: state.network ?? undefined,
+        accounts: state.accounts ?? undefined,
+      };
       if (!!onConnectWalletHandler.current) {
-        onConnectWalletHandler.current(key);
+        onConnectWalletHandler.current(walletFromEvent);
+      } else {
+        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
+      }
+    }
+
+    if (event === Events.NETWORK && value) {
+      const walletFromEvent: LastConnectedWallet = {
+        walletType: type,
+        network: value,
+        accounts: state.accounts ?? undefined,
+      };
+      if (!!onConnectWalletHandler.current) {
+        onConnectWalletHandler.current(walletFromEvent);
       } else {
         console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
       }

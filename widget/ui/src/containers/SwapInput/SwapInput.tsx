@@ -69,6 +69,7 @@ export function SwapInput(props: SwapInputPropTypes) {
               <MaxButton
                 variant="default"
                 size="xsmall"
+                id={`${props.id}-max-btn`}
                 onClick={props.onSelectMaxBalance}>
                 <Typography variant="body" size="xsmall">
                   {i18n.t('Max')}
@@ -86,6 +87,7 @@ export function SwapInput(props: SwapInputPropTypes) {
       <div className={formStyles()}>
         <TokenSectionContainer>
           <TokenSection
+            id={`${props.id}-token-selection-container`}
             chain={props.chain.displayName}
             chianImageId={
               props.mode === 'To'
@@ -124,11 +126,16 @@ export function SwapInput(props: SwapInputPropTypes) {
                   disabled={props.disabled || props.mode === 'To'}
                   style={{ padding: 0 }}
                   value={price.value}
+                  id={`${props.id}-input`}
                   type={'onInputChange' in props ? 'number' : 'text'}
                   step="any"
                   size="large"
                   placeholder="0"
                   variant="ghost"
+                  {...('onInputBlur' in props && {
+                    onBlur: (event: React.ChangeEvent<HTMLInputElement>) =>
+                      props.onInputBlur?.(event.target.value),
+                  })}
                   min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>

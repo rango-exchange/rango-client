@@ -2,6 +2,7 @@
 import type {
   BarChartPropTypes,
   BarStackDataType,
+  BottomAxisData,
   TooltipDataType,
 } from './BarChart.types.js';
 import type { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
@@ -35,6 +36,7 @@ import {
 import {
   generateTickValues,
   getDaysRange,
+  getEvenlySpacedNumber,
   getTotalValue,
   getTotalValueDates,
 } from './BarChart.helpers.js';
@@ -64,10 +66,22 @@ export const BarChart = (props: BarChartPropTypes) => {
 
   const isMobile = useIsMobile();
   const daysRange = getDaysRange(data.length);
-  const bottomAxis =
-    width < 700
-      ? bottomAxisData.mobile[daysRange]
-      : bottomAxisData.desktop[daysRange];
+
+  let bottomAxis: BottomAxisData;
+  if (data.length > 90) {
+    const count = 7;
+    const interval = getEvenlySpacedNumber(data.length, count);
+    bottomAxis = {
+      numBottomAxis: count,
+      intervalBottomAxis: interval,
+      startBottomAxis: interval - 10,
+    };
+  } else {
+    bottomAxis =
+      width < 700
+        ? bottomAxisData.mobile[daysRange]
+        : bottomAxisData.desktop[daysRange];
+  }
 
   const { intervalBottomAxis, numBottomAxis, startBottomAxis } = bottomAxis;
 

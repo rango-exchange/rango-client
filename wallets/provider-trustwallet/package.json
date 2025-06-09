@@ -1,29 +1,29 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.44.1",
+  "version": "0.44.2-next.11",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trustwallet",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-trustwallet --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.35.0",
-    "@rango-dev/wallets-shared": "^0.44.1",
-    "rango-types": "^0.1.84"
+    "@rango-dev/signer-evm": "^0.35.1-next.4",
+    "@rango-dev/wallets-shared": "^0.44.2-next.13",
+    "rango-types": "^0.1.85"
   },
   "publishConfig": {
     "access": "public"

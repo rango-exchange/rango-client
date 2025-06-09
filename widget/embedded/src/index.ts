@@ -59,9 +59,14 @@ import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {
   isOnDerivationPath,
+  isOnDetached,
   isOnNamespace,
 } from './components/StatefulConnectModal';
-import { DerivationPath, Namespaces } from './components/WalletStatefulConnect';
+import {
+  DerivationPath,
+  Detached,
+  Namespaces,
+} from './components/WalletStatefulConnect';
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
 import { WidgetWallets } from './containers/Wallets';
@@ -84,8 +89,10 @@ import { customizedThemeTokens } from './utils/ui';
 export const StatefulConnect = {
   DerivationPath,
   Namespaces,
+  Detached,
   isOnDerivationPath,
   isOnNamespace,
+  isOnDetached,
 };
 
 export type {

@@ -66,6 +66,7 @@ function TextFieldComponent(
         className="_text-field">
         {prefix || null}
         <Input
+          autoComplete="off"
           {...inputAttributes}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}

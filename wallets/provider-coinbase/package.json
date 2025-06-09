@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-coinbase",
-  "version": "0.45.1",
+  "version": "0.45.2-next.11",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,11 +21,11 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.35.0",
-    "@rango-dev/signer-solana": "^0.39.0",
-    "@rango-dev/wallets-shared": "^0.44.1",
+    "@rango-dev/signer-evm": "^0.35.1-next.4",
+    "@rango-dev/signer-solana": "^0.39.1-next.4",
+    "@rango-dev/wallets-shared": "^0.44.2-next.13",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.84"
+    "rango-types": "^0.1.85"
   },
   "publishConfig": {
     "access": "public"

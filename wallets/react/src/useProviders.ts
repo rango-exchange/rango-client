@@ -42,18 +42,18 @@ function useProviders(props: ProviderProps) {
       }
       return legacyApi.canSwitchNetworkTo(type, network);
     },
-    async connect(type, network): Promise<ConnectResult[]> {
+    async connect(type, namespaces): Promise<ConnectResult[]> {
       const hubProvider = findProviderByType(hubProviders, type);
       if (hubProvider) {
-        return await hubApi.connect(type, network);
+        return await hubApi.connect(type, namespaces);
       }
 
-      return await legacyApi.connect(type, network);
+      return await legacyApi.connect(type, namespaces);
     },
-    async disconnect(type): Promise<void> {
+    async disconnect(type, namespaces): Promise<void> {
       const hubProvider = findProviderByType(hubProviders, type);
       if (hubProvider) {
-        return await hubApi.disconnect(type);
+        return await hubApi.disconnect(type, namespaces);
       }
 
       return await legacyApi.disconnect(type);

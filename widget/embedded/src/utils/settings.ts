@@ -1,4 +1,4 @@
-import type { Features, Routing } from '../types';
+import type { Features, HighSlippageWarning, Routing } from '../types';
 import type { SwapperMeta, SwapperType, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
@@ -8,6 +8,7 @@ import {
   MAX_SLIPPAGE,
   MIN_SLIPPAGE,
 } from '../constants/swapSettings';
+import { QuoteWarningType } from '../types';
 
 import { removeDuplicateFrom } from './common';
 
@@ -96,9 +97,11 @@ export const addCustomTokensToSupportedTokens = (
     : supportedTokens.concat(customTokens);
 };
 
-export function getSlippageValidation(
-  slippage: number
-): { type: 'error' | 'warning'; message: string } | null {
+export function getSlippageValidation(slippage: number): {
+  type: 'error' | 'warning';
+  message: string;
+  quoteValidation?: HighSlippageWarning;
+} | null {
   if (slippage == MIN_SLIPPAGE) {
     return {
       type: 'error',
@@ -110,6 +113,10 @@ export function getSlippageValidation(
       message: i18n.t(
         'Your transaction is at risk of being frontrun due to high slippage tolerance.'
       ),
+      quoteValidation: {
+        type: QuoteWarningType.HIGH_SLIPPAGE,
+        slippage: slippage.toString(),
+      },
     };
   }
 

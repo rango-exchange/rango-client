@@ -1,5 +1,5 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
-import type { Providers } from '../index.js';
+import type { ProviderContext, Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
@@ -11,20 +11,17 @@ import { Ok, Result } from 'ts-results';
 import {
   type ConnectResult,
   HUB_LAST_CONNECTED_WALLETS,
-  type ProviderContext,
   type ProviderProps,
 } from '../legacy/mod.js';
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
-import {
-  fromAccountIdToLegacyAddressFormat,
-  runSequentiallyWithoutFailure,
-} from './helpers.js';
+import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   getLegacyProvider,
+  getSupportedChainsFromProvider,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -45,6 +42,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
+
+  const queueTask = createQueue();
 
   useEffect(() => {
     dataRef.current = {
@@ -94,7 +93,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              dataRef.current.allVersionedProviders,
               dataRef.current.allBlockChains
             );
           } catch (e) {
@@ -170,7 +168,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       // Try to run `connect` on matched namespaces
       const connectResultFromTargetNamespaces = targetNamespaces.map(
-        ([namespaceInput, namespace]) => {
+        async ([namespaceInput, namespace]) => {
           const network = tryConvertNamespaceNetworkToChainInfo(
             namespaceInput,
             params.allBlockChains || []
@@ -181,7 +179,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
            * our assumption here is all the `connect` hasn't chain or if they have, they will accept it in first argument.
            * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
            */
-          return async () =>
+          const connectNamespaceProcess = async () =>
             namespace
               .connect(network)
               .then<ConnectResult>(transformHubResultToLegacyResult)
@@ -191,10 +189,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
                   input: {
                     namespace: namespaceInput.namespace,
                     network: namespaceInput.network,
-                    supportsEagerConnect: !!namespace.canEagerConnect,
+                    supportsEagerConnect: 'canEagerConnect' in namespace,
                   },
                 };
               });
+          return queueTask(connectNamespaceProcess, type);
         }
       );
 
@@ -202,7 +201,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
        * We need to connect to namespace one after another, sending multiple requests at the same time may be failed.
        * e.g. when wallet popup opens and asking for the password from the user, it should be resolved first, then other request will be resolved.
        */
-      const connectResultWithLegacyFormat = await runSequentiallyWithoutFailure(
+      const connectResultWithLegacyFormat = await Promise.all(
         connectResultFromTargetNamespaces
       );
 
@@ -235,7 +234,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       return allResult.unwrap();
     },
-    async disconnect(type) {
+    async disconnect(type, namespaces) {
       const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(
@@ -244,13 +243,23 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
 
       wallet.getAll().forEach((namespace) => {
-        if (namespace.state()[0]().connected) {
+        const namespaceShouldBeDisconnected =
+          !namespaces || namespaces.includes(namespace.namespaceId);
+        const namespaceIsConnected = namespace.state()[0]().connected;
+        if (namespaceShouldBeDisconnected && namespaceIsConnected) {
           return namespace.disconnect();
         }
       });
 
       if (params.autoConnect) {
-        lastConnectedWalletsFromStorage.removeWallets([type]);
+        if (namespaces) {
+          lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+            type,
+            namespaces
+          );
+        } else {
+          lastConnectedWalletsFromStorage.removeWallets([type]);
+        }
       }
     },
     async disconnectAll() {
@@ -274,8 +283,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       if (!info) {
         throw new Error('Your provider should have required `info`.');
       }
-
-      const provider = getLegacyProvider(params.allVersionedProviders, type);
 
       const installLink: Exclude<WalletInfo['installLink'], string> = {
         DEFAULT: '',
@@ -304,8 +311,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         }
       });
 
-      const walletInfoFromLegacy = provider.getWalletInfo(
-        params.allBlockChains || []
+      const providerProperties = info.properties;
+
+      const namespacesProperty = providerProperties?.find(
+        (property) => property.name === 'namespaces'
+      );
+      const derivationPathProperty = providerProperties?.find(
+        (property) => property.name === 'derivationPath'
+      );
+      const detailsProperty = providerProperties?.find(
+        (property) => property.name === 'details'
       );
 
       return {
@@ -314,13 +329,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains: walletInfoFromLegacy.supportedChains,
-        isContractWallet: false,
-        mobileWallet: false,
+        supportedChains: getSupportedChainsFromProvider(
+          wallet,
+          dataRef.current.allBlockChains
+        ),
+        isContractWallet: detailsProperty?.value?.isContractWallet,
+        mobileWallet: detailsProperty?.value?.mobileWallet,
         // if set to false here, it will not show the wallet in mobile in anyways. to be compatible with old behavior, undefined is more appropirate.
-        showOnMobile: undefined,
-        needsNamespace: walletInfoFromLegacy.needsNamespace,
-        needsDerivationPath: walletInfoFromLegacy.needsDerivationPath,
+        showOnMobile: detailsProperty?.value?.showOnMobile,
+        needsNamespace: namespacesProperty?.value,
+        needsDerivationPath: derivationPathProperty?.value,
 
         isHub: true,
         properties: wallet.info()?.properties,
@@ -341,29 +359,38 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       return output;
     },
     state(type) {
-      const result = getHub().state();
-      const provider = result[type];
+      const hubState = getHub().state();
+      const wallet = getHub().get(type);
+      const walletState = hubState[type];
 
-      if (!provider) {
+      if (!walletState || !wallet) {
         throw new Error(
           `It seems your requested provider doesn't exist in hub. Provider Id: ${type}`
         );
       }
 
-      const accounts = provider.namespaces
+      const accounts = walletState.namespaces
         .filter((namespace) => namespace.connected)
         .flatMap((namespace) =>
           namespace.accounts?.map(fromAccountIdToLegacyAddressFormat)
         )
         .filter((account): account is string => !!account);
 
+      const namespacesState = new Map(
+        Array.from(wallet.getAll(), ([_, value]) => [
+          value.namespaceId,
+          value.state()[0](),
+        ])
+      );
+
       const coreState = {
-        connected: provider.connected,
-        connecting: provider.connecting,
-        installed: provider.installed,
+        connected: walletState.connected,
+        connecting: walletState.connecting,
+        installed: walletState.installed,
         reachable: true,
         accounts: accounts,
         network: null,
+        namespaces: namespacesState,
       };
       return coreState;
     },

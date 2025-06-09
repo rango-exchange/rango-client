@@ -8,7 +8,9 @@ import {
   styled,
   Typography,
   Wallet,
+  WalletState,
 } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
@@ -18,6 +20,7 @@ import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
 import { getContainer, isSingleWalletActive } from '../utils/common';
 import {
+  checkIsWalletPartiallyConnected,
   filterBlockchainsByWalletTypes,
   filterWalletsByCategory,
 } from '../utils/wallets';
@@ -26,7 +29,8 @@ const ListContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  gap: '$10',
+  columnGap: '$5',
+  rowGap: '$10',
   flexWrap: 'wrap',
   paddingTop: '$5',
 });
@@ -40,6 +44,7 @@ export function WalletsPage() {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const blockchains = useAppStore().blockchains();
   const { config } = useAppStore();
+  const { state } = useWallets();
 
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<WalletInfoWithExtra>();
@@ -83,11 +88,22 @@ export function WalletsPage() {
         </Typography>
         <ListContainer>
           {filteredWallets.map((wallet, index) => {
+            const walletState = state(wallet.type);
+            const namespacesState = walletState.namespaces;
             const key = `wallet-${index}-${wallet.type}`;
+            const isWalletPartiallyConnected = checkIsWalletPartiallyConnected(
+              wallet,
+              namespacesState
+            );
             return (
               <Wallet
                 key={key}
                 {...wallet}
+                state={
+                  isWalletPartiallyConnected
+                    ? WalletState.PARTIALLY_CONNECTED
+                    : wallet.state
+                }
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}
@@ -96,6 +112,7 @@ export function WalletsPage() {
             );
           })}
           <StatefulConnectModal
+            id="widget-state-full-connect-modal"
             wallet={selectedWalletToConnect}
             onClose={() => {
               setSelectedWalletToConnect(undefined);

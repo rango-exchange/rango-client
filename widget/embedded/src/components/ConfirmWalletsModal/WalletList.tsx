@@ -6,6 +6,7 @@ import { i18n } from '@lingui/core';
 import { warn } from '@rango-dev/logging-core';
 import {
   Divider,
+  makeInfo,
   SelectableWallet,
   Typography,
   WalletState,
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
 import { WIDGET_UI_ID } from '../../constants';
-import { useStatefulConnect } from '../../hooks/useStatefulConnect';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
@@ -49,7 +49,6 @@ export function WalletList(props: PropTypes) {
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const { suggestAndConnect } = useWallets();
-  const { handleDisconnect } = useStatefulConnect();
   const { list } = useWalletList({
     chain,
   });
@@ -119,9 +118,12 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
+        const isConnected = wallet.state === WalletState.CONNECTED;
         const conciseAddress = address
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
+        const isConnectedButDifferentThanTargetNamespace =
+          isConnected && !!wallet.needsNamespace && !conciseAddress;
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 
@@ -136,25 +138,10 @@ export function WalletList(props: PropTypes) {
           experimentalChainNotAdded &&
           wallet.state === WalletState.CONNECTED;
 
-        const connectedWalletDescription = couldAddExperimentalChain
-          ? i18n.t({
-              id: 'Add {chain} chain',
-              values: { chain },
-            })
-          : conciseAddress;
-
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
-          const isConnectedButDifferentThanTargetNamespace = wallet.isHub
-            ? !conciseAddress
-            : !!wallet.needsNamespace && !conciseAddress;
 
-          if (isDisconnected) {
-            setSelectedWalletToConnect(wallet);
-          } else if (isConnectedButDifferentThanTargetNamespace) {
-            // wallet is connected on a different namespace
-            await handleDisconnect(wallet.type);
-
+          if (isDisconnected || isConnectedButDifferentThanTargetNamespace) {
             setSelectedWalletToConnect(wallet);
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({
@@ -172,6 +159,32 @@ export function WalletList(props: PropTypes) {
           }
         };
 
+        const info = makeInfo(wallet.state);
+
+        const getWalletDescription = () => {
+          if (couldAddExperimentalChain) {
+            return i18n.t({
+              id: 'Add {chain} chain',
+              values: { chain },
+            });
+          } else if (isConnectedButDifferentThanTargetNamespace) {
+            return i18n.t('Chain not connected');
+          } else if (conciseAddress) {
+            return conciseAddress;
+          }
+          return info.description;
+        };
+
+        const getWalletDescriptionColor = () => {
+          if (wallet.state === WalletState.CONNECTED) {
+            if (isConnectedButDifferentThanTargetNamespace) {
+              return 'neutral600';
+            }
+            return 'neutral700';
+          }
+          return info.color;
+        };
+
         const blockchainDisplayName: string | undefined =
           experimentalChainWallet?.chain
             ? getBlockchainDisplayNameFor(
@@ -183,12 +196,14 @@ export function WalletList(props: PropTypes) {
           <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
             {!!experimentalChainWallet && (
               <WatermarkedModal
+                id="widget-wallets-list-watermarked-modal"
                 open={!!experimentalChainWallet && showExperimentalChainModal}
                 container={modalContainer}
                 onClose={() => {
                   setExperimentalChainWallet(null);
                 }}>
                 <ExperimentalChain
+                  id="widget-wallets-list-experimental-chain-container"
                   displayName={blockchainDisplayName}
                   onConfirm={() => {
                     void addExperimentalChain(experimentalChainWallet);
@@ -198,6 +213,7 @@ export function WalletList(props: PropTypes) {
             )}
             {addingExperimentalChainStatus && (
               <WatermarkedModal
+                id="widget-wallets-list-experimental-chain-watermarked-modal"
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
@@ -211,7 +227,9 @@ export function WalletList(props: PropTypes) {
             )}
             <SelectableWallet
               key={wallet.type}
-              description={connectedWalletDescription}
+              id="widget-wallets-list-selectable-wallet-btn"
+              description={getWalletDescription()}
+              descriptionColor={getWalletDescriptionColor()}
               onClick={onSelectableWalletClick}
               selected={isSelected(wallet.type, chain)}
               disabled={!isActiveTab}
@@ -221,6 +239,7 @@ export function WalletList(props: PropTypes) {
         );
       })}
       <StatefulConnectModal
+        id="widget-wallets-list-stateful-connect-modal"
         wallet={selectedWalletToConnect}
         options={{ defaultSelectedChains: quoteChains || [chain] }}
         onClose={() => {
@@ -241,7 +260,10 @@ export function WalletList(props: PropTypes) {
         }}
       />
       {shouldShowMoreWallets && (
-        <ShowMoreWallets selected={false} onClick={onShowMore}>
+        <ShowMoreWallets
+          selected={false}
+          onClick={onShowMore}
+          id="widget-wallets-list-show-more-wallets-btn">
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">

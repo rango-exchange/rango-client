@@ -20,7 +20,11 @@ export function NotificationsBadge() {
 
   return notificationsCount ? (
     <NotificationsBadgeContainer isSever={hasSeverNotification}>
-      <Typography variant="body" size="xsmall" color="$background">
+      <Typography
+        variant="body"
+        size="xsmall"
+        color="$background"
+        id="widget-header-notifications-badge-container">
         {notificationsCount}
       </Typography>
     </NotificationsBadgeContainer>

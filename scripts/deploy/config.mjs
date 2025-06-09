@@ -8,11 +8,7 @@ export const ENABLE_PREVIEW_DEPLOY = process.env.ENABLE_PREVIEW_DEPLOY;
 export const EXCLUDED_PACKAGES = ['@rango-dev/widget-iframe'];
 
 export const VERCEL_PACKAGES = {
-  [`${scope}/wallets-demo`]: getEnvWithFallback('VERCEL_PROJECT_WALLETS'),
   [`${scope}/queue-manager-demo`]: getEnvWithFallback('VERCEL_PROJECT_Q'),
-  [`${scope}/wallets-adapter-demo`]: getEnvWithFallback(
-    'VERCEL_PROJECT_WALLET_ADAPTER'
-  ),
   [`${scope}/widget-playground`]: getEnvWithFallback(
     'VERCEL_PROJECT_WIDGET_CONFIG'
   ),
