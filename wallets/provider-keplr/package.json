@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-keplr",
-  "version": "0.44.2-next.11",
+  "version": "0.45.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-cosmos": "^0.33.1-next.4",
-    "@rango-dev/wallets-shared": "^0.44.2-next.13",
+    "@rango-dev/signer-cosmos": "^0.34.0",
+    "@rango-dev/wallets-shared": "^0.45.0",
     "rango-types": "^0.1.85"
   },
   "devDependencies": {

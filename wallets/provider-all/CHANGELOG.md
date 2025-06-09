@@ -1,3 +1,13 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.46.0...provider-all@0.47.0) (2025-06-09)
+
+
+### Features
+
+* integrate slush wallet ([9e9a5cc](https://github.com/rango-exchange/rango-client/commit/9e9a5ccb802fbd1f9a50322a89f65b557f152c6a))
+* migrate trust wallet to use hub and add support for solana ([61497fd](https://github.com/rango-exchange/rango-client/commit/61497fd40d48d48030e5a6d7ece53b5b7daf7b09))
+
+
+
 # [0.46.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.45.1...provider-all@0.46.0) (2025-05-26)
 
 
