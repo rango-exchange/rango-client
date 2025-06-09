@@ -1,3 +1,12 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/charts@0.8.1...charts@0.9.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* if data exceed 90 days, bottom axis should be shown correctly ([34c0606](https://github.com/rango-exchange/rango-client/commit/34c0606986b72aab97e5174a9bce2f1e1e5a159a))
+
+
+
 ## [0.8.1](https://github.com/rango-exchange/rango-client/compare/charts@0.8.0...charts@0.8.1) (2025-05-04)
 
 

@@ -1,3 +1,28 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.43.0...widget-embedded@0.44.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* add sanitizeInputAmount for blur normalization of zero values ([9691146](https://github.com/rango-exchange/rango-client/commit/969114619abfc7865b55fa2b003b4d0ce19bc36d))
+* autocomplete off for search inputs ([4b47521](https://github.com/rango-exchange/rango-client/commit/4b475216395fb9c0404fdd28a2f26e2c69c12318))
+* correct the formatting of the total payable fee in the fee details modal ([ee052d3](https://github.com/rango-exchange/rango-client/commit/ee052d3f3e5bd8ab4284a01a6e9d92dc627efb68))
+* correctly display small exchange rate values on the home page ([a3e103f](https://github.com/rango-exchange/rango-client/commit/a3e103f116062f0ebfe4062179ed8794a6f24bc2))
+* display correct state in confirm wallets modal ([46417f1](https://github.com/rango-exchange/rango-client/commit/46417f1b75c4daf3d3cb4d43af8b695cdcc71720))
+* display error message from response instead of default fallback ([188e130](https://github.com/rango-exchange/rango-client/commit/188e130a1603a8533f19db3545a445523187593b))
+* fix retry swap on connect wallet ([f6c45b6](https://github.com/rango-exchange/rango-client/commit/f6c45b6c4a6b92a208e04606b42ed98d327ad349))
+* make widget compatible with rango-types ([d8e8ef9](https://github.com/rango-exchange/rango-client/commit/d8e8ef996efc3179932dc91224d97bc7f54ae09f))
+* turn autocomplete off for history search input ([97bc186](https://github.com/rango-exchange/rango-client/commit/97bc18649d0f1ee292c46837db2a1a7f00df97b1))
+
+
+### Features
+
+* add detached connect wallet modal ([b2d7d6f](https://github.com/rango-exchange/rango-client/commit/b2d7d6fda2bdfe3e9f72baba95a1a7694e3db21a))
+* add new states for wallet buttons ([d337aee](https://github.com/rango-exchange/rango-client/commit/d337aeed2315173a7820d3adedb412a4a1704fcd))
+* add static test attributes ([51b1433](https://github.com/rango-exchange/rango-client/commit/51b1433ab464a7255ec9f54499df65fbf98aa66b))
+* show slippage and rate in swap box ([54aea4e](https://github.com/rango-exchange/rango-client/commit/54aea4e69413bc7383716893f091b2ef1b0ae693))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.42.3...widget-embedded@0.43.0) (2025-05-26)
 
 
