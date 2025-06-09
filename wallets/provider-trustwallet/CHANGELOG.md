@@ -1,3 +1,12 @@
+# [0.45.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.44.1...provider-trustwallet@0.45.0) (2025-06-09)
+
+
+### Features
+
+* migrate trust wallet to use hub and add support for solana ([61497fd](https://github.com/rango-exchange/rango-client/commit/61497fd40d48d48030e5a6d7ece53b5b7daf7b09))
+
+
+
 ## [0.44.1](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.44.0...provider-trustwallet@0.44.1) (2025-05-04)
 
 

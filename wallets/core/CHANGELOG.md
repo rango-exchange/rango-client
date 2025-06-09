@@ -1,3 +1,21 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.43.0...wallets-core@0.44.0) (2025-06-09)
+
+
+### Bug Fixes
+
+* add has method to the namespace proxy ([ee74628](https://github.com/rango-exchange/rango-client/commit/ee7462881c27fbf42fae374064362293f5f92765))
+* avoid hub recreation ([2e5fc07](https://github.com/rango-exchange/rango-client/commit/2e5fc07bc0952d1d98b828d7e70a892034bb99b8))
+* fix phantom transaction failure on sui namespace disabled ([213b235](https://github.com/rango-exchange/rango-client/commit/213b23565b2729a48605d3d06ef5dd6daf66900f))
+
+
+### Features
+
+* add detached connect wallet modal ([b2d7d6f](https://github.com/rango-exchange/rango-client/commit/b2d7d6fda2bdfe3e9f72baba95a1a7694e3db21a))
+* integrate slush wallet ([9e9a5cc](https://github.com/rango-exchange/rango-client/commit/9e9a5ccb802fbd1f9a50322a89f65b557f152c6a))
+* migrate trust wallet to use hub and add support for solana ([61497fd](https://github.com/rango-exchange/rango-client/commit/61497fd40d48d48030e5a6d7ece53b5b7daf7b09))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.42.0...wallets-core@0.43.0) (2025-04-30)
 
 
