@@ -10,6 +10,9 @@ import {
   WC_PROJECT_ID,
 } from './constants';
 
+const TEMP_API_URL = window.localStorage.getItem('TEMP_API_URL') || '';
+const TEMP_API_KEY = window.localStorage.getItem('TEMP_API_KEY') || '';
+
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
@@ -37,7 +40,8 @@ export function App() {
        */
 
       config = {
-        apiKey: '',
+        apiUrl: TEMP_API_URL,
+        apiKey: TEMP_API_KEY,
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
