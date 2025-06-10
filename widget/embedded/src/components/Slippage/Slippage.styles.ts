@@ -34,23 +34,23 @@ export const SlippageChip = styled(Chip, {
 });
 
 export const SlippageTextFieldContainer = styled('div', {
-  borderWidth: 1,
-  borderStyle: 'solid',
+  outlineWidth: 1,
+  outlineStyle: 'solid',
   borderRadius: '$xs',
   flex: 1,
   variants: {
     status: {
       safe: {
-        borderColor: '$secondary500',
+        outlineColor: '$secondary500',
       },
       error: {
-        borderColor: '$error500',
+        outlineColor: '$error500',
       },
       warning: {
-        borderColor: '$warning500',
+        outlineColor: '$warning500',
       },
       empty: {
-        borderWidth: 0,
+        outlineWidth: 0,
       },
     },
   },
