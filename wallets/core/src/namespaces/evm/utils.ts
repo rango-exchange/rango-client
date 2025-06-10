@@ -27,7 +27,7 @@ export async function switchNetwork(instance: ProviderAPI, chainId: ChainId) {
     params: [{ chainId: chainId }],
   });
 }
-export function filteredEvmBlockchainNames(meta: BlockchainMeta[]) {
+export function filterAndGetEvmBlockchainNames(meta: BlockchainMeta[]) {
   return evmBlockchains(meta).map((blockchain) => blockchain.name);
 }
 export async function switchOrAddNetwork(

@@ -14,7 +14,7 @@ import { recommended as commonRecommended } from '../common/actions.js';
 
 import { CAIP_NAMESPACE } from './constants.js';
 import {
-  filteredEvmBlockchainNames,
+  filterAndGetEvmBlockchainNames,
   getAccounts,
   switchOrAddNetwork,
 } from './utils.js';
@@ -183,6 +183,6 @@ export function canSwitchNetwork(): FunctionWithContext<
 > {
   return (context, params) => {
     const { network, supportedChains } = params;
-    return filteredEvmBlockchainNames(supportedChains).includes(network);
+    return filterAndGetEvmBlockchainNames(supportedChains).includes(network);
   };
 }

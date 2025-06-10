@@ -145,13 +145,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       if (!('canSwitchNetwork' in proxiedNamespace)) {
         return false;
       }
-
+      const providerSupportedChains = getSupportedChainsFromProvider(
+        provider,
+        dataRef.current.allBlockChains
+      );
+      const providerSupportedChainsOfNamespace = providerSupportedChains.filter(
+        (chain) => chain.type === namespace.namespace
+      );
       return proxiedNamespace.canSwitchNetwork({
         network,
-        supportedChains: getSupportedChainsFromProvider(
-          provider,
-          dataRef.current.allBlockChains
-        ),
+        supportedChains: providerSupportedChainsOfNamespace,
       });
     },
     async connect(type, namespaces) {

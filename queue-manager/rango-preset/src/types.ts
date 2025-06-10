@@ -72,11 +72,7 @@ export interface SwapQueueContext extends QueueContext {
     wallet: WalletType,
     namespaces: TargetNamespace
   ) => Promise<ConnectResult | ConnectResult[] | undefined> | undefined;
-  canSwitchNetworkTo: (
-    type: WalletType,
-    network: Network,
-    namespace: TargetNamespace
-  ) => boolean;
+  canSwitchNetworkTo: UseQueueManagerParams['canSwitchNetworkTo'];
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
 
