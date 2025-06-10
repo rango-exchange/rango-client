@@ -90,9 +90,11 @@ type QueueItem<T> = {
  * predictable task execution order.
  *
  */
-export function createQueue() {
+export function createQueue(options?: {
+  shouldClearQueueForKeyOnError?: (error: unknown) => boolean;
+}) {
   const processingKeys = new Set<string>();
-  const queue: QueueItem<unknown>[] = [];
+  let queue: QueueItem<unknown>[] = [];
 
   const processQueue = async () => {
     const currentItem = queue.find((item) => !processingKeys.has(item.key));
@@ -107,6 +109,16 @@ export function createQueue() {
       const result = await task();
       resolve(new Ok(result));
     } catch (error) {
+      if (options?.shouldClearQueueForKeyOnError?.(error)) {
+        queue = queue.filter((q) => {
+          if (q.key !== key) {
+            return true;
+          }
+          q.resolve(new Err(error));
+          return false;
+        });
+      }
+
       resolve(new Err(error));
     } finally {
       const indexOfCurrentItem = queue.findIndex((item) => item.key === key);
