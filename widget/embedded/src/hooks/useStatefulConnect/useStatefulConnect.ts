@@ -7,10 +7,7 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
-import {
-  checkIsWalletPartiallyConnected,
-  type ExtendedModalWalletInfo,
-} from '../../utils/wallets';
+import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import {
   isStateOnDerivationPathStep,
@@ -148,14 +145,12 @@ export function useStatefulConnect(): UseStatefulConnect {
       }
     }
 
+    // If the wallet is a hub wallet and it is connected (fully or partially) and it contains more than one namespace, we should display detached modal
     if (!!wallet.isHub) {
-      const walletState = state(wallet.type);
-      const namespacesState = walletState.namespaces;
-      const isPartiallyConnected = checkIsWalletPartiallyConnected(
-        wallet,
-        namespacesState
-      );
-      if (isPartiallyConnected) {
+      const needsNamespace = wallet.properties?.find(
+        (item) => item.name === 'namespaces'
+      )?.value;
+      if (needsNamespace?.data.length && needsNamespace.data.length > 1) {
         dispatch({
           type: 'detached',
           payload: {
