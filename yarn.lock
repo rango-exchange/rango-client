@@ -6076,6 +6076,25 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/wallets-core@^0.43.1-next.11":
+  version "0.43.1-next.11"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-core/-/wallets-core-0.43.1-next.11.tgz#49ed6e99d8cc71ff6eb911ab8a0c4108eb948d8a"
+  integrity sha512-a2mu8xjbf30wvTuOuritV5zzgKwUhZhjjY3bDGoOGR8wT4f2HVOQ5BELc6K5fDvfEyZxHFpv84iemFVRGjEaWw==
+  dependencies:
+    caip "^1.1.1"
+    immer "^10.0.4"
+    rango-types "^0.1.85"
+    zustand "^4.5.2"
+
+"@rango-dev/wallets-shared@^0.44.2-next.6":
+  version "0.44.2-next.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.44.2-next.13.tgz#261b15591417baa8218a4288389e4861b202ed46"
+  integrity sha512-Xye2XcNKFqwrrEBtxLrgz2Xrxnvc1B3TYbeVpdjWAeMJJRhzGLWq3nBqAKmK2ujZ6ktBy+N1i+GmVRT6y4GeZg==
+  dependencies:
+    "@rango-dev/wallets-core" "^0.43.1-next.11"
+    ethers "^6.13.2"
+    rango-types "^0.1.85"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
