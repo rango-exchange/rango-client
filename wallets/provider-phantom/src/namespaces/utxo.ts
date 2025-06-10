@@ -1,4 +1,3 @@
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type {
   ProviderAPI,
   UtxoActions,
@@ -155,7 +154,7 @@ const disconnect = commonBuilders
  * This is a temporary workaround due to Phantom's limitation in silently connecting to a BTC account.
  * Once Phantom introduces support for silent BTC connections, this implementation should be updated accordingly.
  */
-const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
+const canEagerConnect = new ActionBuilder<UtxoActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
   .action(solanaCanEagerConnectAction)

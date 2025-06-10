@@ -1,4 +1,5 @@
 export { DefaultSolanaSigner } from './signer.js';
+export { HubSolanaSigner } from './hub.js';
 export {
   executeSolanaTransaction,
   generalSolanaTransactionExecutor,
