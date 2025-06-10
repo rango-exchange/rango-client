@@ -100,7 +100,11 @@ export interface WalletsSlice {
       namespaces?: Namespace[];
     }
   ) => void;
-  addConnectedWallet: (accounts: Wallet[], namespace?: Namespace) => void;
+  addConnectedWallet: (
+    accounts: Wallet[],
+    namespace?: Namespace,
+    derivationPath?: string
+  ) => void;
   setWalletsAsSelected: (
     wallets: { walletType: string; chain: string }[]
   ) => void;
@@ -109,7 +113,8 @@ export interface WalletsSlice {
    */
   newWalletConnected: (
     accounts: Wallet[],
-    namespace?: Namespace
+    namespace?: Namespace,
+    derivationPath?: string
   ) => Promise<void>;
   disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
   /**
@@ -231,7 +236,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         };
       });
     },
-    addConnectedWallet: (accounts, namespace) => {
+    addConnectedWallet: (accounts, namespace, derivationPath) => {
       /*
        * When we are going to add a new account, there are two thing that can be happens:
        * 1. Wallet hasn't add yet.
@@ -276,6 +281,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               walletType: account.walletType,
               selected: shouldMarkWalletAsSelected,
               namespace: namespace,
+              derivationPath: derivationPath,
               loading: false,
               error: false,
             };
@@ -435,13 +441,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
-    newWalletConnected: async (accounts, namespace) => {
+    newWalletConnected: async (accounts, namespace, derivationPath) => {
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
         payload: { walletType: accounts[0].walletType, accounts },
       });
 
-      get().addConnectedWallet(accounts, namespace);
+      get().addConnectedWallet(accounts, namespace, derivationPath);
 
       void get().fetchBalances(accounts);
     },
