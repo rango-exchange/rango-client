@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-09 08:17\n"
+"PO-Revision-Date: 2025-06-10 12:35\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:187
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
@@ -29,7 +29,7 @@ msgstr "Aucun résultat trouvé"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:194
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Essayez d'utiliser différents mots-clés"
@@ -644,7 +644,7 @@ msgstr "Oui, supprimer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:256
+#: widget/embedded/src/pages/HistoryPage.tsx:255
 msgid "No, Cancel"
 msgstr "Non, Annuler"
 
@@ -1127,32 +1127,32 @@ msgid "Search Transaction"
 msgstr "Rechercher une transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:189
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 msgid "No transactions"
 msgstr "Aucune transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:196
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Votre historique de transaction est stocké localement et apparaîtra ici après avoir démarré un swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:221
+#: widget/embedded/src/pages/HistoryPage.tsx:220
 msgid "Clear Transaction History"
 msgstr "Effacer l'historique des transactions"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:225
+#: widget/embedded/src/pages/HistoryPage.tsx:224
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Continuer supprimera toutes les transactions réussies et échouées du widget. Voulez-vous continuer ?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:232
+#: widget/embedded/src/pages/HistoryPage.tsx:231
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Note: Cela n'efface pas votre historique de transactions dans la chaîne; cela ne les supprime que ici."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:246
+#: widget/embedded/src/pages/HistoryPage.tsx:245
 msgid "Yes, Clear the history"
 msgstr "Oui, effacer l'historique"
 

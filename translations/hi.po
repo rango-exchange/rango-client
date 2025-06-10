@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-09 08:17\n"
+"PO-Revision-Date: 2025-06-10 12:35\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:375
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:187
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "कोई परिणाम नहीं मिला"
@@ -29,7 +29,7 @@ msgstr "कोई परिणाम नहीं मिला"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:376
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:194
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "अलग-अलग कीवर्ड का उपयोग करके देखें"
@@ -644,7 +644,7 @@ msgstr "हां, इसे हटा दें"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:256
+#: widget/embedded/src/pages/HistoryPage.tsx:255
 msgid "No, Cancel"
 msgstr "नहीं, रद्द करें"
 
@@ -1127,32 +1127,32 @@ msgid "Search Transaction"
 msgstr "लेनदेन खोजें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:189
+#: widget/embedded/src/pages/HistoryPage.tsx:188
 msgid "No transactions"
 msgstr "कोई लेनदेन नहीं"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:196
+#: widget/embedded/src/pages/HistoryPage.tsx:195
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "आपका लेन-देन इतिहास स्थानीय रूप से संग्रहीत है और आपके द्वारा स्वैप शुरू करने के बाद यहां दिखाई देगा"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:221
+#: widget/embedded/src/pages/HistoryPage.tsx:220
 msgid "Clear Transaction History"
 msgstr "लेन-देन इतिहास साफ़ करें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:225
+#: widget/embedded/src/pages/HistoryPage.tsx:224
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "आगे बढ़ने से विजेट से सभी सफल और असफल लेनदेन हटा दिए जाएंगे। क्या आप जारी रखना चाहते हैं?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:232
+#: widget/embedded/src/pages/HistoryPage.tsx:231
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "ध्यान दें: इससे चेन पर आपके लेन-देन का इतिहास नहीं मिटता; यह केवल उन्हें यहां से हटाता है।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:246
+#: widget/embedded/src/pages/HistoryPage.tsx:245
 msgid "Yes, Clear the history"
 msgstr "हां, इतिहास साफ़ करें"
 
