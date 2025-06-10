@@ -1,3 +1,12 @@
+## [0.44.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.44.0...widget-embedded@0.44.1) (2025-06-10)
+
+
+### Bug Fixes
+
+* layout shift on custom slippage input ([8a8fb3b](https://github.com/rango-exchange/rango-client/commit/8a8fb3b7fd88928828c4b6331dd9481fec32ed50))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.43.0...widget-embedded@0.44.0) (2025-06-09)
 
 
