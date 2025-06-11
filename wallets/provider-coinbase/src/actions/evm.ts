@@ -19,8 +19,6 @@ function changeAccountSubscriber(
   instance: () => ProviderAPI
 ): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
   let eventCallback: EIP1193EventMap['accountsChanged'];
-
-  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
   return [
     (context, err) => {
       const evmInstance = instance();
@@ -46,7 +44,11 @@ function changeAccountSubscriber(
         }
 
         const chainId = await evmInstance.request({ method: 'eth_chainId' });
-        // TODO: Write a comment.
+        /*
+         * Coinbase Wallet's `switch account` returns a list where the currently selected account
+         * is always the first item. We're directly taking this first item as the active account.
+         */
+
         const formattedAccount = [
           AccountId.format({
             address: accounts[0],
@@ -96,6 +98,10 @@ function connect(
 
     const result = await utils.getAccounts(evmInstance);
 
+    /*
+     * Coinbase Wallet's `connect` returns a list where the currently selected account
+     * is always the first item. We're directly taking this first item as the active account.
+     */
     return {
       accounts: [
         AccountId.format({

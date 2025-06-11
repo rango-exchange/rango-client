@@ -24,6 +24,13 @@ Switch account behavior is **unreliable**:
 
 Due to this behavior, switch account functionality may not work properly in multi-namespace setups.
 
+#### ⚠️ Auto Connect
+Coinbase Wallet does **not provide a `onlyIfTrusted` option** or any silent authorization method for Solana.
+- If only **Solana** is selected for connection, auto-connect **will not function**.
+  - Auto-connect works **only when both Solana and EVM are connected simultaneously**, relying on EVM’s eager connection logic.
+- Even in this case, the wallet may **return an incorrect account** if the user has changed accounts while disconnected from the dApp.
+
+
 #### ⚠️ Cross Browser
 Coinbase Wallet is **only available on Chrome**.
 
