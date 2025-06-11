@@ -1,4 +1,4 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled, Typography } from '@rango-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',
@@ -25,6 +25,21 @@ export const Item = styled('div', {
     },
     color: '$$color',
   },
+});
+
+export const ValueContent = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '$2',
+});
+
+export const ValueTypography = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '250px',
 });
 
 export const Action = styled('div', {

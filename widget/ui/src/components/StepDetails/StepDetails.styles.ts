@@ -1,6 +1,7 @@
 import { css } from '@stitches/react';
 
 import { darkTheme, styled } from '../../theme.js';
+import { Typography } from '../Typography/Typography.js';
 
 export const Container = styled('div', {
   width: '100%',
@@ -125,6 +126,22 @@ export const StepSeparator = styled('div', {
       error: { borderColor: '$error500' },
     },
   },
+});
+
+export const TokenNameText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '38px',
+});
+
+export const ValueTypography = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '60px',
 });
 
 export const tokensContainerStyles = css({

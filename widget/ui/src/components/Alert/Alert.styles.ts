@@ -95,6 +95,9 @@ export const Main = styled('div', {
   display: 'flex',
   alignItems: 'center',
   alignSelf: 'stretch',
+  whiteSpace: 'normal',
+  wordBreak: 'break-all',
+
   variants: {
     variant: {
       regular: {
