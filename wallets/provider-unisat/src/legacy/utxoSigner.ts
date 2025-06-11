@@ -1,5 +1,6 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
+import { parseErrorAndThrowStandardizeError } from '@rango-dev/wallets-core/namespaces/common';
 import { Networks } from '@rango-dev/wallets-shared';
 import * as bitcoin from 'bitcoinjs-lib';
 import { SignerError } from 'rango-types';
@@ -33,6 +34,15 @@ export class BTCSigner implements GenericSigner<Transfer> {
       );
     }
 
+    /*
+     * TODO this logic should be added to queue manager rango preset, for safety we are rejecting signing process to avoid asset loss.
+     * https://docs.unisat.io/dev/open-api-documentation/unisat-wallet/supported-chains
+     */
+    const currentChain = await this.provider.getChain();
+    if (currentChain?.enum !== 'BITCOIN_MAINNET') {
+      throw new Error(`Switch your network to Bitcoin to proceed swap.`);
+    }
+
     // 1. Decode Base64 to hex
     const psbtHex = Buffer.from(psbt.unsignedPsbtBase64, 'base64').toString(
       'hex'
@@ -45,10 +55,14 @@ export class BTCSigner implements GenericSigner<Transfer> {
     );
 
     // 3. Sign (& auto-finalize)
-    const signedPsbtHex = await this.provider.signPsbt(psbtHex, {
-      autoFinalized: true, // or false if you want to finalize yourself
-      toSignInputs, // now in the correct object format
-    });
+    const signedPsbtHex = await this.provider
+      .signPsbt(psbtHex, {
+        autoFinalized: true,
+        toSignInputs,
+      })
+      .catch((e: unknown) => {
+        parseErrorAndThrowStandardizeError(e);
+      });
 
     // 4. Parse the PSBT hex and extract the raw transaction
     const psbtObject = bitcoin.Psbt.fromHex(signedPsbtHex);
