@@ -15,6 +15,10 @@ import { recommended as commonRecommended } from '../common/actions.js';
 import { CAIP_NAMESPACE } from './constants.js';
 import { getAccounts, switchOrAddNetwork } from './utils.js';
 
+export { sendTransaction } from './actions/sendTransaction.js';
+export { signMessage } from './actions/signMessage.js';
+export { getTransaction } from './actions/getTransaction.js';
+
 export const recommended = [...commonRecommended];
 
 export function connect(

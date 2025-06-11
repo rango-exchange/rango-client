@@ -1,10 +1,15 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { ProviderContext, Providers } from '../index.js';
-import type { Provider } from '@rango-dev/wallets-core';
+import type { Provider, ProxiedNamespace } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
+import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
+import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
+import { HubEvmSigner } from '@rango-dev/signer-evm';
+import { HubSolanaSigner } from '@rango-dev/signer-solana';
 import { type WalletInfo } from '@rango-dev/wallets-shared';
+import { TransactionType } from 'rango-types';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -271,7 +276,27 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     },
     async getSigners(type) {
       const provider = getLegacyProvider(params.allVersionedProviders, type);
-      return provider.getSigners(provider.getInstance());
+      const signers = await provider.getSigners(provider.getInstance());
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
+
+      wallet.getAll().forEach((namespace) => {
+        if (namespace.namespaceId === 'evm') {
+          signers.registerSigner(
+            TransactionType.EVM,
+            new HubEvmSigner(namespace as ProxiedNamespace<EvmActions>)
+          );
+        } else if (namespace.namespaceId === 'solana') {
+          signers.registerSigner(
+            TransactionType.SOLANA,
+            new HubSolanaSigner(namespace as ProxiedNamespace<SolanaActions>)
+          );
+        }
+      });
+
+      return signers;
     },
     getWalletInfo(type) {
       const wallet = getHub().get(type);

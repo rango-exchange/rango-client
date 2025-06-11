@@ -21,6 +21,11 @@ import { solanaPhantom } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaPhantom);
 
+const getInstance = builders
+  .getInstance()
+  .action(() => solanaPhantom())
+  .build();
+
 /*
  * TODO: If user imported a private key for EVM, it hasn't solana.
  * when trying to connect to solana for this user we go through `-32603` which is an internal error.
@@ -87,10 +92,23 @@ const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
   .action(canEagerConnectAction)
   .build();
 
+const signMessage = builders
+  .signMessage()
+  .action(actions.signMessage(solanaPhantom))
+  .build();
+
+const signTransaction = builders
+  .signTransaction()
+  .action(actions.signTransaction(solanaPhantom))
+  .build();
+
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
+  .action(getInstance)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
+  .action(signMessage)
+  .action(signTransaction)
   .build();
 
 export { solana };
