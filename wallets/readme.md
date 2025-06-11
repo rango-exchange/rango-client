@@ -130,12 +130,12 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 **Status:** ✅ Support, ⚠️ Partial Support, ❌ Unsupported, 🚧 Not Implemented
 
 ## By Group 
-|Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
-|--|--|--|--|--|--|--|
-| [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
-| [SafePal](provider-safepal/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 
-| [Slush](provider-slush/readme.md) | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | 
-| [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
+|Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI | TRON | APTOS|
+|--|--|--|--|--|--|--|--|--|
+| [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| [SafePal](provider-safepal/readme.md) | ✅ | ❌ | ✅ | ❌ | 🚧 | 🚧 | 🚧 | 🚧 |
+| [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | ❌ | ❌ |
 
 
 
@@ -144,9 +144,9 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
-| SafePal |  ✅ | ✅ | ❌ | Injected | ✅ |
+| SafePal |  ⚠️ | ✅ | ❌ | Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
-| Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
+| Trust Wallet |  ⚠️ | ✅ | ❌ | Injected | ✅ | 
 
 
 
