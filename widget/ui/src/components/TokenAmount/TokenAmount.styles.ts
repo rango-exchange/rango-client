@@ -1,4 +1,5 @@
 import { css, styled } from '../../theme.js';
+import { Typography } from '../Typography/Typography.js';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -31,3 +32,14 @@ export const usdValueStyles = css({
 export const tooltipRootStyle = {
   width: 'fit-content',
 };
+
+export const TokenNameText = styled(Typography, {
+  maxWidth: '64px',
+});
+
+export const textTruncate = css({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+});

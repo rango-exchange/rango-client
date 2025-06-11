@@ -1,7 +1,14 @@
 import type { PropTypes } from './CustomTokenModal.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, ExternalLinkIcon, Image, Typography } from '@rango-dev/ui';
+import {
+  Divider,
+  ExternalLinkIcon,
+  Image,
+  InfoIcon,
+  Tooltip,
+  Typography,
+} from '@rango-dev/ui';
 import React from 'react';
 
 import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
@@ -10,8 +17,15 @@ import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CUSTOM_TOKEN_LEARN_MORE_LINK } from './CustomTokenModal.constants';
 import { generateExplorerLink } from './CustomTokenModal.helpers';
-import { Container, StyledButton, StyledLink } from './CustomTokenModal.styles';
+import {
+  Container,
+  FlexCenteredContainer,
+  StyledButton,
+  StyledLink,
+  TokenSymbolText,
+} from './CustomTokenModal.styles';
 
+const VALUE_LENGTH_THRESHOLD = 9;
 export function CustomTokenModal(props: PropTypes) {
   const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
 
@@ -35,9 +49,17 @@ export function CustomTokenModal(props: PropTypes) {
           type="circular"
         />
         <Divider size={4} />
-        <Typography variant="title" size="medium">
-          {token.symbol}
-        </Typography>
+        <FlexCenteredContainer>
+          <TokenSymbolText variant="title" size="medium">
+            {token.symbol}
+          </TokenSymbolText>
+          {token.symbol.length > VALUE_LENGTH_THRESHOLD && (
+            <Tooltip content={token.symbol} container={getContainer()}>
+              <InfoIcon size={12} color="gray" />
+            </Tooltip>
+          )}
+        </FlexCenteredContainer>
+
         <Typography variant="body" size="small" className="_blockchain-name">
           {blockchain.displayName}
         </Typography>

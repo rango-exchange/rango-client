@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { css, styled } from '@rango-dev/ui';
 
 export const WalletContainer = styled('div', {
   display: 'flex',
@@ -15,4 +15,9 @@ export const TooltipErrorContent = styled('div', {
 
 export const ProfileBanner = styled('img', {
   width: '100%',
+});
+
+export const wordWrap = css({
+  whiteSpace: 'normal',
+  wordBreak: 'break-all',
 });
