@@ -1,6 +1,7 @@
 export * as actions from './actions.js';
 export * as builders from './builders.js';
 export { standardizeAndThrowError } from './or.js';
+export { parseErrorAndThrowStandardizeError } from './utils.js';
 export {
   intoConnectionFinished,
   recommended as afterRecommended,
