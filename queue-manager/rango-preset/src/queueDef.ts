@@ -1,7 +1,9 @@
-import { BlockReason, SwapActionTypes, SwapQueueDef } from './types';
+import type { SwapQueueDef } from './types';
+
 import { checkStatus } from './actions/checkStatus';
 import { createTransaction } from './actions/createTransaction';
 import { executeTransaction } from './actions/executeTransaction';
+import { executeXrplTransaction } from './actions/executeXrplTransaction';
 import { scheduleNextStep } from './actions/scheduleNextStep';
 import { start } from './actions/start';
 import {
@@ -9,6 +11,7 @@ import {
   onBlockForConnectWallet,
   onDependsOnOtherQueues,
 } from './helpers';
+import { BlockReason, SwapActionTypes } from './types';
 
 /**
  *
@@ -24,10 +27,12 @@ export const swapQueueDef: SwapQueueDef = {
     [SwapActionTypes.SCHEDULE_NEXT_STEP]: scheduleNextStep,
     [SwapActionTypes.CREATE_TRANSACTION]: createTransaction,
     [SwapActionTypes.EXECUTE_TRANSACTION]: executeTransaction,
+    [SwapActionTypes.EXECUTE_XRPL_TRANSACTION]: executeXrplTransaction,
     [SwapActionTypes.CHECK_TRANSACTION_STATUS]: checkStatus,
   },
   run: [SwapActionTypes.START],
   whenTaskBlocked: (event, meta) => {
+    console.log({ event });
     if (event.reason.reason === BlockReason.WAIT_FOR_CONNECT_WALLET) {
       onBlockForConnectWallet(event, meta);
     } else if (event.reason.reason === BlockReason.WAIT_FOR_NETWORK_CHANGE) {

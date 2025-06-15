@@ -305,6 +305,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
     WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
 
+  console.log({ quoteChains, requiredChains });
+
   return (
     <WatermarkedModal
       id="widget-confirm-wallets-modal"

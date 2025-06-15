@@ -46,6 +46,10 @@
     "./namespaces/utxo": {
       "types": "./dist/namespaces/utxo/mod.d.ts",
       "default": "./dist/namespaces/utxo/mod.js"
+    },
+    "./namespaces/xrpl": {
+      "types": "./dist/namespaces/xrpl/mod.d.ts",
+      "default": "./dist/namespaces/xrpl/mod.js"
     }
   },
   "files": [
@@ -54,7 +58,7 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

@@ -95,6 +95,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
             state,
             info,
           ];
+
           handleEvent(...eventParams);
 
           if (props.onUpdateState) {
