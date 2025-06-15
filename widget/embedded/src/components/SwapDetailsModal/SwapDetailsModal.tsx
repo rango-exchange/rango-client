@@ -22,6 +22,8 @@ export function SwapDetailsModal(props: ModalPropTypes) {
     walletButtonDisabled,
   } = props;
 
+  console.log({ props });
+
   const showWalletStateContent =
     state === PendingSwapNetworkStatus.WaitingForNetworkChange ||
     state === PendingSwapNetworkStatus.WaitingForConnectingWallet ||

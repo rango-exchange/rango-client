@@ -50,6 +50,7 @@ export function useWalletList(params?: Params): API {
     getAvailableProviders()
   );
 
+  console.log({ connectedWallets, listAvailableWalletTypes });
   let wallets = mapWalletTypesToWalletInfo(
     state,
     getWalletInfo,

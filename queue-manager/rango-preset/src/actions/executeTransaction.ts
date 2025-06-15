@@ -36,6 +36,17 @@ import { BlockReason } from '../types';
 export async function executeTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
+  const checkResult = await checkExecution(actions);
+
+  if (checkResult) {
+    // All the conditions are met. We can safely send the tx to wallet for sign.
+    await signTransaction(actions);
+  }
+}
+
+export async function checkExecution(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+): Promise<boolean> {
   const { getStorage, context } = actions;
   const { meta, wallets, providers } = context;
   const { claimedBy } = claimQueue();
@@ -49,7 +60,7 @@ export async function executeTransaction(
   };
 
   const swap = getStorage().swapDetails;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const currentStep = getCurrentStep(swap)!;
 
   // Resetting network status, so we will set it again during the running of this task.
@@ -72,7 +83,7 @@ export async function executeTransaction(
       description,
     };
     requestBlock(blockedFor);
-    return;
+    return false;
   }
 
   /* Wallet should be on correct network */
@@ -93,7 +104,7 @@ export async function executeTransaction(
       details: details,
     };
     requestBlock(blockedFor);
-    return;
+    return false;
   } else if (!networkMatched) {
     const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
     const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(
@@ -105,7 +116,7 @@ export async function executeTransaction(
       details: details,
     };
     requestBlock(blockedFor);
-    return;
+    return false;
   }
   // Update network to mark it as network changed successfully.
   updateNetworkStatus(actions, {
@@ -127,9 +138,8 @@ export async function executeTransaction(
       details: {},
     };
     requestBlock(blockedFor);
-    return;
+    return false;
   }
 
-  // All the conditions are met. We can safely send the tx to wallet for sign.
-  await signTransaction(actions);
+  return true;
 }

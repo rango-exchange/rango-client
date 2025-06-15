@@ -37,6 +37,16 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
   const { list } = useWalletList();
+  console.log({
+    currentStep,
+    currentStepWallet,
+    currentStepFromBlockchain,
+    showWalletButton,
+    walletInfo,
+    walletType,
+    walletState,
+    list,
+  });
 
   const handleWalletItemClick = () => {
     if (!!walletType) {

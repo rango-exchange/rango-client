@@ -1,6 +1,7 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { CreateTransactionRequest } from 'rango-sdk';
+
+import { type CreateTransactionRequest } from 'rango-sdk';
 
 import { DEFAULT_ERROR_CODE } from '../constants';
 import {
@@ -70,7 +71,16 @@ export async function createTransaction(
       }
 
       setStorage({ ...getStorage(), swapDetails: swap });
-      schedule(SwapActionTypes.EXECUTE_TRANSACTION);
+
+      /*
+       * TODO: THIS SHOULD BE TransactionType.XRPL
+       * Since it has problem with linking, will be fixed rango-types is merged anyways.
+       */
+      if (transaction?.blockChain === 'XRPL') {
+        schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+      } else {
+        schedule(SwapActionTypes.EXECUTE_TRANSACTION);
+      }
       next();
     } catch (error) {
       swap.status = 'failed';
