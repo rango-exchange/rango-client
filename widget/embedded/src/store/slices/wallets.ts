@@ -760,7 +760,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       targetBalanceKeys.forEach((targetBalanceKey) => {
         const currentBalance = balances[targetBalanceKey];
         if (!currentBalance) {
-          return maxBalance;
+          return;
         }
         const currentBalanceAmount = new BigNumber(currentBalance.amount);
         const prevBalanceAmount = new BigNumber(maxBalance.amount);
@@ -805,7 +805,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               const balance = balances[balanceKey];
               const asset = extractAssetFromBalanceKey(balanceKey);
 
-              if (asset.blockchain === wallet.chain && balance) {
+              if (asset && asset.blockchain === wallet.chain && balance) {
                 const token = get().findToken(asset);
 
                 const amount = balance?.amount
