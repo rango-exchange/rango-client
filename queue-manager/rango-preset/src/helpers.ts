@@ -9,6 +9,7 @@ import type {
   SwapQueueContext,
   SwapQueueDef,
   SwapStorage,
+  UseQueueManagerParams,
 } from './types';
 import type {
   ExecuterActions,
@@ -893,7 +894,7 @@ export function onBlockForChangeNetwork(
   // Try to auto switch
   const { type, namespace } = getRequiredWallet(swap);
   if (!!type && !!namespace?.network) {
-    if (context.canSwitchNetworkTo(type, namespace.network)) {
+    if (context.canSwitchNetworkTo(type, namespace.network, namespace)) {
       const result = context.switchNetwork(type, namespace);
       if (result) {
         result
@@ -1400,7 +1401,7 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
 export function retryOn(
   lastConnectedWallet: LastConnectedWallet,
   manager?: Manager,
-  canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
+  canSwitchNetworkTo?: UseQueueManagerParams['canSwitchNetworkTo'],
   options = { fallbackToOnlyWallet: true }
 ): void {
   const { walletType: wallet, network } = lastConnectedWallet;
@@ -1456,10 +1457,22 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!network || !canSwitchNetworkTo?.(wallet, network)) {
-    finalQueueToBeRun?.unblock();
-  } else {
-    finalQueueToBeRun?.checkBlock();
+  if (finalQueueToBeRun) {
+    const finalQueueStorage = finalQueueToBeRun.getStorage() as SwapStorage;
+    const currentSwap = getCurrentStep(finalQueueStorage?.swapDetails);
+
+    const currentNamespace = currentSwap
+      ? getCurrentNamespaceOfOrNull(finalQueueStorage.swapDetails, currentSwap)
+      : null;
+    if (
+      !network ||
+      !currentNamespace ||
+      !canSwitchNetworkTo?.(wallet, network, currentNamespace)
+    ) {
+      finalQueueToBeRun.unblock();
+    } else {
+      finalQueueToBeRun.checkBlock();
+    }
   }
 }
 
