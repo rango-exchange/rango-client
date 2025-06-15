@@ -109,7 +109,7 @@ export function hasLimitError(swaps: SwapResult[]): boolean {
 }
 
 export function getLimitErrorMessage(swaps: SwapResult[]): {
-  swap: SwapResult;
+  swap?: SwapResult;
   fromAmountRangeError: string;
   recommendation: string;
 } {
@@ -127,6 +127,13 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
     return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
   })[0];
 
+  if (!swap) {
+    return {
+      swap: undefined,
+      fromAmountRangeError: '',
+      recommendation: '',
+    };
+  }
   const minimum = !!swap.fromAmountMinValue
     ? new BigNumber(swap.fromAmountMinValue)
     : null;
@@ -279,7 +286,7 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') {
+    if (!fee || fee.expenseType === 'DECREASE_FROM_OUTPUT') {
       continue;
     }
 
@@ -552,7 +559,7 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
 
 export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
   const inputAmount = quote.requestAmount;
-  const inputTokenUsdPrice = quote.swaps[0].from.usdPrice;
+  const inputTokenUsdPrice = quote.swaps[0]?.from.usdPrice;
   if (!inputAmount || !inputTokenUsdPrice) {
     return;
   }
@@ -561,7 +568,7 @@ export function getUsdInputFrom(quote: SelectedQuote): BigNumber | undefined {
 
 export function getUsdOutputFrom(quote: SelectedQuote): BigNumber | undefined {
   const outputAmount = quote?.outputAmount || null;
-  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1].to.usdPrice;
+  const outputTokenUsdPrice = quote.swaps[quote.swaps.length - 1]?.to.usdPrice;
   if (!outputAmount || !outputTokenUsdPrice) {
     return;
   }

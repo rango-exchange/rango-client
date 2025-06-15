@@ -1,6 +1,6 @@
 import type { Token } from 'rango-sdk';
 
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { createToken } from '../../test-utils/fixtures';
 import { createTokenHash } from '../../utils/meta';
@@ -35,20 +35,30 @@ function createMetaForMockData(
     if (!meta.tokensMapByBlockchainName[token.blockchain]) {
       meta.tokensMapByBlockchainName[token.blockchain] = [];
     }
-    meta.tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+    meta.tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
   });
 
   return meta;
 }
 
 describe('matchTokensFromConfigWithMeta', () => {
+  let token0: Token;
+  let token1: Token;
+  beforeEach(() => {
+    // Assert presence once
+    if (!tokens[0] || !tokens[1]) {
+      throw new Error('Test data not populated correctly');
+    }
+    token0 = tokens[0];
+    token1 = tokens[1];
+  });
   test('should include tokens from config.tokens array that exist in meta', () => {
     const mockData: MatchTokensFromConfigWithMetaParam = {
       type: 'source',
       meta: createMetaForMockData(tokens),
       config: {
         blockchains: undefined,
-        tokens: [tokens[0], tokens[1]],
+        tokens: [token0, token1],
       },
     };
 
@@ -63,7 +73,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: undefined,
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: false },
         },
       },
     };
@@ -94,8 +104,8 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A, BLOCKCHAIN_B],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [tokens[2]] as Token[], isExcluded: false },
         },
       },
     };
@@ -111,7 +121,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [tokens[2]] as Token[], isExcluded: false },
         },
       },
     };
@@ -141,7 +151,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: true },
+          [BLOCKCHAIN_A]: { tokens: [tokens[0]] as Token[], isExcluded: true },
         },
       },
     };
