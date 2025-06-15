@@ -46,9 +46,9 @@ export function getWalletsList(
       const namespacesProperty = providerProperties?.find(
         (property) => property.name === 'namespaces'
       );
-      const supportedChainsNames = namespacesProperty?.value.data
-        .flatMap((obj) => obj.chains)
-        .map((chain) => chain.name);
+      const supportedChainsNames = namespacesProperty?.value.data.flatMap(
+        (obj) => obj.id
+      );
 
       const supportedChains = blockchains?.filter((blockchain) =>
         supportedChainsNames?.includes(blockchain.name)
