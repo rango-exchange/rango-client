@@ -31,6 +31,7 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
+  VALUE_LENGTH_THRESHOLD,
 } from '../../constants/routing';
 import {
   FooterAlert,
@@ -57,11 +58,11 @@ import { getTotalFeeInUsd, getUsdFeeOfStep } from '../../utils/swap';
 
 import {
   AllRoutesButton,
+  AmountText,
   BasicInfoOutput,
   basicInfoStyles,
   ContainerInfoOutput,
   Content,
-  FrameIcon,
   HorizontalSeparator,
   Line,
   QuoteContainer,
@@ -70,6 +71,7 @@ import {
   summaryHeaderStyles,
   summaryStyles,
   TagContainer,
+  TokenNameText,
 } from './Quote.styles';
 import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
@@ -97,11 +99,6 @@ export function Quote(props: QuoteProps) {
   const userSlippage = customSlippage || slippage;
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
-  const roundedInput = numberToString(
-    input.value,
-    TOKEN_AMOUNT_MIN_DECIMALS,
-    TOKEN_AMOUNT_MAX_DECIMALS
-  );
   const roundedOutput = numberToString(
     output.value,
     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -422,24 +419,40 @@ export function Quote(props: QuoteProps) {
         </div>
         {type === 'basic' && (
           <div className={basicInfoStyles()}>
-            <FrameIcon>
-              <InfoIcon size={12} color="gray" />
-            </FrameIcon>
             <ContainerInfoOutput>
-              <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${steps[0].from.token.displayName} = `}
+              <BasicInfoOutput>
+                <AmountText size="small" variant="body">
+                  {input.value}
+                </AmountText>
+                {input.value.length > VALUE_LENGTH_THRESHOLD && (
+                  <NumericTooltip
+                    content={input.value}
+                    container={container}
+                    open={!input.value ? false : undefined}>
+                    <InfoIcon size={12} color="gray" />
+                  </NumericTooltip>
+                )}
+                <TokenNameText size="small" variant="body">
+                  {steps[0].from.token.displayName}
+                </TokenNameText>
+                <Typography size="small" variant="body">
+                  =
+                </Typography>
+                <AmountText size="small" variant="body">
+                  {output.value}
+                </AmountText>
+                {output.value.length > VALUE_LENGTH_THRESHOLD && (
+                  <NumericTooltip
+                    content={output.value}
+                    container={container}
+                    open={!output.value ? false : undefined}>
+                    <InfoIcon size={12} color="gray" />
+                  </NumericTooltip>
+                )}
+                <TokenNameText size="small" variant="body">
+                  {steps[steps.length - 1].to.token.displayName}
+                </TokenNameText>
               </BasicInfoOutput>
-              <NumericTooltip
-                content={output.value}
-                container={container}
-                open={!output.value ? false : undefined}>
-                <BasicInfoOutput size="small" variant="body">
-                  &nbsp;
-                  {`${roundedOutput} ${
-                    steps[steps.length - 1].to.token.displayName
-                  }`}
-                </BasicInfoOutput>
-              </NumericTooltip>
             </ContainerInfoOutput>
             <NumericTooltip content={output.usdValue} container={container}>
               <Divider size={2} direction="horizontal" />

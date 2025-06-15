@@ -1,4 +1,4 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled, Typography } from '@rango-dev/ui';
 
 export const StyledLink = styled('a', {
   textDecoration: 'none',
@@ -58,4 +58,17 @@ export const Container = styled('div', {
 
 export const StyledButton = styled(Button, {
   minHeight: '$40',
+});
+
+export const TokenSymbolText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '97px',
+});
+export const FlexCenteredContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 });

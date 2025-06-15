@@ -343,18 +343,25 @@ export const HorizontalSeparator = styled('div', {
   borderColor: '$$color',
 });
 
-export const FrameIcon = styled('div', {
-  width: '$16',
-  height: '$16',
-  justifyContent: 'center',
-  alignItems: 'center',
+export const BasicInfoOutput = styled('div', {
   display: 'flex',
+  flexDirection: 'row',
+  gap: '$2',
 });
-
-export const BasicInfoOutput = styled(Typography, {
+export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '$40',
+});
+
+export const AmountText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '82.5px',
 });
 
 export const ContainerInfoOutput = styled('div', {
