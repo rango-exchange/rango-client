@@ -332,6 +332,10 @@ export function Quote(props: QuoteProps) {
   const lastStep = steps[numberOfSteps - 1];
   const firstStep = steps[0];
 
+  if (!firstStep || !lastStep) {
+    return null;
+  }
+
   return fullExpandedMode ? (
     <FullExpandedQuote
       selected={selected}
@@ -430,7 +434,7 @@ export function Quote(props: QuoteProps) {
             </FrameIcon>
             <ContainerInfoOutput>
               <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${firstStep?.from.token.displayName} = `}
+                {`${roundedInput} ${firstStep.from.token.displayName} = `}
               </BasicInfoOutput>
               <NumericTooltip
                 content={output.value}
@@ -438,7 +442,7 @@ export function Quote(props: QuoteProps) {
                 open={!output.value ? false : undefined}>
                 <BasicInfoOutput size="small" variant="body">
                   &nbsp;
-                  {`${roundedOutput} ${lastStep?.to.token.displayName}`}
+                  {`${roundedOutput} ${lastStep.to.token.displayName}`}
                 </BasicInfoOutput>
               </NumericTooltip>
             </ContainerInfoOutput>

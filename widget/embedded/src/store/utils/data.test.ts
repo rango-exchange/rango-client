@@ -1,6 +1,6 @@
 import type { Token } from 'rango-sdk';
 
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { createToken } from '../../test-utils/fixtures';
 import { createTokenHash } from '../../utils/meta';
@@ -42,13 +42,23 @@ function createMetaForMockData(
 }
 
 describe('matchTokensFromConfigWithMeta', () => {
+  let token0: Token;
+  let token1: Token;
+  beforeEach(() => {
+    // Assert presence once
+    if (!tokens[0] || !tokens[1]) {
+      throw new Error('Test data not populated correctly');
+    }
+    token0 = tokens[0];
+    token1 = tokens[1];
+  });
   test('should include tokens from config.tokens array that exist in meta', () => {
     const mockData: MatchTokensFromConfigWithMetaParam = {
       type: 'source',
       meta: createMetaForMockData(tokens),
       config: {
         blockchains: undefined,
-        tokens: tokens[0] && tokens[1] ? [tokens[0], tokens[1]] : undefined,
+        tokens: [token0, token1],
       },
     };
 

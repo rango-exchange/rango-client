@@ -347,7 +347,7 @@ export const getDefaultQuote = (
   requestAmount: string
 ): SelectedQuote | null => {
   let quote = quotes[0]; // Return the first quote from the quotes array
-  if (!quotes.length) {
+  if (!quotes.length || !quote) {
     return null;
   }
   if (!currentQuote) {
@@ -356,8 +356,6 @@ export const getDefaultQuote = (
       requestAmount,
       validationStatus: null,
       ...quote,
-      swaps: quote?.swaps || [],
-      requestId: quote?.requestId || '',
     };
   }
   // Create a set of swapperIds from the currentQuote swaps
@@ -384,8 +382,6 @@ export const getDefaultQuote = (
         requestAmount,
         validationStatus: null,
         ...quote,
-        swaps: quote?.swaps || [],
-        requestId: quote?.requestId || '',
       }
     : null;
 };

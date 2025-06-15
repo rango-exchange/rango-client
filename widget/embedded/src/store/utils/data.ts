@@ -78,11 +78,13 @@ export function matchTokensFromConfigWithMeta(params: {
     const configBlockchainsSet = new Set(configBlockchains);
 
     Object.keys(meta.tokensMapByBlockchainName).forEach((blockchain) => {
+      const metaTokensForSelectedBlockchain =
+        meta.tokensMapByBlockchainName[blockchain];
       if (
         !configBlockchainsSet.has(blockchain) &&
-        meta.tokensMapByBlockchainName[blockchain]
+        metaTokensForSelectedBlockchain
       ) {
-        addTokens(meta.tokensMapByBlockchainName[blockchain]);
+        addTokens(metaTokensForSelectedBlockchain);
       }
     });
   }

@@ -438,9 +438,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       });
     },
     newWalletConnected: async (accounts, namespace) => {
+      const newAccount = accounts[0];
+      if (!newAccount) {
+        return;
+      }
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
-        payload: { walletType: accounts[0]?.walletType || '', accounts },
+        payload: { walletType: newAccount.walletType, accounts },
       });
 
       get().addConnectedWallet(accounts, namespace);
@@ -749,13 +753,17 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
 
       // If there are multiple balances for an specific token, we pick the maximum.
       const firstTargetBalance = balances[targetBalanceKeys[0]];
-      let maxBalance: Balance | null = firstTargetBalance || null;
+      if (!firstTargetBalance) {
+        return null;
+      }
+      let maxBalance: Balance = firstTargetBalance;
       targetBalanceKeys.forEach((targetBalanceKey) => {
-        const currentBalance = balances[targetBalanceKey] || null;
-        const currentBalanceAmount = new BigNumber(
-          currentBalance?.amount || ''
-        );
-        const prevBalanceAmount = new BigNumber(maxBalance?.amount || '');
+        const currentBalance = balances[targetBalanceKey];
+        if (!currentBalance) {
+          return maxBalance;
+        }
+        const currentBalanceAmount = new BigNumber(currentBalance.amount);
+        const prevBalanceAmount = new BigNumber(maxBalance.amount);
 
         if (currentBalanceAmount.isGreaterThan(prevBalanceAmount)) {
           maxBalance = currentBalance;
@@ -797,7 +805,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               const balance = balances[balanceKey];
               const asset = extractAssetFromBalanceKey(balanceKey);
 
-              if (asset.blockchain === wallet.chain) {
+              if (asset.blockchain === wallet.chain && balance) {
                 const token = get().findToken(asset);
 
                 const amount = balance?.amount
@@ -809,8 +817,8 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
                   symbol: asset.symbol,
                   ticker: asset.symbol,
                   address: asset.address,
-                  rawAmount: balance?.amount || '0',
-                  decimal: balance?.decimals || 0,
+                  rawAmount: balance.amount,
+                  decimal: balance.decimals,
                   amount: amount.toString(),
                   isSupported: !!token,
                   logo: token?.image || null,

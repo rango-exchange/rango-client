@@ -140,7 +140,7 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
   const maximum = !!swap.fromAmountMaxValue
     ? new BigNumber(swap.fromAmountMaxValue)
     : null;
-  const isExclusive = swap?.fromAmountRestrictionType === 'EXCLUSIVE';
+  const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
 
   let fromAmountRangeError = '';
   let recommendation = '';
@@ -286,7 +286,7 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (!fee || fee?.expenseType === 'DECREASE_FROM_OUTPUT') {
+    if (!fee || fee.expenseType === 'DECREASE_FROM_OUTPUT') {
       continue;
     }
 

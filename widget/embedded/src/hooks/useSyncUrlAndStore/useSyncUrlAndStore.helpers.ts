@@ -3,13 +3,15 @@ import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
 export function convertTokenSearchParamToAsset(
   searchParam: string,
   chain: BlockchainMeta
-): Asset {
+): Asset | null {
   const symbolAndAddress = searchParam.split('--');
-
+  if (!symbolAndAddress[0]) {
+    return null;
+  }
   return {
     blockchain: chain.name,
     address: symbolAndAddress?.[1] || null,
-    symbol: symbolAndAddress[0] || '',
+    symbol: symbolAndAddress[0],
   };
 }
 
