@@ -27,6 +27,8 @@ import {
   tryConvertNamespaceNetworkToChainInfo,
 } from './utils.js';
 
+const REJECTION_ERROR_CODE = 4001;
+
 export type UseAdapterParams = Omit<ProviderProps, 'providers'> & {
   providers: Provider[];
   /** This is only will be used to access some parts of the legacy provider that doesn't exists in Hub. */
@@ -43,7 +45,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allBlockChains: params.allBlockChains,
   });
 
-  const queueTask = createQueue();
+  const queueTask = createQueue({
+    shouldClearQueueForKeyOnError: (error: unknown) => {
+      if (error && typeof error === 'object') {
+        const errorObj = error as { code?: number; cause?: { code?: number } };
+        const errorCode = errorObj.code ?? errorObj.cause?.code;
+        return errorCode === REJECTION_ERROR_CODE;
+      }
+      return false;
+    },
+  });
 
   useEffect(() => {
     dataRef.current = {
