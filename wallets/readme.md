@@ -129,29 +129,28 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 **Status:** ✅ Support, ⚠️ Partial Support, ❌ Unsupported, 🚧 Not Implemented
 
-## By Group 
-|Wallet| EVM | UTXO | Solana | Cosmos | TON | SUI |
-|--|--|--|--|--|--|--|
-| [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ | 
-| [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | 
-| [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
+## By Group
 
-
-
+| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
+| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
+| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
+| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
+| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
+| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 
 ## By Feature
-|Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
-|--|--|--|--|--|--|
-| Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
-| Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
-| Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
 
-
+| Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
+| ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
+| Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
+| Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
+| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 
 # Supported Wallets (Legacy)
 
 | Wallet         | Supported Chains                                                                                                        | Not Implemented                                   | Auto Connect Support | Source                               |
-|----------------|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|----------------------|--------------------------------------|
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------- | ------------------------------------ |
 | ArgentX        | Starknet                                                                                                                | -                                                 | &check;              | https://www.argent.xyz/              |
 | Bitget         | Bitcoin,EVM,Tron,Solana,Cosmos,Aptos,Sui                                                                                | Bitcoin,Solana,Cosmos,Aptos,Sui                   | &check;              | https://web3.bitget.com/             |
 | Braavos        | Starknet                                                                                                                | -                                                 | &check;              | https://braavos.app/                 |

@@ -8,7 +8,10 @@ import type {
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (chain?: Chain | ChainId) => Promise<AccountsWithActiveChain>;
+  connect: (
+    chain?: Chain | ChainId,
+    derivationPath?: string
+  ) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
 }
 

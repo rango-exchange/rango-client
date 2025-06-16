@@ -181,7 +181,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
            */
           const connectNamespaceProcess = async () =>
             namespace
-              .connect(network)
+              .connect(network, namespaceInput.derivationPath)
               .then<ConnectResult>(transformHubResultToLegacyResult)
               .then((connectResult) => {
                 return {

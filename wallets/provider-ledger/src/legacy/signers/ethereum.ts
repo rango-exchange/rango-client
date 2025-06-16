@@ -7,12 +7,12 @@ import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
+import { getDerivationPath } from '../../state.js';
 import {
   getLedgerError,
   transportConnect,
   transportDisconnect,
-} from '../helpers.js';
-import { getDerivationPath } from '../state.js';
+} from '../../utils.js';
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {

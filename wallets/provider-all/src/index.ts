@@ -18,7 +18,7 @@ import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
 import * as keplr from '@rango-dev/provider-keplr';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
-import * as ledger from '@rango-dev/provider-ledger';
+import { versions as ledger } from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
@@ -124,7 +124,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
     lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(ledger)),
+    ledger,
     lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
