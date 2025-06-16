@@ -42,6 +42,10 @@ export class Provider {
     this.#extendInternalActions = options?.extendInternalActions || {};
     this.#namespaces = namespaces;
 
+    /**
+     * Our assumption is that the store will be optional for the provider.
+     * If a store is provided in the options, it will be initialized and set up.
+     */
     if (options?.store) {
       this.#store = options.store;
       this.#setupStore();
@@ -179,11 +183,8 @@ export class Provider {
   public info(): ProviderConfig['info'] | undefined {
     const store = this.#store;
     if (!store) {
-      throw new Error(
-        'You need to set your store using `.store` method first.'
-      );
+      return this.#configs.info;
     }
-
     return store.getState().providers.list[this.id].config.info;
   }
 
