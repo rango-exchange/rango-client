@@ -30,7 +30,9 @@ export const useNotificationStore = createSelectors(
         setNotification: (event, route) => {
           const fromStep = route.steps[0];
           const toStep = route.steps[route.steps.length - 1];
-
+          if (!fromStep || !toStep) {
+            return;
+          }
           const notification: Notification = {
             event,
             creationTime: Date.now(),

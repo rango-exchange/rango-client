@@ -133,7 +133,10 @@ export function createTintsAndShades(
 
   for (let i = 0; i < length; i++) {
     const index = BASE_INDEX + (isReversed ? length - 1 - i : i) * STEP;
-    colorMap[`${colorKey}${index}`] = combinedColors[i];
+    const color = combinedColors[i];
+    if (color) {
+      colorMap[`${colorKey}${index}`] = color;
+    }
   }
 
   return colorMap;
