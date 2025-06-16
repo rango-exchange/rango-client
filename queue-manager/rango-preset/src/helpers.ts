@@ -246,6 +246,9 @@ export const setCurrentStepTx = (
     case TransactionType.SUI:
       currentStep.suiTransaction = transaction;
       break;
+    case TransactionType.XRPL:
+      currentStep.xrplTransaction = transaction;
+      break;
     default:
       ((x: never) => {
         throw new Error(`${x} was unhandled!`);

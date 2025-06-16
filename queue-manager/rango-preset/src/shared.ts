@@ -429,6 +429,7 @@ export function calculatePendingSwap(
           transferTransaction: null,
           tonTransaction: null,
           suiTransaction: null,
+          xrplTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,
