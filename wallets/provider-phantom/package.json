@@ -28,7 +28,7 @@
     "@rango-dev/signer-sui": "^0.4.0",
     "@rango-dev/wallets-shared": "^0.45.0",
     "bitcoinjs-lib": "^6.1.7",
-    "rango-types": "^0.1.85"
+    "rango-types": "^0.1.88"
   },
   "publishConfig": {
     "access": "public"

@@ -56,7 +56,7 @@
     "@rango-dev/wallets-shared": "^0.45.0",
     "@stitches/react": "^1.2.8",
     "copy-to-clipboard": "^3.3.3",
-    "rango-types": "^0.1.85",
+    "rango-types": "^0.1.88",
     "react-virtuoso": "^4.6.2"
   },
   "publishConfig": {
