@@ -121,18 +121,40 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   );
 
   const api: ProviderContext = {
-    canSwitchNetworkTo(type, network) {
-      const provider = getLegacyProvider(params.allVersionedProviders, type);
-      const switchTo = provider.canSwitchNetworkTo;
+    canSwitchNetworkTo(type, network, namespace) {
+      const provider = getHub().get(type);
 
-      if (!switchTo) {
-        return false;
+      if (!provider) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'canSwitchNetworkTo'.`
+        );
       }
 
-      return switchTo({
+      if (!namespace) {
+        throw new Error(
+          'Passing namespace to `canSwitchNetworkTo` is required.'
+        );
+      }
+
+      const proxiedNamespace = provider.findByNamespace(namespace.namespace);
+      if (!proxiedNamespace) {
+        throw new Error(
+          `We couldn't find any matched namespace on your request provider. (requested namespace: ${namespace.namespace})`
+        );
+      }
+      if (!('canSwitchNetwork' in proxiedNamespace)) {
+        return false;
+      }
+      const providerSupportedChains = getSupportedChainsFromProvider(
+        provider,
+        dataRef.current.allBlockChains
+      );
+      const providerSupportedChainsOfNamespace = providerSupportedChains.filter(
+        (chain) => chain.type === namespace.namespace
+      );
+      return proxiedNamespace.canSwitchNetwork({
         network,
-        meta: params.allBlockChains || [],
-        provider: provider.getInstance(),
+        supportedChains: providerSupportedChainsOfNamespace,
       });
     },
     async connect(type, namespaces) {
@@ -156,7 +178,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         const targetNamespace = namespace.namespace;
 
         const result = wallet.findByNamespace(targetNamespace);
-
         if (!result) {
           throw new Error(
             `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`

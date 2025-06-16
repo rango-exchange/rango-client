@@ -160,7 +160,8 @@ export function SwapDetails(props: SwapDetailsProps) {
     (isMobileWallet(currentStepWallet.walletType) ||
       canSwitchNetworkTo(
         currentStepWallet.walletType,
-        currentStepNamespace.network
+        currentStepNamespace.network,
+        currentStepNamespace
       ));
 
   const switchNetwork = showSwitchNetwork
