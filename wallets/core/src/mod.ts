@@ -6,7 +6,9 @@ export type {
   CommonNamespaceKeys,
   Subscriber,
   SubscriberCleanUp,
+  Context,
 } from './hub/mod.js';
+export type { FunctionWithContext } from './types/mod.js';
 export {
   Hub,
   Provider,
