@@ -7,6 +7,7 @@ import {
 } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
+import { evmActions } from '../actions/evm.js';
 import { WALLET_ID } from '../constants.js';
 import { evmRabby } from '../utils.js';
 
@@ -15,7 +16,7 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 
 const connect = builders
   .connect()
-  .action(actions.connect(evmRabby))
+  .action(evmActions.connect(evmRabby))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)
