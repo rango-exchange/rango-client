@@ -28,7 +28,10 @@ interface UseStatefulConnect {
     wallet: WalletInfoWithExtra,
     selectedNamespaces: Namespace[]
   ) => Promise<Result>;
-  handleDerivationPath: (path: string) => Promise<Result>;
+  handleDerivationPath: (
+    wallet: ExtendedModalWalletInfo,
+    path: string
+  ) => Promise<Result>;
   handleDisconnect: (type: WalletType) => Promise<Result>;
   getState(): State;
   resetState(section?: 'derivation'): void;
@@ -235,14 +238,14 @@ export function useStatefulConnect(): UseStatefulConnect {
       type: 'detached',
       payload: {
         targetWallet: wallet,
-        selectedNamespaces:
-          namespaces?.map((namespace) => namespace.namespace) || null,
+        selectedNamespaces: namespaces ?? null,
       },
     });
     return { status: ResultStatus.Detached };
   };
 
   const handleDerivationPath = async (
+    wallet: ExtendedModalWalletInfo,
     derivationPath: string
   ): Promise<Result> => {
     if (!derivationPath) {
@@ -259,6 +262,22 @@ export function useStatefulConnect(): UseStatefulConnect {
     const type = connectState.derivationPath.providerType;
     const selectedNamespace = connectState.derivationPath.namespace;
     const namespaces = [{ namespace: selectedNamespace, derivationPath }];
+
+    const isHub = !!wallet.isHub;
+    const needsNamespace = isHub
+      ? wallet.properties?.find((item) => item.name === 'namespaces')?.value
+      : wallet.needsNamespace;
+    if (!!needsNamespace?.data && needsNamespace.data.length > 1) {
+      dispatch({
+        type: 'detached',
+        payload: {
+          targetWallet: wallet,
+          selectedNamespaces: namespaces ?? null,
+          derivationPath,
+        },
+      });
+      return { status: ResultStatus.Detached };
+    }
 
     return await runConnect(type, namespaces);
   };

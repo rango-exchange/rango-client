@@ -74,7 +74,7 @@ export function StatefulConnectModal(props: PropTypes) {
       );
     }
 
-    handleDerivationPath(derivationPath)
+    handleDerivationPath(props.wallet!, derivationPath)
       .then(afterConnected)
       .catch(catchErrorOnHandle);
   };
@@ -111,6 +111,13 @@ export function StatefulConnectModal(props: PropTypes) {
     } else if (resultIsDisconnected) {
       handleClosingModal();
     }
+  };
+
+  const handleNavigateToDerivationPath = (selectedNamespace: Namespace) => {
+    if (!props.wallet?.needsDerivationPath) {
+      return;
+    }
+    void handleNamespace(props.wallet, [selectedNamespace]);
   };
 
   useEffect(() => {
@@ -196,6 +203,7 @@ export function StatefulConnectModal(props: PropTypes) {
           onConfirm={handleDetachedConfirm}
           value={getState().namespace}
           selectedNamespaces={getState().selectedNamespaces}
+          navigateToDerivationPath={handleNavigateToDerivationPath}
         />
       )}
     </WatermarkedModal>

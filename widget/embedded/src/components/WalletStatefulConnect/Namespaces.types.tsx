@@ -1,4 +1,5 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
@@ -27,9 +28,12 @@ export type NamespaceItemPropTypes =
   | CheckboxNamespaceItemPropTypes;
 
 export type NamespaceDetachedItemPropTypes = {
-  walletType: string;
+  targetWallet: ExtendedModalWalletInfo;
   initialConnect?: boolean;
   namespace: LegacyNamespaceMeta;
+  navigateToDerivationPath: () => void;
+  derivationPath?: string;
+  singleSelection?: boolean;
 };
 
 export type NamespaceUnsupportedItemPropTypes = {
