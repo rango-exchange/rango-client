@@ -144,7 +144,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
-| Rabby |  ✅ | ✅ | ⚠️ | Injected | ✅ |
+| Rabby |  ✅ | ✅ | ✅ | Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
 | Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
 
