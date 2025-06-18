@@ -12,7 +12,7 @@ const FAKER_SEED = 14;
 const THREE_MAX_DECIMAL = 3;
 const FOUR_MAX_DECIMAL = 4;
 const SMALL_INT = { min: 1, max: 9 };
-const FLOAT_OPTS = { min: 0, max: 100, precision: 0.01 };
+const FLOAT_OPTS = { min: 0, max: 100, multipleOf: 0.01 };
 faker.seed(FAKER_SEED);
 
 describe('check validation behaviors', () => {
