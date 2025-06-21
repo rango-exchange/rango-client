@@ -905,7 +905,7 @@ export function onBlockForChangeNetwork(
             queue.unblock();
           })
           .catch((error) => {
-            // Update network to mark it as network changed successfully.
+            // Update network to mark it as network change failed.
             updateNetworkStatus(
               {
                 getStorage: queue.getStorage.bind(queue) as () => SwapStorage,

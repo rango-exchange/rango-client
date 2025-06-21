@@ -311,26 +311,33 @@ export function SwapDetails(props: SwapDetailsProps) {
         PendingSwapNetworkStatus.WaitingForNetworkChange
       ) {
         handleShowSwitchNetworkLoading();
-      } else if (
+        return;
+      }
+      if (
         currentStepNetworkStatus ===
         PendingSwapNetworkStatus.NetworkChangeFailed
       ) {
         handleShowSwitchNetworkFailed();
+        return;
       }
-    } else if (
+      return;
+    }
+
+    if (
       currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForConnectingWallet
     ) {
       handleChangeModalState('connectWallet');
-    } else if (
-      currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged
-    ) {
+      return;
+    }
+
+    if (currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged) {
       handleChangeModalState('switchNetwork');
       handleShowSwitchNetworkSucceeded();
-    } else if (
-      modalState &&
-      ['connectWallet', 'switchNetwork'].includes(modalState)
-    ) {
+      return;
+    }
+
+    if (modalState && ['connectWallet', 'switchNetwork'].includes(modalState)) {
       handleCloseModal();
     }
   }, [currentStepNetworkStatus]);

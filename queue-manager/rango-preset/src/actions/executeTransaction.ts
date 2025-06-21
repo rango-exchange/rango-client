@@ -106,7 +106,7 @@ export async function executeTransaction(
   // Update network to mark it as network changed successfully.
   updateNetworkStatus(actions, {
     message: '',
-    details: 'The network has been successfully changed. ',
+    details: 'The network has been successfully changed.',
     status: PendingSwapNetworkStatus.NetworkChanged,
   });
 
