@@ -5,6 +5,8 @@ import {
   TransactionType,
 } from 'rango-types';
 
+import getSigners from './signer.js';
+
 export const WALLET_ID = 'slush';
 export const WALLET_NAME_IN_WALLET_STANDARD = 'Slush';
 
@@ -37,6 +39,10 @@ export const info: ProviderInfo = {
         ],
         selection: 'multiple',
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners() },
     },
   ],
 };
