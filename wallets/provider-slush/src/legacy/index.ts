@@ -9,9 +9,8 @@ import {
   TransactionType,
 } from 'rango-types';
 
+import signer from '../signer.js';
 import { suiWalletInstance } from '../utils.js';
-
-import signer from './signer.js';
 
 const WALLET = WalletTypes.SLUSH;
 

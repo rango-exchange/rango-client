@@ -1,4 +1,4 @@
-import type { Provider } from '../utils.js';
+import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
@@ -6,7 +6,7 @@ import { getInstance as getSuiInstance } from '@rango-dev/wallets-core/namespace
 import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
-import { WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
+import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
 
 export default async function getSigners(
   provider: Provider
@@ -19,7 +19,7 @@ export default async function getSigners(
 
   const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
   const { DefaultSolanaSigner } = await import('@rango-dev/signer-solana');
-  const { BTCSigner } = await import('./utxoSigner.js');
+  const { BTCSigner } = await import('./signers/utxoSigner.js');
   const { DefaultSuiSigner } = await import('@rango-dev/signer-sui');
   const signers = new DefaultSignerFactory();
   signers.registerSigner(TxType.SOLANA, new DefaultSolanaSigner(solProvider));

@@ -270,8 +270,26 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       return await Promise.allSettled(disconnectPromises);
     },
     async getSigners(type) {
-      const provider = getLegacyProvider(params.allVersionedProviders, type);
-      return provider.getSigners(provider.getInstance());
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
+
+      const info = wallet.info();
+      if (!info) {
+        throw new Error('Your provider should have required `info`.');
+      }
+
+      const providerProperties = info.properties;
+
+      const signerProperty = providerProperties?.find(
+        (property) => property.name === 'signers'
+      );
+      if (!signerProperty) {
+        throw new Error('Your provider should contain signers property.');
+      }
+
+      return signerProperty.value.getSigners();
     },
     getWalletInfo(type) {
       const wallet = getHub().get(type);
