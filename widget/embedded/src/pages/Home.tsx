@@ -13,6 +13,7 @@ import { SameTokensWarning } from '../components/SameTokensWarning';
 import { SlippageWarningsAndErrors } from '../components/SlippageWarningsAndErrors/SlippageWarningsAndErrors';
 import { SwapMetrics } from '../components/SwapMetrics';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { SLIPPAGES } from '../constants/swapSettings';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
@@ -137,8 +138,12 @@ export function Home() {
 
   const onChangeSlippage = (slippage: number | null) => {
     if (slippage) {
-      setSlippage(slippage);
-      setCustomSlippage(null);
+      if (SLIPPAGES.includes(slippage)) {
+        setSlippage(slippage);
+        setCustomSlippage(null);
+      } else {
+        setCustomSlippage(slippage);
+      }
     }
   };
 
