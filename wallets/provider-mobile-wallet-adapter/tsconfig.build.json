@@ -8,7 +8,8 @@
     "rootDir": "./src",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true
+    "module": "esnext",
+    "moduleResolution": "bundler"
 
     // match output dir to input dir. e.g. dist/index instead of dist/src/index
   }
