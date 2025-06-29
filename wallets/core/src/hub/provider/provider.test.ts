@@ -54,13 +54,37 @@ describe('check providers', () => {
 
     expect(allNamespaces.size).toBe(2);
   });
-  test("throw an error if store hasn't set and try to access .state() and .info()", () => {
+
+  test('throw error if state() is called before store initialization', () => {
     const provider = new Provider('garbage', namespacesMap, {
       info: garbageWalletInfo,
     });
 
     expect(() => provider.state()).toThrowError();
-    expect(() => provider.info()).toThrowError();
+  });
+
+  test('should return wallet info via info() without store initialization', () => {
+    const provider = new Provider('garbage', namespacesMap, {
+      info: garbageWalletInfo,
+    });
+
+    expect(provider.info()).toBe(garbageWalletInfo);
+  });
+
+  test('should return wallet info via info() after store initialization', () => {
+    const store = createStore();
+    const provider = new Provider(
+      'garbage',
+      namespacesMap,
+      {
+        info: garbageWalletInfo,
+      },
+      { store }
+    );
+
+    expect(provider.info()).toBe(
+      store.getState().providers.list['garbage'].config.info
+    );
   });
 
   test('access state correctly', () => {
