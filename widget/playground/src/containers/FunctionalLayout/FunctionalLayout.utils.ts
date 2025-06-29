@@ -42,17 +42,14 @@ export function getWalletsList(
       if (!info) {
         throw new Error('Provider info is not available.');
       }
-      const providerProperties = info?.properties;
-      const namespacesProperty = providerProperties?.find(
+      const namespacesProperty = info.properties?.find(
         (property) => property.name === 'namespaces'
       );
-      const supportedChainsNames = namespacesProperty?.value.data
-        .flatMap((obj) => obj.chains)
-        .map((chain) => chain.name);
 
-      const supportedChains = blockchains?.filter((blockchain) =>
-        supportedChainsNames?.includes(blockchain.name)
-      );
+      const supportedChains =
+        namespacesProperty?.value.data.flatMap((namespace) =>
+          namespace.getSupportedChains(blockchains || [])
+        ) || [];
       walletsList.push({
         title: info.name,
         logo: info.icon,
