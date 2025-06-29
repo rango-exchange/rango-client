@@ -15,7 +15,10 @@ const buildProvider = () =>
         console.debug('[trustwallet] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', info)
+    .config('deepLink', (context) => {
+      return `trust://open_url?coin_id=60&url=${context.targetUrl}?autoConnect=${WALLET_ID}`;
+    })
     .add('evm', evm)
     .add('solana', solana)
     .build();

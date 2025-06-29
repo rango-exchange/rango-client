@@ -159,7 +159,7 @@ export function WalletList(props: PropTypes) {
           }
         };
 
-        const info = makeInfo(wallet.state);
+        const info = makeInfo(wallet.state, !!wallet.generateDeepLink);
 
         const getWalletDescription = () => {
           if (couldAddExperimentalChain) {

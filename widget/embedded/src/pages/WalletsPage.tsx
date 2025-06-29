@@ -1,4 +1,5 @@
 import type { WalletInfoWithExtra } from '../types';
+import type { ExtendedModalWalletInfo } from '../utils/wallets';
 
 import { i18n } from '@lingui/core';
 import {
@@ -69,7 +70,21 @@ export function WalletsPage() {
 
     setSelectedWalletToConnect(wallet);
   };
-
+  const getWalletDeepLink = (
+    wallet: ExtendedModalWalletInfo
+  ): string | undefined => {
+    // Default values are for test only and will be removed after test.
+    const appHost = config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST;
+    const targetUrl =
+      config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL;
+    if (!appHost || !targetUrl) {
+      return;
+    }
+    return wallet.generateDeepLink?.({
+      appHost,
+      targetUrl,
+    });
+  };
   return (
     <Layout
       header={{
@@ -99,12 +114,7 @@ export function WalletsPage() {
               wallet,
               namespacesState
             );
-            const deepLink = wallet.generateDeepLink?.({
-              appHost:
-                config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST,
-              targetUrl:
-                config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL,
-            });
+
             return (
               <Wallet
                 key={key}
@@ -114,7 +124,7 @@ export function WalletsPage() {
                     ? WalletState.PARTIALLY_CONNECTED
                     : wallet.state
                 }
-                deepLink={deepLink}
+                deepLink={getWalletDeepLink(wallet)}
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}

@@ -31,18 +31,16 @@ describe('checking store', () => {
   });
   test('provider can be removed from store', () => {
     const id = 'sol-or-something';
-    const info = {
-      info: {
-        name: 'sol grabage wallet',
-        icon: 'http://somewhere.world',
-        extensions: {
-          homepage: 'http://somewhere.world',
-        },
+    const metadata = {
+      name: 'sol grabage wallet',
+      icon: 'http://somewhere.world',
+      extensions: {
+        homepage: 'http://somewhere.world',
       },
     };
 
     const { getState } = hubStore;
-    getState().providers.addProvider(id, info);
+    getState().providers.addProvider(id, { metadata });
     expect(getState().providers.list[id]).toBeDefined();
     expect(Object.keys(getState().providers.list).length).toBe(1);
     getState().providers.removeProvider(id);
