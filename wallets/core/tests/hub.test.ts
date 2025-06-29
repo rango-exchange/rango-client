@@ -62,7 +62,7 @@ describe('check hub', () => {
   });
   test('should remove wallet from both hub and store', async () => {
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     const garbageWallet = garbageWalletBuilder.build();

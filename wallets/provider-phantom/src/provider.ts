@@ -20,7 +20,7 @@ const buildProvider = () =>
     .config('metadata', info)
     .config('deepLink', (context) => {
       const ref = `https://${context.appHost}`;
-      const deepLinkDestination = `${context.targetUrl}?autoConnect=phantom`;
+      const deepLinkDestination = `${context.targetUrl}?autoConnect=${WALLET_ID}`;
       return `https://phantom.app/ul/browse/${encodeURIComponent(
         deepLinkDestination
       )}?ref=${encodeURIComponent(ref)}`;

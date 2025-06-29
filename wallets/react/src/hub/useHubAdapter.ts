@@ -320,7 +320,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         }
       });
 
-      const providerProperties = info.properties;
+      const providerProperties = info.metadata.properties;
 
       const namespacesProperty = providerProperties?.find(
         (property) => property.name === 'namespaces'

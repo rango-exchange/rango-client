@@ -13,7 +13,7 @@ const buildProvider = () =>
         console.debug('[slush] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', info)
     .add('sui', sui)
     .build();
 
