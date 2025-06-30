@@ -13,10 +13,10 @@ export default async function getSigners(
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
-  const { DefaultSolanaSigner } = await import('@rango-dev/signer-solana');
+  const { CustomSolanaSigner } = await import('./signers/solanaSigner.js');
 
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
-  signers.registerSigner(TxType.SOLANA, new DefaultSolanaSigner(solProvider));
+  signers.registerSigner(TxType.SOLANA, new CustomSolanaSigner(solProvider));
 
   return signers;
 }
