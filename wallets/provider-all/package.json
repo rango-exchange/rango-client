@@ -55,6 +55,7 @@
     "@rango-dev/provider-trustwallet": "^0.45.1-next.1",
     "@rango-dev/provider-walletconnect-2": "^0.39.1-next.1",
     "@rango-dev/provider-xdefi": "^0.47.1-next.1",
+    "@rango-dev/provider-unisat": "^0.1.0",
     "@rango-dev/wallets-react": "^0.31.1-next.1",
     "@rango-dev/wallets-shared": "^0.45.1-next.1"
   },
