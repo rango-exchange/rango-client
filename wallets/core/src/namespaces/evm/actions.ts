@@ -118,7 +118,7 @@ export function changeAccountSubscriber(
       const evmInstance = instance();
 
       if (eventCallback && evmInstance) {
-        evmInstance.removeListener('accountsChanged', eventCallback);
+        evmInstance.removeListener?.('accountsChanged', eventCallback);
       }
 
       return err;
