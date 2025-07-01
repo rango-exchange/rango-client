@@ -20,8 +20,9 @@ export const NetworkStateContent = (props: NetworkStateContentProps) => {
           <Button
             id="widget-switch-network-try-again"
             type="primary"
+            size="large"
             onClick={handleSwitchNetwork}>
-            {i18n.t('Try again')}
+            {i18n.t('Try Again')}
           </Button>
         </>
       )}
