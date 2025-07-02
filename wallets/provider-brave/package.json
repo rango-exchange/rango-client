@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-brave",
-  "version": "0.47.1-next.2",
+  "version": "0.47.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.36.1-next.0",
     "@rango-dev/signer-solana": "^0.40.1-next.0",
-    "@rango-dev/wallets-shared": "^0.45.1-next.2",
+    "@rango-dev/wallets-shared": "^0.45.1-next.3",
     "rango-types": "^0.1.88"
   },
   "publishConfig": {
