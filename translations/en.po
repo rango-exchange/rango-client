@@ -905,7 +905,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:189
+#: widget/embedded/src/pages/Home.tsx:195
 msgid "Swap"
 msgstr "Swap"
 
