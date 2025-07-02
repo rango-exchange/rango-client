@@ -16,7 +16,7 @@ import { CAIP_NAMESPACE } from './constants.js';
 import { getAccounts, switchOrAddNetwork } from './utils.js';
 
 export const recommended = [...commonRecommended];
-
+const CHAIN_ID_RADIX = 16;
 export function connect(
   instance: () => ProviderAPI
 ): FunctionWithContext<EvmActions['connect'], Context> {
@@ -33,9 +33,19 @@ export function connect(
       await switchOrAddNetwork(evmInstance, chain);
     }
 
-    const chainId = await evmInstance.request({ method: 'eth_chainId' });
-
     const result = await getAccounts(evmInstance);
+
+    /*
+     * Trust Wallet Compatibility Fix:
+     * Trust Wallet's in-app browser has been observed to return the `chainId` as a
+     * number (e.g., 1) rather than the standard hexadecimal string (e.g., "0x1").
+     * This code block standardizes the `chainId` to the required hex format to
+     * prevent downstream errors.
+     */
+    let chainId = result.chainId;
+    if (typeof chainId === 'number') {
+      chainId = `0x${Number(chainId).toString(CHAIN_ID_RADIX)}`;
+    }
 
     const formatAccounts = result.accounts.map(
       (account) =>
@@ -50,7 +60,7 @@ export function connect(
 
     return {
       accounts: formatAccounts,
-      network: result.chainId,
+      network: chainId,
     };
   };
 }
