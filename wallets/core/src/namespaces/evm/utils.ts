@@ -50,3 +50,17 @@ export async function switchOrAddNetwork(
     throw switchError;
   }
 }
+
+const EIP_1193_USER_REJECTION_ERROR_CODE = 4001;
+export function isUserRejectionError(error: unknown): boolean {
+  // EIP-1193 user rejection error can be in error.code or error.cause.code
+  if (typeof error === 'object' && error !== null) {
+    const code = (error as { code?: number }).code;
+    const causeCode = (error as { cause?: { code?: number } }).cause?.code;
+    return (
+      code === EIP_1193_USER_REJECTION_ERROR_CODE ||
+      causeCode === EIP_1193_USER_REJECTION_ERROR_CODE
+    );
+  }
+  return false;
+}
