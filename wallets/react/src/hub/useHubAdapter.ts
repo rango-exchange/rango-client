@@ -4,6 +4,7 @@ import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
+import { utils } from '@rango-dev/wallets-core/namespaces/evm';
 import { type WalletInfo } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
@@ -43,7 +44,13 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allBlockChains: params.allBlockChains,
   });
 
-  const queueTask = createQueue();
+  const queueTask = createQueue({
+    onError: (error, actions) => {
+      if (utils.isUserRejectionError(error)) {
+        actions.removeCurrentKeyFromQueue();
+      }
+    },
+  });
 
   useEffect(() => {
     dataRef.current = {
