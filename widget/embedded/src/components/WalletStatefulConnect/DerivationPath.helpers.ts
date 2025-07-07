@@ -13,7 +13,7 @@ export function getDerivationPaths(
   selectedNamespace?: Namespace
 ): DerivationPath[] {
   const selectedNamespaceDerivationPaths = selectedNamespace
-    ? namespaces[selectedNamespace].derivationPaths
+    ? namespaces[selectedNamespace]?.derivationPaths
     : null;
 
   const derivationPaths: DerivationPath[] = !!selectedNamespaceDerivationPaths

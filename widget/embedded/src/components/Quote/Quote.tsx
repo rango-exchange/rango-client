@@ -329,6 +329,13 @@ export function Quote(props: QuoteProps) {
   const timeWarning =
     totalDurationSeconds / SECONDS_IN_MINUTE >= ROUTE_TIME_MAX;
 
+  const lastStep = steps[numberOfSteps - 1];
+  const firstStep = steps[0];
+
+  if (!firstStep || !lastStep) {
+    return null;
+  }
+
   return fullExpandedMode ? (
     <FullExpandedQuote
       selected={selected}
@@ -427,7 +434,7 @@ export function Quote(props: QuoteProps) {
             </FrameIcon>
             <ContainerInfoOutput>
               <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${steps[0].from.token.displayName} = `}
+                {`${roundedInput} ${firstStep.from.token.displayName} = `}
               </BasicInfoOutput>
               <NumericTooltip
                 content={output.value}
@@ -435,9 +442,7 @@ export function Quote(props: QuoteProps) {
                 open={!output.value ? false : undefined}>
                 <BasicInfoOutput size="small" variant="body">
                   &nbsp;
-                  {`${roundedOutput} ${
-                    steps[steps.length - 1].to.token.displayName
-                  }`}
+                  {`${roundedOutput} ${lastStep.to.token.displayName}`}
                 </BasicInfoOutput>
               </NumericTooltip>
             </ContainerInfoOutput>
@@ -462,10 +467,10 @@ export function Quote(props: QuoteProps) {
               realUsdValue: output.usdValue,
             }}
             token={{
-              displayName: steps[numberOfSteps - 1].to.token.displayName,
-              image: steps[numberOfSteps - 1].to.token.image,
+              displayName: lastStep.to.token.displayName,
+              image: lastStep.to.token.image,
             }}
-            chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+            chain={{ image: lastStep.to.chain.image }}
             percentageChange={percentageChange}
             warningLevel={priceImpactWarningLevel}
           />
@@ -473,8 +478,8 @@ export function Quote(props: QuoteProps) {
         {type === 'swap-preview' && (
           <>
             <QuoteSummary
-              from={steps[0].from}
-              to={steps[numberOfSteps - 1].to}
+              from={firstStep.from}
+              to={lastStep.to}
               percentageChange={percentageChange}
               warningLevel={priceImpactWarningLevel}
             />

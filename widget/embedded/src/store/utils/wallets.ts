@@ -35,8 +35,12 @@ export function createBalanceKey(
   return `${assetKey}${BALANCE_SEPARATOR}${accountAddress}`;
 }
 
-export function extractAssetFromBalanceKey(key: BalanceKey): Asset {
+export function extractAssetFromBalanceKey(key: BalanceKey): Asset | null {
   const [assetChain, assetAddress, assetSymbol] = key.split(BALANCE_SEPARATOR);
+
+  if (!assetChain || !assetAddress || !assetSymbol) {
+    return null;
+  }
 
   // null will be serialized to 'null', we need to make it back to a null type
   const address = assetAddress === 'null' ? null : assetAddress;
@@ -113,15 +117,20 @@ export function updateAggregatedBalanceStateForNewAccount(
 ) {
   for (const balanceKey in balanceState) {
     const asset = extractAssetFromBalanceKey(balanceKey as BalanceKey);
-    const assetKey = createAssetKey(asset);
+    const assetKey = asset ? createAssetKey(asset) : null;
 
-    if (!aggregatedBalances[assetKey]) {
+    if (!!assetKey && !aggregatedBalances[assetKey]) {
       aggregatedBalances[assetKey] = [];
     }
 
-    if (!aggregatedBalances[assetKey].includes(balanceKey as BalanceKey)) {
+    const aggregatedBalance = assetKey && aggregatedBalances[assetKey];
+    if (
+      assetKey &&
+      aggregatedBalance &&
+      aggregatedBalance?.includes(balanceKey as BalanceKey)
+    ) {
       aggregatedBalances[assetKey] = [
-        ...aggregatedBalances[assetKey],
+        ...aggregatedBalance,
         balanceKey as BalanceKey,
       ];
     }
@@ -135,6 +144,9 @@ export function removeBalanceFromAggregatedBalance(
   balanceKey: BalanceKey
 ) {
   const asset = extractAssetFromBalanceKey(balanceKey);
+  if (!asset) {
+    return aggregatedBalances;
+  }
   const assetKey = createAssetKey(asset);
 
   if (aggregatedBalances[assetKey]) {
@@ -205,6 +217,9 @@ export function computeNextStateAfterWalletBalanceRemoval(
 
   balanceKeys.forEach((key) => {
     const asset = extractAssetFromBalanceKey(key);
+    if (!asset) {
+      return;
+    }
 
     const shouldBalanceBeRemoved = !!walletsNeedsToBeRemoved.find(
       (wallet) =>
@@ -221,7 +236,7 @@ export function computeNextStateAfterWalletBalanceRemoval(
         nextAggregatedBalanceState,
         key
       );
-    } else {
+    } else if (currentBalancesState[key]) {
       nextBalancesState[key] = currentBalancesState[key];
     }
   });
