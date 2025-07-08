@@ -17,7 +17,6 @@ import {
   isNetworkMatchedForTransaction,
   isRequiredWalletConnected,
   isWalletNull,
-  resetNetworkStatus,
   signTransaction,
   updateNetworkStatus,
 } from '../helpers';
@@ -49,11 +48,8 @@ export async function executeTransaction(
   };
 
   const swap = getStorage().swapDetails;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const currentStep = getCurrentStep(swap)!;
 
-  // Resetting network status, so we will set it again during the running of this task.
-  resetNetworkStatus(actions);
+  const currentStep = getCurrentStep(swap)!;
 
   /* Make sure wallet is connected and also the connected wallet is matched with tx by checking address. */
   const isWrongAddress = !isRequiredWalletConnected(swap, context.state).ok;
@@ -110,7 +106,7 @@ export async function executeTransaction(
   // Update network to mark it as network changed successfully.
   updateNetworkStatus(actions, {
     message: '',
-    details: 'Wallet network changed successfully',
+    details: 'The network has been successfully changed.',
     status: PendingSwapNetworkStatus.NetworkChanged,
   });
 
