@@ -210,13 +210,10 @@ export function getNextStep(
   );
 }
 
-/**
- * Returns the wallet address, based on the current step of `PendingSwap`.
- */
-export const getCurrentAddressOf = (
+export const getCurrentWalletTypeAndAddress = (
   swap: PendingSwap,
   step: PendingSwapStep
-): string => {
+): WalletTypeAndAddress => {
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
@@ -235,18 +232,31 @@ export const getCurrentAddressOf = (
   if (result == null) {
     throw PrettyError.WalletMissing();
   }
-  return result.address;
+  return result;
+};
+
+/**
+ * Returns the wallet address, based on the current step of `PendingSwap`.
+ */
+export const getCurrentAddressOf = (
+  swap: PendingSwap,
+  step: PendingSwapStep
+): string => {
+  return getCurrentWalletTypeAndAddress(swap, step).address;
 };
 
 export function getRelatedWallet(
   swap: PendingSwap,
   currentStep: PendingSwapStep
 ): WalletTypeAndAddress {
-  const walletAddress = getCurrentAddressOf(swap, currentStep);
+  const { address, walletType: type } = getCurrentWalletTypeAndAddress(
+    swap,
+    currentStep
+  );
   const walletKV =
     Object.keys(swap.wallets)
       .map((k) => ({ k, v: swap.wallets[k] }))
-      .find(({ v }) => v.address === walletAddress) || null;
+      .find(({ v }) => v.address === address && v.walletType === type) || null;
   const blockchain = walletKV?.k || null;
   const wallet = walletKV?.v || null;
 
