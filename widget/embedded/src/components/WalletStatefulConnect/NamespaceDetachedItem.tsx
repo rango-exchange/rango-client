@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { getConciseAddress } from '../../utils/wallets';
@@ -46,10 +46,17 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
 
   const supportedChains = namespace.getSupportedChains(blockchains);
 
+  /*
+   * Ref to track ongoing connection attempts.
+   * In React Strict Mode, effects run twice for safety checks.
+   * This prevents multiple connect requests by ensuring only one attempt is processed at a time.
+   */
+  const processingConnectAttempt = useRef(false);
+
   useEffect(() => setErrorIsExpanded(false), [error]);
 
   useLayoutEffect(() => {
-    if (initialConnect) {
+    if (initialConnect && !processingConnectAttempt.current) {
       void handleConnectNamespace(walletType, namespace.value);
     }
   }, []);
@@ -59,6 +66,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
     namespace: Namespace
   ) => {
     try {
+      processingConnectAttempt.current = true;
       await connect(walletType, [
         {
           namespace: namespace,
@@ -67,6 +75,8 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
       ]);
     } catch (error) {
       setError(error as Error);
+    } finally {
+      processingConnectAttempt.current = false;
     }
   };
 
