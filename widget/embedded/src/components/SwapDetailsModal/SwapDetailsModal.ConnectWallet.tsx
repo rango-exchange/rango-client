@@ -140,6 +140,7 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
           <Divider size={10} />
           <Alert
             type="success"
+            variant="alarm"
             title={i18n.t('Wallet connected successfully.')}
           />
         </>
@@ -147,7 +148,7 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
       {error && !namespaceData && (
         <>
           <Divider size={10} />
-          <Alert type="error" title={error?.message} />
+          <Alert type="error" title={error?.message} variant="alarm" />
         </>
       )}
       {namespaceData && (
