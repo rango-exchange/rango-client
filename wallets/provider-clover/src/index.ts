@@ -104,7 +104,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
   return {
-    name: 'Clover',
+    name: 'CLV',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/clover/icon.svg',
     installLink: {
       CHROME:
