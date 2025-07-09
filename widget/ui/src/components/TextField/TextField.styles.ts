@@ -5,6 +5,8 @@ export const InputContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  borderWidth: 1,
+  borderStyle: 'solid',
   variants: {
     fullWidth: {
       true: {
@@ -57,6 +59,20 @@ export const InputContainer = styled('div', {
     disabled: {
       true: {},
       false: {},
+    },
+    status: {
+      default: {
+        borderColor: 'transparent',
+      },
+      error: {
+        borderColor: '$error500',
+      },
+      warning: {
+        borderColor: '$warning500',
+      },
+      success: {
+        borderColor: '$secondary500',
+      },
     },
   },
 

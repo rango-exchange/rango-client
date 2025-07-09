@@ -21,7 +21,6 @@ import {
   Head,
   SlippageChip,
   SlippageChipsContainer,
-  SlippageTextFieldContainer,
 } from './Slippage.styles';
 import { SlippageTooltipContent } from './SlippageTooltipContent';
 
@@ -92,32 +91,31 @@ export function Slippage() {
             />
           );
         })}
-        <SlippageTextFieldContainer
+
+        <TextField
+          type="number"
+          min="0.01"
+          max="30"
+          step="0.01"
           status={
-            slippageValidation?.type || (customSlippage ? 'safe' : 'empty')
-          }>
-          <TextField
-            type="number"
-            min="0.01"
-            max="30"
-            step="0.01"
-            id="widget-slippage-chip-text-input"
-            onInput={onInput}
-            fullWidth
-            variant="contained"
-            value={customSlippage === null ? '' : customSlippage}
-            color="dark"
-            onChange={onSlippageValueChange}
-            suffix={
-              customSlippage && (
-                <Typography variant="body" size="small">
-                  %
-                </Typography>
-              )
-            }
-            placeholder={i18n.t('Custom')}
-          />
-        </SlippageTextFieldContainer>
+            slippageValidation?.type || (customSlippage ? 'success' : 'default')
+          }
+          id="widget-slippage-chip-text-input"
+          onInput={onInput}
+          fullWidth
+          variant="contained"
+          value={customSlippage === null ? '' : customSlippage}
+          color="dark"
+          onChange={onSlippageValueChange}
+          suffix={
+            customSlippage && (
+              <Typography variant="body" size="small">
+                %
+              </Typography>
+            )
+          }
+          placeholder={i18n.t('Custom')}
+        />
       </SlippageChipsContainer>
 
       {slippageValidation && (
