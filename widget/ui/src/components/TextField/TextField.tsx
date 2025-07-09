@@ -21,6 +21,7 @@ function TextFieldComponent(
     variant,
     fullWidth,
     labelProps,
+    status = 'default',
     ...inputAttributes
   } = props;
 
@@ -63,6 +64,7 @@ function TextFieldComponent(
         variant={variant}
         size={size}
         css={style}
+        status={status}
         className="_text-field">
         {prefix || null}
         <Input

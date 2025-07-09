@@ -5,6 +5,7 @@ import type * as Stitches from '@stitches/react';
 type BaseProps = Stitches.VariantProps<typeof InputContainer>;
 type BaseSizes = Exclude<BaseProps['size'], object>;
 type BaseVariants = Exclude<BaseProps['variant'], object>;
+type BaseStatus = Exclude<BaseProps['status'], object>;
 
 export type Ref =
   | ((instance: HTMLInputElement | null) => void)
@@ -22,4 +23,5 @@ export type TextFieldPropTypes = {
   fullWidth?: boolean;
   labelProps?: TypographyPropTypes;
   style?: Stitches.CSS;
+  status?: BaseStatus;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;
