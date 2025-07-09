@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.40.0",
+  "version": "0.40.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -24,7 +24,7 @@
     "@solana/web3.js": "^1.91.4",
     "bs58": "^5.0.0",
     "promise-retry": "^2.0.1",
-    "rango-types": "^0.1.85"
+    "rango-types": "^0.1.88"
   },
   "devDependencies": {
     "@types/promise-retry": "^1.1.6"

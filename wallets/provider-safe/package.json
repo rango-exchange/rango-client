@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.38.0",
+  "version": "0.38.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,12 +21,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.36.0",
-    "@rango-dev/wallets-shared": "^0.45.0",
+    "@rango-dev/signer-evm": "^0.36.1-next.0",
+    "@rango-dev/wallets-shared": "^0.45.1-next.3",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.85"
+    "rango-types": "^0.1.88"
   },
   "publishConfig": {
     "access": "public"

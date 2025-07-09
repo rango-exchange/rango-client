@@ -1,0 +1,31 @@
+{
+  "name": "@rango-dev/provider-unisat",
+  "version": "0.1.1-next.1",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-unisat --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/wallets-shared": "^0.45.1-next.3",
+    "bitcoinjs-lib": "^6.1.7",
+    "rango-types": "^0.1.88"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

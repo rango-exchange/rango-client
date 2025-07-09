@@ -35,6 +35,7 @@ import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
+import { versions as unisat } from '@rango-dev/provider-unisat';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import {
@@ -129,5 +130,6 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
     slush,
+    unisat,
   ];
 };

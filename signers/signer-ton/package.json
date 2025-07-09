@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-ton",
-  "version": "0.22.0",
+  "version": "0.22.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.85"
+    "rango-types": "^0.1.88"
   },
   "peerDependencies": {
     "@ton/core": ">=0.59.0",
