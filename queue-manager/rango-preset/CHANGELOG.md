@@ -1,3 +1,60 @@
+# 0.47.0 (2025-07-09)
+
+
+### Bug Fixes
+
+* a bug in updateHash ([9ce8ccb](https://github.com/rango-exchange/rango-client/commit/9ce8ccb9c3c3a8fc4277a876515c6ee16c4afe9a))
+* add initial state with props in app store and fix bug of passing liquidity sources via config ([9854c5e](https://github.com/rango-exchange/rango-client/commit/9854c5edb1536df43ba7ef4a5d24b0db6bce93ce))
+* add wallets-core to rango-preset package dependencies ([b9700ca](https://github.com/rango-exchange/rango-client/commit/b9700ca160ace208027055f3a3e9b6eb47907647))
+* avoid getting transaction receipt multiple times ([2369e06](https://github.com/rango-exchange/rango-client/commit/2369e067e165c53e5791dec8ef0df60c70a89d60))
+* better parsing of evm rpc errors ([5e23cc0](https://github.com/rango-exchange/rango-client/commit/5e23cc00e207db0fe9c3041f8e8b1bc27e29b88d))
+* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
+* checking starknet and tron approval ([ff857fe](https://github.com/rango-exchange/rango-client/commit/ff857fe5f5bd172486ca0e740451742c9e4ed2b3))
+* display correct network in switch network modal ([4494f3c](https://github.com/rango-exchange/rango-client/commit/4494f3c96bffe6f26cf31e19f0ca7e6be3a38e81))
+* display transaction url after refreshing ([96b9bd7](https://github.com/rango-exchange/rango-client/commit/96b9bd7d9ca99ce466aa86ef1fd9b5ccc8f0ed86))
+* fix bug of duplicate modals for wallet connect ([1cf61cc](https://github.com/rango-exchange/rango-client/commit/1cf61ccab17c687c5422677eaf6d54d9666f5773))
+* fix emitting failed event in swap execution ([d7e6610](https://github.com/rango-exchange/rango-client/commit/d7e66104ad52d928dd6f4d0413e6a47d3de410f5))
+* fix flow bug when check status failed ([66ba427](https://github.com/rango-exchange/rango-client/commit/66ba42701b83a897aab9695a359c587f4e486e37))
+* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
+* fix retry logic in failed swaps ([2395df7](https://github.com/rango-exchange/rango-client/commit/2395df7744b894369add0f020930b8651eaae1ce))
+* fix retry swap on connect wallet ([bd15e9a](https://github.com/rango-exchange/rango-client/commit/bd15e9ab862564b4e6bef1156a34b608892a93e6))
+* fix signer wait change network issues ([57e9a89](https://github.com/rango-exchange/rango-client/commit/57e9a898dc5be0109ef5821bce5059a052dc7aba))
+* fix some swap messages in widget-embedded ([548c236](https://github.com/rango-exchange/rango-client/commit/548c2362859b686de8c95475b3ce610c8301226f))
+* fix widget event hook ([497f61c](https://github.com/rango-exchange/rango-client/commit/497f61c0d161ca041170fc2d34b4e7f0c3c4f6aa))
+* getChainId & networkMatched on wallet connect v1 ([c2e8a29](https://github.com/rango-exchange/rango-client/commit/c2e8a29299e268f59f2cef781936fa8f36f35bcc))
+* handle replaced transactions ([092f4ef](https://github.com/rango-exchange/rango-client/commit/092f4efcd0468d25df13fe2d0e1aecac54c7141e))
+* increase approval checking interval ([2d77521](https://github.com/rango-exchange/rango-client/commit/2d77521cd604e5f374155f947ccb44301cd85f2f))
+* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
+* show network name instead of namespace ([0853c27](https://github.com/rango-exchange/rango-client/commit/0853c2771c9310a01ee617baec9520c7e5ea12d3))
+* showing correct network in notification ([c540ef0](https://github.com/rango-exchange/rango-client/commit/c540ef041262337dc5a06d66993b37abe99c4b50))
+* throw error on sdk's create transaction ([47e2947](https://github.com/rango-exchange/rango-client/commit/47e29470c0e972b92a5c15db07aba83c2cec29f4))
+* update rango-types and fix notification bugs ([e5660ec](https://github.com/rango-exchange/rango-client/commit/e5660ec9e67c96c9f27ddd29773b67aaa60a69d2))
+
+
+### Features
+
+* add an adapter for Hub for wallets-react and enabling Hub by default. ([016fe92](https://github.com/rango-exchange/rango-client/commit/016fe924f30426b5ee92313c2bb9213a31210d71))
+* add state of wallets' details to useWidget ([80c2fad](https://github.com/rango-exchange/rango-client/commit/80c2fadb122534bd843bd8132c44f9172ead2f2b))
+* add sui namespace support for widget ([c489a97](https://github.com/rango-exchange/rango-client/commit/c489a978ebb5baa311898670bac6a47f03f5a1c9))
+* add Ton Transaction and integrate MyTonWallet ([16c81c3](https://github.com/rango-exchange/rango-client/commit/16c81c31e1474f55aedeeff3f8a46be74b9f9cba))
+* add widget events and refactor swap execution events ([3c1c828](https://github.com/rango-exchange/rango-client/commit/3c1c8286c86a06692528d7581e528aeef6b6451b))
+* export notifications from useWidget ([bb615cb](https://github.com/rango-exchange/rango-client/commit/bb615cb80e8457dc745b65ec275ac779f8ef9573))
+* Get Wallet Connect project id from config ([74d189e](https://github.com/rango-exchange/rango-client/commit/74d189e095d44dffba5b4145c8cf264e8e6a1a37))
+* logging packages to be able to create log records and capture them. ([cd0b710](https://github.com/rango-exchange/rango-client/commit/cd0b710aa9917d55e27419c5e6e0e17b2422bfd9))
+* support new widget events ([cf3521d](https://github.com/rango-exchange/rango-client/commit/cf3521d459cd3dde2cef4aaebedf04a99e3431f3))
+* support safe wallet ([d3429d0](https://github.com/rango-exchange/rango-client/commit/d3429d00fe1bee097f2a946bea9cb2e04803d7b8))
+* update payload for events ([b3b8706](https://github.com/rango-exchange/rango-client/commit/b3b8706195d7d83aab7ca38e66ceb0e1c72fa2cc))
+* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
+* update the event payload for failed step and failed route events ([bc1d759](https://github.com/rango-exchange/rango-client/commit/bc1d7590eaccc57cf680ceb40a53075c8a6eb174))
+
+
+### Performance Improvements
+
+* improve finding tokens from store ([ab2a0ea](https://github.com/rango-exchange/rango-client/commit/ab2a0ea487d80f400d392d3c41cbfcfa15cd1a19))
+* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
+
+
+
 # [0.46.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.45.1...queue-manager-rango-preset@0.46.0) (2025-06-09)
 
 

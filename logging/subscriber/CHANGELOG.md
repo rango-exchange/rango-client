@@ -1,3 +1,12 @@
+# 0.9.0 (2025-07-09)
+
+
+### Features
+
+* logging packages to be able to create log records and capture them. ([cd0b710](https://github.com/rango-exchange/rango-client/commit/cd0b710aa9917d55e27419c5e6e0e17b2422bfd9))
+
+
+
 # [0.8.0](https://github.com/rango-exchange/rango-client/compare/logging-subscriber@0.7.0...logging-subscriber@0.8.0) (2025-03-11)
 
 

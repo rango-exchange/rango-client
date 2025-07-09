@@ -1,3 +1,42 @@
+# 0.48.0 (2025-07-09)
+
+
+### Bug Fixes
+
+* bnb bug in xdefi signer ([b887177](https://github.com/rango-exchange/rango-client/commit/b88717722a7ba3442bc4f38a90759cf38a2c607c))
+* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
+* cleanup wallets' subscriber when setProvider get null ([a05dfba](https://github.com/rango-exchange/rango-client/commit/a05dfba623facc20debeee3d149fddc779e66278))
+* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
+* fix the connection problem that happens when another wallet takes over the requested one ([e262f4c](https://github.com/rango-exchange/rango-client/commit/e262f4c03b7dbf486dbffb91cfea26f44f915953))
+* remove null memo from utxo transactions ([38f3b58](https://github.com/rango-exchange/rango-client/commit/38f3b5827f2d6f0ee34d8da07f3462a52fb653eb))
+* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
+* resolve conflicts between evm providers ([30cabfb](https://github.com/rango-exchange/rango-client/commit/30cabfbaddef41c3b0003f90aa4279d6fef934b8))
+* resolve issues with the sign message method for certain solana providers ([d4d21a4](https://github.com/rango-exchange/rango-client/commit/d4d21a446d7f738e7c1fdc79048d17785689bff8))
+* update rango-types and fix notification bugs ([e5660ec](https://github.com/rango-exchange/rango-client/commit/e5660ec9e67c96c9f27ddd29773b67aaa60a69d2))
+
+
+### Features
+
+* add new chains to xdefi ([7ee25d7](https://github.com/rango-exchange/rango-client/commit/7ee25d7f43c52f6a3b833aa0acf03c1b72ef5efb))
+* add ton connect provider ([250ca69](https://github.com/rango-exchange/rango-client/commit/250ca69a7c4fa19d2bc9b054dc82cfab8b905fd5))
+* implement sign message method for providers with a custom signer ([ce0c806](https://github.com/rango-exchange/rango-client/commit/ce0c8066434d6beba15cc1f5a9fac8f9022e31db))
+* update ctrl wallet name and info ([88591d2](https://github.com/rango-exchange/rango-client/commit/88591d2037e7a94993bb334317792897ceb44cab))
+* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
+* use psbt for bitcoin on xdefi/ctrl wallet ([b5cf944](https://github.com/rango-exchange/rango-client/commit/b5cf94480594515a1b4881a888d739ad748d7cbe))
+
+
+### Performance Improvements
+
+* enable code splitting in build process ([e929b66](https://github.com/rango-exchange/rango-client/commit/e929b6698d1f19074bf6552fc438fe1fed04930d))
+* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
+
+
+### Reverts
+
+* Revert "support for rango-types cjs format" ([a424f87](https://github.com/rango-exchange/rango-client/commit/a424f878872b128c1bc673f0d58ba1b99dd29d74))
+
+
+
 # [0.47.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.46.0...provider-xdefi@0.47.0) (2025-06-09)
 
 

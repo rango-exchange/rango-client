@@ -1,3 +1,24 @@
+# 0.13.0 (2025-07-09)
+
+
+### Bug Fixes
+
+* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
+* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
+
+
+### Features
+
+* integrate rabby wallet extension ([8e6835d](https://github.com/rango-exchange/rango-client/commit/8e6835d6e49649a82ca500d37a9ffbdd4e88b51c))
+* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
+
+
+### Performance Improvements
+
+* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
+
+
+
 # [0.12.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.11.1...provider-rabby@0.12.0) (2025-06-09)
 
 
