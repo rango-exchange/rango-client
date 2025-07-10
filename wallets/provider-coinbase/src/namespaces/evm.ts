@@ -1,7 +1,10 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import {
+  builders as commonBuilders,
+  standardizeAndThrowError,
+} from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { evmActions } from '../actions/evm.js';
@@ -16,6 +19,7 @@ const connect = builders
   .action(evmActions.connect(evmCoinbase))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders
