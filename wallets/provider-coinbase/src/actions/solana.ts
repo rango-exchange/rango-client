@@ -1,4 +1,34 @@
+import type { Context, FunctionWithContext } from '@rango-dev/wallets-core';
+import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
+
+import {
+  CAIP_NAMESPACE,
+  CAIP_SOLANA_CHAIN_ID,
+  type ProviderAPI,
+  type SolanaActions,
+} from '@rango-dev/wallets-core/namespaces/solana';
+import { AccountId } from 'caip';
+
 import { evmCoinbase, solanaCoinbase } from '../utils.js';
+
+export function connect(
+  instance: () => ProviderAPI
+): FunctionWithContext<SolanaActions['connect'], Context> {
+  return async () => {
+    const solanaInstance = instance();
+    await solanaInstance.connect();
+
+    return [
+      AccountId.format({
+        address: solanaInstance.publicKey.toString(),
+        chainId: {
+          namespace: CAIP_NAMESPACE,
+          reference: CAIP_SOLANA_CHAIN_ID,
+        },
+      }) as CaipAccount,
+    ];
+  };
+}
 
 /*
  * Coinbase does not provide an eager connection mechanism for its Solana wallet.
@@ -33,4 +63,4 @@ const canEagerConnectAction = async () => {
     return false;
   }
 };
-export const solanaActions = { canEagerConnectAction };
+export const solanaActions = { canEagerConnectAction, connect };
