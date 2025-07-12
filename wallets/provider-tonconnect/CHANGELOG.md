@@ -1,18 +1,3 @@
-# 0.8.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-
-
-### Features
-
-* add ton connect provider ([250ca69](https://github.com/rango-exchange/rango-client/commit/250ca69a7c4fa19d2bc9b054dc82cfab8b905fd5))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.6.1...provider-tonconnect@0.7.0) (2025-06-09)
 
 

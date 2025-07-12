@@ -1,22 +1,3 @@
-# 0.30.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* fix type inconsistency in queue-manager-react Provider props ([231ded4](https://github.com/rango-exchange/rango-client/commit/231ded484694cb90647a807b5a511c70c7d23248))
-* seems npm needs a bit time to update the cdn and return the correct version ([ac6199a](https://github.com/rango-exchange/rango-client/commit/ac6199a4996e858af69c8f3ec0f35d865a29a96e))
-
-
-### Features
-
-* add delete action to queue manager ([d65fca9](https://github.com/rango-exchange/rango-client/commit/d65fca9be7547097cb0a84e2848cbddfe37991be))
-* design history item page ([6bfb4ef](https://github.com/rango-exchange/rango-client/commit/6bfb4ef922d0e29049724f053ae93b403bff0557))
-* handle active tab in widget-embedded ([42d3c4a](https://github.com/rango-exchange/rango-client/commit/42d3c4a795e775289d27583a169f06976b92f4f6))
-* Support for WalletConnect 2 ([9abf37a](https://github.com/rango-exchange/rango-client/commit/9abf37a201e1435ef53b0b31e6c911d3c6fed17a))
-
-
-
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.28.0...queue-manager-react@0.29.0) (2025-03-11)
 
 

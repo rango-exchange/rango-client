@@ -1,20 +1,3 @@
-# 0.10.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* add chart icon and handle dark theme in BarChart component ([9018351](https://github.com/rango-exchange/rango-client/commit/901835162f5dd75f9ed211d59499ebb5999f1148))
-* add prepare data function for chart package ([5790c7f](https://github.com/rango-exchange/rango-client/commit/5790c7f8182f10f85e699d98e9398a8b9c95545a))
-* if data exceed 90 days, bottom axis should be shown correctly ([ba6c420](https://github.com/rango-exchange/rango-client/commit/ba6c4203601c901bde7bad48eb68432e1b9fd69b))
-* improve y-axis display for bar charts with smaller data sets ([4c2a56a](https://github.com/rango-exchange/rango-client/commit/4c2a56acb8c207d107427eafc6b0d05864ae510b))
-
-
-### Features
-
-* add chart package ([9a18e23](https://github.com/rango-exchange/rango-client/commit/9a18e2331fee1638ce865af30479b0bae927d507))
-
-
-
 # [0.9.0](https://github.com/rango-exchange/rango-client/compare/charts@0.8.1...charts@0.9.0) (2025-06-09)
 
 

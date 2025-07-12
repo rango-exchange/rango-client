@@ -1,28 +1,3 @@
-# 0.13.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* fix solfare and solfare-snap signers ([975efe1](https://github.com/rango-exchange/rango-client/commit/975efe1f313517a14fde04182b58e49004848e03))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-* when host is using cjs, fallback to .default() for solfare sdk ([1b7d3df](https://github.com/rango-exchange/rango-client/commit/1b7d3df5a7d22a977d8e4fc3bb24cbb90c96dea7))
-
-
-### Features
-
-* add ton connect provider ([250ca69](https://github.com/rango-exchange/rango-client/commit/250ca69a7c4fa19d2bc9b054dc82cfab8b905fd5))
-* integrate solflare wallet ([b63a04b](https://github.com/rango-exchange/rango-client/commit/b63a04beff58f8046b4e2ace6ecdae41a3e3432e))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-### Performance Improvements
-
-* enable code splitting in build process ([e929b66](https://github.com/rango-exchange/rango-client/commit/e929b6698d1f19074bf6552fc438fe1fed04930d))
-* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
-
-
-
 # [0.12.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.11.1...provider-solflare@0.12.0) (2025-06-09)
 
 

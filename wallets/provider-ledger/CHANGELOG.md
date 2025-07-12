@@ -1,33 +1,3 @@
-# 0.17.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* exclud ledger on mobile and fix injected wallet bug ([409f742](https://github.com/rango-exchange/rango-client/commit/409f7429a9e0dd34180c5136f1c7bc4e28e15fba))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-
-
-### Features
-
-* add a modal for setting custom derivation path for ledger ([6e33216](https://github.com/rango-exchange/rango-client/commit/6e332160cd1febeded77230c30bb04bea70853c9))
-* add derivation path modal for trezor wallet ([74fb02e](https://github.com/rango-exchange/rango-client/commit/74fb02ee9c91f4d16f6787e3fe30f3d8c697885d))
-* add ethereum for ledger ([3b23fa0](https://github.com/rango-exchange/rango-client/commit/3b23fa0f4e4f88881fff85a4f1d77ac6a49cf758))
-* add solana to ledger ([2db1c76](https://github.com/rango-exchange/rango-client/commit/2db1c76bbf3a158a4f9fc9d14f8458e829a94763))
-* add support for Trezor hardware wallet ([838a17d](https://github.com/rango-exchange/rango-client/commit/838a17db0e780664f19b3c6edde82f1972af858d))
-* add ton connect provider ([250ca69](https://github.com/rango-exchange/rango-client/commit/250ca69a7c4fa19d2bc9b054dc82cfab8b905fd5))
-* implement sign message method for providers with a custom signer ([ce0c806](https://github.com/rango-exchange/rango-client/commit/ce0c8066434d6beba15cc1f5a9fac8f9022e31db))
-* implement updated design for initial connect modal ([469ff34](https://github.com/rango-exchange/rango-client/commit/469ff34f1d72e0bcda94d804c95055ce613d9803))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-### Performance Improvements
-
-* enable code splitting in build process ([e929b66](https://github.com/rango-exchange/rango-client/commit/e929b6698d1f19074bf6552fc438fe1fed04930d))
-* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
-
-
-
 # [0.16.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.15.1...provider-ledger@0.16.0) (2025-06-09)
 
 

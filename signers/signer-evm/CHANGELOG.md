@@ -1,27 +1,3 @@
-# 0.37.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* better parsing of evm rpc errors ([5e23cc0](https://github.com/rango-exchange/rango-client/commit/5e23cc00e207db0fe9c3041f8e8b1bc27e29b88d))
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* exclude the gas price from evm transaction specifications in version 2 ([41f8e87](https://github.com/rango-exchange/rango-client/commit/41f8e87593e7d4720f2533ed91e6fc829e6ab721))
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* fix signer wait change network issues ([57e9a89](https://github.com/rango-exchange/rango-client/commit/57e9a898dc5be0109ef5821bce5059a052dc7aba))
-* fix tx data for evm signers when transfering native tokens ([c1291c5](https://github.com/rango-exchange/rango-client/commit/c1291c538251b59dcadf048db47602ad778eb30e))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-* show tenderly error on call exception ([fafdb56](https://github.com/rango-exchange/rango-client/commit/fafdb56049cc38314a62d40d00252ad725afa1bc))
-* update rango-types and fix notification bugs ([e5660ec](https://github.com/rango-exchange/rango-client/commit/e5660ec9e67c96c9f27ddd29773b67aaa60a69d2))
-
-
-### Features
-
-* Support for WalletConnect 2 ([9abf37a](https://github.com/rango-exchange/rango-client/commit/9abf37a201e1435ef53b0b31e6c911d3c6fed17a))
-* support safe wallet ([d3429d0](https://github.com/rango-exchange/rango-client/commit/d3429d00fe1bee097f2a946bea9cb2e04803d7b8))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-
 # [0.36.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.35.0...signer-evm@0.36.0) (2025-06-09)
 
 

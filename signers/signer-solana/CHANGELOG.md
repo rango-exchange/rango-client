@@ -1,32 +1,3 @@
-# 0.41.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* fix solana signer by migrating confirm transaction to get signature statuses ([53117b3](https://github.com/rango-exchange/rango-client/commit/53117b3c15419aa955c5b2f4cea3467a635f15c3))
-* improve solana transaction sign flow ([8b144a7](https://github.com/rango-exchange/rango-client/commit/8b144a78f8aeba782a519aa79198aa43b64d4231))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-* resolve issues with the sign message method for certain solana providers ([d4d21a4](https://github.com/rango-exchange/rango-client/commit/d4d21a446d7f738e7c1fdc79048d17785689bff8))
-* update rango-types and fix notification bugs ([e5660ec](https://github.com/rango-exchange/rango-client/commit/e5660ec9e67c96c9f27ddd29773b67aaa60a69d2))
-* update signMessage in the default Solana signer to return a base58 string instead of base64 ([26560ef](https://github.com/rango-exchange/rango-client/commit/26560efda203fa4cb2a75b4053510a3e6d651029))
-
-
-### Features
-
-* add custom solana rpc url to config ([513b5ae](https://github.com/rango-exchange/rango-client/commit/513b5aef7bdeec0898f11a6fdf5ea7e23be2fe66))
-* add sending solana transaction on multiple nodes ([3d67674](https://github.com/rango-exchange/rango-client/commit/3d6767492c6ff4d66d19705203b3403a758a68e2))
-* add signature to versioned transactions ([c0417f2](https://github.com/rango-exchange/rango-client/commit/c0417f25424179c50458898245a94051d3b0ccb0))
-* add solflare snap connect and signer ([cbbcda9](https://github.com/rango-exchange/rango-client/commit/cbbcda948f3af4a00b52bde11964bdd5faee852e))
-* clean solana signer simulation errors ([5fc4d17](https://github.com/rango-exchange/rango-client/commit/5fc4d177695a9081c9f03ffbc112f00b48ef0d9e))
-* implement sign message method for providers with a custom signer ([ce0c806](https://github.com/rango-exchange/rango-client/commit/ce0c8066434d6beba15cc1f5a9fac8f9022e31db))
-* improve solana simulation failed errors ([ff0c5da](https://github.com/rango-exchange/rango-client/commit/ff0c5da165fd916eaae5e68140121577f721d77b))
-* integrate solflare wallet ([b63a04b](https://github.com/rango-exchange/rango-client/commit/b63a04beff58f8046b4e2ace6ecdae41a3e3432e))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-
 # [0.40.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.39.0...signer-solana@0.40.0) (2025-06-09)
 
 

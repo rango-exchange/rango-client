@@ -1,32 +1,3 @@
-# 0.46.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* add suggest and connect to wallet for  experimental chain ([501b9e4](https://github.com/rango-exchange/rango-client/commit/501b9e4242b96717bfc0ee90b708bebb314e4728))
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* cleanup wallets' subscriber when setProvider get null ([a05dfba](https://github.com/rango-exchange/rango-client/commit/a05dfba623facc20debeee3d149fddc779e66278))
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-* update rango-types and fix notification bugs ([e5660ec](https://github.com/rango-exchange/rango-client/commit/e5660ec9e67c96c9f27ddd29773b67aaa60a69d2))
-
-
-### Features
-
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-### Performance Improvements
-
-* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
-
-
-### Reverts
-
-* Revert "support for rango-types cjs format" ([a424f87](https://github.com/rango-exchange/rango-client/commit/a424f878872b128c1bc673f0d58ba1b99dd29d74))
-
-
-
 # [0.45.0](https://github.com/rango-exchange/rango-client/compare/provider-leap-cosmos@0.44.1...provider-leap-cosmos@0.45.0) (2025-06-09)
 
 

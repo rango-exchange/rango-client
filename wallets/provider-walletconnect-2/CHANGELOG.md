@@ -1,37 +1,3 @@
-# 0.40.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* add zIndex for web3modal ([e4d4a17](https://github.com/rango-exchange/rango-client/commit/e4d4a17726059516635da921b53adc30dfbe37ab))
-* build error in alpha ([0b565f1](https://github.com/rango-exchange/rango-client/commit/0b565f13b392b5da0e5e7f4435e7c31bda6bfa5d))
-* bump sdk and fix type issues ([c297c46](https://github.com/rango-exchange/rango-client/commit/c297c46620f853b6317664dae04061af3dfbbd71))
-* clean evm transaction in wallet-connect signer ([895b5f2](https://github.com/rango-exchange/rango-client/commit/895b5f20b15b36ee59e5d0bff6bee78b8d416b4b))
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* fix wallet connect namespace and switch network ([b338600](https://github.com/rango-exchange/rango-client/commit/b338600a6a58e301bd2ef8e181ead7ee751bb78b))
-* handle switch network flow for wallet-connect ([8066473](https://github.com/rango-exchange/rango-client/commit/8066473b27be525cf220da4070de780ef9b603dd))
-* if there is no cosmos chain passed to wc2, it will be removed from optional namespaces ([d924d19](https://github.com/rango-exchange/rango-client/commit/d924d19cf3106e904030401b02a267ec4e73ad80))
-* rename pbt to ptb for sui ([6023ef8](https://github.com/rango-exchange/rango-client/commit/6023ef84340b25430001d5efd0e005bdd96ff2ae))
-
-
-### Features
-
-* add an option to wallet connect provider to open a desktop wallet directly ([975ccbe](https://github.com/rango-exchange/rango-client/commit/975ccbe93b1892200a0fa43bfc42e78b26815df2))
-* add project id as a external value ([a4146ea](https://github.com/rango-exchange/rango-client/commit/a4146eab7586754312c9a4f5ed91e072a8f6c391))
-* add ton connect provider ([250ca69](https://github.com/rango-exchange/rango-client/commit/250ca69a7c4fa19d2bc9b054dc82cfab8b905fd5))
-* detect proper error related to wallet connect params ([915ebf3](https://github.com/rango-exchange/rango-client/commit/915ebf3c2fe99392afb375cd324598572ec08d97))
-* Get Wallet Connect project id from config ([74d189e](https://github.com/rango-exchange/rango-client/commit/74d189e095d44dffba5b4145c8cf264e8e6a1a37))
-* Support for WalletConnect 2 ([9abf37a](https://github.com/rango-exchange/rango-client/commit/9abf37a201e1435ef53b0b31e6c911d3c6fed17a))
-* update sui to consider recent api changes ([265ff47](https://github.com/rango-exchange/rango-client/commit/265ff47fc90db86fd3c94183b3e48105241e6ae6))
-
-
-### Performance Improvements
-
-* enable code splitting in build process ([e929b66](https://github.com/rango-exchange/rango-client/commit/e929b6698d1f19074bf6552fc438fe1fed04930d))
-* lazy load signer packages ([bc6fa14](https://github.com/rango-exchange/rango-client/commit/bc6fa141c2281cb202294e8df5a78b11d1cdabfb))
-
-
-
 # [0.39.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.38.1...provider-walletconnect-2@0.39.0) (2025-06-09)
 
 

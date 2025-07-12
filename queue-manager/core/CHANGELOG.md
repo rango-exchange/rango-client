@@ -1,20 +1,3 @@
-# 0.30.0 (2025-07-09)
-
-
-### Bug Fixes
-
-* fix HMR for widget and playground ([71c15da](https://github.com/rango-exchange/rango-client/commit/71c15dadab4d161006b9f05a77c286b05c931528))
-* seems npm needs a bit time to update the cdn and return the correct version ([ac6199a](https://github.com/rango-exchange/rango-client/commit/ac6199a4996e858af69c8f3ec0f35d865a29a96e))
-
-
-### Features
-
-* add delete action to queue manager ([d65fca9](https://github.com/rango-exchange/rango-client/commit/d65fca9be7547097cb0a84e2848cbddfe37991be))
-* add filter and clear to widget history ([580bfa4](https://github.com/rango-exchange/rango-client/commit/580bfa49ef0e015c6fd7a4e9153eaad877ecbfe0))
-* Support for WalletConnect 2 ([9abf37a](https://github.com/rango-exchange/rango-client/commit/9abf37a201e1435ef53b0b31e6c911d3c6fed17a))
-
-
-
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-core@0.28.0...queue-manager-core@0.29.0) (2025-03-11)
 
 
