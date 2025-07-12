@@ -1,8 +1,8 @@
+import type { Context } from '@rango-dev/wallets-core';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
 export function trustWallet(): Provider | null {
@@ -48,4 +48,19 @@ export function solanaTrustWallet(): SolanaProviderApi {
   }
 
   return solanaInstance as SolanaProviderApi;
+}
+
+// Considering that the errors thrown in Trust Wallet in-app browser do not follow EIP-1193, we detect such errors and standardize them.
+export function standardizeTrustWalletInAppBrowserError(
+  _context: Context,
+  error: unknown
+) {
+  if (typeof error === 'string' && error === 'cancelled') {
+    const error = new Error('User rejected the request') as Error & {
+      code: number;
+    };
+    error.code = 4001;
+    return error;
+  }
+  return error;
 }

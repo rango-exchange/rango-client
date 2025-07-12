@@ -8,7 +8,10 @@ import {
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { WALLET_ID } from '../constants.js';
-import { solanaTrustWallet } from '../utils.js';
+import {
+  solanaTrustWallet,
+  standardizeTrustWalletInAppBrowserError,
+} from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(solanaTrustWallet);
@@ -18,6 +21,7 @@ const connect = builders
   .action(actions.connect(solanaTrustWallet))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeTrustWalletInAppBrowserError)
   .or(standardizeAndThrowError)
   .build();
 
