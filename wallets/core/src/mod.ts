@@ -6,6 +6,7 @@ export type {
   CommonNamespaceKeys,
   Subscriber,
   SubscriberCleanUp,
+  Context,
 } from './hub/mod.js';
 export {
   Hub,

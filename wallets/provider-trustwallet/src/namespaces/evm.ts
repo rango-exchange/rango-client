@@ -8,7 +8,10 @@ import {
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
-import { evmTrustWallet } from '../utils.js';
+import {
+  evmTrustWallet,
+  standardizeTrustWalletInAppBrowserError,
+} from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   actions.changeAccountSubscriber(evmTrustWallet);
@@ -18,6 +21,7 @@ const connect = builders
   .action(actions.connect(evmTrustWallet))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(standardizeTrustWalletInAppBrowserError)
   .or(standardizeAndThrowError)
   .build();
 
