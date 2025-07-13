@@ -30,8 +30,8 @@ export const getSteps = ({
     const amountToConvert =
       index === 0
         ? swap.inputAmount
-        : swap.steps[index - 1].outputAmount ||
-          swap.steps[index - 1].expectedOutputAmountHumanReadable;
+        : swap.steps[index - 1]?.outputAmount ||
+          swap.steps[index - 1]?.expectedOutputAmountHumanReadable;
     return {
       from: {
         token: { displayName: step.fromSymbol, image: step.fromLogo ?? '' },
