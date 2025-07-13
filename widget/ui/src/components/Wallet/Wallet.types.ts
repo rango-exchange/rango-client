@@ -15,7 +15,6 @@ export type WalletInfo = {
   state: WalletState;
   link: InstallObjects | string;
   generateDeepLink?: GenerateDeepLink;
-  canOpenDeepLink: boolean;
   title: string;
   image: string;
   type: string;
@@ -45,7 +44,6 @@ export interface WalletPropTypes {
   link: InstallObjects | string;
   type: WalletType;
   onClick: (type: WalletType) => void;
-  canOpenDeepLink: boolean;
   deepLink?: string;
   selected?: boolean;
   description?: string;
