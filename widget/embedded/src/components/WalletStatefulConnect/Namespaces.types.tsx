@@ -31,7 +31,3 @@ export type NamespaceDetachedItemPropTypes = {
   initialConnect?: boolean;
   namespace: LegacyNamespaceMeta;
 };
-
-export type NamespaceUnsupportedItemPropTypes = {
-  namespace: LegacyNamespaceMeta;
-};

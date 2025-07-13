@@ -4,9 +4,10 @@ import { i18n } from '@lingui/core';
 import { Divider, Image, MessageBox } from '@rango-dev/ui';
 import React from 'react';
 
+import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
+
 import { NamespaceDetachedItem } from './NamespaceDetachedItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
-import { NamespaceUnsupportedItem } from './NamespaceUnsupportedItem';
 
 export function Detached(props: PropTypes) {
   const { selectedNamespaces, value } = props;
