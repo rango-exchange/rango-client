@@ -1,6 +1,9 @@
 import type { WalletPropTypes } from './Wallet.types.js';
 
-import { detectInstallLink } from '@rango-dev/wallets-shared';
+import {
+  detectInstallLink,
+  detectMobileScreens,
+} from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import { Image } from '../common/index.js';
@@ -27,10 +30,10 @@ function Wallet(props: WalletPropTypes) {
     onClick,
     isLoading,
     disabled = false,
-    canOpenDeepLink,
     deepLink,
   } = props;
-  const info = makeInfo(props.state, canOpenDeepLink);
+  const isMobileScreen = detectMobileScreens();
+  const info = makeInfo(props.state, !!deepLink && isMobileScreen);
 
   if (isLoading) {
     return (
@@ -52,8 +55,7 @@ function Wallet(props: WalletPropTypes) {
       <Tooltip
         container={props.container}
         content={info.tooltipText}
-        side="top"
-      >
+        side="top">
         {children}
       </Tooltip>
     );
@@ -66,7 +68,7 @@ function Wallet(props: WalletPropTypes) {
       onClick={() => {
         if (
           props.state === WalletState.NOT_INSTALLED &&
-          canOpenDeepLink &&
+          isMobileScreen &&
           deepLink
         ) {
           window.open(deepLink, '_blank');
@@ -75,8 +77,7 @@ function Wallet(props: WalletPropTypes) {
         } else {
           onClick(type);
         }
-      }}
-    >
+      }}>
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -90,8 +91,7 @@ function Wallet(props: WalletPropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={info.color}
-        >
+          color={info.color}>
           {info.description}
         </Typography>
       </Text>
