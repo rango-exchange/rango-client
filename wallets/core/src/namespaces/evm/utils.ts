@@ -36,6 +36,11 @@ export async function switchOrAddNetwork(
   } catch (switchError) {
     const error = switchError as { code: number };
 
+    /*
+     * Error code 4902 is used by MetaMask to indicate that the requested chain has not been added to the wallet.
+     * This code is not part of the official EIP-1193 spec (https://eips.ethereum.org/EIPS/eip-1193#supported-rpc-methods),
+     * so other providers may use a different code or behavior for the same condition.
+     */
     const NOT_FOUND_CHAIN_ERROR_CODE = 4902;
     if (
       typeof chain !== 'string' &&
