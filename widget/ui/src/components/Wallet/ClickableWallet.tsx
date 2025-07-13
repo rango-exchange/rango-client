@@ -20,8 +20,17 @@ import {
 import { WalletState } from './Wallet.types.js';
 
 function Wallet(props: WalletPropTypes) {
-  const { title, type, image, onClick, isLoading, disabled = false } = props;
-  const info = makeInfo(props.state);
+  const {
+    title,
+    type,
+    image,
+    onClick,
+    isLoading,
+    disabled = false,
+    canOpenDeepLink,
+    deepLink,
+  } = props;
+  const info = makeInfo(props.state, canOpenDeepLink);
 
   if (isLoading) {
     return (
@@ -43,7 +52,8 @@ function Wallet(props: WalletPropTypes) {
       <Tooltip
         container={props.container}
         content={info.tooltipText}
-        side="top">
+        side="top"
+      >
         {children}
       </Tooltip>
     );
@@ -54,12 +64,19 @@ function Wallet(props: WalletPropTypes) {
       className={'widget-clickable-wallet-btn'}
       disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
-        if (props.state === WalletState.NOT_INSTALLED) {
+        if (
+          props.state === WalletState.NOT_INSTALLED &&
+          canOpenDeepLink &&
+          deepLink
+        ) {
+          window.open(deepLink, '_blank');
+        } else if (props.state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(props.link), '_blank');
         } else {
           onClick(type);
         }
-      }}>
+      }}
+    >
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -73,7 +90,8 @@ function Wallet(props: WalletPropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={info.color}>
+          color={info.color}
+        >
           {info.description}
         </Typography>
       </Text>

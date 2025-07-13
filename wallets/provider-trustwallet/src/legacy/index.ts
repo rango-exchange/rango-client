@@ -1,4 +1,8 @@
 import type {
+  GenerateDeepLink,
+  type LegacyProviderInterface,
+} from '@rango-dev/wallets-core/legacy';
+import type {
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -7,7 +11,6 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import {
   canSwitchNetworkToEvm,
   getEvmAccounts,
@@ -49,6 +52,10 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
+
+export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
+  return `trust://open_url?coin_id=60&url=${targetUrl}?autoConnect=${config.type}`;
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

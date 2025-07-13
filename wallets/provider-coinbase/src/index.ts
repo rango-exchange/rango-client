@@ -1,3 +1,4 @@
+import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -25,7 +26,11 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-import { coinbase as coinbase_instance, getSolanaAccounts } from './helpers.js';
+import {
+  coinbase as coinbase_instance,
+  getSolanaAccounts,
+  type Provider,
+} from './helpers.js';
 import signer from './signer.js';
 
 const WALLET = WalletTypes.COINBASE;
@@ -106,7 +111,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -114,6 +120,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
   }
   return Promise.resolve(false);
+};
+
+export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
+  const deepLinkDestination = `${targetUrl}?autoConnect=${config.type}`;
+  return `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(
+    deepLinkDestination
+  )}`;
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (

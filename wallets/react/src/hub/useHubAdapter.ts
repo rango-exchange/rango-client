@@ -280,6 +280,13 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const provider = getLegacyProvider(params.allVersionedProviders, type);
       return provider.getSigners(provider.getInstance());
     },
+    generateDeepLink(type) {
+      const wallet = getHub().get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
+      return wallet.generateDeepLink() || null;
+    },
     getWalletInfo(type) {
       const wallet = getHub().get(type);
       if (!wallet) {

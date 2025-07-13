@@ -1,4 +1,7 @@
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
+import type {
+  GenerateDeepLink,
+  LegacyProviderInterface,
+} from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -87,6 +90,18 @@ const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
     return false;
   }
 };
+
+export const generateDeepLink: GenerateDeepLink = (
+  targetUrl: string,
+  appDomain: string
+) => {
+  const deepLinkDestination = `${targetUrl}?autoConnect=${config.type}`;
+  const ref = `https://${appDomain}`;
+  return `https://phantom.app/ul/browse/${encodeURIComponent(
+    deepLinkDestination
+  )}?ref=${encodeURIComponent(ref)}`;
+};
+
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
@@ -112,7 +127,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
-
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
