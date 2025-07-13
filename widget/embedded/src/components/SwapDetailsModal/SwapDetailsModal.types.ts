@@ -1,3 +1,5 @@
+import type { TargetNamespace } from '@rango-dev/queue-manager-rango-preset';
+import type { LegacyWalletType } from '@rango-dev/wallets-core/legacy';
 import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =
@@ -6,13 +8,13 @@ export type ModalState =
   | 'cancel'
   | null;
 export interface ModalPropTypes {
+  isOpen: boolean;
   onClose: () => void;
   onCancel: () => void;
   onDelete: () => void;
   state: ModalState;
   swap: PendingSwap;
   message: string;
-  walletButtonDisabled: boolean;
 }
 
 export interface CompleteModalPropTypes {
@@ -36,18 +38,37 @@ export interface CompleteModalPropTypes {
   diagnosisUrl?: string | null;
 }
 
-export interface ModalNetworkValueTypes {
-  type: 'loading' | 'warning' | 'success';
-  title: string;
-}
-
-export interface WalletStateContentProps extends ModalNetworkValueTypes {
+export interface WalletStateContentProps {
   swap: PendingSwap;
   message: string;
-  showWalletButton: boolean;
-  walletButtonDisabled: boolean;
+  onClose: () => void;
 }
 
-export type CancelContentProps = Pick<ModalPropTypes, 'onClose' | 'onCancel'>;
+export interface NetworkStateContentProps {
+  message: string;
+  status: 'networkChanged' | 'waitingForNetworkChange';
+}
 
-export type DeleteContentProps = Pick<ModalPropTypes, 'onClose' | 'onDelete'>;
+export interface InstallWalletContentProps {
+  walletType: LegacyWalletType;
+}
+
+export interface ConnectWalletContentProps {
+  wallet: {
+    walletType: LegacyWalletType;
+    address: string;
+    derivationPath?: string;
+  };
+  namespace: TargetNamespace | null;
+  onClose: () => void;
+}
+
+export interface CancelContentProps {
+  onCancel: () => void;
+  onClose: () => void;
+}
+
+export interface DeleteContentProps {
+  onDelete: () => void;
+  onClose: () => void;
+}
