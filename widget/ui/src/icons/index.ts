@@ -86,6 +86,7 @@ export { default as TimeIcon } from './Time.js';
 export { default as TransactionIcon } from './Transaction.js';
 export { default as TuneIcon } from './Tune.js';
 export { default as UtxoCategoryIcon } from './UtxoCategory.js';
+export { default as VolumeIcon } from './Volume.js';
 export { default as WalletIcon } from './Wallet.js';
 export { default as WarningIcon } from './Warning.js';
 export { default as WidgetIcon } from './Widget.js';
