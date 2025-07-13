@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.45.1-next.3",
+  "version": "0.45.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -27,7 +27,7 @@
     "@rango-dev/logging-core": "^0.9.1-next.0",
     "@rango-dev/provider-all": "^0.48.1-next.2",
     "@rango-dev/queue-manager-core": "^0.30.1-next.0",
-    "@rango-dev/queue-manager-rango-preset": "^0.47.1-next.2",
+    "@rango-dev/queue-manager-rango-preset": "^0.47.1-next.3",
     "@rango-dev/queue-manager-react": "^0.30.1-next.0",
     "@rango-dev/signer-solana": "^0.41.1-next.0",
     "@rango-dev/ui": "^0.48.1-next.3",
