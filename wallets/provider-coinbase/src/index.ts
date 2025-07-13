@@ -1,4 +1,3 @@
-import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -120,13 +119,6 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
   }
   return Promise.resolve(false);
-};
-
-export const generateDeepLink: GenerateDeepLink = (targetUrl: string) => {
-  const deepLinkDestination = `${targetUrl}?autoConnect=${config.type}`;
-  return `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(
-    deepLinkDestination
-  )}`;
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (

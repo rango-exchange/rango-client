@@ -1,6 +1,8 @@
-import type { GenerateDeepLink } from '../../legacy/types.js';
 import type { Namespace } from '../../namespaces/common/types.js';
-import type { State as InternalProviderState } from '../provider/mod.js';
+import type {
+  GenerateDeepLink,
+  State as InternalProviderState,
+} from '../provider/mod.js';
 import type { BlockchainMeta } from 'rango-types';
 import type { StateCreator } from 'zustand';
 
@@ -45,7 +47,7 @@ type DetailsProperty = Property<
   }
 >;
 
-export type ProviderInfo = {
+export type ProviderMetadata = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
@@ -55,8 +57,8 @@ export type ProviderInfo = {
 };
 
 export interface ProviderConfig {
-  info: ProviderInfo;
-  generateDeepLink?: GenerateDeepLink;
+  metadata: ProviderMetadata;
+  deepLink?: GenerateDeepLink;
 }
 
 interface ProviderData {

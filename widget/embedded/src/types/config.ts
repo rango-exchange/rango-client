@@ -181,12 +181,12 @@ export type TrezorManifest = {
  * @property {string} [targetUrl]
  * - The URL to be opened in the provider's in-app browser.
  *
- * @property {string} [appDomain]
+ * @property {string} [appHost]
  * - The full domain of the app, excluding the protocol (https://), path, and query parameters.
  */
 export type DeepLinking = {
   targetUrl: string;
-  appDomain: string;
+  appHost: string;
 };
 /**
  *

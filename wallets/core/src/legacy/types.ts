@@ -1,4 +1,5 @@
 import type { State as WalletState } from './wallet.js';
+import type { GenerateDeepLink } from '../mod.js';
 import type { Namespace } from '../namespaces/common/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
@@ -123,7 +124,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  deepLink?: string;
+  generateDeepLink?: GenerateDeepLink;
   needsDerivationPath?: NeedsDerivationPath;
   needsNamespace?: NeedsNamespace;
 };
@@ -234,7 +235,6 @@ export type CanEagerConnect = (options: {
   meta: BlockchainMeta[];
 }) => Promise<boolean>;
 
-export type GenerateDeepLink = (targetUrl: string, appDomain: string) => string;
 export type EagerConnectResult<I = unknown> = {
   accounts: string[] | null;
   network: string | null;
@@ -250,7 +250,6 @@ export interface WalletActions {
 
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
-  generateDeepLink?: GenerateDeepLink;
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;

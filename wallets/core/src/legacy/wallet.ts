@@ -331,9 +331,7 @@ class Wallet<InstanceType = any> {
       provider,
     });
   }
-  generateDeepLink(targetUrl: string, appDomain: string) {
-    return this.actions.generateDeepLink?.(targetUrl, appDomain);
-  }
+
   onInit() {
     // some times functions can be overridden by wallets. see rf-2119
     if (!this.actions.getInstance) {

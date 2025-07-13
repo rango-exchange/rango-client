@@ -25,9 +25,6 @@ const defaultContext: ProviderContext = {
   providers() {
     throw new Error(defaultErrorMessage);
   },
-  generateDeepLink() {
-    throw new Error(defaultErrorMesssage);
-  },
   getWalletInfo() {
     throw new Error(defaultErrorMessage);
   },

@@ -148,13 +148,6 @@ export function useLegacyProviders(
 
       return providers;
     },
-    generateDeepLink(type) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
-      }
-      return wallet.actions.generateDeepLink || null;
-    },
     getWalletInfo(type) {
       const wallet = wallets.get(type);
       if (!wallet) {
