@@ -351,15 +351,13 @@ export const BasicInfoOutput = styled('div', {
 export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
-  maxWidth: '$40',
+  maxWidth: '$30',
 });
 
 export const AmountText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
   maxWidth: '82.5px',
 });
@@ -402,4 +400,11 @@ export const Line = styled('div', {
   [`.${darkTheme} &`]: {
     borderTopColor: '$neutral800',
   },
+});
+
+export const UsdValueText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  maxWidth: 64,
 });

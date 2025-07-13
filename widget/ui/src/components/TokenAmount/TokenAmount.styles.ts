@@ -40,6 +40,5 @@ export const TokenNameText = styled(Typography, {
 export const textTruncate = css({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
 });

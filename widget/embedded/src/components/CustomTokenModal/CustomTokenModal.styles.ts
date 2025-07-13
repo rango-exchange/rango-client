@@ -63,10 +63,10 @@ export const StyledButton = styled(Button, {
 export const TokenSymbolText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
-  maxWidth: '97px',
+  maxWidth: '96px',
 });
+
 export const FlexCenteredContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',

@@ -96,6 +96,7 @@ export const Title = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+  letterSpacing: '1px',
 });
 
 export const SymbolTooltipStyles: TooltipPropTypes['styles'] = {
@@ -113,4 +114,12 @@ export const SymbolTooltipStyles: TooltipPropTypes['styles'] = {
 export const SymbolTooltipContent = styled(Typography, {
   maxWidth: 217,
   lineBreak: 'anywhere',
+});
+
+export const BlockChainTypography = styled(Typography, {
+  maxWidth: 96,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.25,
+  whiteSpace: 'nowrap',
 });

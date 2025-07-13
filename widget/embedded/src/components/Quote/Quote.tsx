@@ -72,6 +72,7 @@ import {
   summaryStyles,
   TagContainer,
   TokenNameText,
+  UsdValueText,
 } from './Quote.styles';
 import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
@@ -463,9 +464,12 @@ export function Quote(props: QuoteProps) {
             </ContainerInfoOutput>
             <NumericTooltip content={output.usdValue} container={container}>
               <Divider size={2} direction="horizontal" />
-              <Typography color="$neutral600" size="xsmall" variant="body">
+              <UsdValueText color="$neutral600" size="xsmall" variant="body">
                 {`($${roundedOutputUsdValue})`}
-              </Typography>
+              </UsdValueText>
+              {roundedOutputUsdValue.length > VALUE_LENGTH_THRESHOLD - 1 && (
+                <InfoIcon size={12} color="gray" />
+              )}
             </NumericTooltip>
           </div>
         )}
