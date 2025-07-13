@@ -23,7 +23,7 @@ import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
-import * as rabby from '@rango-dev/provider-rabby';
+import { versions as rabby } from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
@@ -126,7 +126,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
     lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(ledger)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(rabby)),
+    rabby,
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
     lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
     slush,
