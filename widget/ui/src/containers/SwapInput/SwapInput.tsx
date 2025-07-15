@@ -88,6 +88,7 @@ export function SwapInput(props: SwapInputPropTypes) {
         <TokenSectionContainer>
           <TokenSection
             id={`${props.id}-token-selection-container`}
+            selectionType={props.selectionType}
             chain={props.chain.displayName}
             chianImageId={
               props.mode === 'To'

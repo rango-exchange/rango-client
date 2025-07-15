@@ -1,3 +1,5 @@
+import type { BlockchainMeta } from 'rango-types';
+
 import { i18n } from '@lingui/core';
 import {
   Divider,
@@ -11,6 +13,7 @@ import { BlockchainList } from '../components/BlockchainList';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 
@@ -26,8 +29,10 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore().use.setToBlockchain();
   const setFromBlockchain = useQuoteStore().use.setFromBlockchain();
-  const { fetchStatus } = useAppStore();
+  const setToToken = useQuoteStore().use.setToToken();
+  const { fetchStatus, findNativeToken } = useAppStore();
   const navigate = useNavigate();
+  const swapMode = useSwapMode();
 
   const blockchains = useAppStore().blockchains({
     type,
@@ -35,6 +40,26 @@ export function SelectBlockchainPage(props: PropTypes) {
   const activeCategoriesCount = getCategoriesCount(blockchains);
 
   const showCategory = !props.hideCategory && activeCategoriesCount !== 1;
+
+  const handleBlockchainChange = (blockchain: BlockchainMeta) => {
+    if (type === 'custom-token') {
+      navigate(`..?blockchain=${blockchain.name}`, { replace: true });
+    } else {
+      if (type === 'source') {
+        setFromBlockchain(blockchain);
+      } else {
+        if (swapMode === 'swap') {
+          setToBlockchain(blockchain);
+        } else {
+          const blockchainNativeToken = findNativeToken(blockchain);
+          if (blockchainNativeToken) {
+            setToToken({ token: blockchainNativeToken, meta: { blockchains } });
+          }
+        }
+      }
+      navigateBack();
+    }
+  };
 
   return (
     <Layout
@@ -72,18 +97,7 @@ export function SelectBlockchainPage(props: PropTypes) {
           showTitle={type !== 'custom-token'}
           searchedFor={searchedFor}
           blockchainCategory={blockchainCategory}
-          onChange={(blockchain) => {
-            if (type === 'custom-token') {
-              navigate(`..?blockchain=${blockchain.name}`, { replace: true });
-            } else {
-              if (type === 'source') {
-                setFromBlockchain(blockchain);
-              } else {
-                setToBlockchain(blockchain);
-              }
-              navigateBack();
-            }
-          }}
+          onChange={handleBlockchainChange}
         />
       </PageContainer>
     </Layout>

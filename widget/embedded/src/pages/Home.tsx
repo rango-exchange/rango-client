@@ -185,6 +185,18 @@ export function Home() {
     setCustomSlippage(slippage);
   };
 
+  const handleInputTokenClick = (mode: 'from' | 'to') => {
+    if (mode === 'from') {
+      onHandleNavigation(navigationRoutes.fromSwap);
+    } else {
+      onHandleNavigation(
+        swapMode === 'swap'
+          ? navigationRoutes.toSwap
+          : navigationRoutes.toSwap + '/' + navigationRoutes.blockchains
+      );
+    }
+  };
+
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
@@ -276,13 +288,7 @@ export function Home() {
               fetchingQuote={fetchingQuote}
               fetchMetaStatus={fetchMetaStatus}
               isExpandable={isExpandable}
-              onClickToken={(mode) => {
-                onHandleNavigation(
-                  mode === 'from'
-                    ? navigationRoutes.fromSwap
-                    : navigationRoutes.toSwap
-                );
-              }}
+              onClickToken={handleInputTokenClick}
             />
             <Divider size="2" />
             {!isExpandable ? (
