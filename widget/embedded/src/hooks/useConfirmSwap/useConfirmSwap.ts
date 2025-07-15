@@ -26,7 +26,7 @@ export function useConfirmSwap(): ConfirmSwap {
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
     resetAlerts,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const { slippage, customSlippage } = useAppStore();
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
@@ -125,7 +125,7 @@ export function useConfirmSwap(): ConfirmSwap {
           warnings: confirmSwapWarnings,
         };
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       const confirmSwapResult = handleQuoteErrors(error);
       return confirmSwapResult;
     }

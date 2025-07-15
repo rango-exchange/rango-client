@@ -50,7 +50,7 @@ export function CustomTokensPage() {
   const [searchedFor, setSearchedFor] = useState<string>('');
   const { deleteCustomToken } = useAppStore();
   const customTokens = useAppStore().customTokens();
-  const { fromToken, toToken, setFromToken, setToToken } = useQuoteStore();
+  const { fromToken, toToken, setFromToken, setToToken } = useQuoteStore()();
   const { mode } = useTheme({});
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);

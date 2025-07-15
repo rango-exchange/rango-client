@@ -28,7 +28,7 @@ export function QuoteInfo(props: PropTypes) {
     fullExpandedMode = false,
     container,
   } = props;
-  const { inputAmount, inputUsdValue } = useQuoteStore();
+  const { inputAmount, inputUsdValue } = useQuoteStore()();
 
   const outputAmount = !!quote?.outputAmount
     ? new BigNumber(quote?.outputAmount)

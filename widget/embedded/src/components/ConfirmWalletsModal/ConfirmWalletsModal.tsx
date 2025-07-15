@@ -51,7 +51,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     setQuoteWalletConfirmed: setQuoteWalletConfirmed,
     customDestination,
     setCustomDestination,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const { config, connectedWallets, setWalletsAsSelected } = useAppStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');

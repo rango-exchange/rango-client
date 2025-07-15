@@ -24,8 +24,8 @@ export function SelectBlockchainPage(props: PropTypes) {
   const navigateBack = useNavigateBack();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
-  const setToBlockchain = useQuoteStore.use.setToBlockchain();
-  const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
+  const setToBlockchain = useQuoteStore().use.setToBlockchain();
+  const setFromBlockchain = useQuoteStore().use.setFromBlockchain();
   const { fetchStatus } = useAppStore();
   const navigate = useNavigate();
 

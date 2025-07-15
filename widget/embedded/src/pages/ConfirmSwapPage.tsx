@@ -70,7 +70,7 @@ export function ConfirmSwapPage() {
     quoteWalletsConfirmed,
     customDestination,
     quoteWarningsConfirmed,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const navigate = useNavigate();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
 

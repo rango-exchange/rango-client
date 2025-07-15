@@ -20,7 +20,7 @@ export const WidgetInfoContext = createContext<
 export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
   const isActiveTab = useUiStore.use.isActiveTab();
-  const retrySwap = useQuoteStore.use.retry();
+  const retrySwap = useQuoteStore().use.retry();
   const {
     findToken,
     getBalances,
@@ -40,7 +40,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const clearNotifications = useNotificationStore().clearNotifications;
   const updateQuoteInputs = useUpdateQuoteInputs();
   const { fromBlockchain, toBlockchain, fromToken, toToken, inputAmount } =
-    useQuoteStore();
+    useQuoteStore()();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {
