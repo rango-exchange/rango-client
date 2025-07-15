@@ -17,6 +17,7 @@ import { SelectSwapItemsPage } from '../pages/SelectSwapItemPage/index';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WalletsPage } from '../pages/WalletsPage';
+import { useAppStore } from '../store/AppStore';
 
 export function AppRoutes() {
   /**
@@ -27,12 +28,9 @@ export function AppRoutes() {
    */
   useSyncStoresWithConfig();
   useSyncUrlAndStore();
+  const { config } = useAppStore();
 
-  return useRoutes([
-    {
-      path: navigationRoutes.home,
-      element: <Home />,
-    },
+  const swapRoutes = [
     {
       path: navigationRoutes.routes,
       element: <RoutesPage />,
@@ -63,6 +61,33 @@ export function AppRoutes() {
         },
       ],
     },
+    {
+      path: navigationRoutes.confirmSwap,
+      element: <ConfirmSwapPage />,
+    },
+  ];
+
+  return useRoutes([
+    {
+      path: navigationRoutes.home,
+      element: <Home />,
+    },
+    ...swapRoutes,
+    ...(config.__UNSTABLE_OR_INTERNAL__?.enableGasStation
+      ? [
+          {
+            path: navigationRoutes.refuel,
+            children: [
+              {
+                index: true,
+                element: <Home />,
+              },
+              ...swapRoutes,
+            ],
+          },
+        ]
+      : []),
+
     {
       path: navigationRoutes.settings,
       children: [
@@ -128,10 +153,6 @@ export function AppRoutes() {
     {
       path: navigationRoutes.wallets,
       element: <WalletsPage />,
-    },
-    {
-      path: navigationRoutes.confirmSwap,
-      element: <ConfirmSwapPage />,
     },
   ]);
 }

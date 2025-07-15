@@ -38,6 +38,7 @@ export { default as FilterIcon } from './Filter.js';
 export { default as FirstIcon } from './First.js';
 export { default as FontIcon } from './Font.js';
 export { default as GasIcon } from './Gas.js';
+export { default as GasStationIcon } from './GasStation.js';
 export { default as HeightIcon } from './Height.js';
 export { default as InProgressIcon } from './InProgress.js';
 export { default as InfoErrorIcon } from './InfoError.js';

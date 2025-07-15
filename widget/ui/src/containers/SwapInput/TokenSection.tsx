@@ -37,9 +37,21 @@ export function TokenSection(props: TokenSectionProps) {
     warning,
     tooltipContainer,
     id,
+    selectionType = 'token',
   } = props;
 
   const tokenSelected = !error && !loading && !!tokenSymbol;
+
+  const getBodyContent = () => {
+    if (error) {
+      return error;
+    } else if (!loading && !chain) {
+      return selectionType === 'token'
+        ? i18n.t('Select Chain')
+        : i18n.t('Where you need gas on');
+    }
+    return chain;
+  };
 
   return (
     <Container
@@ -85,7 +97,9 @@ export function TokenSection(props: TokenSectionProps) {
                   </Tooltip>
                 ) : (
                   <Typography variant="title" size="medium">
-                    {i18n.t('Select Token')}
+                    {selectionType === 'token'
+                      ? i18n.t('Select Token')
+                      : i18n.t('Select Chain')}
                   </Typography>
                 )}
                 {warning && (
@@ -99,7 +113,7 @@ export function TokenSection(props: TokenSectionProps) {
                 variant="body"
                 size="medium"
                 className={chainNameStyles()}>
-                {error || (!loading && !chain) ? i18n.t('Select Chain') : chain}
+                {getBodyContent()}
               </Typography>
             </>
           )}

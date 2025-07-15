@@ -56,6 +56,7 @@ export interface DataSlice {
   swappers: () => SwapperMeta[];
   isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
   findToken: FindToken;
+  findNativeToken: (blockchain: BlockchainMeta) => Token | undefined;
   fetch: () => Promise<void>;
 }
 
@@ -274,6 +275,14 @@ export const createDataSlice: StateCreator<
       );
     }
     return token;
+  },
+  findNativeToken: (blockchain: BlockchainMeta) => {
+    const feeAsset = blockchain.feeAssets[0];
+    return get().findToken({
+      blockchain: blockchain.name,
+      address: feeAsset.address,
+      symbol: feeAsset.symbol,
+    });
   },
   isTokenPinned: (token, type) => {
     const pinnedTokens =
