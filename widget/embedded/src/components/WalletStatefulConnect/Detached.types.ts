@@ -4,5 +4,6 @@ import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 export interface PropTypes {
   value: NeedsNamespacesState;
   onConfirm: () => void;
+  onDisconnectWallet: () => void;
   selectedNamespaces: Namespace[] | null;
 }

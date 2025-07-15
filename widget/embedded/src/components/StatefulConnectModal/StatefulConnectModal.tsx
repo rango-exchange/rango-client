@@ -55,6 +55,7 @@ export function StatefulConnectModal(props: PropTypes) {
     handleNamespace,
     getState,
     resetState,
+    handleDisconnect,
   } = useStatefulConnect();
 
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
@@ -194,6 +195,9 @@ export function StatefulConnectModal(props: PropTypes) {
       {isOnDetached(getState) && (
         <Detached
           onConfirm={handleDetachedConfirm}
+          onDisconnectWallet={() =>
+            void handleDisconnect(getState().namespace.targetWallet)
+          }
           value={getState().namespace}
           selectedNamespaces={getState().selectedNamespaces}
         />
