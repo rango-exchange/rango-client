@@ -1,6 +1,6 @@
 import type {
   GenerateDeepLink,
-  ProviderInfo,
+  ProviderMetadata,
   VersionedProviders,
 } from '@rango-dev/wallets-core';
 import type {
@@ -35,7 +35,7 @@ export type ConnectResult = {
 export type Providers = { [type in WalletType]?: InstanceType };
 
 export type ExtendedWalletInfo = WalletInfo & {
-  properties?: ProviderInfo['properties'];
+  properties?: ProviderMetadata['properties'];
   isHub?: boolean;
 };
 

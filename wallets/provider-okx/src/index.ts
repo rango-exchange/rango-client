@@ -108,8 +108,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     BRAVE:
       'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
     FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/okexwallet',
-    DEEP_LINK:
-      'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3Dhttps%253A%252F%252Fapp.rango.exchange%252Fbridge%253FautoConnect%253Dokx',
     DEFAULT: 'https://www.okx.com/web3',
   },
   color: 'white',

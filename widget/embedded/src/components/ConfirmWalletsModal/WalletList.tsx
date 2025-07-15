@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
 import { WIDGET_UI_ID } from '../../constants';
+import { useDeepLink } from '../../hooks/useDeepLink';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
@@ -38,7 +39,7 @@ export function WalletList(props: PropTypes) {
   const { chain, quoteChains, isSelected, selectWallet, limit, onShowMore } =
     props;
   const isActiveTab = useUiStore.use.isActiveTab();
-
+  const { checkHasDeepLink, getWalletLink } = useDeepLink();
   const { blockchains, connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<ExtendedModalWalletInfo>();
@@ -159,7 +160,9 @@ export function WalletList(props: PropTypes) {
           }
         };
 
-        const info = makeInfo(wallet.state, !!wallet.generateDeepLink);
+        const info = makeInfo(wallet.state, {
+          hasDeepLink: checkHasDeepLink(wallet.type),
+        });
 
         const getWalletDescription = () => {
           if (couldAddExperimentalChain) {
@@ -226,6 +229,7 @@ export function WalletList(props: PropTypes) {
               </WatermarkedModal>
             )}
             <SelectableWallet
+              hasDeepLink={checkHasDeepLink(wallet.type)}
               key={wallet.type}
               id="widget-wallets-list-selectable-wallet-btn"
               description={getWalletDescription()}
@@ -234,6 +238,7 @@ export function WalletList(props: PropTypes) {
               selected={isSelected(wallet.type, chain)}
               disabled={!isActiveTab}
               {...wallet}
+              link={getWalletLink(wallet.type)}
             />
           </React.Fragment>
         );
