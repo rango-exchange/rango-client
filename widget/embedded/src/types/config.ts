@@ -278,6 +278,7 @@ export type WidgetConfig = {
       element: ReactElement;
       routes?: string[];
     };
+    enableGasStation: boolean;
   };
   routing?: Routing;
 };

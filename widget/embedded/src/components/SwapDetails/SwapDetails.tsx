@@ -77,7 +77,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
   const { findToken } = useAppStore();
-  const retry = useQuoteStore.use.retry();
+  const retry = useQuoteStore().use.retry();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

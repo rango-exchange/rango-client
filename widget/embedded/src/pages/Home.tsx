@@ -1,7 +1,15 @@
 import type { SelectedQuote } from '../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
+import {
+  Button,
+  Divider,
+  GasStationIcon,
+  styled,
+  SwapIcon,
+  Tabs,
+  WarningIcon,
+} from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,16 +27,42 @@ import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
+import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { UiEventTypes } from '../types';
+import { getContainer } from '../utils/common';
 import { isVariantExpandable } from '../utils/configs';
 import { emitPreventableEvent } from '../utils/events';
 import { getSlippageValidation } from '../utils/settings';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
 const MainContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$20',
+});
+
+const TabsContainer = styled('div', {
+  maxWidth: '390px',
+  minWidth: '300px',
+});
+
+const MainTabs = styled(Tabs, {
+  width: '298px',
+  height: '54px',
+  margin: 'auto',
+  '& ._tabs': {
+    borderRadius: '50px',
+    borderWidth: '$4',
+  },
+  '& ._backdrop-tab': {
+    borderRadius: '50px',
+  },
+});
+
+const WidgetContainer = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   maxHeight: 700,
@@ -53,7 +87,7 @@ export function Home() {
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
@@ -72,6 +106,7 @@ export function Home() {
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
+  const swapMode = useSwapMode();
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
@@ -93,6 +128,8 @@ export function Home() {
     isExtraLargeScreen,
     config?.variant
   );
+
+  const showTabs = config.__UNSTABLE_OR_INTERNAL__?.enableGasStation;
 
   const hasInputs =
     !!inputAmount &&
@@ -159,145 +196,176 @@ export function Home() {
 
   return (
     <MainContainer>
-      <Layout
-        height="auto"
-        footer={
-          // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
-          <Button
-            id={`widget-swap-${swapButtonState.action}-btn`}
+      {showTabs && (
+        <TabsContainer>
+          <MainTabs
+            container={getContainer()}
+            items={[
+              {
+                id: 'swap',
+                title: 'Swap',
+                icon: <SwapIcon size={12} />,
+              },
+              {
+                id: 'refuel',
+                title: 'Refuel',
+                icon: <GasStationIcon size={12} />,
+              },
+            ]}
+            value={swapMode}
+            onChange={(item) => navigate(item.id === 'swap' ? '/' : '/refuel')}
             type="primary"
-            size="large"
-            disabled={swapButtonState.disabled || !isActiveTab}
-            prefix={
-              swapButtonState.action === 'confirm-warning' && <WarningIcon />
-            }
-            fullWidth
-            onClick={() => {
-              if (swapButtonState.action === 'connect-wallet') {
-                emitPreventableEvent(
-                  { type: UiEventTypes.CLICK_CONNECT_WALLET },
-                  () => onHandleNavigation(navigationRoutes.wallets)
-                );
-              } else if (swapButtonState.action === 'confirm-warning') {
-                setShowQuoteWarningModal(true);
-              } else {
-                onHandleNavigation(navigationRoutes.confirmSwap);
+            borderRadius="full"
+            className="widget-main-tabs"
+          />
+        </TabsContainer>
+      )}
+      <WidgetContainer>
+        <Layout
+          height="auto"
+          footer={
+            // eslint-disable-next-line jsx-id-attribute-enforcement/missing-ids
+            <Button
+              id={`widget-swap-${swapButtonState.action}-btn`}
+              type="primary"
+              size="large"
+              disabled={swapButtonState.disabled || !isActiveTab}
+              prefix={
+                swapButtonState.action === 'confirm-warning' && <WarningIcon />
               }
-            }}>
-            {swapButtonState.title}
-          </Button>
-        }
-        header={{
-          onWallet: () => {
-            onHandleNavigation(navigationRoutes.wallets);
-          },
-          hasBackButton: false,
-          title: config.title || i18n.t('Swap'),
-          suffix: (
-            <HeaderButtons
-              hidden={isExpandable ? ['refresh'] : undefined}
-              onClickRefresh={onClickRefresh}
-              onClickHistory={() => onHandleNavigation(navigationRoutes.swaps)}
-              onClickSettings={() => {
-                onHandleNavigation(navigationRoutes.settings);
+              fullWidth
+              onClick={() => {
+                if (swapButtonState.action === 'connect-wallet') {
+                  emitPreventableEvent(
+                    { type: UiEventTypes.CLICK_CONNECT_WALLET },
+                    () => onHandleNavigation(navigationRoutes.wallets)
+                  );
+                } else if (swapButtonState.action === 'confirm-warning') {
+                  setShowQuoteWarningModal(true);
+                } else {
+                  onHandleNavigation(navigationRoutes.confirmSwap);
+                }
+              }}>
+              {swapButtonState.title}
+            </Button>
+          }
+          header={{
+            onWallet: () => {
+              onHandleNavigation(navigationRoutes.wallets);
+            },
+            hasBackButton: false,
+            title:
+              config.title || swapMode === 'swap'
+                ? i18n.t('Swap')
+                : i18n.t('Refuel'),
+            suffix: (
+              <HeaderButtons
+                hidden={isExpandable ? ['refresh'] : undefined}
+                onClickRefresh={onClickRefresh}
+                onClickHistory={() =>
+                  onHandleNavigation(navigationRoutes.swaps)
+                }
+                onClickSettings={() => {
+                  onHandleNavigation(navigationRoutes.settings);
+                }}
+              />
+            ),
+          }}>
+          <PageContainer>
+            <Inputs
+              fetchingQuote={fetchingQuote}
+              fetchMetaStatus={fetchMetaStatus}
+              isExpandable={isExpandable}
+              onClickToken={(mode) => {
+                onHandleNavigation(
+                  mode === 'from'
+                    ? navigationRoutes.fromSwap
+                    : navigationRoutes.toSwap
+                );
               }}
             />
-          ),
-        }}>
-        <PageContainer>
-          <Inputs
-            fetchingQuote={fetchingQuote}
-            fetchMetaStatus={fetchMetaStatus}
-            isExpandable={isExpandable}
-            onClickToken={(mode) => {
-              onHandleNavigation(
-                mode === 'from'
-                  ? navigationRoutes.fromSwap
-                  : navigationRoutes.toSwap
-              );
-            }}
-          />
-          <Divider size="2" />
-          {!isExpandable ? (
-            <QuoteInfo
-              quote={selectedQuote}
-              loading={fetchingQuote}
-              error={quoteError}
-              id="widget-home-expandable-quote-container"
-              tagHidden={false}
-              warning={currentQuoteWarning}
-              type="basic"
-              onClickAllRoutes={
-                !!quotes && quotes.results.length > 1
-                  ? () => {
-                      updateQuotePartialState('refetchQuote', false);
-                      onHandleNavigation(navigationRoutes.routes);
-                    }
-                  : undefined
-              }
-            />
-          ) : null}
-          {showSwapMetrics && (
-            <>
-              <Divider size={8} />
-              <SwapMetrics
-                quoteError={quoteError}
-                quoteWarning={currentQuoteWarning}
-                fromToken={fromToken}
-                toToken={toToken}
+            <Divider size="2" />
+            {!isExpandable ? (
+              <QuoteInfo
                 quote={selectedQuote}
                 loading={fetchingQuote}
-              />
-            </>
-          )}
-
-          {showMessages ? (
-            <>
-              <QuoteWarningsAndErrors
-                warning={currentQuoteWarning}
                 error={quoteError}
-                skipAlerts={!!slippageValidation}
-                couldChangeSettings={true}
-                refetchQuote={fetchQuote}
-                showWarningModal={showQuoteWarningModal}
-                confirmationDisabled={!isActiveTab}
-                onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-                onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-                onChangeSlippage={onChangeSlippage}
-                onConfirmWarningModal={() => {
-                  setShowQuoteWarningModal(false);
-                  setQuoteWarningsConfirmed(true);
-                  onHandleNavigation(navigationRoutes.confirmSwap);
-                }}
-                onChangeSettings={() =>
-                  onHandleNavigation(navigationRoutes.settings)
+                id="widget-home-expandable-quote-container"
+                tagHidden={false}
+                warning={currentQuoteWarning}
+                type="basic"
+                onClickAllRoutes={
+                  !!quotes && quotes.results.length > 1
+                    ? () => {
+                        updateQuotePartialState('refetchQuote', false);
+                        onHandleNavigation(navigationRoutes.routes);
+                      }
+                    : undefined
                 }
               />
-            </>
-          ) : null}
+            ) : null}
+            {showSwapMetrics && (
+              <>
+                <Divider size={8} />
+                <SwapMetrics
+                  quoteError={quoteError}
+                  quoteWarning={currentQuoteWarning}
+                  fromToken={fromToken}
+                  toToken={toToken}
+                  quote={selectedQuote}
+                  loading={fetchingQuote}
+                />
+              </>
+            )}
 
-          {showSlippageAlerts && (
-            <>
-              <Divider size="10" />
-              <SlippageWarningsAndErrors
-                onChangeSettings={() =>
-                  onHandleNavigation(navigationRoutes.settings)
-                }
-              />
-            </>
-          )}
-          <SameTokensWarning />
-        </PageContainer>
-      </Layout>
-      {isExpandable ? (
-        <ExpandedQuotes
-          loading={fetchingQuote}
-          onClickOnQuote={onClickOnQuote}
-          fetch={fetchQuote}
-          onClickRefresh={onClickRefresh}
-          isVisible={isVisibleExpanded}
-        />
-      ) : null}
+            {showMessages ? (
+              <>
+                <QuoteWarningsAndErrors
+                  warning={currentQuoteWarning}
+                  error={quoteError}
+                  skipAlerts={!!slippageValidation}
+                  couldChangeSettings={true}
+                  refetchQuote={fetchQuote}
+                  showWarningModal={showQuoteWarningModal}
+                  confirmationDisabled={!isActiveTab}
+                  onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+                  onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+                  onChangeSlippage={onChangeSlippage}
+                  onConfirmWarningModal={() => {
+                    setShowQuoteWarningModal(false);
+                    setQuoteWarningsConfirmed(true);
+                    onHandleNavigation(navigationRoutes.confirmSwap);
+                  }}
+                  onChangeSettings={() =>
+                    onHandleNavigation(navigationRoutes.settings)
+                  }
+                />
+              </>
+            ) : null}
+
+            {showSlippageAlerts && (
+              <>
+                <Divider size="10" />
+                <SlippageWarningsAndErrors
+                  onChangeSettings={() =>
+                    onHandleNavigation(navigationRoutes.settings)
+                  }
+                />
+              </>
+            )}
+            <SameTokensWarning />
+          </PageContainer>
+        </Layout>
+        {isExpandable ? (
+          <ExpandedQuotes
+            loading={fetchingQuote}
+            onClickOnQuote={onClickOnQuote}
+            fetch={fetchQuote}
+            onClickRefresh={onClickRefresh}
+            isVisible={isVisibleExpanded}
+          />
+        ) : null}
+      </WidgetContainer>
     </MainContainer>
   );
 }

@@ -40,7 +40,7 @@ export function Inputs(props: PropTypes) {
     outputAmount,
     outputUsdValue,
     selectedQuote,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =

@@ -10,7 +10,7 @@ import {
 } from './SwitchFromAndTo.styles';
 
 export function SwitchFromAndToButton() {
-  const switchFromAndTo = useQuoteStore.use.switchFromAndTo();
+  const switchFromAndTo = useQuoteStore().use.switchFromAndTo();
 
   return (
     <SwitchButtonContainer>
