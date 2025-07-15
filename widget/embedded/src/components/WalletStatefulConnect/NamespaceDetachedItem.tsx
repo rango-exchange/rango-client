@@ -93,7 +93,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
             id="widget-name-space-connect-btn"
             variant="ghost"
             type={namespaceState.connected ? 'error' : 'primary'}
-            size="small"
+            size="xsmall"
             onClick={async () => handleButtonClick(namespaceState)}>
             {getButtonText()}
           </Button>

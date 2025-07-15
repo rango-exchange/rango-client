@@ -1,17 +1,22 @@
 import type { PropTypes } from './Detached.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, Image, MessageBox } from '@rango-dev/ui';
+import { Button, Divider, Image, MessageBox } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
+import { NamespacesHeader } from './Detached.styles';
 import { NamespaceDetachedItem } from './NamespaceDetachedItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
 
 export function Detached(props: PropTypes) {
-  const { selectedNamespaces, value } = props;
+  const { selectedNamespaces, value, onDisconnectWallet } = props;
   const { targetWallet } = value;
+
+  const { state } = useWallets();
+  const walletState = state(targetWallet.type);
 
   return (
     <>
@@ -25,7 +30,18 @@ export function Detached(props: PropTypes) {
         )}
         icon={<Image src={targetWallet.image} size={45} />}
       />
-      <Divider size={20} />
+      <Divider size={30} />
+      <NamespacesHeader>
+        <Button
+          id="widget-detached-disconnect-wallet-btn"
+          variant="ghost"
+          type="error"
+          size="xsmall"
+          disabled={walletState.connecting || !walletState.connected}
+          onClick={onDisconnectWallet}>
+          {i18n.t('Disconnect wallet')}
+        </Button>
+      </NamespacesHeader>
       <NamespaceList id="widget-detached-namespace-list" as={'ul'}>
         {targetWallet.needsNamespace?.data.map((namespace, index, array) => (
           <React.Fragment key={namespace.id}>

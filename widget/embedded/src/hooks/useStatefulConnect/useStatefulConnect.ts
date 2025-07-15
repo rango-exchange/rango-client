@@ -7,6 +7,7 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
+import { isOnDetached } from '../../components/StatefulConnectModal';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import {
@@ -26,7 +27,7 @@ interface UseStatefulConnect {
     selectedNamespaces: Namespace[]
   ) => Promise<Result>;
   handleDerivationPath: (path: string) => Promise<Result>;
-  handleDisconnect: (type: WalletType) => Promise<Result>;
+  handleDisconnect: (wallet: WalletInfoWithExtra) => Promise<Result>;
   getState(): State;
   resetState(section?: 'derivation'): void;
 }
@@ -163,7 +164,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     }
 
     if (options?.disconnectIfConnected) {
-      await handleDisconnect(wallet.type);
+      await handleDisconnect(wallet);
       return { status: ResultStatus.Disconnected };
     }
 
@@ -258,10 +259,25 @@ export function useStatefulConnect(): UseStatefulConnect {
     return await runConnect(type, namespaces);
   };
 
-  const handleDisconnect = async (type: WalletType): Promise<Result> => {
-    const wallet = state(type);
-    if (wallet.connected || wallet.connecting) {
-      await disconnect(type);
+  const getState = () => connectState;
+
+  const handleDisconnect = async (
+    wallet: ExtendedModalWalletInfo
+  ): Promise<Result> => {
+    const walletState = state(wallet.type);
+    if (walletState.connected || walletState.connecting) {
+      await disconnect(wallet.type);
+
+      if (isOnDetached(getState)) {
+        dispatch({
+          type: 'needsNamespace',
+          payload: {
+            targetWallet: wallet,
+          },
+        });
+        return { status: ResultStatus.Namespace };
+      }
+
       return { status: ResultStatus.Disconnected };
     }
 
@@ -273,7 +289,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     handleDisconnect,
     handleNamespace,
     handleDerivationPath,
-    getState: () => connectState,
+    getState,
     resetState: (section?: 'derivation') => {
       if (section === 'derivation') {
         dispatch({
