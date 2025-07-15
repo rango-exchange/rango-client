@@ -1,4 +1,3 @@
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanSwitchNetwork,
   Connect,
@@ -8,6 +7,7 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import {
   canSwitchNetworkToEvm,
   getEvmAccounts,

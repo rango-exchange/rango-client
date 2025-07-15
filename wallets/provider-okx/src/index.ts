@@ -24,7 +24,6 @@ import {
   getSolanaAccounts,
   okx_instance,
   OKX_WALLET_SUPPORTED_CHAINS,
-  type Provider,
 } from './helpers.js';
 import signer from './signer.js';
 
@@ -36,7 +35,6 @@ export const config = {
 };
 
 export const getInstance = okx_instance;
-
 export const connect: Connect = async ({ instance, meta }) => {
   let results: ProviderConnectResult[] = [];
 
@@ -86,8 +84,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: Provider) => Promise<SignerFactory> =
-  signer;
+export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);

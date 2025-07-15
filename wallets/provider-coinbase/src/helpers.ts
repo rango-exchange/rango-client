@@ -2,9 +2,6 @@ import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { Networks } from '@rango-dev/wallets-shared';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Map<string, any>;
-
 export function coinbase() {
   const { coinbaseWalletExtension, coinbaseSolana } = window;
 
@@ -25,7 +22,7 @@ export function coinbase() {
 }
 
 export async function getSolanaAccounts(
-  instance: Provider
+  instance: any
 ): Promise<ProviderConnectResult[]> {
   const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
