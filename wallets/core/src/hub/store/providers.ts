@@ -1,6 +1,6 @@
 import type { Namespace } from '../../namespaces/common/types.js';
 import type { State as InternalProviderState } from '../provider/mod.js';
-import type { BlockchainMeta } from 'rango-types';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { StateCreator } from 'zustand';
 
 import { produce } from 'immer';
@@ -43,13 +43,22 @@ type DetailsProperty = Property<
     isContractWallet?: boolean;
   }
 >;
+type SignersProperty = Property<
+  'signers',
+  {
+    getSigners: () => Promise<SignerFactory>;
+  }
+>;
 
 export type ProviderInfo = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
   properties?: Array<
-    NamespacesProperty | DerivationPathProperty | DetailsProperty
+    | NamespacesProperty
+    | DerivationPathProperty
+    | DetailsProperty
+    | SignersProperty
   >;
 };
 

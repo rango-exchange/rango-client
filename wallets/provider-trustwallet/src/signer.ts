@@ -1,4 +1,4 @@
-import type { Provider } from '../utils.js';
+import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
@@ -13,7 +13,9 @@ export default async function getSigners(
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
-  const { CustomSolanaSigner } = await import('./signers/solanaSigner.js');
+  const { CustomSolanaSigner } = await import(
+    './legacy/signers/solanaSigner.js'
+  );
 
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new CustomSolanaSigner(solProvider));
