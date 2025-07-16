@@ -1,10 +1,16 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { Transaction, TransactionStatusResponse } from 'rango-sdk';
-import type { GenericSigner } from 'rango-types';
+import type {
+  CheckTxStatusRequest,
+  Transaction,
+  TransactionStatusResponse,
+} from 'rango-sdk';
 
-import { DEFAULT_ERROR_CODE } from '../constants';
+import { warn } from '@rango-dev/logging-core';
+import { type GenericSigner, SignerError } from 'rango-types';
+
 import {
+  createStepFailedEvent,
   delay,
   getCurrentStep,
   getCurrentStepTx,
@@ -51,6 +57,7 @@ async function checkTransactionStatus({
 >): Promise<void> {
   const swap = getStorage().swapDetails;
   const { meta } = context;
+  const checkStatusError = new Error('check status Error');
 
   const currentStep = getCurrentStep(swap)!;
 
@@ -137,15 +144,22 @@ async function checkTransactionStatus({
       errorCode: extraMessageErrorCode,
     });
 
-    notifier({
-      event: {
-        type: StepEventType.FAILED,
-        reason: extraMessage,
-        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-        inputAmount: getLastFinishedStepInput(swap),
-        inputAmountUsd: getLastFinishedStepInputUsd(swap),
+    const event = createStepFailedEvent(
+      swap,
+      extraMessage,
+      updateResult.failureType
+    );
+
+    warn(checkStatusError, {
+      tags: {
+        type: 'singer-error',
+        reason: event.reason,
+        reasonCode: event.reasonCode,
+        message: extraMessage,
+        messageDetail: extraMessageDetail,
+        pendingSwap: swap,
       },
-      ...updateResult,
+      context: SignerError.isSignerError(error) ? error.getErrorContext() : {},
     });
 
     getTxReceiptFailed = true;
@@ -155,16 +169,21 @@ async function checkTransactionStatus({
      */
   }
 
+  const requestBody: CheckTxStatusRequest = {
+    requestId: swap.requestId,
+    txId,
+    step: currentStep.id,
+  };
+
   try {
-    status = await httpService().checkStatus({
-      requestId: swap.requestId,
-      txId,
-      step: currentStep.id,
-    });
+    status = await httpService().checkStatus(requestBody);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     await delay(INTERVAL_FOR_CHECK_STATUS);
     retry();
+    warn(checkStatusError, {
+      tags: { type: 'request-error', requestBody, pendingSwap: swap },
+    });
     return;
   }
 
@@ -242,6 +261,14 @@ async function checkTransactionStatus({
     swap.extraMessageDetail = status?.extraMessage || '';
     swap.status = 'failed';
     swap.finishTime = new Date().getTime().toString();
+    warn(checkStatusError, {
+      tags: {
+        type: 'transaction-failed',
+        message: swap.extraMessage,
+        messageDetails: swap.extraMessageDetail,
+        pendingSwap: swap,
+      },
+    });
   }
 
   // Sync data with storage
@@ -282,6 +309,7 @@ async function checkApprovalStatus({
   const { meta } = context;
   const { getTransactionDataByHash, setTransactionDataByHash } =
     inMemoryTransactionsData();
+  const checkApprovalStatusError = new Error('check approval status error');
 
   const currentStep = getCurrentStep(swap);
   if (!currentStep) {
@@ -366,24 +394,41 @@ async function checkApprovalStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
+
+    const event = createStepFailedEvent(
+      swap,
+      extraMessage,
+      updateResult.failureType
+    );
+
     notifier({
-      event: {
-        type: StepEventType.FAILED,
-        reason: extraMessage,
-        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-        inputAmount: getLastFinishedStepInput(swap),
-        inputAmountUsd: getLastFinishedStepInputUsd(swap),
-      },
+      event,
       ...updateResult,
+    });
+    warn(checkApprovalStatusError, {
+      tags: {
+        type: 'singer-error',
+        reason: event.reason,
+        reasonCode: event.reasonCode,
+        message: extraMessage,
+        messageDetail: extraMessageDetail,
+        pendingSwap: swap,
+      },
+      context: SignerError.isSignerError(error) ? error.getErrorContext() : {},
     });
     return failed();
   }
 
   let isApproved = false;
+  const request: { requestId: string; txId?: string } = {
+    requestId: swap.requestId,
+    txId: currentStep.executedTransactionId,
+  };
+
   try {
     const response = await httpService().checkApproval(
-      swap.requestId,
-      currentStep.executedTransactionId
+      request.requestId,
+      request.txId
     );
     // If user cancel swap during check status api call, we should ignore check approval response
     if (currentStep?.status === 'failed') {
@@ -421,15 +466,24 @@ async function checkApprovalStatus({
         details: details,
       });
 
+      const event = createStepFailedEvent(
+        swap,
+        message,
+        updateResult.failureType
+      );
+
       notifier({
-        event: {
-          type: StepEventType.FAILED,
-          reason: message,
-          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-          inputAmount: getLastFinishedStepInput(swap),
-          inputAmountUsd: getLastFinishedStepInputUsd(swap),
-        },
+        event,
         ...updateResult,
+      });
+
+      warn(checkApprovalStatusError, {
+        tags: {
+          type: 'approval-failed',
+          message: swap.extraMessage,
+          messageDetails: swap.extraMessageDetail,
+          pendingSwap: swap,
+        },
       });
 
       failed();
@@ -444,6 +498,9 @@ async function checkApprovalStatus({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     isApproved = false;
+    warn(checkApprovalStatusError, {
+      tags: { type: 'request-error', requestBody: request, pendingSwap: swap },
+    });
   }
   if (isApproved) {
     currentStep.status = 'approved';
