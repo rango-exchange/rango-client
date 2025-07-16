@@ -41,11 +41,7 @@ export function HighValueLossWarningModal(props: Props) {
   const highValueLossData = [
     {
       title: i18n.t('Swapping'),
-      value: numberToString(
-        warning.inputUsdValue,
-        USD_VALUE_MIN_DECIMALS,
-        USD_VALUE_MAX_DECIMALS
-      ),
+      value: numberToString(warning.inputUsdValue),
     },
     {
       title: i18n.t('Gas cost'),

@@ -20,7 +20,7 @@ import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
-import { ProfileBanner } from './SwapDetailsModal.styles';
+import { ProfileBanner, wordWrap } from './SwapDetailsModal.styles';
 
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
@@ -68,6 +68,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           />
           <Divider size={12} />
           <Typography
+            className={wordWrap()}
             variant="body"
             size="medium"
             color="neutral700"
