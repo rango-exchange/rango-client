@@ -5,11 +5,12 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
+import type {
+  ExtendedWalletInfo,
+  ProviderContext,
+} from '@rango-dev/wallets-react';
 import type {
   Network,
-  WalletState,
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
@@ -46,19 +47,27 @@ import { formatThousandsWithCommas } from './sanitizers';
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
 
-export function mapStatusToWalletState(state: WalletState): WalletStatus {
-  if (state.connected) {
+export function getWalletConnectionStatus(
+  wallet: ExtendedWalletInfo,
+  walletState: ReturnType<ProviderContext['state']>
+): WalletStatus {
+  if (checkIsWalletPartiallyConnected(wallet, walletState)) {
+    return WalletStatus.PARTIALLY_CONNECTED;
+  }
+  if (walletState.connected) {
     return WalletStatus.CONNECTED;
-  } else if (state.connecting) {
+  }
+  if (walletState.connecting) {
     return WalletStatus.CONNECTING;
-  } else if (!state.installed) {
+  }
+  if (!walletState.installed) {
     return WalletStatus.NOT_INSTALLED;
   }
   return WalletStatus.DISCONNECTED;
 }
 
 export function mapWalletTypesToWalletInfo(
-  getState: (type: WalletType) => WalletState,
+  getState: ProviderContext['state'],
   getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
   list: WalletType[],
   chain?: string
@@ -97,7 +106,10 @@ export function mapWalletTypesToWalletInfo(
         supportedChains.map((item) => item.type)
       );
 
-      const state = mapStatusToWalletState(getState(type));
+      const state = getWalletConnectionStatus(
+        getWalletInfo(type),
+        getState(type)
+      );
       return {
         title: name,
         image,
@@ -418,42 +430,22 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: ExtendedModalWalletInfo[],
-  state: (type: WalletType) => {
-    namespaces?: Map<Namespace, { connected: boolean }>;
-  }
+  wallets: ExtendedModalWalletInfo[]
 ): ExtendedModalWalletInfo[] {
-  return (
-    wallets
-      .map((wallet) => ({
-        // add isPartiallyConnected to wallet items
-        isPartiallyConnected: checkIsWalletPartiallyConnected(
-          wallet,
-          state(wallet.type).namespaces
-        ),
-        ...wallet,
-      }))
-      .sort(
-        (a, b) =>
-          Number(
-            b.state === WalletStatus.CONNECTED && !b.isPartiallyConnected
-          ) -
-            Number(
-              a.state === WalletStatus.CONNECTED && !a.isPartiallyConnected
-            ) ||
-          Number(b.state === WalletStatus.CONNECTED) -
-            Number(a.state === WalletStatus.CONNECTED) ||
-          Number(
-            b.state === WalletStatus.DISCONNECTED ||
-              b.state === WalletStatus.CONNECTING
-          ) -
-            Number(
-              a.state === WalletStatus.DISCONNECTED ||
-                a.state === WalletStatus.CONNECTING
-            )
-      )
-      // remove isPartiallyConnected from wallet items
-      .map(({ isPartiallyConnected, ...wallet }) => wallet)
+  return wallets.sort(
+    (a, b) =>
+      Number(b.state === WalletStatus.CONNECTED) -
+        Number(a.state === WalletStatus.CONNECTED) ||
+      Number(b.state === WalletStatus.PARTIALLY_CONNECTED) -
+        Number(a.state === WalletStatus.PARTIALLY_CONNECTED) ||
+      Number(
+        b.state === WalletStatus.DISCONNECTED ||
+          b.state === WalletStatus.CONNECTING
+      ) -
+        Number(
+          a.state === WalletStatus.DISCONNECTED ||
+            a.state === WalletStatus.CONNECTING
+        )
   );
 }
 
@@ -536,14 +528,10 @@ export function filterWalletsByCategory(
 }
 
 export function checkIsWalletPartiallyConnected(
-  wallet: ExtendedModalWalletInfo,
-  namespacesState?: Map<Namespace, { connected: boolean }>
+  wallet: ExtendedWalletInfo,
+  walletState: ReturnType<ProviderContext['state']>
 ) {
-  if (
-    !wallet.isHub ||
-    !wallet.needsNamespace ||
-    wallet.state !== WalletStatus.CONNECTED
-  ) {
+  if (!wallet.isHub || !wallet.needsNamespace || !walletState.connected) {
     return false;
   }
   const namespaces = wallet.needsNamespace.data;
@@ -552,6 +540,6 @@ export function checkIsWalletPartiallyConnected(
   );
 
   return supportedNamespaces.some(
-    (namespace) => !namespacesState?.get(namespace.value)?.connected
+    (namespace) => !walletState.namespaces?.get(namespace.value)?.connected
   );
 }
