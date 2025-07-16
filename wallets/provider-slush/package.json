@@ -24,6 +24,7 @@
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-sui": "^0.5.1-next.0",
+    "@rango-dev/wallets-core": "^0.45.1-next.3",
     "@rango-dev/wallets-shared": "^0.46.1-next.3",
     "rango-types": "^0.1.88"
   },

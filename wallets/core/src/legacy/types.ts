@@ -139,6 +139,7 @@ export type ConnectResult = {
 };
 
 export type Providers = { [type in WalletType]?: InstanceType };
+export type NetworkProviderMap = Map<Networks, unknown>;
 
 export enum Events {
   CONNECTED = 'connected',

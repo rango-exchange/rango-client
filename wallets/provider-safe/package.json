@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.37.1-next.0",
+    "@rango-dev/wallets-core": "^0.45.1-next.3",
     "@rango-dev/wallets-shared": "^0.46.1-next.3",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^9.1.0",
