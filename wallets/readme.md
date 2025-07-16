@@ -141,7 +141,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 
 
-
 ## By Feature
 |Wallet| Switch Account | Switch Network | Auto Connect | Interface | Cross Browser 
 |--|--|--|--|--|--|
