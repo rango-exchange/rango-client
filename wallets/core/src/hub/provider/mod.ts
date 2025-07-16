@@ -5,6 +5,8 @@ export type {
   State,
   Context,
   ProviderBuilderOptions,
+  GenerateDeepLink,
+  DeepLinkContext,
 } from './types.js';
 
 export { Provider } from './provider.js';

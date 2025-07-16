@@ -1,11 +1,11 @@
 import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
 
-import { type ProviderInfo } from '@rango-dev/wallets-core';
+import { type ProviderMetadata } from '@rango-dev/wallets-core';
 import { Networks } from '@rango-dev/wallets-shared';
 
 export const WALLET_ID = 'unisat';
 
-export const info: ProviderInfo = {
+export const metadata: ProviderMetadata = {
   name: 'UniSat',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/unisat/icon.svg',
   extensions: {

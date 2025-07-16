@@ -1,4 +1,4 @@
-import { type ProviderInfo } from '@rango-dev/wallets-core';
+import { type ProviderMetadata } from '@rango-dev/wallets-core';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { Networks } from '@rango-dev/wallets-shared';
 import {
@@ -20,7 +20,7 @@ export const EVM_SUPPORTED_CHAINS = [
 export const WALLET_ID = 'phantom';
 export const WALLET_NAME_IN_WALLET_STANDARD = 'Phantom';
 
-export const info: ProviderInfo = {
+export const metadata: ProviderMetadata = {
   name: 'Phantom',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/phantom/icon.svg',
   extensions: {

@@ -20,6 +20,7 @@ import {
   sortWalletsBasedOnConnectionState,
 } from '../utils/wallets';
 
+import { useDeepLink } from './useDeepLink';
 import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
 
 interface Params {
@@ -44,6 +45,7 @@ export function useWalletList(params?: Params): API {
   const { state, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
+  const { checkHasDeepLink } = useDeepLink();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes = configWalletsToWalletName(
@@ -60,7 +62,8 @@ export function useWalletList(params?: Params): API {
   wallets = detectMobileScreens()
     ? wallets.filter(
         (wallet) =>
-          wallet.showOnMobile !== false && state(wallet.type).installed
+          wallet.showOnMobile !== false &&
+          (state(wallet.type).installed || checkHasDeepLink(wallet.type))
       )
     : wallets;
 

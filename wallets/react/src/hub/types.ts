@@ -1,7 +1,7 @@
 import type {
   CommonNamespaces,
   FindProxiedNamespace,
-  ProviderInfo,
+  ProviderMetadata,
 } from '@rango-dev/wallets-core';
 
 export type AllProxiedNamespaces = FindProxiedNamespace<
@@ -9,4 +9,4 @@ export type AllProxiedNamespaces = FindProxiedNamespace<
   CommonNamespaces
 >;
 
-export type ExtensionLink = keyof ProviderInfo['extensions'];
+export type ExtensionLink = keyof ProviderMetadata['extensions'];
