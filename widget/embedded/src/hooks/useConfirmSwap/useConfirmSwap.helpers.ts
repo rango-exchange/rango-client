@@ -124,42 +124,29 @@ export function generateWarnings(params: {
   return output;
 }
 
-export function handleQuoteErrors(error: any): ConfirmSwapFetchResult {
+export function handleQuoteErrors(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any
+): NonNullable<ConfirmSwapFetchResult['error']> {
   if (error?.code === 'ERR_CANCELED') {
     return {
-      swap: null,
-      error: {
-        type: QuoteErrorType.REQUEST_CANCELED,
-      },
-      warnings: null,
+      type: QuoteErrorType.REQUEST_CANCELED,
     };
   }
 
   if (error.cause) {
-    return {
-      swap: null,
-      error: error.cause,
-      warnings: null,
-    };
+    return error.cause;
   }
 
   if (error?.code === 'ERR_BAD_REQUEST') {
     return {
-      swap: null,
-      error: {
-        type: QuoteErrorType.NO_RESULT,
-        diagnosisMessage: error.response.data.error,
-      },
-      warnings: null,
+      type: QuoteErrorType.NO_RESULT,
+      diagnosisMessage: error.response.data.error,
     };
   }
 
   return {
-    swap: null,
-    error: {
-      type: QuoteErrorType.REQUEST_FAILED,
-      diagnosisMessage: error.message,
-    },
-    warnings: null,
+    type: QuoteErrorType.REQUEST_FAILED,
+    diagnosisMessage: error.message,
   };
 }

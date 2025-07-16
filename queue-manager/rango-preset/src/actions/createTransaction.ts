@@ -2,11 +2,12 @@ import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 import type { CreateTransactionRequest } from 'rango-sdk';
 
-import { DEFAULT_ERROR_CODE } from '../constants';
+import { warn } from '@rango-dev/logging-core';
+
 import {
+  createStepFailedEvent,
   getCurrentStep,
   getCurrentStepTx,
-  getLastFinishedStepInput,
   setCurrentStepTx,
   throwOnOK,
   updateSwapStatus,
@@ -72,7 +73,7 @@ export async function createTransaction(
       setStorage({ ...getStorage(), swapDetails: swap });
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       next();
-    } catch (error) {
+    } catch (error: unknown) {
       swap.status = 'failed';
       swap.finishTime = new Date().getTime().toString();
       const { extraMessage, extraMessageDetail } = prettifyErrorMessage(error);
@@ -87,16 +88,28 @@ export async function createTransaction(
         errorCode: 'FETCH_TX_FAILED',
       });
 
+      const event = createStepFailedEvent(
+        swap,
+        extraMessage,
+        updateResult.failureType
+      );
+
       notifier({
-        event: {
-          type: StepEventType.FAILED,
-          reason: extraMessage,
-          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-          inputAmount: getLastFinishedStepInput(swap),
-          inputAmountUsd: getLastFinishedStepInput(swap),
-        },
+        event,
         ...updateResult,
       });
+
+      if (error instanceof Error) {
+        warn(new Error('create transaction error'), {
+          tags: {
+            message: error.message,
+            requestBody: request,
+            reason: event.reason,
+            reasonCode: event.reasonCode,
+            pendingSwap: swap,
+          },
+        });
+      }
 
       actions.failed();
     }

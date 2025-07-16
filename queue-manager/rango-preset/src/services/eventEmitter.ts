@@ -26,7 +26,7 @@ import {
   WidgetEvents,
 } from '../types';
 
-type NotifierParams = {
+export type NotifierParams = {
   swap: PendingSwap;
   step: PendingSwapStep | null;
 } & {

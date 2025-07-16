@@ -1,12 +1,17 @@
 import type { ConfirmSwap } from './useConfirmSwap.types';
-import type { PendingSwapSettings, SelectedQuote } from '../../types';
 import type { ConfirmRouteRequest } from 'rango-sdk';
 
+import { warn } from '@rango-dev/logging-core';
 import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import {
+  type PendingSwapSettings,
+  QuoteErrorType,
+  type SelectedQuote,
+} from '../../types';
 import { getWalletsForNewSwap } from '../../utils/swap';
 import { useFetchConfirmQuote } from '../useFetchConfirmQuote';
 
@@ -125,9 +130,19 @@ export function useConfirmSwap(): ConfirmSwap {
           warnings: confirmSwapWarnings,
         };
       });
-    } catch (error: any) {
-      const confirmSwapResult = handleQuoteErrors(error);
-      return confirmSwapResult;
+    } catch (error: unknown) {
+      const quoteError = handleQuoteErrors(error);
+      if (quoteError.type !== QuoteErrorType.REQUEST_CANCELED) {
+        warn(new Error('confirm swap error'), {
+          tags: {
+            ...quoteError,
+            type: QuoteErrorType[quoteError.type],
+            initialQuote,
+            requestBody,
+          },
+        });
+      }
+      return { swap: null, error: quoteError, warnings: null };
     }
   };
 
