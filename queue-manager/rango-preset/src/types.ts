@@ -72,7 +72,7 @@ export interface SwapQueueContext extends QueueContext {
     wallet: WalletType,
     namespaces: TargetNamespace
   ) => Promise<ConnectResult | ConnectResult[] | undefined> | undefined;
-  canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
+  canSwitchNetworkTo: UseQueueManagerParams['canSwitchNetworkTo'];
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
 
@@ -92,7 +92,11 @@ export interface UseQueueManagerParams {
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
-  canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
+  canSwitchNetworkTo: (
+    type: WalletType,
+    network: Network,
+    namespace: TargetNamespace
+  ) => boolean;
 }
 
 export enum WidgetEvents {
