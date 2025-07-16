@@ -1,1 +1,4 @@
-{ "extends": "./tsconfig.build.json", "include": ["src", "tests"] }
+{
+  "extends": "./tsconfig.build.json",
+  "include": ["src", "tests", "../../global-wallets-env.d.ts"]
+}

@@ -3,18 +3,18 @@
   "version": "0.47.1-next.3",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-safepal",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-safepal  --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

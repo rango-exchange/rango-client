@@ -134,10 +134,10 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |--|--|--|--|--|--|--|
 | [Phantom](provider-phantom/readme.md) | ⚠️ | ⚠️ | ✅ | ❌ | ❌ | ✅ |
 | [Rabby](provider-rabby/readme.md) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | 
-| [Slush](provider-slush/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | 
+| [SafePal](provider-safepal/readme.md) | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 
+| [Slush](provider-slush/readme.md) | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | 
 | [Trust Wallet](provider-trust-wallet/readme.md) |  ✅ | ❌ | ✅ | 🚧 | 🚧 | 🚧 | 
 | [UniSat](provider-unisat/readme.md) |  ❌ | ⚠️ | ❌ | ❌ | ❌ | ❌ | 
-
 
 
 
@@ -146,6 +146,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 |--|--|--|--|--|--|
 | Phantom |  ✅ | ✅ | ⚠️ | Wallet Standard, Injected | ✅ |
 | Rabby |  ✅ | ✅ | ✅ | Injected | ✅ |
+| SafePal |  ✅ | ✅ | ❌ | Injected | ✅ |
 | Slush |  ❌ | ❌ | ✅ | Wallet Standard | ❌ |
 | Trust Wallet |  🚧 | ✅ | ❌ | Injected | ✅ | 
 | Unisat |  ✅ | 🚧 | ❌ | Injected | ❌ | 
