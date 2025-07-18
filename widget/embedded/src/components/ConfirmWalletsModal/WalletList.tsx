@@ -52,6 +52,7 @@ export function WalletList(props: PropTypes) {
   const { list } = useWalletList({
     chain,
   });
+  console.log({ list, chain });
 
   const [sortedList, setSortedList] = useState<ExtendedModalWalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
