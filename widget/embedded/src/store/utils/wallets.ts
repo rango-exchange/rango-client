@@ -117,22 +117,19 @@ export function updateAggregatedBalanceStateForNewAccount(
 ) {
   for (const balanceKey in balanceState) {
     const asset = extractAssetFromBalanceKey(balanceKey as BalanceKey);
-    const assetKey = asset ? createAssetKey(asset) : null;
+    if (asset) {
+      const assetKey = createAssetKey(asset);
 
-    if (!!assetKey && !aggregatedBalances[assetKey]) {
-      aggregatedBalances[assetKey] = [];
-    }
+      if (!aggregatedBalances[assetKey]) {
+        aggregatedBalances[assetKey] = [];
+      }
 
-    const aggregatedBalance = assetKey && aggregatedBalances[assetKey];
-    if (
-      assetKey &&
-      aggregatedBalance &&
-      aggregatedBalance?.includes(balanceKey as BalanceKey)
-    ) {
-      aggregatedBalances[assetKey] = [
-        ...aggregatedBalance,
-        balanceKey as BalanceKey,
-      ];
+      if (!aggregatedBalances[assetKey].includes(balanceKey as BalanceKey)) {
+        aggregatedBalances[assetKey] = [
+          ...aggregatedBalances[assetKey],
+          balanceKey as BalanceKey,
+        ];
+      }
     }
   }
 
