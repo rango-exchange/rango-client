@@ -1,5 +1,5 @@
 import type { PropTypes } from './Detached.types';
-import type { NamespaceMeta } from '@rango-dev/wallets-core/dist/legacy/types';
+import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
 
 import { i18n } from '@lingui/core';
 import { Alert, Button, Divider, Image, MessageBox } from '@rango-dev/ui';
@@ -13,7 +13,7 @@ import { NamespaceDetachedItem } from './NamespaceDetachedItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
 
 interface NamespaceItemProps {
-  namespace: NamespaceMeta;
+  namespace: LegacyNamespaceMeta;
   targetWallet: PropTypes['value']['targetWallet'];
   singleSelection: boolean;
   selectedNamespaces?: PropTypes['selectedNamespaces'];
