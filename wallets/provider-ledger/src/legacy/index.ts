@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   Connect,
   Disconnect,
@@ -8,14 +9,15 @@ import type {
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
+import { setDerivationPath } from '../state.js';
 import {
   getEthereumAccounts,
-  getLedgerInstance,
+  ledger as getLedgerInstance,
   getSolanaAccounts,
   transportDisconnect,
-} from './helpers.js';
+} from '../utils.js';
+
 import signer from './signer.js';
-import { setDerivationPath } from './state.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
@@ -154,3 +156,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  getSigners,
+  getWalletInfo,
+});
+
+export { buildLegacyProvider };

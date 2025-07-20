@@ -7,12 +7,12 @@ import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
 import { PublicKey } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
+import { getDerivationPath } from '../../state.js';
 import {
   getLedgerError,
   transportConnect,
   transportDisconnect,
-} from '../helpers.js';
-import { getDerivationPath } from '../state.js';
+} from '../../utils.js';
 
 export function isVersionedTransaction(
   transaction: Transaction | VersionedTransaction
