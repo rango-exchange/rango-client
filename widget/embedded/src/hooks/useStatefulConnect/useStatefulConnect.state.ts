@@ -9,7 +9,9 @@ export interface State {
   status: 'init' | 'namespace' | 'derivationPath' | 'detached';
   namespace: NeedsNamespacesState | null;
   derivationPath: NeedsDerivationPathState | null;
-  selectedNamespaces: Namespace[] | null;
+  selectedNamespaces:
+    | { namespace: Namespace; derivationPath?: string }[]
+    | null;
 }
 
 export const initState: State = {

@@ -13,11 +13,26 @@ import { NamespaceItem } from '../NamespaceItem';
 export const NamespaceDetachedItem = function NamespaceDetachedItem(
   props: NamespaceDetachedItemPropTypes
 ) {
-  const { walletType, namespace, initialConnect } = props;
+  const {
+    targetWallet,
+    namespace,
+    initialConnect,
+    navigateToDerivationPath,
+    derivationPath,
+    singleSelection,
+  } = props;
   const { connect, disconnect, state } = useWallets();
   const [error, setError] = useState<Error | null>(null);
 
+  const walletType = targetWallet.type;
   const walletState = state(walletType);
+
+  const namespacesPathProperty = targetWallet.properties?.find(
+    (property) => property.name === 'namespaces'
+  );
+  const derivationPathProperty = targetWallet.properties?.find(
+    (property) => property.name === 'derivationPath'
+  );
 
   const namespaceState = walletState.namespaces?.get(namespace.value);
   const firstAccountArray = namespaceState.accounts?.[0]?.split(':');
@@ -39,12 +54,19 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
     walletType: string,
     namespace: Namespace
   ) => {
+    if (singleSelection) {
+      await disconnect(
+        walletType,
+        namespacesPathProperty?.value.data.map((namespace) => namespace.value)
+      );
+    }
     try {
       processingConnectAttempt.current = true;
       await connect(walletType, [
         {
           namespace: namespace,
           network: '',
+          derivationPath: derivationPath ?? undefined,
         },
       ]);
     } catch (error) {
@@ -59,7 +81,11 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
     if (namespaceState.connected) {
       await disconnect(walletType, [namespace.value]);
     } else {
-      void handleConnectNamespace(walletType, namespace.value);
+      if (derivationPathProperty) {
+        navigateToDerivationPath();
+      } else {
+        void handleConnectNamespace(walletType, namespace.value);
+      }
     }
   };
 

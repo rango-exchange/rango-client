@@ -88,22 +88,27 @@ export function WalletsPage() {
         </Typography>
         <ListContainer>
           {filteredWallets.map((wallet, index) => {
-            const walletState = state(wallet.type);
-            const namespacesState = walletState.namespaces;
+            const namespacesState = state(wallet.type).namespaces;
             const key = `wallet-${index}-${wallet.type}`;
             const isWalletPartiallyConnected = checkIsWalletPartiallyConnected(
               wallet,
               namespacesState
             );
+            const namespaceSelection = wallet.needsNamespace?.selection;
+
+            let walletState = wallet.state;
+            if (
+              isWalletPartiallyConnected &&
+              namespaceSelection === 'multiple'
+            ) {
+              // If the wallet is connected to only a subset of namespaces, and the user has the option to connect to additional ones, we label the wallet as `Partially Connected`
+              walletState = WalletState.PARTIALLY_CONNECTED;
+            }
             return (
               <Wallet
                 key={key}
                 {...wallet}
-                state={
-                  isWalletPartiallyConnected
-                    ? WalletState.PARTIALLY_CONNECTED
-                    : wallet.state
-                }
+                state={walletState}
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}
