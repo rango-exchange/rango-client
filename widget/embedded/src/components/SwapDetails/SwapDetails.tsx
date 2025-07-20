@@ -72,6 +72,8 @@ import {
   titleStepsStyles,
 } from './SwapDetails.styles';
 
+const SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY = 3000;
+
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
@@ -88,6 +90,9 @@ export function SwapDetails(props: SwapDetailsProps) {
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
+
+  const modalStateRef = useRef(modalState);
+  const switchNetworkModalStateRef = useRef(switchNetworkModalState);
 
   const getNotifications = useNotificationStore.use.getNotifications();
   const removeNotification = useNotificationStore.use.removeNotification();
@@ -341,6 +346,28 @@ export function SwapDetails(props: SwapDetailsProps) {
       handleCloseModal();
     }
   }, [currentStepNetworkStatus]);
+
+  useEffect(() => {
+    modalStateRef.current = modalState;
+    switchNetworkModalStateRef.current = switchNetworkModalState;
+
+    // Close switch network success modal with a delay
+    if (
+      modalStateRef.current === 'switchNetwork' &&
+      switchNetworkModalState?.type === 'success'
+    ) {
+      const timeout = setTimeout(() => {
+        if (
+          modalState === 'switchNetwork' &&
+          switchNetworkModalStateRef.current?.type === 'success'
+        ) {
+          handleCloseModal();
+        }
+      }, SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [modalState, switchNetworkModalState]);
 
   return (
     <Layout
