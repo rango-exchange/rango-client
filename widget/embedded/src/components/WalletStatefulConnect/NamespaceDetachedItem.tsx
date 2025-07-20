@@ -27,9 +27,6 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
   const walletType = targetWallet.type;
   const walletState = state(walletType);
 
-  const namespacesPathProperty = targetWallet.properties?.find(
-    (property) => property.name === 'namespaces'
-  );
   const derivationPathProperty = targetWallet.properties?.find(
     (property) => property.name === 'derivationPath'
   );
@@ -55,10 +52,7 @@ export const NamespaceDetachedItem = function NamespaceDetachedItem(
     namespace: Namespace
   ) => {
     if (singleSelection) {
-      await disconnect(
-        walletType,
-        namespacesPathProperty?.value.data.map((namespace) => namespace.value)
-      );
+      await disconnect(walletType);
     }
     try {
       processingConnectAttempt.current = true;
