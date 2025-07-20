@@ -83,7 +83,7 @@ export function Detached(props: PropTypes) {
           wallet: targetWallet.type,
         })}
         description={i18n.t(
-          "This wallet supports multiple chains. Choose which chains you'd like to connect or disconnect."
+          'This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect.'
         )}
         icon={<Image src={targetWallet.image} size={45} />}
       />
