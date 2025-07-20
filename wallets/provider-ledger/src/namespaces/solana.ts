@@ -6,7 +6,6 @@ import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/c
 import {
   builders,
   CAIP_NAMESPACE,
-  CAIP_SOLANA_CHAIN_ID,
 } from '@rango-dev/wallets-core/namespaces/solana';
 import { CAIP } from '@rango-dev/wallets-core/utils';
 
@@ -16,12 +15,12 @@ import { getSolanaAccounts, standardizeAndThrowLedgerError } from '../utils.js';
 
 const connect = builders
   .connect()
-  .action(async function (_context, _chain, derivationPath) {
-    if (!derivationPath) {
+  .action(async function (_context, _chain, options) {
+    if (!options?.derivationPath) {
       throw new Error('Derivation Path can not be empty.');
     }
 
-    setDerivationPath(derivationPath);
+    setDerivationPath(options.derivationPath);
 
     const result = await getSolanaAccounts();
 
@@ -31,7 +30,7 @@ const connect = builders
           address: account,
           chainId: {
             namespace: CAIP_NAMESPACE,
-            reference: CAIP_SOLANA_CHAIN_ID,
+            reference: result.chainId,
           },
         }) as CaipAccount
     );

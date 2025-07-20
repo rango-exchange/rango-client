@@ -7,7 +7,7 @@ import type {
 export interface SolanaActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (network?: unknown, derivationPath?: string) => Promise<Accounts>;
+  connect: (network?: unknown, options?: ConnectOptions) => Promise<Accounts>;
   canEagerConnect: () => Promise<boolean>;
 }
 
@@ -20,3 +20,7 @@ export interface SolanaActions
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;
+
+export type ConnectOptions = {
+  derivationPath?: string;
+};

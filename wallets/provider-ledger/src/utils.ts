@@ -2,6 +2,7 @@ import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { CAIP_SOLANA_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/solana';
 import {
   ETHEREUM_CHAIN_ID,
   type ProviderConnectResult,
@@ -100,7 +101,7 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
 
     return {
       accounts: accounts,
-      chainId: LegacyNetworks.SOLANA,
+      chainId: CAIP_SOLANA_CHAIN_ID,
       derivationPath,
     };
   } catch (error: unknown) {

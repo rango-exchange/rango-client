@@ -10,7 +10,7 @@ export interface EvmActions
     CommonActions {
   connect: (
     chain?: Chain | ChainId,
-    derivationPath?: string
+    options?: ConnectOptions
   ) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
 }
@@ -22,4 +22,5 @@ export type Chain = AddEthereumChainParameter;
 
 export type ConnectOptions = {
   switchOrAddNetwork?: (instance: ProviderAPI, chain: ChainId | Chain) => void;
+  derivationPath?: string;
 };
