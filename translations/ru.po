@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-02 10:33\n"
+"PO-Revision-Date: 2025-07-21 06:56\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -17,6 +17,26 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
+msgstr "Соединение вашего кошелька или некоторых сетей было прервано. Подключитесь, чтобы продолжить обмен."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+msgid "Wallet connected successfully."
+msgstr "Кошелек успешно подключен."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+msgid "Install {wallet}"
+msgstr "Установить {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+msgid "Disconnect wallet"
+msgstr "Отключить кошелек"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -195,7 +215,6 @@ msgstr "История"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Подключить кошелек"
@@ -225,7 +244,7 @@ msgstr "Добавить другой пользовательский токе�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
 msgid "Swaps steps"
 msgstr "Меняет шаги"
 
@@ -458,12 +477,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "Вы не можете использовать один и тот же токен для полей «От» и «До»."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:71
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Допустимость проскальзывания на смену"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:118
+#: widget/embedded/src/components/Slippage/Slippage.tsx:117
 msgid "Custom"
 msgstr "Свой"
 
@@ -495,13 +514,13 @@ msgstr "Осторожно, проскальзывание высокое!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Swap Details"
 msgstr "Детали обмена"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "ID запроса"
 
@@ -516,53 +535,54 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Поменять на ID запроса = {requestId} не найдено."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Вы получили {amount} {token} на {conciseAddress} кошельке на цепочке {chain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
 msgid "Transaction was not sent."
 msgstr "Транзакция не отправлена."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} на {blockchain} остается в вашем кошельке."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
 msgid "Delete"
 msgstr "Удалить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
 msgstr "Попробовать еще раз"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:330
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copied To Clipboard"
 msgstr "Скопировано в буфер обмена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:331
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copy Request ID"
 msgstr "Копировать ID запроса"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:354
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
 msgid "View on Rango Explorer"
 msgstr "Просмотр в проводнике Rango"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Finished at"
 msgstr "Завершено в"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Created at"
 msgstr "Создано в"
 
@@ -573,7 +593,8 @@ msgstr "Просмотр транзакции"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
@@ -591,7 +612,8 @@ msgstr "Транзакция не удалась"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
 msgid "Done"
 msgstr "Готово"
 
@@ -649,19 +671,14 @@ msgid "No, Cancel"
 msgstr "Нет, отменить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
 msgid "Change Network"
 msgstr "Изменить сеть"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
 msgid "Network Changed"
 msgstr "Сеть изменена"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Сбой изменения сети"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
@@ -730,14 +747,15 @@ msgid "Enter Index"
 msgstr "Введите индекс"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
+#: widget/embedded/src/utils/swap.ts:707
 msgid "Connect {wallet}"
 msgstr "Подключиться {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Этот кошелек поддерживает несколько цепочек. Выберите, какие цепочки вы хотите подключить или отключить."
 
@@ -778,24 +796,24 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Вы отклонили добавление цепочки {blockchainDisplayName} в ваш кошелек."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Отключиться"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Подключено"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
 msgid "Connection failed"
 msgstr "Соединение не удалось"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
 msgid "See why"
 msgstr "Посмотрите почему"
 
@@ -822,7 +840,7 @@ msgid "Select all"
 msgstr "Выбрать все"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(В настоящее время не поддерживается)"
 
@@ -1253,32 +1271,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "Обязательный: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for network fee"
 msgstr " за комиссию сети"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:643
 msgid " for swap"
 msgstr " для подкачки"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:641
+#: widget/embedded/src/utils/swap.ts:646
 msgid " for input and network fee"
 msgstr " за ввод и сетевой сбор"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:648
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Нужно <unk> {requiredAmount} {symbol}{reason}, но у вас есть {currentAmount} {symbol} в кошельке {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:714
 msgid "Waiting for other running tasks to be finished"
 msgstr "Ожидание завершения других запущенных задач"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:712
+#: widget/embedded/src/utils/swap.ts:717
 msgid "Waiting for changing wallet network"
 msgstr "Ожидание изменения сети кошелька"
 
@@ -1384,6 +1402,7 @@ msgid "Connect other chains"
 msgstr "Подключайте другие цепи"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
