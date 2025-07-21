@@ -8,7 +8,7 @@ msgstr ""
 "Language: af\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-02 10:33\n"
+"PO-Revision-Date: 2025-07-21 06:56\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,26 @@ msgstr ""
 "X-Crowdin-Language: af\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
+msgstr "Die verbinding van jou beursie of sommige netwerke is ontkoppel. Koppel om die ruil voort te sit."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+msgid "Wallet connected successfully."
+msgstr "Beursie suksesvol gekoppel."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+msgid "Install {wallet}"
+msgstr "Installeer {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+msgid "Disconnect wallet"
+msgstr "Ontkoppel beursie"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -195,7 +215,6 @@ msgstr "Geskiedenis"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Koppel Wallet"
@@ -225,7 +244,7 @@ msgstr "Voeg nog 'n pasgemaakte teken by"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
 msgid "Swaps steps"
 msgstr "Ruil trappe om"
 
@@ -458,12 +477,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "Jy kan nie dieselfde teken vir Van en To gebruik nie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:71
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Gliptoleransie per ruil"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:118
+#: widget/embedded/src/components/Slippage/Slippage.tsx:117
 msgid "Custom"
 msgstr "Pasgemaak"
 
@@ -495,13 +514,13 @@ msgstr "Pasop, jou gly is hoog!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Swap Details"
 msgstr "Ruil Besonderhede"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "Versoek ID"
 
@@ -516,53 +535,54 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Ruil met versoek-ID = {requestId} nie gevind nie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Jy het {amount} {token} in {conciseAddress} beursie op {chain} ketting ontvang."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
 msgid "Transaction was not sent."
 msgstr "Transaksie is nie gestuur nie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} op {blockchain} bly in jou beursie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
 msgid "Delete"
 msgstr "Vee uit"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
 msgstr "Probeer weer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:330
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copied To Clipboard"
 msgstr "Gekopieer na knipbord"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:331
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copy Request ID"
 msgstr "Kopieer versoek-ID"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:354
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
 msgid "View on Rango Explorer"
 msgstr "Kyk op Rango Explorer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Finished at"
 msgstr "Klaar om"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Created at"
 msgstr "Geskep by"
 
@@ -573,7 +593,8 @@ msgstr "Bekyk transaksie"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
@@ -591,7 +612,8 @@ msgstr "Transaksie het misluk"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
 msgid "Done"
 msgstr "Klaar"
 
@@ -649,19 +671,14 @@ msgid "No, Cancel"
 msgstr "Nee, kanselleer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
 msgid "Change Network"
 msgstr "Verander netwerk"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
 msgid "Network Changed"
 msgstr "Netwerk verander"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Netwerkverandering het misluk"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
@@ -730,14 +747,15 @@ msgid "Enter Index"
 msgstr "Voer indeks in"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
+#: widget/embedded/src/utils/swap.ts:707
 msgid "Connect {wallet}"
 msgstr "Verbind {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Hierdie beursie ondersteun verskeie kettings. Kies watter kettings jy wil koppel of ontkoppel."
 
@@ -778,24 +796,24 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Jy het geweier om {blockchainDisplayName} -ketting by jou beursie te voeg."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Ontkoppel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Gekoppel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
 msgid "Connection failed"
 msgstr "Verbinding het misluk"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
 msgid "See why"
 msgstr "Sien hoekom"
 
@@ -822,7 +840,7 @@ msgid "Select all"
 msgstr "Kies alles"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(Tans nie ondersteun nie)"
 
@@ -1253,32 +1271,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "Vereis: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for network fee"
 msgstr " vir netwerkfooi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:643
 msgid " for swap"
 msgstr " vir ruil"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:641
+#: widget/embedded/src/utils/swap.ts:646
 msgid " for input and network fee"
 msgstr " vir insette en netwerkfooi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:648
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Benodig ≈ {requiredAmount} {symbol}{reason}, maar jy het {currentAmount} {symbol} in jou {blockchain} beursie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:714
 msgid "Waiting for other running tasks to be finished"
 msgstr "Wag vir ander lopende take om klaar te wees"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:712
+#: widget/embedded/src/utils/swap.ts:717
 msgid "Waiting for changing wallet network"
 msgstr "Wag vir verandering van beursienetwerk"
 
@@ -1384,6 +1402,7 @@ msgid "Connect other chains"
 msgstr "Verbind ander kettings"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
