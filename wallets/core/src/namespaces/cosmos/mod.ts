@@ -1,1 +1,1 @@
-export type { CosmosActions } from './types.js';
+export type { CosmosActions, ProviderAPI } from './types.js';

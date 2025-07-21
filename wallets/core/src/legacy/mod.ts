@@ -18,6 +18,7 @@ export type {
   CanSwitchNetwork as LegacyCanSwitchNetwork,
   NamespaceData as LegacyNamespaceData,
   ProviderInterface as LegacyProviderInterface,
+  NetworkProviderMap as LegacyNetworkProviderMap,
   Network as LegacyNetwork,
   WalletType as LegacyWalletType,
   InstallObjects as LegacyInstallObjects,
