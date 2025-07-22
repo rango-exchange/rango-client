@@ -1,10 +1,17 @@
 import type {
+  XrplPaymentTransactionData,
   XrplTransaction,
   XrplTransactionDataIssuedCurrencyAmount,
   XrplTransactionDataMPTAmount,
+  XrplTrustSetTransactionData,
 } from 'rango-types/mainApi';
 
-import { sendPayment, setTrustline } from '@gemwallet/api';
+import {
+  sendPayment,
+  type SendPaymentRequest,
+  setTrustline,
+  type SetTrustlineRequest,
+} from '@gemwallet/api';
 import { type GenericSigner, SignerError } from 'rango-types';
 
 /*
@@ -33,6 +40,61 @@ function isMPTokenAmount(
     typeof amount.value === 'string'
   );
 }
+
+function toGemWalletMemo(memos: XrplPaymentTransactionData['Memos']) {
+  if (!memos) {
+    return [];
+  }
+
+  return memos.map((memo) => {
+    return {
+      memo: {
+        memoType: memo.Memo.MemoType,
+        memoData: memo.Memo.MemoData,
+        memoFormat: memo.Memo.MemoFormat,
+      },
+    };
+  });
+}
+
+function toGemWalletTrustlineRequest(
+  data: XrplTrustSetTransactionData
+): SetTrustlineRequest {
+  return {
+    limitAmount: {
+      currency: data.LimitAmount.currency,
+      value: data.LimitAmount.value,
+      issuer: data.LimitAmount.issuer,
+    },
+    memos: toGemWalletMemo(data.Memos),
+    flags: data.Flags,
+  };
+}
+
+function toGemWalletPaymentRequest(
+  data: XrplPaymentTransactionData
+): SendPaymentRequest {
+  if (isMPTokenAmount(data.Amount)) {
+    throw new Error("Current implemented signer doesn't have support for MPT");
+  }
+
+  const amount = isIssuedCurrencyAmount(data.Amount)
+    ? {
+        currency: data.Amount.currency,
+        value: data.Amount.value,
+        issuer: data.Amount.issuer,
+      }
+    : data.Amount;
+
+  return {
+    amount,
+    destination: data.Destination,
+    destinationTag: data.DestinationTag,
+    memos: toGemWalletMemo(data.Memos),
+    flags: data.Flags,
+  };
+}
+
 export class XrplSigner implements GenericSigner<XrplTransaction> {
   async signMessage(): Promise<string> {
     throw SignerError.UnimplementedError('signMessage');
@@ -40,24 +102,7 @@ export class XrplSigner implements GenericSigner<XrplTransaction> {
 
   async signAndSendTx(tx: XrplTransaction): Promise<{ hash: string }> {
     if (tx.data.TransactionType === 'TrustSet') {
-      const transaction = {
-        limitAmount: {
-          currency: tx.data.LimitAmount.currency,
-          value: tx.data.LimitAmount.value,
-          issuer: tx.data.LimitAmount.issuer,
-        },
-        memo: (tx.data.Memos || []).map((memo) => {
-          return {
-            memo: {
-              memoType: memo.Memo.MemoType,
-              memoData: memo.Memo.MemoData,
-              memoFormat: memo.Memo.MemoFormat,
-            },
-          };
-        }),
-        flags: tx.data.Flags,
-      };
-      const result = await setTrustline(transaction);
+      const result = await setTrustline(toGemWalletTrustlineRequest(tx.data));
 
       if (result.type === 'reject') {
         throw new Error('The request has been rejected', {
@@ -73,36 +118,7 @@ export class XrplSigner implements GenericSigner<XrplTransaction> {
         hash: result.result.hash,
       };
     } else if (tx.data.TransactionType === 'Payment') {
-      if (isMPTokenAmount(tx.data.Amount)) {
-        throw new Error(
-          "Current implemented signer doesn't have support for MPT"
-        );
-      }
-
-      const amount = isIssuedCurrencyAmount(tx.data.Amount)
-        ? {
-            currency: tx.data.Amount.currency,
-            value: tx.data.Amount.value,
-            issuer: tx.data.Amount.issuer,
-          }
-        : tx.data.Amount;
-
-      const transaction = {
-        amount,
-        destination: tx.data.Destination,
-        destinationTag: tx.data.DestinationTag,
-        memo: (tx.data.Memos || []).map((memo) => {
-          return {
-            memo: {
-              memoType: memo.Memo.MemoType,
-              memoData: memo.Memo.MemoData,
-              memoFormat: memo.Memo.MemoFormat,
-            },
-          };
-        }),
-        flags: tx.data.Flags,
-      };
-      const result = await sendPayment(transaction);
+      const result = await sendPayment(toGemWalletPaymentRequest(tx.data));
 
       if (result.type === 'reject') {
         throw new Error('The request has been rejected', {
