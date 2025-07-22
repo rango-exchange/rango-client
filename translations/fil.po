@@ -8,7 +8,7 @@ msgstr ""
 "Language: fil\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-02 10:33\n"
+"PO-Revision-Date: 2025-07-21 06:56\n"
 "Last-Translator: \n"
 "Language-Team: Filipino\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,6 +17,26 @@ msgstr ""
 "X-Crowdin-Language: fil\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
+msgstr "Ang koneksyon ng iyong wallet o ilang network ay nadiskonekta. Kumonekta upang ipagpatuloy ang pagpapalit"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+msgid "Wallet connected successfully."
+msgstr "Matagumpay na nakakonekta ang wallet."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+msgid "Install {wallet}"
+msgstr "I-install ang {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+msgid "Disconnect wallet"
+msgstr "Idiskonekta ang wallet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -195,7 +215,6 @@ msgstr "Kasaysayan"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Ikonekta ang Wallet"
@@ -225,7 +244,7 @@ msgstr "Magdagdag ng isa pang custom na token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:431
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
 msgid "Swaps steps"
 msgstr "Nagpapalitan ng mga hakbang"
 
@@ -458,12 +477,12 @@ msgid "You cannot use the same token for From and To."
 msgstr "Hindi mo maaaring gamitin ang parehong token para sa From and To."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:71
+#: widget/embedded/src/components/Slippage/Slippage.tsx:70
 msgid "Slippage tolerance per swap"
 msgstr "Pagpapahintulot sa slippage bawat swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:118
+#: widget/embedded/src/components/Slippage/Slippage.tsx:117
 msgid "Custom"
 msgstr "Custom"
 
@@ -495,13 +514,13 @@ msgstr "Mag-ingat, ang iyong pagdulas ay mataas!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Swap Details"
 msgstr "Pagpalitin ang mga Detalye"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:320
 msgid "Request ID"
 msgstr "Humiling ng ID"
 
@@ -516,53 +535,54 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Magpalit gamit ang request ID = {requestId} hindi nahanap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Nakatanggap ka ng {amount} {token} sa {conciseAddress} wallet sa {chain} chain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:251
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
 msgid "Transaction was not sent."
 msgstr "Hindi naipadala ang transaksyon."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} sa {blockchain} nananatili sa iyong wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:290
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
 msgid "Delete"
 msgstr "Tanggalin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:313
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:87
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
 msgstr "Subukan muli"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:330
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copied To Clipboard"
 msgstr "Kinopya Sa Clipboard"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:331
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
 msgid "Copy Request ID"
 msgstr "Kopyahin ang Request ID"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:354
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
 msgid "View on Rango Explorer"
 msgstr "Tingnan sa Rango Explorer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Finished at"
 msgstr "Natapos sa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
 msgid "Created at"
 msgstr "Nilikha sa"
 
@@ -573,7 +593,8 @@ msgstr "Tingnan ang transaksyon"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:89
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
@@ -591,7 +612,8 @@ msgstr "Nabigo ang Transaksyon"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:49
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
 msgid "Done"
 msgstr "Tapos na"
 
@@ -649,19 +671,14 @@ msgid "No, Cancel"
 msgstr "Hindi, Kanselahin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
 msgid "Change Network"
 msgstr "Baguhin ang Network"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
 msgid "Network Changed"
 msgstr "Binago ang Network"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:24
-msgid "Network Change Failed"
-msgstr "Nabigo ang Pagbabago sa Network"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
@@ -730,14 +747,15 @@ msgid "Enter Index"
 msgstr "Ipasok ang Index"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:19
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:702
+#: widget/embedded/src/utils/swap.ts:707
 msgid "Connect {wallet}"
 msgstr "Kumonekta {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:22
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Sinusuportahan ng wallet na ito ang maraming chain. Piliin kung aling mga chain ang gusto mong ikonekta o idiskonekta."
 
@@ -778,24 +796,24 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Tinanggihan mo ang pagdaragdag ng {blockchainDisplayName} chain sa iyong wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:84
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Idiskonekta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:106
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Nakakonekta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:111
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
 msgid "Connection failed"
 msgstr "Nabigo ang koneksyon"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:140
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
 msgid "See why"
 msgstr "Tingnan kung bakit"
 
@@ -822,7 +840,7 @@ msgid "Select all"
 msgstr "Piliin lahat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceUnsupportedItem.tsx:36
+#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
 msgid "(Currently not supported)"
 msgstr "(Kasalukuyang hindi suportado)"
 
@@ -1253,32 +1271,32 @@ msgid "Required: < {max} {symbol}"
 msgstr "Kinakailangan: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:635
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for network fee"
 msgstr " para sa bayad sa network"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:638
+#: widget/embedded/src/utils/swap.ts:643
 msgid " for swap"
 msgstr " para sa swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:641
+#: widget/embedded/src/utils/swap.ts:646
 msgid " for input and network fee"
 msgstr " para sa input at bayad sa network"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:648
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Kailangan ng ≈ {requiredAmount} {symbol}{reason}, ngunit mayroon kang {currentAmount} {symbol} sa iyong {blockchain} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:714
 msgid "Waiting for other running tasks to be finished"
 msgstr "Naghihintay na matapos ang iba pang tumatakbong gawain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:712
+#: widget/embedded/src/utils/swap.ts:717
 msgid "Waiting for changing wallet network"
 msgstr "Naghihintay para sa pagpapalit ng network ng wallet"
 
@@ -1384,6 +1402,7 @@ msgid "Connect other chains"
 msgstr "Ikonekta ang iba pang mga chain"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"

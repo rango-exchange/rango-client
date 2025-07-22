@@ -1,5 +1,6 @@
 import type { Token } from 'rango-sdk';
 
+import { warn } from '@rango-dev/logging-core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
@@ -168,16 +169,24 @@ export function useSwapInput({
           updateQuotePartialState('warning', quoteWarning);
         })
         .catch((error) => {
-          const { error: quoteError } = handleQuoteErrors(error);
+          const quoteError = handleQuoteErrors(error);
           if (
-            quoteError?.type === QuoteErrorType.NO_RESULT ||
-            quoteError?.type === QuoteErrorType.REQUEST_FAILED
+            quoteError.type === QuoteErrorType.NO_RESULT ||
+            quoteError.type === QuoteErrorType.REQUEST_FAILED
           ) {
             resetQuote();
           }
-          if (quoteError?.type !== QuoteErrorType.REQUEST_CANCELED) {
+
+          if (quoteError.type !== QuoteErrorType.REQUEST_CANCELED) {
             updateQuotePartialState('error', quoteError);
             setLoading(false);
+            warn(new Error('quote error'), {
+              tags: {
+                ...quoteError,
+                type: QuoteErrorType[quoteError.type],
+                requestBody,
+              },
+            });
           }
         });
     }

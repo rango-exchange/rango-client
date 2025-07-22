@@ -57,7 +57,7 @@ export enum QuoteWarningType {
   EXCESSIVE_OUTPUT_AMOUNT_CHANGE,
 }
 
-export type RecommendedSlippages = Map<number, string>;
+export type RecommendedSlippages = Record<number, string>;
 
 export type InsufficientSlippageWarning = {
   type: QuoteWarningType.INSUFFICIENT_SLIPPAGE;

@@ -353,14 +353,14 @@ export function hasSlippageError(
 export function checkSlippageErrors(
   swaps: SwapResult[]
 ): RecommendedSlippages | null {
-  const recommendedSlippages: RecommendedSlippages = new Map();
+  const recommendedSlippages = new Map<number, string>();
   swaps.forEach((swap, index) => {
     if (swap.recommendedSlippage?.error) {
       recommendedSlippages.set(index, swap.recommendedSlippage.slippage);
     }
   });
   if (recommendedSlippages.size > 0) {
-    return recommendedSlippages;
+    return Object.fromEntries(recommendedSlippages);
   }
   return null;
 }
@@ -369,7 +369,7 @@ export function checkSlippageWarnings(
   quote: SelectedQuote,
   userSlippage: number
 ): RecommendedSlippages | null {
-  const recommendedSlippages: RecommendedSlippages = new Map();
+  const recommendedSlippages = new Map<number, string>();
   quote?.swaps.forEach((swap, index) => {
     if (
       swap.recommendedSlippage?.slippage &&
@@ -379,7 +379,7 @@ export function checkSlippageWarnings(
     }
   });
   if (recommendedSlippages.size > 0) {
-    return recommendedSlippages;
+    return Object.fromEntries(recommendedSlippages);
   }
   return null;
 }
@@ -534,13 +534,18 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   const wallets = selectedWallets.reduce(
     (
       selectedWalletsMap: {
-        [p: string]: { address: string; walletType: WalletType };
+        [p: string]: {
+          address: string;
+          walletType: WalletType;
+          derivationPath?: string;
+        };
       },
       selectedWallet
     ) => (
       (selectedWalletsMap[selectedWallet.chain] = {
         address: selectedWallet.address,
         walletType: selectedWallet.walletType,
+        derivationPath: selectedWallet.derivationPath,
       }),
       selectedWalletsMap
     ),

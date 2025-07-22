@@ -134,11 +134,11 @@ export function Quote(props: QuoteProps) {
 
       const hasSlippageError =
         error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
-        error.recommendedSlippages?.has(index);
+        !!error.recommendedSlippages?.[index];
 
       const hasSlippageWarning =
         warning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE &&
-        warning.recommendedSlippages?.has(index);
+        !!warning.recommendedSlippages?.[index];
 
       const stepHasError = hasBridgeLimitError || hasSlippageError;
       const stepHasWarning = hasSlippageWarning;
@@ -269,12 +269,12 @@ export function Quote(props: QuoteProps) {
                                 ...(error?.type ===
                                   QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
                                   minRequiredSlippage:
-                                    error.recommendedSlippages?.get(index),
+                                    error.recommendedSlippages?.[index],
                                 }),
                                 ...(warning?.type ===
                                   QuoteWarningType.INSUFFICIENT_SLIPPAGE && {
                                   minRequiredSlippage:
-                                    warning.recommendedSlippages?.get(index),
+                                    warning.recommendedSlippages?.[index],
                                 }),
                               },
                             })}

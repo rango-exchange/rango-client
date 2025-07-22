@@ -78,7 +78,7 @@ export function useWalletList(params?: Params): API {
       wallets?.filter((wallet) => wallet.state === WalletState.CONNECTING) ||
       [];
     for (const wallet of connectingWallets) {
-      void handleDisconnect(wallet.type);
+      void handleDisconnect(wallet);
     }
   }, [hashWalletsState(wallets)]);
 

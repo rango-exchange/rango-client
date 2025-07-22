@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-solflare",
-  "version": "0.13.0",
+  "version": "0.13.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-solana": "^0.41.0",
-    "@rango-dev/wallets-shared": "^0.46.0",
+    "@rango-dev/signer-solana": "^0.41.1-next.0",
+    "@rango-dev/wallets-shared": "^0.46.1-next.3",
     "@solana/web3.js": "^1.91.4",
     "@solflare-wallet/sdk": "^1.4.2",
     "bs58": "^5.0.0",

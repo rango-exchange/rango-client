@@ -1,5 +1,5 @@
 import type { EIP1193EventMap } from './eip1193.js';
-import type { EvmActions, ProviderAPI } from './types.js';
+import type { ConnectOptions, EvmActions, ProviderAPI } from './types.js';
 import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
 import type {
   CanEagerConnect,
@@ -18,7 +18,8 @@ import { getAccounts, switchOrAddNetwork } from './utils.js';
 export const recommended = [...commonRecommended];
 const CHAIN_ID_RADIX = 16;
 export function connect(
-  instance: () => ProviderAPI
+  instance: () => ProviderAPI,
+  options?: ConnectOptions
 ): FunctionWithContext<EvmActions['connect'], Context> {
   return async (_context, chain) => {
     const evmInstance = instance();
@@ -30,7 +31,17 @@ export function connect(
     }
 
     if (chain) {
-      await switchOrAddNetwork(evmInstance, chain);
+      /*
+       * The `switchOrAddNetwork` function can be optionally provided through `options`
+       * to handle network switching or addition in a way that is compatible with the specific wallet provider.
+       * This approach is necessary because not all providers follow the same conventions—
+       * for example, Rabby uses a different error code for "chain not found".
+       */
+      if (options?.switchOrAddNetwork) {
+        await options.switchOrAddNetwork(evmInstance, chain);
+      } else {
+        await switchOrAddNetwork(evmInstance, chain);
+      }
     }
 
     const result = await getAccounts(evmInstance);

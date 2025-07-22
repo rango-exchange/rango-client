@@ -1,6 +1,7 @@
 /* eslint-disable destructuring/in-params */
 
 /* eslint-disable @typescript-eslint/no-floating-promises */
+import type { NotifierParams } from './services/eventEmitter';
 import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
   ArrayElement,
@@ -1633,4 +1634,18 @@ export function getLastSuccessfulStepOutputUsd(swap: PendingSwap): string {
     lastSuccessfulStep?.outputAmount ?? '',
     lastSuccessfulStep?.toUsdPrice ?? ''
   );
+}
+
+export function createStepFailedEvent(
+  swap: PendingSwap,
+  message: string,
+  reasonCode?: APIErrorCode
+): NotifierParams['event'] & { type: StepEventType.FAILED } {
+  return {
+    type: StepEventType.FAILED,
+    reason: message,
+    reasonCode: reasonCode ?? DEFAULT_ERROR_CODE,
+    inputAmount: getLastFinishedStepInput(swap),
+    inputAmountUsd: getLastFinishedStepInputUsd(swap),
+  };
 }

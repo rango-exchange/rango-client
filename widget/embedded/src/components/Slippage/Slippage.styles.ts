@@ -32,26 +32,3 @@ export const SlippageChip = styled(Chip, {
   width: '61px',
   flexShrink: 0,
 });
-
-export const SlippageTextFieldContainer = styled('div', {
-  outlineWidth: 1,
-  outlineStyle: 'solid',
-  borderRadius: '$xs',
-  flex: 1,
-  variants: {
-    status: {
-      safe: {
-        outlineColor: '$secondary500',
-      },
-      error: {
-        outlineColor: '$error500',
-      },
-      warning: {
-        outlineColor: '$warning500',
-      },
-      empty: {
-        outlineWidth: 0,
-      },
-    },
-  },
-});

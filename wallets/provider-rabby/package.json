@@ -1,28 +1,28 @@
 {
   "name": "@rango-dev/provider-rabby",
-  "version": "0.13.0",
+  "version": "0.13.1-next.3",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-rabby",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-rabby --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.37.0",
-    "@rango-dev/wallets-shared": "^0.46.0",
+    "@rango-dev/signer-evm": "^0.37.1-next.0",
+    "@rango-dev/wallets-shared": "^0.46.1-next.3",
     "rango-types": "^0.1.88"
   },
   "publishConfig": {

@@ -1,0 +1,1 @@
+export { NamespaceItem } from './NamespaceItem';

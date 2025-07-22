@@ -1,4 +1,4 @@
-import type { NamespaceUnsupportedItemPropTypes } from './Namespaces.types';
+import type { NamespaceUnsupportedItemPropTypes } from './NamespaceItem.types';
 
 import { i18n } from '@lingui/core';
 import { Typography } from '@rango-dev/ui';
@@ -6,13 +6,13 @@ import React from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 
-import { getBlockchainLogo } from './Namespaces.helpers';
+import { getBlockchainLogo } from './NamespaceItem.helpers';
 import {
   NamespaceItemContainer,
   NamespaceItemContent,
   NamespaceLogo,
   UnsupportedNamespaceItemInnerContent,
-} from './Namespaces.styles';
+} from './NamespaceItem.styles';
 
 export function NamespaceUnsupportedItem(
   props: NamespaceUnsupportedItemPropTypes
