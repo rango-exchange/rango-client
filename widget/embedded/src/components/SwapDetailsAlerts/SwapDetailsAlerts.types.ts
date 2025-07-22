@@ -1,6 +1,5 @@
 import type { getSwapMessages } from '../../utils/swap';
 import type { ModalState } from '../SwapDetailsModal';
-import type { ConnectResult } from '@rango-dev/wallets-react';
 import type { SwapperMeta } from 'rango-sdk';
 import type {
   BlockchainMeta,
@@ -15,7 +14,8 @@ export interface SwapAlertsProps extends WaningAlertsProps {
 }
 
 export interface WaningAlertsProps extends FailedAlertsProps {
-  switchNetwork: (() => Promise<ConnectResult[]>) | undefined;
+  switchNetworkIsAvailable: boolean;
+  handleSwitchNetworkClick: () => void;
   showNetworkModal: PendingSwapNetworkStatus | null | undefined;
   setNetworkModal: (network: ModalState) => void;
 }
