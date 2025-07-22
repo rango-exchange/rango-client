@@ -1,3 +1,21 @@
+## Widget [0.40.0] (2025-07-22)
+_includes `@rango-dev/widget-embedded@0.46.0`_
+
+### Features
+
+- redesign swap details modal ([ef59df5](https://github.com/rango-exchange/rango-client/commit/ef59df5ade0f5f05f8415f6ccfbe4ded368bfd99))
+- add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+- migrate rabby to use hub ([e25ba8c](https://github.com/rango-exchange/rango-client/commit/e25ba8c52e2a603ba0689e91773fd6edebf3003f))
+- add disconnect wallet button to detached modal ([80303b1](https://github.com/rango-exchange/rango-client/commit/80303b1ecbdc0351198d30431d3bc081b6ad2d13))
+- add status to textfield ([d9dcb23](https://github.com/rango-exchange/rango-client/commit/d9dcb237b46a12ffab5c965dd9d51de281c777e6))
+
+
+### Bug Fixes
+
+- abort all namespace connections if user rejects one connect request ([5824a96](https://github.com/rango-exchange/rango-client/commit/5824a96c8c9d8075c730a19de3b78caccbb04778))
+- handle trust wallet in app browser user rejection error ([1b1d07f](https://github.com/rango-exchange/rango-client/commit/1b1d07f9155bbd7dbe3f7a9157b353e4a2a3cc40))
+
+
 ## Widget [0.38.0] (2025-06-10)
 _includes `@rango-dev/widget-embedded@0.44.1`_
 
