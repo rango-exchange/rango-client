@@ -51,6 +51,7 @@ export async function switchOrAddNetwork(
        * This error code indicates that the chain has not been added to wallet.
        */
       await suggestNetwork(instance, chain);
+      return;
     }
     throw switchError;
   }
