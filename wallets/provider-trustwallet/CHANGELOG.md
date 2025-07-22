@@ -1,3 +1,17 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.46.0...provider-trustwallet@0.47.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* handle trust wallet in app browser user rejection error ([1b1d07f](https://github.com/rango-exchange/rango-client/commit/1b1d07f9155bbd7dbe3f7a9157b353e4a2a3cc40))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.45.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.44.1...provider-trustwallet@0.45.0) (2025-06-09)
 
 

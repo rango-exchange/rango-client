@@ -1,3 +1,17 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.46.0...wallets-shared@0.47.0) (2025-07-22)
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.45.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.44.1...wallets-shared@0.45.0) (2025-06-09)
 
 

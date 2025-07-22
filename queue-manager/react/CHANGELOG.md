@@ -1,3 +1,12 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.30.0...queue-manager-react@0.31.0) (2025-07-22)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.28.0...queue-manager-react@0.29.0) (2025-03-11)
 
 

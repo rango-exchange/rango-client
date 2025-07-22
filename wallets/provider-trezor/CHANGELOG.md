@@ -1,3 +1,17 @@
+# [0.14.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.13.0...provider-trezor@0.14.0) (2025-07-22)
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.12.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.11.1...provider-trezor@0.12.0) (2025-06-09)
 
 

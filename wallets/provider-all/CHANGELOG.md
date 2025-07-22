@@ -1,3 +1,17 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.48.0...provider-all@0.49.0) (2025-07-22)
+
+
+### Features
+
+* migrate rabby to use hub ([e25ba8c](https://github.com/rango-exchange/rango-client/commit/e25ba8c52e2a603ba0689e91773fd6edebf3003f))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.47.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.46.0...provider-all@0.47.0) (2025-06-09)
 
 

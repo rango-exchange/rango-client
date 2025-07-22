@@ -1,3 +1,12 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/provider-station@0.45.0...provider-station@0.46.0) (2025-07-22)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/provider-station@0.43.1...provider-station@0.44.0) (2025-06-09)
 
 

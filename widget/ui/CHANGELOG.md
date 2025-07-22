@@ -1,3 +1,17 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/ui@0.48.0...ui@0.49.0) (2025-07-22)
+
+
+### Features
+
+* add status to textfield ([d9dcb23](https://github.com/rango-exchange/rango-client/commit/d9dcb237b46a12ffab5c965dd9d51de281c777e6))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.47.0](https://github.com/rango-exchange/rango-client/compare/ui@0.46.1...ui@0.47.0) (2025-06-09)
 
 
