@@ -118,6 +118,7 @@ export const getCurrentNamespaceOf = (
   const solanaNetwork = step.solanaTransaction?.blockChain;
   const tonNetwork = step.tonTransaction?.blockChain;
   const suiNetwork = step.suiTransaction?.blockChain;
+  const xrplNetwork = step.xrplTransaction?.blockChain;
 
   if (evmNetwork) {
     return {
@@ -153,6 +154,11 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'Sui',
       network: suiNetwork,
+    };
+  } else if (xrplNetwork) {
+    return {
+      namespace: 'XRPL',
+      network: xrplNetwork,
     };
   } else if (!!step.transferTransaction) {
     const transferAddress = step.transferTransaction.fromWalletAddress;
@@ -232,6 +238,7 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
+    swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? { address: step.transferTransaction?.fromWalletAddress }
       : null) ||
@@ -268,6 +275,13 @@ export function getRelatedWallet(
   const wallet = walletKV?.v || null;
 
   const walletType = wallet?.walletType;
+
+  console.log({
+    walletType,
+    wallet,
+    blockchain,
+    walletKV,
+  });
   if (wallet === null) {
     throw PrettyError.AssertionFailed(
       `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
@@ -284,8 +298,10 @@ export function getRelatedWalletOrNull(
     return null;
   }
   try {
+    console.log('checking...');
     return getRelatedWallet(swap, currentStep);
-  } catch {
+  } catch (e) {
+    console.log({ e });
     return null;
   }
 }

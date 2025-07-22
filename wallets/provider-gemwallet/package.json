@@ -1,0 +1,33 @@
+{
+  "name": "@rango-dev/provider-gemwallet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-gemwallet --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/signer-solana": "^0.41.1-next.0",
+    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@gemwallet/api": "^3.8.0",
+    "xrpl": "^4.2.0",
+    "rango-types": "^0.1.88"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
