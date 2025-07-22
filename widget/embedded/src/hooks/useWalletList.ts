@@ -1,14 +1,14 @@
 import type { ExtendedModalWalletInfo } from '../utils/wallets';
-import type { WalletInfo } from '@rango-dev/ui';
+import type { WalletInfo } from '@arlert-dev/ui';
 import type { BlockchainMeta } from 'rango-sdk';
 
-import { WalletState } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
+import { WalletState } from '@arlert-dev/ui';
+import { useWallets } from '@arlert-dev/wallets-react';
 import {
   detectMobileScreens,
   KEPLR_COMPATIBLE_WALLETS,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';

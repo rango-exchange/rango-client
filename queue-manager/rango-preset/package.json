@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/queue-manager-rango-preset",
+  "name": "@arlert-dev/queue-manager-rango-preset",
   "version": "0.47.1-next.5",
   "license": "MIT",
   "type": "module",
@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
-    "@rango-dev/queue-manager-core": "*",
-    "@rango-dev/queue-manager-react": "*",
-    "@rango-dev/wallets-core": "*",
-    "@rango-dev/wallets-shared": "*",
+    "@arlert-dev/queue-manager-core": "*",
+    "@arlert-dev/queue-manager-react": "*",
+    "@arlert-dev/wallets-core": "*",
+    "@arlert-dev/wallets-shared": "*",
     "bignumber.js": "*",
     "rango-sdk": "*",
     "rango-types": "*",
@@ -34,7 +34,7 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
-    "@rango-dev/logging-core": "^0.9.1-next.0",
+    "@arlert-dev/logging-core": "^0.9.1-next.0",
     "rango-types": "^0.1.88",
     "uuid": "^9.0.0"
   },

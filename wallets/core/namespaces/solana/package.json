@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-core/namespaces/solana",
+  "name": "@arlert-dev/wallets-core/namespaces/solana",
   "type": "module",
   "main": "../../dist/namespaces/solana/mod.js",
   "module": "../../dist/namespaces/solana/mod.js",

@@ -1,6 +1,6 @@
-import type { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import type { Network, ProviderConnectResult } from '@arlert-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@arlert-dev/wallets-shared';
 
 export function clover() {
   const { clover, clover_solana } = window;

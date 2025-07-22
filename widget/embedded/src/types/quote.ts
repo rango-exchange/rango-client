@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-enum-initializers */
 
-import type { PriceImpactWarningLevel } from '@rango-dev/ui';
+import type { PriceImpactWarningLevel } from '@arlert-dev/ui';
 import type BigNumber from 'bignumber.js';
 import type {
   Asset,

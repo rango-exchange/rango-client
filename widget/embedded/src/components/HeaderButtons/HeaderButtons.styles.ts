@@ -1,4 +1,4 @@
-import { css, darkTheme, IconButton, styled } from '@rango-dev/ui';
+import { css, darkTheme, IconButton, styled } from '@arlert-dev/ui';
 
 export const HeaderButton = styled(IconButton, {
   width: '$24',

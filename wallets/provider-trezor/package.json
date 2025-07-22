@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-trezor",
+  "name": "@arlert-dev/provider-trezor",
   "version": "0.13.1-next.3",
   "license": "MIT",
   "type": "module",
@@ -24,8 +24,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.37.1-next.0",
-    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/signer-evm": "^0.37.1-next.0",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
     "@trezor/connect-web": "^9.5.0",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.88"

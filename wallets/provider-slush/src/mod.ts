@@ -1,4 +1,4 @@
-import { defineVersions } from '@rango-dev/wallets-core/utils';
+import { defineVersions } from '@arlert-dev/wallets-core/utils';
 
 import { buildLegacyProvider } from './legacy/index.js';
 import { buildProvider } from './provider.js';

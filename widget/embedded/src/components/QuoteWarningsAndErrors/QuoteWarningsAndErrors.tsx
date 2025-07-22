@@ -2,7 +2,7 @@ import type { ActionType } from './QuoteWarningsAndErrors.helpers';
 import type { PropTypes } from './QuoteWarningsAndErrors.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button, Divider, InfoIcon } from '@rango-dev/ui';
+import { Alert, Button, Divider, InfoIcon } from '@arlert-dev/ui';
 import React from 'react';
 
 import { QuoteErrorType, QuoteWarningType } from '../../types';

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Header } from '@rango-dev/ui';
+import { Header } from '@arlert-dev/ui';
 
 const meta: Meta<typeof Header> = {
   component: Header,

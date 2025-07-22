@@ -1,1 +1,1 @@
-# @rango-dev/provider-exodus
+# @arlert-dev/provider-exodus

@@ -3,7 +3,7 @@ import type { TransactionResponse } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { DefaultEvmSigner, waitMs } from '@rango-dev/signer-evm';
+import { DefaultEvmSigner, waitMs } from '@arlert-dev/signer-evm';
 import { TransactionStatus } from '@safe-global/safe-apps-sdk';
 
 import { sdk } from '../helpers.js';

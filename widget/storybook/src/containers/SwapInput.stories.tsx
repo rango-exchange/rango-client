@@ -1,7 +1,7 @@
-import type { SwapInputPropTypes } from '@rango-dev/ui';
+import type { SwapInputPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { SwapInput } from '@rango-dev/ui';
+import { SwapInput } from '@arlert-dev/ui';
 import React from 'react';
 
 const meta: Meta<typeof SwapInput> = {

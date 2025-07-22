@@ -1,4 +1,4 @@
-import { type ProviderInfo } from '@rango-dev/wallets-core';
+import { type ProviderInfo } from '@arlert-dev/wallets-core';
 import {
   type BlockchainMeta,
   evmBlockchains,

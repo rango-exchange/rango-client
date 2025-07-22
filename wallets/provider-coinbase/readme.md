@@ -1,1 +1,1 @@
-# @rango-dev/provider-coinbase
+# @arlert-dev/provider-coinbase

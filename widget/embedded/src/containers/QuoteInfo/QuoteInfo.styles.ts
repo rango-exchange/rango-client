@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { styled } from '@arlert-dev/ui';
 
 export const QuoteContainer = styled('div', {
   width: '100%',

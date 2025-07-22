@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@arlert-dev/queue-manager-react';
 import {
   Button,
   darkTheme,
@@ -8,7 +8,7 @@ import {
   NotFound,
   styled,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import {
   type PendingSwap,
   type PendingSwapStep,

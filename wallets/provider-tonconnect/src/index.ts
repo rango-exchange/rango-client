@@ -6,11 +6,11 @@ import type {
   Disconnect,
   GetInstance,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { TonConnectUI } from '@tonconnect/ui';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@arlert-dev/wallets-shared';
 import { tonBlockchain } from 'rango-types';
 
 import {

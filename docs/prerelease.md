@@ -80,7 +80,7 @@ https://github.com/rango-exchange/widget-examples
 Update `widget-embedded` version to latest **_next_** version using this command:
 
 ```shell
-yarn add @rango-dev/widget-embedded@next
+yarn add @arlert-dev/widget-embedded@next
 ```
 
 Note: don’t commit your changes to the repo, We will doing it after release the production successfully which means we only commit `production` version to the repo. More details is on `Post Release` document.

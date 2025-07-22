@@ -1,6 +1,6 @@
 import type { WalletActions, WalletProviders } from './types.js';
-import type { LegacyWallet as Wallet } from '@rango-dev/wallets-core/legacy';
-import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWallet as Wallet } from '@arlert-dev/wallets-core/legacy';
+import type { WalletConfig, WalletType } from '@arlert-dev/wallets-shared';
 
 import { LastConnectedWalletsFromStorage } from '../hub/lastConnectedWallets.js';
 

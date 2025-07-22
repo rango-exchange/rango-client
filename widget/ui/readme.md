@@ -1,4 +1,4 @@
-# @rango-dev/ui
+# @arlert-dev/ui
 
 Rango UI components
 

@@ -1,6 +1,6 @@
-import type { Step } from '@rango-dev/ui';
+import type { Step } from '@arlert-dev/ui';
 
-import { Alert } from '@rango-dev/ui';
+import { Alert } from '@arlert-dev/ui';
 import React from 'react';
 
 export const steps: Step[] = [

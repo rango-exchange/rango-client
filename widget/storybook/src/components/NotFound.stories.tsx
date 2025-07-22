@@ -1,7 +1,7 @@
-import type { NotFoundPropTypes } from '@rango-dev/ui';
+import type { NotFoundPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { NotFound } from '@rango-dev/ui';
+import { NotFound } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

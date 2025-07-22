@@ -1,7 +1,7 @@
-import type { PersistedQueue } from '@rango-dev/queue-manager-core';
+import type { PersistedQueue } from '@arlert-dev/queue-manager-core';
 import type { PendingSwap } from 'rango-types';
 
-import { DB_NAME, Persistor, Status } from '@rango-dev/queue-manager-core';
+import { DB_NAME, Persistor, Status } from '@arlert-dev/queue-manager-core';
 import { v4 as uuid } from 'uuid';
 
 import { SwapActionTypes } from './types';

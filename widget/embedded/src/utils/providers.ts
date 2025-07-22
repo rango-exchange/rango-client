@@ -1,12 +1,12 @@
 import type { WidgetConfig } from '../types';
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
+import type { LegacyProviderInterface } from '@arlert-dev/wallets-core/legacy';
 
 import {
   defineVersions,
   pickVersion,
   Provider,
   type VersionedProviders,
-} from '@rango-dev/wallets-core';
+} from '@arlert-dev/wallets-core';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
@@ -42,7 +42,7 @@ export function matchAndGenerateProviders({
     configWallets.forEach((requestedWallet) => {
       /*
        * There are two types of provider we get, the first one is only passing the wallet name
-       * then we will match the wallet name with our providers (@rango-dev/provider-*).
+       * then we will match the wallet name with our providers (@arlert-dev/provider-*).
        * The second way is passing a custom provider which implemented ProviderInterface.
        */
       if (typeof requestedWallet === 'string') {

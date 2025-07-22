@@ -1,7 +1,7 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WidgetConfig } from '@arlert-dev/widget-embedded';
 
-import { ToastProvider } from '@rango-dev/ui';
-import { Widget, WidgetProvider } from '@rango-dev/widget-embedded';
+import { ToastProvider } from '@arlert-dev/ui';
+import { Widget, WidgetProvider } from '@arlert-dev/widget-embedded';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 

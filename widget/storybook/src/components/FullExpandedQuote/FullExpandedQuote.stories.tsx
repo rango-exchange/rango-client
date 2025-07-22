@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { FullExpandedQuote } from '@rango-dev/ui';
+import { FullExpandedQuote } from '@arlert-dev/ui';
 
 import { steps, tags } from './mock';
 

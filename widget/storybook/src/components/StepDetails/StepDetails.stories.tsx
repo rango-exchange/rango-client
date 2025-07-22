@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Alert, StepDetails } from '@rango-dev/ui';
+import { Alert, StepDetails } from '@arlert-dev/ui';
 import React from 'react';
 
 import { step1 } from './mock';

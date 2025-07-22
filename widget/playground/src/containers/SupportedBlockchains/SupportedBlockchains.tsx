@@ -1,6 +1,6 @@
 import type { Type } from '../../types';
 
-import { ChainsIcon } from '@rango-dev/ui';
+import { ChainsIcon } from '@arlert-dev/ui';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect';

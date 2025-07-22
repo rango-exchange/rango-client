@@ -1,7 +1,7 @@
 import type { WalletInfoWithExtra } from '../types';
 import type { Token } from 'rango-sdk';
 
-import { BlockchainCategories, WalletState } from '@rango-dev/ui';
+import { BlockchainCategories, WalletState } from '@arlert-dev/ui';
 import { TransactionType } from 'rango-sdk';
 
 import { WIDGET_UI_ID } from '../constants';

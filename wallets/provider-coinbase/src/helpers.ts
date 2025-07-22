@@ -1,6 +1,6 @@
-import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
+import type { ProviderConnectResult } from '@arlert-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@arlert-dev/wallets-shared';
 
 export function coinbase() {
   const { coinbaseWalletExtension, coinbaseSolana } = window;

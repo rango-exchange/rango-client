@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@arlert-dev/ui';
 
 export const Container = styled('div', {
   transition: 'width 0.2s, opacity 0.2s, margin-left 0.2s',

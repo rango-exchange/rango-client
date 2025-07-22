@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { TokenAmount } from '@rango-dev/ui';
+import { TokenAmount } from '@arlert-dev/ui';
 
 const meta: Meta<typeof TokenAmount> = {
   component: TokenAmount,

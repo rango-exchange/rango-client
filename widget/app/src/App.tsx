@@ -1,6 +1,6 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WidgetConfig } from '@arlert-dev/widget-embedded';
 
-import { Widget } from '@rango-dev/widget-embedded';
+import { Widget } from '@arlert-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 

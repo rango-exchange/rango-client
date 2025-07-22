@@ -1,7 +1,7 @@
 import type { SwapDetailsPlaceholderPropTypes } from './SwapDetails.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, NotFound, Skeleton, Typography } from '@rango-dev/ui';
+import { Divider, NotFound, Skeleton, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';

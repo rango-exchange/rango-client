@@ -1,4 +1,4 @@
-import type { Tokens, WidgetConfig } from '@rango-dev/widget-embedded';
+import type { Tokens, WidgetConfig } from '@arlert-dev/widget-embedded';
 import type { Token } from 'rango-sdk';
 
 import { initialConfig } from '../store/config';

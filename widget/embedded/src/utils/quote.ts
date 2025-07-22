@@ -7,7 +7,7 @@ import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
   Step,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import type {
   Asset,
   BlockchainMeta,
@@ -18,7 +18,7 @@ import type {
 } from 'rango-sdk';
 import type { PendingSwap } from 'rango-types';
 
-import { getLastSuccessfulStep } from '@rango-dev/queue-manager-rango-preset';
+import { getLastSuccessfulStep } from '@arlert-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 
 import { HIGH_PRIORITY_TAGS } from '../constants/quote';

@@ -1,7 +1,7 @@
 import type Solflare from '@solflare-wallet/sdk';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
-import { executeSolanaTransaction } from '@rango-dev/signer-solana';
+import { executeSolanaTransaction } from '@arlert-dev/signer-solana';
 import base58 from 'bs58';
 
 export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {

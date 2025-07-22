@@ -1,6 +1,6 @@
 import type { Asset } from 'rango-sdk';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@arlert-dev/wallets-shared';
 
 export function shallowEqual<T>(
   object1: { [x: string]: T | undefined },

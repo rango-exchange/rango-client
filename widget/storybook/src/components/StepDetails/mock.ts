@@ -1,4 +1,4 @@
-import type { Step } from '@rango-dev/ui';
+import type { Step } from '@arlert-dev/ui';
 
 export const step1: Step = {
   swapper: {

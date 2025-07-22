@@ -3,7 +3,7 @@ import type {
   Subscribe,
   Suggest,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -11,7 +11,7 @@ import {
   Networks,
   suggestCosmosChain,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
 
 import { getKeplrInstance } from './helpers.js';

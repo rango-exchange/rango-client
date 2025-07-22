@@ -10,8 +10,8 @@ import {
   MessageBox,
   Spinner,
   WarningIcon,
-} from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
+} from '@arlert-dev/ui';
+import { useWallets } from '@arlert-dev/wallets-react';
 import React, { useState } from 'react';
 
 import { useWalletList } from '../../hooks/useWalletList';

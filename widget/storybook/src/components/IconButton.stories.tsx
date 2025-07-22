@@ -1,7 +1,7 @@
-import type { IconButtonPropTypes } from '@rango-dev/ui';
+import type { IconButtonPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { IconButton, WalletIcon } from '@rango-dev/ui';
+import { IconButton, WalletIcon } from '@arlert-dev/ui';
 import React from 'react';
 
 const meta: Meta<typeof IconButton> = {

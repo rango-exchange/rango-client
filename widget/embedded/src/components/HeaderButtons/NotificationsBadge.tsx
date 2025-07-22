@@ -1,5 +1,5 @@
-import { EventSeverity } from '@rango-dev/queue-manager-rango-preset';
-import { Typography } from '@rango-dev/ui';
+import { EventSeverity } from '@arlert-dev/queue-manager-rango-preset';
+import { Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import { useNotificationStore } from '../../store/notification';

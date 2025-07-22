@@ -1,7 +1,7 @@
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { cleanEvmError } from '@rango-dev/signer-evm';
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
+import { cleanEvmError } from '@arlert-dev/signer-evm';
+import { DEFAULT_ETHEREUM_RPC_URL } from '@arlert-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
 

@@ -1,7 +1,7 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
-import { Divider, Spinner } from '@rango-dev/ui';
+import { Divider, Spinner } from '@arlert-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

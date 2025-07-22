@@ -1,4 +1,4 @@
-import { ListItem, styled } from '@rango-dev/ui';
+import { ListItem, styled } from '@arlert-dev/ui';
 
 export const CustomListItem = styled(ListItem, {
   height: 61,

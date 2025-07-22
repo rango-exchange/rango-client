@@ -4,7 +4,7 @@ import type {
 } from '../../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, WarningIcon } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, WarningIcon } from '@arlert-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

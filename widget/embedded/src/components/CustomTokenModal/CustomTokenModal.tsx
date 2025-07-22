@@ -1,7 +1,7 @@
 import type { PropTypes } from './CustomTokenModal.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, ExternalLinkIcon, Image, Typography } from '@rango-dev/ui';
+import { Divider, ExternalLinkIcon, Image, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';

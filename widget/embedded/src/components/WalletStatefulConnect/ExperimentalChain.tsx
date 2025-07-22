@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox } from '@rango-dev/ui';
+import { Button, Divider, MessageBox } from '@arlert-dev/ui';
 import React from 'react';
 
 interface PropTypes {

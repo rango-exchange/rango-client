@@ -1,4 +1,4 @@
-import { Button, styled, Typography } from '@rango-dev/ui';
+import { Button, styled, Typography } from '@arlert-dev/ui';
 
 export const InputsContainer = styled('div', {
   paddingTop: '$30',

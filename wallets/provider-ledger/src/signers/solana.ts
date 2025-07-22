@@ -1,9 +1,9 @@
-import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
+import type { SolanaWeb3Signer } from '@arlert-dev/signer-solana';
 import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import Solana from '@ledgerhq/hw-app-solana';
-import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
+import { generalSolanaTransactionExecutor } from '@arlert-dev/signer-solana';
 import { PublicKey } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
 

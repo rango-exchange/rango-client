@@ -1,7 +1,7 @@
-import type { AlertPropTypes } from '@rango-dev/ui';
+import type { AlertPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Alert, Divider } from '@rango-dev/ui';
+import { Alert, Divider } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

@@ -1,6 +1,6 @@
 import type { Notification } from '../../types/notification';
 
-import { Notifications } from '@rango-dev/ui';
+import { Notifications } from '@arlert-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

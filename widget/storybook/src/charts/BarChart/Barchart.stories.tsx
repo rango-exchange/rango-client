@@ -1,7 +1,7 @@
-import type { BarChartPropTypes } from '@rango-dev/charts';
+import type { BarChartPropTypes } from '@arlert-dev/charts';
 import type { Meta } from '@storybook/react';
 
-import { BarChart } from '@rango-dev/charts';
+import { BarChart } from '@arlert-dev/charts';
 import React from 'react';
 
 import {

@@ -3,8 +3,8 @@ import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 
-import { allProviders as getAllProviders } from '@rango-dev/provider-all';
-import { type VersionedProviders } from '@rango-dev/wallets-core';
+import { allProviders as getAllProviders } from '@arlert-dev/provider-all';
+import { type VersionedProviders } from '@arlert-dev/wallets-core';
 
 import { cacheService } from '../../services/cacheService';
 import {

@@ -11,7 +11,7 @@ import {
   Divider,
   MessageBox,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

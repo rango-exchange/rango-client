@@ -11,7 +11,7 @@ import {
   MessageBox,
   NotFound,
   styled,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

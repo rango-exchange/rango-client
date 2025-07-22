@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/logging-subscriber",
+  "name": "@arlert-dev/logging-subscriber",
   "version": "0.9.1-next.0",
   "license": "MIT",
   "type": "module",
@@ -14,7 +14,7 @@
     "src"
   ],
   "dependencies": {
-    "@rango-dev/logging-types": "^0.9.1-next.0"
+    "@arlert-dev/logging-types": "^0.9.1-next.0"
   },
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path logging/subscriber",

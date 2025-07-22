@@ -28,7 +28,7 @@ export {
  * Our `embedded` hasn't been migrated to NodeNext yet so it doesn't support `exports` field.
  * There are two approach to make `NodeNext` which is used for our libs with old moduleResolution:
  *
- * 1. Use direct paths, e.g. '@rango-dev/wallets-core/dist/legacy/mod'
+ * 1. Use direct paths, e.g. '@arlert-dev/wallets-core/dist/legacy/mod'
  * 2. Add types and function that are using in `embedded` to package entry point (this file).
  *
  * The first one is better since we don't need to deprecate or having a breaking change in future,

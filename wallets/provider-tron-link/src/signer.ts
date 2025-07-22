@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { DefaultTronSigner } from '@rango-dev/signer-tron';
+import { DefaultTronSigner } from '@arlert-dev/signer-tron';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(

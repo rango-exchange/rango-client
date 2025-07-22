@@ -1,3 +1,3 @@
-# @rango-dev/storybook
+# @arlert-dev/storybook
 
 Storybook for Rango design system

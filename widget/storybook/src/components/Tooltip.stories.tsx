@@ -1,7 +1,7 @@
-import type { TooltipPropTypes } from '@rango-dev/ui';
+import type { TooltipPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { AddIcon, Tooltip } from '@rango-dev/ui';
+import { AddIcon, Tooltip } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

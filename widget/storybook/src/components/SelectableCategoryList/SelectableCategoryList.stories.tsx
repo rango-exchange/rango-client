@@ -1,7 +1,7 @@
-import type { SelectableCategoryListPropTypes } from '@rango-dev/ui';
+import type { SelectableCategoryListPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { SelectableCategoryList } from '@rango-dev/ui';
+import { SelectableCategoryList } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { blockchains } from './mock';

@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WidgetConfig } from '@arlert-dev/widget-embedded';
 
 import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -108,7 +108,7 @@ export function getIframeCode(config: string) {
 }
 
 export function getEmbeddedCode(config: string) {
-  return `import { Widget, WidgetConfig } from "@rango-dev/widget-embedded";
+  return `import { Widget, WidgetConfig } from "@arlert-dev/widget-embedded";
 
 export default function App() {
 

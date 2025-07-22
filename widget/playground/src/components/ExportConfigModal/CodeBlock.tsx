@@ -6,7 +6,7 @@ import {
   DoneIcon,
   Tooltip,
   useCopyToClipboard,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {

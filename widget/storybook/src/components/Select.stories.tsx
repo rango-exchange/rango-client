@@ -1,7 +1,7 @@
-import type { SelectPropTypes } from '@rango-dev/ui';
+import type { SelectPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Select } from '@rango-dev/ui';
+import { Select } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 const options = [

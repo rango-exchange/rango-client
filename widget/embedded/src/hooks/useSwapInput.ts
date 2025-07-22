@@ -1,6 +1,6 @@
 import type { Token } from 'rango-sdk';
 
-import { warn } from '@rango-dev/logging-core';
+import { warn } from '@arlert-dev/logging-core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';

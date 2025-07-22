@@ -1,6 +1,6 @@
 import type { PropTypes } from './BlockchainSelectorButton.types';
 
-import { ChevronRightIcon, Divider, Image, Typography } from '@rango-dev/ui';
+import { ChevronRightIcon, Divider, Image, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import {

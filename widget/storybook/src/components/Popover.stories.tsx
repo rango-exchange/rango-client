@@ -1,4 +1,4 @@
-import type { PopoverPropTypes } from '@rango-dev/ui';
+import type { PopoverPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
 import {
@@ -7,7 +7,7 @@ import {
   List,
   NotificationsIcon,
   Popover,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 
 function PopoverContent() {

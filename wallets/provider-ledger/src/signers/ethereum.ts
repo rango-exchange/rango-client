@@ -3,7 +3,7 @@ import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
 import Eth, { ledgerService } from '@ledgerhq/hw-app-eth';
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
+import { DEFAULT_ETHEREUM_RPC_URL } from '@arlert-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
 

@@ -1,1 +1,1 @@
-# @rango-dev/provider-metamask
+# @arlert-dev/provider-metamask

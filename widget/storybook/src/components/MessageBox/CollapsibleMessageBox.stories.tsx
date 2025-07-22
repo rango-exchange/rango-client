@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { CollapsibleMessageBox, Typography } from '@rango-dev/ui';
+import { CollapsibleMessageBox, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 const meta: Meta<typeof CollapsibleMessageBox> = {

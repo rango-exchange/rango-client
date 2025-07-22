@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-core/namespaces/evm",
+  "name": "@arlert-dev/wallets-core/namespaces/evm",
   "type": "module",
   "main": "../../dist/namespaces/evm/mod.js",
   "module": "../../dist/namespaces/evm/mod.js",

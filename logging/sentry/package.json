@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/logging-sentry",
+  "name": "@arlert-dev/logging-sentry",
   "version": "0.11.1-next.0",
   "license": "MIT",
   "type": "module",
@@ -14,7 +14,7 @@
     "src"
   ],
   "dependencies": {
-    "@rango-dev/logging-types": "^0.9.1-next.0"
+    "@arlert-dev/logging-types": "^0.9.1-next.0"
   },
   "devDependencies": {
     "@sentry/browser": "^7.119.1"

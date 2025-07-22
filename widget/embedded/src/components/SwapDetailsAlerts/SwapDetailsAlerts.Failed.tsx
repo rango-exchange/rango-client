@@ -1,6 +1,6 @@
 import type { FailedAlertsProps } from './SwapDetailsAlerts.types';
 
-import { Alert, ChevronDownIcon, IconButton } from '@rango-dev/ui';
+import { Alert, ChevronDownIcon, IconButton } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { MessageText } from '../SwapDetails/SwapDetails.styles';

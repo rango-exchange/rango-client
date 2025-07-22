@@ -1,4 +1,4 @@
-import { css, IconButton, SelectableWalletButton, styled } from '@rango-dev/ui';
+import { css, IconButton, SelectableWalletButton, styled } from '@arlert-dev/ui';
 
 export const Title = styled('div', {
   display: 'flex',

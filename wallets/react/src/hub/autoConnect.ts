@@ -1,14 +1,14 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub, Provider } from '@rango-dev/wallets-core';
+import type { Hub, Provider } from '@arlert-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
-} from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { WalletType } from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-core/legacy';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
+import type { WalletType } from '@arlert-dev/wallets-shared';
 
-import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
+import { legacyIsEvmNamespace } from '@arlert-dev/wallets-core/legacy';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';

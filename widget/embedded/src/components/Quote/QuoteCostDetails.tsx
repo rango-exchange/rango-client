@@ -11,7 +11,7 @@ import {
   NumericTooltip,
   QuoteCost,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { getFeeLabel } from '../../constants/quote';

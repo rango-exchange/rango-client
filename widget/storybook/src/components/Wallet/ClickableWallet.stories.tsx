@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Wallet, WalletState } from '@rango-dev/ui';
+import { Wallet, WalletState } from '@arlert-dev/ui';
 
 const meta: Meta<typeof Wallet> = {
   component: Wallet,

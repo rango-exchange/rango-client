@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-slush",
+  "name": "@arlert-dev/provider-slush",
   "version": "0.2.1-next.3",
   "license": "MIT",
   "type": "module",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
-    "@rango-dev/signer-sui": "^0.5.1-next.0",
-    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/signer-sui": "^0.5.1-next.0",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
     "rango-types": "^0.1.88"
   },
   "publishConfig": {

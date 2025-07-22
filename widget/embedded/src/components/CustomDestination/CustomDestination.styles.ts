@@ -1,4 +1,4 @@
-import { darkTheme, styled, TextField } from '@rango-dev/ui';
+import { darkTheme, styled, TextField } from '@arlert-dev/ui';
 
 export const Container = styled('div', {
   padding: '$10 $0',

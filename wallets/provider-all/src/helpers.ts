@@ -1,6 +1,6 @@
-import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
+import type { VersionedProviders } from '@arlert-dev/wallets-core/utils';
+import type { ProviderInterface } from '@arlert-dev/wallets-react';
+import type { WalletType, WalletTypes } from '@arlert-dev/wallets-shared';
 
 export const isWalletExcluded = (
   providers: (WalletType | ProviderInterface)[],

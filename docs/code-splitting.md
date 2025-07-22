@@ -27,5 +27,5 @@ Currently, we've achieved a good initial bundle size based on analyses conducted
 
 ## Notes
 
-The `@rango-dev/signer-solana` package is not dynamically imported because it has a major dependency ("@solana/web3.js") that is also a dependency in `@solflare-wallet/sdk`, which is used in `provider-solflare`. This dependency cannot be dynamically imported, so importing `@rango-dev/signer-solana` dynamically would only result in a very small reduction in the bundle size.
+The `@arlert-dev/signer-solana` package is not dynamically imported because it has a major dependency ("@solana/web3.js") that is also a dependency in `@solflare-wallet/sdk`, which is used in `provider-solflare`. This dependency cannot be dynamically imported, so importing `@arlert-dev/signer-solana` dynamically would only result in a very small reduction in the bundle size.
 

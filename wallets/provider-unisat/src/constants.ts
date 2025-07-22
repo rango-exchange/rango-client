@@ -1,7 +1,7 @@
 import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
 
-import { type ProviderInfo } from '@rango-dev/wallets-core';
-import { Networks } from '@rango-dev/wallets-shared';
+import { type ProviderInfo } from '@arlert-dev/wallets-core';
+import { Networks } from '@arlert-dev/wallets-shared';
 
 export const WALLET_ID = 'unisat';
 

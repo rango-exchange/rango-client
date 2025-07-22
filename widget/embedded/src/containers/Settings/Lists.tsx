@@ -1,5 +1,5 @@
 import type { ThemeMode } from '../../store/slices/settings';
-import type { ListPropTypes, SvgIconProps } from '@rango-dev/ui';
+import type { ListPropTypes, SvgIconProps } from '@arlert-dev/ui';
 
 import { i18n } from '@lingui/core';
 import {
@@ -23,7 +23,7 @@ import {
   TargetIcon,
   Tooltip,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

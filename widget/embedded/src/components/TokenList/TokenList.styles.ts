@@ -5,7 +5,7 @@ import {
   ListItemButton,
   styled,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 
 export const tokenNameStyles = css({
   position: 'absolute',

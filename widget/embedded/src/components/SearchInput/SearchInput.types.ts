@@ -1,4 +1,4 @@
-import type { TextField } from '@rango-dev/ui';
+import type { TextField } from '@arlert-dev/ui';
 import type * as Stitches from '@stitches/react';
 import type { ComponentProps, ReactElement } from 'react';
 

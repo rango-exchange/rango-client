@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { Alert, Button, styled } from '@rango-dev/ui';
+import { Alert, Button, styled } from '@arlert-dev/ui';
 import React from 'react';
 import { useInRouterContext, useSearchParams } from 'react-router-dom';
 

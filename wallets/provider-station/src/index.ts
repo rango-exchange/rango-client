@@ -3,10 +3,10 @@ import type {
   Connect,
   Subscribe,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@arlert-dev/wallets-shared';
 import { ConnectType } from '@terra-money/wallet-controller';
 
 import { station as station_instance } from './helpers.js';

@@ -8,12 +8,12 @@ import type {
   SwitchNetwork,
   WalletConfig,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { ISignClient } from '@walletconnect/types';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { debug, error as logError } from '@rango-dev/logging-core';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { debug, error as logError } from '@arlert-dev/logging-core';
+import { Networks, WalletTypes } from '@arlert-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
 import { AccountId, ChainId } from 'caip';
 import { evmBlockchains } from 'rango-types';

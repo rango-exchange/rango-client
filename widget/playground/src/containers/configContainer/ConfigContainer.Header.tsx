@@ -1,4 +1,4 @@
-import { Divider, useToast } from '@rango-dev/ui';
+import { Divider, useToast } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { ExportConfigModal } from '../../components/ExportConfigModal';

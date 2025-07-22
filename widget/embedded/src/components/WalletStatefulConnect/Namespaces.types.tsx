@@ -1,6 +1,6 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
-import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { LegacyNamespaceMeta } from '@arlert-dev/wallets-core/legacy';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;

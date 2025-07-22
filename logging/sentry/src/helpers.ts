@@ -1,6 +1,6 @@
 import type { SeverityLevel } from '@sentry/browser';
 
-import { Level } from '@rango-dev/logging-types';
+import { Level } from '@arlert-dev/logging-types';
 
 const FALLBACK_LEVEL = 'log';
 

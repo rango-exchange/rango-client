@@ -1,4 +1,4 @@
-import { ColorsIcon, Divider, Tabs, Typography } from '@rango-dev/ui';
+import { ColorsIcon, Divider, Tabs, Typography } from '@arlert-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { TABS } from '../../constants';

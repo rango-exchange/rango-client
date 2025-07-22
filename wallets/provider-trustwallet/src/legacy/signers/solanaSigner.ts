@@ -1,4 +1,4 @@
-import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
+import { DefaultSolanaSigner } from '@arlert-dev/signer-solana';
 import base58 from 'bs58';
 
 export class CustomSolanaSigner extends DefaultSolanaSigner {

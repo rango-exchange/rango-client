@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { styled } from '@arlert-dev/ui';
 
 import {
   WIDGET_MAX_HEIGHT,

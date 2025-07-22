@@ -1,4 +1,4 @@
-import { IconButton, styled } from '@rango-dev/ui';
+import { IconButton, styled } from '@arlert-dev/ui';
 
 export const Link = styled('a', {
   color: '$neutral700',

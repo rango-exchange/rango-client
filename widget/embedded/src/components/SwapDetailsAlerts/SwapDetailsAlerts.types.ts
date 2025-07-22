@@ -1,6 +1,6 @@
 import type { getSwapMessages } from '../../utils/swap';
 import type { ModalState } from '../SwapDetailsModal';
-import type { ConnectResult } from '@rango-dev/wallets-react';
+import type { ConnectResult } from '@arlert-dev/wallets-react';
 import type { SwapperMeta } from 'rango-sdk';
 import type {
   BlockchainMeta,

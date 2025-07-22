@@ -1,5 +1,5 @@
 import type { PropTypes } from './ExperimentalChainStatus.types';
-import type { MessageType } from '@rango-dev/ui';
+import type { MessageType } from '@arlert-dev/ui';
 
 import { i18n } from '@lingui/core';
 

@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { Alert, Divider, NoRouteIcon, Typography } from '@rango-dev/ui';
+import { Alert, Divider, NoRouteIcon, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import { useQuoteStore } from '../../store/quote';

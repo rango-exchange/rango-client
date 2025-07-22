@@ -1,4 +1,4 @@
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { LegacyNetworks } from '@arlert-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;

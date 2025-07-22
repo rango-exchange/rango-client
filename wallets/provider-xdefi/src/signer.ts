@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { getNetworkInstance, Networks } from '@arlert-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { CustomCosmosSigner } from './cosmos-signer.js';
@@ -14,7 +14,7 @@ export default async function getSigners(
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);
 
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
+  const { DefaultEvmSigner } = await import('@arlert-dev/signer-evm');
 
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new CustomSolanaSigner(solProvider));

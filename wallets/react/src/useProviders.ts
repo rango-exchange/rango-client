@@ -5,7 +5,7 @@ import type {
   Providers,
 } from './index.js';
 import type { ConnectResult } from './legacy/mod.js';
-import type { LegacyState } from '@rango-dev/wallets-core/legacy';
+import type { LegacyState } from '@arlert-dev/wallets-core/legacy';
 import type { SignerFactory } from 'rango-types';
 
 import {

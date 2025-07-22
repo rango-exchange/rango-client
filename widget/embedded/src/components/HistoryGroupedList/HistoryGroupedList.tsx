@@ -1,14 +1,14 @@
 import type { PropTypes } from './HistoryGroupedList.types';
 
 import { i18n } from '@lingui/core';
-import { getCurrentStep } from '@rango-dev/queue-manager-rango-preset';
+import { getCurrentStep } from '@arlert-dev/queue-manager-rango-preset';
 import {
   Divider,
   GroupedVirtualizedList,
   Skeleton,
   SwapListItem,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import {

@@ -8,7 +8,7 @@ import type {
   BalanceState,
   ConnectedWallet,
 } from '../slices/wallets';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
 import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';

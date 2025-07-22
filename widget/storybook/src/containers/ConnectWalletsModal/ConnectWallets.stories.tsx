@@ -1,7 +1,7 @@
-import type { ConnectWalletsModalPropTypes } from '@rango-dev/ui';
+import type { ConnectWalletsModalPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { ConnectWalletsModal } from '@rango-dev/ui';
+import { ConnectWalletsModal } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { walletsInfo } from './mock';

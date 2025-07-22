@@ -1,7 +1,7 @@
-import type { ModalPropTypes } from '@rango-dev/ui';
+import type { ModalPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { MessageBox, Modal } from '@rango-dev/ui';
+import { MessageBox, Modal } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 export default {

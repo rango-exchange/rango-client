@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/charts",
+  "name": "@arlert-dev/charts",
   "version": "0.10.1-next.6",
   "license": "MIT",
   "type": "module",
@@ -26,7 +26,7 @@
     "react-dom": ">=16"
   },
   "dependencies": {
-    "@rango-dev/ui": "^0.48.1-next.6",
+    "@arlert-dev/ui": "^0.48.1-next.6",
     "@visx/axis": "2.18.0",
     "@visx/event": "2.17.0",
     "@visx/grid": "2.18.0",

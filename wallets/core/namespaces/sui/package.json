@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-core/namespaces/sui",
+  "name": "@arlert-dev/wallets-core/namespaces/sui",
   "type": "module",
   "main": "../../dist/namespaces/sui/mod.js",
   "module": "../../dist/namespaces/sui/mod.js",

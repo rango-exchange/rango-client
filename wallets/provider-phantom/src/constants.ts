@@ -1,6 +1,6 @@
-import { type ProviderInfo } from '@rango-dev/wallets-core';
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { Networks } from '@rango-dev/wallets-shared';
+import { type ProviderInfo } from '@arlert-dev/wallets-core';
+import { LegacyNetworks } from '@arlert-dev/wallets-core/legacy';
+import { Networks } from '@arlert-dev/wallets-shared';
 import {
   type BlockchainMeta,
   type EvmBlockchainMeta,

@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-shared",
+  "name": "@arlert-dev/wallets-shared",
   "version": "0.46.1-next.3",
   "license": "MIT",
   "type": "module",
@@ -27,7 +27,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.45.1-next.3",
+    "@arlert-dev/wallets-core": "^0.45.1-next.3",
     "ethers": "^6.13.2",
     "rango-types": "^0.1.88"
   },

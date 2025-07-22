@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { SpinnerPropTypes } from '@rango-dev/ui';
+import type { SpinnerPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Spinner } from '@rango-dev/ui';
+import { Spinner } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { getNetworkInstance, Networks } from '@arlert-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
@@ -8,7 +8,7 @@ export default async function getSigners(
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
+  const { DefaultEvmSigner } = await import('@arlert-dev/signer-evm');
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   return signers;
 }

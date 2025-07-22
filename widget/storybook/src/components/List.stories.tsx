@@ -10,7 +10,7 @@ import {
   ListItemButton,
   RefreshIcon,
   WalletIcon,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 const DEFAULT_TITLE = 'Your title';

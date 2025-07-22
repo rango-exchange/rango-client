@@ -1,7 +1,7 @@
 import type { SwapDateRowProps } from './SwapDetails.types';
 
 import { i18n } from '@lingui/core';
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 import { rowStyles } from './SwapDetails.styles';

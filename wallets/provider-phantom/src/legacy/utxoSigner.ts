@@ -1,7 +1,7 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
 import * as secp256k1 from '@bitcoinerlab/secp256k1';
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@arlert-dev/wallets-shared';
 import * as bitcoin from 'bitcoinjs-lib';
 import { SignerError } from 'rango-types';
 

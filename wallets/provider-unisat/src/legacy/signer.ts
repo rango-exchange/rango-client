@@ -1,8 +1,8 @@
 import type { Provider } from '../utils.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-import { getNetworkInstance } from '@rango-dev/wallets-shared';
+import { LegacyNetworks as Networks } from '@arlert-dev/wallets-core/legacy';
+import { getNetworkInstance } from '@arlert-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(

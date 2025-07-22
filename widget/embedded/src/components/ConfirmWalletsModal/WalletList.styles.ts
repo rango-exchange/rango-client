@@ -1,4 +1,4 @@
-import { keyframes, styled } from '@rango-dev/ui';
+import { keyframes, styled } from '@arlert-dev/ui';
 
 export const LogoContainer = styled('div', {
   position: 'relative',

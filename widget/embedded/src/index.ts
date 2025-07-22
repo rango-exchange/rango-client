@@ -33,16 +33,16 @@ import type {
   StepSucceededEvent,
   StepTxExecutionBlockedEvent,
   StepTxExecutionUpdatedEvent,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@arlert-dev/queue-manager-rango-preset';
 import type {
   LegacyEventHandler as HandleWalletsUpdate,
   LegacyProviderInterface as ProviderInterface,
-} from '@rango-dev/wallets-core/legacy';
+} from '@arlert-dev/wallets-core/legacy';
 import type {
   WalletInfo,
   WalletState,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
@@ -51,10 +51,10 @@ import {
   StepEventType,
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
-} from '@rango-dev/queue-manager-rango-preset';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+} from '@arlert-dev/queue-manager-rango-preset';
+import { legacyReadAccountAddress as readAccountAddress } from '@arlert-dev/wallets-core/legacy';
+import { useWallets, Events as WalletEvents } from '@arlert-dev/wallets-react';
+import { Networks, WalletTypes } from '@arlert-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {

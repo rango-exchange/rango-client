@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-starknet",
+  "name": "@arlert-dev/signer-starknet",
   "version": "0.37.1-next.0",
   "license": "MIT",
   "type": "module",

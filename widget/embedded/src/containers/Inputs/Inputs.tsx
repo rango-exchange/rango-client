@@ -1,7 +1,7 @@
 import type { PropTypes } from './Inputs.types';
 
 import { i18n } from '@lingui/core';
-import { SwapInput } from '@rango-dev/ui';
+import { SwapInput } from '@arlert-dev/ui';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 

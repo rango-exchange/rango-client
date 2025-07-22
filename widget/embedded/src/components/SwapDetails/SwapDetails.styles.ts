@@ -1,4 +1,4 @@
-import { css, darkTheme, styled, Typography } from '@rango-dev/ui';
+import { css, darkTheme, styled, Typography } from '@arlert-dev/ui';
 
 import { PageContainer } from '../Layout';
 

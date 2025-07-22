@@ -6,7 +6,7 @@ import {
   ChevronUpIcon,
   Divider,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

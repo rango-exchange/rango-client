@@ -1,5 +1,5 @@
 import type { AppStoreState } from './types';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
 import type { Asset, Token, WalletDetail } from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';

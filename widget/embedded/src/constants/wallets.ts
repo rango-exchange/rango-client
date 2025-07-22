@@ -1,4 +1,4 @@
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@arlert-dev/wallets-shared';
 
 export const BALANCE_SEPARATOR = '~';
 

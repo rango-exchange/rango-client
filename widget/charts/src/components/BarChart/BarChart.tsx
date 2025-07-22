@@ -7,7 +7,7 @@ import type {
 } from './BarChart.types.js';
 import type { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 
-import { Divider } from '@rango-dev/ui';
+import { Divider } from '@arlert-dev/ui';
 import { AxisBottom, AxisLeft } from '@visx/axis';
 import { localPoint } from '@visx/event';
 import { Grid } from '@visx/grid';

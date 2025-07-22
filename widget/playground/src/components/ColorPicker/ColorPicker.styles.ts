@@ -1,4 +1,4 @@
-import { Button, styled } from '@rango-dev/ui';
+import { Button, styled } from '@arlert-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',

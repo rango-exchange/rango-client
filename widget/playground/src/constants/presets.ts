@@ -3,9 +3,9 @@ import type { PresetType } from '../types';
 import type {
   WidgetColors,
   WidgetColorsKeys,
-} from '@rango-dev/widget-embedded';
+} from '@arlert-dev/widget-embedded';
 
-import { rangoDarkColors } from '@rango-dev/ui';
+import { rangoDarkColors } from '@arlert-dev/ui';
 
 export const DEFAULT_PRESET_ID = 'DEFAULT_THEME_COLORS';
 

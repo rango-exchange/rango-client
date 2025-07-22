@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-core/namespaces/common",
+  "name": "@arlert-dev/wallets-core/namespaces/common",
   "type": "module",
   "main": "../../dist/namespaces/common/mod.js",
   "module": "../../dist/namespaces/common/mod.js",

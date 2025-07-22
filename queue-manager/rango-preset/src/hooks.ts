@@ -1,6 +1,6 @@
 import type { LastConnectedWallet, UseQueueManagerParams } from './types';
 
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@arlert-dev/queue-manager-react';
 import { useEffect, useState } from 'react';
 
 import {

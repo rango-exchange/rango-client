@@ -1,4 +1,4 @@
-import { useManager } from "@rango-dev/queue-manager-react";
+import { useManager } from "@arlert-dev/queue-manager-react";
 import React from "react";
 
 function History() {

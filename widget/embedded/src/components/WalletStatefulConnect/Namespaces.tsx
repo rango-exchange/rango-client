@@ -1,5 +1,5 @@
 import type { PropTypes } from './Namespaces.types';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import {
@@ -9,7 +9,7 @@ import {
   Image,
   MessageBox,
   RadioRoot,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

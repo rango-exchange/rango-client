@@ -1,11 +1,11 @@
-import type { CollapsiblePropTypes } from '@rango-dev/ui';
+import type { CollapsiblePropTypes } from '@arlert-dev/ui';
 
 import {
   Button,
   ChevronDownIcon,
   Collapsible,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 export default {

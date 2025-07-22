@@ -6,7 +6,7 @@ export default async function getSigners(
   provider: any
 ): Promise<SignerFactory> {
   const signers = new DefaultSignerFactory();
-  const { DefaultTerraSigner } = await import('@rango-dev/signer-terra');
+  const { DefaultTerraSigner } = await import('@arlert-dev/signer-terra');
   signers.registerSigner(TxType.COSMOS, new DefaultTerraSigner(provider));
   return signers;
 }

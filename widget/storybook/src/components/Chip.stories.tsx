@@ -1,6 +1,6 @@
-import type { ChipPropTypes } from '@rango-dev/ui';
+import type { ChipPropTypes } from '@arlert-dev/ui';
 
-import { Chip } from '@rango-dev/ui';
+import { Chip } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

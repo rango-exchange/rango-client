@@ -1,11 +1,11 @@
-import type { TabsPropTypes } from '@rango-dev/ui';
+import type { TabsPropTypes } from '@arlert-dev/ui';
 
 import {
   AutoThemeIcon,
   DarkModeIcon,
   LightModeIcon,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 
 export const themes = [

@@ -3,7 +3,7 @@ import {
   Divider,
   getCategoriesCount,
   SelectableCategoryList,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

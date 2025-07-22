@@ -1,4 +1,4 @@
-import type { ProviderInfo, VersionedProviders } from '@rango-dev/wallets-core';
+import type { ProviderInfo, VersionedProviders } from '@arlert-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
@@ -7,13 +7,13 @@ import type {
   LegacyWalletInfo as WalletInfo,
   LegacyState as WalletState,
   LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { NamespaceData } from '@rango-dev/wallets-core/store';
+} from '@arlert-dev/wallets-core/legacy';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
+import type { NamespaceData } from '@arlert-dev/wallets-core/store';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
-import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
+import { LegacyEvents as Events } from '@arlert-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;

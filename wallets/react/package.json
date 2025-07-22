@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-react",
+  "name": "@arlert-dev/wallets-react",
   "version": "0.32.1-next.3",
   "license": "MIT",
   "type": "module",
@@ -35,8 +35,8 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.45.1-next.3",
-    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/wallets-core": "^0.45.1-next.3",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
     "rango-types": "^0.1.88",
     "ts-results": "^3.3.0"
   },

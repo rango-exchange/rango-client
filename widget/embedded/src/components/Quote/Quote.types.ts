@@ -1,5 +1,5 @@
 import type { QuoteError, QuoteWarning, SelectedQuote } from '../../types';
-import type { Step } from '@rango-dev/ui';
+import type { Step } from '@arlert-dev/ui';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 

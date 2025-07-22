@@ -1,7 +1,7 @@
 import type { PropTypes } from './RefreshModal.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, MessageBox, RefreshIcon } from '@rango-dev/ui';
+import { Divider, MessageBox, RefreshIcon } from '@arlert-dev/ui';
 import React from 'react';
 
 import { getContainer } from '../../utils/common';

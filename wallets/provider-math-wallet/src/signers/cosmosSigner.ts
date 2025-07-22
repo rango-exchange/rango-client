@@ -2,7 +2,7 @@ import type { StdFee } from '@cosmjs/stargate';
 import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
 import { SigningStargateClient } from '@cosmjs/stargate';
-import { DEFAULT_COSMOS_RPC_URL } from '@rango-dev/wallets-shared';
+import { DEFAULT_COSMOS_RPC_URL } from '@arlert-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 const COSMOS_MESSAGE_TRANSFER_TYPE_URL =

@@ -4,7 +4,7 @@ import {
   ETHEREUM_CHAIN_ID,
   Networks,
   type ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 
 import { getDerivationPath } from './state.js';
 

@@ -3,9 +3,9 @@ import type { Wallet } from './wallets';
 import type {
   RouteEventData,
   StepEventData,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@arlert-dev/queue-manager-rango-preset';
 
-import { WidgetEvents as QueueManagerEvents } from '@rango-dev/queue-manager-rango-preset';
+import { WidgetEvents as QueueManagerEvents } from '@arlert-dev/queue-manager-rango-preset';
 
 type EventData<
   T extends QuoteEventTypes | WalletEventTypes | UiEventTypes,

@@ -1,7 +1,7 @@
 import type { ColorsTypes, PresetTypes } from './StyleLayout.types';
 import type { ColorsType } from '../../types';
 
-import { Button, Divider, Switch, Typography } from '@rango-dev/ui';
+import { Button, Divider, Switch, Typography } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { DEFAULT_THEME_COLORS, PRESETS } from '../../constants';

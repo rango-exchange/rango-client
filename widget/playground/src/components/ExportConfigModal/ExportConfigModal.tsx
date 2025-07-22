@@ -13,7 +13,7 @@ import {
   Tabs,
   TextField,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 import {
   atomDark as dark,

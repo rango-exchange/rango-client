@@ -1,6 +1,6 @@
 import type { NamespaceItemPropTypes } from './Namespaces.types';
 
-import { Checkbox, Radio } from '@rango-dev/ui';
+import { Checkbox, Radio } from '@arlert-dev/ui';
 import React from 'react';
 
 import { NamespaceItem } from '../NamespaceItem';

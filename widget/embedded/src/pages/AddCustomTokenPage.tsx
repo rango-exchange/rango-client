@@ -8,7 +8,7 @@ import {
   styled,
   TextField,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 

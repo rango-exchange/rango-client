@@ -1,1 +1,1 @@
-# @rango-dev/queue-manager-react
+# @arlert-dev/queue-manager-react

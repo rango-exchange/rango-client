@@ -7,7 +7,7 @@ import {
   MessageBox,
   TokenAmount,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 

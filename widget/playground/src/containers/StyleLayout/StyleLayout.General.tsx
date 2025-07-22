@@ -9,8 +9,8 @@ import {
   Select,
   Typography,
   WidgetIcon,
-} from '@rango-dev/ui';
-import { SUPPORTED_FONTS, useWidget } from '@rango-dev/widget-embedded';
+} from '@arlert-dev/ui';
+import { SUPPORTED_FONTS, useWidget } from '@arlert-dev/widget-embedded';
 import React, { useCallback, useState } from 'react';
 
 import { ItemPicker } from '../../components/ItemPicker';

@@ -1,7 +1,7 @@
-import type { CheckboxPropTypes } from '@rango-dev/ui';
+import type { CheckboxPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Checkbox } from '@rango-dev/ui';
+import { Checkbox } from '@arlert-dev/ui';
 import React from 'react';
 
 const meta: Meta<typeof Checkbox> = {

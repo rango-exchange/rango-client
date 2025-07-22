@@ -1,4 +1,4 @@
-import { darkTheme, Image, styled, Typography } from '@rango-dev/ui';
+import { darkTheme, Image, styled, Typography } from '@arlert-dev/ui';
 
 export const NamespaceItemContainer = styled('li', {
   backgroundColor: '$neutral200',

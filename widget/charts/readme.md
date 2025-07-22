@@ -1,4 +1,4 @@
-# @rango-dev/charts
+# @arlert-dev/charts
 
 Rango charts
 

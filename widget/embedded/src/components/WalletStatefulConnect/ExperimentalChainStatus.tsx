@@ -1,6 +1,6 @@
 import type { PropTypes } from './ExperimentalChainStatus.types';
 
-import { Image, MessageBox } from '@rango-dev/ui';
+import { Image, MessageBox } from '@arlert-dev/ui';
 import React from 'react';
 
 import {

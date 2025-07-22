@@ -4,7 +4,7 @@ import {
   getNetworkInstance,
   Networks,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { xdefiTransfer } from './helpers.js';

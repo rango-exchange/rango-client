@@ -1,5 +1,5 @@
 ## Widget [0.38.0] (2025-06-10)
-_includes `@rango-dev/widget-embedded@0.44.1`_
+_includes `@arlert-dev/widget-embedded@0.44.1`_
 
 ### Bug Fixes
 
@@ -7,7 +7,7 @@ _includes `@rango-dev/widget-embedded@0.44.1`_
 
 
 ## Widget [0.37.0] (2025-06-09)
-_includes `@rango-dev/widget-embedded@0.44.0`_
+_includes `@arlert-dev/widget-embedded@0.44.0`_
 
 ### Features
 
@@ -43,14 +43,14 @@ _includes `@rango-dev/widget-embedded@0.44.0`_
 
 
 ## Widget [0.36.0] (2025-05-26)
-_includes `@rango-dev/widget-embedded@0.43.0`_
+_includes `@arlert-dev/widget-embedded@0.43.0`_
 
 ### Features
 
 - Use psbt for bitcoin on xdefi/ctrl wallet ([86abfbf](https://github.com/rango-exchange/rango-client/commit/86abfbfe725ce66de5cd344bd7a5c9894271c77e))
 
 ## Widget [0.35.0] (2025-05-21)
-_includes `@rango-dev/widget-embedded@0.42.3`_
+_includes `@arlert-dev/widget-embedded@0.42.3`_
 
 ### Bug Fixes
 
@@ -58,7 +58,7 @@ _includes `@rango-dev/widget-embedded@0.42.3`_
 
 ## Widget [0.34.0] (2025-05-12)
 
-_includes `@rango-dev/widget-embedded@0.42.2`_
+_includes `@arlert-dev/widget-embedded@0.42.2`_
 
 ### Bug Fixes
 
@@ -66,7 +66,7 @@ _includes `@rango-dev/widget-embedded@0.42.2`_
 
 ## Widget [0.33.0] (2025-05-04)
 
-_includes `@rango-dev/widget-embedded@0.42.1`_
+_includes `@arlert-dev/widget-embedded@0.42.1`_
 
 ### Bug Fixes
 
@@ -74,7 +74,7 @@ _includes `@rango-dev/widget-embedded@0.42.1`_
 
 ## Widget [0.32.0] (2025-04-30)
 
-_includes `@rango-dev/widget-embedded@0.42.0`_
+_includes `@arlert-dev/widget-embedded@0.42.0`_
 
 ### Features
 
@@ -102,7 +102,7 @@ _includes `@rango-dev/widget-embedded@0.42.0`_
 
 ## Widget [0.31.0] (2025-03-17)
 
-_includes `@rango-dev/widget-embedded@0.41.1`_
+_includes `@arlert-dev/widget-embedded@0.41.1`_
 
 ## Bug Fixes
 
@@ -114,7 +114,7 @@ _includes `@rango-dev/widget-embedded@0.41.1`_
 
 ## Widget [0.30.0] (2025-03-11)
 
-_includes `@rango-dev/widget-embedded@0.41.0`_
+_includes `@arlert-dev/widget-embedded@0.41.0`_
 
 ### Features
 
@@ -134,7 +134,7 @@ _includes `@rango-dev/widget-embedded@0.41.0`_
 
 ## Widget [0.29.0] (2025-02-25)
 
-_includes `@rango-dev/widget-embedded@0.40.1`_
+_includes `@arlert-dev/widget-embedded@0.40.1`_
 
 ### Bug Fixes
 
@@ -142,7 +142,7 @@ _includes `@rango-dev/widget-embedded@0.40.1`_
 
 ## Widget [0.28.0] (2025-02-23)
 
-_includes `@rango-dev/widget-embedded@0.40.0`_
+_includes `@arlert-dev/widget-embedded@0.40.0`_
 
 ### Features
 
@@ -210,7 +210,7 @@ _includes `@rango-dev/widget-embedded@0.40.0`_
 
 ## Widget [0.27.0] (2025-01-27)
 
-_includes `@rango-dev/widget-embedded@0.39.0`_
+_includes `@arlert-dev/widget-embedded@0.39.0`_
 
 ### Features
 
@@ -218,7 +218,7 @@ _includes `@rango-dev/widget-embedded@0.39.0`_
 
 ## Widget [0.26.0] (2025-01-20)
 
-_includes `@rango-dev/widget-embedded@0.38.0`_
+_includes `@arlert-dev/widget-embedded@0.38.0`_
 
 ### Features
 
@@ -226,7 +226,7 @@ _includes `@rango-dev/widget-embedded@0.38.0`_
 
 ## Widget [0.25.0] (2024-12-31)
 
-_includes `@rango-dev/widget-embedded@0.37.0`_
+_includes `@arlert-dev/widget-embedded@0.37.0`_
 
 ### Bug Fixes
 
@@ -238,7 +238,7 @@ _includes `@rango-dev/widget-embedded@0.37.0`_
 
 ## Widget [0.24.0] (2024-11-27)
 
-_includes `@rango-dev/widget-embedded@0.36.0`_
+_includes `@arlert-dev/widget-embedded@0.36.0`_
 
 ### Bug Fixes
 
@@ -253,7 +253,7 @@ _includes `@rango-dev/widget-embedded@0.36.0`_
 
 ## Widget [0.23.0] (2024-11-12)
 
-_includes `@rango-dev/widget-embedded@0.35.0`_
+_includes `@arlert-dev/widget-embedded@0.35.0`_
 
 ### Features
 
@@ -265,7 +265,7 @@ _includes `@rango-dev/widget-embedded@0.35.0`_
 
 ## Widget [0.22.0] (2024-10-12)
 
-_includes `@rango-dev/widget-embedded@0.34.0`_
+_includes `@arlert-dev/widget-embedded@0.34.0`_
 
 ### Bug Fixes
 
@@ -292,7 +292,7 @@ _includes `@rango-dev/widget-embedded@0.34.0`_
 
 ## Widget [0.20.0] (2024-09-10)
 
-_includes `@rango-dev/widget-embedded@0.33.0`_
+_includes `@arlert-dev/widget-embedded@0.33.0`_
 
 ### Bug Fixes
 
@@ -316,7 +316,7 @@ _includes `@rango-dev/widget-embedded@0.33.0`_
 
 ## Widget [0.19.0] (2024-08-17)
 
-_includes `@rango-dev/widget-embedded@0.32.1`_
+_includes `@arlert-dev/widget-embedded@0.32.1`_
 
 ### Features
 
@@ -324,7 +324,7 @@ _includes `@rango-dev/widget-embedded@0.32.1`_
 
 ## Widget [0.18.0] (2024-08-11)
 
-_includes `@rango-dev/widget-embedded@0.31.0`_
+_includes `@arlert-dev/widget-embedded@0.31.0`_
 
 ### Bug Fixes
 
@@ -352,7 +352,7 @@ _includes `@rango-dev/widget-embedded@0.31.0`_
 
 ## Widget [0.17.0] (2024-07-09)
 
-_includes `@rango-dev/widget-embedded@0.30.0`_
+_includes `@arlert-dev/widget-embedded@0.30.0`_
 
 ### Bug Fixes
 
@@ -397,7 +397,7 @@ _includes `@rango-dev/widget-embedded@0.30.0`_
 
 ## Widget [0.16.0] (2024-06-01)
 
-_includes `@rango-dev/widget-embedded@0.29.0`_
+_includes `@arlert-dev/widget-embedded@0.29.0`_
 
 ### Bug Fixes
 
@@ -419,7 +419,7 @@ _includes `@rango-dev/widget-embedded@0.29.0`_
 
 ## Widget [0.15.0] (2024-05-14)
 
-_includes `@rango-dev/widget-embedded@0.28.0`_
+_includes `@arlert-dev/widget-embedded@0.28.0`_
 
 ### Features
 
@@ -442,7 +442,7 @@ _includes `@rango-dev/widget-embedded@0.28.0`_
 
 ## Widget (2024-05-08)
 
-_includes `@rango-dev/widget-embedded@0.27.3`_
+_includes `@arlert-dev/widget-embedded@0.27.3`_
 
 ### Bug Fixes
 
@@ -450,7 +450,7 @@ _includes `@rango-dev/widget-embedded@0.27.3`_
 
 ## Widget (2024-04-27)
 
-_includes `@rango-dev/widget-embedded@0.27.2`_
+_includes `@arlert-dev/widget-embedded@0.27.2`_
 
 ### Bug Fixes
 
@@ -458,7 +458,7 @@ _includes `@rango-dev/widget-embedded@0.27.2`_
 
 ## Widget (2024-04-24)
 
-_includes `@rango-dev/widget-embedded@0.27.1`_
+_includes `@arlert-dev/widget-embedded@0.27.1`_
 
 ### Features
 
@@ -466,7 +466,7 @@ _includes `@rango-dev/widget-embedded@0.27.1`_
 
 ## Widget (2024-04-23)
 
-_includes `@rango-dev/widget-embedded@0.27.0`_
+_includes `@arlert-dev/widget-embedded@0.27.0`_
 
 ### Bug Fixes
 
@@ -490,7 +490,7 @@ You can use the following template:
 
 ## Widget or Playground [VERSION] (DATE)
 
-_includes `@rango-dev/widget-embedded@VERSION`_
+_includes `@arlert-dev/widget-embedded@VERSION`_
 
 ### Bug Fixes
 

@@ -1,6 +1,6 @@
-import type { Provider, Store } from '@rango-dev/wallets-core';
+import type { Provider, Store } from '@arlert-dev/wallets-core';
 
-import { createStore, Hub } from '@rango-dev/wallets-core';
+import { createStore, Hub } from '@arlert-dev/wallets-core';
 import { useRef } from 'react';
 
 import { synchronizeHubWithConfigProviders } from './utils.js';

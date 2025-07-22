@@ -1,4 +1,4 @@
-import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { ProviderInterface } from '@arlert-dev/wallets-react';
 
 export function hashProviders(
   providers: (string | ProviderInterface)[]

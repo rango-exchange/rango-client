@@ -1,7 +1,7 @@
 import type { PropTypes } from './ImportCustomToken.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox } from '@rango-dev/ui';
+import { Button, Divider, MessageBox } from '@arlert-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

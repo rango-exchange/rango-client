@@ -6,7 +6,7 @@ import {
   HeightIcon,
   NotSelectableTypography,
   WidthIcon,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 
 import { WIDGET_VARIANT_MAX_WIDTH } from '../../constants/styles';

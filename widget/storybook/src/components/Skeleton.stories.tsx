@@ -1,7 +1,7 @@
-import type { SkeletonPropTypes } from '@rango-dev/ui';
+import type { SkeletonPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Divider, Skeleton, Typography } from '@rango-dev/ui';
+import { Divider, Skeleton, Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
@@ -22,7 +22,7 @@ import type {
   AllBlockchains,
   Network,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -31,13 +31,13 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
+import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@arlert-dev/provider-xdefi';
+import { legacyReadAccountAddress as readAccountAddress } from '@arlert-dev/wallets-core/legacy';
 import {
   Networks,
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import {
@@ -66,7 +66,6 @@ export const RANGO_COOKIE_HEADER = 'X-Rango-Id';
 export const RANGO_DAPP_ID_QUERY =
   'apiKey=4a624ab5-16ff-4f96-90b7-ab00ddfc342c';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const navigator: any;
 
 export function calculatePendingSwap(

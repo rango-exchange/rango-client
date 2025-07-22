@@ -6,7 +6,7 @@ import type {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 
 import {
   canEagerlyConnectToEvm,
@@ -20,7 +20,7 @@ import {
   switchNetworkForEvm,
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 import { cosmosBlockchains, isCosmosBlockchain } from 'rango-types';
 

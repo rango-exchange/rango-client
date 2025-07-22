@@ -1,1 +1,1 @@
-# @rango-dev/provider-trezor
+# @arlert-dev/provider-trezor

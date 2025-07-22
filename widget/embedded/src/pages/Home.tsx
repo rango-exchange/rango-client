@@ -1,7 +1,7 @@
 import type { SelectedQuote } from '../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
+import { Button, Divider, styled, WarningIcon } from '@arlert-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

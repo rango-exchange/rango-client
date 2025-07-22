@@ -1,6 +1,6 @@
 import type { Meta, RetryQuote } from '../../store/quote';
 import type { FindToken } from '../../store/slices/data';
-import type { Manager } from '@rango-dev/queue-manager-core';
+import type { Manager } from '@arlert-dev/queue-manager-core';
 import type { PendingSwap } from 'rango-types/lib';
 
 import {
@@ -8,7 +8,7 @@ import {
   getCurrentNamespaceOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@arlert-dev/queue-manager-rango-preset';
 
 import { getPendingSwaps } from '../../utils/queue';
 import { createRetryQuote } from '../../utils/quote';

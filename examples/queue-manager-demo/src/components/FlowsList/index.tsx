@@ -1,8 +1,8 @@
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@arlert-dev/queue-manager-react';
 import React, { useEffect, useState } from 'react';
 import { requestSwap, urlToToken } from '../../flows/rango/helpers';
 import { FlowRunner } from '../FlowRunner';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { WalletType } from '@arlert-dev/wallets-shared';
 
 interface PropTypes {
   connectedWallets: WalletType[];

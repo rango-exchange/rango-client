@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@arlert-dev/ui';
 
 export const Container = styled('div', {
   $$color: '$colors$neutral100',

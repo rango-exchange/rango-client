@@ -1,7 +1,7 @@
-import type { SwitchPropTypes } from '@rango-dev/ui';
+import type { SwitchPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Switch } from '@rango-dev/ui';
+import { Switch } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

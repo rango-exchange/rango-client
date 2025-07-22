@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/ui",
+  "name": "@arlert-dev/ui",
   "version": "0.48.1-next.6",
   "license": "MIT",
   "type": "module",
@@ -53,7 +53,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
     "@stitches/react": "^1.2.8",
     "copy-to-clipboard": "^3.3.3",
     "rango-types": "^0.1.88",

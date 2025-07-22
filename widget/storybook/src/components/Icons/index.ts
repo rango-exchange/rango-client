@@ -106,7 +106,7 @@ import {
   WidgetIcon,
   WidthIcon,
   XIcon,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 
 export const Icons = {
   AddIcon,

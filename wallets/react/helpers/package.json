@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-react/helpers",
+  "name": "@arlert-dev/wallets-react/helpers",
   "type": "module",
   "main": "../dist/helpers/index.js",
   "module": "../dist/helpers/index.js",

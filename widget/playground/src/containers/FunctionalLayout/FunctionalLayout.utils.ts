@@ -1,10 +1,10 @@
 import type { MapSupportedList } from '../../components/MultiSelect/MultiSelect.types';
-import type { WalletTypes } from '@rango-dev/wallets-shared';
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WalletTypes } from '@arlert-dev/wallets-shared';
+import type { WidgetConfig } from '@arlert-dev/widget-embedded';
 import type { BlockchainMeta } from 'rango-sdk';
 
-import { allProviders as getAllProviders } from '@rango-dev/provider-all';
-import { pickVersion, type VersionedProviders } from '@rango-dev/wallets-core';
+import { allProviders as getAllProviders } from '@arlert-dev/provider-all';
+import { pickVersion, type VersionedProviders } from '@arlert-dev/wallets-core';
 
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';

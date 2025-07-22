@@ -1,1 +1,1 @@
-# @rango-dev/provider-solflare
+# @arlert-dev/provider-solflare

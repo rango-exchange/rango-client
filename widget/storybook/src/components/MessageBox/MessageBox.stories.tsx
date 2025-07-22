@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MessageBox } from '@rango-dev/ui';
+import { MessageBox } from '@arlert-dev/ui';
 
 const meta: Meta<typeof MessageBox> = {
   component: MessageBox,

@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-safe",
+  "name": "@arlert-dev/provider-safe",
   "version": "0.39.1-next.3",
   "license": "MIT",
   "type": "module",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.37.1-next.0",
-    "@rango-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/signer-evm": "^0.37.1-next.0",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "ethers": "^6.13.2",

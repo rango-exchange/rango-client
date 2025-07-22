@@ -1,7 +1,7 @@
-import type { TypographyPropTypes } from '@rango-dev/ui';
+import type { TypographyPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

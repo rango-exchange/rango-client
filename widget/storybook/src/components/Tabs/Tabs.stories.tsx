@@ -1,7 +1,7 @@
-import type { TabsPropTypes } from '@rango-dev/ui';
+import type { TabsPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { Tabs } from '@rango-dev/ui';
+import { Tabs } from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { numbers, themes } from './mock';

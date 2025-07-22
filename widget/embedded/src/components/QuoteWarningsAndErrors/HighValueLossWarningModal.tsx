@@ -7,7 +7,7 @@ import {
   MessageBox,
   Typography,
   WarningIcon,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';

@@ -2,12 +2,12 @@ import type { AllProxiedNamespaces } from './types.js';
 import type {
   Accounts,
   AccountsWithActiveChain,
-} from '@rango-dev/wallets-core/namespaces/common';
+} from '@arlert-dev/wallets-core/namespaces/common';
 import type { Result } from 'ts-results';
 
-import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
-import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
-import { CAIP } from '@rango-dev/wallets-core/utils';
+import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@arlert-dev/wallets-core/legacy';
+import { CAIP_BITCOIN_CHAIN_ID } from '@arlert-dev/wallets-core/namespaces/utxo';
+import { CAIP } from '@arlert-dev/wallets-core/utils';
 import { Err, Ok } from 'ts-results';
 
 export function mapCaipNamespaceToLegacyNetworkName(

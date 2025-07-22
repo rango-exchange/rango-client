@@ -1,11 +1,11 @@
-import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
+import type { EvmActions } from '@arlert-dev/wallets-core/namespaces/evm';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
+import { NamespaceBuilder } from '@arlert-dev/wallets-core';
 import {
   builders as commonBuilders,
   standardizeAndThrowError,
-} from '@rango-dev/wallets-core/namespaces/common';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
+} from '@arlert-dev/wallets-core/namespaces/common';
+import { actions, builders } from '@arlert-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
 import { evmRabby, switchOrAddNetwork } from '../utils.js';

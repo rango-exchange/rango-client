@@ -1,7 +1,7 @@
-import type { TextFieldPropTypes } from '@rango-dev/ui';
+import type { TextFieldPropTypes } from '@arlert-dev/ui';
 import type { Meta } from '@storybook/react';
 
-import { SearchIcon, TextField } from '@rango-dev/ui';
+import { SearchIcon, TextField } from '@arlert-dev/ui';
 import React from 'react';
 
 export default {

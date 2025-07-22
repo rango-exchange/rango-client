@@ -1,7 +1,7 @@
 import type { WalletType } from '../..';
-import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
+import type { LastConnectedWallet } from '@arlert-dev/queue-manager-rango-preset';
 
-import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
+import { useQueueManager } from '@arlert-dev/queue-manager-rango-preset';
 import { isEvmBlockchain } from 'rango-sdk';
 import { useContext, useEffect, useState } from 'react';
 

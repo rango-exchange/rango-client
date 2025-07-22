@@ -1,7 +1,7 @@
 import type { PropTypes } from './ActivateTabAlert.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button } from '@rango-dev/ui';
+import { Alert, Button } from '@arlert-dev/ui';
 import React from 'react';
 
 export function ActivateTabAlert(props: PropTypes) {

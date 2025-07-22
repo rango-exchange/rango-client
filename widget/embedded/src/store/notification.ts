@@ -5,7 +5,7 @@ import {
   type Route,
   type RouteEvent,
   type StepEvent,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@arlert-dev/queue-manager-rango-preset';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 

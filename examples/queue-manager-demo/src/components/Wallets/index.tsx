@@ -1,4 +1,4 @@
-import { useWallets } from '@rango-dev/wallets-react';
+import { useWallets } from '@arlert-dev/wallets-react';
 import React from 'react';
 
 function Wallets() {

@@ -1,7 +1,7 @@
 import type { PropTypes } from './ExpandedQuotes.types';
 
 import { i18n } from '@lingui/core';
-import { Header } from '@rango-dev/ui';
+import { Header } from '@arlert-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { HeaderButtons } from '../../components/HeaderButtons';

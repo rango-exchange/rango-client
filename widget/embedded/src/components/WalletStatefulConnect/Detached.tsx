@@ -1,8 +1,8 @@
 import type { PropTypes } from './Detached.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, Image, MessageBox } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
+import { Button, Divider, Image, MessageBox } from '@arlert-dev/ui';
+import { useWallets } from '@arlert-dev/wallets-react';
 import React from 'react';
 
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';

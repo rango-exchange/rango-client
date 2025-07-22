@@ -1,6 +1,6 @@
 import type { FilterSelectorPropTypes } from './FilterSelector.type';
 
-import { FilterIcon, Popover } from '@rango-dev/ui';
+import { FilterIcon, Popover } from '@arlert-dev/ui';
 import React from 'react';
 
 import { getContainer } from '../../utils/common';

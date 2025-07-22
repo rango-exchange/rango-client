@@ -1,5 +1,5 @@
-import type { TargetNamespace } from '@rango-dev/queue-manager-rango-preset';
-import type { LegacyWalletType } from '@rango-dev/wallets-core/legacy';
+import type { TargetNamespace } from '@arlert-dev/queue-manager-rango-preset';
+import type { LegacyWalletType } from '@arlert-dev/wallets-core/legacy';
 import type { PendingSwap, PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =

@@ -4,17 +4,17 @@ import type {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { type LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
+import { type LegacyProviderInterface } from '@arlert-dev/wallets-core/legacy';
 import {
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@arlert-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import {

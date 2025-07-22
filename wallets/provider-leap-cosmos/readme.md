@@ -1,1 +1,1 @@
-# @rango-dev/provider-leap-cosmos
+# @arlert-dev/provider-leap-cosmos

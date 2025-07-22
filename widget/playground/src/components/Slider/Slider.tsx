@@ -1,6 +1,6 @@
 import type { PropTypes } from './Slider.types';
 
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@arlert-dev/ui';
 import React, { useEffect } from 'react';
 
 import { DEFAULT_THEME_COLORS, PLAYGROUND_CONTAINER_ID } from '../../constants';

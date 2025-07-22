@@ -9,7 +9,7 @@ import {
   ListItemButton,
   NotFound,
   Typography,
-} from '@rango-dev/ui';
+} from '@arlert-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';

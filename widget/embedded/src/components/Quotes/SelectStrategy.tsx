@@ -1,7 +1,7 @@
 import type { PreferenceType } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
-import { Select } from '@rango-dev/ui';
+import { Select } from '@arlert-dev/ui';
 import React from 'react';
 
 import { useQuoteStore } from '../../store/quote';

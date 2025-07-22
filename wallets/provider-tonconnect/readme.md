@@ -1,3 +1,3 @@
-# @rango-dev/provider-tonconnect
+# @arlert-dev/provider-tonconnect
 
 TonConnect

@@ -6,7 +6,7 @@ export default async function getSigners(
   provider: any
 ): Promise<SignerFactory> {
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
+  const { DefaultEvmSigner } = await import('@arlert-dev/signer-evm');
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(provider));
   return signers;
 }

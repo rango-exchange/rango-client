@@ -1,7 +1,7 @@
 import type { ActionType } from './SlippageWarningsAndErrors.helpers';
 import type { PropTypes } from './SlippageWarningsAndErrors.types';
 
-import { Alert, Button } from '@rango-dev/ui';
+import { Alert, Button } from '@arlert-dev/ui';
 import React from 'react';
 
 import { DEFAULT_SLIPPAGE } from '../../constants/swapSettings';

@@ -2,11 +2,11 @@ import type {
   LegacyNetwork as Network,
   LegacyWalletInfo as WalletInfo,
   LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+} from '@arlert-dev/wallets-core/legacy';
+import type { Namespace } from '@arlert-dev/wallets-core/namespaces/common';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { LegacyNetworks as Networks } from '@arlert-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
@@ -24,12 +24,12 @@ export type {
   LegacyWalletInfo as WalletInfo,
   LegacyWalletType as WalletType,
   LegacyNamespaceData as NamespaceData,
-} from '@rango-dev/wallets-core/legacy';
+} from '@arlert-dev/wallets-core/legacy';
 
 export {
   LegacyNetworks as Networks,
   legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-} from '@rango-dev/wallets-core/legacy';
+} from '@arlert-dev/wallets-core/legacy';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';

@@ -1,9 +1,9 @@
 import type { WidgetConfig } from '../../types';
-import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
+import type { LastConnectedWallet } from '@arlert-dev/queue-manager-rango-preset';
 import type {
   LegacyEventHandler as EventHandler,
   LegacyEvents,
-} from '@rango-dev/wallets-core/legacy';
+} from '@arlert-dev/wallets-core/legacy';
 
 export type OnWalletConnectHandler = (wallet: LastConnectedWallet) => void;
 export type OnWalletDisconnectHandler = (walletType: string) => void;

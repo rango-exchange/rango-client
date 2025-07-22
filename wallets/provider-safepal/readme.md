@@ -1,1 +1,1 @@
-# @rango-dev/provider-safepal
+# @arlert-dev/provider-safepal

@@ -1,4 +1,4 @@
-import { css, styled } from '@rango-dev/ui';
+import { css, styled } from '@arlert-dev/ui';
 
 export const Container = styled('div', {
   position: 'relative',
