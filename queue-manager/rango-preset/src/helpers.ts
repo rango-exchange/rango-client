@@ -61,7 +61,6 @@ import {
 import { httpService } from './services';
 import { notifier } from './services/eventEmitter';
 import {
-  getCurrentAddressOf,
   getCurrentNamespaceOf,
   getCurrentNamespaceOfOrNull,
   getRelatedWallet,
@@ -1014,202 +1013,95 @@ export function isRequiredWalletConnected(
   return { ok: matched, reason: 'account_miss_match' };
 }
 
-export async function signTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
-): Promise<void> {
-  const { setTransactionDataByHash } = inMemoryTransactionsData();
-  const { getStorage, setStorage, failed, next, schedule, context } = actions;
-  const { meta, getSigners, isMobileWallet } = context;
-  const swap = getStorage().swapDetails;
+export function handleSuccessfulSign(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  data: { isApproval: boolean }
+) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return ({ hash, response }: { hash: string; response?: any }) => {
+    const { setTransactionDataByHash } = inMemoryTransactionsData();
+    const { getStorage, next, schedule, context } = actions;
+    const { meta } = context;
+    const swap = getStorage().swapDetails;
 
-  const currentStep = getCurrentStep(swap)!;
+    const currentStep = getCurrentStep(swap)!;
 
-  const sourceWallet = getRelatedWallet(swap, currentStep);
-  const mobileWallet = isMobileWallet(sourceWallet?.walletType);
-  const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
-
-  const onFinish = () => {
-    // TODO resetClaimedBy is undefined here
-    if (actions.context.resetClaimedBy) {
-      actions.context.resetClaimedBy();
+    const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
+    const explorerUrl = getScannerUrl(
+      hash,
+      currentStepNamespace.network,
+      meta.blockchains
+    );
+    setStepTransactionIds(
+      actions,
+      hash,
+      explorerUrl && (!response || (response && !response.hashRequiringUpdate))
+        ? {
+            url: explorerUrl,
+            description: data.isApproval ? 'Approve' : 'Swap',
+          }
+        : undefined
+    );
+    // response used for evm transactions to get receipt and track replaced
+    if (response) {
+      setTransactionDataByHash(hash, { response });
     }
+    schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+    next();
   };
+}
 
-  const tx = getCurrentStepTx(currentStep);
-  const txType = tx?.type;
-  const isApproval = isApprovalCurrentStepTx(currentStep);
+export function handlRejectedSign(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (error: any) => {
+    const { getStorage, setStorage, failed } = actions;
+    const swap = getStorage().swapDetails;
 
-  if (!tx || !txType) {
-    const extraMessage = 'Unexpected Error: tx is null!';
+    const currentStep = getCurrentStep(swap)!;
+
+    const sourceWallet = getRelatedWallet(swap, currentStep);
+    if (swap.status === 'failed') {
+      return;
+    }
+
+    const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+      prettifyErrorMessage(error);
+
+    warn(error, {
+      tags: {
+        requestId: swap.requestId,
+        rpc: true,
+        swapper: currentStep?.swapperId || '',
+        walletType: sourceWallet?.walletType || '',
+      },
+      context: SignerError.isSignerError(error) ? error.getErrorContext() : {},
+    });
+
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: 'failed',
       nextStepStatus: 'failed',
       message: extraMessage,
-      details: undefined,
-      errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      details: extraMessageDetail,
+      errorCode: extraMessageErrorCode,
+      trace: error?.cause,
     });
+
     notifier({
       event: {
         type: StepEventType.FAILED,
         reason: extraMessage,
-        reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
-        inputAmount: getLastFinishedStepInput(swap),
-        inputAmountUsd: getLastFinishedStepInputUsd(swap),
-      },
-      ...updateResult,
-    });
-    failed();
-    return onFinish();
-  }
-
-  const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
-
-  const hasAlreadyProceededToSign =
-    typeof swap.hasAlreadyProceededToSign === 'boolean';
-
-  let nextStatus: SwapStatus | undefined,
-    nextStepStatus: StepStatus,
-    message: string,
-    details: string,
-    eventType: StepEventType;
-
-  if (isApproval) {
-    message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      mobileWallet ? 'on your mobile phone!' : ''
-    }`;
-    details =
-      'Waiting for approve transaction to be mined and confirmed successfully';
-    nextStepStatus = 'waitingForApproval';
-    nextStatus = undefined;
-    eventType = StepEventType.TX_EXECUTION;
-  } else if (hasAlreadyProceededToSign) {
-    message = 'Transaction is expired. Please try again.';
-    nextStepStatus = 'failed';
-    nextStatus = 'failed';
-    details = '';
-    eventType = StepEventType.FAILED;
-  } else {
-    message = 'Executing transaction ...';
-    nextStepStatus = 'running';
-    nextStatus = 'running';
-    details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
-    eventType = StepEventType.TX_EXECUTION;
-  }
-
-  const updateResult = updateSwapStatus({
-    getStorage,
-    setStorage,
-    nextStepStatus,
-    nextStatus,
-    message: message,
-    details: details,
-    hasAlreadyProceededToSign: isApproval
-      ? undefined
-      : hasAlreadyProceededToSign,
-    errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
-  });
-
-  if (eventType === StepEventType.FAILED) {
-    notifier({
-      event: {
-        type: eventType,
-        reason: message,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
         inputAmount: getLastFinishedStepInput(swap),
         inputAmountUsd: getLastFinishedStepInputUsd(swap),
       },
       ...updateResult,
     });
-  } else {
-    notifier({
-      event: { type: eventType, status: StepExecutionEventStatus.SEND_TX },
-      ...updateResult,
-    });
-  }
-
-  if (hasAlreadyProceededToSign) {
     failed();
-    onFinish();
-    return;
-  }
-
-  const walletSigners = await getSigners(sourceWallet.walletType);
-
-  const signer = walletSigners.getSigner(txType);
-  signer.signAndSendTx(tx, walletAddress, chainId).then(
-    ({ hash, response }) => {
-      const explorerUrl = getScannerUrl(
-        hash,
-        currentStepNamespace.network,
-        meta.blockchains
-      );
-      setStepTransactionIds(
-        actions,
-        hash,
-        explorerUrl &&
-          (!response || (response && !response.hashRequiringUpdate))
-          ? {
-              url: explorerUrl,
-              description: isApproval ? 'Approve' : 'Swap',
-            }
-          : undefined
-      );
-      // response used for evm transactions to get receipt and track replaced
-      if (response) {
-        setTransactionDataByHash(hash, { response });
-      }
-      schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-      next();
-      onFinish();
-    },
-    (error) => {
-      if (swap.status === 'failed') {
-        return;
-      }
-
-      const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-        prettifyErrorMessage(error);
-
-      warn(error, {
-        tags: {
-          requestId: swap.requestId,
-          rpc: true,
-          swapper: currentStep?.swapperId || '',
-          walletType: sourceWallet?.walletType || '',
-        },
-        context: SignerError.isSignerError(error)
-          ? error.getErrorContext()
-          : {},
-      });
-
-      const updateResult = updateSwapStatus({
-        getStorage,
-        setStorage,
-        nextStatus: 'failed',
-        nextStepStatus: 'failed',
-        message: extraMessage,
-        details: extraMessageDetail,
-        errorCode: extraMessageErrorCode,
-        trace: error?.cause,
-      });
-
-      notifier({
-        event: {
-          type: StepEventType.FAILED,
-          reason: extraMessage,
-          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-          inputAmount: getLastFinishedStepInput(swap),
-          inputAmountUsd: getLastFinishedStepInputUsd(swap),
-        },
-        ...updateResult,
-      });
-      failed();
-      onFinish();
-    }
-  );
+  };
 }
 
 export function checkWaitingForConnectWalletChange(params: {
@@ -1442,6 +1334,7 @@ export function retryOn(
     }
   });
 
+  console.log({ walletAndNetworkMatched, onlyWalletMatched, wallet, network });
   let finalQueueToBeRun: QueueType | undefined = undefined;
   if (walletAndNetworkMatched.length > 0) {
     finalQueueToBeRun = walletAndNetworkMatched[0];
