@@ -1,6 +1,6 @@
 {
   "name": "@arlert-dev/logging-subscriber",
-  "version": "0.9.1-next.0",
+  "version": "0.9.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "dependencies": {
-    "@arlert-dev/logging-types": "^0.9.1-next.0"
+    "@arlert-dev/logging-types": "^0.9.1-next.1"
   },
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path logging/subscriber",

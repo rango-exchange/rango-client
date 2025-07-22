@@ -1,6 +1,6 @@
 {
   "name": "@arlert-dev/provider-coinbase",
-  "version": "0.47.1-next.3",
+  "version": "0.47.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@arlert-dev/signer-evm": "^0.37.1-next.0",
-    "@arlert-dev/signer-solana": "^0.41.1-next.0",
-    "@arlert-dev/wallets-shared": "^0.46.1-next.3",
+    "@arlert-dev/signer-evm": "^0.37.1-next.1",
+    "@arlert-dev/signer-solana": "^0.41.1-next.1",
+    "@arlert-dev/wallets-shared": "^0.46.1-next.4",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.88"
   },
