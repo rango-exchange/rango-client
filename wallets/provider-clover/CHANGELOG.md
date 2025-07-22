@@ -1,3 +1,12 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.48.0...provider-clover@0.49.0) (2025-07-22)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.47.0](https://github.com/rango-exchange/rango-client/compare/provider-clover@0.46.1...provider-clover@0.47.0) (2025-06-09)
 
 

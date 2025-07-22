@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.5.0...signer-sui@0.6.0) (2025-07-22)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.4.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.3.0...signer-sui@0.4.0) (2025-06-09)
 
 

@@ -1,3 +1,22 @@
+# [0.33.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.32.0...wallets-react@0.33.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* abort all namespace connections if user rejects one connect request ([5824a96](https://github.com/rango-exchange/rango-client/commit/5824a96c8c9d8075c730a19de3b78caccbb04778))
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.30.1...wallets-react@0.31.0) (2025-06-09)
 
 

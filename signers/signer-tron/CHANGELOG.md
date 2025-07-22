@@ -1,3 +1,12 @@
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/signer-tron@0.36.0...signer-tron@0.37.0) (2025-07-22)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.35.0](https://github.com/rango-exchange/rango-client/compare/signer-tron@0.34.0...signer-tron@0.35.0) (2025-06-09)
 
 
