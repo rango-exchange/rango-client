@@ -1,3 +1,17 @@
+# [0.48.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.47.0...queue-manager-rango-preset@0.48.0) (2025-07-22)
+
+
+### Features
+
+* redesign swap details modal ([ef59df5](https://github.com/rango-exchange/rango-client/commit/ef59df5ade0f5f05f8415f6ccfbe4ded368bfd99))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.46.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.45.1...queue-manager-rango-preset@0.46.0) (2025-06-09)
 
 

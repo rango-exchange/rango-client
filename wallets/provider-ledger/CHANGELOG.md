@@ -1,3 +1,17 @@
+# [0.18.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.17.0...provider-ledger@0.18.0) (2025-07-22)
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.16.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.15.1...provider-ledger@0.16.0) (2025-06-09)
 
 

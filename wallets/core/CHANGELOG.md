@@ -1,3 +1,24 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.45.0...wallets-core@0.46.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* abort all namespace connections if user rejects one connect request ([5824a96](https://github.com/rango-exchange/rango-client/commit/5824a96c8c9d8075c730a19de3b78caccbb04778))
+* handle trust wallet in app browser user rejection error ([1b1d07f](https://github.com/rango-exchange/rango-client/commit/1b1d07f9155bbd7dbe3f7a9157b353e4a2a3cc40))
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/rango-exchange/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+* migrate rabby to use hub ([e25ba8c](https://github.com/rango-exchange/rango-client/commit/e25ba8c52e2a603ba0689e91773fd6edebf3003f))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/rango-exchange/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.43.0...wallets-core@0.44.0) (2025-06-09)
 
 
