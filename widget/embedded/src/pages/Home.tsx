@@ -1,7 +1,7 @@
 import type { SelectedQuote } from '../types';
 
-import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@arlert-dev/ui';
+import { i18n } from '@lingui/core';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -298,6 +298,7 @@ export function Home() {
           isVisible={isVisibleExpanded}
         />
       ) : null}
+      <div>Test Mode</div>
     </MainContainer>
   );
 }
