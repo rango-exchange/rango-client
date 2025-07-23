@@ -13,6 +13,7 @@ import {
 } from '../../components/index.js';
 
 import {
+  BlockChainTypography,
   chainNameStyles,
   Container,
   skeletonStyles,
@@ -95,12 +96,12 @@ export function TokenSection(props: TokenSectionProps) {
                   </>
                 )}
               </TitleContainer>
-              <Typography
+              <BlockChainTypography
                 variant="body"
                 size="medium"
                 className={chainNameStyles()}>
                 {error || (!loading && !chain) ? i18n.t('Select Chain') : chain}
-              </Typography>
+              </BlockChainTypography>
             </>
           )}
         </div>

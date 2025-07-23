@@ -1,16 +1,8 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { css, darkTheme, styled } from '@rango-dev/ui';
 
-export const WalletContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-});
-
-export const TooltipErrorContent = styled('div', {
-  maxWidth: 280,
-  '& ._typography': {
-    wordWrap: 'break-word',
-    display: 'block',
-  },
+export const wordWrap = css({
+  wordWrap: 'break-word',
+  display: 'block',
 });
 
 export const ProfileBanner = styled('img', {

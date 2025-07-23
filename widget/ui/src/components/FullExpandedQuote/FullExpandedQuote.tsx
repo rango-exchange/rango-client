@@ -4,11 +4,12 @@ import type { Tag } from 'rango-types/lib/api/main';
 import { i18n } from '@lingui/core';
 import React, { useState } from 'react';
 
-import { ErrorIcon, WarningIcon } from '../../icons/index.js';
+import { ErrorIcon, InfoIcon, WarningIcon } from '../../icons/index.js';
 import { ChainToken } from '../ChainToken/index.js';
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
 import { QuoteTag } from '../QuoteTag/index.js';
+import { textTruncate } from '../TokenAmount/TokenAmount.styles.js';
 import { NumericTooltip, Tooltip } from '../Tooltip/index.js';
 import { Typography } from '../Typography/index.js';
 
@@ -28,6 +29,7 @@ import {
 import {
   IconHighlight,
   lastStepStyle,
+  OutputPriceValue,
   OutputSection,
   RouteContainer,
   RouteHeader,
@@ -46,6 +48,7 @@ import {
 import { TokenSection } from './FullExpandedQuote.TokenSection.js';
 import { TooltipContent } from './FullExpandedQuote.Tooltip.js';
 
+const MAX_OUTPUT_AMOUNT_LENGTH_FOR_INFO_ICON = 7;
 export function FullExpandedQuote(props: PropTypes) {
   const {
     loading,
@@ -244,9 +247,16 @@ export function FullExpandedQuote(props: PropTypes) {
                           open={
                             !props.outputPrice.realValue ? false : undefined
                           }>
-                          <Typography size="xmedium" variant="title">
+                          <OutputPriceValue
+                            className={textTruncate()}
+                            size="xmedium"
+                            variant="title">
                             {props.outputPrice.value}
-                          </Typography>
+                          </OutputPriceValue>
+                          {props.outputPrice.value.length >
+                            MAX_OUTPUT_AMOUNT_LENGTH_FOR_INFO_ICON && (
+                            <InfoIcon color="gray" size={12} />
+                          )}
                           <Divider size={4} direction="horizontal" />
                           <Typography size="xmedium" variant="title">
                             {step.to.token.displayName}
