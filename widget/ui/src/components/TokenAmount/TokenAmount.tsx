@@ -21,7 +21,7 @@ import {
 
 const TOKEN_NAME_TRUNCATE_THRESHOLD = 11;
 const PRICE_VALUE_TOOLTIP_THRESHOLD = 14;
-export const USD_VALUE_TOOLTIP_THRESHOLD = 7;
+export const USD_VALUE_TOOLTIP_THRESHOLD = 8;
 const MAX_VERTICAL_PRICE_VALUE_LENGTH = 30;
 
 export function TokenAmount(props: PropTypes) {
@@ -63,7 +63,7 @@ export function TokenAmount(props: PropTypes) {
               style={{
                 fontWeight: 600,
                 ...(isHorizontal && {
-                  maxWidth: '154px',
+                  maxWidth: '145px',
                 }),
                 ...(isVertical && {
                   whiteSpace: 'normal',
