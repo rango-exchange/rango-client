@@ -21,7 +21,7 @@
   "dependencies": {
     "@arlert-dev/logging-console": "^0.9.1-next.1",
     "@arlert-dev/logging-subscriber": "^0.9.1-next.1",
-    "@arlert-dev/widget-embedded": "^0.45.1-next.10",
+    "@arlert-dev/widget-embedded": "^0.45.1-next.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
