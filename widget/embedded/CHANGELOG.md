@@ -1,3 +1,20 @@
+# [0.46.0](https://github.com/arlert-armin/rango-client/compare/widget-embedded@0.45.0...widget-embedded@0.46.0) (2025-07-23)
+
+
+### Features
+
+* add derivation path to swap wallets ([0728ac4](https://github.com/arlert-armin/rango-client/commit/0728ac40a67f648d254db2461627b7cd408a28c5))
+* add disconnect wallet button to detached modal ([80303b1](https://github.com/arlert-armin/rango-client/commit/80303b1ecbdc0351198d30431d3bc081b6ad2d13))
+* add status to textfield ([d9dcb23](https://github.com/arlert-armin/rango-client/commit/d9dcb237b46a12ffab5c965dd9d51de281c777e6))
+* redesign swap details modal ([ef59df5](https://github.com/arlert-armin/rango-client/commit/ef59df5ade0f5f05f8415f6ccfbe4ded368bfd99))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/arlert-armin/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
 ## [0.44.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.44.0...widget-embedded@0.44.1) (2025-06-10)
 
 
