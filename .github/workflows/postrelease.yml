@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  update-next:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,11 +14,8 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
 
-      - name: Update Next Branch
+      - name: Post Release
         run: yarn run post-release-prod
         env:
           REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
-          # Github will create .npmrc based on this env variable.
-          # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
