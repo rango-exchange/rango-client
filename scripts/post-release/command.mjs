@@ -12,6 +12,20 @@ async function run() {
   await checkout('next');
   await pull();
   await merge('main', { mergeStrategy: '--no-ff' });
+
+  // Commit changes with a "skip ci" flag to prevent triggering CI pipelines for this sync merge.
+  // "--no-verify" is used to bypass commit hooks (e.g., commitlint, pre-commit).
+  await execa('git', [
+    'commit',
+    '-m',
+    'chore: sync next with main',
+    '-m',
+    '[skip ci]',
+    '--no-verify',
+  ]).catch((error) => {
+    throw new GitError(`git commit failed. \n ${error.stderr}`);
+  });
+
   await push();
 }
 
