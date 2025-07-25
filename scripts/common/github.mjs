@@ -41,9 +41,11 @@ export async function getGithubReleaseFor(pkg) {
  * @param {import('./typedefs.mjs').Package} pkg
  */
 export async function makeGithubRelease(pkg) {
-  const notes = await generateChangelog(pkg, {
-    saveToFile: false,
-  });
+  const notes = '';
+  for await (chunk of generateChangelog(pkg)) {
+    notes += chunk;
+  }
+
   const tagName = generateTagName(pkg);
   const output = await execa('gh', [
     'release',

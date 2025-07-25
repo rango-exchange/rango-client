@@ -54,13 +54,6 @@ export class IncreaseVersionFailedError extends Error {
   }
 }
 
-export class GenerateChangelogFailedError extends Error {
-  name = 'GenerateChangelogFailedError';
-  constructor(msg) {
-    super(msg);
-  }
-}
-
 export class UnableToProceedPublishError extends Error {
   name = 'UnableToProceedPublishError';
   constructor(msg) {
@@ -111,3 +104,4 @@ export class VercelError extends Error {
     super(msg);
   }
 }
+
