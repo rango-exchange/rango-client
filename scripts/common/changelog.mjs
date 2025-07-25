@@ -1,49 +1,96 @@
-import { execa } from 'execa';
-import { GenerateChangelogFailedError, YarnError } from './errors.mjs';
 import { packageNameWithoutScope } from './utils.mjs';
+import { ConventionalChangelog } from 'conventional-changelog';
+import { ConventionalGitClient } from '@conventional-changelog/git-client';
+import { WriteStream } from 'node:fs';
+import fs from 'node:fs';
+import path from 'node:path';
+
+/**
+ * Retrieving some useful information when you are going to generate a changelog
+ *
+ * @param {import("./typedefs.mjs").Package} pkg
+ */
+export async function getInfoBeforeGeneratingChangelog(pkg) {
+  const gitClient = new ConventionalGitClient(process.cwd());
+  const tagsParams = {
+    prefix: `${packageNameWithoutScope(pkg.name)}@`,
+  };
+  const semverTagsStream = gitClient.getSemverTags(tagsParams);
+  const semverTags = [];
+  for await (const tag of semverTagsStream) {
+    semverTags.push(tag);
+  }
+
+  const commitsParams = {
+    merges: false,
+    from: semverTags[0],
+    path: pkg.location,
+  };
+  const commitsStream = gitClient.getCommits(commitsParams);
+
+  const commits = [];
+  for await (const commit of commitsStream) {
+    commits.push(commit);
+  }
+
+  return {
+    /** Where is considering as starting point, it is genrally a tag. undefined means it's the first release.'*/
+    from: semverTags[0],
+    /** How many commits this release has. */
+    commitsCount: commits.length,
+  };
+}
+
+/**
+ * Create a write stream for the target package's changelog.
+ *
+ * @param {import("./typedefs.mjs").Package} pkg
+ * @returns {WriteStream}
+ */
+export function changelogFileStream(pkg) {
+  const changelogPath = path.join(pkg.location, 'CHANGELOG.md');
+  const file = fs.createWriteStream(changelogPath, {
+    encoding: 'utf-8',
+    flags: 'a',
+  });
+
+  return file;
+}
 
 /**
  * Generate a changelog by using convetional commit format.
+ * It uses tags to identify releases.
  *
  * @param {import("./typedefs.mjs").Package} pkg
- * @param {Object} options
- * @param {boolean} options.saveToFile `true` for using it for creating `pkg/CHANGELOG.com` and `false` for Github Release note.
+ * @returns {WriteStream}
  */
-export async function generateChangelog(pkg, options) {
-  const { saveToFile = false } = options || {};
+export async function generateChangelog(pkg) {
+  const generator = new ConventionalChangelog(process.cwd());
+  // TODO: idk why without .json at the was working before
+  generator.readPackage(`${pkg.location}/package.json`);
+  generator.loadPreset('angular');
 
-  const conventionalChangelogBinPath = await execa('yarn', [
-    'bin',
-    'conventional-changelog',
-  ])
-    .then((result) => result.stdout)
-    .catch((err) => {
-      throw new YarnError(`GetBinaryPathFailed: \n${err.stdout}`);
-    });
+  let commitsOptions = {
+    path: pkg.location,
+  };
 
+  // Our tagging is using lerna convention which is package-name@version
+  // for example for @rango-dev/wallets-core, it will be wallets-core@1.1.0
   const tagName = packageNameWithoutScope(pkg.name);
-  const command = [
-    'conventional-changelog',
-    '-p',
-    'angular',
-    '-l',
-    `${tagName}`,
-    '-k',
-    pkg.location,
-    '--commit-path',
-    pkg.location,
-  ];
+  generator.tags({
+    prefix: `${tagName}@`,
+  });
+  generator.commits(commitsOptions);
 
-  if (saveToFile) {
-    const changelogPath = `${pkg.location}/CHANGELOG.md`;
-    command.push('-i', changelogPath, '-s');
-  }
+  return generator.writeStream();
+}
 
-  const result = await execa(conventionalChangelogBinPath, command)
-    .then((result) => result.stdout)
-    .catch((err) => {
-      throw new GenerateChangelogFailedError(err.stdout);
-    });
+export function generateChangelogAndSave(pkg) {
+  const changelog = generateChangelog(pkg);
+  changelog.pipe(changelogFileStream(pkg));
+}
 
-  return result;
+export function generateChangelogAndPrint(pkg) {
+  const changelog = generateChangelog(pkg);
+  changelog.pipe(process.stdout);
 }

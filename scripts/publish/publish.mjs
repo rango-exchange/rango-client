@@ -1,12 +1,9 @@
 import chalk from 'chalk';
-import { generateChangelog } from '../common/changelog.mjs';
+import { generateChangelogAndSave } from '../common/changelog.mjs';
 import { should } from '../common/features.mjs';
 import { publishOnNpm } from '../common/npm.mjs';
 import { upgradeDependents } from './upgrade.mjs';
-import {
-  addPkgFileChangesToStage,
-  sequentiallyRun,
-} from './utils.mjs';
+import { addPkgFileChangesToStage, sequentiallyRun } from './utils.mjs';
 
 /**
  *
@@ -44,7 +41,7 @@ async function publishTask(pkg, { onUpdateState }) {
 
   if (should('generateChangelog')) {
     console.log(chalk.green('[2/4]'), `Making changelog`);
-    await generateChangelog(pkg, { saveToFile: true });
+    generateChangelogAndSave(pkg);
   } else {
     console.log(chalk.green('[2/4]'), `Skipping changelog and github release.`);
   }
