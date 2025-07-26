@@ -1,4 +1,4 @@
-import type { Provider } from '../utils.js';
+import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
@@ -8,9 +8,9 @@ import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const evmProvider = getNetworkInstance(provider, Networks.ETHEREUM);
+  const bitcoinInstance = getNetworkInstance(provider, Networks.BTC);
+  const { BTCSigner } = await import('./signers/utxoSigner.js');
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
-  signers.registerSigner(TxType.EVM, new DefaultEvmSigner(evmProvider));
+  signers.registerSigner(TxType.TRANSFER, new BTCSigner(bitcoinInstance));
   return signers;
 }
