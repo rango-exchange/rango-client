@@ -94,13 +94,9 @@ export function WalletsPage() {
               wallet,
               namespacesState
             );
-            const namespaceSelection = wallet.needsNamespace?.selection;
 
             let walletState = wallet.state;
-            if (
-              isWalletPartiallyConnected &&
-              namespaceSelection === 'multiple'
-            ) {
+            if (isWalletPartiallyConnected) {
               // If the wallet is connected to only a subset of namespaces, and the user has the option to connect to additional ones, we label the wallet as `Partially Connected`
               walletState = WalletState.PARTIALLY_CONNECTED;
             }

@@ -551,7 +551,11 @@ export function checkIsWalletPartiallyConnected(
     (namespace) => !namespace.unsupported
   );
 
-  return supportedNamespaces.some(
-    (namespace) => !namespacesState?.get(namespace.value)?.connected
+  // If the wallet is connected to only a subset of namespaces, and the user has the option to connect to additional ones, we label the wallet as `Partially Connected`
+  return (
+    wallet.needsNamespace.selection === 'multiple' &&
+    supportedNamespaces.some(
+      (namespace) => !namespacesState?.get(namespace.value)?.connected
+    )
   );
 }
