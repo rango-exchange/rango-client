@@ -42,3 +42,6 @@ storybook-static
 .yalc
 yalc.lock
 .nx
+
+examples/**/node_modules
+examples/**/build
