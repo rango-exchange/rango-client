@@ -9,3 +9,7 @@ export const WIDGET_UI_ID = {
   EXPANDED_BOX_ID: 'rango-expanded-box',
   ...UI_ID,
 };
+
+// Following constants will be removed after test.
+export const DEEP_LINK_DEFAULT_TARGET_URL = 'https://app.rango.exchange/bridge';
+export const DEEP_LINK_DEFAULT_APP_HOST = 'app.rango.exchange';
