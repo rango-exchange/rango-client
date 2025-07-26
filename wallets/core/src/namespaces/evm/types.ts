@@ -8,7 +8,10 @@ import type {
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (chain?: Chain | ChainId) => Promise<AccountsWithActiveChain>;
+  connect: (
+    chain?: Chain | ChainId,
+    options?: ConnectOptions
+  ) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
 }
 
@@ -19,4 +22,5 @@ export type Chain = AddEthereumChainParameter;
 
 export type ConnectOptions = {
   switchOrAddNetwork?: (instance: ProviderAPI, chain: ChainId | Chain) => void;
+  derivationPath?: string;
 };
