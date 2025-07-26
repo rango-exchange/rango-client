@@ -1,7 +1,7 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
-import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { NamespaceData } from '@rango-dev/wallets-core/store';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;
@@ -28,10 +28,11 @@ export type NamespaceItemPropTypes =
   | CheckboxNamespaceItemPropTypes;
 
 export type NamespaceDetachedItemPropTypes = {
-  targetWallet: ExtendedModalWalletInfo;
-  initialConnect?: boolean;
   namespace: LegacyNamespaceMeta;
-  navigateToDerivationPath: () => void;
-  derivationPath?: string;
-  singleSelection?: boolean;
+  state: NamespaceData;
+  initialConnect?: boolean;
+  handleConnect: (options?: {
+    shouldAskForDerivationPath?: boolean;
+  }) => Promise<void>;
+  handleDisconnect: () => Promise<void>;
 };

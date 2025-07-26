@@ -1,10 +1,11 @@
 import type { PropTypes } from './Detached.types';
 import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import { Alert, Button, Divider, Image, MessageBox } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
@@ -12,22 +13,93 @@ import { NamespacesHeader } from './Detached.styles';
 import { NamespaceDetachedItem } from './NamespaceDetachedItem';
 import { NamespaceList, StyledButton } from './Namespaces.styles';
 
-interface NamespaceItemProps {
-  namespace: LegacyNamespaceMeta;
-  targetWallet: PropTypes['value']['targetWallet'];
-  singleSelection: boolean;
-  selectedNamespaces?: PropTypes['selectedNamespaces'];
-  navigateToDerivationPath: (namespace: string) => void;
-}
-
-const NamespaceItem = React.memo(
-  ({
-    namespace,
-    targetWallet,
-    singleSelection,
+export function Detached(props: PropTypes) {
+  const {
+    value,
     selectedNamespaces,
+    onConfirm,
+    onDisconnectWallet,
     navigateToDerivationPath,
-  }: NamespaceItemProps) => {
+  } = props;
+  const { targetWallet } = value;
+
+  const { connect, disconnect, state } = useWallets();
+  const walletType = targetWallet.type;
+  const walletState = state(walletType);
+  const namespacesProperty = targetWallet.properties?.find(
+    (property) => property.name === 'namespaces'
+  );
+  const derivationPathProperty = targetWallet.properties?.find(
+    (property) => property.name === 'derivationPath'
+  );
+
+  const singleSelection = namespacesProperty?.value.selection === 'single';
+
+  const handleConnectNamespace = async (
+    namespace: Namespace,
+    options?: {
+      derivationPath?: string;
+      shouldAskForDerivationPath?: boolean;
+    }
+  ) => {
+    if (singleSelection) {
+      // For single-selection wallets, disconnect all namespaces before connecting a new namespace
+      await disconnect(walletType);
+    }
+    if (derivationPathProperty && options?.shouldAskForDerivationPath) {
+      navigateToDerivationPath(namespace);
+    } else {
+      await connect(walletType, [
+        {
+          namespace: namespace,
+          network: '',
+          derivationPath: options?.derivationPath ?? undefined,
+        },
+      ]);
+    }
+  };
+
+  const handleDisconnectNamespace = async (namespace: Namespace) => {
+    await disconnect(walletType, [namespace]);
+  };
+
+  const renderNamespaceListHeader = () => {
+    if (!!singleSelection) {
+      return (
+        <>
+          <Divider size={20} />
+          <Alert
+            id="widget-wallet-stateful-connect-alert"
+            variant="alarm"
+            type="info"
+            title={i18n.t(
+              'This wallet can only connect to one chain at a time.'
+            )}
+          />
+          <Divider size={30} />
+        </>
+      );
+    }
+    return (
+      <>
+        <Divider size={30} />
+        <NamespacesHeader>
+          <Button
+            id="widget-detached-disconnect-wallet-btn"
+            variant="ghost"
+            type="error"
+            size="xsmall"
+            disabled={walletState.connecting || !walletState.connected}
+            onClick={onDisconnectWallet}>
+            {i18n.t('Disconnect wallet')}
+          </Button>
+        </NamespacesHeader>
+        <Divider size={16} />
+      </>
+    );
+  };
+
+  const renderNamespaceItem = (namespace: LegacyNamespaceMeta) => {
     if (namespace.unsupported) {
       return <NamespaceUnsupportedItem namespace={namespace} />;
     }
@@ -37,43 +109,29 @@ const NamespaceItem = React.memo(
         selectedNamespaceItem.namespace === namespace.value
     );
 
+    const namespaceState = walletState.namespaces?.get(namespace.value);
+
+    if (!namespaceState) {
+      throw new Error(`State for ${namespace.value} was not found!`);
+    }
+
     return (
       <NamespaceDetachedItem
-        targetWallet={targetWallet}
         namespace={namespace}
-        singleSelection={singleSelection}
-        navigateToDerivationPath={() =>
-          navigateToDerivationPath(namespace.value)
-        }
         initialConnect={!!selectedNamespace}
-        derivationPath={selectedNamespace?.derivationPath}
+        state={namespaceState}
+        handleConnect={async (options) =>
+          handleConnectNamespace(namespace.value, {
+            derivationPath: selectedNamespace?.derivationPath,
+            shouldAskForDerivationPath: options?.shouldAskForDerivationPath,
+          })
+        }
+        handleDisconnect={async () =>
+          handleDisconnectNamespace(namespace.value)
+        }
       />
     );
-  }
-);
-
-NamespaceItem.displayName = 'NamespaceItem';
-
-export function Detached(props: PropTypes) {
-  const {
-    value,
-    selectedNamespaces,
-    onDisconnectWallet,
-    navigateToDerivationPath,
-  } = props;
-  const { targetWallet } = value;
-
-  const { state } = useWallets();
-  const walletState = state(targetWallet.type);
-  const namespacesProperty = useMemo(
-    () =>
-      targetWallet.properties?.find(
-        (property) => property.name === 'namespaces'
-      ),
-    [targetWallet.properties]
-  );
-
-  const singleSelection = namespacesProperty?.value.selection === 'single';
+  };
 
   return (
     <>
@@ -87,46 +145,11 @@ export function Detached(props: PropTypes) {
         )}
         icon={<Image src={targetWallet.image} size={45} />}
       />
-      {!!singleSelection ? (
-        <>
-          <Divider size={20} />
-          <Alert
-            id="widget-wallet-stateful-connect-alert"
-            variant="alarm"
-            type="info"
-            title={i18n.t(
-              'This wallet can only connect to one chain at a time.'
-            )}
-          />
-          <Divider size={30} />
-        </>
-      ) : (
-        <>
-          <Divider size={30} />
-          <NamespacesHeader>
-            <Button
-              id="widget-detached-disconnect-wallet-btn"
-              variant="ghost"
-              type="error"
-              size="xsmall"
-              disabled={walletState.connecting || !walletState.connected}
-              onClick={onDisconnectWallet}>
-              {i18n.t('Disconnect wallet')}
-            </Button>
-          </NamespacesHeader>
-          <Divider size={16} />
-        </>
-      )}
-      <NamespaceList id="widget-detached-namespace-list" as={'ul'}>
+      {renderNamespaceListHeader()}
+      <NamespaceList id="widget-detached-namespace-list">
         {targetWallet.needsNamespace?.data.map((namespace, index, array) => (
           <React.Fragment key={namespace.id}>
-            <NamespaceItem
-              namespace={namespace}
-              targetWallet={targetWallet}
-              singleSelection={singleSelection}
-              selectedNamespaces={selectedNamespaces}
-              navigateToDerivationPath={navigateToDerivationPath}
-            />
+            {renderNamespaceItem(namespace)}
             {index !== array.length - 1 && <Divider size={10} />}
           </React.Fragment>
         ))}
@@ -135,7 +158,7 @@ export function Detached(props: PropTypes) {
       <StyledButton
         id="widget-name-space-confirm-btn"
         type="primary"
-        onClick={props.onConfirm}>
+        onClick={onConfirm}>
         {i18n.t('Done')}
       </StyledButton>
     </>
