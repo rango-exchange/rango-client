@@ -1,6 +1,9 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { type BlockchainMeta, evmBlockchains } from 'rango-types';
 
+import getSigners from './signer.js';
+import { evmRabby } from './utils.js';
+
 export const WALLET_ID = 'rabby';
 
 export const info: ProviderInfo = {
@@ -29,6 +32,10 @@ export const info: ProviderInfo = {
           },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners(evmRabby()) },
     },
   ],
 };

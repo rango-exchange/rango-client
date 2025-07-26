@@ -3,6 +3,9 @@ import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { Networks } from '@rango-dev/wallets-shared';
 
+import getSigners from './signer.js';
+import { getInstanceOrThrow } from './utils.js';
+
 export const WALLET_ID = 'unisat';
 
 export const info: ProviderInfo = {
@@ -31,6 +34,10 @@ export const info: ProviderInfo = {
           },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

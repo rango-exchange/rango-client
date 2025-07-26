@@ -35,6 +35,16 @@ export function phantom(): Provider | null {
   return instances;
 }
 
+export function getInstanceOrThrow(): Provider {
+  const instances = phantom();
+
+  if (!instances) {
+    throw new Error('Phantom is not injected. Please check your wallet.');
+  }
+
+  return instances;
+}
+
 export function evmPhantom(): EvmProviderApi {
   const instances = phantom();
 

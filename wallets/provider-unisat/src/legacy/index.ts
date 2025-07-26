@@ -9,9 +9,8 @@ import {
 } from 'rango-types';
 
 import { info, WALLET_ID } from '../constants.js';
+import signer from '../signer.js';
 import { type Provider, unisat as unisat_instance } from '../utils.js';
-
-import signer from './signer.js';
 
 const config = {
   type: WALLET_ID,
