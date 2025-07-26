@@ -11,6 +11,9 @@ import {
   type TransferBlockchainMeta,
 } from 'rango-types';
 
+import getSigners from './signer.js';
+import { getInstanceOrThrow } from './utils.js';
+
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
   LegacyNetworks.POLYGON,
@@ -74,6 +77,10 @@ export const info: ProviderInfo = {
           },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

@@ -1,4 +1,4 @@
-import type { Provider } from '../utils.js';
+import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';

@@ -4,9 +4,8 @@ import type { Connect, WalletInfo } from '@rango-dev/wallets-shared';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
+import signer from '../signer.js';
 import { suiWalletInstance } from '../utils.js';
-
-import signer from './signer.js';
 
 const WALLET = WalletTypes.SLUSH;
 

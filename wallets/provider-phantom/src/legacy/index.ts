@@ -27,9 +27,8 @@ import {
 } from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
+import signer from '../signer.js';
 import { phantom as phantom_instance, type Provider } from '../utils.js';
-
-import signer from './signer.js';
 
 const WALLET = WalletTypes.PHANTOM;
 
