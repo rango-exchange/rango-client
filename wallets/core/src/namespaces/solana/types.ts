@@ -7,7 +7,7 @@ import type {
 export interface SolanaActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (network?: unknown, options?: ConnectOptions) => Promise<Accounts>;
+  connect: (options?: ConnectOptions) => Promise<Accounts>;
   canEagerConnect: () => Promise<boolean>;
 }
 

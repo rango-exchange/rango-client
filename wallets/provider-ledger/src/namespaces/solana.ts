@@ -15,7 +15,7 @@ import { getSolanaAccounts, standardizeAndThrowLedgerError } from '../utils.js';
 
 const connect = builders
   .connect()
-  .action(async function (_context, _chain, options) {
+  .action(async function (_context, options) {
     if (!options?.derivationPath) {
       throw new Error('Derivation Path can not be empty.');
     }
