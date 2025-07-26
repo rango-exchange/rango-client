@@ -23,6 +23,16 @@ export function trustWallet(): Provider | null {
   return instances;
 }
 
+export function getInstanceOrThrow(): Provider {
+  const instances = trustWallet();
+
+  if (!instances) {
+    throw new Error('Trust Wallet is not injected. Please check your wallet.');
+  }
+
+  return instances;
+}
+
 export function evmTrustWallet(): EvmProviderApi {
   const instances = trustWallet();
 

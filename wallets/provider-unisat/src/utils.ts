@@ -20,6 +20,16 @@ export function unisat(): Provider | null {
   return instances;
 }
 
+export function getInstanceOrThrow(): Provider {
+  const instances = unisat();
+
+  if (!instances) {
+    throw new Error('Unisat is not injected. Please check your wallet.');
+  }
+
+  return instances;
+}
+
 export function bitcoinUnisat(): ProviderAPI {
   const instances = unisat();
   const bitcoinInstance = instances?.get(LegacyNetworks.BTC);

@@ -17,12 +17,11 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
+import signer from '../signer.js';
 import {
   type Provider,
   trustWallet as trustwallet_instance,
 } from '../utils.js';
-
-import signer from './signer.js';
 
 const WALLET = WalletTypes.TRUST_WALLET;
 
