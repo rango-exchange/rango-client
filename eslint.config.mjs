@@ -1,3 +1,8 @@
 import rangoRules from 'eslint-config-rango';
 
-export default [...rangoRules];
+export default [
+  {
+    ignores: ['examples/**']
+  },
+  ...rangoRules
+];
