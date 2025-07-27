@@ -233,7 +233,13 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
-      ? { address: step.transferTransaction?.fromWalletAddress }
+      ? {
+          address: step.transferTransaction.fromWalletAddress,
+          walletType: Object.values(swap.wallets).find(
+            (wallet) =>
+              wallet.address === step.transferTransaction?.fromWalletAddress
+          )?.walletType,
+        }
       : null) ||
     null;
   if (result == null) {

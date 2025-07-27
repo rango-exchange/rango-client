@@ -1,3 +1,12 @@
+## [0.48.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.48.0...queue-manager-rango-preset@0.48.1) (2025-07-27)
+
+
+### Bug Fixes
+
+* fix undefined wallet type for transfer transactions ([75c310c](https://github.com/rango-exchange/rango-client/commit/75c310c34335ab073ee612cb5bbde45ff1b99b3c))
+
+
+
 # [0.48.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.47.0...queue-manager-rango-preset@0.48.0) (2025-07-22)
 
 
