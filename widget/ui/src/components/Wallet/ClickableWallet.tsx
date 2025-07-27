@@ -20,8 +20,16 @@ import {
 import { WalletState } from './Wallet.types.js';
 
 function Wallet(props: WalletPropTypes) {
-  const { title, type, image, onClick, isLoading, disabled = false } = props;
-  const info = makeInfo(props.state);
+  const {
+    title,
+    type,
+    image,
+    onClick,
+    isLoading,
+    disabled = false,
+    hasDeepLink,
+  } = props;
+  const info = makeInfo(props.state, { hasDeepLink });
 
   if (isLoading) {
     return (

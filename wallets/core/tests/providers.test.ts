@@ -14,7 +14,7 @@ import {
   NamespaceBuilder,
   ProviderBuilder,
 } from '../src/builders/mod.js';
-import { garbageWalletInfo } from '../src/test-utils/fixtures.js';
+import { garbageWalletMetaData } from '../src/test-utils/fixtures.js';
 
 describe('check Provider works with Blockchain correctly', () => {
   const walletName = 'garbage-wallet';
@@ -53,8 +53,8 @@ describe('check Provider works with Blockchain correctly', () => {
       .build();
 
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'info',
-      garbageWalletInfo
+      'metadata',
+      garbageWalletMetaData
     );
     garbageWalletBuilder.add('evm', evmNamespace);
     garbageWalletBuilder.add('solana', solanaNamespace);
@@ -117,8 +117,8 @@ describe('check Provider works with Blockchain correctly', () => {
       .build();
 
     const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
-      'info',
-      garbageWalletInfo
+      'metadata',
+      garbageWalletMetaData
     );
     garbageWalletBuilder.add('evm', evmNamespace);
 
