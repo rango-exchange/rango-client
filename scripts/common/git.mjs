@@ -252,12 +252,13 @@ export async function checkout(branch) {
 
 export async function merge(branch, mergeOptions) {
   const { mergeStrategy = '', messages = [] } = mergeOptions;
-  const formattedMessages = messages.map((message) => ` -m "${message}"`);
+  const messagesWithSwitch = messages.flatMap((message) => ['-m', message]);
+
   const output = await execa('git', [
     'merge',
     mergeStrategy,
     branch,
-    ...formattedMessages,
+    ...messagesWithSwitch,
   ])
     .then(({ stdout }) => stdout)
     .catch((error) => {
