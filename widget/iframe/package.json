@@ -13,6 +13,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@arlert-dev/widget-embedded": "^0.46.3"
+    "@arlert-dev/widget-embedded": "^0.46.3-next.0"
   }
 }
