@@ -1,4 +1,13 @@
+## Widget [0.41.0] (2025-07-27)
+
+_includes `@rango-dev/widget-embedded@0.46.1`_
+
+### Bug Fixes
+
+- fix undefined wallet type for transfer transactions ([75c310c](https://github.com/rango-exchange/rango-client/commit/75c310c34335ab073ee612cb5bbde45ff1b99b3c))
+
 ## Widget [0.40.0] (2025-07-22)
+
 _includes `@rango-dev/widget-embedded@0.46.0`_
 
 ### Features
@@ -9,22 +18,21 @@ _includes `@rango-dev/widget-embedded@0.46.0`_
 - add disconnect wallet button to detached modal ([80303b1](https://github.com/rango-exchange/rango-client/commit/80303b1ecbdc0351198d30431d3bc081b6ad2d13))
 - add status to textfield ([d9dcb23](https://github.com/rango-exchange/rango-client/commit/d9dcb237b46a12ffab5c965dd9d51de281c777e6))
 
-
 ### Bug Fixes
 
 - abort all namespace connections if user rejects one connect request ([5824a96](https://github.com/rango-exchange/rango-client/commit/5824a96c8c9d8075c730a19de3b78caccbb04778))
 - handle trust wallet in app browser user rejection error ([1b1d07f](https://github.com/rango-exchange/rango-client/commit/1b1d07f9155bbd7dbe3f7a9157b353e4a2a3cc40))
 
-
 ## Widget [0.38.0] (2025-06-10)
+
 _includes `@rango-dev/widget-embedded@0.44.1`_
 
 ### Bug Fixes
 
 - layout shift on custom slippage input ([8a8fb3b](https://github.com/rango-exchange/rango-client/commit/8a8fb3b7fd88928828c4b6331dd9481fec32ed50))
 
-
 ## Widget [0.37.0] (2025-06-09)
+
 _includes `@rango-dev/widget-embedded@0.44.0`_
 
 ### Features
@@ -36,7 +44,6 @@ _includes `@rango-dev/widget-embedded@0.44.0`_
 - add new states for wallet buttons ([d337aee](https://github.com/rango-exchange/rango-client/commit/d337aeed2315173a7820d3adedb412a4a1704fcd))
 - add static test attributes ([51b1433](https://github.com/rango-exchange/rango-client/commit/51b1433ab464a7255ec9f54499df65fbf98aa66b))
 - show slippage and rate in swap box ([54aea4e](https://github.com/rango-exchange/rango-client/commit/54aea4e69413bc7383716893f091b2ef1b0ae693))
-
 
 ### Bug Fixes
 
@@ -58,9 +65,8 @@ _includes `@rango-dev/widget-embedded@0.44.0`_
 - turn autocomplete off for history search input ([97bc186](https://github.com/rango-exchange/rango-client/commit/97bc18649d0f1ee292c46837db2a1a7f00df97b1))
 - show correct terms in routing section of cross-chain transactions ([0554412](https://github.com/rango-exchange/rango-client/commit/055441200814c904d258158e0e10a14abea7386b))
 
-
-
 ## Widget [0.36.0] (2025-05-26)
+
 _includes `@rango-dev/widget-embedded@0.43.0`_
 
 ### Features
@@ -68,6 +74,7 @@ _includes `@rango-dev/widget-embedded@0.43.0`_
 - Use psbt for bitcoin on xdefi/ctrl wallet ([86abfbf](https://github.com/rango-exchange/rango-client/commit/86abfbfe725ce66de5cd344bd7a5c9894271c77e))
 
 ## Widget [0.35.0] (2025-05-21)
+
 _includes `@rango-dev/widget-embedded@0.42.3`_
 
 ### Bug Fixes
