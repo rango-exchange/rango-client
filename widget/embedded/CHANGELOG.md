@@ -1,3 +1,7 @@
+## [0.46.4](https://github.com/arlert-armin/rango-client/compare/widget-embedded@0.46.3...widget-embedded@0.46.4) (2025-07-27)
+
+
+
 ## [0.46.3](https://github.com/arlert-armin/rango-client/compare/widget-embedded@0.46.1...widget-embedded@0.46.3) (2025-07-27)
 
 
