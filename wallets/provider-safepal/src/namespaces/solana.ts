@@ -4,11 +4,12 @@ import { NamespaceBuilder } from '@rango-dev/wallets-core';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/solana';
 
+import { safePalSolanaActions } from '../actions/solana.js';
 import { WALLET_ID } from '../constants.js';
 import { solanaSafepal } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber(solanaSafepal);
+  safePalSolanaActions.changeAccountSubscriber(solanaSafepal);
 const connect = builders
   .connect()
   .action(actions.connect(solanaSafepal))
