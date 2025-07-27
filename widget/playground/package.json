@@ -26,7 +26,7 @@
     "@arlert-dev/ui": "^0.48.1-next.6",
     "@arlert-dev/wallets-react": "^0.32.1-next.3",
     "@arlert-dev/wallets-shared": "^0.46.1-next.4",
-    "@arlert-dev/widget-embedded": "^0.46.2-next.2",
+    "@arlert-dev/widget-embedded": "^0.46.2",
     "rango-sdk": "^0.1.69",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
