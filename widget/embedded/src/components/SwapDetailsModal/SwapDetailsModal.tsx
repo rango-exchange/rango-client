@@ -11,18 +11,32 @@ import { NetworkStateContent } from './SwapDetailsModal.NetworkState';
 import { WalletStateContent } from './SwapDetailsModal.WalletState';
 
 export function SwapDetailsModal(props: ModalPropTypes) {
-  const { isOpen, state, onClose, onDelete, onCancel, swap, message } = props;
+  const {
+    isOpen,
+    state,
+    switchNetworkModalState,
+    onClose,
+    onDelete,
+    onCancel,
+    swap,
+    message,
+    handleSwitchNetwork,
+  } = props;
 
   return (
     <WatermarkedModal
       open={isOpen}
       onClose={onClose}
       container={getContainer()}>
-      {state === 'waitingForConnectingWallet' && (
+      {state === 'connectWallet' && (
         <WalletStateContent swap={swap} message={message} onClose={onClose} />
       )}
-      {(state === 'waitingForNetworkChange' || state === 'networkChanged') && (
-        <NetworkStateContent message={message} status={state} />
+      {state === 'switchNetwork' && switchNetworkModalState && (
+        <NetworkStateContent
+          message={message}
+          switchNetworkModalState={switchNetworkModalState}
+          handleSwitchNetwork={handleSwitchNetwork}
+        />
       )}
       {state === 'delete' && (
         <DeleteContent

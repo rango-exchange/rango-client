@@ -716,6 +716,13 @@ export function getSwapMessages(
       case PendingSwapNetworkStatus.WaitingForNetworkChange:
         message = message || i18n.t('Waiting for changing wallet network');
         break;
+      case PendingSwapNetworkStatus.NetworkChangeFailed:
+        message =
+          message ||
+          i18n.t(
+            'The network switch could not be completed. Please try again, or switch the network manually in your wallet.'
+          );
+        break;
       default:
         message = message || '';
         break;
