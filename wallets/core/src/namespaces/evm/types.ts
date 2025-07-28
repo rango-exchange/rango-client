@@ -4,13 +4,19 @@ import type {
   AutoImplementedActionsByRecommended,
   CommonActions,
 } from '../common/types.js';
+import type { BlockchainMeta } from 'rango-types';
 
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
   connect: (chain?: Chain | ChainId) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
+  canSwitchNetwork: (params: CanSwitchNetworkParams) => boolean;
 }
+type CanSwitchNetworkParams = {
+  network: string;
+  supportedChains: BlockchainMeta[];
+};
 
 export type ProviderAPI = EIP1193Provider;
 // A 0x-prefixed hexadecimal string

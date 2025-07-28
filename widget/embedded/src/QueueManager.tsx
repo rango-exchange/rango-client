@@ -55,7 +55,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     wallet: WalletType,
     namespace: TargetNamespace
   ) => {
-    if (!canSwitchNetworkTo(wallet, namespace.network)) {
+    if (!canSwitchNetworkTo(wallet, namespace.network, namespace)) {
       return undefined;
     }
     const result = await connect(wallet, [namespace]);
@@ -70,6 +70,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const allBlockchains = blockchainsList
     .filter((blockchain) => blockchain.enabled)
     .reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (blockchainsObj: any, blockchain) => (
         (blockchainsObj[blockchain.name] = blockchain), blockchainsObj
       ),
