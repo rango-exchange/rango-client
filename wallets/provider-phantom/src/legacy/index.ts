@@ -69,11 +69,9 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
     instance?.off?.('accountChanged', handleAccountsChanged);
   };
 };
-
 const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
-
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 
@@ -168,9 +166,9 @@ const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   getInstance,
   connect,
   subscribe,
-  canSwitchNetworkTo,
   getSigners,
   getWalletInfo,
+  canSwitchNetworkTo,
   canEagerConnect,
 });
 
