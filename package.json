@@ -84,7 +84,6 @@
     "command-line-args": "^5.2.1",
     "conventional-changelog": "^7.1.0",
     "conventional-changelog-angular": "^8.0.0",
-    "conventional-changelog-cli": "^2.2.2",
     "conventional-commits-filter": "^5.0.0",
     "conventional-commits-parser": "^6.2.0",
     "conventional-recommended-bump": "^6.1.0",
