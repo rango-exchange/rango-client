@@ -86,6 +86,8 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
         method: 'wallet_addEthereumChain',
         params: [targetChain],
       });
+      // Return if target chain has been added successfully
+      return;
     }
     throw switchError;
   }
