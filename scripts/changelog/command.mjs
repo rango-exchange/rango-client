@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
-import { discoverWorkspacePackages } from '../common/repository.mjs';
 import commandLineArgs from 'command-line-args';
 import {
-  generateChangelog,
   getInfoBeforeGeneratingChangelog,
-  changelogFileStream,
   generateChangelogAndSave,
   generateChangelogAndPrint,
 } from '../common/changelog.mjs';
@@ -15,39 +12,25 @@ import {
   packageNamesToPackagesWithInfo,
 } from '../common/utils.mjs';
 
-// NOTE: changelog should be run before the tagging proccess for the new release.
+async function generateChangelogForRoot(options) {
+  const { from, commitsCount } = await getInfoBeforeGeneratingChangelog();
 
-// TODO: Add single repo flow for genrating changelog, the whole assumption here is we are in a monorepo.
-async function run() {
-  const optionDefinitions = [
-    { name: 'name', type: String },
-    { name: 'save', type: Boolean },
-  ];
-  const { name, save } = commandLineArgs(optionDefinitions);
+  if (commitsCount > 0) {
+    console.log('from:', from || 'start (first release)');
+    console.log('commits:', commitsCount);
 
-  // Create a list of packages we are going to create changelog for.
-  const packages = [];
-  if (name) {
-    const pkgs = await packageNamesToPackagesWithInfo([name]);
-    if (pkgs.length !== 1)
-      throw new Error('Your provided package is not found.', { cause: pkgs });
-
-    packages.push(pkgs[0]);
+    if (options.save) {
+      generateChangelogAndSave();
+    } else {
+      generateChangelogAndPrint();
+    }
   } else {
-    console.warn(
-      "You didn't specify any package name, so we will consider this as all the public packages should be considered."
-    );
-
-    const list = await workspacePackages();
-    list
-      .filter((pkg) => !pkg.private)
-      .forEach((pkg) => {
-        packages.push(pkg);
-      });
+    console.log(`No commits found, skipping changelog generation.`);
   }
+}
 
-  // Try generate changelog for each of them.
-  for (const pkg of packages) {
+async function generateChangelogForWorkspaceMembers(pkgs) {
+  for (const pkg of pkgs) {
     const { from, commitsCount } = await getInfoBeforeGeneratingChangelog(pkg);
 
     if (commitsCount > 0) {
@@ -65,6 +48,46 @@ async function run() {
         `No commits found for ${pkg.name}, skipping changelog generation.`
       );
     }
+  }
+}
+
+// NOTE 1: changelog should be run before the tagging proccess for the new release. checkout the steps here: https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#recommended-workflow
+// NOTE 2: we use tags. tags with package@semver format.
+// NOTE 3: when don't use any flag, we will last valid tag as starting point.
+async function run() {
+  const optionDefinitions = [
+    { name: 'name', type: String },
+    { name: 'save', type: Boolean },
+    { name: 'all', type: Boolean },
+  ];
+  const { name, save, all } = commandLineArgs(optionDefinitions);
+
+  if (name && all)
+    throw new Error('One of the --name or --all flag should be given');
+
+  if (name || all) {
+    // Create a list of packages we are going to create changelog for.
+    const pkgs = [];
+    if (name) {
+      const pkgs = await packageNamesToPackagesWithInfo([name]);
+      if (pkgs.length !== 1)
+        throw new Error('Your provided package is not found.', { cause: pkgs });
+
+      pkgs.push(pkgs[0]);
+    } else {
+      const list = await workspacePackages();
+      list
+        .filter((pkg) => !pkg.private)
+        .forEach((pkg) => {
+          pkgs.push(pkg);
+        });
+    }
+
+    await generateChangelogForWorkspaceMembers(pkgs);
+  } else {
+    await generateChangelogForRoot({
+      save,
+    });
   }
 }
 
