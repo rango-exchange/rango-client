@@ -1,6 +1,8 @@
 import { ReverseIcon } from '@rango-dev/ui';
 import React from 'react';
 
+import { useSwapMode } from '../../hooks/useSwapMode';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 
 import {
@@ -11,6 +13,9 @@ import {
 
 export function SwitchFromAndToButton() {
   const switchFromAndTo = useQuoteStore.use.switchFromAndTo();
+  const fromBlockchain = useQuoteStore.use.fromBlockchain();
+  const { findNativeToken } = useAppStore();
+  const swapMode = useSwapMode();
 
   return (
     <SwitchButtonContainer>
@@ -24,7 +29,12 @@ export function SwitchFromAndToButton() {
           setTimeout(() => {
             button.classList.remove('rotate');
           }, ROTATE_ANIMATION_DURATION);
-          switchFromAndTo();
+          switchFromAndTo({
+            toToken:
+              swapMode === 'refuel' && !!fromBlockchain
+                ? findNativeToken(fromBlockchain)
+                : undefined,
+          });
         }}>
         <ReverseIcon size={12} />
       </StyledButton>

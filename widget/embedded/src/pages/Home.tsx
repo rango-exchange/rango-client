@@ -19,6 +19,7 @@ import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
+import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
@@ -69,6 +70,7 @@ export function Home() {
     setCustomSlippage,
   } = useAppStore();
 
+  const swapMode = useSwapMode();
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
@@ -148,6 +150,18 @@ export function Home() {
     setCustomSlippage(slippage);
   };
 
+  const handleInputTokenClick = (mode: 'from' | 'to') => {
+    if (mode === 'from') {
+      onHandleNavigation(navigationRoutes.fromSwap);
+    } else {
+      onHandleNavigation(
+        swapMode === 'swap'
+          ? navigationRoutes.toSwap
+          : navigationRoutes.toSwap + '/' + navigationRoutes.blockchains
+      );
+    }
+  };
+
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
@@ -192,7 +206,9 @@ export function Home() {
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,
-          title: config.title || i18n.t('Swap'),
+          title:
+            config.title ||
+            (swapMode === 'swap' ? i18n.t('Swap') : i18n.t('Refuel')),
           suffix: (
             <HeaderButtons
               hidden={isExpandable ? ['refresh'] : undefined}
@@ -209,13 +225,7 @@ export function Home() {
             fetchingQuote={fetchingQuote}
             fetchMetaStatus={fetchMetaStatus}
             isExpandable={isExpandable}
-            onClickToken={(mode) => {
-              onHandleNavigation(
-                mode === 'from'
-                  ? navigationRoutes.fromSwap
-                  : navigationRoutes.toSwap
-              );
-            }}
+            onClickToken={handleInputTokenClick}
           />
           <Divider size="2" />
           {!isExpandable ? (

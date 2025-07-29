@@ -95,7 +95,7 @@ export interface QuoteState {
   sanitizeInputAmount: (amount: string) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (retryQuote: RetryQuote) => void;
-  switchFromAndTo: () => void;
+  switchFromAndTo: (options?: { toToken?: Token }) => void;
   setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
   setCustomDestination: (address: string | null) => void;
@@ -276,12 +276,12 @@ export const useQuoteStore = createSelectors(
           selectedQuote: null,
         });
       },
-      switchFromAndTo: () =>
+      switchFromAndTo: (options) =>
         set((state) => ({
           fromBlockchain: state.toBlockchain,
           fromToken: state.toToken,
           toBlockchain: state.fromBlockchain,
-          toToken: state.fromToken,
+          toToken: options?.toToken ?? state.fromToken,
           inputAmount: state.outputAmount?.toString() || '',
           inputUsdValue: state.toToken
             ? getUsdValue(state.toToken, state.outputAmount?.toString() || '')
