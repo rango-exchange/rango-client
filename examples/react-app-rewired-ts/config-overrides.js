@@ -1,6 +1,14 @@
+const path = require('path');
+const paths = require('react-scripts/config/paths');
+
 const webpack = require("webpack");
 
+const dist = path.resolve(__dirname, 'dist');
+
+paths.appBuild  = dist;
+
 module.exports = function override(config) {
+  config.output.path = dist;  
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
     crypto: require.resolve("crypto-browserify"),
