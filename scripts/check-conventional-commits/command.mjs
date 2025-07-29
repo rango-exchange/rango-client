@@ -1,8 +1,8 @@
 import { execa } from 'execa';
 import { logAsSection } from '../publish/utils.mjs';
 import { detectChannel } from '../common/github.mjs';
-import parser from 'conventional-commits-parser';
-import filter from 'conventional-commits-filter';
+import { CommitParser } from 'conventional-commits-parser';
+import { filterRevertedCommitsSync } from 'conventional-commits-filter';
 
 async function run() {
   const channel = detectChannel();
@@ -15,7 +15,12 @@ async function run() {
     '--pretty=format:%B__________',
   ]);
   const commits = logs.split('__________').filter(Boolean);
-  const parsedCommits = filter(commits.map(parser.sync));
+
+  const parser = new CommitParser();
+  const parsedCommits = Array.from(
+    filterRevertedCommitsSync(commits.map((commit) => parser.parse(commit)))
+  );
+
   const hasAnyConventionalCommit = parsedCommits.some(
     (commit) => !!commit.type
   );
