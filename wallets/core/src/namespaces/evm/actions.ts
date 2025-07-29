@@ -1,145 +1,87 @@
 import type { EIP1193EventMap } from './eip1193.js';
 import type { ConnectOptions, EvmActions, ProviderAPI } from './types.js';
-import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
+import type { Subscriber } from '../../hub/namespaces/mod.js';
 import type {
   CanEagerConnect,
+  Context,
   SubscriberCleanUp,
 } from '../../hub/namespaces/types.js';
-import type { CaipAccount } from '../../types/accounts.js';
-import type { FunctionWithContext } from '../../types/actions.js';
-
-import { AccountId } from 'caip';
+import type { FunctionWithContext } from '../../mod.js';
 
 import { recommended as commonRecommended } from '../common/actions.js';
 
-import { CAIP_NAMESPACE } from './constants.js';
 import {
+  createAccountSubscriber,
+  createConnect,
   filterAndGetEvmBlockchainNames,
-  getAccounts,
-  switchOrAddNetwork,
+  formatAccountsToCaipAccounts,
 } from './utils.js';
 
 export const recommended = [...commonRecommended];
-const CHAIN_ID_RADIX = 16;
-export function connect(
+
+export const connect = (
   instance: () => ProviderAPI,
   options?: ConnectOptions
-): FunctionWithContext<EvmActions['connect'], Context> {
-  return async (_context, chain) => {
-    const evmInstance = instance();
-
-    if (!evmInstance) {
-      throw new Error(
-        'Do your wallet injected correctly and is evm compatible?'
-      );
-    }
-
-    if (chain) {
-      /*
-       * The `switchOrAddNetwork` function can be optionally provided through `options`
-       * to handle network switching or addition in a way that is compatible with the specific wallet provider.
-       * This approach is necessary because not all providers follow the same conventions—
-       * for example, Rabby uses a different error code for "chain not found".
-       */
-      if (options?.switchOrAddNetwork) {
-        await options.switchOrAddNetwork(evmInstance, chain);
-      } else {
-        await switchOrAddNetwork(evmInstance, chain);
-      }
-    }
-
-    const result = await getAccounts(evmInstance);
-
-    /*
-     * Trust Wallet Compatibility Fix:
-     * Trust Wallet's in-app browser has been observed to return the `chainId` as a
-     * number (e.g., 1) rather than the standard hexadecimal string (e.g., "0x1").
-     * This code block standardizes the `chainId` to the required hex format to
-     * prevent downstream errors.
-     */
-    let chainId = result.chainId;
-    if (typeof chainId === 'number') {
-      chainId = `0x${Number(chainId).toString(CHAIN_ID_RADIX)}`;
-    }
-
-    const formatAccounts = result.accounts.map(
-      (account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: chainId,
-          },
-        }) as CaipAccount
-    );
-
-    return {
-      accounts: formatAccounts,
+) =>
+  createConnect(
+    instance,
+    (accounts, chainId) => ({
+      accounts,
       network: chainId,
-    };
-  };
-}
+    }),
+    options
+  );
 
-export function changeAccountSubscriber(
-  instance: () => ProviderAPI
-): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
-  let eventCallback: EIP1193EventMap['accountsChanged'];
+/**
+ * Connects to an EVM wallet provider and returns only the first account.
+ *
+ * This function is designed for wallet providers like Coinbase Wallet where the
+ * currently selected account is always the first item in the accounts list.
+ *
+ * @param instance - Factory function that returns the wallet provider API instance
+ * @param options - Optional configuration for connection behavior
+ * @param options.switchOrAddNetwork - Custom function to handle network switching/addition.
+ *   Useful for providers that don't follow standard conventions (e.g., Rabby uses different error codes)
+ *
+ * @returns A function that accepts context and chain parameters and returns connection result
+ *
+ * @throws {Error} When the wallet provider is not available or not EVM compatible
+ *
+ */
+export const connectSingle = (
+  instance: () => ProviderAPI,
+  options?: ConnectOptions
+) =>
+  createConnect(
+    instance,
+    (accounts, chainId) => ({
+      accounts: [accounts[0]],
+      network: chainId,
+    }),
+    options
+  );
 
-  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
-  return [
-    (context, err) => {
-      const evmInstance = instance();
+export const changeAccountSubscriber = (instance: () => ProviderAPI) =>
+  createAccountSubscriber(instance, ({ accounts, chainId }) =>
+    formatAccountsToCaipAccounts({ accounts, chainId })
+  );
 
-      if (!evmInstance) {
-        throw new Error(
-          'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
-        );
-      }
-
-      const [, setState] = context.state();
-
-      eventCallback = async (accounts) => {
-        /*
-         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
-         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
-         *
-         * This assumption may not work for other wallets, if that the case, we need to consider a new approach.
-         */
-        if (!accounts || accounts.length === 0) {
-          context.action('disconnect');
-          return;
-        }
-
-        const chainId = await evmInstance.request({ method: 'eth_chainId' });
-        const formatAccounts = accounts.map((account) =>
-          AccountId.format({
-            address: account,
-            chainId: {
-              namespace: CAIP_NAMESPACE,
-              reference: chainId,
-            },
-          })
-        );
-
-        setState('accounts', formatAccounts);
-      };
-      evmInstance.on('accountsChanged', eventCallback);
-
-      if (err instanceof Error) {
-        throw err;
-      }
-    },
-    (_, err) => {
-      const evmInstance = instance();
-
-      if (eventCallback && evmInstance) {
-        evmInstance.removeListener?.('accountsChanged', eventCallback);
-      }
-
-      return err;
-    },
-  ];
-}
+/**
+ * Subscribes to the `accountsChanged` event from an EVM provider and updates the state
+ * using **only the first account** returned by the provider.
+ *
+ * This is useful in wallets like **Coinbase Wallet**, which includes all connected accounts
+ * in the `accountsChanged` event, but places the **currently active account as the first one**.
+ *
+ *
+ * @param instance - A function returning the current EVM provider instance.
+ * @returns A tuple of two functions: a `Subscriber` that listens to account changes,
+ * and a `SubscriberCleanUp` that removes the listener.
+ */
+export const changeAccountSubscriberSingle = (instance: () => ProviderAPI) =>
+  createAccountSubscriber(instance, ({ accounts, chainId }) =>
+    formatAccountsToCaipAccounts({ accounts: [accounts[0]], chainId })
+  );
 
 export function changeChainSubscriber(
   instance: () => ProviderAPI

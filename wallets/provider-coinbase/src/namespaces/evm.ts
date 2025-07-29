@@ -7,16 +7,15 @@ import {
 } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { evmActions } from '../actions/evm.js';
 import { WALLET_ID } from '../constants.js';
 import { evmCoinbase } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  evmActions.changeAccountSubscriber(evmCoinbase);
+  actions.changeAccountSubscriberSingle(evmCoinbase);
 
 const connect = builders
   .connect()
-  .action(evmActions.connect(evmCoinbase))
+  .action(actions.connectSingle(evmCoinbase))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)

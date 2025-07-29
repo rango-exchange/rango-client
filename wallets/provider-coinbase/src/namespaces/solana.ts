@@ -16,7 +16,7 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 
 const connect = builders
   .connect()
-  .action(solanaActions.connect(solanaCoinbase))
+  .action(actions.connect(solanaCoinbase))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)

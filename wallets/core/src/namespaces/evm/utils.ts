@@ -1,17 +1,151 @@
-import type { Chain, ChainId, ProviderAPI } from './types.js';
+import type { EIP1193EventMap } from './mod.js';
+import type {
+  Chain,
+  ChainId,
+  ConnectOptions,
+  EvmActions,
+  ProviderAPI,
+} from './types.js';
+import type {
+  Context,
+  Subscriber,
+  SubscriberCleanUp,
+} from '../../hub/namespaces/mod.js';
+import type { FunctionWithContext } from '../../mod.js';
+import type { CaipAccount } from '../common/mod.js';
 
+import { AccountId } from 'caip';
 import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+
+import { CAIP_NAMESPACE } from './constants.js';
+
+const CHAIN_ID_RADIX = 16;
+export function createConnect(
+  instance: () => ProviderAPI,
+  formatConnectAccounts: (
+    accounts: ReturnType<typeof formatAccountsToCaipAccounts>,
+    chain: Awaited<ReturnType<typeof getAccounts>>['chainId']
+  ) => Awaited<ReturnType<EvmActions['connect']>>,
+  options?: ConnectOptions
+): FunctionWithContext<EvmActions['connect'], Context> {
+  return async (_context, chain) => {
+    const evmInstance = instance();
+
+    if (!evmInstance) {
+      throw new Error(
+        'Do your wallet injected correctly and is evm compatible?'
+      );
+    }
+
+    if (chain) {
+      /*
+       * The `switchOrAddNetwork` function can be optionally provided through `options`
+       * to handle network switching or addition in a way that is compatible with the specific wallet provider.
+       * This approach is necessary because not all providers follow the same conventions—
+       * for example, Rabby uses a different error code for "chain not found".
+       */
+      if (options?.switchOrAddNetwork) {
+        await options.switchOrAddNetwork(evmInstance, chain);
+      } else {
+        await switchOrAddNetwork(evmInstance, chain);
+      }
+    }
+    const providerAccounts = await getAccounts(evmInstance);
+
+    const formattedCaipAccounts =
+      formatAccountsToCaipAccounts(providerAccounts);
+
+    return formatConnectAccounts(
+      formattedCaipAccounts,
+      providerAccounts.chainId
+    );
+  };
+}
 
 export async function getAccounts(provider: ProviderAPI) {
   const [accounts, chainId] = await Promise.all([
     provider.request({ method: 'eth_requestAccounts' }),
     provider.request({ method: 'eth_chainId' }),
   ]);
+  /*
+   *
+   * Trust Wallet Compatibility Fix:
+   * Trust Wallet's in-app browser has been observed to return the `chainId` as a
+   * number (e.g., 1) rather than the standard hexadecimal string (e.g., "0x1").
+   * This code block standardizes the `chainId` to the required hex format to
+   * prevent downstream errors.
+   */
+  let standardChainId = chainId;
+  if (typeof standardChainId === 'number') {
+    standardChainId = `0x${Number(chainId).toString(CHAIN_ID_RADIX)}`;
+  }
 
   return {
     accounts,
-    chainId,
+    chainId: standardChainId,
   };
+}
+
+export function createAccountSubscriber(
+  instance: () => ProviderAPI,
+  formatAccounts: typeof formatAccountsToCaipAccounts
+): [Subscriber<EvmActions>, SubscriberCleanUp<EvmActions>] {
+  let eventCallback: EIP1193EventMap['accountsChanged'];
+
+  return [
+    (context, err) => {
+      const evmInstance = instance();
+
+      if (!evmInstance) {
+        throw new Error(
+          'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
+        );
+      }
+
+      const [, setState] = context.state();
+
+      eventCallback = async (accounts) => {
+        if (!accounts || accounts.length === 0) {
+          context.action('disconnect');
+          return;
+        }
+
+        const chainId = await evmInstance.request({ method: 'eth_chainId' });
+        const formattedAccounts = formatAccounts({ accounts, chainId });
+
+        setState('accounts', formattedAccounts);
+      };
+
+      evmInstance.on('accountsChanged', eventCallback);
+
+      if (err instanceof Error) {
+        throw err;
+      }
+    },
+    (_, err) => {
+      const evmInstance = instance();
+
+      if (eventCallback && evmInstance) {
+        evmInstance.removeListener?.('accountsChanged', eventCallback);
+      }
+
+      return err;
+    },
+  ];
+}
+export function formatAccountsToCaipAccounts(
+  providerAccounts: Awaited<ReturnType<typeof getAccounts>>
+): CaipAccount[] {
+  return providerAccounts.accounts.map(
+    (account) =>
+      AccountId.format({
+        address: account,
+        chainId: {
+          namespace: CAIP_NAMESPACE,
+          reference: providerAccounts.chainId,
+        },
+      }) as CaipAccount
+  );
 }
 
 export async function suggestNetwork(instance: ProviderAPI, chain: Chain) {

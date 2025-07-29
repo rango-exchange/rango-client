@@ -32,7 +32,7 @@ Coinbase Wallet does **not provide a `onlyIfTrusted` option** or any silent auth
 
 
 #### ⚠️ Cross Browser
-Coinbase Wallet is **only available on Chrome**.
+Coinbase Wallet is **only available on Chrome and Brave**.
 
 ---
 
