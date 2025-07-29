@@ -1,0 +1,21 @@
+name: Post-Release
+on:
+  workflow_dispatch:
+
+jobs:
+  post-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Post Release
+        run: yarn run post-release-prod
+        env:
+          REF: ${{ github.ref }}
+          GH_TOKEN: ${{ github.token }}
