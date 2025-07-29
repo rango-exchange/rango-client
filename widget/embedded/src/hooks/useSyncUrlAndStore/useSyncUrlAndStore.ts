@@ -131,25 +131,22 @@ export function useSyncUrlAndStore() {
         (blockchain) => blockchain.name === searchParams.fromBlockchain
       );
 
-      const fromToken =
-        searchParams.fromToken && fromBlockchain
-          ? findToken(
-              convertTokenSearchParamToAsset(
-                searchParams.fromToken,
-                fromBlockchain
-              )
-            )
-          : undefined;
+      const convertFromToken =
+        searchParams.fromToken &&
+        fromBlockchain &&
+        convertTokenSearchParamToAsset(searchParams.fromToken, fromBlockchain);
+      const fromToken = convertFromToken
+        ? findToken(convertFromToken)
+        : undefined;
       const toBlockchain = blockchains.find(
         (blockchain) => blockchain.name === searchParams.toBlockchain
       );
+      const convertToToken =
+        searchParams.toToken &&
+        toBlockchain &&
+        convertTokenSearchParamToAsset(searchParams.toToken, toBlockchain);
 
-      const toToken =
-        searchParams.toToken && toBlockchain
-          ? findToken(
-              convertTokenSearchParamToAsset(searchParams.toToken, toBlockchain)
-            )
-          : undefined;
+      const toToken = convertToToken ? findToken(convertToToken) : undefined;
 
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);

@@ -76,7 +76,7 @@ beforeEach(() => {
     if (!initData._tokensMapByBlockchainName[token.blockchain]) {
       initData._tokensMapByBlockchainName[token.blockchain] = [];
     }
-    initData._tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+    initData._tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
   });
 
   const appStore = createAppStore(DEFAULT_CONFIG);
@@ -104,7 +104,7 @@ describe('check sorting tokens is working correctly in app store', () => {
       type: 'source',
     });
 
-    const firstResult = tokens[0].symbol;
+    const firstResult = tokens[0]?.symbol;
     expect(firstResult).toBe(rangoToken.symbol);
   });
 
@@ -125,7 +125,7 @@ describe('check sorting tokens is working correctly in app store', () => {
       },
     });
 
-    const firstResult = tokens[0].symbol;
+    const firstResult = tokens[0]?.symbol;
     expect(firstResult).toBe(rangoToken.symbol);
   });
 
@@ -146,7 +146,7 @@ describe('check sorting tokens is working correctly in app store', () => {
       type: 'source',
     });
 
-    const firstResult = tokens[0].symbol;
+    const firstResult = tokens[0]?.symbol;
     expect(firstResult).toBe(rangoToken.symbol);
   });
 
@@ -191,7 +191,7 @@ describe('check sorting tokens is working correctly in app store', () => {
       type: 'source',
     });
 
-    const firstResult = tokens[0].symbol;
+    const firstResult = tokens[0]?.symbol;
     expect(firstResult).toBe(rangoToken.symbol);
   });
 
@@ -225,8 +225,8 @@ describe('check sorting tokens is working correctly in app store', () => {
       },
     });
 
-    const firstResult = tokens[0].symbol;
-    const secondResult = tokens[1].symbol;
+    const firstResult = tokens[0]?.symbol;
+    const secondResult = tokens[1]?.symbol;
     expect(firstResult).toBe(rangoToken.symbol);
     expect(secondResult).toBe(djangoToken.symbol);
   });
@@ -261,8 +261,8 @@ describe('check sorting tokens is working correctly in app store', () => {
       },
     });
 
-    const firstResult = tokens[0].symbol;
-    const secondResult = tokens[1].symbol;
+    const firstResult = tokens[0]?.symbol;
+    const secondResult = tokens[1]?.symbol;
 
     const popularTokensCount = tokens.reduce((previousValue, current) => {
       if (current.isPopular) {

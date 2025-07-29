@@ -44,8 +44,11 @@ export function throwErrorIfResponseIsNotValid(response: QuoteResponse) {
 export function getQuoteError(swaps: SwapResult[]): QuoteErrorResponse | null {
   const limitError = hasLimitError(swaps);
   if (limitError) {
-    const { swap, recommendation, fromAmountRangeError } =
+    const { swap, fromAmountRangeError, recommendation } =
       getLimitErrorMessage(swaps);
+    if (!swap) {
+      return null;
+    }
     return {
       message: 'bridge limit error',
       options: {

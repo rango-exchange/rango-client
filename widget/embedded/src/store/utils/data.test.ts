@@ -1,6 +1,6 @@
 import type { Token } from 'rango-sdk';
 
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { createToken } from '../../test-utils/fixtures';
 import { createTokenHash } from '../../utils/meta';
@@ -35,25 +35,38 @@ function createMetaForMockData(
     if (!meta.tokensMapByBlockchainName[token.blockchain]) {
       meta.tokensMapByBlockchainName[token.blockchain] = [];
     }
-    meta.tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+    meta.tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
   });
 
   return meta;
 }
 
 describe('matchTokensFromConfigWithMeta', () => {
+  let token0: Token;
+  let token1: Token;
+  let token2: Token;
+
+  beforeEach(() => {
+    // Assert presence once
+    if (!tokens[0] || !tokens[1] || !tokens[2]) {
+      throw new Error('Test data not populated correctly');
+    }
+    token0 = tokens[0];
+    token1 = tokens[1];
+    token2 = tokens[2];
+  });
   test('should include tokens from config.tokens array that exist in meta', () => {
     const mockData: MatchTokensFromConfigWithMetaParam = {
       type: 'source',
       meta: createMetaForMockData(tokens),
       config: {
         blockchains: undefined,
-        tokens: [tokens[0], tokens[1]],
+        tokens: [token0, token1],
       },
     };
 
     const result = matchTokensFromConfigWithMeta(mockData);
-    expect(result).toEqual([tokens[0], tokens[1]]);
+    expect(result).toEqual([token0, token1]);
   });
 
   test('If config.blockchains is not defined or is empty, we should include all tokens from the meta for every blockchain that does not have tokens specified in the config, as well as tokens specified in the config that exist in the meta.', () => {
@@ -63,7 +76,7 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: undefined,
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [token0], isExcluded: false },
         },
       },
     };
@@ -80,7 +93,7 @@ describe('matchTokensFromConfigWithMeta', () => {
        * as we have a comprehensive sorting logic applied to tokens within the data slice.
        */
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      expect(result).toEqual([tokens[2], tokens[3], tokens[0]]);
+      expect(result).toEqual([token2, tokens[3], token0]);
     };
 
     runTestWithConfig({ blockchains: undefined });
@@ -94,14 +107,14 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A, BLOCKCHAIN_B],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: false },
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_A]: { tokens: [token0], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [token2], isExcluded: false },
         },
       },
     };
 
     const result = matchTokensFromConfigWithMeta(mockData);
-    expect(result).toEqual([tokens[0], tokens[2]]);
+    expect(result).toEqual([token0, token2]);
   });
 
   test('should not include tokens from config.tokens whose blockchain does not exist in config.blockchains', () => {
@@ -111,13 +124,13 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_B]: { tokens: [tokens[2]], isExcluded: false },
+          [BLOCKCHAIN_B]: { tokens: [token2], isExcluded: false },
         },
       },
     };
 
     const result = matchTokensFromConfigWithMeta(mockData);
-    expect(result).toEqual([tokens[0], tokens[1]]);
+    expect(result).toEqual([token0, token1]);
   });
 
   test('should include all tokens from a blockchain if that blockchain does not have any tokens in config.tokens', () => {
@@ -131,7 +144,7 @@ describe('matchTokensFromConfigWithMeta', () => {
     };
 
     const result = matchTokensFromConfigWithMeta(mockData);
-    expect(result).toEqual([tokens[0], tokens[1]]);
+    expect(result).toEqual([token0, token1]);
   });
 
   test('should include all tokens from config.blockchains that exist in the meta, except tokens excluded in config.token', () => {
@@ -141,13 +154,13 @@ describe('matchTokensFromConfigWithMeta', () => {
       config: {
         blockchains: [BLOCKCHAIN_A],
         tokens: {
-          [BLOCKCHAIN_A]: { tokens: [tokens[0]], isExcluded: true },
+          [BLOCKCHAIN_A]: { tokens: [token0], isExcluded: true },
         },
       },
     };
 
     const result = matchTokensFromConfigWithMeta(mockData);
-    expect(result).toEqual([tokens[1]]);
+    expect(result).toEqual([token1]);
   });
 
   test('should include all tokens from the meta when config parameters are empty values', () => {

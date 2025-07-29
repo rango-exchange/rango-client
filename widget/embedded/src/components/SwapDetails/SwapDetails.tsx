@@ -207,7 +207,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const numberOfSteps = steps.length;
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];
   const outputAmount =
-    lastStep.outputAmount || lastStep.expectedOutputAmountHumanReadable;
+    lastStep?.outputAmount || lastStep?.expectedOutputAmountHumanReadable;
 
   const totalFee = swap.steps.reduce(
     (totalFee, steps) => totalFee + parseFloat(steps.feeInUsd || ''),
@@ -219,13 +219,13 @@ export function SwapDetails(props: SwapDetailsProps) {
   )?.diagnosisUrl;
 
   const outputUsdValue = numberToString(
-    parseFloat(outputAmount || '0') * (lastStep.toUsdPrice || 0),
+    parseFloat(outputAmount || '0') * (lastStep?.toUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
 
   const inputUsdValue = numberToString(
-    parseFloat(swap.inputAmount) * (firstStep.fromUsdPrice || 0),
+    parseFloat(swap.inputAmount) * (firstStep?.fromUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
@@ -237,7 +237,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     : '';
 
   const realInputUsdValue = new BigNumber(swap.inputAmount)
-    .multipliedBy(firstStep.fromUsdPrice || 0)
+    .multipliedBy(firstStep?.fromUsdPrice || 0)
     .toString();
 
   const percentageChange = getPriceImpact(inputUsdValue, outputUsdValue);
@@ -255,12 +255,12 @@ export function SwapDetails(props: SwapDetailsProps) {
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
-          token: steps[numberOfSteps - 1].to.token.displayName,
+          token: steps[numberOfSteps - 1]?.to.token.displayName,
           conciseAddress: getConciseAddress(
-            swap.wallets[steps[numberOfSteps - 1].to.chain.displayName]
+            swap.wallets[steps[numberOfSteps - 1]?.to.chain.displayName || '']
               ?.address || ''
           ),
-          chain: steps[numberOfSteps - 1].to.chain.displayName,
+          chain: steps[numberOfSteps - 1]?.to.chain.displayName,
         },
       })
     ) : (
@@ -442,12 +442,12 @@ export function SwapDetails(props: SwapDetailsProps) {
                 realValue: swap.inputAmount,
               },
               token: {
-                displayName: steps[0].from.token.displayName,
-                image: steps[0].from.token.image,
+                displayName: steps[0]?.from.token.displayName || '',
+                image: steps[0]?.from.token.image,
               },
               chain: {
-                image: steps[0].from.chain.image,
-                displayName: steps[0].from.chain.displayName,
+                image: steps[0]?.from.chain.image,
+                displayName: steps[0]?.from.chain.displayName || '',
               },
             }}
             to={{
@@ -462,12 +462,14 @@ export function SwapDetails(props: SwapDetailsProps) {
                 realValue: outputAmount || '',
               },
               token: {
-                displayName: steps[numberOfSteps - 1].to.token.displayName,
-                image: steps[numberOfSteps - 1].to.token.image,
+                displayName:
+                  steps[numberOfSteps - 1]?.to.token.displayName || '',
+                image: steps[numberOfSteps - 1]?.to.token.image,
               },
               chain: {
-                image: steps[numberOfSteps - 1].to.chain.image,
-                displayName: steps[numberOfSteps - 1].to.chain.displayName,
+                image: steps[numberOfSteps - 1]?.to.chain.image,
+                displayName:
+                  steps[numberOfSteps - 1]?.to.chain.displayName || '',
               },
             }}
             percentageChange={numberToString(
@@ -487,7 +489,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         <StepsList>
           {steps.map((step, index) => {
             const key = index;
-            const state = getStepState(swap.steps[index]);
+            const state = swap.steps[index] && getStepState(swap.steps[index]);
             const isFocused =
               state === 'error' ||
               state === 'in-progress' ||
@@ -541,10 +543,10 @@ export function SwapDetails(props: SwapDetailsProps) {
           PERCENTAGE_CHANGE_MAX_DECIMALS
         )}
         token={{
-          displayName: steps[numberOfSteps - 1].to.token.displayName,
-          image: steps[numberOfSteps - 1].to.token.image,
+          displayName: steps[numberOfSteps - 1]?.to.token.displayName || '',
+          image: steps[numberOfSteps - 1]?.to.token.image,
         }}
-        chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+        chain={{ image: steps[numberOfSteps - 1]?.to.chain.image }}
         description={completeModalDesc}
       />
     </Layout>

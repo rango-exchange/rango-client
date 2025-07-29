@@ -32,17 +32,20 @@ type TagCSS = {
   [x: string]:
     | string
     | {
-        $$color: string;
-      };
-  $$color: string;
+        $$color?: string;
+      }
+    | undefined;
+  $$color?: string;
   backgroundColor: string;
 };
+
 type TitleCSS = {
   [x: string]:
     | string
     | {
-        $$color: string;
-      };
-  $$color: string;
+        $$color?: string;
+      }
+    | undefined;
+  $$color?: string;
   color: string;
 };

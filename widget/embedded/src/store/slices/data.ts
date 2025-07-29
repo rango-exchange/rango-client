@@ -378,7 +378,7 @@ export const createDataSlice: StateCreator<
           tokensMapByBlockchainName[token.blockchain] = [];
         }
         tokensMapByTokenHash.set(tokenHash, token);
-        tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+        tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
       });
 
       set({
