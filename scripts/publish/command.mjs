@@ -81,7 +81,7 @@ async function run() {
   if (should('generateChangelog')) {
     console.log(`Making root changelog...`);
     generateChangelogAndSave();
-    addFileToStage('../../CHANGELOG.md');
+    addFileToStage(`${path.join('.')}\CHANGELOG.md`);
   }
 
   try {
