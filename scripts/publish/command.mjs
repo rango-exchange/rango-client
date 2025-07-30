@@ -78,11 +78,11 @@ async function run() {
 
   // 3. Publish
   if (should('generateChangelog')) {
-    console.log(chalk.green('[1/1]'), `Making root changelog`);
+    console.log(`Making root changelog...`);
     generateChangelogAndSave();
     addFileToStage('../../CHANGELOG.md');
   }
-  
+
   try {
     await tryPublish(pkgs, {
       onUpdateState: state.setState.bind(state),
