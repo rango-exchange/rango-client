@@ -1,6 +1,6 @@
 {
   "name": "@arlert-dev/provider-trustwallet",
-  "version": "0.46.1-next.5",
+  "version": "0.47.0-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
