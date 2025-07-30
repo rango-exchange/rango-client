@@ -17,6 +17,7 @@ import { update } from './package.mjs';
 import { build } from './build.mjs';
 import { should } from '../common/features.mjs';
 import { generateChangelogAndSave } from '../common/changelog.mjs';
+import path from 'node:path';
 
 async function run() {
   logAsSection('::group::🔍 Checking environments...');
