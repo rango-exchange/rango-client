@@ -16,6 +16,7 @@ import { addFileToStage, publishCommitAndTags, push } from '../common/git.mjs';
 import { update } from './package.mjs';
 import { build } from './build.mjs';
 import { should } from '../common/features.mjs';
+import { generateChangelogAndSave } from '../common/changelog.mjs';
 
 async function run() {
   logAsSection('::group::🔍 Checking environments...');
