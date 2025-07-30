@@ -1,6 +1,6 @@
 {
   "name": "@arlert-dev/widget-embedded",
-  "version": "0.46.4",
+  "version": "0.46.5-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@arlert-dev/logging-core": "^0.9.1-next.0",
-    "@arlert-dev/provider-all": "^0.48.1-next.4",
+    "@arlert-dev/provider-all": "^0.48.1-next.5",
     "@arlert-dev/queue-manager-core": "^0.30.1-next.0",
     "@arlert-dev/queue-manager-rango-preset": "^0.47.1-next.5",
     "@arlert-dev/queue-manager-react": "^0.30.1-next.0",

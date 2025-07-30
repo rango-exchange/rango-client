@@ -1,6 +1,6 @@
 {
   "name": "@arlert-dev/provider-rabby",
-  "version": "0.13.1-next.3",
+  "version": "0.13.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
