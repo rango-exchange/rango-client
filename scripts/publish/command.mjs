@@ -77,7 +77,12 @@ async function run() {
   console.log('::endgroup::');
 
   // 3. Publish
-  logAsSection(`::group::🚀 Start publishing...`);
+  if (should('generateChangelog')) {
+    console.log(chalk.green('[1/1]'), `Making root changelog`);
+    generateChangelogAndSave();
+    addFileToStage('../../CHANGELOG.md');
+  }
+  
   try {
     await tryPublish(pkgs, {
       onUpdateState: state.setState.bind(state),
