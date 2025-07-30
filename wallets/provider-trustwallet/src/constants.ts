@@ -15,7 +15,7 @@ export const info: ProviderInfo = {
       'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph',
     brave:
       'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph',
-    homepage: 'https://trustwallet.com/browser-extension',
+    homepage: 'https://trustwallet.com/browser-extension/',
   },
   properties: [
     {

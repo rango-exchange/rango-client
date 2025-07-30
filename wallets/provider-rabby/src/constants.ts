@@ -12,7 +12,7 @@ export const info: ProviderInfo = {
     brave:
       'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch',
     firefox: 'https://addons.mozilla.org/en-US/firefox/addon/rabby-wallet',
-    homepage: 'https://rabby.io/',
+    homepage: 'https://rabby.io',
   },
   properties: [
     {
