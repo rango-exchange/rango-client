@@ -78,6 +78,7 @@ export function throwIfUnableToProceed(pkgsState) {
       const list = alreadyHasGithubReleasePackages
         .map((pkg) => pkg.gitTag)
         .join(',');
+      console.log(alreadyHasGitTagPackages.length, list, 'what');
       throw new UnableToProceedPublishError(
         `These tags already exist. \n ${list}`
       );
