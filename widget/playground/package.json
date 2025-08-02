@@ -22,7 +22,7 @@
     "@types/stringify-object": "^4.0.2"
   },
   "dependencies": {
-    "@arlert-dev/provider-all": "^null",
+    "@arlert-dev/provider-all": "^0.49.0-next.0",
     "@arlert-dev/ui": "^0.48.1-next.6",
     "@arlert-dev/wallets-react": "^0.32.1-next.3",
     "@arlert-dev/wallets-shared": "^0.46.1-next.4",
