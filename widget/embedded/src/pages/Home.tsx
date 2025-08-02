@@ -19,6 +19,7 @@ import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
+import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
@@ -72,6 +73,7 @@ export function Home() {
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
+  const swapMode = useSwapMode();
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
@@ -192,7 +194,10 @@ export function Home() {
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,
-          title: config.title || i18n.t('Swap'),
+          title:
+            config.title || swapMode === 'swap'
+              ? i18n.t('Swap')
+              : i18n.t('Refuel'),
           suffix: (
             <HeaderButtons
               hidden={isExpandable ? ['refresh'] : undefined}
