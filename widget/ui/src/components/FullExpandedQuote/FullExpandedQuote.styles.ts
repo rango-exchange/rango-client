@@ -1,5 +1,6 @@
 import { css, darkTheme, styled } from '../../theme.js';
 import { PriceImpact } from '../PriceImpact/index.js';
+import { Typography } from '../Typography/Typography.js';
 
 export const tokenLabelStyles = css({});
 
@@ -304,4 +305,13 @@ export const TooltipFooter = styled(FlexCenter, {
 
 export const Icon = styled('div', {
   paddingBottom: '$20',
+});
+
+export const OutputPriceValue = styled(Typography, {
+  letterSpacing: 0.15,
+  maxWidth: '65px',
+});
+
+export const AmountText = styled(Typography, {
+  maxWidth: '34px',
 });
