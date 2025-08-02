@@ -1,4 +1,7 @@
 import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types.js';
+import type { config } from '../../theme';
+import type * as Stitches from '@stitches/react';
+import type { ReactNode } from 'react';
 
 export type BaseProps = {
   id: string;
@@ -21,7 +24,7 @@ export type BaseProps = {
   loading?: boolean;
   error?: boolean;
   disabled?: boolean;
-  label: string;
+  label?: string;
   sharpBottomStyle?: boolean;
   onClickToken: () => void;
   tooltipContainer?: HTMLElement;
@@ -29,11 +32,7 @@ export type BaseProps = {
 
 type FromProps = {
   mode: 'From';
-  balance?: string;
-  loadingBalance: boolean;
-  onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
-  anyWalletConnected: boolean;
   onInputBlur?: (inputAmount: string) => void;
 };
 
@@ -45,4 +44,8 @@ type ToProps = {
 };
 
 export type SwapInputPropTypes = BaseProps &
-  (FromProps | ToProps) & { tooltipContainer?: HTMLElement };
+  (FromProps | ToProps) & {
+    tooltipContainer?: HTMLElement;
+    style?: { container: Stitches.CSS<typeof config> };
+    moreInfo?: ReactNode;
+  };
