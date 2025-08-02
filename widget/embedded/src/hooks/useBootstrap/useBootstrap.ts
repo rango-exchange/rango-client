@@ -16,12 +16,14 @@ import { useFetchApiConfig } from '../useFetchApiConfig';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
 import { useSyncNotifications } from '../useSyncNotifications';
+import { useUpdateSelectedWallets } from '../useUpdateSelectedWalelts.ts';
 
 export function useBootstrap() {
   useForceAutoConnect();
   globalFont();
   useSubscribeToWidgetEvents();
   useSyncNotifications();
+  useUpdateSelectedWallets();
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
   const [lastConnectedWallet, setLastConnectedWallet] =
