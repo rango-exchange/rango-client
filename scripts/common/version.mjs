@@ -62,10 +62,8 @@ export async function increaseVersionForProd(pkg) {
   ])
     .then((result) => result.stdout)
     .then((output) => {
-      console.log(output, 'yarn output');
 
       const versions = parseYarnVersionResult(output);
-      console.log(JSON.stringify(versions), 'versions');
 
       if (!versions.current && !versions.next) {
         throw new IncreaseVersionFailedError(

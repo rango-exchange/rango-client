@@ -79,11 +79,11 @@ async function run() {
   console.log('::endgroup::');
 
   // 3. Publish
-  // if (should('generateChangelog')) {
-  //   console.log(`Making root changelog...`);
-  //   generateChangelogAndSave();
-  //   addFileToStage(`${path.join('.')}/CHANGELOG.md`);
-  // }
+  if (should('generateChangelog')) {
+    console.log(`Making root changelog...`);
+    generateChangelogAndSave();
+    addFileToStage(`${path.join('.')}/CHANGELOG.md`);
+  }
 
   try {
     await tryPublish(pkgs, {
