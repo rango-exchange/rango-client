@@ -14,7 +14,8 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
+    "build": "rangutopia library build --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
+    "build2": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
