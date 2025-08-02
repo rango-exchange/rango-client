@@ -1,6 +1,7 @@
 import type { SignerFactory } from 'rango-types';
 
-import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { CustomSolanaSigner } from './solana-signer.js';
