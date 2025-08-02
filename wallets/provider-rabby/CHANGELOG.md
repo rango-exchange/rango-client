@@ -75,3 +75,36 @@
 
 
 
+## [0.13.1-next.5](https://github.com/arlert-armin/rango-client/compare/provider-rabby@0.13.0...provider-rabby@0.13.1-next.5) (2025-07-30)
+
+
+### Features
+
+* migrate rabby to use hub ([e25ba8c](https://github.com/arlert-armin/rango-client/commit/e25ba8c52e2a603ba0689e91773fd6edebf3003f))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/arlert-armin/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
+# [0.15.0-next.0](https://github.com/arlert-armin/rango-client/compare/provider-rabby@0.13.0...provider-rabby@0.15.0-next.0) (2025-08-02)
+
+
+### Bug Fixes
+
+* bump versions ([85ecca0](https://github.com/arlert-armin/rango-client/commit/85ecca0fcc37a5166a2a51f6fd5cea46e53076af))
+
+
+### Features
+
+* migrate rabby to use hub ([e25ba8c](https://github.com/arlert-armin/rango-client/commit/e25ba8c52e2a603ba0689e91773fd6edebf3003f))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/arlert-armin/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+

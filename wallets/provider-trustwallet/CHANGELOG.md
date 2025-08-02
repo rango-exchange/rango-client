@@ -179,3 +179,18 @@
 
 
 
+# [0.47.0-next.0](https://github.com/arlert-armin/rango-client/compare/provider-trustwallet@0.46.0...provider-trustwallet@0.47.0-next.0) (2025-08-02)
+
+
+### Bug Fixes
+
+* bump versions ([85ecca0](https://github.com/arlert-armin/rango-client/commit/85ecca0fcc37a5166a2a51f6fd5cea46e53076af))
+* handle trust wallet in app browser user rejection error ([1b1d07f](https://github.com/arlert-armin/rango-client/commit/1b1d07f9155bbd7dbe3f7a9157b353e4a2a3cc40))
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([064ce15](https://github.com/arlert-armin/rango-client/commit/064ce157a2f819856f647f83aeb1c0410542e8d7))
+
+
+
