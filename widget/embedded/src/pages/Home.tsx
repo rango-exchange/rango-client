@@ -298,7 +298,7 @@ export function Home() {
           isVisible={isVisibleExpanded}
         />
       ) : null}
-      <div>Test Mode | Post Release Fix</div>
+      <div>Test Mode | Post Release Fox</div>
     </MainContainer>
   );
 }
