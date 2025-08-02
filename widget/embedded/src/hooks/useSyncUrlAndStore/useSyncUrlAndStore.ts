@@ -28,7 +28,7 @@ export function useSyncUrlAndStore() {
     setFromToken,
     setToToken,
     setInputAmount,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const isInRouterContext = useInRouterContext();

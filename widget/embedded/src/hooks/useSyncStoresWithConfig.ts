@@ -21,7 +21,7 @@ export function useSyncStoresWithConfig() {
     toToken,
     fromBlockchain,
     toBlockchain,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const config = useAppStore().config;
   const fetchMetaStatus = useAppStore().fetchStatus;

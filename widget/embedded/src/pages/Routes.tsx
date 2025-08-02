@@ -21,7 +21,7 @@ export function RoutesPage() {
     setSelectedQuote,
     updateQuotePartialState,
     error: quoteError,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const { fetch: fetchQuote, loading: fetchingQuote } = useSwapInput({
     refetchQuote,

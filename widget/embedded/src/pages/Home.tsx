@@ -53,7 +53,7 @@ export function Home() {
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
