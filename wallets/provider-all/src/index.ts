@@ -25,7 +25,7 @@ import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
 import * as safe from '@rango-dev/provider-safe';
-import * as safepal from '@rango-dev/provider-safepal';
+import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
 import * as solflare from '@rango-dev/provider-solflare';
 import * as taho from '@rango-dev/provider-taho';
@@ -110,7 +110,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(safepal)),
+    safepal,
     lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
     lazyProvider(legacyProviderImportsToVersionsInterface(coinbase)),

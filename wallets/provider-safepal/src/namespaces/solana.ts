@@ -1,0 +1,29 @@
+import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
+
+import { NamespaceBuilder } from '@rango-dev/wallets-core';
+import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
+import { actions, builders } from '@rango-dev/wallets-core/namespaces/solana';
+
+import { safePalSolanaActions } from '../actions/solana.js';
+import { WALLET_ID } from '../constants.js';
+import { solanaSafepal } from '../utils.js';
+
+const [changeAccountSubscriber, changeAccountCleanup] =
+  safePalSolanaActions.changeAccountSubscriber(solanaSafepal);
+const connect = builders
+  .connect()
+  .action(actions.connect(solanaSafepal))
+  .before(changeAccountSubscriber)
+  .or(changeAccountCleanup)
+  .build();
+const disconnect = commonBuilders
+  .disconnect<SolanaActions>()
+  .after(changeAccountCleanup)
+  .build();
+
+const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
+  .action(connect)
+  .action(disconnect)
+  .build();
+
+export { solana };
