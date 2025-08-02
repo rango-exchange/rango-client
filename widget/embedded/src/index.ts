@@ -69,6 +69,7 @@ import {
 } from './components/WalletStatefulConnect';
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
+import { Refuel } from './containers/Refuel';
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
@@ -132,6 +133,7 @@ export type {
 };
 export {
   Widget,
+  Refuel,
   /**
    * @deprecated Use `WidgetProvider` instead. This component will be removed in future versions.
    */

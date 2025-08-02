@@ -1,4 +1,4 @@
-import type { WidgetProps } from './Widget.types';
+import type { RefuelProps } from './Refuel.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -9,11 +9,11 @@ import { DEFAULT_CONFIG } from '../../store/slices/config';
 import { Main } from '../App';
 import { WidgetProvider } from '../WidgetProvider';
 
-export function Widget(props: PropsWithChildren<WidgetProps>) {
+export function Refuel(props: PropsWithChildren<RefuelProps>) {
   const isExternalWalletsEnabled = props.config?.externalWallets;
 
   return (
-    <SwapModeContext.Provider value="swap">
+    <SwapModeContext.Provider value="refuel">
       <AppRouter>
         {isExternalWalletsEnabled ? (
           <Main />
