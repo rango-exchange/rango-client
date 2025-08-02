@@ -16,6 +16,7 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { useSwapMode } from '../../hooks/useSwapMode';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { getContainer } from '../../utils/common';
@@ -41,6 +42,7 @@ export function Inputs(props: PropTypes) {
     outputUsdValue,
     selectedQuote,
   } = useQuoteStore()();
+  const swapMode = useSwapMode();
   const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =
@@ -131,6 +133,7 @@ export function Inputs(props: PropTypes) {
         <SwitchFromAndToButton />
       </FromContainer>
       <SwapInput
+        selectionType={swapMode === 'swap' ? 'token' : 'chain'}
         sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
         label={i18n.t('To')}
         mode="To"
