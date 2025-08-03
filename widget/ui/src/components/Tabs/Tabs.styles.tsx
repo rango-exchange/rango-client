@@ -97,6 +97,7 @@ export const Tab = styled(Button, {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: '$2',
   },
   variants: {
     borderRadius: {
