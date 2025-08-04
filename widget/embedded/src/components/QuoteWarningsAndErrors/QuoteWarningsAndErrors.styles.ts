@@ -37,7 +37,6 @@ export const ValueContent = styled('div', {
 export const ValueTypography = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
   maxWidth: '250px',
 });
