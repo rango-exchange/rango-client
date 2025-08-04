@@ -20,7 +20,7 @@ async function generateChangelogForRoot(options) {
     console.log('commits:', commitsCount);
 
     if (options.save) {
-      generateChangelogAndSave();
+      await generateChangelogAndSave();
     } else {
       generateChangelogAndPrint();
     }
@@ -39,7 +39,7 @@ async function generateChangelogForWorkspaceMembers(pkgs) {
       console.log('commits:', commitsCount);
 
       if (save) {
-        generateChangelogAndSave(pkg);
+        await generateChangelogAndSave(pkg);
       } else {
         generateChangelogAndPrint(pkg);
       }

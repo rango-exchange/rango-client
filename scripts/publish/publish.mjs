@@ -41,7 +41,7 @@ async function publishTask(pkg, { onUpdateState }) {
 
   if (should('generateChangelog')) {
     console.log(chalk.green('[2/4]'), `Making changelog`);
-    generateChangelogAndSave(pkg);
+    await generateChangelogAndSave(pkg);
   } else {
     console.log(chalk.green('[2/4]'), `Skipping changelog and github release.`);
   }
