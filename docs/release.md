@@ -87,9 +87,7 @@ git commit -m "chore(release): deploy" -m "[skip ci]"
 
 #### 4. Promote our clients (widget and playground) to production on Vercel (ask the team if you don't have access).
 
-#### 5. Create a pull request from the `main` branch to `next` to update the `next` branch.
-
-Please keep in mind that this PR should be merged using the `Create a merge commit` strategy instead of the default `Rebase and merge` strategy.
+#### 5. Run the Post-Release workflow, which will merge the `main` branch into the `next` branch to keep it in sync.
 
 **NOTE 1:**
 
