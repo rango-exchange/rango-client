@@ -8,7 +8,7 @@ msgstr ""
 "Language: ar\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-21 06:56\n"
+"PO-Revision-Date: 2025-08-04 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Crowdin-Language: ar\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "فشل تبديل الشبكة"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "حاول ثانية"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:722
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "تعذر إكمال عملية تبديل الشبكة. يُرجى المحاولة مرة أخرى، أو تبديل الشبكة يدويًا في محفظتك."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
@@ -244,7 +259,7 @@ msgstr "إضافة رمز مخصص آخر"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
 msgid "Swaps steps"
 msgstr "خطوات المبادلة"
 
@@ -426,7 +441,7 @@ msgstr "انتبه، انزلاقك مرتفع."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
 #: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:31
 msgid "Change"
 msgstr "يتغير"
 
@@ -514,7 +529,7 @@ msgstr "انتبه، انزلاقك مرتفع!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
 msgid "Swap Details"
 msgstr "تفاصيل المبادلة"
 
@@ -535,27 +550,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "لم يتم العثور على التبادل مع معرف الطلب = {requestId} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "لقد تلقيت {amount} {token} في محفظة {conciseAddress} على سلسلة {chain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Transaction was not sent."
 msgstr "لم يتم ارسال المعاملة."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} على {blockchain} يبقى في محفظتك."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:391
 msgid "Delete"
 msgstr "يمسح"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
@@ -587,12 +602,12 @@ msgid "Created at"
 msgstr "تم إنشاؤه في"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
 msgid "View transaction"
 msgstr "عرض المعاملة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
@@ -671,12 +686,12 @@ msgid "No, Cancel"
 msgstr "لا، إلغاء"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
 msgid "Change Network"
 msgstr "شبكة التغيير"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
 msgid "Network Changed"
 msgstr "تم تغيير الشبكة"
 

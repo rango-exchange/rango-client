@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-21 06:56\n"
+"PO-Revision-Date: 2025-08-04 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Crowdin-Language: pt-PT\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "Falha na troca de rede"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "Tentar novamente"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:722
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "A troca de rede não pôde ser concluída. Tente novamente ou troque a rede manualmente na sua carteira."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
@@ -244,7 +259,7 @@ msgstr "Adicionar outro token personalizado"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
 msgid "Swaps steps"
 msgstr "Etapas de troca"
 
@@ -426,7 +441,7 @@ msgstr "Cuidado, seu slippage está alto."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
 #: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:31
 msgid "Change"
 msgstr "Troca"
 
@@ -514,7 +529,7 @@ msgstr "Cuidado, o seu deslizamento é alto!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
 msgid "Swap Details"
 msgstr "Trocar detalhes"
 
@@ -535,27 +550,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Trocar com o ID de requisição = {requestId} não encontrado."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Você recebeu {amount} {token} em carteira {conciseAddress} na cadeia {chain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Transaction was not sent."
 msgstr "Transação não foi enviada."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} em {blockchain} permanece em sua carteira."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:391
 msgid "Delete"
 msgstr "excluir"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
@@ -587,12 +602,12 @@ msgid "Created at"
 msgstr "Criado em"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
 msgid "View transaction"
 msgstr "Ver transação"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
@@ -671,12 +686,12 @@ msgid "No, Cancel"
 msgstr "Não, cancele"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
 msgid "Change Network"
 msgstr "Alterar rede"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
 msgid "Network Changed"
 msgstr "Rede alterada"
 

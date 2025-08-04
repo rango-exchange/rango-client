@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-21 06:56\n"
+"PO-Revision-Date: 2025-08-04 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "네트워크 스위치 실패"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "다시 시도하세요"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:722
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "네트워크 전환을 완료할 수 없습니다. 다시 시도하거나 지갑에서 네트워크를 수동으로 전환하세요."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
@@ -244,7 +259,7 @@ msgstr "다른 사용자 정의 토큰 추가"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
 msgid "Swaps steps"
 msgstr "단계를 바꿉니다"
 
@@ -426,7 +441,7 @@ msgstr "조심하세요, 미끄러짐이 심합니다."
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
 #: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:31
 msgid "Change"
 msgstr "변화"
 
@@ -514,7 +529,7 @@ msgstr "조심하세요, 미끄러짐 위험이 높습니다!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
 msgid "Swap Details"
 msgstr "스왑 세부 정보"
 
@@ -535,27 +550,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "요청 ID = {requestId} 인 스왑을 찾을 수 없습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "{chain} 체인의 {conciseAddress} 지갑에서 {amount} {token} 을 받았습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Transaction was not sent."
 msgstr "거래가 전송되지 않았습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} 의 {blockchain} 이(가) 지갑에 남아 있습니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:391
 msgid "Delete"
 msgstr "삭제"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
@@ -587,12 +602,12 @@ msgid "Created at"
 msgstr "생성됨"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
 msgid "View transaction"
 msgstr "거래 보기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
@@ -671,12 +686,12 @@ msgid "No, Cancel"
 msgstr "아니요, 취소"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
 msgid "Change Network"
 msgstr "네트워크 변경"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
 msgid "Network Changed"
 msgstr "네트워크가 변경되었습니다"
 

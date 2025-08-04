@@ -8,7 +8,7 @@ msgstr ""
 "Language: th\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-21 06:56\n"
+"PO-Revision-Date: 2025-08-04 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Crowdin-Language: th\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "สวิตช์เครือข่ายล้มเหลว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "ลองอีกครั้ง"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:722
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "ไม่สามารถสลับเครือข่ายได้ โปรดลองอีกครั้งหรือสลับเครือข่ายด้วยตนเองในกระเป๋าสตางค์ของคุณ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
@@ -244,7 +259,7 @@ msgstr "เพิ่มโทเค็นที่กำหนดเองอื
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:387
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
 msgid "Swaps steps"
 msgstr "สลับขั้นตอน"
 
@@ -426,7 +441,7 @@ msgstr "ระวัง การลื่นไถลของคุณมี�
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:110
 #: widget/embedded/src/components/SlippageWarningsAndErrors/SlippageWarningsAndErrors.helpers.ts:27
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:27
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:31
 msgid "Change"
 msgstr "เปลี่ยน"
 
@@ -514,7 +529,7 @@ msgstr "ระวัง การลื่นไถลของคุณสู�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
 msgid "Swap Details"
 msgstr "รายละเอียดการสลับ"
 
@@ -535,27 +550,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "สลับกับ ID คำขอ = {requestId} ไม่พบ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "คุณได้รับ {amount} {token} ในกระเป๋าเงิน {conciseAddress} บนเครือข่าย {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Transaction was not sent."
 msgstr "ไม่ได้ส่งธุรกรรม"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} บน {blockchain} ยังคงอยู่ในกระเป๋าเงินของคุณ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:295
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:391
 msgid "Delete"
 msgstr "ลบ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:318
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
@@ -587,12 +602,12 @@ msgid "Created at"
 msgstr "สร้างขึ้นเมื่อ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
 msgid "View transaction"
 msgstr "ดูการทำธุรกรรม"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:51
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
@@ -671,12 +686,12 @@ msgid "No, Cancel"
 msgstr "ไม่ ยกเลิก"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:13
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
 msgid "Change Network"
 msgstr "เปลี่ยนเครือข่าย"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:14
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
 msgid "Network Changed"
 msgstr "เครือข่ายมีการเปลี่ยนแปลง"
 
