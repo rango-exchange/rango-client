@@ -131,7 +131,6 @@ export const StepSeparator = styled('div', {
 export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
   maxWidth: '38px',
 });
@@ -139,7 +138,6 @@ export const TokenNameText = styled(Typography, {
 export const ValueTypography = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
   whiteSpace: 'nowrap',
   maxWidth: '60px',
 });

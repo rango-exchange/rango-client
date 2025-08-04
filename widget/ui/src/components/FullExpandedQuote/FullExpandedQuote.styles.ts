@@ -308,7 +308,6 @@ export const Icon = styled('div', {
 });
 
 export const OutputPriceValue = styled(Typography, {
-  letterSpacing: 0.15,
   maxWidth: '65px',
 });
 
