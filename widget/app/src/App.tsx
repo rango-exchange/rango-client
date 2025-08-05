@@ -50,7 +50,14 @@ export function App() {
 
   return (
     <Routes>
-      <Route path="/*" element={<Widget config={configRef.current} />} />
+      <Route
+        path="/*"
+        element={
+          <div style={{ height: '100vh' }}>
+            <Widget config={configRef.current} />
+          </div>
+        }
+      />
     </Routes>
   );
 }

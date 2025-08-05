@@ -2,6 +2,7 @@ import { styled } from '@rango-dev/ui';
 
 export const MainContainer = styled('div', {
   fontFamily: '$widget',
+  height: '100%',
   boxSizing: 'border-box',
   textAlign: 'left',
   '& *, *::before, *::after': {
