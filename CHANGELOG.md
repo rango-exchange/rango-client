@@ -1,3 +1,22 @@
+## Widget [0.42.0] (2025-08-05)
+
+_includes `@rango-dev/widget-embedded@0.47.0`_
+
+### Features
+
+- implement canSwitchNetwork for hub providers ([5a4eced22](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+- improve swap details page switch network modal ([f92e2bd26](https://github.com/rango-exchange/rango-client/commit/f92e2bd26affc3ff680e1b15ae938e471dd41393))
+
+### Bug Fixes
+
+- add canSwitchNetwork action to rabby ([a1052f597](https://github.com/rango-exchange/rango-client/commit/a1052f597f2c9c43a480473a4bf9be0236cd97fe))
+- prevent throwing error after adding network to the wallet ([0635f3f13](https://github.com/rango-exchange/rango-client/commit/0635f3f133377a5f350db58fa17e680e4e62458c))
+- ensure input remains fully clickable by adjusting wrapper padding ([a5c160f1e](https://github.com/rango-exchange/rango-client/commit/a5c160f1e79d6f78b8b69aa87a05b724afe26e16))
+
+### Refactor
+
+- remove dependency to legacy getSigners ([64168423b](https://github.com/rango-exchange/rango-client/commit/64168423baa65d2c86e6bc24a186cf7174083d6c))
+
 ## Widget [0.41.0] (2025-07-27)
 
 _includes `@rango-dev/widget-embedded@0.46.1`_
