@@ -3,7 +3,6 @@ import type { TabsPropTypes } from './Tabs.types.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'src/icons/index.js';
 
-import { Divider } from '../Divider/index.js';
 import { Tooltip } from '../Tooltip/index.js';
 
 import {
@@ -190,7 +189,7 @@ export function TabsComponent(props: TabsPropTypes) {
               content={item.tooltip}
               open={!item.tooltip ? false : undefined}>
               <Tab
-                className="_tab"
+                className={`_tab ${isActive ? '_active' : ''}`}
                 ref={index === currentIndex ? tabRef : null}
                 type={type}
                 fullWidth={scrollable ? false : true}
@@ -202,9 +201,6 @@ export function TabsComponent(props: TabsPropTypes) {
                 data-active={isActive}
                 variant="default">
                 {item.icon}
-                {!!item.icon && !!item.title && (
-                  <Divider direction="horizontal" size="2" />
-                )}
                 {item.title}
               </Tab>
             </Tooltip>

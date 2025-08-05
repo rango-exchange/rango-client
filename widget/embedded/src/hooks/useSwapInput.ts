@@ -65,7 +65,7 @@ export function useSwapInput({
     warning,
     setSelectedQuote,
     updateQuotePartialState,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const {
     slippage,
     customSlippage,

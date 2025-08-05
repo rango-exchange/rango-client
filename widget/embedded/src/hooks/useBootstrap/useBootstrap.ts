@@ -10,7 +10,10 @@ import { WidgetContext } from '../../containers/Wallets';
 import { globalFont } from '../../globalStyles';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
-import { unsubscribeQuoteStore } from '../../store/quote';
+import {
+  unsubscribeRefuelQuoteStore,
+  unsubscribeSwapQuoteStore,
+} from '../../store/quote';
 import { tabManager } from '../../store/ui';
 import { useFetchApiConfig } from '../useFetchApiConfig';
 import { useForceAutoConnect } from '../useForceAutoConnect';
@@ -34,7 +37,8 @@ export function useBootstrap() {
   const { fetchApiConfig } = useFetchApiConfig();
 
   // Unsubscribe QuoteStore listeners
-  useEffect(() => () => unsubscribeQuoteStore(), []);
+  useEffect(() => () => unsubscribeSwapQuoteStore(), []);
+  useEffect(() => () => unsubscribeRefuelQuoteStore(), []);
 
   // At the moment, we only detect the disconnection of EVM wallets.
   useQueueManager({

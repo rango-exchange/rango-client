@@ -115,7 +115,7 @@ export function TokenList(props: PropTypes) {
   const blockchains = useAppStore().blockchains();
   const { getBalanceFor, fetchingWallets: loadingWallet } = useAppStore();
   const { isTokenPinned } = useAppStore();
-  const { setFromToken, setToToken } = useQuoteStore();
+  const { setFromToken, setToToken } = useQuoteStore()();
   const { t } = useTranslation();
   const navigateBack = useNavigateBack();
 

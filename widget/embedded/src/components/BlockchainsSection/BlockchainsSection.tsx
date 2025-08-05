@@ -37,8 +37,8 @@ export function BlockchainsSection(props: PropTypes) {
   });
 
   const { fetchStatus } = useAppStore();
-  const resetToBlockchain = useQuoteStore.use.resetToBlockchain();
-  const resetFromBlockchain = useQuoteStore.use.resetFromBlockchain();
+  const resetToBlockchain = useQuoteStore().use.resetToBlockchain();
+  const resetFromBlockchain = useQuoteStore().use.resetFromBlockchain();
   const hasMoreItemsInList = blockchainsList.more.length > 0;
   /**
    * When only one item is left on list, we will not show the `More` button and will show the item itself instead.
