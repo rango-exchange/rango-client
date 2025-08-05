@@ -5,6 +5,9 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
+import getSigners from './signer.js';
+import { getInstanceOrThrow } from './utils.js';
+
 export const WALLET_ID = 'trust-wallet';
 
 export const info: ProviderInfo = {
@@ -39,6 +42,10 @@ export const info: ProviderInfo = {
           },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

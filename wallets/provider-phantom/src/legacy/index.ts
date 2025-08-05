@@ -27,9 +27,8 @@ import {
 } from 'rango-types';
 
 import { EVM_SUPPORTED_CHAINS } from '../constants.js';
+import signer from '../signer.js';
 import { phantom as phantom_instance, type Provider } from '../utils.js';
-
-import signer from './signer.js';
 
 const WALLET = WalletTypes.PHANTOM;
 
@@ -70,11 +69,9 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
     instance?.off?.('accountChanged', handleAccountsChanged);
   };
 };
-
 const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
-
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 
@@ -169,9 +166,9 @@ const buildLegacyProvider: () => LegacyProviderInterface = () => ({
   getInstance,
   connect,
   subscribe,
-  canSwitchNetworkTo,
   getSigners,
   getWalletInfo,
+  canSwitchNetworkTo,
   canEagerConnect,
 });
 

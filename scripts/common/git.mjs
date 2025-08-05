@@ -251,8 +251,15 @@ export async function checkout(branch) {
 }
 
 export async function merge(branch, mergeOptions) {
-  const { mergeStrategy = '' } = mergeOptions;
-  const output = await execa('git', ['merge', mergeStrategy, branch])
+  const { mergeStrategy = '', messages = [] } = mergeOptions;
+  const messagesWithSwitch = messages.flatMap((message) => ['-m', message]);
+
+  const output = await execa('git', [
+    'merge',
+    mergeStrategy,
+    branch,
+    ...messagesWithSwitch,
+  ])
     .then(({ stdout }) => stdout)
     .catch((error) => {
       throw new GitError(`git merge failed. \n ${error.stderr}`);

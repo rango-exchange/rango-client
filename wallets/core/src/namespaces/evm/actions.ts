@@ -13,7 +13,11 @@ import { AccountId } from 'caip';
 import { recommended as commonRecommended } from '../common/actions.js';
 
 import { CAIP_NAMESPACE } from './constants.js';
-import { getAccounts, switchOrAddNetwork } from './utils.js';
+import {
+  filterAndGetEvmBlockchainNames,
+  getAccounts,
+  switchOrAddNetwork,
+} from './utils.js';
 
 export const recommended = [...commonRecommended];
 const CHAIN_ID_RADIX = 16;
@@ -192,5 +196,14 @@ export function canEagerConnect(
     } catch {
       return false;
     }
+  };
+}
+export function canSwitchNetwork(): FunctionWithContext<
+  EvmActions['canSwitchNetwork'],
+  Context
+> {
+  return (context, params) => {
+    const { network, supportedChains } = params;
+    return filterAndGetEvmBlockchainNames(supportedChains).includes(network);
   };
 }

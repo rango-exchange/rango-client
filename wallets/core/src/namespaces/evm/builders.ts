@@ -15,3 +15,5 @@ export const connect = () =>
 
 export const canEagerConnect = () =>
   new ActionBuilder<EvmActions, 'canEagerConnect'>('canEagerConnect');
+export const canSwitchNetwork = () =>
+  new ActionBuilder<EvmActions, 'canSwitchNetwork'>('canSwitchNetwork');

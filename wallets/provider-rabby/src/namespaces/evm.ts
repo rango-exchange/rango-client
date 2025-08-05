@@ -26,6 +26,11 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
+const canSwitchNetwork = builders
+  .canSwitchNetwork()
+  .action(actions.canSwitchNetwork())
+  .build();
+
 const canEagerConnect = builders
   .canEagerConnect()
   .action(actions.canEagerConnect(evmRabby))
@@ -35,6 +40,7 @@ const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
+  .action(canSwitchNetwork)
   .build();
 
 export { evm };

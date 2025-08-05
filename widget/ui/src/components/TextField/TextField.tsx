@@ -1,7 +1,7 @@
 import type { Ref, TextFieldPropTypes } from './TextField.types.js';
 import type { PropsWithChildren } from 'react';
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Divider } from '../Divider/index.js';
 import { Typography } from '../Typography/index.js';
@@ -12,6 +12,8 @@ function TextFieldComponent(
   props: PropsWithChildren<TextFieldPropTypes>,
   ref?: Ref
 ) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const {
     label,
     prefix,
@@ -44,6 +46,14 @@ function TextFieldComponent(
     }
   };
 
+  const handleClick = () => {
+    if (ref && 'current' in ref && ref.current) {
+      ref.current.focus();
+    } else if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <>
       {label && (
@@ -65,18 +75,22 @@ function TextFieldComponent(
         size={size}
         css={style}
         status={status}
+        suffix={!!suffix}
+        prefix={!!prefix}
+        onClick={handleClick}
         className="_text-field">
-        {prefix || null}
+        {prefix}
         <Input
           autoComplete="off"
           {...inputAttributes}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           spellCheck={false}
-          suffix={!!suffix}
-          ref={ref}
+          prefix={!!prefix}
+          size={size}
+          ref={ref || inputRef}
         />
-        {suffix || null}
+        {suffix}
       </InputContainer>
     </>
   );

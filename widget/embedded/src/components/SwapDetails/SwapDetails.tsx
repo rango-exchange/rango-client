@@ -1,5 +1,6 @@
 import type { SwapDetailsProps } from './SwapDetails.types';
 import type { ModalState } from '../SwapDetailsModal';
+import type { SwitchNetworkModalState } from '../SwapDetailsModal/SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
 import {
@@ -71,6 +72,8 @@ import {
   titleStepsStyles,
 } from './SwapDetails.styles';
 
+const SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY = 3000;
+
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
@@ -82,10 +85,14 @@ export function SwapDetails(props: SwapDetailsProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState<ModalState>(null);
+  const [switchNetworkModalState, setSwitchNetworkModalState] =
+    useState<SwitchNetworkModalState | null>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
-  const showSwitchNetworkRef = useRef(false);
+
+  const modalStateRef = useRef(modalState);
+  const switchNetworkModalStateRef = useRef(switchNetworkModalState);
 
   const getNotifications = useNotificationStore.use.getNotifications();
   const removeNotification = useNotificationStore.use.removeNotification();
@@ -102,42 +109,27 @@ export function SwapDetails(props: SwapDetailsProps) {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    const existNotification = notifications.find(
-      (n) => n.requestId === swap.requestId
-    );
-    if (existNotification) {
-      if (swap.status === 'success' || swap.status === 'failed') {
-        setShowCompletedModal(swap.status);
-        removeNotification(swap.requestId);
-        handleCloseModal();
-      } else if (showCompletedModal) {
-        setShowCompletedModal(null);
-      }
-    }
-  }, [swap.status, swap.requestId]);
-
-  useEffect(() => {
-    if (showSwitchNetwork) {
-      handleChangeModalState(PendingSwapNetworkStatus.WaitingForNetworkChange);
-    } else if (
-      currentStepNetworkStatus ===
-      PendingSwapNetworkStatus.WaitingForConnectingWallet
-    ) {
-      handleChangeModalState(
-        PendingSwapNetworkStatus.WaitingForConnectingWallet
-      );
-    } else if (
-      currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged
-    ) {
-      handleChangeModalState(PendingSwapNetworkStatus.NetworkChanged);
-    }
-
-    if (!showSwitchNetwork && showSwitchNetworkRef.current) {
-      handleCloseModal();
-    }
-    showSwitchNetworkRef.current = showSwitchNetwork;
-  }, [currentStepNetworkStatus]);
+  const handleShowSwitchNetworkLoading = () => {
+    setSwitchNetworkModalState({
+      type: 'loading',
+      title: i18n.t('Change Network'),
+      description: `We’re switching the connected network to ${currentStepNamespace?.network}. Please check your wallet.`,
+    });
+  };
+  const handleShowSwitchNetworkSucceeded = () => {
+    setSwitchNetworkModalState({
+      type: 'success',
+      title: i18n.t('Network Changed'),
+      description: 'The network has been successfully changed.',
+    });
+  };
+  const handleShowSwitchNetworkFailed = (error?: Error) => {
+    setSwitchNetworkModalState({
+      type: 'error',
+      title: i18n.t('Network Switch Failed'),
+      description: error?.message || stepMessage.detailedMessage.content,
+    });
+  };
 
   const lastConvertedTokenInFailedSwap =
     getLastConvertedTokenInFailedSwap(swap);
@@ -152,33 +144,60 @@ export function SwapDetails(props: SwapDetailsProps) {
   const swapDate = getSwapDate(swap);
   const shouldRetry = shouldRetrySwap(swap);
 
-  const isMobileWallet = (walletType: string): boolean =>
+  const checkIsMobileWallet = (walletType: string): boolean =>
     !!getWalletInfo(walletType)?.mobileWallet;
 
-  const showSwitchNetwork =
-    currentStepNetworkStatus ===
-      PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    !!currentStepNamespace &&
+  const stepIsBlockedForSwitchNetwork =
+    !!currentStepNetworkStatus &&
+    [
+      PendingSwapNetworkStatus.WaitingForNetworkChange,
+      PendingSwapNetworkStatus.NetworkChangeFailed,
+    ].includes(currentStepNetworkStatus);
+  const isMobileWallet =
     !!currentStepWallet?.walletType &&
-    (isMobileWallet(currentStepWallet.walletType) ||
-      canSwitchNetworkTo(
-        currentStepWallet.walletType,
-        currentStepNamespace.network
-      ));
+    checkIsMobileWallet(currentStepWallet.walletType);
+  const canSwitchNetworkToRequiredNetwork =
+    !!currentStepWallet &&
+    !!currentStepNamespace &&
+    canSwitchNetworkTo(
+      currentStepWallet.walletType,
+      currentStepNamespace.network,
+      currentStepNamespace
+    );
 
-  const switchNetwork = showSwitchNetwork
-    ? connect.bind(null, currentStepWallet.walletType, [
+  const switchNetworkIsAvailable =
+    !!currentStepNamespace &&
+    stepIsBlockedForSwitchNetwork &&
+    (isMobileWallet || canSwitchNetworkToRequiredNetwork);
+
+  const handleSwitchNetwork = () => {
+    if (switchNetworkIsAvailable) {
+      handleShowSwitchNetworkLoading();
+      connect(currentStepWallet.walletType, [
         {
           namespace: currentStepNamespace.namespace,
           network: currentStepNamespace.network,
         },
       ])
-    : undefined;
+        .then(() => {
+          handleShowSwitchNetworkSucceeded();
+        })
+        .catch((error: unknown) => {
+          handleShowSwitchNetworkFailed(error as Error);
+        });
+    }
+  };
+
+  const handleSwitchNetworkClick = () => {
+    handleChangeModalState('switchNetwork');
+    handleSwitchNetwork();
+  };
 
   const stepMessage = getSwapMessages(swap, currentStep, getWalletInfo);
   const steps = getSteps({
     swap,
-    switchNetwork,
+    switchNetworkIsAvailable,
+    handleSwitchNetworkClick,
     showNetworkModal: currentStepNetworkStatus,
     setNetworkModal: handleChangeModalState,
     message: stepMessage,
@@ -274,6 +293,83 @@ export function SwapDetails(props: SwapDetailsProps) {
         )}
       </ErrorMessages>
     );
+
+  useEffect(() => {
+    const existNotification = notifications.find(
+      (n) => n.requestId === swap.requestId
+    );
+    if (existNotification) {
+      if (swap.status === 'success' || swap.status === 'failed') {
+        setShowCompletedModal(swap.status);
+        removeNotification(swap.requestId);
+        handleCloseModal();
+      } else if (showCompletedModal) {
+        setShowCompletedModal(null);
+      }
+    }
+  }, [swap.status, swap.requestId]);
+
+  useEffect(() => {
+    if (switchNetworkIsAvailable) {
+      handleChangeModalState('switchNetwork');
+      if (
+        currentStepNetworkStatus ===
+        PendingSwapNetworkStatus.WaitingForNetworkChange
+      ) {
+        handleShowSwitchNetworkLoading();
+        return;
+      }
+      if (
+        currentStepNetworkStatus ===
+        PendingSwapNetworkStatus.NetworkChangeFailed
+      ) {
+        handleShowSwitchNetworkFailed();
+        return;
+      }
+      return;
+    }
+
+    if (
+      currentStepNetworkStatus ===
+      PendingSwapNetworkStatus.WaitingForConnectingWallet
+    ) {
+      handleChangeModalState('connectWallet');
+      return;
+    }
+
+    if (currentStepNetworkStatus === PendingSwapNetworkStatus.NetworkChanged) {
+      handleChangeModalState('switchNetwork');
+      handleShowSwitchNetworkSucceeded();
+      return;
+    }
+
+    if (modalState && ['connectWallet', 'switchNetwork'].includes(modalState)) {
+      handleCloseModal();
+    }
+  }, [currentStepNetworkStatus]);
+
+  useEffect(() => {
+    modalStateRef.current = modalState;
+    switchNetworkModalStateRef.current = switchNetworkModalState;
+
+    // Close switch network success modal with a delay
+    if (
+      modalState === 'switchNetwork' &&
+      switchNetworkModalState?.type === 'success'
+    ) {
+      const timeout = setTimeout(() => {
+        if (
+          modalStateRef.current === 'switchNetwork' &&
+          switchNetworkModalStateRef.current?.type === 'success'
+        ) {
+          handleCloseModal();
+        }
+      }, SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY);
+
+      return () => clearTimeout(timeout);
+    }
+    return;
+  }, [modalState, switchNetworkModalState]);
 
   return (
     <Layout
@@ -418,11 +514,13 @@ export function SwapDetails(props: SwapDetailsProps) {
       <SwapDetailsModal
         isOpen={isModalOpen}
         state={modalState}
+        switchNetworkModalState={switchNetworkModalState}
         onClose={handleCloseModal}
         onCancel={onCancel}
         onDelete={onDelete}
         message={stepMessage.detailedMessage.content}
         swap={swap}
+        handleSwitchNetwork={handleSwitchNetworkClick}
       />
       <SwapDetailsCompleteModal
         open={!!showCompletedModal}

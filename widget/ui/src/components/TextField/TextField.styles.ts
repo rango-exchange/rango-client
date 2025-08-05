@@ -17,14 +17,24 @@ export const InputContainer = styled('div', {
       },
     },
     size: {
-      small: {
-        padding: '$5 $15',
-      },
+      small: {},
       large: {
-        padding: '$10',
         borderRadius: '$xl',
       },
     },
+    suffix: {
+      true: {},
+      false: {
+        padding: 0,
+      },
+    },
+    prefix: {
+      true: {},
+      false: {
+        padding: 0,
+      },
+    },
+
     variant: {
       contained: {
         $$color: '$colors$neutral100',
@@ -78,6 +88,34 @@ export const InputContainer = styled('div', {
 
   compoundVariants: [
     {
+      size: 'small',
+      suffix: true,
+      css: {
+        paddingRight: '$15',
+      },
+    },
+    {
+      size: 'small',
+      prefix: true,
+      css: {
+        paddingLeft: '$15',
+      },
+    },
+    {
+      size: 'large',
+      suffix: true,
+      css: {
+        paddingRight: '$10',
+      },
+    },
+    {
+      size: 'large',
+      prefix: true,
+      css: {
+        paddingLeft: '$10',
+      },
+    },
+    {
       variant: 'contained',
       disabled: true,
       css: {
@@ -109,10 +147,37 @@ export const Input = styled('input', {
   fontFamily: 'inherit',
   maxWidth: '100%',
   variants: {
-    suffix: {
-      true: { marginRight: '$10' },
+    prefix: {
+      true: {
+        paddingLeft: '$0',
+      },
+      false: {},
+    },
+    size: {
+      small: {
+        padding: '$6 $15 $6 $0',
+      },
+      large: {
+        padding: '$10 $10 $10 $0',
+      },
     },
   },
+  compoundVariants: [
+    {
+      size: 'small',
+      prefix: false,
+      css: {
+        paddingLeft: '$15',
+      },
+    },
+    {
+      size: 'large',
+      prefix: false,
+      css: {
+        paddingLeft: '$10',
+      },
+    },
+  ],
   backgroundColor: 'transparent',
   '-webkit-appearance': 'none',
   margin: 0,

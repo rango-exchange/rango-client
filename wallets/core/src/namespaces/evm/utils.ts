@@ -1,5 +1,7 @@
 import type { Chain, ChainId, ProviderAPI } from './types.js';
 
+import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+
 export async function getAccounts(provider: ProviderAPI) {
   const [accounts, chainId] = await Promise.all([
     provider.request({ method: 'eth_requestAccounts' }),
@@ -25,7 +27,9 @@ export async function switchNetwork(instance: ProviderAPI, chainId: ChainId) {
     params: [{ chainId: chainId }],
   });
 }
-
+export function filterAndGetEvmBlockchainNames(meta: BlockchainMeta[]) {
+  return evmBlockchains(meta).map((blockchain) => blockchain.name);
+}
 export async function switchOrAddNetwork(
   instance: ProviderAPI,
   chain: ChainId | Chain
@@ -51,6 +55,7 @@ export async function switchOrAddNetwork(
        * This error code indicates that the chain has not been added to wallet.
        */
       await suggestNetwork(instance, chain);
+      return;
     }
     throw switchError;
   }
