@@ -296,7 +296,9 @@ export const calculateWalletUsdValue = (balances: BalanceState) => {
 
 function numberWithThousandSeparator(number: string | number): string {
   const parts = number.toString().split('.');
-  parts[0] = formatThousandsWithCommas(parts[0]);
+  if (parts[0]) {
+    parts[0] = formatThousandsWithCommas(parts[0]);
+  }
   return parts.join('.');
 }
 
@@ -311,7 +313,7 @@ export const isExperimentalChain = (
   );
   return (
     cosmosExperimentalChainInfo &&
-    cosmosExperimentalChainInfo[wallet]?.experimental
+    !!cosmosExperimentalChainInfo[wallet]?.experimental
   );
 };
 
