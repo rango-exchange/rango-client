@@ -9,14 +9,14 @@ import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
-import { mapStatusToWalletState } from '../../utils/wallets';
+import { getWalletConnectionStatus } from '../../utils/wallets';
 
 import { ConnectWalletContent } from './SwapDetailsModal.ConnectWallet';
 import { InstallWalletContent } from './SwapDetailsModal.InstallWallet';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const { swap, onClose } = props;
-  const { state } = useWallets();
+  const { state, getWalletInfo } = useWallets();
 
   const currentStep = getCurrentStep(swap);
   const currentStepWallet = currentStep
@@ -25,7 +25,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
 
   const walletType = currentStepWallet?.walletType;
   const walletState = walletType
-    ? mapStatusToWalletState(state(walletType))
+    ? getWalletConnectionStatus(getWalletInfo(walletType), state(walletType))
     : null;
   const currentNamespace = currentStep
     ? getCurrentNamespaceOfOrNull(swap, currentStep)
