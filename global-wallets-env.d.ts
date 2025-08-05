@@ -19,7 +19,7 @@ declare global {
     coin98?: any;
     keplr?: any;
     isSafePal?: any;
-    safepal?: any;
+    safePal?: any;
     safepalProvider?: any;
     trustwallet?: any;
     okxwallet?: any;
