@@ -1,3 +1,12 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.46.0...wallets-core@0.47.0) (2025-08-05)
+
+
+### Features
+
+* implement canSwitchNetwork for hub providers ([5a4eced](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+
+
+
 # [0.46.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.45.0...wallets-core@0.46.0) (2025-07-22)
 
 

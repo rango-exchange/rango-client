@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.14.0...provider-rabby@0.15.0) (2025-08-05)
+
+
+### Bug Fixes
+
+* add canSwitchNetwork action to rabby ([a1052f5](https://github.com/rango-exchange/rango-client/commit/a1052f597f2c9c43a480473a4bf9be0236cd97fe))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.13.0...provider-rabby@0.14.0) (2025-07-22)
 
 

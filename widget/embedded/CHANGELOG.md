@@ -1,3 +1,18 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.46.1...widget-embedded@0.47.0) (2025-08-05)
+
+
+### Bug Fixes
+
+* ensure input remains fully clickable by adjusting wrapper padding ([a5c160f](https://github.com/rango-exchange/rango-client/commit/a5c160f1e79d6f78b8b69aa87a05b724afe26e16))
+
+
+### Features
+
+* implement canSwitchNetwork for hub providers ([5a4eced](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+* improve swap details page switch network modal ([f92e2bd](https://github.com/rango-exchange/rango-client/commit/f92e2bd26affc3ff680e1b15ae938e471dd41393))
+
+
+
 ## [0.46.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.46.0...widget-embedded@0.46.1) (2025-07-27)
 
 

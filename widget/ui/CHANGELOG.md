@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/ui@0.49.0...ui@0.50.0) (2025-08-05)
+
+
+### Bug Fixes
+
+* ensure input remains fully clickable by adjusting wrapper padding ([a5c160f](https://github.com/rango-exchange/rango-client/commit/a5c160f1e79d6f78b8b69aa87a05b724afe26e16))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/ui@0.48.0...ui@0.49.0) (2025-07-22)
 
 
