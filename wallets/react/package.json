@@ -21,7 +21,7 @@
     "helpers"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/react --inputs src/index.ts,src/helpers/index.ts",
+    "build": "rangutopia library build --inputs src/index.ts,src/helpers/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
