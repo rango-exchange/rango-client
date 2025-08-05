@@ -1,3 +1,12 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.33.0...wallets-react@0.34.0) (2025-08-05)
+
+
+### Features
+
+* implement canSwitchNetwork for hub providers ([5a4eced](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+
+
+
 # [0.33.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.32.0...wallets-react@0.33.0) (2025-07-22)
 
 

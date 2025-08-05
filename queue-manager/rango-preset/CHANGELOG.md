@@ -1,3 +1,13 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.48.1...queue-manager-rango-preset@0.49.0) (2025-08-05)
+
+
+### Features
+
+* implement canSwitchNetwork for hub providers ([5a4eced](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+* improve swap details page switch network modal ([f92e2bd](https://github.com/rango-exchange/rango-client/commit/f92e2bd26affc3ff680e1b15ae938e471dd41393))
+
+
+
 ## [0.48.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.48.0...queue-manager-rango-preset@0.48.1) (2025-07-27)
 
 

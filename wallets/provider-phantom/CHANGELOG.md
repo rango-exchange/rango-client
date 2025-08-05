@@ -1,3 +1,12 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.48.0...provider-phantom@0.49.0) (2025-08-05)
+
+
+### Features
+
+* implement canSwitchNetwork for hub providers ([5a4eced](https://github.com/rango-exchange/rango-client/commit/5a4eced221046b5474176aca7c569092e36f1bde))
+
+
+
 # [0.48.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.47.0...provider-phantom@0.48.0) (2025-07-22)
 
 

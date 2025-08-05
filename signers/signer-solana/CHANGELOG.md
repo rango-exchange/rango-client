@@ -1,3 +1,7 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.42.0...signer-solana@0.43.0) (2025-08-05)
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.41.0...signer-solana@0.42.0) (2025-07-22)
 
 
