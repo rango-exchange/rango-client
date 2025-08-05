@@ -2,6 +2,7 @@ import type { SwapInputPropTypes } from './SwapInput.types.js';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
+import { InfoIcon } from 'src/icons/index.js';
 
 import {
   Divider,
@@ -28,6 +29,7 @@ import {
 } from './SwapInput.styles.js';
 import { TokenSection } from './TokenSection.js';
 
+const USD_VALUE_TOOLTIP_THRESHOLD = 20;
 export function SwapInput(props: SwapInputPropTypes) {
   const showBalance =
     'balance' in props &&
@@ -46,7 +48,6 @@ export function SwapInput(props: SwapInputPropTypes) {
   const displayUsdValue =
     props.price.error ||
     (isUsdValueZeroOrFalsy ? '0.00' : `~$${props.price.usdValue}`);
-
   return (
     <Container
       id={
@@ -157,17 +158,19 @@ export function SwapInput(props: SwapInputPropTypes) {
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <NumericTooltip
-                  content={price.realUsdValue}
-                  container={props.tooltipContainer}
-                  open={isUsdValueZeroOrFalsy ? false : undefined}
-                  side="bottom">
-                  <ValueTypography hasWarning={!!price.error}>
-                    <UsdPrice variant="body" size="medium">
-                      {displayUsdValue}
-                    </UsdPrice>
-                  </ValueTypography>
-                </NumericTooltip>
+                <ValueTypography hasWarning={!!price.error}>
+                  <UsdPrice variant="body" size="medium">
+                    {displayUsdValue}
+                  </UsdPrice>
+                  {displayUsdValue.length > USD_VALUE_TOOLTIP_THRESHOLD && (
+                    <NumericTooltip
+                      content={price.realUsdValue}
+                      container={props.tooltipContainer}
+                      side="bottom">
+                      <InfoIcon size={12} color="gray" />
+                    </NumericTooltip>
+                  )}
+                </ValueTypography>
               )}
             </>
           )}
