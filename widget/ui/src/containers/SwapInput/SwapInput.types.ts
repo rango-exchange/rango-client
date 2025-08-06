@@ -24,8 +24,6 @@ export type BaseProps = {
   loading?: boolean;
   error?: boolean;
   disabled?: boolean;
-  label?: string;
-  sharpBottomStyle?: boolean;
   onClickToken: () => void;
   tooltipContainer?: HTMLElement;
 };

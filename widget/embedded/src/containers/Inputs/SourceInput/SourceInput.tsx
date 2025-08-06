@@ -1,10 +1,10 @@
 import type { PropTypes } from './SourceInput.types';
 
+import { i18n } from '@lingui/core';
 import { Divider, SwapInput } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { SwitchFromAndToButton } from '../../../components/SwitchFromAndTo';
@@ -43,7 +43,6 @@ export function SourceInput(props: PropTypes) {
     setInputAmount,
     sanitizeInputAmount,
   } = useQuoteStore();
-  const { t } = useTranslation();
   const { getWalletInfo } = useWallets();
   const navigate = useNavigate();
   const relatedWallet = selectedSourceWallet
@@ -51,7 +50,7 @@ export function SourceInput(props: PropTypes) {
         ...selectedSourceWallet,
         image: getWalletInfo(selectedSourceWallet.type).img,
       }
-    : null;
+    : undefined;
 
   const fetchingBalance = fromToken
     ? isFetchingBalance(connectedWallets, fromToken.blockchain)
@@ -97,7 +96,7 @@ export function SourceInput(props: PropTypes) {
   return (
     <FromContainer>
       <SwapInputLabel
-        label={t('From')}
+        label={i18n.t('From')}
         onClickWallet={onClickWallet}
         relatedWallet={relatedWallet}
       />
