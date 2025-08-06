@@ -13,11 +13,15 @@ import { useQuoteStore } from '../../store/quote';
  * and trigger the wallet update method accordingly.
  */
 export function useUpdateSelectedWallets() {
-  const { fromToken } = useQuoteStore();
-  const { checkAndUpdateSelectedWalletsIfNeeded, connectedWallets } =
+  const { fromToken, toToken } = useQuoteStore();
+  const { checkAndUpdateSelectedWalletIfNeeded, connectedWallets } =
     useAppStore();
 
   useEffect(() => {
-    checkAndUpdateSelectedWalletsIfNeeded(connectedWallets);
+    checkAndUpdateSelectedWalletIfNeeded('source', connectedWallets);
   }, [fromToken]);
+
+  useEffect(() => {
+    checkAndUpdateSelectedWalletIfNeeded('destination', connectedWallets);
+  }, [toToken]);
 }

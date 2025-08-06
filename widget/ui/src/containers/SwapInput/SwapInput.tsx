@@ -7,7 +7,6 @@ import {
   NumericTooltip,
   PriceImpact,
   Skeleton,
-  Typography,
 } from '../../components/index.js';
 import { UI_ID } from '../../constants/index.js';
 
@@ -16,9 +15,6 @@ import {
   Container,
   formStyles,
   InputAmount,
-  labelContainerStyles,
-  labelStyles,
-  textStyles,
   TokenSectionContainer,
   TokenValue,
   UsdPrice,
@@ -44,13 +40,6 @@ export function SwapInput(props: SwapInputPropTypes) {
           : UI_ID.SWAP_FROM_INPUT_CONTAINER_ID
       }
       css={props.style?.container}>
-      <div className={labelContainerStyles()}>
-        <div className={labelStyles()}>
-          <Typography variant="body" size="small" className={textStyles()}>
-            {props.label}
-          </Typography>
-        </div>
-      </div>
       <div className={formStyles()}>
         <TokenSectionContainer>
           <TokenSection
