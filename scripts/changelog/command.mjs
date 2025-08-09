@@ -29,7 +29,7 @@ async function generateChangelogForRoot(options) {
   }
 }
 
-async function generateChangelogForWorkspaceMembers(pkgs) {
+async function generateChangelogForWorkspaceMembers(pkgs, options) {
   for (const pkg of pkgs) {
     const { from, commitsCount } = await getInfoBeforeGeneratingChangelog(pkg);
 
@@ -38,7 +38,7 @@ async function generateChangelogForWorkspaceMembers(pkgs) {
       console.log('from:', from || 'start (first release)');
       console.log('commits:', commitsCount);
 
-      if (save) {
+      if (options.save) {
         await generateChangelogAndSave(pkg);
       } else {
         generateChangelogAndPrint(pkg);
@@ -83,7 +83,9 @@ async function run() {
         });
     }
 
-    await generateChangelogForWorkspaceMembers(pkgs);
+    await generateChangelogForWorkspaceMembers(pkgs, {
+      save
+    });
   } else {
     await generateChangelogForRoot({
       save,
