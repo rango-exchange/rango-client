@@ -69,11 +69,13 @@ async function run() {
     // Create a list of packages we are going to create changelog for.
     const pkgs = [];
     if (name) {
-      const pkgs = await packageNamesToPackagesWithInfo([name]);
-      if (pkgs.length !== 1)
-        throw new Error('Your provided package is not found.', { cause: pkgs });
+      const workspacePkgs = await packageNamesToPackagesWithInfo([name]);
+      if (workspacePkgs.length !== 1)
+        throw new Error('Your provided package is not found.', {
+          cause: workspacePkgs,
+        });
 
-      pkgs.push(pkgs[0]);
+      pkgs.push(workspacePkgs[0]);
     } else {
       const list = await workspacePackages();
       list
@@ -84,7 +86,7 @@ async function run() {
     }
 
     await generateChangelogForWorkspaceMembers(pkgs, {
-      save
+      save,
     });
   } else {
     await generateChangelogForRoot({
