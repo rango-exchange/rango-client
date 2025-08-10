@@ -31,6 +31,7 @@ export type NamespaceDetachedItemPropTypes = {
   namespace: LegacyNamespaceMeta;
   state: NamespaceData;
   initialConnect?: boolean;
+  disabled?: boolean;
   handleConnect: (options?: {
     shouldAskForDerivationPath?: boolean;
   }) => Promise<void>;

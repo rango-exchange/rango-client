@@ -8,8 +8,14 @@ import { getConciseAddress } from '../../utils/wallets';
 import { NamespaceItem } from '../NamespaceItem';
 
 export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
-  const { namespace, initialConnect, state, handleConnect, handleDisconnect } =
-    props;
+  const {
+    namespace,
+    initialConnect,
+    disabled,
+    state,
+    handleConnect,
+    handleDisconnect,
+  } = props;
 
   const [error, setError] = useState<Error | null>(null);
 
@@ -82,7 +88,8 @@ export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
             variant="ghost"
             type={state.connected ? 'error' : 'primary'}
             size="xsmall"
-            onClick={async () => handleButtonClick()}>
+            onClick={async () => handleButtonClick()}
+            disabled={disabled}>
             {getButtonText()}
           </Button>
         )

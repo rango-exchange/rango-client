@@ -115,10 +115,13 @@ export function Detached(props: PropTypes) {
       throw new Error(`State for ${namespace.value} was not found!`);
     }
 
+    const disabled = singleSelection && walletState.connecting; // If wallet is configured as single selection, button should be disabled while a namespace is already in connecting state
+
     return (
       <NamespaceDetachedItem
         namespace={namespace}
         initialConnect={!!selectedNamespace}
+        disabled={disabled}
         state={namespaceState}
         handleConnect={async (options) =>
           handleConnectNamespace(namespace.value, {
