@@ -2,14 +2,14 @@ import { packageNameWithoutScope } from './utils.mjs';
 import { ConventionalChangelog } from 'conventional-changelog';
 import { ConventionalGitClient } from '@conventional-changelog/git-client';
 import { createWriteStream, createReadStream, WriteStream } from 'node:fs';
-import fs from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { rename, unlink, access } from 'node:fs/promises';
 
 // Our tagging is using lerna convention which is package-name@version
 // for example for @rango-dev/wallets-core, it will be wallets-core@1.1.0
-const TAG_PACKAGE_PREFIX = (pkg) => `${packageNameWithoutScope(pkg.name)}@`;
+export const TAG_PACKAGE_PREFIX = (pkg) =>
+  `${packageNameWithoutScope(pkg.name)}@`;
 const TAG_ROOT_PREFIX = /^[^@]+@/;
 
 // TODO: this is not correct assumption that the script will be run from the root.
