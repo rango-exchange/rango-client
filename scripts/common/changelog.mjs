@@ -161,7 +161,8 @@ export async function generateChangelogAndSave(pkg) {
   return new Promise((resolve, reject) => {
     const changelog = generateChangelog(pkg);
 
-    // we only need location for file stream, when pkg is undefined, we will point to root package.json
+    // we only need location for file stream, when pkg is undefined, we will point to root of the project.
+    // useful for creating root changelog for a monorepo, or for normal repos.
     if (!pkg) pkg = { location: rootPath() };
 
     const writeStream = changelog.pipe(changelogFileStream(pkg));
