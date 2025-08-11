@@ -56,6 +56,7 @@
     "@rango-dev/provider-unisat": "^0.4.0",
     "@rango-dev/provider-walletconnect-2": "^0.42.0",
     "@rango-dev/provider-xdefi": "^0.50.0",
+    "@rango-dev/wallets-core": "0.47.0",
     "@rango-dev/wallets-react": "^0.34.0",
     "@rango-dev/wallets-shared": "^0.48.0"
   },

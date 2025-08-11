@@ -26,6 +26,7 @@
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-solana": "^0.43.0",
     "@rango-dev/signer-sui": "^0.7.0",
+    "@rango-dev/wallets-core": "0.47.0",
     "@rango-dev/wallets-shared": "^0.48.0",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.1.88"
