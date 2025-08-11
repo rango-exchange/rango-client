@@ -43,7 +43,9 @@ export function BlockchainsSection(props: PropTypes) {
   /**
    * When only one item is left on list, we will not show the `More` button and will show the item itself instead.
    */
-  const onlyOneItemInList = blockchainsList.more.length === 1;
+  const firstItemOfList = blockchainsList.more[0];
+  const onlyOneItemInList =
+    blockchainsList.more.length === 1 && firstItemOfList;
   const showMoreButton = !onlyOneItemInList && hasMoreItemsInList;
 
   return (
@@ -103,13 +105,12 @@ export function BlockchainsSection(props: PropTypes) {
             {onlyOneItemInList ? (
               <BlockchainsChip
                 className="widget-blockchains-section-only-item-btn"
-                key={blockchainsList.more[0].name}
+                key={firstItemOfList.name}
                 selected={
-                  !!blockchain &&
-                  blockchain.name === blockchainsList.more[0].name
+                  !!blockchain && blockchain.name === firstItemOfList.name
                 }
-                onClick={() => onChange(blockchainsList.more[0])}>
-                <Image src={blockchainsList.more[0].logo} size={30} />
+                onClick={() => onChange(firstItemOfList)}>
+                <Image src={firstItemOfList.logo} size={30} />
               </BlockchainsChip>
             ) : null}
 
