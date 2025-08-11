@@ -5,6 +5,7 @@ import { createWriteStream, createReadStream, WriteStream } from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { rename, unlink, access } from 'node:fs/promises';
+import { Writable } from 'stream';
 
 // Our tagging is using lerna convention which is package-name@version
 // for example for @rango-dev/wallets-core, it will be wallets-core@1.1.0
@@ -97,29 +98,40 @@ export function changelogFileStream(pkg) {
   // Creating a temp writer to don't load the whole file in memory at once, at the end will append the old changelog to the temp, then rename it.
   const tempWriteStream = createWriteStream(changelogPathTmp);
 
-  tempWriteStream.on('finish', async () => {
-    try {
-      // if a changelog already exists, we append the old one top the temp.
-      await access(changelogPath)
-        .then(() =>
-          pipeline(
-            createReadStream(changelogPath),
-            createWriteStream(changelogPathTmp, { flags: 'a' })
-          )
-        )
-        .catch(() => {
-          // ignore.
-        });
+  const proxyStream = new Writable({
+    write(chunk, encoding, cb) {
+      tempWriteStream.write(chunk, encoding, cb);
+    },
+    final(cb) {
+      tempWriteStream.end(async () => {
+        try {
+          // if a changelog already exists, we append the old one top the temp.
+          await access(changelogPath)
+            .then(() =>
+              pipeline(
+                createReadStream(changelogPath),
+                createWriteStream(changelogPathTmp, { flags: 'a' })
+              )
+            )
+            .catch(() => {
+              // ignore.
+            });
 
-      // replace temp as the main changelog.
-      await rename(changelogPathTmp, changelogPath);
-    } catch (err) {
-      console.error('Failed to prepend changelog:', { err });
-      void unlink(changelogPathTmp);
-    }
+          // replace temp as the main changelog.
+          await rename(changelogPathTmp, changelogPath);
+
+          cb();
+        } catch (err) {
+          console.error('Failed to prepend changelog:', { err });
+          void unlink(changelogPathTmp);
+
+          cb(err);
+        }
+      });
+    },
   });
 
-  return tempWriteStream;
+  return proxyStream;
 }
 
 /**
