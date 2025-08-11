@@ -1334,7 +1334,6 @@ export function retryOn(
     }
   });
 
-  console.log({ walletAndNetworkMatched, onlyWalletMatched, wallet, network });
   let finalQueueToBeRun: QueueType | undefined = undefined;
   if (walletAndNetworkMatched.length > 0) {
     finalQueueToBeRun = walletAndNetworkMatched[0];

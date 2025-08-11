@@ -114,11 +114,11 @@ export function onNextStateError(
     nextStatus: error.nextStatus,
     message: error.message,
     details: error.details,
+    errorCode: error.errorCode,
 
     hasAlreadyProceededToSign: isApproval
       ? undefined
       : hasAlreadyProceededToSign,
-    errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
 
   notifier({
