@@ -109,6 +109,9 @@ export function HistoryGroupedList(props: PropTypes) {
         const currentStep = getCurrentStep(swap);
         const firstStep = swap.steps[0];
         const lastStep = swap.steps[swap.steps.length - 1];
+        if (!firstStep || !lastStep) {
+          return null;
+        }
         return (
           <SwapItemContainer key={swap.requestId}>
             <SwapListItem

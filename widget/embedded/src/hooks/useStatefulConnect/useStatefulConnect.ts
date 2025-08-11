@@ -122,7 +122,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       }
 
       // 3. Target wallet contains only one namespace
-      if (needsNamespace?.data.length === 1) {
+      if (needsNamespace?.data.length === 1 && needsNamespace.data[0]) {
         if (needsDerivationPath) {
           const namespace = needsNamespace.data[0];
 

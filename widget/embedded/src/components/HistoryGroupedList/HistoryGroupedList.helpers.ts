@@ -9,8 +9,10 @@ export function calculateGroupsSoFar(totalGroups: number[], count: number) {
   let index = 0;
   do {
     const group = totalGroups[index];
-    groups.push(Math.min(group, count));
-    count -= group;
+    if (group) {
+      groups.push(Math.min(group, count));
+      count -= group;
+    }
     index++;
   } while (count > 0 && index <= totalGroups.length);
   return groups;

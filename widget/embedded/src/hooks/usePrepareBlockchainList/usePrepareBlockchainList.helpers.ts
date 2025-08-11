@@ -54,7 +54,7 @@ export function prepare(
 
         preferredBlockchainsWithoutMainList =
           preferredBlockchainsWithoutMainList.filter((preferredBlockchain) => {
-            return blockchain.name !== preferredBlockchain;
+            return blockchain?.name !== preferredBlockchain;
           });
       }
     }
