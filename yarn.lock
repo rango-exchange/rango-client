@@ -18340,28 +18340,28 @@ range-parser@^1.2.1, range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-rango-sdk-basic@^0.1.69:
-  version "0.1.69"
-  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.69.tgz#ff6d86ce0d51598996a58915d484a0880507b944"
-  integrity sha512-kP4Uml0rKwVQEWOX0PgGzjibbT/fJLo5Xqj2NITmTkEo8/Hu3QLvMkXbaY1wlVYMkMl62xup5hSzBLW9kypMhQ==
+rango-sdk-basic@^0.1.70:
+  version "0.1.70"
+  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.70.tgz#c95d0501c18f7b4d2d9ef7aea8d578a047db3741"
+  integrity sha512-oi8Zzwwa+CEmtvlXnGNDGf3yzz1nAWTWIsGUEi5E5jItpy7dbURBB3E5w5IUGVs/eiZnRw1uRQLc2kO49ua7Gw==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.88"
+    rango-types "^0.1.89"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.69:
-  version "0.1.69"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.69.tgz#5a787c7bf1ed02aae4c267a7c4943b003eeb96b2"
-  integrity sha512-v04OlcCpV3Pk4KdtMn7XEqwzSwI5kODvy7UIVNb/UB6YXpq+/q2sxDOy9r6/eeqdAa+RKnq3jYdgqf5ATdoXnQ==
+rango-sdk@^0.1.70:
+  version "0.1.70"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.70.tgz#9fd4454aef0b3148d1851b9c9c6df0954e0e293b"
+  integrity sha512-tz+n9F53sA4LDcbUlSHccUR9JXo+kf83BxN/s94MXXn20D0ekcgjqMO8QLekcNXuVFFFqjNSzBu6roCFJgJ7Zg==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.88"
+    rango-types "^0.1.89"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.88:
-  version "0.1.88"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.88.tgz#077d73f20206aff287d8b6e7f30fc3477038cd85"
-  integrity sha512-lumeWNFU/wxPvCkFayMDDsAXrL8foAlu4GXR/BfusZWOxbenIHFQVUtIpDFcs5nsZa3eO2WJML4zTRf//CbHsQ==
+rango-types@^0.1.89:
+  version "0.1.89"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.89.tgz#023e68f76f12746476ef68f658eed62735e23c4f"
+  integrity sha512-14ynaYTLYnwY867RCl9UbZrFtW4LAiBET7ONS6eiCRhvl4ROvdiqopmzIDnsR6jma67QvcusHikBu9EcwhHTlw==
 
 raw-body@2.5.2:
   version "2.5.2"
