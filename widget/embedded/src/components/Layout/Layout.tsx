@@ -145,7 +145,9 @@ function Layout(props: PropsWithChildren<PropTypes>) {
 
       if (isSmallScreen) {
         containerRef.current.style.height = `${
-          window.innerHeight - containerRef.current.offsetTop
+          window.innerHeight -
+          containerRef.current.getBoundingClientRect().top -
+          (__UNSTABLE_OR_INTERNAL__?.dynamicHeight?.offsetBottom ?? 0)
         }px`;
       } else {
         containerRef.current.style.height = `${WIDGET_MAX_HEIGHT}px`;
@@ -162,7 +164,12 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     window.addEventListener('resize', handler);
 
     return () => window.removeEventListener('resize', handler);
-  }, [height, isMobile, isTablet]);
+  }, [
+    height,
+    isMobile,
+    isTablet,
+    __UNSTABLE_OR_INTERNAL__?.dynamicHeight?.offsetBottom,
+  ]);
 
   return (
     <Container
