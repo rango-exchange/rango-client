@@ -1,0 +1,35 @@
+name: Post-Release
+on:
+  workflow_dispatch:
+
+
+  workflow_call:
+    secrets:
+      PAT:
+        description: 'Add a PAT to secrets.'
+        required: true
+    inputs:
+      branch:
+        description: 'Branch to checkout'
+        required: true
+        type: string
+jobs:
+  post-release:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ inputs.branch || github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+          ref: ${{ env.TARGET_BRANCH }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Post Release
+        run: yarn run post-release-prod
+        env:
+          REF: ${{ env.TARGET_BRANCH }}
+          GH_TOKEN: ${{ github.token }}

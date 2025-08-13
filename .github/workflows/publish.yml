@@ -4,7 +4,21 @@ on:
     branches:
       - 'main'
       - 'next'
+  workflow_dispatch:
 
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: 'You need a npm token to be set.'
+        required: true
+      PAT:
+        description: 'Add a PAT to secrets.'
+        required: true
+    inputs:
+      branch:
+        description: 'Branch to checkout'
+        required: true
+        type: string
 concurrency:
   group: package-publishing
 
@@ -12,6 +26,8 @@ jobs:
   publish:
     timeout-minutes: 30
     runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ inputs.branch || github.ref }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,7 +41,7 @@ jobs:
       - name: Build, Version & Publish packages
         run: yarn run publish
         env:
-          REF: ${{ github.ref }}
+          REF: ${{ env.TARGET_BRANCH }}
           GH_TOKEN: ${{ github.token }}
           # Github will create .npmrc based on this env variable.
           # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
