@@ -1,0 +1,44 @@
+name: Production Release
+on:
+  workflow_dispatch:
+
+jobs:
+  main-sync:
+    uses: ./.github/workflows/main-sync.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      PAT: ${{ secrets.PAT }}
+
+  publish:
+    needs: main-sync
+    uses: ./.github/workflows/publish.yml
+    with:
+      branch:
+        refs/heads/main
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      PAT: ${{ secrets.PAT }}
+
+  deploy:
+    needs: publish
+    uses: ./.github/workflows/deploy.yml
+    with:
+      branch:
+        refs/heads/main
+    secrets:
+      PAT: ${{ secrets.PAT }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+      VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
+      VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
+      VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
+
+  post-release:
+    needs: deploy
+    with:
+      branch:
+        refs/heads/next
+    uses: ./.github/workflows/post-release.yml
+    secrets:
+      PAT: ${{ secrets.PAT }}

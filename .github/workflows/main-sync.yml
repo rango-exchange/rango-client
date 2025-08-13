@@ -1,9 +1,17 @@
-name: Release
+name: Main Sync
 on:
   workflow_dispatch:
 
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: 'You need a npm token to be set.'
+        required: true
+      PAT:
+        description: 'Add a PAT to secrets.'
+        required: true
 jobs:
-  release:
+  main-sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,8 +22,8 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
 
-      - name: Release Production
-        run: yarn run release-prod
+      - name: Sync main to the next
+        run: yarn run main-sync
         env:
           REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}

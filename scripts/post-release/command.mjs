@@ -11,7 +11,7 @@ async function run() {
   
   await merge('main', {
     mergeStrategy: '--no-ff',
-    messages: ['chore: sync next with main', '[skip ci]'],
+    messages: ['chore(release): sync next with main', '[skip ci]'],
   });
 
   await push();
