@@ -36,7 +36,7 @@
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "cosmos-wallet": "^1.2.0",
-    "rango-types": "^0.1.88"
+    "rango-types": "^0.1.89"
   },
   "devDependencies": {
     "@walletconnect/modal": "^2.6.2",
