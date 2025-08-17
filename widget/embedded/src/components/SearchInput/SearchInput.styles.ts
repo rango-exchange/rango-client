@@ -7,3 +7,15 @@ export const IconWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
 });
+
+export const SearchInputContainer = styled('div', {
+  width: '100%',
+  '& ._text-field': {
+    paddingLeft: '$10',
+    '& input': {
+      paddingLeft: '$2',
+      paddingTop: '$12',
+      paddingBottom: '$12',
+    },
+  },
+});

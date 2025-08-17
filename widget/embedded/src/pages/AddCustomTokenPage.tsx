@@ -28,8 +28,11 @@ const Content = styled('div', {
   flexDirection: 'column',
   flex: 1,
   '& ._text-field': {
-    padding: '$4 $10',
+    padding: '$4 $12',
     backgroundColor: '$neutral300',
+    '& input': {
+      padding: '0',
+    },
     [`.${darkTheme} &`]: {
       backgroundColor: '$neutral400',
     },
