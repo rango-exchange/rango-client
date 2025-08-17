@@ -1,23 +1,19 @@
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
-import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
-import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
 export function safepal(): Provider | null {
-  const { safePal: safePalSolana, safepalProvider: safePalEvm } = window;
-  if (!safePalEvm && !safePalSolana) {
+  const { safepalProvider: safePalEvm } = window;
+  if (!safePalEvm) {
     return null;
   }
   const instances = new Map();
   if (safePalEvm) {
     instances.set(LegacyNetworks.ETHEREUM, safePalEvm);
   }
-  if (safePalSolana) {
-    instances.set(LegacyNetworks.SOLANA, safePalSolana);
-  }
+
   return instances;
 }
 
@@ -31,25 +27,12 @@ export function evmSafepal(): EvmProviderApi {
   }
   return evmInstance as EvmProviderApi;
 }
+export function getInstanceOrThrow(): Provider {
+  const instances = safepal();
 
-export function solanaSafepal(): SolanaProviderApi {
-  const instance = safepal();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
-  if (!solanaInstance) {
-    throw new Error(
-      'Safepal not injected or Solana not enabled. Please check your wallet.'
-    );
+  if (!instances) {
+    throw new Error('Trust Wallet is not injected. Please check your wallet.');
   }
-  return solanaInstance as SolanaProviderApi;
-}
 
-export async function getSolanaAccounts(
-  instance: SolanaProviderApi
-): Promise<ProviderConnectResult> {
-  const solanaResponse = await instance.connect();
-  const account = solanaResponse.publicKey.toString();
-  return {
-    accounts: [account],
-    chainId: LegacyNetworks.SOLANA,
-  };
+  return instances;
 }

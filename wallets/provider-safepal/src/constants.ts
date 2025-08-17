@@ -1,11 +1,11 @@
 import { type ProviderInfo } from '@rango-dev/wallets-core';
-import {
-  type BlockchainMeta,
-  evmBlockchains,
-  solanaBlockchain,
-} from 'rango-types';
+import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+
+import getSigners from './signer.js';
+import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'safepal';
+export const WALLET_NAME_IN_WALLET_STANDARD = 'SafePal';
 export const info: ProviderInfo = {
   name: 'SafePal',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/safepal/icon.svg',
@@ -31,15 +31,12 @@ export const info: ProviderInfo = {
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               evmBlockchains(allBlockchains),
           },
-          {
-            label: 'Solana',
-            value: 'Solana',
-            id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
-          },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

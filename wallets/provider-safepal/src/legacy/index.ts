@@ -22,14 +22,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
-import {
-  getSolanaAccounts as getNonEvmAccounts,
-  type Provider,
-  safepal as safepal_instance,
-  solanaSafepal,
-} from '../utils.js';
-
-import signer from './signer.js';
+import signer from '../signer.js';
+import { type Provider, safepal as safepal_instance } from '../utils.js';
 
 const WALLET = WalletTypes.SAFEPAL;
 
@@ -49,11 +43,6 @@ export const connect: Connect = async ({ instance, meta }) => {
     results.push(evmResult);
   }
 
-  const solanaInstance = solanaSafepal();
-  if (solanaInstance) {
-    const solanaResults = await getNonEvmAccounts(solanaInstance);
-    results.push(solanaResults);
-  }
   return results;
 };
 

@@ -2,7 +2,6 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { info, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
-import { solana } from './namespaces/solana.js';
 import { safepal as safepalInstance } from './utils.js';
 
 const buildProvider = () =>
@@ -16,7 +15,6 @@ const buildProvider = () =>
     })
 
     .config('info', info)
-    .add('solana', solana)
     .add('evm', evm)
     .build();
 
