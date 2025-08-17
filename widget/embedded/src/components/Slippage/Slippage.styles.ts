@@ -13,6 +13,7 @@ export const SlippageChipsContainer = styled('div', {
     flex: '1 1 0',
     maxWidth: '127px',
     minWidth: '85px',
+    paddingLeft: '$2',
   },
 });
 

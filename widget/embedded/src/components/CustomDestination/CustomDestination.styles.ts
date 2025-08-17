@@ -13,11 +13,13 @@ export const Container = styled('div', {
   '& .collapsible_root': {
     backgroundColor: '$neutral100',
   },
+  '& input': {
+    padding: '$15',
+  },
 });
 
 export const StyledTextField = styled(TextField, {
   backgroundColor: '$neutral100',
-  padding: '$15',
 });
 
 export const CustomDestinationButton = styled('div', {
