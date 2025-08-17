@@ -9,7 +9,6 @@ const buildProvider = () =>
   new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();
-
       if (safepalInstance()) {
         setState('installed', true);
         console.debug('[safepal] instance detected.', context);
