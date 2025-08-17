@@ -199,6 +199,8 @@ export const rowStyles = css({
 export const basicInfoStyles = css({
   display: 'flex',
   alignItems: 'center',
+  minWidth: 0,
+
   '.usd-value': {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
@@ -347,6 +349,8 @@ export const BasicInfoOutput = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   gap: '$2',
+  flex: '1 1 auto',
+  minWidth: 0,
 });
 export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
@@ -359,12 +363,14 @@ export const AmountText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  maxWidth: '82.5px',
+  flexShrink: 1,
+  minWidth: 0,
 });
 
 export const ContainerInfoOutput = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+  minWidth: 0,
 });
 
 export const MoreStep = styled('div', {
@@ -406,5 +412,6 @@ export const UsdValueText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  maxWidth: 64,
+  flexShrink: 1,
+  minWidth: 0,
 });

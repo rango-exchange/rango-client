@@ -4,10 +4,11 @@ import React from 'react';
 import { InfoIcon } from 'src/icons/index.js';
 
 import { Divider, NumericTooltip, Typography } from '../index.js';
-import { USD_VALUE_TOOLTIP_THRESHOLD } from '../TokenAmount/TokenAmount.js';
 import { textTruncate } from '../TokenAmount/TokenAmount.styles.js';
 
 import { Container, ValueTypography } from './PriceImpact.styles.js';
+
+const USD_VALUE_TOOLTIP_THRESHOLD = 8;
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {
@@ -30,7 +31,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
       {outputUsdValue && (
         <ValueTypography>
           <Typography
-            className={textTruncate()}
+            className={`${textTruncate()} output-usd-value`}
             size={size}
             variant="body"
             color={outputColor}>

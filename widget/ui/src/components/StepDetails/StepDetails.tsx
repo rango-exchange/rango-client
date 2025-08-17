@@ -27,7 +27,7 @@ import {
 } from './StepDetails.styles.js';
 
 const HIGHT_OF_STICKY_HEADER = 45;
-const VALUE_LENGTH_THRESHOLD = 8;
+const VALUE_LENGTH_THRESHOLD = 9;
 
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
   (props, parentRef) => {
@@ -155,12 +155,13 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 <ValueTypography
                   size="small"
                   color="$neutral700"
-                  variant="body">{`${step.from.price.value}`}</ValueTypography>
+                  variant="body">{`${step.from.price.realValue}`}</ValueTypography>
                 <Divider direction="horizontal" size={2} />
 
-                {step.from.price.value.length > VALUE_LENGTH_THRESHOLD && (
-                  <InfoIcon size={12} color="gray" />
-                )}
+                {step.from.price.realValue &&
+                  step.from.price.realValue.length > VALUE_LENGTH_THRESHOLD && (
+                    <InfoIcon size={12} color="gray" />
+                  )}
                 <Divider direction="horizontal" size={2} />
 
                 <TokenNameText size="small" color="$neutral700" variant="body">

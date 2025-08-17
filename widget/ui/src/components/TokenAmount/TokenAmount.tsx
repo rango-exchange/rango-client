@@ -1,6 +1,7 @@
 import type { PropTypes } from './TokenAmount.types.js';
 
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { useIsTruncated } from 'src/hooks/useIsTruncated.js';
 import { InfoIcon } from 'src/icons/index.js';
 
 import { ChainToken } from '../ChainToken/index.js';
@@ -11,6 +12,7 @@ import { NumericTooltip, Tooltip } from '../Tooltip/index.js';
 import { Typography } from '../Typography/index.js';
 
 import {
+  centeredFlexBox,
   Container,
   textTruncate,
   tokenAmountStyles,
@@ -20,13 +22,39 @@ import {
 } from './TokenAmount.styles.js';
 
 const TOKEN_NAME_TRUNCATE_THRESHOLD = 11;
-const PRICE_VALUE_TOOLTIP_THRESHOLD = 14;
-export const USD_VALUE_TOOLTIP_THRESHOLD = 8;
 const MAX_VERTICAL_PRICE_VALUE_LENGTH = 30;
+const MAX_LEFT_WIDTH = 200;
 
 export function TokenAmount(props: PropTypes) {
   const isVertical = props.direction === 'vertical';
   const isHorizontal = props.direction === 'horizontal';
+  const realValueRef = useRef<HTMLSpanElement | null>(null);
+  const isRealValueTruncated = useIsTruncated(
+    props.price.realValue,
+    realValueRef
+  );
+  const realUSdValueRef = useRef<HTMLSpanElement | null>(null);
+  const isRealUsedValueTruncated = useIsTruncated(
+    props.price.realUsdValue,
+    realUSdValueRef
+  );
+  const leftBoxRef = useRef<HTMLDivElement | null>(null);
+  const [isLeftAtMax, setIsLeftAtMax] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!leftBoxRef.current) {
+      return;
+    }
+
+    const el = leftBoxRef.current;
+    const ro = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      setIsLeftAtMax(width >= MAX_LEFT_WIDTH);
+    });
+
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   return (
     <Container
       direction={props.direction}
@@ -34,6 +62,7 @@ export function TokenAmount(props: PropTypes) {
       id={props.id}>
       <div
         className={tokenAmountStyles()}
+        ref={leftBoxRef}
         style={{
           flexDirection:
             props.price.realValue &&
@@ -49,21 +78,23 @@ export function TokenAmount(props: PropTypes) {
         />
 
         <Divider direction="horizontal" size={4} />
-        <div>
+        <div style={{ minWidth: 0 }}>
           {props.label && (
             <Typography size="xsmall" variant="body" color="$neutral700">
               {props.label}
             </Typography>
           )}
-          <div className={tokenAmountStyles()}>
+          <div style={{ minWidth: 0 }} className={centeredFlexBox()}>
             <Typography
               className={textTruncate()}
+              ref={realValueRef}
               size="medium"
               variant="title"
               style={{
                 fontWeight: 600,
                 ...(isHorizontal && {
-                  maxWidth: '145px',
+                  flexShrink: 1,
+                  minWidth: 0,
                 }),
                 ...(isVertical && {
                   whiteSpace: 'normal',
@@ -72,17 +103,15 @@ export function TokenAmount(props: PropTypes) {
               }}>
               {props.price.realValue}
             </Typography>
-            {isHorizontal &&
-              props.price.realValue &&
-              props.price.realValue?.length > PRICE_VALUE_TOOLTIP_THRESHOLD && (
-                <NumericTooltip
-                  styles={{ root: tooltipRootStyle }}
-                  content={props.price.realValue}
-                  open={!props.price.realValue ? false : undefined}
-                  container={props.tooltipContainer}>
-                  <InfoIcon size={12} color="gray" />
-                </NumericTooltip>
-              )}
+            {isHorizontal && props.price.realValue && isRealValueTruncated && (
+              <NumericTooltip
+                styles={{ root: tooltipRootStyle }}
+                content={props.price.realValue}
+                open={!props.price.realValue ? false : undefined}
+                container={props.tooltipContainer}>
+                <InfoIcon size={12} color="gray" />
+              </NumericTooltip>
+            )}
             {isHorizontal && (
               <>
                 <Divider direction="horizontal" size={8} />
@@ -129,26 +158,32 @@ export function TokenAmount(props: PropTypes) {
       {props.price.usdValue && props.price.usdValue !== '0' && (
         <div className={usdValueStyles()}>
           {props.type === 'input' && (
-            <ValueTypography>
+            <ValueTypography style={{ maxWidth: 88 }}>
               <Typography
                 size="small"
                 variant="body"
+                ref={realUSdValueRef}
                 className={textTruncate()}>
                 {`~$${props.price.realUsdValue}`}
               </Typography>
-              {props.price.realUsdValue &&
-                props.price.realUsdValue.length >
-                  USD_VALUE_TOOLTIP_THRESHOLD && (
-                  <NumericTooltip
-                    content={props.price.realUsdValue}
-                    container={props.tooltipContainer}>
-                    <InfoIcon size={12} color="gray" />
-                  </NumericTooltip>
-                )}
+              {isRealUsedValueTruncated && (
+                <NumericTooltip
+                  content={props.price.realUsdValue}
+                  container={props.tooltipContainer}>
+                  <InfoIcon size={12} color="gray" />
+                </NumericTooltip>
+              )}
             </ValueTypography>
           )}
           {props.type === 'output' && (
             <PriceImpact
+              style={{
+                minWidth: 0,
+                flexShrink: 1,
+                maxWidth: 88,
+                flexDirection: isLeftAtMax ? 'column' : 'row',
+                alignItems: isLeftAtMax ? 'flex-end' : 'center',
+              }}
               size="small"
               tooltipProps={{ container: props.tooltipContainer, side: 'top' }}
               outputUsdValue={props.price.usdValue}

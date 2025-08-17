@@ -13,6 +13,7 @@ import {
   StepDetails,
   TokenAmount,
   Typography,
+  useIsTruncated,
 } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
@@ -31,7 +32,6 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
-  VALUE_LENGTH_THRESHOLD,
 } from '../../constants/routing';
 import {
   FooterAlert,
@@ -326,6 +326,15 @@ export function Quote(props: QuoteProps) {
   const feeWarning = totalFee.gte(new BigNumber(GAS_FEE_MAX));
   const timeWarning =
     totalDurationSeconds / SECONDS_IN_MINUTE >= ROUTE_TIME_MAX;
+  const inputValueRef = useRef<HTMLSpanElement | null>(null);
+  const isInputValueTruncated = useIsTruncated(input.value, inputValueRef);
+  const outputValueRef = useRef<HTMLSpanElement | null>(null);
+  const isOutputValueTruncated = useIsTruncated(output.value, outputValueRef);
+  const usdValueRef = useRef<HTMLSpanElement | null>(null);
+  const isUsdValueTruncated = useIsTruncated(
+    roundedOutputUsdValue,
+    usdValueRef
+  );
 
   const lastStep = steps[numberOfSteps - 1];
   const firstStep = steps[0];
@@ -429,10 +438,10 @@ export function Quote(props: QuoteProps) {
           <div className={basicInfoStyles()}>
             <ContainerInfoOutput>
               <BasicInfoOutput>
-                <AmountText size="small" variant="body">
+                <AmountText ref={inputValueRef} size="small" variant="body">
                   {input.value}
                 </AmountText>
-                {input.value.length > VALUE_LENGTH_THRESHOLD && (
+                {isInputValueTruncated && (
                   <NumericTooltip
                     content={input.value}
                     container={container}
@@ -446,10 +455,10 @@ export function Quote(props: QuoteProps) {
                 <Typography size="small" variant="body">
                   =
                 </Typography>
-                <AmountText size="small" variant="body">
+                <AmountText ref={outputValueRef} size="small" variant="body">
                   {output.value}
                 </AmountText>
-                {output.value.length > VALUE_LENGTH_THRESHOLD && (
+                {isOutputValueTruncated && (
                   <NumericTooltip
                     content={output.value}
                     container={container}
@@ -462,15 +471,19 @@ export function Quote(props: QuoteProps) {
                 </TokenNameText>
               </BasicInfoOutput>
             </ContainerInfoOutput>
-            <NumericTooltip content={output.usdValue} container={container}>
-              <Divider size={2} direction="horizontal" />
-              <UsdValueText color="$neutral600" size="xsmall" variant="body">
-                {`($${roundedOutputUsdValue})`}
-              </UsdValueText>
-              {roundedOutputUsdValue.length > VALUE_LENGTH_THRESHOLD - 1 && (
+            <Divider size={2} direction="horizontal" />
+            <UsdValueText
+              ref={usdValueRef}
+              color="$neutral600"
+              size="xsmall"
+              variant="body">
+              {`($${roundedOutputUsdValue})`}
+            </UsdValueText>
+            {isUsdValueTruncated && (
+              <NumericTooltip content={output.usdValue} container={container}>
                 <InfoIcon size={12} color="gray" />
-              )}
-            </NumericTooltip>
+              </NumericTooltip>
+            )}
           </div>
         )}
         {type === 'list-item' && (
