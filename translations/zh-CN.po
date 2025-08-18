@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-04 08:52\n"
+"PO-Revision-Date: 2025-08-18 07:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,43 +19,8 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
-msgid "Network Switch Failed"
-msgstr "网络切换失败"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
-msgid "Try Again"
-msgstr "再试一次"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:722
-msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
-msgstr "无法完成网络切换。请重试，或在钱包中手动切换网络。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
-msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
-msgstr "您的钱包或部分网络连接已断开。请重新连接以继续兑换"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
-msgid "Wallet connected successfully."
-msgstr "钱包连接成功。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
-msgid "Install {wallet}"
-msgstr "安装 {wallet}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
-msgid "Disconnect wallet"
-msgstr "断开钱包"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:375
+#: widget/embedded/src/components/TokenList/TokenList.tsx:377
 #: widget/embedded/src/pages/HistoryPage.tsx:187
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -63,7 +28,7 @@ msgstr "未找到结果"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:376
+#: widget/embedded/src/components/TokenList/TokenList.tsx:378
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -71,19 +36,19 @@ msgstr "尝试使用不同的关键字"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "选择链条"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:83
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
 msgid "All"
 msgstr "所有的"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:122
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:123
 msgid "More +{count}"
 msgstr "更多 +{count}"
 
@@ -235,7 +200,7 @@ msgid "Connect Wallet"
 msgstr "连接钱包"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:122
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:125
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -259,9 +224,30 @@ msgstr "添加另一个自定义令牌"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:485
 msgid "Swaps steps"
 msgstr "互换步骤"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "已连接"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
+msgid "Connection failed"
+msgstr "连接失败"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
+msgid "See why"
+msgstr "了解原因"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
+msgid "(Currently not supported)"
+msgstr "（目前不支持）"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -294,7 +280,7 @@ msgid "Yours: {userSlippage}"
 msgstr "你的： {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:418
+#: widget/embedded/src/components/Quote/Quote.tsx:425
 msgid "See All Routes"
 msgstr "查看所有路由"
 
@@ -528,16 +514,41 @@ msgid "Caution, your slippage is high!"
 msgstr "注意，您的滑点很高！"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
-msgid "Swap Details"
-msgstr "交换详情"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 msgid "Request ID"
 msgstr "请求ID"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
+msgid "Copied To Clipboard"
+msgstr "复制到剪贴板"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
+msgid "Copy Request ID"
+msgstr "复制请求ID"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
+msgid "View on Rango Explorer"
+msgstr "在Rango浏览器上查看"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
+msgid "Finished at"
+msgstr "完成于"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
+msgid "Created at"
+msgstr "创建于"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
+msgid "Swap Details"
+msgstr "交换详情"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
@@ -548,6 +559,21 @@ msgstr "找不到"
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "未找到请求 ID = {requestId} 的交换。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
+msgid "Change Network"
+msgstr "更改网络"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
+msgid "Network Changed"
+msgstr "网络已更改"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "网络切换失败"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
@@ -575,31 +601,6 @@ msgstr "删除"
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
 msgstr "再试一次"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
-msgid "Copied To Clipboard"
-msgstr "复制到剪贴板"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
-msgid "Copy Request ID"
-msgstr "复制请求ID"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
-msgid "View on Rango Explorer"
-msgstr "在Rango浏览器上查看"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
-msgid "Finished at"
-msgstr "完成于"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
-msgid "Created at"
-msgstr "创建于"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
@@ -664,6 +665,24 @@ msgid "No, Continue"
 msgstr "否，继续"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:714
+msgid "Connect {wallet}"
+msgstr "连接 {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
+msgstr "您的钱包或部分网络连接已断开。请重新连接以继续兑换"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+msgid "Wallet connected successfully."
+msgstr "钱包连接成功。"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
 msgid "Delete Transaction"
 msgstr "删除交易"
@@ -686,14 +705,21 @@ msgid "No, Cancel"
 msgstr "否，取消"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
-msgid "Change Network"
-msgstr "更改网络"
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+msgid "Install {wallet}"
+msgstr "安装 {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
-msgid "Network Changed"
-msgstr "网络已更改"
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+msgid "Install"
+msgstr "安装"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "再试一次"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
@@ -701,7 +727,7 @@ msgid "Slippage:"
 msgstr "滑移："
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/embedded/src/components/TokenList/TokenList.tsx:352
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
 msgid "Select Token"
 msgstr "选择令牌"
@@ -762,17 +788,14 @@ msgid "Enter Index"
 msgstr "输入索引"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:707
-msgid "Connect {wallet}"
-msgstr "连接 {wallet}"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "此钱包支持多条链。请选择您想要连接或断开的链。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+msgid "Disconnect wallet"
+msgstr "断开钱包"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
@@ -817,22 +840,6 @@ msgid "Disconnect"
 msgstr "断开连接"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
-msgid "Connected"
-msgstr "已连接"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
-msgid "Connection failed"
-msgstr "连接失败"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
-msgid "See why"
-msgstr "了解原因"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "此钱包支持多条链。请选择您想要连接的链。"
@@ -853,11 +860,6 @@ msgstr "取消全选"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "选择所有"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
-msgid "(Currently not supported)"
-msgstr "（目前不支持）"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -1066,29 +1068,29 @@ msgid "An error occurred while retrieving token data."
 msgstr "检索令牌数据时发生错误。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:71
 #: widget/embedded/src/pages/CustomTokensPage.tsx:151
 msgid "Add Custom Token"
 msgstr "添加自定义令牌"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:89
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:90
 msgid "Select chain"
 msgstr "选择链接"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:94
 msgid "Enter Address"
 msgstr "输入地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:99
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:102
 msgid "Enter token address"
 msgstr "输入令牌地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:129
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
 msgid "Import"
 msgstr "导入"
 
@@ -1266,54 +1268,59 @@ msgid "Your transaction is at risk of being frontrun due to high slippage tolera
 msgstr "由于滑点容忍度较高，您的交易面临被抢先交易的风险。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:141
+#: widget/embedded/src/utils/swap.ts:148
 msgid "Required: >= {min} {symbol}"
 msgstr "必需：>= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:154
+#: widget/embedded/src/utils/swap.ts:161
 msgid "Required: > {min} {symbol}"
 msgstr "必需：> {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:169
+#: widget/embedded/src/utils/swap.ts:176
 msgid "Required: <= {max} {symbol}"
 msgstr "必需：<= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:182
+#: widget/embedded/src/utils/swap.ts:189
 msgid "Required: < {max} {symbol}"
 msgstr "必填：< {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:647
 msgid " for network fee"
 msgstr " 网络费用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:650
 msgid " for swap"
 msgstr " 换行"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:646
+#: widget/embedded/src/utils/swap.ts:653
 msgid " for input and network fee"
 msgstr " 输入和网络费用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:648
+#: widget/embedded/src/utils/swap.ts:655
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "需要 ≈ {requiredAmount} {symbol}{reason}，但是你的 {blockchain} 钱包里有 {currentAmount} {symbol}。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/utils/swap.ts:721
 msgid "Waiting for other running tasks to be finished"
 msgstr "等待其他正在运行的任务完成"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:717
+#: widget/embedded/src/utils/swap.ts:724
 msgid "Waiting for changing wallet network"
 msgstr "正在等待更改钱包网络"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:729
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "无法完成网络切换。请重试，或在钱包中手动切换网络。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:6
@@ -1415,13 +1422,6 @@ msgstr "部分连接"
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
 msgid "Connect other chains"
 msgstr "连接其他链"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-msgid "Install"
-msgstr "安装"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:30

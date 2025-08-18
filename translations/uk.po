@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-04 08:52\n"
+"PO-Revision-Date: 2025-08-18 07:08\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -19,43 +19,8 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
-msgid "Network Switch Failed"
-msgstr "Помилка мережевого комутатора"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
-msgid "Try Again"
-msgstr "Спробуйте ще раз"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:722
-msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
-msgstr "Не вдалося переключити мережу. Спробуйте ще раз або переключіть мережу вручну у своєму гаманці."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
-msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
-msgstr "З’єднання вашого гаманця або деяких мереж розірвано. Підключіться, щоб продовжити обмін."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
-msgid "Wallet connected successfully."
-msgstr "Гаманець успішно підключено."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
-msgid "Install {wallet}"
-msgstr "Встановити {wallet}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
-msgid "Disconnect wallet"
-msgstr "Від’єднати гаманець"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:375
+#: widget/embedded/src/components/TokenList/TokenList.tsx:377
 #: widget/embedded/src/pages/HistoryPage.tsx:187
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -63,7 +28,7 @@ msgstr "Нічого не знайдено"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:376
+#: widget/embedded/src/components/TokenList/TokenList.tsx:378
 #: widget/embedded/src/pages/HistoryPage.tsx:194
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -71,19 +36,19 @@ msgstr "Спробуйте використовувати інші ключов�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:55
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "Обрати ланцюжок"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:83
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
 msgid "All"
 msgstr "Всі"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:122
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:123
 msgid "More +{count}"
 msgstr "Більше +{count}"
 
@@ -235,7 +200,7 @@ msgid "Connect Wallet"
 msgstr "Підключіть Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:122
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:125
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
@@ -259,9 +224,30 @@ msgstr "Додати інший користувацький токен"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:483
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:485
 msgid "Swaps steps"
 msgstr "Кроки зміни"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
+msgid "Connected"
+msgstr "Підключено"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
+msgid "Connection failed"
+msgstr "Помилка підключення"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
+msgid "See why"
+msgstr "Дізнайтеся чому"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
+msgid "(Currently not supported)"
+msgstr "(Наразі не підтримується)"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:153
@@ -294,7 +280,7 @@ msgid "Yours: {userSlippage}"
 msgstr "Ваш: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:418
+#: widget/embedded/src/components/Quote/Quote.tsx:425
 msgid "See All Routes"
 msgstr "Побачити всі маршрути"
 
@@ -528,16 +514,41 @@ msgid "Caution, your slippage is high!"
 msgstr "Обережно, ваше прослизання високе!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
-msgid "Swap Details"
-msgstr "Деталі свопи"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:33
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 msgid "Request ID"
 msgstr "Номер запиту"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
+msgid "Copied To Clipboard"
+msgstr "Скопійовано в буфер обміну"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
+msgid "Copy Request ID"
+msgstr "Копіювати ID запиту"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
+msgid "View on Rango Explorer"
+msgstr "Переглянути в Rango Explorer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
+msgid "Finished at"
+msgstr "Завершено о"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
+msgid "Created at"
+msgstr "Створений в"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
+msgid "Swap Details"
+msgstr "Деталі свопи"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:61
@@ -548,6 +559,21 @@ msgstr "Не знайдено"
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:62
 msgid "Swap with request ID = {requestId} not found."
 msgstr "Своп з RequestID = {requestId} не знайдено."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
+msgid "Change Network"
+msgstr "Змінити мережу"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
+msgid "Network Changed"
+msgstr "Мережа змінена"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:129
+msgid "Network Switch Failed"
+msgstr "Помилка мережевого комутатора"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:250
@@ -575,31 +601,6 @@ msgstr "Видалити"
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
 msgid "Try again"
 msgstr "Спробуйте ще раз"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
-msgid "Copied To Clipboard"
-msgstr "Скопійовано в буфер обміну"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:42
-msgid "Copy Request ID"
-msgstr "Копіювати ID запиту"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/RequestIdRow.tsx:65
-msgid "View on Rango Explorer"
-msgstr "Переглянути в Rango Explorer"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
-msgid "Finished at"
-msgstr "Завершено о"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDateRow.tsx:14
-msgid "Created at"
-msgstr "Створений в"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:52
@@ -664,6 +665,24 @@ msgid "No, Continue"
 msgstr "Ні, продовжити"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/utils/swap.ts:714
+msgid "Connect {wallet}"
+msgstr "Підключитися {wallet}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
+msgstr "З’єднання вашого гаманця або деяких мереж розірвано. Підключіться, щоб продовжити обмін."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+msgid "Wallet connected successfully."
+msgstr "Гаманець успішно підключено."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
 msgid "Delete Transaction"
 msgstr "Видалити транзакцію"
@@ -686,14 +705,21 @@ msgid "No, Cancel"
 msgstr "Ні, скасувати"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:115
-msgid "Change Network"
-msgstr "Змінити мережу"
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+msgid "Install {wallet}"
+msgstr "Встановити {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:122
-msgid "Network Changed"
-msgstr "Мережа змінена"
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+msgid "Install"
+msgstr "Інсталювати"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.NetworkState.tsx:25
+msgid "Try Again"
+msgstr "Спробуйте ще раз"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapMetrics/SwapMetrics.tsx:84
@@ -701,7 +727,7 @@ msgid "Slippage:"
 msgstr "Прослизання:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:350
+#: widget/embedded/src/components/TokenList/TokenList.tsx:352
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
 msgid "Select Token"
 msgstr "Вибрати токен"
@@ -762,17 +788,14 @@ msgid "Enter Index"
 msgstr "Введіть індекс"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:707
-msgid "Connect {wallet}"
-msgstr "Підключитися {wallet}"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Цей гаманець підтримує кілька ланцюгів. Виберіть, які ланцюги ви хочете підключити або відключити."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+msgid "Disconnect wallet"
+msgstr "Від’єднати гаманець"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
@@ -817,22 +840,6 @@ msgid "Disconnect"
 msgstr "Від'єднатись"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
-msgid "Connected"
-msgstr "Підключено"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
-msgid "Connection failed"
-msgstr "Помилка підключення"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
-msgid "See why"
-msgstr "Дізнайтеся чому"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Цей гаманець підтримує кілька ланцюгів. Виберіть, які ланцюги ви хочете підключити."
@@ -853,11 +860,6 @@ msgstr "Зняти всі виділення"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Виділити все"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceUnsupportedItem.tsx:36
-msgid "(Currently not supported)"
-msgstr "(Наразі не підтримується)"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
@@ -1066,29 +1068,29 @@ msgid "An error occurred while retrieving token data."
 msgstr "Під час отримання даних маркера сталася помилка."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:68
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:71
 #: widget/embedded/src/pages/CustomTokensPage.tsx:151
 msgid "Add Custom Token"
 msgstr "Додати користувацький токен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:86
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:87
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:89
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:90
 msgid "Select chain"
 msgstr "Виберіть ланцюжок"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:91
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:94
 msgid "Enter Address"
 msgstr "Введіть адресу"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:99
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:102
 msgid "Enter token address"
 msgstr "Введіть адресу маркера"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/AddCustomTokenPage.tsx:129
+#: widget/embedded/src/pages/AddCustomTokenPage.tsx:132
 msgid "Import"
 msgstr "Імпорт"
 
@@ -1266,54 +1268,59 @@ msgid "Your transaction is at risk of being frontrun due to high slippage tolera
 msgstr "Ваша транзакція ризикує бути випередженою через високу толерантність до прослизання."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:141
+#: widget/embedded/src/utils/swap.ts:148
 msgid "Required: >= {min} {symbol}"
 msgstr "Обов'язково: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:154
+#: widget/embedded/src/utils/swap.ts:161
 msgid "Required: > {min} {symbol}"
 msgstr "Обов'язково: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:169
+#: widget/embedded/src/utils/swap.ts:176
 msgid "Required: <= {max} {symbol}"
 msgstr "Обов'язково: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:182
+#: widget/embedded/src/utils/swap.ts:189
 msgid "Required: < {max} {symbol}"
 msgstr "Обов'язково: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:647
 msgid " for network fee"
 msgstr " за збір мережі"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:650
 msgid " for swap"
 msgstr " для свопа"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:646
+#: widget/embedded/src/utils/swap.ts:653
 msgid " for input and network fee"
 msgstr " за вхідний та мережевий збір"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:648
+#: widget/embedded/src/utils/swap.ts:655
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Необхідний TrueCon {requiredAmount} {symbol}{reason}, але ви маєте {currentAmount} {symbol} в гаманці {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/utils/swap.ts:721
 msgid "Waiting for other running tasks to be finished"
 msgstr "Очікуємо завершення інших запущених задач"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:717
+#: widget/embedded/src/utils/swap.ts:724
 msgid "Waiting for changing wallet network"
 msgstr "Очікування зміни мережі гаманця"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:729
+msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
+msgstr "Не вдалося переключити мережу. Спробуйте ще раз або переключіть мережу вручну у своєму гаманці."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:6
@@ -1415,13 +1422,6 @@ msgstr "Частково підключено"
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
 msgid "Connect other chains"
 msgstr "З'єднайте інші ланцюги"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-msgid "Install"
-msgstr "Інсталювати"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
