@@ -1,3 +1,7 @@
+# [0.16.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.15.0...provider-solflare@0.16.0) (2025-08-19)
+
+
+
 # [0.15.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.14.0...provider-solflare@0.15.0) (2025-08-05)
 
 

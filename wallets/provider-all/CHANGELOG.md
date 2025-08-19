@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.50.0...provider-all@0.51.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* add rango-dev/wallets-core to dependencies of providers ([84b4b2b](https://github.com/rango-exchange/rango-client/commit/84b4b2b7c3a7f5631228fb6ebf04617c3c4428e9))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.49.0...provider-all@0.50.0) (2025-08-05)
 
 

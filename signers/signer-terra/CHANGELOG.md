@@ -1,3 +1,7 @@
+# [0.39.0](https://github.com/rango-exchange/rango-client/compare/signer-terra@0.38.0...signer-terra@0.39.0) (2025-08-19)
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/signer-terra@0.37.0...signer-terra@0.38.0) (2025-08-05)
 
 
