@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.49.1-next.1",
+  "version": "0.49.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -27,7 +27,7 @@
     "@rango-dev/signer-solana": "^0.43.1-next.0",
     "@rango-dev/signer-sui": "^0.7.1-next.0",
     "@rango-dev/wallets-core": "^0.47.1-next.1",
-    "@rango-dev/wallets-shared": "^0.48.1-next.1",
+    "@rango-dev/wallets-shared": "^0.48.1-next.2",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.1.89"
   },
