@@ -37,6 +37,7 @@ import type {
   PendingSwap,
   PendingSwapStep,
   SignerErrorCode,
+  SignerFactory,
   StepStatus,
 } from 'rango-types';
 
@@ -1153,11 +1154,62 @@ export async function signTransaction(
     return;
   }
 
-  const walletSigners = await getSigners(sourceWallet.walletType);
+  const handleSignError = (error: Error) => {
+    if (swap.status === 'failed') {
+      return;
+    }
+
+    const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+      prettifyErrorMessage(error);
+
+    warn(error, {
+      tags: {
+        requestId: swap.requestId,
+        rpc: true,
+        swapper: currentStep?.swapperId || '',
+        walletType: sourceWallet?.walletType || '',
+      },
+      context: SignerError.isSignerError(error) ? error.getErrorContext() : {},
+    });
+
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: 'failed',
+      nextStepStatus: 'failed',
+      message: extraMessage,
+      details: extraMessageDetail,
+      errorCode: extraMessageErrorCode,
+      trace: error?.cause as Error | null | undefined, // TODO: we should define Error type with `cause` property to prevent such assertions
+    });
+
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        inputAmount: getLastFinishedStepInput(swap),
+        inputAmountUsd: getLastFinishedStepInputUsd(swap),
+      },
+      ...updateResult,
+    });
+    failed();
+    onFinish();
+  };
+
+  let walletSigners: SignerFactory;
+
+  try {
+    walletSigners = await getSigners(sourceWallet.walletType);
+  } catch (error) {
+    handleSignError(error as Error);
+    return;
+  }
 
   const signer = walletSigners.getSigner(txType);
-  signer.signAndSendTx(tx, walletAddress, chainId).then(
-    ({ hash, response }) => {
+  signer
+    .signAndSendTx(tx, walletAddress, chainId)
+    .then(({ hash, response }) => {
       const explorerUrl = getScannerUrl(
         hash,
         currentStepNamespace.network,
@@ -1181,52 +1233,7 @@ export async function signTransaction(
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       next();
       onFinish();
-    },
-    (error) => {
-      if (swap.status === 'failed') {
-        return;
-      }
-
-      const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-        prettifyErrorMessage(error);
-
-      warn(error, {
-        tags: {
-          requestId: swap.requestId,
-          rpc: true,
-          swapper: currentStep?.swapperId || '',
-          walletType: sourceWallet?.walletType || '',
-        },
-        context: SignerError.isSignerError(error)
-          ? error.getErrorContext()
-          : {},
-      });
-
-      const updateResult = updateSwapStatus({
-        getStorage,
-        setStorage,
-        nextStatus: 'failed',
-        nextStepStatus: 'failed',
-        message: extraMessage,
-        details: extraMessageDetail,
-        errorCode: extraMessageErrorCode,
-        trace: error?.cause,
-      });
-
-      notifier({
-        event: {
-          type: StepEventType.FAILED,
-          reason: extraMessage,
-          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
-          inputAmount: getLastFinishedStepInput(swap),
-          inputAmountUsd: getLastFinishedStepInputUsd(swap),
-        },
-        ...updateResult,
-      });
-      failed();
-      onFinish();
-    }
-  );
+    }, handleSignError);
 }
 
 export function checkWaitingForConnectWalletChange(params: {

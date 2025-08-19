@@ -26,11 +26,15 @@ export const Container = styled('div', {
     },
     color: '$$color',
   },
+  '& ._text-field': {
+    '& input': {
+      padding: 0,
+    },
+  },
 });
 
 export const InputAmount = styled(TextField, {
   width: '100%',
-  padding: '0',
   fontSize: '$18',
   lineHeight: '$26',
   fontWeight: '$medium',

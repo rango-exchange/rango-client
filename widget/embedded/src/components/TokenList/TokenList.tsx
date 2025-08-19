@@ -219,9 +219,8 @@ export function TokenList(props: PropTypes) {
               />
             );
           }
-          const address = token.address || '';
           const blockchain = blockchains.find(
-            (blockchain) => blockchain.name === token.blockchain
+            (blockchain) => blockchain.name === token?.blockchain
           );
 
           /**
@@ -229,9 +228,11 @@ export function TokenList(props: PropTypes) {
            * Be cautious, as Virtuoso warns us if we return empty elements.
            * If you need to exclude any items, do so before passing them to the virtual list.
            */
-          if (!blockchain) {
+          if (!blockchain || !token) {
             return null;
           }
+
+          const address = token.address;
 
           const colors = createTintsAndShades(blockchain.color, 'main');
           const customCssForTag = {
@@ -260,11 +261,11 @@ export function TokenList(props: PropTypes) {
             <ListItemContainer>
               <StyledListItemButton
                 tab-index={index}
-                key={`${token.symbol}${token.address}`}
-                id={`${token.symbol}${token.address}`}
+                key={`${token.symbol}${address}`}
+                id={`${token.symbol}${address}`}
                 className="widget-token-list-item-btn"
                 hasDivider
-                customToken={token.customToken}
+                customToken={token?.customToken}
                 onClick={handleClick}
                 start={
                   <ImageSection>
@@ -277,6 +278,7 @@ export function TokenList(props: PropTypes) {
                       size={30}
                     />
                     {props.type !== 'custom-token' &&
+                      token &&
                       isTokenPinned(token, props.type) && (
                         <Pin>
                           <PinIcon size={12} color="gray" />
@@ -285,7 +287,7 @@ export function TokenList(props: PropTypes) {
                   </ImageSection>
                 }
                 title={
-                  blockchain?.type === 'COSMOS' ||
+                  blockchain.type === 'COSMOS' ||
                   !!token.name ||
                   (!token.name && !address) ? (
                     <Title>
@@ -312,7 +314,7 @@ export function TokenList(props: PropTypes) {
                 }
                 description={
                   typeof token !== 'string' &&
-                  !!blockchain?.info &&
+                  !!blockchain.info &&
                   !!address &&
                   blockchain.type !== 'COSMOS'
                     ? renderDesc({

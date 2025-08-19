@@ -10,3 +10,6 @@ export interface CosmosActions
   connect: () => Promise<string>;
   canEagerConnect: () => Promise<boolean>;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ProviderAPI = Record<string, any>;

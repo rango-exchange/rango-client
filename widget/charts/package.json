@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/charts",
-  "version": "0.12.0",
+  "version": "0.12.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -26,7 +26,7 @@
     "react-dom": ">=16"
   },
   "dependencies": {
-    "@rango-dev/ui": "^0.50.0",
+    "@rango-dev/ui": "^0.50.1-next.3",
     "@visx/axis": "2.18.0",
     "@visx/event": "2.17.0",
     "@visx/grid": "2.18.0",

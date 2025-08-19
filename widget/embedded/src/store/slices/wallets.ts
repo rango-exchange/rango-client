@@ -339,7 +339,9 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           if (!acc[wallet.address]) {
             acc[wallet.address] = [];
           }
-          acc[wallet.address].push(...tokensByBlockchain[wallet.chain]);
+          acc[wallet.address]?.push(
+            ...(tokensByBlockchain[wallet.chain] || [])
+          );
         }
         return acc;
       }, {});
@@ -442,9 +444,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       });
     },
     newWalletConnected: async (accounts, namespace, derivationPath) => {
+      const newAccount = accounts[0];
+      if (!newAccount) {
+        return;
+      }
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
-        payload: { walletType: accounts[0].walletType, accounts },
+        payload: { walletType: newAccount.walletType, accounts },
       });
 
       get().addConnectedWallet(accounts, namespace, derivationPath);
@@ -602,7 +608,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       }
     },
     fetchMainTokensBalances: async (accounts, options) => {
-      if (accounts.length === 0) {
+      if (accounts.length === 0 || !accounts[0]) {
         return;
       }
       // All the `accounts` have same `walletType` so we can pick the first one.
@@ -744,18 +750,25 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       const assetKey = createAssetKey(token);
       const targetBalanceKeys = get()._aggregatedBalances[assetKey] || [];
 
-      if (targetBalanceKeys.length === 0) {
+      if (targetBalanceKeys.length === 0 || !targetBalanceKeys[0]) {
         return null;
-      } else if (targetBalanceKeys.length === 1) {
-        const targetKey = targetBalanceKeys[0];
+      }
+      const targetKey = targetBalanceKeys[0];
+      if (targetBalanceKeys.length === 1 && balances[targetKey]) {
         return balances[targetKey];
       }
 
       // If there are multiple balances for an specific token, we pick the maximum.
       const firstTargetBalance = balances[targetBalanceKeys[0]];
+      if (!firstTargetBalance) {
+        return null;
+      }
       let maxBalance: Balance = firstTargetBalance;
       targetBalanceKeys.forEach((targetBalanceKey) => {
         const currentBalance = balances[targetBalanceKey];
+        if (!currentBalance) {
+          return;
+        }
         const currentBalanceAmount = new BigNumber(currentBalance.amount);
         const prevBalanceAmount = new BigNumber(maxBalance.amount);
 
@@ -775,7 +788,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
 
           const [, , , balanceWalletAddreess] =
             balanceKey.split(BALANCE_SEPARATOR);
-          if (balanceWalletAddreess === address) {
+          if (balance && balanceWalletAddreess === address) {
             output[balanceKey] = balance;
           }
 
@@ -799,10 +812,10 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               const balance = balances[balanceKey];
               const asset = extractAssetFromBalanceKey(balanceKey);
 
-              if (asset.blockchain === wallet.chain) {
+              if (asset && asset.blockchain === wallet.chain && balance) {
                 const token = get().findToken(asset);
 
-                const amount = balance.amount
+                const amount = balance?.amount
                   ? new BigNumber(balance.amount).shiftedBy(-balance.decimals)
                   : ZERO;
 

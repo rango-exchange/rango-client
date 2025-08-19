@@ -240,7 +240,7 @@ export function createInitialAppStore() {
       tokensMapByBlockchainName[token.blockchain] = [];
     }
     tokensMapByTokenHash.set(tokenHash, token);
-    tokensMapByBlockchainName[token.blockchain].push(tokenHash);
+    tokensMapByBlockchainName[token.blockchain]?.push(tokenHash);
   });
 
   return {

@@ -1,4 +1,7 @@
 {
   "extends": "./tsconfig.build.json",
-  "include": ["src", "tests"]
+  "include": ["src", "tests"],
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true
+  }
 }

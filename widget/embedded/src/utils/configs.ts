@@ -54,15 +54,19 @@ export const isTokenExcludedInConfig = (
   tokensConfig?: TokensConfig
 ) => {
   let result = false;
+
   if (tokensConfig && token) {
     if (Array.isArray(tokensConfig)) {
       result = !tokensConfig.some((asset) => areTokensEqual(asset, token));
-    } else if (!Array.isArray(tokensConfig) && tokensConfig[token.blockchain]) {
-      result = tokensConfig[token.blockchain].tokens.some((asset) =>
-        areTokensEqual(asset, token)
-      );
-      const isExcluded = tokensConfig[token.blockchain].isExcluded;
-      return (!isExcluded && !result) || (isExcluded && result);
+    } else if (!Array.isArray(tokensConfig)) {
+      const configForChain = tokensConfig[token.blockchain];
+      if (configForChain) {
+        result = !!configForChain.tokens.some((asset) =>
+          areTokensEqual(asset, token)
+        );
+        const isExcluded = configForChain.isExcluded;
+        return (!isExcluded && !result) || (isExcluded && result);
+      }
     }
   }
   return result;

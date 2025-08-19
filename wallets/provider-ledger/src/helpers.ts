@@ -2,6 +2,7 @@ import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import {
+  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   Networks,
   type ProviderConnectResult,
@@ -60,7 +61,11 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
     const transport = await transportConnect();
     const derivationPath = getDerivationPath();
 
-    const eth = new (await import('@ledgerhq/hw-app-eth')).default(transport);
+    const eth = new (
+      await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-eth')
+      )
+    ).default(transport);
 
     const accounts: string[] = [];
 
@@ -84,9 +89,11 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
     const transport = await transportConnect();
     const derivationPath = getDerivationPath();
 
-    const solana = new (await import('@ledgerhq/hw-app-solana')).default(
-      transport
-    );
+    const solana = new (
+      await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-solana')
+      )
+    ).default(transport);
 
     const accounts: string[] = [];
 

@@ -79,7 +79,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
       blockchain.name ===
-      selectedQuote?.swaps[selectedQuote?.swaps.length - 1].to.blockchain
+      selectedQuote?.swaps[selectedQuote?.swaps.length - 1]?.to.blockchain
   );
   const isWalletRequiredFor = (blockchain: string) =>
     requiredChains.includes(blockchain);

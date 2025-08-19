@@ -38,6 +38,9 @@ export const FromAmount = styled('div', {
   border: '1px solid $neutral300',
   borderRadius: '$xm',
   padding: '$2 $5',
+  '& input': {
+    padding: '$5 $15',
+  },
   [`& .${amountStyles}`]: {
     color: '$neutral700',
     fontSize: '$12',

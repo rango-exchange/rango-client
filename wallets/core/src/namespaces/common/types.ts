@@ -21,3 +21,5 @@ export interface CommonActions {
 export interface AutoImplementedActionsByRecommended {
   disconnect: () => void;
 }
+
+export type Provider = Map<string, unknown>;

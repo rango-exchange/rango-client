@@ -10,11 +10,14 @@ export const IconWrapper = styled('div', {
 
 export const InputContainer = styled('div', {
   '._text-field': {
-    padding: 10,
+    padding: '0 $10',
     borderRadius: 25,
     alignItems: 'center',
     '._icon-button': {
       display: 'none',
+    },
+    '& input': {
+      padding: '$12 $10 $12 0',
     },
     '&:hover': {
       $$color: '$colors$neutral100',

@@ -143,6 +143,16 @@ export function createRetryQuote(
   const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
   const lastSuccessfulStep = getLastSuccessfulStep(pendingSwap.steps);
 
+  if (!lastStep || !firstStep) {
+    return {
+      fromBlockchain: null,
+      fromToken: undefined,
+      toBlockchain: null,
+      toToken: undefined,
+      inputAmount: '',
+    };
+  }
+
   const toToken = {
     blockchain: lastStep.toBlockchain,
     symbol: lastStep.toSymbol,
@@ -336,15 +346,16 @@ export const getDefaultQuote = (
   quotes: MultiRouteSimulationResult[],
   requestAmount: string
 ): SelectedQuote | null => {
-  if (!quotes.length) {
+  const quote = quotes[0]; // Return the first quote from the quotes array
+  if (!quotes.length || !quote) {
     return null;
   }
   if (!currentQuote) {
     // Handle the case where currentQuote is null
     return {
-      requestAmount: requestAmount,
+      requestAmount,
       validationStatus: null,
-      ...quotes[0], // Return the first quote from the quotes array
+      ...quote,
     };
   }
   // Create a set of swapperIds from the currentQuote swaps
@@ -365,9 +376,9 @@ export const getDefaultQuote = (
 
   // Return the matchedQuote if found, otherwise return the first quote from the quotes array
   return {
-    requestAmount: requestAmount,
+    requestAmount,
     validationStatus: null,
-    ...(matchedQuote || quotes[0]),
+    ...(matchedQuote || quote),
   };
 };
 
