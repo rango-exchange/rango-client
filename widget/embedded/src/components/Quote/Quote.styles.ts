@@ -199,6 +199,8 @@ export const rowStyles = css({
 export const basicInfoStyles = css({
   display: 'flex',
   alignItems: 'center',
+  minWidth: 0,
+
   '.usd-value': {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
@@ -343,23 +345,32 @@ export const HorizontalSeparator = styled('div', {
   borderColor: '$$color',
 });
 
-export const FrameIcon = styled('div', {
-  width: '$16',
-  height: '$16',
-  justifyContent: 'center',
-  alignItems: 'center',
+export const BasicInfoOutput = styled('div', {
   display: 'flex',
+  flexDirection: 'row',
+  gap: '$2',
+  flex: '1 1 auto',
+  minWidth: 0,
 });
-
-export const BasicInfoOutput = styled(Typography, {
+export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '$30',
+});
+
+export const AmountText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  flexShrink: 1,
+  minWidth: 0,
 });
 
 export const ContainerInfoOutput = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+  minWidth: 0,
 });
 
 export const MoreStep = styled('div', {
@@ -395,4 +406,12 @@ export const Line = styled('div', {
   [`.${darkTheme} &`]: {
     borderTopColor: '$neutral800',
   },
+});
+
+export const UsdValueText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  flexShrink: 1,
+  minWidth: 0,
 });

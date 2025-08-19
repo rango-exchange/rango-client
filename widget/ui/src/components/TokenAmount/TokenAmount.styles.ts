@@ -1,8 +1,10 @@
 import { css, styled } from '../../theme.js';
+import { Typography } from '../Typography/Typography.js';
 
 export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
+  gap: '$8',
   variants: {
     direction: {
       vertical: {
@@ -17,17 +19,38 @@ export const Container = styled('div', {
   },
 });
 
-export const tokenAmountStyles = css({
+export const centeredFlexBox = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 });
 
+export const tokenAmountStyles = css({
+  maxWidth: 254,
+  flex: '1 1 0',
+  minWidth: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+});
+
 export const usdValueStyles = css({
   display: 'flex',
   paddingTop: '$5',
+  minWidth: 0,
+  flex: '0 1 auto',
 });
 
 export const tooltipRootStyle = {
   width: 'fit-content',
 };
+
+export const TokenNameText = styled(Typography, {
+  maxWidth: '64px',
+});
+
+export const textTruncate = css({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});

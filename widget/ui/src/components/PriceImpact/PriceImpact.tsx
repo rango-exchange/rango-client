@@ -1,10 +1,14 @@
 import type { PriceImpactPropTypes } from './PriceImpact.types.js';
 
 import React from 'react';
+import { InfoIcon } from 'src/icons/index.js';
 
 import { Divider, NumericTooltip, Typography } from '../index.js';
+import { textTruncate } from '../TokenAmount/TokenAmount.styles.js';
 
 import { Container, ValueTypography } from './PriceImpact.styles.js';
+
+const USD_VALUE_TOOLTIP_THRESHOLD = 8;
 
 export function PriceImpact(props: PriceImpactPropTypes) {
   const {
@@ -25,21 +29,24 @@ export function PriceImpact(props: PriceImpactPropTypes) {
   return (
     <Container {...rest}>
       {outputUsdValue && (
-        <NumericTooltip
-          content={realOutputUsdValue}
-          container={tooltipProps?.container}
-          open={
-            !realOutputUsdValue || realOutputUsdValue === '0'
-              ? false
-              : undefined
-          }
-          side={tooltipProps?.side}>
-          <ValueTypography>
-            <Typography size={size} variant="body" color={outputColor}>
-              {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
-            </Typography>
-          </ValueTypography>
-        </NumericTooltip>
+        <ValueTypography>
+          <Typography
+            className={`${textTruncate()} output-usd-value`}
+            size={size}
+            variant="body"
+            color={outputColor}>
+            {realOutputUsdValue === '0' ? '0.00' : `~$${realOutputUsdValue}`}
+          </Typography>
+          {realOutputUsdValue &&
+            realOutputUsdValue.length > USD_VALUE_TOOLTIP_THRESHOLD && (
+              <NumericTooltip
+                content={realOutputUsdValue}
+                container={tooltipProps?.container}
+                side={tooltipProps?.side}>
+                <InfoIcon size={12} color="gray" />
+              </NumericTooltip>
+            )}
+        </ValueTypography>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <ValueTypography hasError={hasError} hasWarning={hasWarning}>

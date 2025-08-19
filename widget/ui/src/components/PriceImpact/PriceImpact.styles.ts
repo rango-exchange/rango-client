@@ -12,6 +12,9 @@ export const ValueTypography = styled('div', {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  '& .output-usd-value': {
+    maxWidth: '77px',
+  },
   '& ._typography': {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
