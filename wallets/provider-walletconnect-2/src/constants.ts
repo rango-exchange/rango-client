@@ -15,7 +15,7 @@ export enum NAMESPACES {
 
 export const CHAIN_ID_STORAGE = 'wc@2:client//namespaces';
 
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/solana-rpc
+// Reference: https://docs.walletconnect.com/2.0/advanced/rpc-reference/solana-rpc
 export enum SolanaRPCMethods {
   GET_ACCOUNTS = 'solana_getAccounts',
   REQUEST_ACCOUNTS = 'solana_requestAccounts',
@@ -23,14 +23,14 @@ export enum SolanaRPCMethods {
   SIGN_MESSAGE = 'solana_signMessage',
 }
 
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/cosmos-rpc
+// Reference: https://docs.walletconnect.com/2.0/advanced/rpc-reference/cosmos-rpc
 export enum CosmosRPCMethods {
   GET_ACCOUNTS = 'cosmos_getAccounts',
   SIGN_DIRECT = 'cosmos_signDirect',
   SIGN_AMINO = 'cosmos_signAmino',
 }
 
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/ethereum-rpc
+// Reference: https://docs.walletconnect.com/2.0/advanced/rpc-reference/ethereum-rpc
 export enum EthereumRPCMethods {
   PERSONAL_SIGN = 'personal_sign',
   SIGN = 'eth_sign',
@@ -78,7 +78,7 @@ export const DEFAULT_COSMOS_METHODS = [
   CosmosRPCMethods.SIGN_DIRECT,
 ];
 
-// refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
+// reference: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
 export const DEFAULT_SOLANA_CHAIN_ID = '4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ';
 
 export const DEFAULT_APP_METADATA = {

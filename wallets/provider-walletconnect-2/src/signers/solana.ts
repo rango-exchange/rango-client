@@ -106,7 +106,7 @@ class SOLANASigner implements GenericSigner<SolanaTransaction> {
      *  TODO: solana chain id in supported blockchains("mainnet-beta") is different from solana chain id is here ("5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp")
      * # Solana Mainnet
      *  solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvd
-     *  refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
+     *  reference: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
      */
 
     let solana_chain_id = chainId;

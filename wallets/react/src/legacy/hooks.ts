@@ -20,7 +20,7 @@ export function useInitializers(
 
   /*
    * If `wallet` hasn't been added to `availableWallets`,
-   * Get a instance of `Wallet` and save the refrence in `availableWallets`.
+   * Get a instance of `Wallet` and save the reference in `availableWallets`.
    * Otherwise, return the already created instance.
    */
   function updater(wallet: {
