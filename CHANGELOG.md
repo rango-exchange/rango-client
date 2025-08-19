@@ -1,3 +1,13 @@
+## Widget [0.43.0] (2025-08-19)
+
+_includes `@rango-dev/widget-embedded@0.48.0`_
+
+### Bug Fixes
+
+- implemented retry mechanism for lazy imports, reverted due to problems related to module map caching and added throw refined error on dynamic import failure ([9a8e19171](https://github.com/rango-exchange/rango-client/commit/9a8e191711d2319990ca4d0613e8188a5f86842f), [a2944ac3c](https://github.com/rango-exchange/rango-client/commit/a2944ac3c05a0e945f6e5621fa5693ab89625485))
+- adjust all input paddings ([3f6ac40c3](https://github.com/rango-exchange/rango-client/commit/3f6ac40c372db84ed1ec94c32c72c29df92ffa21))
+- add rango-dev/wallets-core to dependencies of providers ([84b4b2b7c](https://github.com/rango-exchange/rango-client/commit/84b4b2b7c3a7f5631228fb6ebf04617c3c4428e9))
+
 ## Widget [0.42.0] (2025-08-05)
 
 _includes `@rango-dev/widget-embedded@0.47.0`_
