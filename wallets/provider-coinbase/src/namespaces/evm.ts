@@ -7,7 +7,6 @@ import {
 } from '@rango-dev/wallets-core/namespaces/common';
 import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { evmActions } from '../actions/evm.js';
 import { WALLET_ID } from '../constants.js';
 import { evmCoinbase } from '../utils.js';
 
@@ -16,7 +15,12 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 
 const connect = builders
   .connect()
-  .action(evmActions.connect(evmCoinbase))
+  .action(actions.connect(evmCoinbase))
+  /*
+   * Coinbase Wallet's `connect` returns a list where the currently selected account
+   * is always the first item. We're directly taking this first item as the active account.
+   */
+  .and((context, accounts) => [accounts[0]])
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)
