@@ -1,7 +1,7 @@
 import type { WCInstance } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import { retryLazyImport } from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
@@ -13,13 +13,19 @@ export default async function getSigners(
 
   const signers = new DefaultSignerFactory();
   const EVMSigner = (
-    await retryLazyImport(async () => await import('./signers/evm.js'))
+    await dynamicImportWithRefinedError(
+      async () => await import('./signers/evm.js')
+    )
   ).default;
   const COSMOSSigner = (
-    await retryLazyImport(async () => await import('./signers/cosmos.js'))
+    await dynamicImportWithRefinedError(
+      async () => await import('./signers/cosmos.js')
+    )
   ).default;
   const SOLANASigner = (
-    await retryLazyImport(async () => await import('./signers/solana.js'))
+    await dynamicImportWithRefinedError(
+      async () => await import('./signers/solana.js')
+    )
   ).default;
 
   signers.registerSigner(

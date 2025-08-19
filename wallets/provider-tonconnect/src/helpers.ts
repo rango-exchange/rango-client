@@ -1,16 +1,18 @@
 import type { TonConnectUI } from '@tonconnect/ui';
 
-import { retryLazyImport } from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 
 export async function getTonConnectUIModule() {
-  const tonConnectUI = await retryLazyImport(
+  const tonConnectUI = await dynamicImportWithRefinedError(
     async () => await import('@tonconnect/ui')
   );
   return tonConnectUI;
 }
 
 export async function getTonCoreModule() {
-  const tonCore = await retryLazyImport(async () => await import('@ton/core'));
+  const tonCore = await dynamicImportWithRefinedError(
+    async () => await import('@ton/core')
+  );
   return tonCore;
 }
 

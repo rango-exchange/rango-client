@@ -3,9 +3,9 @@ import type { SignerFactory } from 'rango-types';
 
 import { DefaultTronSigner } from '@rango-dev/signer-tron';
 import {
+  dynamicImportWithRefinedError,
   getNetworkInstance,
   Networks,
-  retryLazyImport,
 } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
@@ -15,7 +15,7 @@ export default async function getSigners(
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const tronProvider = getNetworkInstance(provider, Networks.TRON);
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await retryLazyImport(
+  const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
     async () => await import('@rango-dev/signer-evm')
   );
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));

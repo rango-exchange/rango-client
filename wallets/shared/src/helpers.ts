@@ -213,31 +213,22 @@ export function detectMobileScreens(): boolean {
 }
 
 /**
- * Retry a dynamic import multiple times with optional delay.
+ * Dynamically import a module and refine the error.
  *
  * @param importer - lazy import callback.
- * @param retries - Number of retry attempts (default: 3).
- * @param delayMs - Delay between retries in milliseconds (default: 500ms).
  * @returns A promise resolving to the imported module.
  */
-export async function retryLazyImport<T>(
-  importer: () => Promise<T>,
-  retries: number = 3,
-  delayMs: number = 500
+export async function dynamicImportWithRefinedError<T>(
+  importer: () => Promise<T>
 ): Promise<T> {
-  let attempt = 0;
-  while (attempt < retries) {
-    try {
-      return await importer();
-    } catch (error) {
-      attempt++;
-      if (attempt >= retries) {
-        throw error;
+  try {
+    return await importer();
+  } catch (error) {
+    throw new Error(
+      'A network error occurred while processing your request. Please check your internet connection or refresh the page and try again.',
+      {
+        cause: error,
       }
-      await new Promise((res) => setTimeout(res, delayMs));
-    }
+    );
   }
-
-  // Should never reach here
-  throw new Error('Unexpected error in retryLazyImport');
 }
