@@ -1,4 +1,4 @@
-import { packageNameWithoutScope } from './utils.mjs';
+import { packageNameWithoutScope, packageJson } from './utils.mjs';
 import { ConventionalChangelog } from 'conventional-changelog';
 import { ConventionalGitClient } from '@conventional-changelog/git-client';
 import { createWriteStream, createReadStream, WriteStream } from 'node:fs';
@@ -156,7 +156,31 @@ export function generateChangelog(pkg) {
       prefix: TAG_PACKAGE_PREFIX(pkg),
     });
   } else {
+    // TODO: sorry about this, we need to get embedded from yarn workspace. and also appending this "includes ..." should be a cli param somehow since it's specific to rango-client, and normal repos won't need that.
+    let embeddedVersion;
+    try {
+      const json = packageJson(path.join('widget', 'embedded'));
+      embeddedVersion = json.version;
+    } catch {
+      // ignore. in case of the target directory changed or doesn't exists.
+    }
+
+    /** @see https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-writer/templates/header.hbs */
+    let headerTemplate = `## {{#if isPatch~}} <small> {{~/if~}} {{#if title}}{{title}}{{/if}} [{{version}}] {{~#if date}} ({{date}}) {{~/if~}} {{~#if isPatch~}} </small> {{~/if}}`;
+    if (embeddedVersion) {
+      headerTemplate += `\n_includes \`@rango-dev/widget-embedded@${embeddedVersion}\`_`;
+    }
+
     generator.readPackage(rootPackageJson());
+    generator.context({
+      // TODO: this shouldn't be hardcoded, we can use package.json's name field.
+      // TODO: this is also a dirty way to know we are in rango-client or not. for other repos, we don't add any title.
+      title: embeddedVersion ? 'Widget' : undefined,
+    });
+
+    generator.writer({
+      headerPartial: headerTemplate,
+    });
     generator.tags({
       prefix: TAG_ROOT_PREFIX,
     });
