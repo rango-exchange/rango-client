@@ -1,10 +1,10 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
 import {
+  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   Networks,
   type ProviderConnectResult,
-  retryLazyImport,
 } from '@rango-dev/wallets-shared';
 
 import { getDerivationPath } from './state.js';
@@ -15,7 +15,7 @@ export const trezorErrorMessages: { [statusCode: string]: string } = {
 
 // `@trezor/connect-web` is commonjs, when we are importing it dynamically, it has some differences in different tooling. for example vite (you can check widget-examples), goes throw error. this is a workaround for solving this interop issue.
 export async function getTrezorModule() {
-  const mod = await retryLazyImport(
+  const mod = await dynamicImportWithRefinedError(
     async () => await import('@trezor/connect-web')
   );
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

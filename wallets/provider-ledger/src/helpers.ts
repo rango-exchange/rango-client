@@ -2,10 +2,10 @@ import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import {
+  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   Networks,
   type ProviderConnectResult,
-  retryLazyImport,
 } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
@@ -62,7 +62,9 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
     const derivationPath = getDerivationPath();
 
     const eth = new (
-      await retryLazyImport(async () => await import('@ledgerhq/hw-app-eth'))
+      await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-eth')
+      )
     ).default(transport);
 
     const accounts: string[] = [];
@@ -88,7 +90,9 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
     const derivationPath = getDerivationPath();
 
     const solana = new (
-      await retryLazyImport(async () => await import('@ledgerhq/hw-app-solana'))
+      await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-solana')
+      )
     ).default(transport);
 
     const accounts: string[] = [];

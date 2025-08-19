@@ -2,9 +2,9 @@ import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/cosmos';
 import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
 import {
+  dynamicImportWithRefinedError,
   getNetworkInstance,
   Networks,
-  retryLazyImport,
 } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -36,7 +36,7 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
     }
   }
   async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
-    const { executeCosmosTransaction } = await retryLazyImport(
+    const { executeCosmosTransaction } = await dynamicImportWithRefinedError(
       async () => await import('@rango-dev/signer-cosmos')
     );
 
