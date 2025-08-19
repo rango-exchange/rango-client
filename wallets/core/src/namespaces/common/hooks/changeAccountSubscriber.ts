@@ -8,14 +8,14 @@ import type {
   SupportedProviderTypes,
 } from '../types.js';
 
-type ChangeAccountSubscriberBuilderConfig<
+type Operations<
   EventType,
   ProviderAPI extends SupportedProviderTypes,
   AddEventListenerReturnType
 > = {
   getInstance: () => ProviderAPI;
   format: (instance: ProviderAPI, event: EventType) => Promise<string[]>;
-  shouldItDisconnect: (event: EventType) => boolean;
+  validateEventArgs?: (event: EventType) => boolean;
   addEventListener: (
     instance: ProviderAPI,
     callback: (event: EventType) => void
@@ -26,6 +26,7 @@ type ChangeAccountSubscriberBuilderConfig<
     addEventListenerReturn: AddEventListenerReturnType
   ) => void;
 };
+
 export class ChangeAccountSubscriberBuilder<
   EventType,
   AddEventListenerReturnType,
@@ -33,41 +34,49 @@ export class ChangeAccountSubscriberBuilder<
   ActionsType extends Actions<ActionsType> &
     Actions<AutoImplementedActionsByRecommended>
 > {
-  private config = {} as ChangeAccountSubscriberBuilderConfig<
+  private operations = {} as Operations<
     EventType,
     ProviderAPI,
     AddEventListenerReturnType
   >;
-  setGetInstance(getInstance: (typeof this.config)['getInstance']) {
-    this.config.getInstance = getInstance;
+  private requiredFields: (keyof typeof this.operations)[] = [
+    'addEventListener',
+    'removeEventListener',
+    'format',
+    'getInstance',
+  ];
+  setGetInstance(getInstance: (typeof this.operations)['getInstance']) {
+    this.operations.getInstance = getInstance;
     return this;
   }
-  setFormat(format: (typeof this.config)['format']) {
-    this.config.format = format;
+  setFormat(format: (typeof this.operations)['format']) {
+    this.operations.format = format;
     return this;
   }
-  setShouldItDisconnect(
-    shouldItDisconnect: (typeof this.config)['shouldItDisconnect']
+  setValidateEventArgs(
+    validateEventArgs: (typeof this.operations)['validateEventArgs']
   ) {
-    this.config.shouldItDisconnect = shouldItDisconnect;
+    this.operations.validateEventArgs = validateEventArgs;
     return this;
   }
   setAddEventListener(
-    addEventListener: (typeof this.config)['addEventListener']
+    addEventListener: (typeof this.operations)['addEventListener']
   ) {
-    this.config.addEventListener = addEventListener;
+    this.operations.addEventListener = addEventListener;
     return this;
   }
   setRemoveEventListener(
-    removeEventListener: (typeof this.config)['removeEventListener']
+    removeEventListener: (typeof this.operations)['removeEventListener']
   ) {
-    this.config.removeEventListener = removeEventListener;
+    this.operations.removeEventListener = removeEventListener;
     return this;
   }
   build(): [Subscriber<ActionsType>, SubscriberCleanUp<ActionsType>] {
-    for (const configKey in this.config) {
-      if (!this.config[configKey as keyof typeof this.config]) {
-        throw new Error(`"${configKey}" has not been set`);
+    for (const field of this.requiredFields) {
+      if (!this.operations[field]) {
+        throw new Error(
+          `Required "${field}" operation has not been set for "changeAccountSubscriber"`
+        );
       }
     }
 
@@ -76,7 +85,7 @@ export class ChangeAccountSubscriberBuilder<
     return [
       async (context) => {
         const [, setState] = context.state();
-        const instance = this.config.getInstance();
+        const instance = this.operations.getInstance();
 
         if (!instance) {
           throw new Error(
@@ -84,21 +93,21 @@ export class ChangeAccountSubscriberBuilder<
           );
         }
         eventCallback = async (event) => {
-          if (this.config.shouldItDisconnect(event)) {
+          if (this.operations.validateEventArgs?.(event)) {
             context.action('disconnect');
             return;
           }
-          setState('accounts', await this.config.format(instance, event));
+          setState('accounts', await this.operations.format(instance, event));
         };
-        addEventListenerReturn = this.config.addEventListener(
+        addEventListenerReturn = this.operations.addEventListener(
           instance,
           eventCallback
         );
       },
       (_, err) => {
-        const instance = this.config.getInstance();
+        const instance = this.operations.getInstance();
 
-        this.config.removeEventListener(
+        this.operations.removeEventListener(
           instance,
           eventCallback,
           addEventListenerReturn

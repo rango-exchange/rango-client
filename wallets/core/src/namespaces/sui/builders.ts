@@ -61,12 +61,13 @@ export const changeAccountSubscriber = (
     SuiActions
   >()
     .setGetInstance(() => getInstanceOrThrow(params.name))
-    .setShouldItDisconnect(
+    .setValidateEventArgs(
       (event) =>
         /*
-         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
-         * So null means we don't have access to account and we 0 need to disconnect and let the user connect the account.
+         * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
+         * A null value indicates no access to the account, requiring a disconnect and user reconnection.
          */
+
         event.accounts?.length === 0
     )
     .setFormat(async (_, event) => formatAccountsToCAIP(event.accounts))

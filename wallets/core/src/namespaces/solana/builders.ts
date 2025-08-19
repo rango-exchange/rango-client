@@ -19,13 +19,18 @@ export const connect = () =>
 
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<string, void, ProviderAPI, SolanaActions>()
+  new ChangeAccountSubscriberBuilder<
+    string,
+    undefined,
+    ProviderAPI,
+    SolanaActions
+  >()
     .setGetInstance(getInstance)
-    .setShouldItDisconnect(
+    .setValidateEventArgs(
       (accounts) =>
         /*
-         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
-         * So null means we don't have access to account and we 0 need to disconnect and let the user connect the account.
+         * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
+         * A null value indicates no access to the account, requiring a disconnect and user reconnection.
          */
         !accounts
     )
@@ -34,7 +39,7 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
       instance.on('accountChanged', callback);
     })
     .setRemoveEventListener((instance, callback) => {
-      if (!callback && instance) {
+      if (callback && instance) {
         instance.off('accountChanged', callback);
       }
     });

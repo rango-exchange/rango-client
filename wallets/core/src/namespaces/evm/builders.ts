@@ -26,15 +26,19 @@ export const canSwitchNetwork = () =>
 
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<string[], void, ProviderAPI, EvmActions>()
+  new ChangeAccountSubscriberBuilder<
+    string[],
+    undefined,
+    ProviderAPI,
+    EvmActions
+  >()
     .setGetInstance(getInstance)
-    .setShouldItDisconnect(
+    .setValidateEventArgs(
       (accounts) =>
         /*
-         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns a null.
-         * So null means we don't have access to account and we need to disconnect and let the user connect the account.
-         *
-         * This assumption may not work for other wallets, if that the case, we need to consider a new approach.
+         * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
+         * A null value indicates no access to the account, requiring a disconnect and user reconnection.
+         * This behavior may vary across different wallets, and if so, a different approach may be needed.
          */
         !accounts || accounts.length === 0
     )
