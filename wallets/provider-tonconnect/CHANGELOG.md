@@ -1,3 +1,17 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.10.0...provider-tonconnect@0.11.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* remove retry dynamic import and throw refined error on dynamic import failure ([a2944ac](https://github.com/rango-exchange/rango-client/commit/a2944ac3c05a0e945f6e5621fa5693ab89625485))
+
+
+### Features
+
+* implement retry mechanism for lazy imports ([9a8e191](https://github.com/rango-exchange/rango-client/commit/9a8e191711d2319990ca4d0613e8188a5f86842f))
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.9.0...provider-tonconnect@0.10.0) (2025-08-05)
 
 

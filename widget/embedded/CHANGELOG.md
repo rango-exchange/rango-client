@@ -1,3 +1,12 @@
+# [0.48.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.47.0...widget-embedded@0.48.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* adjust all input paddings ([3f6ac40](https://github.com/rango-exchange/rango-client/commit/3f6ac40c372db84ed1ec94c32c72c29df92ffa21))
+
+
+
 # [0.47.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.46.1...widget-embedded@0.47.0) (2025-08-05)
 
 

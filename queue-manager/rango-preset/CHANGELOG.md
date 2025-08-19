@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.49.0...queue-manager-rango-preset@0.50.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* remove retry dynamic import and throw refined error on dynamic import failure ([a2944ac](https://github.com/rango-exchange/rango-client/commit/a2944ac3c05a0e945f6e5621fa5693ab89625485))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.48.1...queue-manager-rango-preset@0.49.0) (2025-08-05)
 
 
