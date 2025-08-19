@@ -53,7 +53,15 @@ export function solanaCoinbase(): SolanaProviderApi {
 
   return solanaInstance as SolanaProviderApi;
 }
+export function getInstanceOrThrow(): Provider {
+  const instances = coinbase();
 
+  if (!instances) {
+    throw new Error('Coinbase is not injected. Please check your wallet.');
+  }
+
+  return instances;
+}
 export async function getSolanaAccounts(
   instance: Provider
 ): Promise<ProviderConnectResult> {

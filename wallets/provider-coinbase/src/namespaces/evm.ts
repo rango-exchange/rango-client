@@ -11,7 +11,7 @@ import { WALLET_ID } from '../constants.js';
 import { evmCoinbase } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  evmActions.changeAccountSubscriber(evmCoinbase);
+  actions.changeAccountSubscriber(evmCoinbase);
 
 const connect = builders
   .connect()
