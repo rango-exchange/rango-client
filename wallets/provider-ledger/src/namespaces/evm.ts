@@ -43,6 +43,7 @@ const connect = builders
     return {
       accounts: formatAccounts,
       network: result.chainId,
+      derivationPath: result.derivationPath,
     };
   })
   .or(standardizeAndThrowLedgerError)

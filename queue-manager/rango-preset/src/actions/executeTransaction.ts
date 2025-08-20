@@ -103,12 +103,15 @@ export async function executeTransaction(
     requestBlock(blockedFor);
     return;
   }
-  // Update network to mark it as network changed successfully.
-  updateNetworkStatus(actions, {
-    message: '',
-    details: 'The network has been successfully changed.',
-    status: PendingSwapNetworkStatus.NetworkChanged,
-  });
+
+  if (currentStep.networkStatus === PendingSwapNetworkStatus.NetworkChanged) {
+    // Considering that network is matched now, if currently network status of the current step is equal to `NetworkChanged`, we need to update the network status to mark it as network changed successfully.
+    updateNetworkStatus(actions, {
+      message: '',
+      details: 'The network has been successfully changed.',
+      status: PendingSwapNetworkStatus.NetworkChanged,
+    });
+  }
 
   /*
    *For avoiding conflict by making too many requests to wallet, we need to make sure

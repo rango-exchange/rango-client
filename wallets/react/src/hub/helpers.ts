@@ -1,7 +1,7 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type {
-  Accounts,
   AccountsWithActiveChain,
+  AccountsWithDerivationPath,
 } from '@rango-dev/wallets-core/namespaces/common';
 import type { Result } from 'ts-results';
 
@@ -69,13 +69,25 @@ export async function runSequentiallyWithoutFailure<R>(
 export function isConnectResultEvm(
   result: Awaited<ReturnType<AllProxiedNamespaces['connect']>>
 ): result is AccountsWithActiveChain {
-  return typeof result === 'object' && !Array.isArray(result);
+  return (
+    typeof result === 'object' && !Array.isArray(result) && 'network' in result
+  );
 }
 
 export function isConnectResultSolana(
   result: Awaited<ReturnType<AllProxiedNamespaces['connect']>>
-): result is Accounts {
-  return Array.isArray(result);
+): result is AccountsWithDerivationPath {
+  return (
+    typeof result === 'object' &&
+    !Array.isArray(result) &&
+    !('network' in result)
+  );
+}
+
+export function isConnectResultCosmos(
+  result: Awaited<ReturnType<AllProxiedNamespaces['connect']>>
+): result is string {
+  return typeof result === 'string';
 }
 
 type QueueItem<T> = {

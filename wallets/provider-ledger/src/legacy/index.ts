@@ -9,6 +9,7 @@ import type {
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
+import signer from '../signer.js';
 import { setDerivationPath } from '../state.js';
 import {
   getEthereumAccounts,
@@ -16,8 +17,6 @@ import {
   getSolanaAccounts,
   transportDisconnect,
 } from '../utils.js';
-
-import signer from './signer.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;

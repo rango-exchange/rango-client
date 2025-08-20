@@ -3,6 +3,8 @@ import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { Networks } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta } from 'rango-types';
 
+import getSigners from './signer';
+
 export const EVM_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
   LegacyNetworks.POLYGON,
@@ -80,6 +82,10 @@ export const info: ProviderInfo = {
           },
         ],
       },
+    },
+    {
+      name: 'signers',
+      value: { getSigners: async () => getSigners() },
     },
   ],
 };

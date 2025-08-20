@@ -78,8 +78,7 @@ export function connect(
         'Expecting solana response to be a single value, not an array.'
       );
     }
-
-    return result.accounts.map(
+    const accounts = result.accounts.map(
       (account) =>
         AccountId.format({
           address: account,
@@ -89,5 +88,7 @@ export function connect(
           },
         }) as CaipAccount
     );
+
+    return { accounts };
   };
 }

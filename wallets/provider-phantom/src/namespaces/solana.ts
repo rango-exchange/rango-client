@@ -52,7 +52,7 @@ const connect = builders
         }) as CaipAccount
     );
 
-    return formatAccounts;
+    return { accounts: formatAccounts };
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
