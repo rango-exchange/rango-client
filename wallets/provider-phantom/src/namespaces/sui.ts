@@ -1,4 +1,3 @@
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
@@ -36,7 +35,7 @@ const disconnect = commonBuilders
  * This is a temporary workaround due to Phantom's limitation in silently connecting to a Sui account.
  * Once Phantom introduces support for silent Sui connections, this implementation should be updated accordingly.
  */
-const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
+const canEagerConnect = new ActionBuilder<SuiActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
   .action(solanaCanEagerConnectAction)

@@ -135,9 +135,9 @@ describe('check providers', () => {
 
   test('run namespace actions from provider', async () => {
     const { evm, solana } = namespaces;
-    solana.action('connect', async () => [
-      'solana:mainnet:0x000000000000000000000000000000000000dead',
-    ]);
+    solana.action('connect', async () => ({
+      accounts: ['solana:mainnet:0x000000000000000000000000000000000000dead'],
+    }));
     const testNamespaces = new Map();
     testNamespaces.set('evm', evm.build());
     testNamespaces.set('solana', solana.build());
@@ -148,9 +148,9 @@ describe('check providers', () => {
 
     const result = await provider.get('solana')?.connect();
 
-    expect(result).toStrictEqual([
-      'solana:mainnet:0x000000000000000000000000000000000000dead',
-    ]);
+    expect(result).toStrictEqual({
+      accounts: ['solana:mainnet:0x000000000000000000000000000000000000dead'],
+    });
     // Since we didn't add any action regarding connect for `evm`
     await expect(async () =>
       provider.get('evm')?.connect('0x1')

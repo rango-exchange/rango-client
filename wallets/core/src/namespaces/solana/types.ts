@@ -1,4 +1,4 @@
-import type { Accounts } from '../../types/accounts.js';
+import type { AccountsWithDerivationPath } from '../../types/accounts.js';
 import type {
   AutoImplementedActionsByRecommended,
   CommonActions,
@@ -7,7 +7,7 @@ import type {
 export interface SolanaActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (options?: ConnectOptions) => Promise<Accounts>;
+  connect: (options?: ConnectOptions) => Promise<AccountsWithDerivationPath>;
   canEagerConnect: () => Promise<boolean>;
 }
 

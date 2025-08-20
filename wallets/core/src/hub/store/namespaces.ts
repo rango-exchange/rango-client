@@ -21,6 +21,7 @@ export interface NamespaceData {
   network: null | string;
   connected: boolean;
   connecting: boolean;
+  derivationPath?: string;
 }
 
 interface NamespaceInfo {

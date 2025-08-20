@@ -17,6 +17,7 @@ export type {
   CaipAccount,
   Accounts,
   AccountsWithActiveChain,
+  AccountsWithDerivationPath,
 } from '../../types/accounts.js';
 
 export type { Namespace } from './types.js';

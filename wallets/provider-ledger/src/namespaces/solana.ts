@@ -35,7 +35,10 @@ const connect = builders
         }) as CaipAccount
     );
 
-    return formatAccounts;
+    return {
+      accounts: formatAccounts,
+      derivationPath: result.derivationPath,
+    };
   })
   .or(standardizeAndThrowLedgerError)
   .build();

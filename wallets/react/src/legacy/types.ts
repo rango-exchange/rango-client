@@ -26,6 +26,7 @@ export type ConnectResult = {
   accounts: string[] | null;
   network: Network | null;
   provider: InstanceType;
+  derivationPath?: string;
 };
 
 export type Providers = { [type in WalletType]?: InstanceType };

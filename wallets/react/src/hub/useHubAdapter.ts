@@ -5,6 +5,7 @@ import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/leg
 import type {
   Accounts,
   AccountsWithActiveChain,
+  AccountsWithDerivationPath,
 } from '@rango-dev/wallets-core/namespaces/common';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
@@ -222,6 +223,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
           let connectNamespacePromise:
             | Promise<Accounts>
+            | Promise<AccountsWithDerivationPath>
             | Promise<string>
             | Promise<AccountsWithActiveChain>;
 

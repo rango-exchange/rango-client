@@ -29,6 +29,7 @@ import {
 
 import {
   fromAccountIdToLegacyAddressFormat,
+  isConnectResultCosmos,
   isConnectResultEvm,
   isConnectResultSolana,
 } from './helpers.js';
@@ -113,11 +114,13 @@ export function mapHubEventsToLegacy(
     : undefined;
   let accounts: string[] | null = null;
   let network: string | null = null;
+  let derivationPath: string | undefined = undefined;
 
   if (namespace) {
     const [getNamespaceState] = namespace.state();
     accounts = getNamespaceState().accounts;
     network = getNamespaceState().network;
+    derivationPath = getNamespaceState().derivationPath;
   }
 
   const [getProviderState] = provider.state();
@@ -128,6 +131,7 @@ export function mapHubEventsToLegacy(
     accounts,
     network,
     reachable: true,
+    derivationPath,
   };
 
   const eventInfo = {
@@ -327,17 +331,25 @@ export function transformHubResultToLegacyResult(
       accounts: res.accounts,
       network: res.network,
       provider: undefined,
+      derivationPath: res.derivationPath,
     };
   } else if (isConnectResultSolana(res)) {
     return {
-      accounts: res,
+      accounts: res.accounts,
+      network: null,
+      provider: undefined,
+      derivationPath: res.derivationPath,
+    };
+  } else if (isConnectResultCosmos(res)) {
+    return {
+      accounts: [res],
       network: null,
       provider: undefined,
     };
   }
 
   return {
-    accounts: [res],
+    accounts: res,
     network: null,
     provider: undefined,
   };
