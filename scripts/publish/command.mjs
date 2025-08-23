@@ -16,7 +16,7 @@ import { addFileToStage, publishCommitAndTags, push } from '../common/git.mjs';
 import { update } from './package.mjs';
 import { build } from './build.mjs';
 import { should } from '../common/features.mjs';
-import { versionLog } from './version-log.mjs';
+import { bumpClientAndRootVersionsAndGenerateRootChangelog } from './version-log.mjs';
 
 async function run() {
   logAsSection('::group::🔍 Checking environments...');
@@ -66,7 +66,7 @@ async function run() {
 
   // 2. Generate root changelog and bump widget, app and root versions.
   logAsSection('::group::📋 Root changelog and versions...');
-  await versionLog();
+  await bumpClientAndRootVersionsAndGenerateRootChangelog();
   console.log('::endgroup::');
 
   // 3. Build all packacges

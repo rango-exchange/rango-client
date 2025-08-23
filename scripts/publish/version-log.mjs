@@ -37,7 +37,7 @@ async function bumpVersions() {
   await addFileToStage(packageJsonPath(playgroundPackage.location));
 }
 
-export async function versionLog() {
+export async function bumpClientAndRootVersionsAndGenerateRootChangelog() {
   if (should('generateChangelog')) {
     console.log(chalk.green('[1/3]'), `Bump versions`);
     await bumpVersions();
@@ -48,6 +48,7 @@ export async function versionLog() {
     console.log(chalk.green('[3/3]'), `Commit changes`);
     await makeCommit([ROOT_VERSIONS_COMMIT_SUBJECT], {
       shouldSkipCI: true,
+      // If ESLint fails, it will break our workflow, so it has been turned off to avoid checking files.
       shouldVerify: false,
     });
   } else {
