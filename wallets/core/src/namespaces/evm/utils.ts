@@ -1,16 +1,33 @@
 import type { Chain, ChainId, ProviderAPI } from './types.js';
+import type { CaipAccount } from '../../types/accounts.js';
 
+import { AccountId } from 'caip';
 import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+
+import { CAIP_NAMESPACE } from './constants.js';
+
+const CHAIN_ID_RADIX = 16;
 
 export async function getAccounts(provider: ProviderAPI) {
   const [accounts, chainId] = await Promise.all([
     provider.request({ method: 'eth_requestAccounts' }),
     provider.request({ method: 'eth_chainId' }),
   ]);
+  /*
+   * Trust Wallet Compatibility Fix:
+   * Trust Wallet's in-app browser has been observed to return the `chainId` as a
+   * number (e.g., 1) rather than the standard hexadecimal string (e.g., "0x1").
+   * This code block standardizes the `chainId` to the required hex format to
+   * prevent downstream errors.
+   */
+  let standardChainId = chainId;
+  if (typeof standardChainId === 'number') {
+    standardChainId = `0x${Number(chainId).toString(CHAIN_ID_RADIX)}`;
+  }
 
   return {
     accounts,
-    chainId,
+    chainId: standardChainId,
   };
 }
 
@@ -73,4 +90,17 @@ export function isUserRejectionError(error: unknown): boolean {
     );
   }
   return false;
+}
+
+export function formatAccountsToCAIP(accounts: string[], chainId: string) {
+  return accounts.map(
+    (account) =>
+      AccountId.format({
+        address: account,
+        chainId: {
+          namespace: CAIP_NAMESPACE,
+          reference: chainId,
+        },
+      }) as CaipAccount
+  );
 }

@@ -6,14 +6,14 @@ import {
   builders as commonBuilders,
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/sui';
+import { builders, hooks } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
 
 import { canEagerConnectAction as solanaCanEagerConnectAction } from './solana.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber({
+  hooks.changeAccountSubscriber({
     name: WALLET_NAME_IN_WALLET_STANDARD,
   });
 

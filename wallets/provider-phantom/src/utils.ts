@@ -94,5 +94,5 @@ export function suiPhantom(): SuiProviderApi {
     );
   }
 
-  return suiInstance;
+  return suiInstance as SuiProviderApi;
 }
