@@ -11,7 +11,7 @@ import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
 
 import {
-  argentx as argentx_instances,
+  ready as readyInstances,
   type StarknetProviderAPI,
 } from './helpers.js';
 import signer from './signer.js';
@@ -23,7 +23,7 @@ import signer from './signer.js';
  * https://github.com/argentlabs/argent-x#-usage-with-your-dapp
  */
 
-const WALLET = WalletTypes.ARGENTX;
+const WALLET = WalletTypes.READY;
 const MAINNET_CHAIN_ID = 'SN_MAIN';
 
 export const config = {
@@ -31,7 +31,7 @@ export const config = {
   defaultNetwork: Networks.STARKNET,
 };
 
-export const getInstance = argentx_instances;
+export const getInstance = readyInstances;
 
 export const connect: Connect = async ({ instance }) => {
   let r = undefined;
