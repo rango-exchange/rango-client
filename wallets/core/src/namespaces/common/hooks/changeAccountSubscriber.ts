@@ -15,7 +15,7 @@ type Operations<
 > = {
   getInstance: () => ProviderAPI;
   format: (instance: ProviderAPI, event: EventType) => Promise<string[]>;
-  validateEventArgs?: (event: EventType) => boolean;
+  validateEventPayload?: (event: EventType) => boolean;
   addEventListener: (
     instance: ProviderAPI,
     callback: (event: EventType) => void
@@ -53,10 +53,10 @@ export class ChangeAccountSubscriberBuilder<
     this.operations.format = format;
     return this;
   }
-  setValidateEventArgs(
-    validateEventArgs: (typeof this.operations)['validateEventArgs']
+  setValidateEventPayload(
+    validateEventPayload: (typeof this.operations)['validateEventPayload']
   ) {
-    this.operations.validateEventArgs = validateEventArgs;
+    this.operations.validateEventPayload = validateEventPayload;
     return this;
   }
   setAddEventListener(
@@ -93,7 +93,10 @@ export class ChangeAccountSubscriberBuilder<
           );
         }
         eventCallback = async (event) => {
-          if (this.operations.validateEventArgs?.(event)) {
+          if (
+            !!this.operations.validateEventPayload &&
+            !this.operations.validateEventPayload(event)
+          ) {
             context.action('disconnect');
             return;
           }

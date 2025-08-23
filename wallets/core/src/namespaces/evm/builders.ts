@@ -33,7 +33,7 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
     EvmActions
   >()
     .setGetInstance(getInstance)
-    .setValidateEventArgs(
+    .setValidateEventPayload(
       (accounts) =>
         /*
          * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.

@@ -61,7 +61,7 @@ export const changeAccountSubscriber = (
     SuiActions
   >()
     .setGetInstance(() => getInstanceOrThrow(params.name))
-    .setValidateEventArgs(
+    .setValidateEventPayload(
       (event) =>
         /*
          * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
