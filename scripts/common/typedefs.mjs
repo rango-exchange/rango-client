@@ -47,3 +47,9 @@
  * @property {string} current - current version
  * @property {string} next - increased version
  */
+
+/**
+ * @typedef {Object} MakeCommitOptions
+ * @property {boolean} shouldSkipCI - If true, appends `[skip ci]` to the commit message.
+ * @property {boolean} shouldVerify - If true, appends `[skip ci]` to the commit message.
+ */

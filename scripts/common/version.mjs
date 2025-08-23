@@ -2,6 +2,7 @@ import { execa } from 'execa';
 import { IncreaseVersionFailedError } from './errors.mjs';
 import { Bumper } from 'conventional-recommended-bump';
 import { TAG_PACKAGE_PREFIX } from './changelog.mjs';
+import { ROOT_PACKAGE_NAME } from '../deploy/config.mjs';
 
 /**
  *
@@ -43,18 +44,28 @@ export async function increaseVersionForNext(pkg) {
 }
 
 /**
+ * Increases the version of a given package (using Yarn versioning).
  *
- * @param {import('./typedefs.mjs').Package} pkg
- * @returns {Promise<import('./typedefs.mjs').Package>} Returns package with updated version
+ * - If a `pkg` is provided, it bumps the version for that workspace package.
+ * - If no package is provided, it bumps the version of the root package.
+ *
+ * The bump type (patch/minor/major) is determined automatically
+ * by `recommendBump`.
+ *
+ * @param {import('./typedefs.mjs').Package} - The workspace package to bump. If omitted, the root package is used.
+ * @returns {Promise<import('./typedefs.mjs').Package>} A promise resolving to the package with its new version.
+ * @throws {IncreaseVersionFailedError} If the version bump fails or Yarn output cannot be parsed.
  */
 export async function increaseVersionForProd(pkg) {
-  const recommendation = await recommendBump(pkg);
+  const recommendation = await recommendBump(
+    pkg ? pkg : { name: ROOT_PACKAGE_NAME }
+  );
   const releaseType = recommendation.releaseType;
+  const packageArgs = pkg ? ['workspace', pkg.name] : [];
 
   /** @type {import('./typedefs.mjs').IncreaseVersionResult} */
   const versions = await execa('yarn', [
-    'workspace',
-    pkg.name,
+    ...packageArgs,
     'version',
     `--${releaseType}`,
     '--no-git-tag-version',
