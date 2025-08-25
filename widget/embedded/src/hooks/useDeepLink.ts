@@ -3,10 +3,6 @@ import type { InstallObjects } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-react';
 import { detectMobileScreens } from '@rango-dev/wallets-shared';
 
-import {
-  DEEP_LINK_DEFAULT_APP_HOST,
-  DEEP_LINK_DEFAULT_TARGET_URL,
-} from '../constants';
 import { useAppStore } from '../store/AppStore';
 
 export function useDeepLink() {
@@ -16,10 +12,8 @@ export function useDeepLink() {
 
   function getWalletDeepLink(walletType: string): string | undefined {
     const wallet = getWalletInfo(walletType);
-    // Default values are for test only and will be removed after test.
-    const appHost = config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST;
-    const targetUrl =
-      config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL;
+    const appHost = config.deepLinking?.appHost;
+    const targetUrl = config.deepLinking?.targetUrl;
     if (!appHost || !targetUrl) {
       return;
     }
