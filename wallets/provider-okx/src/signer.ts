@@ -1,4 +1,3 @@
-import type { LegacyNetworkProviderMap } from '@rango-dev/wallets-core/legacy';
 import type { SignerFactory } from 'rango-types';
 
 import {
@@ -11,7 +10,7 @@ import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 import { CustomSolanaSigner } from './solana-signer.js';
 
 export default async function getSigners(
-  provider: LegacyNetworkProviderMap
+  provider: any
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);

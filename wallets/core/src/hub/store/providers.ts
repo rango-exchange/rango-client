@@ -1,5 +1,8 @@
 import type { Namespace } from '../../namespaces/common/types.js';
-import type { State as InternalProviderState } from '../provider/mod.js';
+import type {
+  GenerateDeepLink,
+  State as InternalProviderState,
+} from '../provider/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { StateCreator } from 'zustand';
 
@@ -50,7 +53,7 @@ type SignersProperty = Property<
   }
 >;
 
-export type ProviderInfo = {
+export type ProviderMetadata = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
@@ -63,8 +66,11 @@ export type ProviderInfo = {
 };
 
 export interface ProviderConfig {
-  info: ProviderInfo;
+  metadata: ProviderMetadata;
+  deepLink?: GenerateDeepLink;
 }
+
+export type ProviderInfo = ProviderConfig;
 
 interface ProviderData {
   installed: boolean;
