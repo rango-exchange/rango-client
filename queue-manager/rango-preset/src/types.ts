@@ -192,6 +192,7 @@ export type FailedRouteEventPayload = {
   inputAmountUsd: string;
   reason?: string;
   reasonCode: APIErrorCode;
+  swapMode: 'swap' | 'refuel';
 };
 
 export type FailedStepEventPayload = FailedRouteEventPayload;
@@ -201,6 +202,7 @@ export type SucceededRouteEventPayload = {
   inputAmountUsd: string;
   outputAmount: string;
   outputAmountUsd: string;
+  swapMode: 'swap' | 'refuel';
 };
 
 export type SucceededStepEventPayload = SucceededRouteEventPayload;
