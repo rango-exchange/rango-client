@@ -156,7 +156,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet        | Supported Chains                                             | Not Implemented                                   | Auto Connect Support | Source                               |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------- | -------------------- | ------------------------------------ |
-| ArgentX       | Starknet                                                     | -                                                 | &check;              | https://www.argent.xyz/              |
 | Bitget        | Bitcoin,EVM,Tron,Solana,Cosmos,Aptos,Sui                     | Bitcoin,Solana,Cosmos,Aptos,Sui                   | &check;              | https://web3.bitget.com/             |
 | Braavos       | Starknet                                                     | -                                                 | &check;              | https://braavos.app/                 |
 | Brave         | EVM, Solana                                                  | -                                                 | &check;              | https://brave.com/wallet/            |
@@ -174,6 +173,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Math Wallet   | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                    | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
 | Metamask      | EVM                                                          | -                                                 | &check;              | -                                    |
 | OKX           | EVM,Solana,Cosmos                                            | Cosmos                                            | &check;              | https://www.okx.com/web3             |
+| Ready         | Starknet                                                     | -                                                 | &check;              | https://www.ready.co/              |
 | Safe          | EVM                                                          | -                                                 | &check;              | https://safe.global/                 |
 | SafePal       | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                       | BTC,Tron,LTC,Doge,Aptos,TON                       | &cross;              | https://www.safepal.com/             |
 | Solflare      | Solana                                                       | -                                                 | &cross;              | https://solflare.com                 |

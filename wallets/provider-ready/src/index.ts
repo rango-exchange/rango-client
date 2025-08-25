@@ -10,7 +10,10 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
 
-import { argentx as argentx_instances } from './helpers.js';
+import {
+  ready as readyInstances,
+  type StarknetProviderAPI,
+} from './helpers.js';
 import signer from './signer.js';
 
 /*
@@ -20,7 +23,7 @@ import signer from './signer.js';
  * https://github.com/argentlabs/argent-x#-usage-with-your-dapp
  */
 
-const WALLET = WalletTypes.ARGENTX;
+const WALLET = WalletTypes.READY;
 const MAINNET_CHAIN_ID = 'SN_MAIN';
 
 export const config = {
@@ -28,13 +31,13 @@ export const config = {
   defaultNetwork: Networks.STARKNET,
 };
 
-export const getInstance = argentx_instances;
+export const getInstance = readyInstances;
 
 export const connect: Connect = async ({ instance }) => {
   let r = undefined;
   r = await instance?.enable();
   if (!r || !instance.isConnected || r?.length === 0) {
-    throw new Error('Error connecting ArgentX');
+    throw new Error('Error connecting Ready');
   }
   if (instance?.chainId !== MAINNET_CHAIN_ID) {
     throw new Error(
@@ -45,7 +48,7 @@ export const connect: Connect = async ({ instance }) => {
 };
 
 export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
-  const handleAccountsChanged = (accounts: any) => {
+  const handleAccountsChanged = (accounts: string[]) => {
     if (state.connected) {
       if (instance) {
         updateAccounts(accounts, Networks.STARKNET);
@@ -61,7 +64,9 @@ export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (
+  provider: StarknetProviderAPI
+) => Promise<SignerFactory> = signer;
 
 export const canEagerConnect: CanEagerConnect = ({ instance }) =>
   instance.isPreauthorized();
@@ -71,15 +76,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const starknet = starknetBlockchain(allBlockChains);
   return {
-    name: 'ArgentX',
+    name: 'Ready',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/argentx/icon.svg',
     installLink: {
       CHROME:
-        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+        'https://chromewebstore.google.com/detail/ready-wallet-formerly-arg/dlcobpjiigpikoobohmabehhmhfoodbb',
       BRAVE:
-        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+        'https://chromewebstore.google.com/detail/ready-wallet-formerly-arg/dlcobpjiigpikoobohmabehhmhfoodbb',
       FIREFOX: 'https://addons.mozilla.org/en-GB/firefox/addon/argent-x',
-      DEFAULT: 'https://www.argent.xyz',
+      DEFAULT: 'https://www.ready.co/',
     },
 
     color: '#96e7ed',
