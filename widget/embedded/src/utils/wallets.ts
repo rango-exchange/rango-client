@@ -5,7 +5,6 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
-import type { GenerateDeepLink } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
@@ -62,7 +61,6 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
-  generateDeepLink: (type: WalletType) => GenerateDeepLink | null,
   list: WalletType[],
   chain?: string
 ): ExtendedModalWalletInfo[] {
@@ -95,18 +93,18 @@ export function mapWalletTypesToWalletInfo(
         needsDerivationPath,
         properties,
         isHub,
+        generateDeepLink,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
       );
-      const deepLinkGenerator = generateDeepLink(type);
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
         image,
         link: detectInstallLink(installLink),
-        generateDeepLink: deepLinkGenerator,
-        canOpenDeepLink: !!deepLinkGenerator && detectMobileScreens(),
+        generateDeepLink,
+        canOpenDeepLink: !!generateDeepLink && detectMobileScreens(),
         state,
         type,
         showOnMobile,

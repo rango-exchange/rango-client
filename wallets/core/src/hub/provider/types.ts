@@ -43,3 +43,15 @@ export type RegisteredNamespaces<K extends keyof T, T> = Map<
 >;
 
 export type ProviderBuilderOptions = { store?: Store };
+export type GenerateDeepLink = (context: DeeplinkContext) => string;
+
+/**
+ * Deeplink parameters context.
+ *
+ * @param targetUrl - URL of the widget in the app to be opened in the in-app browser.
+ * @param appHost - Domain of the app where the widget has been implemented.
+ */
+export type DeeplinkContext = {
+  targetUrl: string;
+  appHost: string;
+};

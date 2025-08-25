@@ -16,7 +16,7 @@ import React, { useState } from 'react';
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
 import {
-  DEEP_LINK_DEFAULT_APP_DOMAIN,
+  DEEP_LINK_DEFAULT_APP_HOST,
   DEEP_LINK_DEFAULT_TARGET_URL,
 } from '../constants';
 import { useWalletList } from '../hooks/useWalletList';
@@ -99,10 +99,12 @@ export function WalletsPage() {
               wallet,
               namespacesState
             );
-            const deepLink = wallet.generateDeepLink?.(
-              config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL,
-              config.deepLinking?.appDomain || DEEP_LINK_DEFAULT_APP_DOMAIN
-            );
+            const deepLink = wallet.generateDeepLink?.({
+              appHost:
+                config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST,
+              targetUrl:
+                config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL,
+            });
             return (
               <Wallet
                 key={key}

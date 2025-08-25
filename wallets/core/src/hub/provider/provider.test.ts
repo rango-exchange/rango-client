@@ -47,7 +47,7 @@ describe('check providers', () => {
 
   test('Initialize providers correctly', () => {
     const provider = new Provider('garbage', namespacesMap, {
-      info: garbageWalletInfo,
+      metadata: garbageWalletInfo,
     });
 
     const allNamespaces = provider.getAll();
@@ -57,7 +57,7 @@ describe('check providers', () => {
 
   test('throw error if state() is called before store initialization', () => {
     const provider = new Provider('garbage', namespacesMap, {
-      info: garbageWalletInfo,
+      metadata: garbageWalletInfo,
     });
 
     expect(() => provider.state()).toThrowError();
@@ -92,7 +92,7 @@ describe('check providers', () => {
       'garbage',
       namespacesMap,
       {
-        info: garbageWalletInfo,
+        metadata: garbageWalletInfo,
       },
       {
         store: createStore(),
@@ -118,7 +118,7 @@ describe('check providers', () => {
       'garbage',
       namespacesMap,
       {
-        info: garbageWalletInfo,
+        metadata: garbageWalletInfo,
       },
       {
         store,
@@ -143,7 +143,7 @@ describe('check providers', () => {
     testNamespaces.set('solana', solana.build());
 
     const provider = new Provider('garbage', testNamespaces, {
-      info: garbageWalletInfo,
+      metadata: garbageWalletInfo,
     });
 
     const result = await provider.get('solana')?.connect();
@@ -159,15 +159,19 @@ describe('check providers', () => {
 
   test('sets config properly', () => {
     const builder = new ProviderBuilder('garbage');
-    builder.config('info', garbageWalletInfo);
+    const deepLinkMock = () => 'deep link';
+    builder
+      .config('metadata', garbageWalletInfo)
+      .config('deepLink', deepLinkMock);
     const provider = builder.build().store(store);
 
-    expect(provider.info()).toStrictEqual(garbageWalletInfo);
+    expect(provider.info()?.metadata).toStrictEqual(garbageWalletInfo);
+    expect(provider.info()?.deepLink).toStrictEqual(deepLinkMock);
   });
 
   test('.init should works on Provider', () => {
     const builder = new ProviderBuilder('garbage').config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     let count = 0;
@@ -184,7 +188,7 @@ describe('check providers', () => {
 
   test(".init shouldn't do anything when use hasn't set anything", () => {
     const builder = new ProviderBuilder('garbage').config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     const provider = builder.build().store(store);
@@ -197,7 +201,7 @@ describe('check providers', () => {
 
   test('A provider can be found using its namespace', () => {
     const builder = new ProviderBuilder('garbage', { store }).config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
 
@@ -231,7 +235,7 @@ describe('check providers', () => {
 
     const builder = new ProviderBuilder('garbage', { store })
       .add('evm', evmNamespace)
-      .config('info', garbageWalletInfo);
+      .config('metadata', garbageWalletInfo);
     const provider = builder.build();
 
     const [getState] = provider.state();

@@ -1,7 +1,5 @@
-import type {
-  GenerateDeepLink,
-  LegacyWalletInfo,
-} from '@rango-dev/wallets-core/legacy';
+import type { GenerateDeepLink } from '@rango-dev/wallets-core';
+import type { LegacyWalletInfo } from '@rango-dev/wallets-core/legacy';
 import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
 import type { TransactionType } from 'rango-types';
 
@@ -16,7 +14,7 @@ export enum WalletState {
 export type WalletInfo = {
   state: WalletState;
   link: InstallObjects | string;
-  generateDeepLink: GenerateDeepLink | null;
+  generateDeepLink?: GenerateDeepLink;
   canOpenDeepLink: boolean;
   title: string;
   image: string;

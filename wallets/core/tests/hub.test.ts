@@ -41,7 +41,7 @@ describe('check hub', () => {
       .action('connect', evmConnect)
       .build();
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'info',
+      'metadata',
       garbageWalletInfo
     );
     garbageWalletBuilder.add('evm', evmNamespace);
