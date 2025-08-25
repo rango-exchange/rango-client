@@ -24,7 +24,7 @@ import { formatBalance, isFetchingBalance } from '../../../utils/wallets';
 import { MaxBalance } from '../MaxBalance';
 import { SwapInputLabel } from '../SwapInputLabel';
 
-import { FromContainer } from './SourceInput.styles';
+import { Container } from './SourceInput.styles';
 
 export function SourceInput(props: PropTypes) {
   const { onClickToken } = props;
@@ -93,7 +93,7 @@ export function SourceInput(props: PropTypes) {
   };
 
   return (
-    <FromContainer>
+    <Container>
       <SwapInputLabel
         label={i18n.t('From')}
         onClickWallet={onClickWallet}
@@ -143,6 +143,6 @@ export function SourceInput(props: PropTypes) {
         tooltipContainer={getContainer()}
       />
       <SwitchFromAndToButton />
-    </FromContainer>
+    </Container>
   );
 }

@@ -6,10 +6,3 @@ export const Container = styled('div', {
   gap: '$5',
   alignSelf: 'stretch',
 });
-
-export const DestinationInputStyles = {
-  container: {
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
-};
