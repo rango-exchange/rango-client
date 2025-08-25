@@ -154,7 +154,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
       const namespacesProperty = provider
         .info()
-        ?.properties?.find((property) => property.name === 'namespaces');
+        ?.metadata?.properties?.find(
+          (property) => property.name === 'namespaces'
+        );
 
       if (!dataRef.current.allBlockChains) {
         throw new Error(`Blockchains are not available`);
@@ -320,7 +322,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         throw new Error('Your provider should have required `info`.');
       }
 
-      const providerProperties = info.properties;
+      const providerProperties = info.metadata.properties;
 
       const signerProperty = providerProperties?.find(
         (property) => property.name === 'signers'
