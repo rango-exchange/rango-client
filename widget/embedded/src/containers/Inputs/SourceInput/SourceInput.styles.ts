@@ -1,5 +1,5 @@
 import { styled } from '@rango-dev/ui';
 
-export const FromContainer = styled('div', {
+export const Container = styled('div', {
   position: 'relative',
 });
