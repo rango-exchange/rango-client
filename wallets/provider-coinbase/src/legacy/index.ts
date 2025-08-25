@@ -1,3 +1,4 @@
+import type { Provider } from '../utils.js';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -10,11 +11,14 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
+  type LegacyProviderInterface,
+  LegacyNetworks as Networks,
+} from '@rango-dev/wallets-core/legacy';
+import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
-  Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
@@ -25,8 +29,12 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-import { coinbase as coinbase_instance, getSolanaAccounts } from './helpers.js';
-import signer from './signer.js';
+import signer from '../signer.js';
+import {
+  coinbase as coinbase_instance,
+  getSolanaAccounts,
+  solanaCoinbase,
+} from '../utils.js';
 
 const WALLET = WalletTypes.COINBASE;
 
@@ -44,15 +52,19 @@ export const connect: Connect = async ({ instance, meta }) => {
    * whenever we are requesting accounts.
    */
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
-  let results: ProviderConnectResult[] = [];
+  const results: ProviderConnectResult[] = [];
 
   if (evm_instance) {
     const evm = await getEvmAccounts(evm_instance);
     results.push(evm);
   }
 
-  const solanaResults = await getSolanaAccounts(instance);
-  results = [...results, ...solanaResults];
+  const solanaInstance = solanaCoinbase();
+  if (solanaInstance) {
+    const solanaResults = await getSolanaAccounts(solanaInstance);
+    results.push(solanaResults);
+  }
+
   return results;
 };
 
@@ -106,7 +118,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -133,5 +146,38 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#2a62f5',
     supportedChains: [...evms, ...solana],
+    needsNamespace: {
+      selection: 'multiple',
+      data: [
+        {
+          label: 'EVM',
+          value: 'EVM',
+          id: 'ETH',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            evmBlockchains(allBlockchains),
+        },
+        {
+          label: 'Solana',
+          value: 'Solana',
+          id: 'SOLANA',
+          getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+            solanaBlockchain(allBlockchains),
+        },
+      ],
+    },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+});
+
+export { buildLegacyProvider };
