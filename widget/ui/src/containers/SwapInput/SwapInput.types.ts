@@ -25,6 +25,7 @@ export type BaseProps = {
   sharpBottomStyle?: boolean;
   onClickToken: () => void;
   tooltipContainer?: HTMLElement;
+  selectionType?: 'token' | 'chain';
 };
 
 type FromProps = {

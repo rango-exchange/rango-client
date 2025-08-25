@@ -37,7 +37,7 @@ export function Quotes(props: PropTypes) {
     toToken,
     sortStrategy,
     error,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const { slippage, customSlippage } = useAppStore();
   const { findToken } = useAppStore();
   const container = propContainer || getContainer();

@@ -8,7 +8,7 @@ import { areTokensEqual } from '../../utils/wallets';
 import { Container } from './SameTokensWarning.styles';
 
 export function SameTokensWarning() {
-  const { fromToken, toToken } = useQuoteStore();
+  const { fromToken, toToken } = useQuoteStore()();
   const showWarningMessage =
     !!fromToken && !!toToken && areTokensEqual(fromToken, toToken);
 
