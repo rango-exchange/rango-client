@@ -4,7 +4,6 @@ import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import { AppRouter } from '../../components/AppRouter';
-import { SwapModeContext } from '../../hooks/useSwapMode';
 import { DEFAULT_CONFIG } from '../../store/slices/config';
 import { Main } from '../App';
 import { WidgetProvider } from '../WidgetProvider';
@@ -13,16 +12,14 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
   const isExternalWalletsEnabled = props.config?.externalWallets;
 
   return (
-    <SwapModeContext.Provider value="swap">
-      <AppRouter>
-        {isExternalWalletsEnabled ? (
+    <AppRouter>
+      {isExternalWalletsEnabled ? (
+        <Main />
+      ) : (
+        <WidgetProvider config={props.config ?? DEFAULT_CONFIG}>
           <Main />
-        ) : (
-          <WidgetProvider config={props.config ?? DEFAULT_CONFIG}>
-            <Main />
-          </WidgetProvider>
-        )}
-      </AppRouter>
-    </SwapModeContext.Provider>
+        </WidgetProvider>
+      )}
+    </AppRouter>
   );
 }

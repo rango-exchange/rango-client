@@ -7,6 +7,7 @@ import {
   MessageBox,
   NotFound,
   styled,
+  Tabs,
   Typography,
 } from '@rango-dev/ui';
 import {
@@ -24,10 +25,13 @@ import { HistoryGroupedList } from '../components/HistoryGroupedList';
 import { NotFoundContainer } from '../components/HistoryGroupedList/HistoryGroupedList.styles';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
+import { useSwapMode } from '../hooks/useSwapMode';
 import { getContainer } from '../utils/common';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
 import { getPendingSwaps } from '../utils/queue';
+
+type SwapModeTab = 'all' | 'swap' | 'refuel';
 
 const HistoryGroupedListContainer = styled('div', {
   overflowY: 'visible',
@@ -65,6 +69,21 @@ const transactionStatusFilters = [
   { id: TransactionStatus.FAILED, title: i18n.t('Failed') },
 ];
 
+const SWAP_MODE_TAB_ITEMS = [
+  {
+    id: 'all',
+    title: i18n.t('All'),
+  },
+  {
+    id: 'swap',
+    title: i18n.t('Swap'),
+  },
+  {
+    id: 'refuel',
+    title: i18n.t('Refuel'),
+  },
+];
+
 const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
   if (!steps?.length) {
     return false;
@@ -87,18 +106,21 @@ export function HistoryPage() {
   const loading = !state.loadedFromPersistor;
   const [filterBy, setFilterBy] = useState('');
   const [openClearModal, setOpenClearModal] = useState(false);
+  const [swapModeActiveTab, setSwapModeActiveTab] =
+    useState<SwapModeTab>('all');
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
   };
+  const { isMultiMode } = useSwapMode();
 
   const filteredList = useMemo(() => {
-    if (!searchedFor && !filterBy) {
+    if (!searchedFor && !filterBy && swapModeActiveTab === 'all') {
       return list;
     }
 
     return list.filter((swap) => {
-      const { inputAmount, status, steps, requestId } = swap;
+      const { inputAmount, status, steps, requestId, mode } = swap;
 
       const matchesSearch =
         !searchedFor ||
@@ -109,9 +131,22 @@ export function HistoryPage() {
 
       const matchesFilter = !filterBy || filterBy === status;
 
-      return matchesSearch && matchesFilter;
+      const matchesSwapMode = (() => {
+        if (swapModeActiveTab === 'all') {
+          return true;
+        }
+        if (swapModeActiveTab === 'swap') {
+          return !mode || mode === 'swap';
+        }
+        if (swapModeActiveTab === 'refuel') {
+          return mode === 'refuel';
+        }
+        return false;
+      })();
+
+      return matchesSearch && matchesFilter && matchesSwapMode;
     });
-  }, [list, searchedFor, filterBy]);
+  }, [list, searchedFor, filterBy, swapModeActiveTab]);
 
   const isEmpty = !filteredList?.length && !loading;
 
@@ -177,6 +212,18 @@ export function HistoryPage() {
         </SearchAndFilterBar>
 
         <Divider size="16" />
+
+        {isMultiMode && !loading && (
+          <>
+            <Tabs
+              items={SWAP_MODE_TAB_ITEMS}
+              onChange={(item) => setSwapModeActiveTab(item.id as SwapModeTab)}
+              value={swapModeActiveTab}
+              type="secondary"
+            />
+            <Divider size="12" />
+          </>
+        )}
         <HistoryGroupedListContainer>
           {isEmpty && (
             <NotFoundContainer>
