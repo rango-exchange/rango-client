@@ -3,6 +3,12 @@ import type {
   AutoImplementedActionsByRecommended,
   CommonActions,
 } from '../common/types.js';
+import type {
+  StandardConnectFeature,
+  StandardEventsFeature,
+  SuiFeatures,
+  WalletWithFeatures,
+} from '@mysten/wallet-standard';
 
 export interface SuiActions
   extends AutoImplementedActionsByRecommended,
@@ -11,5 +17,10 @@ export interface SuiActions
   canEagerConnect: () => Promise<boolean>;
 }
 
-// eslint-disable-next-line
-export type ProviderAPI = Record<string, any>;
+export type ProviderAPI = WalletWithFeatures<
+  StandardConnectFeature & StandardEventsFeature & SuiFeatures
+>;
+
+export interface ChangeAccountSubscriberParams {
+  name: string;
+}

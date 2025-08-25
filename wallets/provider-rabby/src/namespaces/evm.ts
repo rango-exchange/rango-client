@@ -5,13 +5,17 @@ import {
   builders as commonBuilders,
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
+import {
+  actions,
+  builders,
+  hooks,
+} from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
 import { evmRabby, switchOrAddNetwork } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber(evmRabby);
+  hooks.changeAccountSubscriber(evmRabby);
 
 const connect = builders
   .connect()
