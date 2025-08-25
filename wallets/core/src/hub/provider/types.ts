@@ -13,7 +13,10 @@ export type Context = {
   state: () => [GetState, SetState];
 };
 
-export type State = Omit<LegacyState, 'reachable' | 'accounts' | 'network'>;
+export type State = Omit<
+  LegacyState,
+  'reachable' | 'accounts' | 'network' | 'derivationPath'
+>;
 export type SetState = <K extends keyof Pick<State, 'installed'>>(
   name: K,
   value: State[K]
@@ -43,7 +46,7 @@ export type RegisteredNamespaces<K extends keyof T, T> = Map<
 >;
 
 export type ProviderBuilderOptions = { store?: Store };
-export type GenerateDeepLink = (context: DeeplinkContext) => string;
+export type GenerateDeepLink = (context: DeepLinkContext) => string;
 
 /**
  * Deeplink parameters context.
@@ -51,7 +54,7 @@ export type GenerateDeepLink = (context: DeeplinkContext) => string;
  * @param targetUrl - URL of the widget in the app to be opened in the in-app browser.
  * @param appHost - Domain of the app where the widget has been implemented.
  */
-export type DeeplinkContext = {
+export type DeepLinkContext = {
   targetUrl: string;
   appHost: string;
 };

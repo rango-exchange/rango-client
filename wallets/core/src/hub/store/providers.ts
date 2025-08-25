@@ -70,6 +70,8 @@ export interface ProviderConfig {
   deepLink?: GenerateDeepLink;
 }
 
+export type ProviderInfo = ProviderConfig;
+
 interface ProviderData {
   installed: boolean;
 }

@@ -1,5 +1,4 @@
 import type { WalletInfoWithExtra } from '../types';
-import type { ExtendedModalWalletInfo } from '../utils/wallets';
 
 import { i18n } from '@lingui/core';
 import {
@@ -16,10 +15,7 @@ import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
-import {
-  DEEP_LINK_DEFAULT_APP_HOST,
-  DEEP_LINK_DEFAULT_TARGET_URL,
-} from '../constants';
+import { useDeepLink } from '../hooks/useDeepLink';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -50,7 +46,7 @@ export function WalletsPage() {
   const blockchains = useAppStore().blockchains();
   const { config } = useAppStore();
   const { state } = useWallets();
-
+  const { checkHasDeepLink, getWalletLink } = useDeepLink();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<WalletInfoWithExtra>();
   const isActiveTab = useUiStore.use.isActiveTab();
@@ -70,21 +66,7 @@ export function WalletsPage() {
 
     setSelectedWalletToConnect(wallet);
   };
-  const getWalletDeepLink = (
-    wallet: ExtendedModalWalletInfo
-  ): string | undefined => {
-    // Default values are for test only and will be removed after test.
-    const appHost = config.deepLinking?.appHost || DEEP_LINK_DEFAULT_APP_HOST;
-    const targetUrl =
-      config.deepLinking?.targetUrl || DEEP_LINK_DEFAULT_TARGET_URL;
-    if (!appHost || !targetUrl) {
-      return;
-    }
-    return wallet.generateDeepLink?.({
-      appHost,
-      targetUrl,
-    });
-  };
+
   return (
     <Layout
       header={{
@@ -124,7 +106,8 @@ export function WalletsPage() {
                     ? WalletState.PARTIALLY_CONNECTED
                     : wallet.state
                 }
-                deepLink={getWalletDeepLink(wallet)}
+                hasDeepLink={checkHasDeepLink(wallet.type)}
+                link={getWalletLink(wallet.type)}
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}

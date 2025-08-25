@@ -1,6 +1,6 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
-import { info, WALLET_ID } from './constants.js';
+import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
 import { trustWallet as trustwalletInstance } from './utils.js';
@@ -15,7 +15,7 @@ const buildProvider = () =>
         console.debug('[trustwallet] instance detected.', context);
       }
     })
-    .config('metadata', info)
+    .config('metadata', metadata)
     .config('deepLink', (context) => {
       return `trust://open_url?coin_id=60&url=${context.targetUrl}?autoConnect=${WALLET_ID}`;
     })
