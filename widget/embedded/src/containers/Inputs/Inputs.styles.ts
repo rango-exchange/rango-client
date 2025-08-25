@@ -7,6 +7,9 @@ export const Container = styled('div', {
   alignSelf: 'stretch',
 });
 
-export const FromContainer = styled('div', {
-  position: 'relative',
-});
+export const DestinationInputStyles = {
+  container: {
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+};
