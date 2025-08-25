@@ -1,7 +1,7 @@
 import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types.js';
 import type { config } from '../../theme';
 import type * as Stitches from '@stitches/react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 
 export type BaseProps = {
   id: string;
@@ -25,7 +25,6 @@ export type BaseProps = {
   error?: boolean;
   disabled?: boolean;
   label?: string;
-  sharpBottomStyle?: boolean;
   onClickToken: () => void;
   tooltipContainer?: HTMLElement;
 };
@@ -47,5 +46,5 @@ export type SwapInputPropTypes = BaseProps &
   (FromProps | ToProps) & {
     tooltipContainer?: HTMLElement;
     style?: { container: Stitches.CSS<typeof config> };
-    moreInfo?: ReactNode;
+    moreInfo?: ReactElement;
   };

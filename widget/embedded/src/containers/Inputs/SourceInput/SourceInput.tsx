@@ -1,10 +1,10 @@
 import type { PropTypes } from './SourceInput.types';
 
+import { i18n } from '@lingui/core';
 import { Divider, SwapInput } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { SwitchFromAndToButton } from '../../../components/SwitchFromAndTo';
@@ -24,16 +24,16 @@ import { formatBalance, isFetchingBalance } from '../../../utils/wallets';
 import { MaxBalance } from '../MaxBalance';
 import { SwapInputLabel } from '../SwapInputLabel';
 
-import { FromContainer, swapInputStyles } from './SourceInput.styles';
+import { FromContainer } from './SourceInput.styles';
 
 export function SourceInput(props: PropTypes) {
   const { onClickToken } = props;
   const {
-    selectedWallets: { source: selectedSourceWallet },
     connectedWallets,
     getBalanceFor,
     fetchStatus: fetchingMetaStatus,
   } = useAppStore();
+  const sourceWallet = useAppStore().sourceWallet();
   const {
     fromToken,
     fromBlockchain,
@@ -43,16 +43,14 @@ export function SourceInput(props: PropTypes) {
     setInputAmount,
     sanitizeInputAmount,
   } = useQuoteStore();
-  const { t } = useTranslation();
   const { getWalletInfo } = useWallets();
   const navigate = useNavigate();
-  const relatedWallet = selectedSourceWallet
+  const relatedWallet = sourceWallet
     ? {
-        ...selectedSourceWallet,
-        image: getWalletInfo(selectedSourceWallet.type).img,
+        ...sourceWallet,
+        image: getWalletInfo(sourceWallet.walletType).img,
       }
-    : null;
-
+    : undefined;
   const fetchingBalance = fromToken
     ? isFetchingBalance(connectedWallets, fromToken.blockchain)
     : false;
@@ -97,7 +95,7 @@ export function SourceInput(props: PropTypes) {
   return (
     <FromContainer>
       <SwapInputLabel
-        label={t('From')}
+        label={i18n.t('From')}
         onClickWallet={onClickWallet}
         relatedWallet={relatedWallet}
       />
@@ -111,7 +109,6 @@ export function SourceInput(props: PropTypes) {
             onClickMaxBalance={setMaxBalanceAsInputAmount}
           />
         }
-        style={swapInputStyles}
         mode="From"
         onInputChange={setInputAmount}
         onInputBlur={sanitizeInputAmount}

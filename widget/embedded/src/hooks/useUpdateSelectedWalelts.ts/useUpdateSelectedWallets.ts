@@ -14,10 +14,9 @@ import { useQuoteStore } from '../../store/quote';
  */
 export function useUpdateSelectedWallets() {
   const { fromToken } = useQuoteStore();
-  const { checkAndUpdateSelectedWalletsIfNeeded, connectedWallets } =
-    useAppStore();
+  const { checkAndUpdateSelectedWalletIfNeeded } = useAppStore();
 
   useEffect(() => {
-    checkAndUpdateSelectedWalletsIfNeeded(connectedWallets);
-  }, [fromToken]);
+    checkAndUpdateSelectedWalletIfNeeded('source');
+  }, [fromToken?.blockchain, fromToken?.address, fromToken?.symbol]);
 }

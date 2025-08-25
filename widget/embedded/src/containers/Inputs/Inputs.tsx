@@ -19,7 +19,7 @@ import { numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { canComputePriceImpact } from '../../utils/swap';
 
-import { Container } from './Inputs.styles';
+import { Container, DestinationInputStyles } from './Inputs.styles';
 import { SourceInput } from './SourceInput/SourceInput';
 
 export function Inputs(props: PropTypes) {
@@ -49,7 +49,11 @@ export function Inputs(props: PropTypes) {
     <Container>
       <SourceInput onClickToken={() => onClickToken('from')} />
       <SwapInput
-        sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
+        style={
+          !isExpandable && (!!selectedQuote || fetchingQuote)
+            ? DestinationInputStyles
+            : undefined
+        }
         label={i18n.t('To')}
         mode="To"
         id="widget-swap-to-input"

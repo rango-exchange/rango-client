@@ -31,7 +31,8 @@ export const ListContainer = styled('div', {
 export function SourceWalletPage() {
   const { t } = useTranslation();
   const { fromBlockchain } = useQuoteStore();
-  const { selectedWallets, setWalletsAsSelected } = useAppStore();
+  const { connectedWallets, setSourceWallet } = useAppStore();
+  const sourceWallet = useAppStore().sourceWallet();
   const navigate = useNavigate();
   const location = useLocation();
   const sourceBlockchain = fromBlockchain?.name;
@@ -50,8 +51,8 @@ export function SourceWalletPage() {
 
   const isSelected = (walletType: string, blockchain: string) => {
     return (
-      selectedWallets.source?.blockchain === blockchain &&
-      selectedWallets.source?.type === walletType
+      sourceWallet?.chain === blockchain &&
+      sourceWallet?.walletType === walletType
     );
   };
 
@@ -76,13 +77,14 @@ export function SourceWalletPage() {
               //
             }}
             selectWallet={(wallet) => {
-              setWalletsAsSelected({
-                source: {
+              setSourceWallet(
+                {
                   address: wallet.address,
                   blockchain: wallet.chain,
                   type: wallet.walletType,
                 },
-              });
+                connectedWallets
+              );
             }}
           />
         </ListContainer>

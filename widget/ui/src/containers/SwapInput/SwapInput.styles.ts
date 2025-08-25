@@ -11,14 +11,6 @@ export const Container = styled('div', {
   backgroundColor: '$$color',
   borderRadius: '$xm',
   padding: '$15',
-  variants: {
-    sharpBottomStyle: {
-      true: {
-        borderBottomLeftRadius: '$0',
-        borderBottomRightRadius: '$0',
-      },
-    },
-  },
   [`& .${textStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
