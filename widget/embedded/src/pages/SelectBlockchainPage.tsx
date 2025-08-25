@@ -32,7 +32,7 @@ export function SelectBlockchainPage(props: PropTypes) {
   const setToToken = useQuoteStore().use.setToToken();
   const { fetchStatus, findNativeToken } = useAppStore();
   const navigate = useNavigate();
-  const swapMode = useSwapMode();
+  const { swapMode } = useSwapMode();
 
   const blockchains = useAppStore().blockchains({
     type,

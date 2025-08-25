@@ -338,7 +338,7 @@ export const useSwapQuoteStore = createSelectors(createSwapQuoteSelectors);
 export const useRefuelQuoteStore = createSelectors(createRefuelQuoteSelectors);
 
 export function useQuoteStore() {
-  const swapMode = useSwapMode();
+  const { swapMode } = useSwapMode();
   return createSelectors(
     swapMode === 'refuel'
       ? createRefuelQuoteSelectors
