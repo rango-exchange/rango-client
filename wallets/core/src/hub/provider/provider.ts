@@ -187,7 +187,37 @@ export class Provider {
     }
     return store.getState().providers.list[this.id].config.info;
   }
+  /**
+   * Retrieves the deep link generation method for the provider.
+   *
+   * This method returns the function responsible for generating deep links,
+   * if it has been configured for the provider.
+   *
+   * @example
+   * ```ts
+   * const provider = new Provider(...);
+   *
+   * const deepLinkGenerator = provider.generateDeepLink();
+   * if (deepLinkGenerator) {
+   *   deepLinkGenerator('targetURL', 'appDomain');
+   * }
+   * ```
+   *
+   * @throws {Error} If the store is not set.
+   *
+   * @returns {ProviderConfig['generateDeepLink'] | null}
+   * The deep link generation function if available, otherwise `null`.
+   */
+  public generateDeepLink(): ProviderConfig['generateDeepLink'] | undefined {
+    const store = this.#store;
+    if (!store) {
+      throw new Error(
+        'You need to set your store using `.store` method first.'
+      );
+    }
 
+    return store.getState().providers.list[this.id].config.generateDeepLink;
+  }
   /**
    * A list of registered _proxied_ namespaces.
    *
