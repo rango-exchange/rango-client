@@ -379,14 +379,24 @@ function mapSwapStepToPendingSwapStep(
   };
 }
 
-export function calculatePendingSwap(
-  inputAmount: string,
-  bestRoute: NonNullable<ConfirmRouteResponse['result']>,
-  wallets: { [p: string]: WalletTypeAndAddress },
-  settings: SwapSavedSettings,
-  validateBalanceOrFee: boolean,
-  meta: Pick<MetaResponse, 'blockchains' | 'tokens'> | null
-): PendingSwap {
+export function calculatePendingSwap(params: {
+  inputAmount: string;
+  bestRoute: NonNullable<ConfirmRouteResponse['result']>;
+  wallets: { [p: string]: WalletTypeAndAddress };
+  settings: SwapSavedSettings;
+  validateBalanceOrFee: boolean;
+  meta: Pick<MetaResponse, 'blockchains' | 'tokens'> | null;
+  swapMode?: 'swap' | 'refuel';
+}): PendingSwap {
+  const {
+    inputAmount,
+    bestRoute,
+    wallets,
+    settings,
+    validateBalanceOrFee,
+    meta,
+    swapMode = 'swap',
+  } = params;
   const simulationResult = bestRoute.result;
   if (!simulationResult) {
     throw Error('Simulation result should not be null');
@@ -399,6 +409,7 @@ export function calculatePendingSwap(
     inputAmount: inputAmount,
     wallets,
     status: 'running',
+    mode: swapMode,
     isPaused: false,
     extraMessage: null,
     extraMessageSeverity: null,

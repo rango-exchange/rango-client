@@ -42,7 +42,7 @@ export function Inputs(props: PropTypes) {
     outputUsdValue,
     selectedQuote,
   } = useQuoteStore()();
-  const swapMode = useSwapMode();
+  const { swapMode } = useSwapMode();
   const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =

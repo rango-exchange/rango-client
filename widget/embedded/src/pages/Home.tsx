@@ -73,7 +73,7 @@ export function Home() {
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
-  const swapMode = useSwapMode();
+  const { swapMode } = useSwapMode();
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
