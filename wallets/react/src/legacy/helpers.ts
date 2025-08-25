@@ -155,7 +155,7 @@ export function clearPersistance() {
 /*
  *Our event handler includes an internal state updater, and a notifier
  *for the outside listener.
- *On creating first wallet refrence, and on chaning `props.onUpdateState`
+ *On creating first wallet reference, and on chaning `props.onUpdateState`
  *we are using this function.
  */
 export function makeEventHandler(

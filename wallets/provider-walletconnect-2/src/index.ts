@@ -119,7 +119,7 @@ export const subscribe: Subscribe = ({
   const { client } = instance as WCInstance;
 
   /**
-   * Session events refrence:
+   * Session events reference:
    * https://docs.walletconnect.com/2.0/specs/clients/sign/session-events
    */
 
