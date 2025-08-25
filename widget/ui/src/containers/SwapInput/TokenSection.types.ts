@@ -10,4 +10,5 @@ export type TokenSectionProps = {
   loading?: boolean;
   warning?: boolean;
   tooltipContainer?: HTMLElement;
+  selectionType?: 'token' | 'chain';
 };

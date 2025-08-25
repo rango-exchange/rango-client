@@ -14,7 +14,7 @@ export function useUpdateQuoteInputs() {
     setToBlockchain,
     setToToken,
     setInputAmount,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const updateQuoteInputs: UpdateQuoteInputs = (params) => {
     const { fromBlockchain, fromToken, toBlockchain, toToken, requestAmount } =
