@@ -31,7 +31,7 @@ export function useConfirmSwap(): ConfirmSwap {
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
     resetAlerts,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const { slippage, customSlippage } = useAppStore();
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();

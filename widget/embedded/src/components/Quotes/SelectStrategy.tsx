@@ -9,7 +9,7 @@ import { useQuoteStore } from '../../store/quote';
 import { SelectContainer } from './Quotes.styles';
 
 export function SelectStrategy(props: { container: HTMLElement }) {
-  const { updateQuotePartialState, sortStrategy } = useQuoteStore();
+  const { updateQuotePartialState, sortStrategy } = useQuoteStore()();
 
   const ROUTE_STRATEGY: { value: PreferenceType; label: string }[] = [
     {
