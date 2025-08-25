@@ -5,6 +5,7 @@ import { setSolanaSignerConfig } from '@rango-dev/signer-solana';
 import React, { useEffect, useMemo } from 'react';
 
 import { DEFAULT_BASE_URL, RANGO_PUBLIC_API_KEY } from '../../constants';
+import { useFetchApiConfig } from '../../hooks/useFetchApiConfig';
 import useFontLoader from '../../hooks/useFontLoader';
 import QueueManager from '../../QueueManager';
 import { initConfig } from '../../utils/configs';
@@ -16,7 +17,12 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
 
   const fontFamily = props.config?.theme?.fontFamily;
 
+  const { fetchApiConfig } = useFetchApiConfig();
   const { handleLoadCustomFont } = useFontLoader();
+
+  useEffect(() => {
+    void fetchApiConfig().catch(console.log);
+  }, []);
 
   useEffect(() => {
     if (fontFamily) {

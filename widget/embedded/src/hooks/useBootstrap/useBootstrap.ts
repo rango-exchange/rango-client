@@ -15,7 +15,6 @@ import {
   unsubscribeSwapQuoteStore,
 } from '../../store/quote';
 import { tabManager } from '../../store/ui';
-import { useFetchApiConfig } from '../useFetchApiConfig';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
 import { useSyncNotifications } from '../useSyncNotifications';
@@ -33,8 +32,6 @@ export function useBootstrap() {
   const widgetContext = useContext(WidgetContext);
 
   const evmChains = blockchains.filter(isEvmBlockchain);
-
-  const { fetchApiConfig } = useFetchApiConfig();
 
   // Unsubscribe QuoteStore listeners
   useEffect(() => () => unsubscribeSwapQuoteStore(), []);
@@ -99,8 +96,6 @@ export function useBootstrap() {
           : lastConnectedWallet
       );
     });
-
-    void fetchApiConfig().catch(console.log);
 
     return tabManager.destroy;
   }, []);
