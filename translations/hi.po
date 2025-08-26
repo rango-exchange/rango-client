@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-18 07:08\n"
+"PO-Revision-Date: 2025-08-26 07:37\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,9 +19,20 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:83
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "ईधन"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "गैस श्रृंखला का चयन करें"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:377
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:234
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "कोई परिणाम नहीं मिला"
@@ -29,7 +40,7 @@ msgstr "कोई परिणाम नहीं मिला"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:378
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:241
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "अलग-अलग कीवर्ड का उपयोग करके देखें"
@@ -37,13 +48,15 @@ msgstr "अलग-अलग कीवर्ड का उपयोग करक�
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:67
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:50
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "चेन चुनें"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:75
 msgid "All"
 msgstr "सभी"
 
@@ -189,7 +202,7 @@ msgstr "सेटिंग्स"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
-#: widget/embedded/src/pages/HistoryPage.tsx:139
+#: widget/embedded/src/pages/HistoryPage.tsx:174
 msgid "History"
 msgstr "इतिहास"
 
@@ -700,7 +713,7 @@ msgstr "हां, इसे हटा दें"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:302
 msgid "No, Cancel"
 msgstr "नहीं, रद्द करें"
 
@@ -728,7 +741,7 @@ msgstr "फिसलन:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:352
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "टोकन चुनें"
 
@@ -943,7 +956,8 @@ msgstr "USD मूल्य की पुष्टि करें अज्ञ�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "बदलना"
 
@@ -959,12 +973,12 @@ msgid "Routes"
 msgstr "मार्गों"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:82
 msgid "From"
 msgstr "से"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:138
 msgid "To"
 msgstr "को"
 
@@ -1136,58 +1150,58 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "क्या आप वाकई इस टोकन को हटाना चाहते हैं?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:59
+#: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Complete"
 msgstr "पूरा"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "Running"
 msgstr "दौड़ना"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "असफल"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
+#: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "स्पष्ट"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:161
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Search Transaction"
 msgstr "लेनदेन खोजें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:235
 msgid "No transactions"
 msgstr "कोई लेनदेन नहीं"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:242
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "आपका लेन-देन इतिहास स्थानीय रूप से संग्रहीत है और आपके द्वारा स्वैप शुरू करने के बाद यहां दिखाई देगा"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:267
 msgid "Clear Transaction History"
 msgstr "लेन-देन इतिहास साफ़ करें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:271
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "आगे बढ़ने से विजेट से सभी सफल और असफल लेनदेन हटा दिए जाएंगे। क्या आप जारी रखना चाहते हैं?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:278
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "ध्यान दें: इससे चेन पर आपके लेन-देन का इतिहास नहीं मिटता; यह केवल उन्हें यहां से हटाता है।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:292
 msgid "Yes, Clear the history"
 msgstr "हां, इतिहास साफ़ करें"
 
@@ -1202,7 +1216,7 @@ msgid "Search {sourceType}"
 msgstr "खोज {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:85
 msgid "Search Chain"
 msgstr "खोज श्रृंखला"
 

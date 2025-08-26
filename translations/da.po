@@ -8,7 +8,7 @@ msgstr ""
 "Language: da\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-18 07:08\n"
+"PO-Revision-Date: 2025-08-26 07:37\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,9 +19,20 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:83
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "Tanke op"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "Vælg gaskæde"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:377
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:234
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "Ingen resultater fundet"
@@ -29,7 +40,7 @@ msgstr "Ingen resultater fundet"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:378
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:241
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Prøv at bruge forskellige søgeord"
@@ -37,13 +48,15 @@ msgstr "Prøv at bruge forskellige søgeord"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:67
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:50
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "Vælg Kæde"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:75
 msgid "All"
 msgstr "Alle"
 
@@ -189,7 +202,7 @@ msgstr "Indstillinger"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
-#: widget/embedded/src/pages/HistoryPage.tsx:139
+#: widget/embedded/src/pages/HistoryPage.tsx:174
 msgid "History"
 msgstr "Historie"
 
@@ -700,7 +713,7 @@ msgstr "Ja, slet det"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:302
 msgid "No, Cancel"
 msgstr "Nej, annuller"
 
@@ -728,7 +741,7 @@ msgstr "Glidning:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:352
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "Vælg Token"
 
@@ -943,7 +956,8 @@ msgstr "Bekræft USD-pris ukendt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "Byt"
 
@@ -959,12 +973,12 @@ msgid "Routes"
 msgstr "Ruter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:82
 msgid "From"
 msgstr "Fra"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:138
 msgid "To"
 msgstr "Til"
 
@@ -1136,58 +1150,58 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "Er du sikker på, at du vil slette dette token?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:59
+#: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Complete"
 msgstr "Komplet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "Running"
 msgstr "Løb"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Mislykkedes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
+#: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "Klar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:161
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Search Transaction"
 msgstr "Søg transaktion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:235
 msgid "No transactions"
 msgstr "Ingen transaktioner"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:242
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Din transaktionshistorik gemmes lokalt og vises her, når du har startet en swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:267
 msgid "Clear Transaction History"
 msgstr "Ryd transaktionshistorik"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:271
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Hvis du fortsætter, fjernes alle vellykkede og mislykkede transaktioner fra widgetten. Vil du fortsætte?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:278
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Bemærk: Dette sletter ikke din transaktionshistorik på kæden; det fjerner dem kun her."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:292
 msgid "Yes, Clear the history"
 msgstr "Ja, Ryd historikken"
 
@@ -1202,7 +1216,7 @@ msgid "Search {sourceType}"
 msgstr "Søg {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:85
 msgid "Search Chain"
 msgstr "Søgekæde"
 

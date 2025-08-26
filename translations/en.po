@@ -14,9 +14,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:83
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "Refuel"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "Select gas chain"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:377
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:234
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "No results found"
@@ -24,7 +35,7 @@ msgstr "No results found"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:378
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:241
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "Try using different keywords"
@@ -32,13 +43,15 @@ msgstr "Try using different keywords"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:67
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:50
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "Select Chain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:75
 msgid "All"
 msgstr "All"
 
@@ -184,7 +197,7 @@ msgstr "Settings"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
-#: widget/embedded/src/pages/HistoryPage.tsx:139
+#: widget/embedded/src/pages/HistoryPage.tsx:174
 msgid "History"
 msgstr "History"
 
@@ -697,7 +710,7 @@ msgstr "Yes, Delete it"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:302
 msgid "No, Cancel"
 msgstr "No, Cancel"
 
@@ -725,7 +738,7 @@ msgstr "Slippage:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:352
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -940,7 +953,8 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "Swap"
 
@@ -956,12 +970,12 @@ msgid "Routes"
 msgstr "Routes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:82
 msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:138
 msgid "To"
 msgstr "To"
 
@@ -1133,58 +1147,58 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "Are you sure you want to Delete this Token?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:59
+#: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Complete"
 msgstr "Complete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "Running"
 msgstr "Running"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Failed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
+#: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "Clear"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:161
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Search Transaction"
 msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:235
 msgid "No transactions"
 msgstr "No transactions"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:242
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "Your transaction history is stored locally and will appear here after you start a swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:267
 msgid "Clear Transaction History"
 msgstr "Clear Transaction History"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:271
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:278
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "Note: This does not erase your transaction history on the chain; it only removes them here."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:292
 msgid "Yes, Clear the history"
 msgstr "Yes, Clear the history"
 
@@ -1199,7 +1213,7 @@ msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:85
 msgid "Search Chain"
 msgstr "Search Chain"
 
