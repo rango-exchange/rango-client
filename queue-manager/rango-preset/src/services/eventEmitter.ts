@@ -156,6 +156,7 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route, swap: PendingSwap) {
         type: RouteEventType.FAILED,
         inputAmount: swap.inputAmount,
         inputAmountUsd: getSwapInputUsd(swap),
+        swapMode: swap.mode || 'swap',
       };
       break;
     case StepEventType.SUCCEEDED: {
@@ -166,6 +167,7 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route, swap: PendingSwap) {
         inputAmountUsd: getSwapInputUsd(swap),
         outputAmount: swap.steps[swap.steps.length - 1].outputAmount ?? '',
         outputAmountUsd: getSwapOutputUsd(swap),
+        swapMode: swap.mode || 'swap',
       };
       break;
     }

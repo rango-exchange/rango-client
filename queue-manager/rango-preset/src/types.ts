@@ -192,18 +192,23 @@ export type FailedRouteEventPayload = {
   inputAmountUsd: string;
   reason?: string;
   reasonCode: APIErrorCode;
+  swapMode: 'swap' | 'refuel';
 };
 
-export type FailedStepEventPayload = FailedRouteEventPayload;
+export type FailedStepEventPayload = Omit<FailedRouteEventPayload, 'swapMode'>;
 
 export type SucceededRouteEventPayload = {
   inputAmount: string;
   inputAmountUsd: string;
   outputAmount: string;
   outputAmountUsd: string;
+  swapMode: 'swap' | 'refuel';
 };
 
-export type SucceededStepEventPayload = SucceededRouteEventPayload;
+export type SucceededStepEventPayload = Omit<
+  SucceededRouteEventPayload,
+  'swapMode'
+>;
 
 export type OutputRevealedEventPayload = { outputAmount: string };
 
