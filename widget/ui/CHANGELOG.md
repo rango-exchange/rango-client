@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/ui@0.51.0...ui@0.52.0) (2025-08-27)
+
+
+### Features
+
+* add refuel mode ([07becb5](https://github.com/rango-exchange/rango-client/commit/07becb5b686f86fdcda9371ecc2b08fed7e99f10))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/ui@0.50.0...ui@0.51.0) (2025-08-19)
 
 

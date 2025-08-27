@@ -1,3 +1,13 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.50.0...queue-manager-rango-preset@0.51.0) (2025-08-27)
+
+
+### Features
+
+* add swap mode tabs to history page ([be3ae60](https://github.com/rango-exchange/rango-client/commit/be3ae60f5867f0bc921d8e7ceb1ae673766a38f3))
+* add swap mode to payload of route events ([492d076](https://github.com/rango-exchange/rango-client/commit/492d07649e356437cca79dd10f1664d3927b0fb9))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.49.0...queue-manager-rango-preset@0.50.0) (2025-08-19)
 
 
