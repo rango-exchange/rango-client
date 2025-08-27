@@ -1,3 +1,17 @@
+## Widget [0.44.0] (2025-08-27)
+
+_includes `@rango-dev/widget-embedded@0.49.0`_
+
+### Features
+
+- add refuel mode ([07becb5b6](https://github.com/rango-exchange/rango-client/commit/07becb5b686f86fdcda9371ecc2b08fed7e99f10))
+- add swap mode tabs to history page ([be3ae60f5](https://github.com/rango-exchange/rango-client/commit/be3ae60f5867f0bc921d8e7ceb1ae673766a38f3))
+- add swap mode to payload of route events ([492d07649](https://github.com/rango-exchange/rango-client/commit/492d07649e356437cca79dd10f1664d3927b0fb9))
+
+### Bug Fixes
+
+- move fetch config to widget provider ([37bfe2431](https://github.com/rango-exchange/rango-client/commit/37bfe24312de7e0fcc1995f09ff3f578824cbf69))
+
 ## Widget [0.43.0] (2025-08-19)
 
 _includes `@rango-dev/widget-embedded@0.48.0`_
