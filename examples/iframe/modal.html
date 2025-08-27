@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title>Rango widget in iframe (modal)</title>
+    <style>
+      :root {
+        --iframe-container-width: 550px;
+        --iframe-container-height: 550px;
+      }
+
+      body::before {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        content: "";
+      }
+      .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+
+        width: var(--iframe-container-width);
+        background: #ccc;
+        height: var(--iframe-container-height);
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta
+      vestibulum pulvinar. Aliquam erat volutpat. Sed et odio ut sapien aliquet
+      molestie. Cras at nisi placerat, sodales nibh at, posuere augue. Nullam
+      lacinia vel magna ut pulvinar. Lorem ipsum dolor sit amet, consectetur
+      adipiscing elit. Praesent dictum ullamcorper ex, at pharetra risus ornare
+      ut. Cras vel pharetra magna. Nunc orci nisl, elementum sit amet justo id,
+      semper vehicula purus. Sed nisi sem, convallis quis efficitur sit amet,
+      dictum pretium nisi. Vestibulum vel tincidunt sem. Duis vel diam ut lacus
+      dignissim congue. Phasellus tincidunt diam ut turpis tempus commodo. Duis
+      sit amet feugiat sapien, fringilla facilisis justo. Suspendisse blandit
+      efficitur lectus, sed porttitor turpis dapibus ac. Maecenas vel arcu
+      luctus, finibus erat sed, faucibus lacus. Nunc vulputate enim in tellus
+      blandit volutpat. Mauris quis vehicula mi. Sed ac quam scelerisque,
+      posuere felis ut, volutpat diam. Donec enim justo, rutrum et leo nec,
+      cursus placerat magna. Cras mollis sagittis sem, et vestibulum nunc
+      sodales non. Sed laoreet erat enim, sollicitudin rhoncus sem maximus sit
+      amet. Nullam mattis lectus sed mi scelerisque, et commodo odio rhoncus.
+      Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum
+      lacus sem, porttitor nec ullamcorper non, rutrum id libero. Curabitur
+      interdum, dui id vehicula placerat, orci ex dapibus nisi, a pretium lorem
+      ligula a metus. Vivamus erat sem, cursus in pulvinar eu, aliquam vitae
+      metus. Maecenas nec quam posuere, bibendum elit a, elementum purus. In
+      eget neque odio. Sed faucibus aliquam metus, vitae vestibulum eros
+      volutpat eu. Fusce sagittis, nisi sagittis aliquet porttitor, tortor mi
+      iaculis nisl, at iaculis ex neque vel elit. Pellentesque non convallis
+      nulla. Donec non est nibh. Vestibulum malesuada velit in lacus tempus
+      elementum. Praesent sit amet fringilla sem, a aliquet sem. Suspendisse ac
+      eros ornare, sodales ipsum et, tincidunt ipsum. Vivamus consectetur
+      commodo massa ut facilisis. Quisque lacinia mi auctor quam molestie
+      imperdiet. Integer at lorem eu leo congue commodo. Vivamus interdum ornare
+      nisi, ac pretium leo laoreet ac. Morbi consequat turpis sit amet dui
+      volutpat pellentesque. Proin bibendum, magna id feugiat fringilla, libero
+      justo elementum leo, ac ullamcorper neque massa id mi. Nam auctor diam
+      congue dignissim convallis. Proin ut quam sed metus interdum venenatis.
+      Aliquam ornare enim imperdiet felis placerat, non molestie sem venenatis.
+      Pellentesque efficitur libero id mauris ornare lobortis. Aenean dignissim
+      ultrices elit, quis bibendum magna consectetur nec. Duis pellentesque elit
+      eu ligula luctus, ac euismod nulla convallis. Quisque mattis luctus dolor
+      sed tincidunt. Vivamus auctor elit mauris, quis molestie nisi posuere ut.
+      Sed fringilla felis non lectus vehicula, in scelerisque elit condimentum.
+      Sed lacinia leo eu lorem elementum, nec convallis nibh ornare. Integer sed
+      mauris leo. Sed quis nisi tortor. Aenean vitae mauris sed est viverra
+      porttitor sed vitae dui. Cras vitae leo tincidunt, rutrum nibh at, ornare
+      leo. Aenean facilisis, quam non semper ultricies, libero augue congue
+      eros, non posuere ante mi eu orci. Duis eget nunc id augue tempor mollis.
+      Aliquam libero lectus, vestibulum sed sodales in, vulputate eget tortor.
+      Duis turpis nibh, pharetra sed diam ut, iaculis pulvinar magna. In mattis
+      iaculis bibendum. Nulla ullamcorper a mauris a faucibus.
+    </p>
+    <div class="modal">
+      <div id="rango-widget-container"></div>
+    </div>
+    <script src="https://api.rango.exchange/widget/iframe.bundle.min.js"></script>
+    <script defer type="text/javascript">
+      const config = {
+        from: {
+          blockchain: "ETH",
+        },
+        amount: 1,
+        // This API key is only for test purpose. Don't use it in production.
+        apiKey: "c6381a79-2817-4602-83bf-6a641a409e32",
+        // This project id is only for test purpose. Don't use it in production.
+        // Get your Wallet Connect project id from https://cloud.walletconnect.com/
+        walletConnectProjectId: "e24844c5deb5193c1c14840a7af6a40b",
+      };
+
+      rangoWidget.init(config);
+    </script>
+  </body>
+</html>
