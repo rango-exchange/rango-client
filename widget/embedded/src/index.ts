@@ -69,11 +69,13 @@ import {
 } from './components/WalletStatefulConnect';
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
+import { Refuel } from './containers/Refuel';
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
 import { useStatefulConnect } from './hooks/useStatefulConnect';
+import { SwapModeContext } from './hooks/useSwapMode';
 import { useWalletList } from './hooks/useWalletList';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
 import { widgetEventEmitter } from './services/eventEmitter';
@@ -132,6 +134,8 @@ export type {
 };
 export {
   Widget,
+  Refuel,
+  SwapModeContext,
   /**
    * @deprecated Use `WidgetProvider` instead. This component will be removed in future versions.
    */

@@ -14,6 +14,7 @@ import {
 } from '../../types';
 import { getWalletsForNewSwap } from '../../utils/swap';
 import { useFetchConfirmQuote } from '../useFetchConfirmQuote';
+import { useSwapMode } from '../useSwapMode';
 
 import {
   generateWarnings,
@@ -31,13 +32,14 @@ export function useConfirmSwap(): ConfirmSwap {
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
     resetAlerts,
-  } = useQuoteStore();
+  } = useQuoteStore()();
 
   const { slippage, customSlippage } = useAppStore();
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const { findToken } = useAppStore();
+  const { swapMode } = useSwapMode();
 
   const userSlippage = customSlippage || slippage;
 
@@ -114,14 +116,15 @@ export function useConfirmSwap(): ConfirmSwap {
 
         const proceedAnyway = !!confirmSwapWarnings.balance;
 
-        const swap = calculatePendingSwap(
-          inputAmount.toString(),
-          result,
-          getWalletsForNewSwap(selectedWallets),
-          swapSettings,
-          proceedAnyway ? false : true,
-          { blockchains, tokens }
-        );
+        const swap = calculatePendingSwap({
+          inputAmount: inputAmount.toString(),
+          bestRoute: result,
+          wallets: getWalletsForNewSwap(selectedWallets),
+          settings: swapSettings,
+          validateBalanceOrFee: proceedAnyway ? false : true,
+          meta: { blockchains, tokens },
+          swapMode,
+        });
 
         return {
           quote: currentQuote,

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-18 07:08\n"
+"PO-Revision-Date: 2025-08-26 07:37\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,9 +19,20 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:83
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "연료를 보급하다"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "가스 체인 선택"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:377
-#: widget/embedded/src/pages/HistoryPage.tsx:187
+#: widget/embedded/src/pages/HistoryPage.tsx:234
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
 msgstr "검색 결과가 없습니다"
@@ -29,7 +40,7 @@ msgstr "검색 결과가 없습니다"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
 #: widget/embedded/src/components/TokenList/TokenList.tsx:378
-#: widget/embedded/src/pages/HistoryPage.tsx:194
+#: widget/embedded/src/pages/HistoryPage.tsx:241
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
 msgstr "다른 키워드를 사용해 보세요"
@@ -37,13 +48,15 @@ msgstr "다른 키워드를 사용해 보세요"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:75
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:67
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:50
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:102
 msgid "Select Chain"
 msgstr "체인 선택"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:75
 msgid "All"
 msgstr "모두"
 
@@ -189,7 +202,7 @@ msgstr "설정"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:93
-#: widget/embedded/src/pages/HistoryPage.tsx:139
+#: widget/embedded/src/pages/HistoryPage.tsx:174
 msgid "History"
 msgstr "역사"
 
@@ -700,7 +713,7 @@ msgstr "네, 삭제합니다"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:33
-#: widget/embedded/src/pages/HistoryPage.tsx:255
+#: widget/embedded/src/pages/HistoryPage.tsx:302
 msgid "No, Cancel"
 msgstr "아니요, 취소"
 
@@ -728,7 +741,7 @@ msgstr "미끄러짐:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:352
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:88
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "토큰 선택"
 
@@ -943,7 +956,8 @@ msgstr "USD 가격 확인 불명"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "교환"
 
@@ -959,12 +973,12 @@ msgid "Routes"
 msgstr "경로"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:80
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:82
 msgid "From"
 msgstr "에서"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:135
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:138
 msgid "To"
 msgstr "에게"
 
@@ -1136,58 +1150,58 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "이 토큰을 삭제하시겠습니까?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:59
+#: widget/embedded/src/pages/HistoryPage.tsx:63
 msgid "Complete"
 msgstr "완벽한"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "Running"
 msgstr "달리기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:65
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "실패한"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:149
+#: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "분명한"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:161
+#: widget/embedded/src/pages/HistoryPage.tsx:196
 msgid "Search Transaction"
 msgstr "거래 검색"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:188
+#: widget/embedded/src/pages/HistoryPage.tsx:235
 msgid "No transactions"
 msgstr "거래 없음"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:195
+#: widget/embedded/src/pages/HistoryPage.tsx:242
 msgid "Your transaction history is stored locally and will appear here after you start a swap"
 msgstr "거래 내역은 로컬에 저장되며 스왑을 시작하면 여기에 표시됩니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:220
+#: widget/embedded/src/pages/HistoryPage.tsx:267
 msgid "Clear Transaction History"
 msgstr "거래 내역 지우기"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:224
+#: widget/embedded/src/pages/HistoryPage.tsx:271
 msgid "Proceeding will remove all successful and failed transactions from the widget. Do you want to continue?"
 msgstr "진행하면 위젯에서 모든 성공 및 실패한 거래가 제거됩니다. 계속하시겠습니까?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:231
+#: widget/embedded/src/pages/HistoryPage.tsx:278
 msgid "Note: This does not erase your transaction history on the chain; it only removes them here."
 msgstr "참고: 이렇게 해도 체인의 거래 내역은 지워지지 않습니다. 단지 여기서만 삭제됩니다."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:245
+#: widget/embedded/src/pages/HistoryPage.tsx:292
 msgid "Yes, Clear the history"
 msgstr "네, 기록을 지웁니다."
 
@@ -1202,7 +1216,7 @@ msgid "Search {sourceType}"
 msgstr "검색 {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:85
 msgid "Search Chain"
 msgstr "검색 체인"
 

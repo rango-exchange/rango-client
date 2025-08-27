@@ -35,7 +35,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setToToken,
     setFromBlockchain,
     setToBlockchain,
-  } = useQuoteStore();
+  } = useQuoteStore()();
   const { getBalanceFor } = useAppStore();
   const {
     fetch,

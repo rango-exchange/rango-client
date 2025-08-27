@@ -32,7 +32,7 @@ import {
 export function CustomDestination(props: PropTypes) {
   const { blockchain, handleOpenChange, open } = props;
 
-  const { customDestination, setCustomDestination } = useQuoteStore();
+  const { customDestination, setCustomDestination } = useQuoteStore()();
   const { config } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const blockchainName = getBlockchainDisplayNameFor(
