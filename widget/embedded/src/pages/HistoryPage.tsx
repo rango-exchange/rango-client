@@ -57,33 +57,6 @@ const Description = styled('div', {
   },
 });
 
-const transactionStatusFilters = [
-  {
-    id: TransactionStatus.SUCCESS,
-    title: i18n.t('Complete'),
-  },
-  {
-    id: TransactionStatus.RUNNING,
-    title: i18n.t('Running'),
-  },
-  { id: TransactionStatus.FAILED, title: i18n.t('Failed') },
-];
-
-const SWAP_MODE_TAB_ITEMS = [
-  {
-    id: 'all',
-    title: i18n.t('All'),
-  },
-  {
-    id: 'swap',
-    title: i18n.t('Swap'),
-  },
-  {
-    id: 'refuel',
-    title: i18n.t('Refuel'),
-  },
-];
-
 const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
   if (!steps?.length) {
     return false;
@@ -113,6 +86,33 @@ export function HistoryPage() {
     setSearchedFor(value);
   };
   const { isMultiMode } = useSwapMode();
+
+  const transactionStatusFilters = [
+    {
+      id: TransactionStatus.SUCCESS,
+      title: i18n.t('Complete'),
+    },
+    {
+      id: TransactionStatus.RUNNING,
+      title: i18n.t('Running'),
+    },
+    { id: TransactionStatus.FAILED, title: i18n.t('Failed') },
+  ];
+
+  const swapModeTabItems = [
+    {
+      id: 'all',
+      title: i18n.t('All'),
+    },
+    {
+      id: 'swap',
+      title: i18n.t('Swap'),
+    },
+    {
+      id: 'refuel',
+      title: i18n.t('Refuel'),
+    },
+  ];
 
   const filteredList = useMemo(() => {
     if (!searchedFor && !filterBy && swapModeActiveTab === 'all') {
@@ -216,7 +216,7 @@ export function HistoryPage() {
         {isMultiMode && !loading && (
           <>
             <Tabs
-              items={SWAP_MODE_TAB_ITEMS}
+              items={swapModeTabItems}
               onChange={(item) => setSwapModeActiveTab(item.id as SwapModeTab)}
               value={swapModeActiveTab}
               type="secondary"
