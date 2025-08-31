@@ -22,6 +22,7 @@ import {
   throwErrorIfResponseIsNotValid,
 } from './useConfirmSwap/useConfirmSwap.helpers';
 import { useFetchAllQuotes } from './useFetchAllQuotes';
+import { useSwapMode } from './useSwapMode';
 
 const DEBOUNCE_DELAY = 600;
 
@@ -78,6 +79,7 @@ export function useSwapInput({
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const excludeLiquiditySources = useAppStore().excludeLiquiditySources();
   const { findToken } = useAppStore();
+  const { swapMode } = useSwapMode();
 
   const [loading, setLoading] = useState(true);
   const prevInputAmount = useRef(inputAmount);
@@ -139,6 +141,10 @@ export function useSwapInput({
 
       if (routing?.maxLength) {
         requestBody.maxLength = routing.maxLength;
+      }
+
+      if (swapMode === 'refuel') {
+        requestBody.maxLength = 1;
       }
 
       fetchQuote(requestBody)
