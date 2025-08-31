@@ -20,8 +20,16 @@ import {
 import { WalletState } from './Wallet.types.js';
 
 function Wallet(props: WalletPropTypes) {
-  const { title, type, image, onClick, isLoading, disabled = false } = props;
-  const info = makeInfo(props.state);
+  const {
+    title,
+    type,
+    image,
+    onClick,
+    isLoading,
+    disabled = false,
+    hasDeepLink,
+  } = props;
+  const info = makeInfo(props.state, { hasDeepLink });
 
   if (isLoading) {
     return (
@@ -43,7 +51,8 @@ function Wallet(props: WalletPropTypes) {
       <Tooltip
         container={props.container}
         content={info.tooltipText}
-        side="top">
+        side="top"
+      >
         {children}
       </Tooltip>
     );
@@ -59,7 +68,8 @@ function Wallet(props: WalletPropTypes) {
         } else {
           onClick(type);
         }
-      }}>
+      }}
+    >
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -73,7 +83,8 @@ function Wallet(props: WalletPropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={info.color}>
+          color={info.color}
+        >
           {info.description}
         </Typography>
       </Text>

@@ -9,7 +9,7 @@ import type {
 } from './types.js';
 import type { FindProxiedNamespace } from '../../builders/mod.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
-import type { ProviderConfig, Store } from '../store/mod.js';
+import type { ProviderConfig, ProviderInfo, Store } from '../store/mod.js';
 
 const VERSION = '1.0';
 
@@ -180,12 +180,14 @@ export class Provider {
    * provider.info();
    * ```
    */
-  public info(): ProviderConfig['info'] | undefined {
+  public info(): ProviderInfo | undefined {
     const store = this.#store;
     if (!store) {
-      return this.#configs.info;
+      return this.#configs;
     }
-    return store.getState().providers.list[this.id].config.info;
+    const config = store.getState().providers.list[this.id].config;
+
+    return { metadata: config.metadata, deepLink: config.deepLink };
   }
 
   /**

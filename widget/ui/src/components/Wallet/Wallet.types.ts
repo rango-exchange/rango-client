@@ -21,7 +21,9 @@ export type WalletInfo = {
   needsNamespace?: LegacyWalletInfo['needsNamespace'];
   needsDerivationPath?: LegacyWalletInfo['needsDerivationPath'];
 };
-
+export interface MakeInfoOptions {
+  hasDeepLink: boolean;
+}
 export interface Info {
   color: string;
   description: string;
@@ -42,6 +44,7 @@ export interface WalletPropTypes {
   link: InstallObjects | string;
   type: WalletType;
   onClick: (type: WalletType) => void;
+  hasDeepLink: boolean;
   selected?: boolean;
   description?: string;
   isLoading?: boolean;
