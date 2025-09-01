@@ -142,6 +142,10 @@ export const namespaces: Record<
     mainBlockchain: 'SUI',
     title: 'Sui',
   },
+  XRPL: {
+    mainBlockchain: 'XRPL',
+    title: 'XRPL',
+  },
 };
 
 export type DerivationPath = {
