@@ -17,7 +17,6 @@ import {
   getCurrentStepTx,
   handleSuccessfulSign,
   handlRejectedSign,
-  isApprovalCurrentStepTx,
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
@@ -28,7 +27,7 @@ import {
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
 
-import { isIssuedCurrencyAmount } from './helpers';
+import { TRUST_LINE_AMOUNT } from './constants';
 
 export async function executeXrplTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
@@ -45,7 +44,6 @@ export async function executeXrplTransaction(
 
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap)!;
-  const isApproval = isApprovalCurrentStepTx(currentStep);
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here
     if (actions.context.resetClaimedBy) {
@@ -87,38 +85,79 @@ export async function executeXrplTransaction(
   }
 
   const transactionQueue: XrplTransaction[] = [tx];
-  if (isIssuedCurrencyAmount(tx.data.Amount)) {
-    const trustlineTx: XrplTrustSetTransactionData = {
-      TransactionType: 'TrustSet',
-      Account: tx.data.Account,
-      LimitAmount: {
-        currency: tx.data.Amount.currency,
-        issuer: tx.data.Amount.issuer,
-        value: tx.data.Amount.value,
-      },
-    };
-    transactionQueue.unshift({
-      ...tx,
-      data: trustlineTx,
+
+  // null means it's native token (xrpl).
+  if (currentStep.toSymbolAddress) {
+    // Extracting currency and account from the following format (it's a convention on rango's backend): currency-accountAddress
+    const [currency, account] = currentStep.toSymbolAddress.split('-');
+    if (!currency || !account) {
+      console.error(
+        'invalid format for xrpl token address',
+        currentStep.toSymbolAddress
+      );
+      throw new Error('Unexpected format for token address');
+    }
+
+    // We need to work with namespace instance
+    const provider = context.hubProvider(sourceWallet.walletType);
+    const xrplNamespace = provider.get('xrpl');
+    if (!xrplNamespace) {
+      throw new Error('XRPL is not available on your wallet.');
+    }
+
+    // Check if a trust line exists or not and also have capacity or not, if not, open a new one.
+
+    // TODO: it's better to add some logic arround `balance` to ensure we have enough capacity for the trust line.
+    const lines = await xrplNamespace.accountLines(sourceWallet.address, {
+      peer: account,
     });
+    const isTruslineAlreadyOpened = !!lines.find((trustline) => {
+      return (
+        trustline.currency === currency &&
+        trustline.account === account &&
+        trustline.limit !== '0'
+      );
+    });
+
+    if (!isTruslineAlreadyOpened) {
+      const trustlineTx: XrplTrustSetTransactionData = {
+        TransactionType: 'TrustSet',
+        Account: tx.data.Account,
+        LimitAmount: {
+          currency: currency,
+          issuer: account,
+          value: TRUST_LINE_AMOUNT,
+        },
+      };
+
+      transactionQueue.unshift({
+        ...tx,
+        data: trustlineTx,
+      });
+    }
   }
 
   const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
     tx.type
   );
 
-  // TODO: Check failuire scenario
   for (const transaction of transactionQueue) {
-    await signer
-      .signAndSendTx(transaction, walletAddress, chainId)
-      .then(
-        handleSuccessfulSign(actions, {
-          isApproval,
-        }),
-        handlRejectedSign(actions)
-      )
-      .finally(() => {
-        onFinish();
-      });
+    try {
+      const result = await signer.signAndSendTx(
+        transaction,
+        walletAddress,
+        chainId
+      );
+
+      // TODO: approval has different meaning for EVM, we may need to add a third type called trustline for the following function.
+      handleSuccessfulSign(actions, {
+        isApproval: transaction.data.TransactionType === 'TrustSet',
+      })(result);
+    } catch (e) {
+      handlRejectedSign(actions)(e);
+      break;
+    }
   }
+  // this works as `finally` for the iterator.
+  onFinish();
 }

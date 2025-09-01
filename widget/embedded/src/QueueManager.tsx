@@ -29,6 +29,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     connect,
     canSwitchNetworkTo,
     getWalletInfo,
+    hubProvider,
   } = useWallets();
 
   const swapQueueDef = useMemo(() => {
@@ -70,6 +71,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const allBlockchains = blockchainsList
     .filter((blockchain) => blockchain.enabled)
     .reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (blockchainsObj: any, blockchain) => (
         (blockchainsObj[blockchain.name] = blockchain), blockchainsObj
       ),
@@ -97,6 +99,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     canSwitchNetworkTo,
     state,
     isMobileWallet,
+    hubProvider,
   };
 
   const isActiveTab = useUiStore.use.isActiveTab();

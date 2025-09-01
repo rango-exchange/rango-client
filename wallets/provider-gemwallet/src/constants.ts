@@ -3,6 +3,7 @@ import type { BlockchainMeta } from 'rango-types';
 import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { Networks } from '@rango-dev/wallets-shared';
 
+export const XRPL_PUBLIC_SERVER = 'wss://xrplcluster.com/';
 export const WALLET_ID = 'gemwallet';
 
 export const info: ProviderInfo = {

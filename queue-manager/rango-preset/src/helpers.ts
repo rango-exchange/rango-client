@@ -1065,11 +1065,11 @@ export function handlRejectedSign(
 
     const currentStep = getCurrentStep(swap)!;
 
-    const sourceWallet = getRelatedWallet(swap, currentStep);
     if (swap.status === 'failed') {
       return;
     }
 
+    const sourceWallet = getRelatedWallet(swap, currentStep);
     const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
       prettifyErrorMessage(error);
 
