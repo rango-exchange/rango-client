@@ -42,7 +42,7 @@ export function getWalletsList(
       if (!info) {
         throw new Error('Provider info is not available.');
       }
-      const namespacesProperty = info.properties?.find(
+      const namespacesProperty = info.metadata.properties?.find(
         (property) => property.name === 'namespaces'
       );
 
@@ -51,8 +51,8 @@ export function getWalletsList(
           namespace.getSupportedChains(blockchains || [])
         ) || [];
       walletsList.push({
-        title: info.name,
-        logo: info.icon,
+        title: info.metadata.name,
+        logo: info.metadata.icon,
         name: provider.id,
         supportedNetworks: getCategoryNetworks(supportedChains),
       });
