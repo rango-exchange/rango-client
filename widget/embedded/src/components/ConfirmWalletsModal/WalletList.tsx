@@ -119,7 +119,9 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
-        const isConnected = wallet.state === WalletState.CONNECTED;
+        const isConnected =
+          wallet.state === WalletState.CONNECTED ||
+          wallet.state === WalletState.PARTIALLY_CONNECTED;
         const conciseAddress = address
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
@@ -179,12 +181,16 @@ export function WalletList(props: PropTypes) {
         };
 
         const getWalletDescriptionColor = () => {
-          if (wallet.state === WalletState.CONNECTED) {
+          if (
+            wallet.state === WalletState.CONNECTED ||
+            wallet.state === WalletState.PARTIALLY_CONNECTED
+          ) {
             if (isConnectedButDifferentThanTargetNamespace) {
               return 'neutral600';
             }
             return 'neutral700';
           }
+
           return info.color;
         };
 
