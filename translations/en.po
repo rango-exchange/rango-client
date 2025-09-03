@@ -14,23 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "Open"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:113
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "Refuel"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "Select gas chain"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:377
 #: widget/embedded/src/pages/HistoryPage.tsx:234
@@ -1169,6 +1152,12 @@ msgid "Failed"
 msgstr "Failed"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "Refuel"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "Clear"
@@ -1441,6 +1430,12 @@ msgid "Connect other chains"
 msgstr "Connect other chains"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "Open"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "Connecting ..."
@@ -1479,3 +1474,8 @@ msgstr "Balance"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "Max"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "Select gas chain"

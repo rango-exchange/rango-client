@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-02 10:09\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,23 +17,6 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "열려 있는"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:113
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "연료를 보급하다"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "가스 체인 선택"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -1172,6 +1155,12 @@ msgid "Failed"
 msgstr "실패한"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "연료를 보급하다"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "분명한"
@@ -1444,6 +1433,12 @@ msgid "Connect other chains"
 msgstr "다른 체인을 연결하세요"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "열려 있는"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "연결 중..."
@@ -1482,4 +1477,9 @@ msgstr "균형"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "맥스"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "가스 체인 선택"
 

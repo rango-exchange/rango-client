@@ -8,7 +8,7 @@ msgstr ""
 "Language: af\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-02 10:09\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,23 +17,6 @@ msgstr ""
 "X-Crowdin-Language: af\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "Oop"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:113
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "Hervul"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "Kies gasketting"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -1172,6 +1155,12 @@ msgid "Failed"
 msgstr "Misluk"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "Hervul"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "Duidelik"
@@ -1444,6 +1433,12 @@ msgid "Connect other chains"
 msgstr "Verbind ander kettings"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "Oop"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "Koppel tans …"
@@ -1482,4 +1477,9 @@ msgstr "Balans"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "Maks"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "Kies gasketting"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: bn\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-02 10:09\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,23 +17,6 @@ msgstr ""
 "X-Crowdin-Language: bn\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "খোলা"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:113
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "জ্বালানি ভরে নিন"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "গ্যাস চেইন নির্বাচন করুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -1172,6 +1155,12 @@ msgid "Failed"
 msgstr "ব্যর্থ হয়েছে"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "জ্বালানি ভরে নিন"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
 msgid "Clear"
 msgstr "পরিষ্কার"
@@ -1444,6 +1433,12 @@ msgid "Connect other chains"
 msgstr "অন্যান্য চেইন সংযুক্ত করুন"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "খোলা"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "সংযোগ করা হচ্ছে..."
@@ -1482,4 +1477,9 @@ msgstr "ভারসাম্য"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "সর্বোচ্চ"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "গ্যাস চেইন নির্বাচন করুন"
 
