@@ -1,18 +1,11 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+
 import { readFileSync } from 'fs';
-import { join } from 'path';
 import { execa } from 'execa';
 import process from 'node:process';
 import { NPM_ORG_NAME } from './constants.mjs';
+import { packageJsonPath } from './path.mjs';
 
-const root = join(printDirname(), '..', '..');
 
-export function printDirname() {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  return __dirname;
-}
 
 /**
  * Getting workspace members using Yarn.
@@ -36,20 +29,14 @@ export async function workspacePackages() {
   return output;
 }
 
-export function convertPackageLocationToFullPath(pkgLocation) {
-  const fullPath = join(root, pkgLocation);
-  return fullPath;
-}
-
 /**
  * Getting a package json and deserialize it to JS object.
  * @param {string} location
  * @returns {Object}
  */
 export function packageJson(location) {
-  const pkgPath = convertPackageLocationToFullPath(location);
-  const fullPath = join(pkgPath, 'package.json');
-  const file = readFileSync(fullPath);
+  const pkgPath = packageJsonPath(location);
+  const file = readFileSync(pkgPath);
   return JSON.parse(file);
 }
 

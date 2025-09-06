@@ -5,9 +5,8 @@ import { getChangedPackagesFor } from './git.mjs';
 import { detectChannel } from './github.mjs';
 import { importJson, nxToGraph } from './graph/helpers.mjs';
 import { Graph } from './graph/index.mjs';
-import { packageNamesToPackagesWithInfo, printDirname } from './utils.mjs';
+import { packageNamesToPackagesWithInfo } from './utils.mjs';
 
-const root = join(printDirname(), '..', '..');
 
 /**
  *
