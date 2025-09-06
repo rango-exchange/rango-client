@@ -1,3 +1,12 @@
+# [0.36.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.35.0...wallets-react@0.36.0) (2025-09-06)
+
+
+### Features
+
+* implement deep linking ([1dec48e](https://github.com/rango-exchange/rango-client/commit/1dec48e4db944977fb6d3797d7aa49527940fab6))
+
+
+
 # [0.35.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.34.0...wallets-react@0.35.0) (2025-08-19)
 
 

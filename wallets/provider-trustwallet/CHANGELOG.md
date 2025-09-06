@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.49.0...provider-trustwallet@0.50.0) (2025-09-06)
+
+
+### Features
+
+* implement deep linking ([1dec48e](https://github.com/rango-exchange/rango-client/commit/1dec48e4db944977fb6d3797d7aa49527940fab6))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.48.0...provider-trustwallet@0.49.0) (2025-08-19)
 
 

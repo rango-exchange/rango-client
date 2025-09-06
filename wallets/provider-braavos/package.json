@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-braavos",
-  "version": "0.43.1-next.1",
+  "version": "0.44.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-starknet": "^0.40.0",
-    "@rango-dev/wallets-shared": "^0.49.1-next.1",
+    "@rango-dev/wallets-shared": "^0.50.0",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {
