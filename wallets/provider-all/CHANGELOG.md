@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.51.0...provider-all@0.52.0) (2025-09-06)
+
+
+### Bug Fixes
+
+* update argent wallet name to ready ([11f6202](https://github.com/rango-exchange/rango-client/commit/11f620233e47a5d87f96102bcd51591848348d7a))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.50.0...provider-all@0.51.0) (2025-08-19)
 
 

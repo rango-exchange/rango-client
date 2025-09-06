@@ -1,3 +1,18 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.49.0...widget-embedded@0.50.0) (2025-09-06)
+
+
+### Bug Fixes
+
+* fix translating swap tabs in history page ([afd30d7](https://github.com/rango-exchange/rango-client/commit/afd30d75260109a596b8743da9cbfbc5947e5195))
+* restrict refuel quotes to single step routes ([2741450](https://github.com/rango-exchange/rango-client/commit/274145010a60c65da4d0a57f319306d52b94d042))
+
+
+### Features
+
+* implement deep linking ([1dec48e](https://github.com/rango-exchange/rango-client/commit/1dec48e4db944977fb6d3797d7aa49527940fab6))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.48.0...widget-embedded@0.49.0) (2025-08-27)
 
 

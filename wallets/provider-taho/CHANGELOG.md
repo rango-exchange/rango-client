@@ -1,3 +1,7 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.49.0...provider-taho@0.50.0) (2025-09-06)
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.48.0...provider-taho@0.49.0) (2025-08-19)
 
 

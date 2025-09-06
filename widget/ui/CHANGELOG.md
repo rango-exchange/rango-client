@@ -1,3 +1,12 @@
+# [0.53.0](https://github.com/rango-exchange/rango-client/compare/ui@0.52.0...ui@0.53.0) (2025-09-06)
+
+
+### Features
+
+* implement deep linking ([1dec48e](https://github.com/rango-exchange/rango-client/commit/1dec48e4db944977fb6d3797d7aa49527940fab6))
+
+
+
 # [0.52.0](https://github.com/rango-exchange/rango-client/compare/ui@0.51.0...ui@0.52.0) (2025-08-27)
 
 
