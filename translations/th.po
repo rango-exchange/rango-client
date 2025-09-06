@@ -8,7 +8,7 @@ msgstr ""
 "Language: th\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-26 07:37\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,17 +17,6 @@ msgstr ""
 "X-Crowdin-Language: th\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:83
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "เติมน้ำมัน"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "เลือกโซ่แก๊ส"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -56,7 +45,7 @@ msgstr "เลือกโซ่"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
-#: widget/embedded/src/pages/HistoryPage.tsx:75
+#: widget/embedded/src/pages/HistoryPage.tsx:105
 msgid "All"
 msgstr "ทั้งหมด"
 
@@ -115,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "คุณต้องเชื่อมต่อกระเป๋าเงิน {blockchainName}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
 msgid "Add {chain} chain"
 msgstr "เพิ่มโซ่ {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
 msgid "Chain not connected"
 msgstr "โซ่ไม่ได้เชื่อมต่อ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
 msgid "Show more wallets"
 msgstr "แสดงกระเป๋าสตางค์เพิ่มเติม"
 
@@ -625,7 +614,7 @@ msgstr "ดูการทำธุรกรรม"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "เชื่อมต่อ"
 
@@ -724,8 +713,8 @@ msgstr "ติดตั้ง {wallet}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
 msgid "Install"
 msgstr "ติดตั้ง"
 
@@ -956,7 +945,7 @@ msgstr "ยืนยันราคา USD ไม่ทราบ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/HistoryPage.tsx:109
 #: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "แลกเปลี่ยน"
@@ -1150,20 +1139,26 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบโทเค็นนี้?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:93
 msgid "Complete"
 msgstr "สมบูรณ์"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:67
+#: widget/embedded/src/pages/HistoryPage.tsx:97
 msgid "Running"
 msgstr "วิ่ง"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:69
+#: widget/embedded/src/pages/HistoryPage.tsx:99
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "ล้มเหลว"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "เติมน้ำมัน"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
@@ -1246,13 +1241,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "จำเป็นต้องมี ID คำขอเพื่อแสดงรายละเอียดการสลับ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
+#: widget/embedded/src/pages/WalletsPage.tsx:73
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
 msgid "Connect Wallets"
 msgstr "เชื่อมต่อกระเป๋าสตางค์"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:87
+#: widget/embedded/src/pages/WalletsPage.tsx:88
 msgid "Choose a wallet to connect."
 msgstr "เลือกกระเป๋าสตางค์ที่จะเชื่อมต่อ"
 
@@ -1438,22 +1433,28 @@ msgid "Connect other chains"
 msgstr "เชื่อมโยงโซ่อื่น ๆ"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "เปิด"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "กำลังเชื่อมต่อ ..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
 msgid "Connecting"
 msgstr "การเชื่อมต่อ"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
 msgid "Disconnected"
 msgstr "ถูกตัดการเชื่อมต่อ"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
 msgid "you need to pass a correct state to Wallet."
 msgstr "คุณต้องส่งสถานะที่ถูกต้องไปยัง Wallet"
 
@@ -1476,4 +1477,9 @@ msgstr "สมดุล"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "แม็กซ์"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "เลือกโซ่แก๊ส"
 

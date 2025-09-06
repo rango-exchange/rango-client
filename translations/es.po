@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-26 07:37\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,17 +17,6 @@ msgstr ""
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:83
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "Repostar"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "Seleccionar cadena de gas"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -56,7 +45,7 @@ msgstr "Seleccionar cadena"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
-#: widget/embedded/src/pages/HistoryPage.tsx:75
+#: widget/embedded/src/pages/HistoryPage.tsx:105
 msgid "All"
 msgstr "Todos"
 
@@ -115,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Necesitas conectar un monedero {blockchainName}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
 msgid "Add {chain} chain"
 msgstr "Añadir cadena {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
 msgid "Chain not connected"
 msgstr "Cadena no conectada"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
 msgid "Show more wallets"
 msgstr "Mostrar más carteras"
 
@@ -625,7 +614,7 @@ msgstr "Ver transacción"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "Conectar"
 
@@ -724,8 +713,8 @@ msgstr "Instalar {wallet}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
 msgid "Install"
 msgstr "Instalar"
 
@@ -956,7 +945,7 @@ msgstr "Confirmar el precio de USD desconocido"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/HistoryPage.tsx:109
 #: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "Intercambiar"
@@ -1150,20 +1139,26 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "¿Está seguro de que desea eliminar este token?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:93
 msgid "Complete"
 msgstr "Complete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:67
+#: widget/embedded/src/pages/HistoryPage.tsx:97
 msgid "Running"
 msgstr "Ejecutando"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:69
+#: widget/embedded/src/pages/HistoryPage.tsx:99
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Fallo"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "Repostar"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
@@ -1246,13 +1241,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "El ID de solicitud es necesario para mostrar los detalles del intercambio."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
+#: widget/embedded/src/pages/WalletsPage.tsx:73
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
 msgid "Connect Wallets"
 msgstr "Conectar billeteras"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:87
+#: widget/embedded/src/pages/WalletsPage.tsx:88
 msgid "Choose a wallet to connect."
 msgstr "Elija una cartera para conectar."
 
@@ -1438,22 +1433,28 @@ msgid "Connect other chains"
 msgstr "Conectar otras cadenas"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "Abierto"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "Conectando..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
 msgid "Connecting"
 msgstr "Conectando"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
 msgid "Disconnected"
 msgstr "Desconectado"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
 msgid "you need to pass a correct state to Wallet."
 msgstr "necesita pasar un estado correcto a Wallet."
 
@@ -1476,4 +1477,9 @@ msgstr "Saldo"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "Máx"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "Seleccionar cadena de gas"
 

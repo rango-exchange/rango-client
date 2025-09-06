@@ -56,6 +56,6 @@ export class ProviderBuilder {
   }
 
   #isConfigsValid(config: Partial<ProviderConfig>): config is ProviderConfig {
-    return !!config.info;
+    return !!config.metadata;
   }
 }

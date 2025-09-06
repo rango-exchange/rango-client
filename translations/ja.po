@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-26 07:37\n"
+"PO-Revision-Date: 2025-09-03 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,17 +17,6 @@ msgstr ""
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:83
-#: widget/embedded/src/pages/Home.tsx:211
-msgid "Refuel"
-msgstr "燃料補給"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
-msgid "Select gas chain"
-msgstr "ガスチェーンを選択"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -56,7 +45,7 @@ msgstr "チェーンを選択"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:85
-#: widget/embedded/src/pages/HistoryPage.tsx:75
+#: widget/embedded/src/pages/HistoryPage.tsx:105
 msgid "All"
 msgstr "すべて"
 
@@ -115,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "{blockchainName} ウォレットに接続する必要があります。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
 msgid "Add {chain} chain"
 msgstr "{chain} チェーンを追加"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:171
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
 msgid "Chain not connected"
 msgstr "チェーンが接続されていません"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:268
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
 msgid "Show more wallets"
 msgstr "ウォレットをもっと表示"
 
@@ -625,7 +614,7 @@ msgstr "取引を表示"
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "接続する"
 
@@ -724,8 +713,8 @@ msgstr "インストール {wallet}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
 msgid "Install"
 msgstr "インストール"
 
@@ -956,7 +945,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/HistoryPage.tsx:79
+#: widget/embedded/src/pages/HistoryPage.tsx:109
 #: widget/embedded/src/pages/Home.tsx:211
 msgid "Swap"
 msgstr "入れ替え"
@@ -1150,20 +1139,26 @@ msgid "Are you sure you want to Delete this Token?"
 msgstr "このトークンを削除してもよろしいですか？"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:63
+#: widget/embedded/src/pages/HistoryPage.tsx:93
 msgid "Complete"
 msgstr "Complete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:67
+#: widget/embedded/src/pages/HistoryPage.tsx:97
 msgid "Running"
 msgstr "実行中"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:69
+#: widget/embedded/src/pages/HistoryPage.tsx:99
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "失敗しました"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/HistoryPage.tsx:113
+#: widget/embedded/src/pages/Home.tsx:211
+msgid "Refuel"
+msgstr "燃料補給"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:184
@@ -1246,13 +1241,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "スワップの詳細を表示するにはリクエスト ID が必要です。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
+#: widget/embedded/src/pages/WalletsPage.tsx:73
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
 msgid "Connect Wallets"
 msgstr "ウォレットを接続"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:87
+#: widget/embedded/src/pages/WalletsPage.tsx:88
 msgid "Choose a wallet to connect."
 msgstr "接続するウォレットを選択してください。"
 
@@ -1438,22 +1433,28 @@ msgid "Connect other chains"
 msgstr "他のチェーンを接続する"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
+msgid "Open"
+msgstr "開ける"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connecting ..."
 msgstr "接続中..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
 msgid "Connecting"
 msgstr "接続中"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
 msgid "Disconnected"
 msgstr "切断されました"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
 msgid "you need to pass a correct state to Wallet."
 msgstr "ウォレットに正しい状態を渡す必要があります。"
 
@@ -1476,4 +1477,9 @@ msgstr "残高"
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
 msgid "Max"
 msgstr "最大値"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:51
+msgid "Select gas chain"
+msgstr "ガスチェーンを選択"
 
