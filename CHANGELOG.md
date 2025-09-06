@@ -1,3 +1,23 @@
+## Widget [0.45.0] (2025-09-06)
+
+_includes `@rango-dev/widget-embedded@0.50.0`_
+
+### Features
+
+- implement deep linking ([1dec48e4d](https://github.com/rango-exchange/rango-client/commit/1dec48e4db944977fb6d3797d7aa49527940fab6))
+
+### Bug Fixes
+
+- restrict refuel quotes to single step routes ([274145010](https://github.com/rango-exchange/rango-client/commit/274145010a60c65da4d0a57f319306d52b94d042))
+- update argent wallet name to ready ([11f620233](https://github.com/rango-exchange/rango-client/commit/11f620233e47a5d87f96102bcd51591848348d7a))
+- fix translating swap tabs in history page ([afd30d752](https://github.com/rango-exchange/rango-client/commit/afd30d75260109a596b8743da9cbfbc5947e5195))
+
+## Playground [0.45.0] (2025-09-06)
+
+### Bug Fixes
+
+- add missing metadata to playground ([551125277](https://github.com/rango-exchange/rango-client/commit/55112527794d8d31f76bf8e51d8fcd2185daf48f))
+
 ## Widget [0.44.0] (2025-08-27)
 
 _includes `@rango-dev/widget-embedded@0.49.0`_
