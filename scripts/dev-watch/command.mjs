@@ -6,10 +6,9 @@ import commandLineArgs from 'command-line-args';
 import { dev } from './subcommands/dev.mjs';
 import { watch } from './subcommands/watch.mjs';
 import { awake } from './utils.mjs';
-import { printDirname } from '../common/utils.mjs';
+import { rootPath } from '../common/path.mjs';
 
-const cwd = join(printDirname(), '..', '..');
-const nx = join(cwd, 'node_modules', '.bin', 'nx');
+const nx = join(rootPath(), 'node_modules', '.bin', 'nx');
 
 async function run() {
   const optionDefinitions = [{ name: 'project', type: String }];

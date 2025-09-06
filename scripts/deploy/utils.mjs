@@ -11,7 +11,6 @@ import {
 import * as actionCore from '@actions/core';
 import { VercelError } from '../common/errors.mjs';
 import {
-  convertPackageLocationToFullPath,
   packageJson,
   packageNameWithoutScope,
   workspacePackages,
@@ -21,6 +20,7 @@ import { dirname, join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
 
 import { fileURLToPath } from 'node:url';
+import { packagePath } from '../common/path.mjs';
 
 export function getVercelProjectId(packageName) {
   return VERCEL_PACKAGES[packageName];
@@ -228,7 +228,7 @@ export async function makeOutputFolderForBuildOutputApi(
   }
 
   // Paths
-  const pkgPath = convertPackageLocationToFullPath(pkgLocation);
+  const pkgPath = packagePath(pkgLocation);
   const mainDir = dirname(join(pkgPath, pkg.main));
   const targetDir = join(pkgPath, '.vercel/output');
   const targetStaticDir = join(targetDir, 'static');

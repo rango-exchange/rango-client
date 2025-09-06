@@ -1,15 +1,13 @@
 import fs from 'node:fs/promises';
-import { join } from 'node:path';
 import { $ } from 'execa';
-import { printDirname } from '../common/utils.mjs';
 import { packageVersionOnNPM } from '../common/npm.mjs';
+import { packageJsonPath } from '../common/path.mjs';
 
-const cwd = join(printDirname(), '..', '..');
 
 export async function updateVersion(target, upgrade) {
   const { path } = target;
   const { name, version } = upgrade;
-  const pkgPath = join(cwd, path, 'package.json');
+  const pkgPath = packageJsonPath(path);
 
   const pkgJson = await fs.readFile(pkgPath, { encoding: 'utf8' });
   const updatedPkgJson = JSON.parse(pkgJson);

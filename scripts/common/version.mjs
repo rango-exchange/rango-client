@@ -1,7 +1,7 @@
 import { execa } from 'execa';
 import { IncreaseVersionFailedError } from './errors.mjs';
-import conventionanRecommendBump from 'conventional-recommended-bump';
-import { packageNameWithoutScope } from './utils.mjs';
+import { Bumper } from 'conventional-recommended-bump';
+import { TAG_PACKAGE_PREFIX } from './changelog.mjs';
 
 /**
  *
@@ -91,22 +91,13 @@ export async function increaseVersionForProd(pkg) {
  * @return {Promise<{level: number,reason: string, releaseType: 'patch' | 'minor' | 'major',}>}
  */
 export async function recommendBump(pkg) {
-  const tagName = packageNameWithoutScope(pkg.name);
-  return new Promise((resolve, reject) => {
-    conventionanRecommendBump(
-      {
-        preset: 'angular',
-        lernaPackage: tagName,
-      },
-      (error, recommendation) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(recommendation);
-        }
-      }
-    );
+  const bumper = new Bumper().loadPreset('angular');
+  bumper.tag({
+    prefix: TAG_PACKAGE_PREFIX(pkg),
   });
+  const recommendation = await bumper.bump();
+
+  return recommendation;
 }
 
 function parseYarnVersionResult(output) {

@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import { $, execa } from 'execa';
 import { join } from 'node:path';
-import { printDirname } from '../common/utils.mjs';
 import { compareSemVer } from 'semver-parser';
 import fetch, { Headers } from 'node-fetch';
 import {
@@ -11,8 +10,8 @@ import {
   YarnError,
 } from './errors.mjs';
 import { detectChannel } from './github.mjs';
+import { rootPath } from './path.mjs';
 
-const cwd = join(printDirname(), '..', '..');
 
 /**
  * Publish a package using `yarn publish`
@@ -108,7 +107,7 @@ export async function packagePath(project) {
   const pkg = workspaces[project];
   const path = pkg.location;
 
-  return join(cwd, path);
+  return join(rootPath(), path);
 }
 
 export async function readPackageJson(project) {
