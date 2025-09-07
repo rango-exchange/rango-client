@@ -5,5 +5,8 @@ export interface PropTypes {
   value: NeedsNamespacesState;
   onConfirm: () => void;
   onDisconnectWallet: () => void;
-  selectedNamespaces: Namespace[] | null;
+  selectedNamespaces:
+    | { namespace: Namespace; derivationPath?: string }[]
+    | null;
+  navigateToDerivationPath: (selectedNamespace: Namespace) => void;
 }
