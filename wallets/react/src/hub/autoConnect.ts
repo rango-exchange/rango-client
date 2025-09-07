@@ -15,7 +15,10 @@ import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
 
 import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
-import { convertNamespaceNetworkToEvmChainId } from './utils.js';
+import {
+  convertNamespaceNetworkToEvmChainId,
+  isEvmNamespace,
+} from './utils.js';
 
 // Getting connected wallets from storage
 const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
@@ -70,8 +73,11 @@ async function eagerConnect(
         : undefined;
       const chain = evmChain || info.network;
 
-      return async () =>
-        await namespace.connect(chain).catch((e) => {
+      return async () => {
+        const connectNamespacePromise = isEvmNamespace(namespace)
+          ? namespace.connect(chain)
+          : namespace.connect();
+        return await connectNamespacePromise.catch((e) => {
           /*
            * Since we check for connect failures using `instanceof Error`
            * this check is added here to make sure the thrown error always is an instance of `Error`
@@ -81,6 +87,7 @@ async function eagerConnect(
           }
           throw new Error(e);
         });
+      };
     }
   );
 

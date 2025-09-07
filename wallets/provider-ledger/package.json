@@ -3,18 +3,18 @@
   "version": "0.21.0",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices  --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
