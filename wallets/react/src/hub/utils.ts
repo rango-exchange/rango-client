@@ -18,6 +18,7 @@ import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
+  type WalletType,
 } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
@@ -93,7 +94,12 @@ export function mapHubEventsToLegacy(
   hub: Hub,
   event: Event,
   onUpdateState: WalletEventHandler,
-  allBlockChains: ProviderProps['allBlockChains']
+  metadata: {
+    allBlockChains: ProviderProps['allBlockChains'];
+    lastConnectAttemptParams: {
+      [type: WalletType]: LegacyNamespaceInputForConnect[];
+    };
+  }
 ): void {
   const provider = hub.get(event.provider);
   if (!provider) {
@@ -113,11 +119,18 @@ export function mapHubEventsToLegacy(
     : undefined;
   let accounts: string[] | null = null;
   let network: string | null = null;
+  let derivationPath: string | undefined;
 
   if (namespace) {
     const [getNamespaceState] = namespace.state();
     accounts = getNamespaceState().accounts;
     network = getNamespaceState().network;
+
+    if (metadata.lastConnectAttemptParams[event.provider]) {
+      derivationPath = metadata.lastConnectAttemptParams[event.provider].find(
+        (namespace) => namespace.namespace === namespaceId
+      )?.derivationPath;
+    }
   }
 
   const [getProviderState] = provider.state();
@@ -128,12 +141,13 @@ export function mapHubEventsToLegacy(
     accounts,
     network,
     reachable: true,
+    derivationPath,
   };
 
   const eventInfo = {
     supportedBlockchains: getSupportedChainsFromProvider(
       provider,
-      allBlockChains
+      metadata.allBlockChains
     ),
     isContractWallet: false,
     isHub: true,
