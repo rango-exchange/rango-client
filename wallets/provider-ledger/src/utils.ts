@@ -1,17 +1,32 @@
 import type Transport from '@ledgerhq/hw-transport';
 
 import { getAltStatusMessage } from '@ledgerhq/errors';
+import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { CAIP_SOLANA_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/solana';
 import {
   dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
-  Networks,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
+import { HEXADECIMAL_BASE } from './constants.js';
 import { getDerivationPath } from './state.js';
 
-export const HEXADECIMAL_BASE = 16;
+export type Provider = Map<string, unknown>;
+
+export function ledger(): Provider | null {
+  /*
+   * Instances have a required property which is `chainId` and is using in swap execution.
+   * Here we are setting it as Ethereum always since we are supporting only eth for now.
+   */
+  const instances = new Map();
+
+  instances.set(LegacyNetworks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
+  instances.set(LegacyNetworks.SOLANA, { chainId: LegacyNetworks.SOLANA });
+
+  return instances;
+}
 
 const ledgerFrequentErrorMessages: { [statusCode: number]: string } = {
   0x5515: 'The device is locked',
@@ -43,17 +58,8 @@ export function getLedgerError(error: any) {
   return error;
 }
 
-export function getLedgerInstance() {
-  /*
-   * Instances have a required property which is `chainId` and is using in swap execution.
-   * Here we are setting it as Ethereum always since we are supporting only eth for now.
-   */
-  const instances = new Map();
-
-  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
-  instances.set(Networks.SOLANA, { chainId: Networks.SOLANA });
-
-  return instances;
+export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
+  throw getLedgerError(error);
 }
 
 export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
@@ -77,7 +83,7 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
       chainId: ETHEREUM_CHAIN_ID,
       derivationPath,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     throw getLedgerError(error);
   } finally {
     await transportDisconnect();
@@ -102,10 +108,10 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
 
     return {
       accounts: accounts,
-      chainId: Networks.SOLANA,
+      chainId: CAIP_SOLANA_CHAIN_ID,
       derivationPath,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     throw getLedgerError(error);
   } finally {
     await transportDisconnect();
