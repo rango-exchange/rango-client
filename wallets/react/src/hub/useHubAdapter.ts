@@ -9,7 +9,7 @@ import type {
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { utils } from '@rango-dev/wallets-core/namespaces/evm';
-import { type WalletInfo } from '@rango-dev/wallets-shared';
+import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -49,6 +49,21 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
+
+  /*
+   * Params of each connection attempt for each wallet type are stored here.
+   * Derivation path from params is used in `mapHubEventsToLegacy` to be added to the payload of connect events.
+   */
+  const lastConnectAttemptParamsRef = useRef<{
+    [type: WalletType]: LegacyNamespaceInputForConnect[];
+  }>({});
+
+  const updateLastConnectAttemptParams = (
+    type: WalletType,
+    namespaces: LegacyNamespaceInputForConnect[] | undefined
+  ) => {
+    lastConnectAttemptParamsRef.current[type] = namespaces || [];
+  };
 
   const queueTask = createQueue({
     onError: (error, actions) => {
@@ -106,7 +121,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              dataRef.current.allBlockChains
+              {
+                allBlockChains: dataRef.current.allBlockChains,
+                lastConnectAttemptParams: lastConnectAttemptParamsRef.current,
+              }
             );
           } catch (e) {
             console.error(e);
@@ -195,6 +213,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       if (!namespaces) {
         throw new Error('Passing namespace to `connect` is required.');
       }
+
+      updateLastConnectAttemptParams(type, namespaces);
 
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
       const targetNamespaces: [
