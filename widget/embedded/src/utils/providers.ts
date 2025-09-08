@@ -1,12 +1,8 @@
 import type { WidgetConfig } from '../types';
+import type { Provider, VersionedProviders } from '@rango-dev/wallets-core';
 import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 
-import {
-  defineVersions,
-  pickVersion,
-  Provider,
-  type VersionedProviders,
-} from '@rango-dev/wallets-core';
+import { defineVersions, pickVersion } from '@rango-dev/wallets-core';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
@@ -15,6 +11,10 @@ export interface ProvidersOptions {
   >['walletConnectListedDesktopWalletLink'];
   trezorManifest: WidgetConfig['trezorManifest'];
   tonConnect: WidgetConfig['tonConnect'];
+}
+
+function isHubProvider(provider: BothProvidersInterface): provider is Provider {
+  return 'version' in provider && provider.version === '1.0';
 }
 
 /**
@@ -56,7 +56,7 @@ export function matchAndGenerateProviders({
            */
           const versionedProvider =
             pickProviderVersionWithFallbackToLegacy(provider);
-          if (versionedProvider instanceof Provider) {
+          if (isHubProvider(versionedProvider)) {
             return versionedProvider.id === requestedWallet;
           }
           return versionedProvider.config.type === requestedWallet;
@@ -77,7 +77,7 @@ export function matchAndGenerateProviders({
         }
       } else {
         // It's a custom provider so we directly push it to the list.
-        if (requestedWallet instanceof Provider) {
+        if (isHubProvider(requestedWallet)) {
           selectedProviders.push(
             defineVersions().version('1.0.0', requestedWallet).build()
           );
@@ -112,7 +112,7 @@ export function configWalletsToWalletName(
   const names = providers
     .map((provider) => pickProviderVersionWithFallbackToLegacy(provider))
     .map((provider) => {
-      if (provider instanceof Provider) {
+      if (isHubProvider(provider)) {
         return provider.id;
       }
       return provider.config.type;
