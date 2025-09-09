@@ -1,15 +1,10 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { Hub, Provider, ProxiedNamespace } from '@rango-dev/wallets-core';
+import type { Hub, Provider } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { CosmosActions } from '@rango-dev/wallets-core/namespaces/cosmos';
-import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
-import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { Event } from '@rango-dev/wallets-core/store';
 
 import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
@@ -374,19 +369,4 @@ export function synchronizeHubWithConfigProviders(
       hub.remove(registeredProvider.id);
     }
   });
-}
-
-export function isSolanaNamespace(
-  ns: ProxiedNamespace<
-    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
-  >
-): ns is ProxiedNamespace<SolanaActions> & { namespaceId: 'Solana' } {
-  return ns.namespaceId === 'Solana';
-}
-export function isEvmNamespace(
-  ns: ProxiedNamespace<
-    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
-  >
-): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
-  return ns.namespaceId === 'EVM';
 }
