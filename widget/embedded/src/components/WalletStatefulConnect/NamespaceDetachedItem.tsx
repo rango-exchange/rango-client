@@ -1,23 +1,26 @@
 import type { NamespaceDetachedItemPropTypes } from './Namespaces.types';
+import type { NamespaceData } from '@rango-dev/wallets-core/dist/hub/store/namespaces';
+import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import { Button, Spinner } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-react';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import { getConciseAddress } from '../../utils/wallets';
 import { NamespaceItem } from '../NamespaceItem';
 
-export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
-  const {
-    namespace,
-    initialConnect,
-    disabled,
-    state,
-    handleConnect,
-    handleDisconnect,
-  } = props;
-
+export const NamespaceDetachedItem = function NamespaceDetachedItem(
+  props: NamespaceDetachedItemPropTypes
+) {
+  const { walletType, namespace, initialConnect } = props;
+  const { connect, disconnect, state } = useWallets();
   const [error, setError] = useState<Error | null>(null);
+
+  const walletState = state(walletType);
+
+  const namespaceState = walletState.namespaces?.get(namespace.value);
+  const firstAccountArray = namespaceState.accounts?.[0]?.split(':');
 
   /*
    * Ref to track ongoing connection attempts.
@@ -28,16 +31,22 @@ export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
 
   useLayoutEffect(() => {
     if (initialConnect && !processingConnectAttempt.current) {
-      void handleConnectNamespace(); // If we attempt to connect the namespace as the initial connect, we should not ask for derivation path
+      void handleConnectNamespace(walletType, namespace.value);
     }
   }, []);
 
-  const handleConnectNamespace = async (options?: {
-    shouldAskForDerivationPath?: boolean;
-  }) => {
+  const handleConnectNamespace = async (
+    walletType: string,
+    namespace: Namespace
+  ) => {
     try {
       processingConnectAttempt.current = true;
-      await handleConnect(options);
+      await connect(walletType, [
+        {
+          namespace: namespace,
+          network: '',
+        },
+      ]);
     } catch (error) {
       setError(error as Error);
     } finally {
@@ -45,27 +54,17 @@ export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
     }
   };
 
-  const handleButtonClick = async () => {
+  const handleButtonClick = async (namespaceState: NamespaceData) => {
     setError(null);
-    if (state.connected) {
-      await handleDisconnect();
+    if (namespaceState.connected) {
+      await disconnect(walletType, [namespace.value]);
     } else {
-      void handleConnectNamespace({ shouldAskForDerivationPath: true }); // If we attempt to connect the namespace in result of button click, we should ask for derivation path
+      void handleConnectNamespace(walletType, namespace.value);
     }
-  };
-
-  const getConnectedAddress = () => {
-    const firstAccountArray = state.accounts?.[0]?.split(':');
-    const address = firstAccountArray?.[firstAccountArray.length - 1]; // Considering that account = [namespace, chain, address], we only need to get the address
-    if (!state.connected || !address) {
-      return null;
-    }
-
-    return getConciseAddress(address);
   };
 
   const getButtonText = () => {
-    if (state.connected) {
+    if (namespaceState.connected) {
       return i18n.t('Disconnect');
     }
     if (!!error) {
@@ -77,24 +76,29 @@ export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
   return (
     <NamespaceItem
       namespace={namespace}
-      connected={state.connected}
+      connected={namespaceState.connected}
       error={error?.message}
-      address={getConnectedAddress()}
+      address={
+        namespaceState.connected
+          ? getConciseAddress(
+              firstAccountArray?.[firstAccountArray?.length - 1]
+            )
+          : ''
+      }
       suffix={
-        state.connecting ? (
+        namespaceState.connecting ? (
           <Spinner color="info" />
         ) : (
           <Button
             id="widget-name-space-connect-btn"
             variant="ghost"
-            type={state.connected ? 'error' : 'primary'}
+            type={namespaceState.connected ? 'error' : 'primary'}
             size="xsmall"
-            onClick={async () => handleButtonClick()}
-            disabled={disabled}>
+            onClick={async () => handleButtonClick(namespaceState)}>
             {getButtonText()}
           </Button>
         )
       }
     />
   );
-}
+};

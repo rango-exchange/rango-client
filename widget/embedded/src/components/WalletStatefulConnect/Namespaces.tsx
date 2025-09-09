@@ -124,7 +124,6 @@ export function Namespaces(props: PropTypes) {
               'This wallet can only connect to one chain at a time. '
             )}
           />
-          <Divider size={30} />
         </>
       ) : (
         <>
@@ -140,7 +139,6 @@ export function Namespaces(props: PropTypes) {
               ? i18n.t('Deselect all')
               : i18n.t('Select all')}
           </Button>
-          <Divider size={10} />
         </>
       )}
       <NamespaceList>

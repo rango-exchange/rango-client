@@ -14,10 +14,7 @@ export interface NeedsNamespacesState {
 
 export interface DetachedPayload {
   targetWallet: ExtendedModalWalletInfo;
-  selectedNamespaces:
-    | { namespace: Namespace; derivationPath?: string }[]
-    | null;
-  derivationPath?: string;
+  selectedNamespaces: Namespace[] | null;
 }
 
 export interface NeedsDerivationPathState {
