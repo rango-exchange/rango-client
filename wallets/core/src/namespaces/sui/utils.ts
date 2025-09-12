@@ -6,6 +6,9 @@ import type {
 } from '@mysten/wallet-standard';
 
 import { getWallets, SUI_MAINNET_CHAIN } from '@mysten/wallet-standard';
+import { AccountId } from 'caip';
+
+import { CAIP_NAMESPACE, CAIP_SUI_CHAIN_ID } from './constants.js';
 
 // TODO: StandardFetures doesn't work, so we should add each feature separately
 type SuiWalletStandard = WalletWithFeatures<
@@ -39,4 +42,15 @@ export function getInstanceOrThrow(name: string): SuiWalletStandard {
   }
 
   return wallet;
+}
+export function formatAccountsToCAIP(accounts: readonly { address: string }[]) {
+  return accounts.map((account) => {
+    return AccountId.format({
+      address: account.address,
+      chainId: {
+        namespace: CAIP_NAMESPACE,
+        reference: CAIP_SUI_CHAIN_ID,
+      },
+    });
+  });
 }
