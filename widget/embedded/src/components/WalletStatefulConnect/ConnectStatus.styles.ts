@@ -36,9 +36,3 @@ export const Spinner = styled('div', {
   right: 0,
   left: 0,
 });
-
-export const WalletImageContainer = styled('div', {
-  '& img': {
-    borderRadius: '50%',
-  },
-});

@@ -9,6 +9,7 @@ import {
   Image,
   MessageBox,
   RadioRoot,
+  WalletImageContainer,
 } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -111,7 +112,11 @@ export function Namespaces(props: PropTypes) {
         description={i18n.t(
           'This wallet supports multiple chains. Choose which chains you’d like to connect.'
         )}
-        icon={<Image src={providerImage} size={45} />}
+        icon={
+          <WalletImageContainer>
+            <Image src={providerImage} size={45} />
+          </WalletImageContainer>
+        }
       />
       {singleNamespace ? (
         <>

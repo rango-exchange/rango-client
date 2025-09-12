@@ -3,7 +3,14 @@ import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button, Divider, Image, MessageBox } from '@rango-dev/ui';
+import {
+  Alert,
+  Button,
+  Divider,
+  Image,
+  MessageBox,
+  WalletImageContainer,
+} from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
@@ -146,7 +153,11 @@ export function Detached(props: PropTypes) {
         description={i18n.t(
           'This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect.'
         )}
-        icon={<Image src={targetWallet.image} size={45} />}
+        icon={
+          <WalletImageContainer>
+            <Image src={targetWallet.image} size={45} />
+          </WalletImageContainer>
+        }
       />
       {renderNamespaceListHeader()}
       <NamespaceList id="widget-detached-namespace-list">
