@@ -7,10 +7,10 @@ import {
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
 import {
-  actions,
   builders,
   CAIP_NAMESPACE,
   CAIP_SOLANA_CHAIN_ID,
+  hooks,
 } from '@rango-dev/wallets-core/namespaces/solana';
 import { CAIP } from '@rango-dev/wallets-core/utils';
 import { getSolanaAccounts } from '@rango-dev/wallets-shared';
@@ -19,7 +19,7 @@ import { WALLET_ID } from '../constants.js';
 import { solanaPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber(solanaPhantom);
+  hooks.changeAccountSubscriber(solanaPhantom);
 
 /*
  * TODO: If user imported a private key for EVM, it hasn't solana.

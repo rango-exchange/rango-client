@@ -5,13 +5,17 @@ import {
   builders as commonBuilders,
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
+import {
+  actions,
+  builders,
+  hooks,
+} from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
 import { evmPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
-  actions.changeAccountSubscriber(evmPhantom);
+  hooks.changeAccountSubscriber(evmPhantom);
 
 /*
  * TODO: If user imported a private key for EVM, it hasn't solana.
