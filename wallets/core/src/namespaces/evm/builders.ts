@@ -1,7 +1,5 @@
 import type { EvmActions, ProviderAPI } from './types.js';
 
-import { AccountId } from 'caip';
-
 import { ActionBuilder } from '../../mod.js';
 import { ChangeAccountSubscriberBuilder } from '../common/hooks/changeAccountSubscriber.js';
 import {
@@ -10,7 +8,7 @@ import {
   intoConnectionFinished,
 } from '../common/mod.js';
 
-import { CAIP_NAMESPACE } from './constants.js';
+import { formatAccountsToCAIP } from './utils.js';
 
 // Actions
 export const connect = () =>
@@ -39,15 +37,7 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
     )
     .format(async (instance, accounts) => {
       const chainId = await instance.request({ method: 'eth_chainId' });
-      return accounts.map((account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: chainId,
-          },
-        })
-      );
+      return formatAccountsToCAIP(accounts, chainId);
     })
     .addEventListener((instance, callback) => {
       instance.on('accountsChanged', callback);
