@@ -137,6 +137,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
+| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | 
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
 
@@ -148,6 +149,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
+| SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 
@@ -174,7 +176,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | OKX            | EVM,Solana,Cosmos                                                                                                       | Cosmos                                            | &check;              | https://www.okx.com/web3             |
 | Ready          | Starknet                                                                                                                | -                                                 | &check;              | https://www.ready.co/                |
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
-| SafePal        | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                                                                                  | BTC,Tron,LTC,Doge,Aptos,TON                       | &cross;              | https://www.safepal.com/             |
 | Solflare       | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com                 |
 | Solflare Snap  | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com/metamask        |
 | Station        | Terra Classic, Terra                                                                                                    | -                                                 | &cross;              | https://station.terra.money/         |

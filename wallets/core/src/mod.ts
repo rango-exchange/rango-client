@@ -10,6 +10,7 @@ export type {
   GenerateDeepLink,
   DeepLinkContext,
 } from './hub/mod.js';
+export type { AnyFunction } from './types/mod.js';
 export {
   Hub,
   Provider,
