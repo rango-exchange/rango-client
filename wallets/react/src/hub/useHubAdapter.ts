@@ -242,25 +242,26 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             params.allBlockChains || []
           );
 
-          let connectNamespacePromise:
-            | Promise<Accounts>
-            | Promise<string>
-            | Promise<AccountsWithActiveChain>;
+          let connectNamespacePromise: () => Promise<
+            Accounts | string | AccountsWithActiveChain
+          >;
 
           if (isSolanaNamespace(namespace)) {
-            connectNamespacePromise = namespace.connect({
-              derivationPath: namespaceInput.derivationPath,
-            });
+            connectNamespacePromise = async () =>
+              namespace.connect({
+                derivationPath: namespaceInput.derivationPath,
+              });
           } else if (isEvmNamespace(namespace)) {
-            connectNamespacePromise = namespace.connect(network, {
-              derivationPath: namespaceInput.derivationPath,
-            });
+            connectNamespacePromise = async () =>
+              namespace.connect(network, {
+                derivationPath: namespaceInput.derivationPath,
+              });
           } else {
-            connectNamespacePromise = namespace.connect();
+            connectNamespacePromise = async () => namespace.connect();
           }
 
           const connectNamespaceProcess = async () =>
-            connectNamespacePromise
+            connectNamespacePromise()
               .then<ConnectResult>(transformHubResultToLegacyResult)
               .then((connectResult) => {
                 return {
