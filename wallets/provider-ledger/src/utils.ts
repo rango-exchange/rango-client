@@ -65,13 +65,13 @@ export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
 export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
-    const derivationPath = getDerivationPath();
-
-    const eth = new (
+    const LedgerAppEth = (
       await dynamicImportWithRefinedError(
         async () => await import('@ledgerhq/hw-app-eth')
       )
-    ).default(transport);
+    ).default;
+    const eth = new LedgerAppEth(transport);
+    const derivationPath = getDerivationPath();
 
     const accounts: string[] = [];
 
@@ -93,13 +93,13 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
 export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
-    const derivationPath = getDerivationPath();
-
-    const solana = new (
+    const LedgerAppSolana = (
       await dynamicImportWithRefinedError(
         async () => await import('@ledgerhq/hw-app-solana')
       )
-    ).default(transport);
+    ).default;
+    const solana = new LedgerAppSolana(transport);
+    const derivationPath = getDerivationPath();
 
     const accounts: string[] = [];
 
@@ -121,9 +121,13 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
 let transportConnection: Transport | null = null;
 
 export async function transportConnect() {
-  transportConnection = await (
-    await import('@ledgerhq/hw-transport-webhid')
-  ).default.create();
+  const TransportWebHID = (
+    await dynamicImportWithRefinedError(
+      async () => await import('@ledgerhq/hw-transport-webhid')
+    )
+  ).default;
+
+  transportConnection = await TransportWebHID.create();
 
   return transportConnection;
 }
