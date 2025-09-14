@@ -2,8 +2,10 @@ import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import Eth, { ledgerService } from '@ledgerhq/hw-app-eth';
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
+import {
+  DEFAULT_ETHEREUM_RPC_URL,
+  dynamicImportWithRefinedError,
+} from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -18,8 +20,13 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
     try {
       const transport = await transportConnect();
+      const LedgerAppEth = (
+        await dynamicImportWithRefinedError(
+          async () => await import('@ledgerhq/hw-app-eth')
+        )
+      ).default;
+      const eth = new LedgerAppEth(transport);
 
-      const eth = new Eth(transport);
       const result = await eth.signPersonalMessage(
         getDerivationPath(),
         Buffer.from(msg).toString('hex')
@@ -60,16 +67,19 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const unsignedTx =
         Transaction.from(transaction).unsignedSerialized.substring(2); // Create unsigned transaction
 
-      const resolution = await ledgerService.resolveTransaction(
+      const transport = await transportConnect();
+      const LedgerHqAppEth = await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-eth')
+      );
+
+      const LedgerAppEth = LedgerHqAppEth.default;
+      const eth = new LedgerAppEth(transport);
+
+      const resolution = await LedgerHqAppEth.ledgerService.resolveTransaction(
         unsignedTx,
         {},
         {}
       ); // metadata necessary to allow the device to clear sign information
-
-      const transport = await transportConnect();
-
-      const eth = new Eth(transport);
-
       const signature = await eth.signTransaction(
         getDerivationPath(),
         unsignedTx,
