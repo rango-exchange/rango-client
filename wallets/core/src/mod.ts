@@ -43,3 +43,4 @@ export {
  */
 export type { VersionedProviders } from './utils/mod.js';
 export { defineVersions, pickVersion } from './utils/mod.js';
+export type { FunctionWithContext } from './types/mod.js';

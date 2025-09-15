@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
  * These are copied from `viem` (EIP1193Provider)
  * They have an issue with `node16`, we can not directly import from their package.
@@ -241,7 +242,6 @@ export type EIP1193Events = {
 
 export type Prettify<T> = {
   [K in keyof T]: T[K];
-  // eslint-disable-next-line @typescript-eslint/ban-types
 } & {};
 
 export type RpcSchema = readonly {
@@ -1411,4 +1411,5 @@ export type EIP1474Methods = [
 
 export type EIP1193Provider = EIP1193Events & {
   request: EIP1193RequestFn<EIP1474Methods>;
+  disconnect: () => void;
 };
