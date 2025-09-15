@@ -109,6 +109,7 @@ export const ErrorMessages = styled('div', {
   flexDirection: 'column',
   gap: '$5',
 });
+
 export const MessageText = styled(Typography, {
   wordBreak: 'break-word',
 });

@@ -107,7 +107,7 @@ export const balanceStyles = css({
 });
 
 export const amountStyles = css({
-  width: '45%',
+  width: '48%',
   maxWidth: '170px',
   display: 'flex',
   flexDirection: 'column',
@@ -126,4 +126,5 @@ export const UsdPrice = styled(Typography, {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  maxWidth: 147,
 });
