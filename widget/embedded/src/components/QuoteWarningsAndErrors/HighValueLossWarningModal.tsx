@@ -16,8 +16,6 @@ import {
   GAS_FEE_MIN_DECIMALS,
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
-  USD_VALUE_MAX_DECIMALS,
-  USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import { getContainer } from '../../utils/common';
 import { numberToString } from '../../utils/numbers';
@@ -41,11 +39,7 @@ export function HighValueLossWarningModal(props: Props) {
   const highValueLossData = [
     {
       title: i18n.t('Swapping'),
-      value: numberToString(
-        warning.inputUsdValue,
-        USD_VALUE_MIN_DECIMALS,
-        USD_VALUE_MAX_DECIMALS
-      ),
+      value: numberToString(warning.inputUsdValue),
     },
     {
       title: i18n.t('Gas cost'),
@@ -57,11 +51,7 @@ export function HighValueLossWarningModal(props: Props) {
     },
     {
       title: i18n.t('Receiving'),
-      value: numberToString(
-        warning.outputUsdValue,
-        USD_VALUE_MIN_DECIMALS,
-        USD_VALUE_MAX_DECIMALS
-      ),
+      value: numberToString(warning.outputUsdValue),
     },
     {
       title: i18n.t('Price impact'),

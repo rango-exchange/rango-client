@@ -3,14 +3,17 @@ import type { PropTypes } from './SwapToken.types.js';
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { NextIcon } from '../../icons/index.js';
+import { InfoIcon, NextIcon } from '../../icons/index.js';
 import { ChainToken } from '../ChainToken/index.js';
 import { Divider } from '../Divider/index.js';
 import { Skeleton } from '../Skeleton/index.js';
-import { NumericTooltip } from '../Tooltip/index.js';
+import { textTruncate } from '../TokenAmount/TokenAmount.styles.js';
+import { NumericTooltip, Tooltip } from '../Tooltip/index.js';
 import { Typography } from '../Typography/index.js';
 
 import {
+  AmountText,
+  FlexCenteredContainer,
   Icon,
   IconLoading,
   Images,
@@ -18,8 +21,12 @@ import {
   LayoutLoading,
   TokenContainer,
   TokenInfo,
+  TokenNameText,
   TopSection,
 } from './SwapToken.styles.js';
+
+const TOKEN_NAME_TOOLTIP_THRESHOLD = 10;
+const TOKEN_AMOUNT_TOOLTIP_THRESHOLD = 6;
 
 export function SwapToken(props: PropTypes) {
   if ('isLoading' in props) {
@@ -65,7 +72,6 @@ export function SwapToken(props: PropTypes) {
       },
       to: {
         token: toToken,
-        amount: toAmount,
         blockchain: toBlockchain,
         realAmount: toRealAmount,
       },
@@ -99,15 +105,35 @@ export function SwapToken(props: PropTypes) {
       {status === 'running' ? (
         <Layout direction="column">
           <TopSection>
-            <Typography size="medium" variant="title">
+            <TokenNameText
+              className={textTruncate()}
+              size="medium"
+              variant="title">
               {fromToken.displayName}
-            </Typography>
+            </TokenNameText>
+            {fromToken.displayName.length > TOKEN_NAME_TOOLTIP_THRESHOLD && (
+              <Tooltip
+                content={fromToken.displayName}
+                container={tooltipContainer}>
+                <InfoIcon size={12} color="gray" />
+              </Tooltip>
+            )}
             <Icon>
               <NextIcon size={24} color="black" />
             </Icon>
-            <Typography size="medium" variant="title">
+            <TokenNameText
+              className={textTruncate()}
+              size="medium"
+              variant="title">
               {toToken.displayName}
-            </Typography>
+            </TokenNameText>
+            {toToken.displayName.length > TOKEN_NAME_TOOLTIP_THRESHOLD && (
+              <Tooltip
+                content={toToken.displayName}
+                container={tooltipContainer}>
+                <InfoIcon size={12} color="gray" />
+              </Tooltip>
+            )}
           </TopSection>
           <Typography size="small" variant="body" color="neutral700">
             {currentStep?.fromBlockchain === currentStep?.toBlockchain
@@ -118,31 +144,77 @@ export function SwapToken(props: PropTypes) {
       ) : (
         <Layout direction="row">
           <TokenInfo>
-            <Typography size="medium" variant="title">
-              {fromToken.displayName}
-            </Typography>
+            <FlexCenteredContainer>
+              <TokenNameText
+                className={textTruncate()}
+                size="medium"
+                variant="title">
+                {fromToken.displayName}
+              </TokenNameText>
+              {fromToken.displayName.length > TOKEN_NAME_TOOLTIP_THRESHOLD && (
+                <Tooltip
+                  content={fromToken.displayName}
+                  container={tooltipContainer}>
+                  <InfoIcon size={12} color="gray" />
+                </Tooltip>
+              )}
+            </FlexCenteredContainer>
+
             {!!fromAmount && (
-              <NumericTooltip
-                content={fromRealAmount}
-                container={tooltipContainer}>
-                <Typography size="small" variant="body" color="neutral700">
-                  {fromAmount}
-                </Typography>
-              </NumericTooltip>
+              <FlexCenteredContainer>
+                <AmountText
+                  className={textTruncate()}
+                  size="small"
+                  variant="body"
+                  color="neutral700">
+                  {fromRealAmount}
+                </AmountText>
+
+                {fromRealAmount.length > TOKEN_AMOUNT_TOOLTIP_THRESHOLD && (
+                  <NumericTooltip
+                    content={fromRealAmount}
+                    container={tooltipContainer}>
+                    <InfoIcon size={12} color="gray" />
+                  </NumericTooltip>
+                )}
+              </FlexCenteredContainer>
             )}
           </TokenInfo>
           <Icon>
             <NextIcon size={24} color="black" />
           </Icon>
           <TokenInfo>
-            <Typography size="medium" variant="title">
-              {toToken.displayName}
-            </Typography>
-            <NumericTooltip content={toRealAmount} container={tooltipContainer}>
-              <Typography size="small" variant="body" color="neutral700">
-                {toAmount}
-              </Typography>
-            </NumericTooltip>
+            <FlexCenteredContainer>
+              <TokenNameText
+                className={textTruncate()}
+                size="medium"
+                variant="title">
+                {toToken.displayName}
+              </TokenNameText>
+              {toToken.displayName.length > TOKEN_NAME_TOOLTIP_THRESHOLD && (
+                <Tooltip
+                  content={toToken.displayName}
+                  container={tooltipContainer}>
+                  <InfoIcon size={12} color="gray" />
+                </Tooltip>
+              )}
+            </FlexCenteredContainer>
+            <FlexCenteredContainer>
+              <AmountText
+                className={textTruncate()}
+                size="small"
+                variant="body"
+                color="neutral700">
+                {toRealAmount}
+              </AmountText>
+              {toRealAmount.length > TOKEN_AMOUNT_TOOLTIP_THRESHOLD && (
+                <NumericTooltip
+                  content={toRealAmount}
+                  container={tooltipContainer}>
+                  <InfoIcon size={12} color="gray" />
+                </NumericTooltip>
+              )}
+            </FlexCenteredContainer>
           </TokenInfo>
         </Layout>
       )}

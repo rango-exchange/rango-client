@@ -13,6 +13,7 @@ import {
   StepDetails,
   TokenAmount,
   Typography,
+  useIsTruncated,
 } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
@@ -57,11 +58,9 @@ import { getTotalFeeInUsd, getUsdFeeOfStep } from '../../utils/swap';
 
 import {
   AllRoutesButton,
+  AmountText,
   BasicInfoOutput,
-  basicInfoStyles,
-  ContainerInfoOutput,
   Content,
-  FrameIcon,
   HorizontalSeparator,
   Line,
   QuoteContainer,
@@ -70,6 +69,8 @@ import {
   summaryHeaderStyles,
   summaryStyles,
   TagContainer,
+  TokenNameText,
+  UsdValueText,
 } from './Quote.styles';
 import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
@@ -97,11 +98,6 @@ export function Quote(props: QuoteProps) {
   const userSlippage = customSlippage || slippage;
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
-  const roundedInput = numberToString(
-    input.value,
-    TOKEN_AMOUNT_MIN_DECIMALS,
-    TOKEN_AMOUNT_MAX_DECIMALS
-  );
   const roundedOutput = numberToString(
     output.value,
     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -241,6 +237,7 @@ export function Quote(props: QuoteProps) {
                         <Typography
                           size="xsmall"
                           variant="body"
+                          className="from-amount-text"
                           color="neutral900">
                           {i18n.t({
                             id: 'Yours: {amount} {symbol}',
@@ -328,6 +325,15 @@ export function Quote(props: QuoteProps) {
   const feeWarning = totalFee.gte(new BigNumber(GAS_FEE_MAX));
   const timeWarning =
     totalDurationSeconds / SECONDS_IN_MINUTE >= ROUTE_TIME_MAX;
+  const inputValueRef = useRef<HTMLSpanElement | null>(null);
+  const isInputValueTruncated = useIsTruncated(input.value, inputValueRef);
+  const outputValueRef = useRef<HTMLSpanElement | null>(null);
+  const isOutputValueTruncated = useIsTruncated(output.value, outputValueRef);
+  const usdValueRef = useRef<HTMLSpanElement | null>(null);
+  const isUsdValueTruncated = useIsTruncated(
+    roundedOutputUsdValue,
+    usdValueRef
+  );
 
   const lastStep = steps[numberOfSteps - 1];
   const firstStep = steps[0];
@@ -428,31 +434,52 @@ export function Quote(props: QuoteProps) {
           )}
         </div>
         {type === 'basic' && (
-          <div className={basicInfoStyles()}>
-            <FrameIcon>
-              <InfoIcon size={12} color="gray" />
-            </FrameIcon>
-            <ContainerInfoOutput>
-              <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${firstStep.from.token.displayName} = `}
-              </BasicInfoOutput>
+          <BasicInfoOutput>
+            <AmountText ref={inputValueRef} size="small" variant="body">
+              {input.value}
+            </AmountText>
+            {isInputValueTruncated && (
+              <NumericTooltip
+                content={input.value}
+                container={container}
+                open={!input.value ? false : undefined}>
+                <InfoIcon size={12} color="gray" />
+              </NumericTooltip>
+            )}
+            <TokenNameText size="small" variant="body">
+              {steps[0]?.from.token.displayName}
+            </TokenNameText>
+            <Typography size="small" variant="body">
+              =
+            </Typography>
+            <AmountText ref={outputValueRef} size="small" variant="body">
+              {output.value}
+            </AmountText>
+            {isOutputValueTruncated && (
               <NumericTooltip
                 content={output.value}
                 container={container}
                 open={!output.value ? false : undefined}>
-                <BasicInfoOutput size="small" variant="body">
-                  &nbsp;
-                  {`${roundedOutput} ${lastStep.to.token.displayName}`}
-                </BasicInfoOutput>
+                <InfoIcon size={12} color="gray" />
               </NumericTooltip>
-            </ContainerInfoOutput>
-            <NumericTooltip content={output.usdValue} container={container}>
-              <Divider size={2} direction="horizontal" />
-              <Typography color="$neutral600" size="xsmall" variant="body">
-                {`($${roundedOutputUsdValue})`}
-              </Typography>
-            </NumericTooltip>
-          </div>
+            )}
+            <TokenNameText size="small" variant="body">
+              {lastStep?.to.token.displayName}
+            </TokenNameText>
+            <Divider size={2} direction="horizontal" />
+            <UsdValueText
+              ref={usdValueRef}
+              color="$neutral600"
+              size="xsmall"
+              variant="body">
+              {`($${roundedOutputUsdValue})`}
+            </UsdValueText>
+            {isUsdValueTruncated && (
+              <NumericTooltip content={output.usdValue} container={container}>
+                <InfoIcon size={12} color="gray" />
+              </NumericTooltip>
+            )}
+          </BasicInfoOutput>
         )}
         {type === 'list-item' && (
           <TokenAmount

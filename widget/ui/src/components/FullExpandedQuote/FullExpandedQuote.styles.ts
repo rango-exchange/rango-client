@@ -1,7 +1,6 @@
 import { css, darkTheme, styled } from '../../theme.js';
 import { PriceImpact } from '../PriceImpact/index.js';
-
-export const tokenLabelStyles = css({});
+import { Typography } from '../Typography/Typography.js';
 
 export const FlexCenter = styled('div', {
   display: 'flex',
@@ -135,7 +134,7 @@ export const TokenInfo = styled(FlexCenter, {
   bottom: 0,
   left: 0,
   right: 0,
-  [`& .${tokenLabelStyles}`]: {
+  '& .internal_swap_amount_typography, & .token_label_typography': {
     color: '$neutral700',
     [`.${darkTheme} &`]: {
       color: '$neutral900',
@@ -226,6 +225,7 @@ export const VerticalLine = styled('div', {
 export const StyledPriceImpact = styled(PriceImpact, {
   justifyContent: 'center',
   gap: '$4',
+  maxWidth: 150,
 });
 
 export const lastStepStyle = css({
@@ -304,4 +304,12 @@ export const TooltipFooter = styled(FlexCenter, {
 
 export const Icon = styled('div', {
   paddingBottom: '$20',
+});
+
+export const OutputPriceValue = styled(Typography, {
+  maxWidth: '65px',
+});
+
+export const AmountText = styled(Typography, {
+  maxWidth: '34px',
 });
