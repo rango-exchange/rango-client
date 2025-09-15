@@ -1,1 +1,1 @@
-export type { AnyFunction } from './actions.js';
+export type { AnyFunction, FunctionWithContext } from './actions.js';

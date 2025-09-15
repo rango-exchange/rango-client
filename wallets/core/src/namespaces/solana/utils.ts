@@ -9,6 +9,8 @@ import { CAIP_NAMESPACE, CAIP_SOLANA_CHAIN_ID } from './constants.js';
 
 export async function getAccounts(provider: ProviderAPI) {
   const solanaResponse = await provider.connect();
+  console.log(solanaResponse, 'sol resp');
+
   const account = solanaResponse.publicKey.toString();
   return {
     accounts: [account],
