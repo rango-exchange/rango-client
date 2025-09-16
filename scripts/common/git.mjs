@@ -156,24 +156,15 @@ export async function publishCommitAndTags(pkgs) {
   const message = subject + list;
   let body = `Affected packages: ${tags.join(',')}`;
 
-  /* 
-    When we are pushing a publish commit into main or next, it triggers a redundant workflow run,
-    To avoid this, by adding a [skip ci] the workflow run will be skipped.
-  */
-  body += '\n[skip ci]';
-
   // Making a publish commit
-  await execa('git', [
-    'commit',
-    '-m',
-    message,
-    '-m',
-    body,
+  await commit([message, body], {
+    // When we are pushing a publish commit into main or next, it triggers a redundant workflow run,
+    // To avoid this, by adding a [skip ci] the workflow run will be skipped.
+    shouldSkipCI: true,
+
     // We need to pass no-verify to bypass commitlint.
     // NOTE: it will bypass precommit and commit-msg hooks.
-    '--no-verify',
-  ]).catch((error) => {
-    throw new GitError(`git commit failed. \n ${error.stderr}`);
+    shouldVerify: false,
   });
 
   // Creating annotated tags based on packages
@@ -184,6 +175,37 @@ export async function publishCommitAndTags(pkgs) {
   return tags;
 }
 
+/**
+ * Creates a Git commit with the provided messages.
+ *
+ * - Supports multiple commit messages by passing them as an array.
+ * - Optionally appends `[skip ci]` to the commit message to skip CI pipelines.
+ * - Can disable Git hooks verification if `shouldVerify` is set.
+ *
+ * @param @typedef {string[]}  messages - The commit messages to include.
+ * @param {import("./typedefs.mjs").CommitOptions} options - Commit options.
+ *
+ * @throws {GitError} If the `git commit` command fails.
+ */
+export async function commit(messages, options) {
+  const { shouldVerify, shouldSkipCI } = options;
+
+  const messagesWithCI = shouldSkipCI ? [...messages, '[skip ci]'] : messages;
+
+  const commitArgs = [
+    'commit',
+    ...messagesWithCI.flatMap((msg) => ['-m', msg]),
+    ...(shouldVerify ? [] : ['--no-verify']),
+  ];
+
+  try {
+    await execa('git', commitArgs);
+  } catch (error) {
+    throw new GitError(
+      `git commit failed. \n ${error.stderr || error.message}`
+    );
+  }
+}
 export async function publishTags(pkgs) {
   const tags = pkgs.map(generateTagName);
 
