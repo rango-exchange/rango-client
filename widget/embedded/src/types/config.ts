@@ -292,6 +292,7 @@ export type WidgetConfig = {
       element: ReactElement;
       routes?: string[];
     };
+    dynamicHeight?: { offsetBottom: number };
   };
   routing?: Routing;
 };
