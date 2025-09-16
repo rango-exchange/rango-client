@@ -6,6 +6,7 @@ import { detectChannel } from './github.mjs';
 import { importJson, nxToGraph } from './graph/helpers.mjs';
 import { Graph } from './graph/index.mjs';
 import { packageNamesToPackagesWithInfo } from './utils.mjs';
+import { rootPath } from './path.mjs';
 
 
 /**
@@ -54,7 +55,7 @@ export async function analyzeChangesEffects(changedPkgs) {
 
 export async function exportNx() {
   const filename = '__output__.json';
-  const filepath = join(root, filename);
+  const filepath = join(rootPath(), filename);
   await execa('yarn', ['nx', 'graph', '--file', filename]).catch((error) => {
     throw new NxError(`Creating graph file failed. \n ${error.stderr}`);
   });

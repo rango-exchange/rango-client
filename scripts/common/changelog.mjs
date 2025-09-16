@@ -2,12 +2,11 @@ import { packageNameWithoutScope, packageJson } from './utils.mjs';
 import { ConventionalChangelog } from 'conventional-changelog';
 import { ConventionalGitClient } from '@conventional-changelog/git-client';
 import { createWriteStream, createReadStream, WriteStream } from 'node:fs';
-import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { rename, unlink, access } from 'node:fs/promises';
 import { Writable } from 'stream';
-import { packageJsonPath, packageChangelogPath, packagePath } from './path.mjs';
-
+import { packageJsonPath, packageChangelogPath } from './path.mjs';
+import path from 'node:path';
 // Our tagging is using lerna convention which is package-name@version
 // for example for @rango-dev/wallets-core, it will be wallets-core@1.1.0
 export const TAG_PACKAGE_PREFIX = (pkg) =>
@@ -191,7 +190,7 @@ export async function generateChangelogAndSave(pkg) {
 
     // we only need location for file stream, when pkg is undefined, we will point to root of the project.
     // useful for creating root changelog for a monorepo, or for normal repos.
-    if (!pkg) pkg = { location: packagePath() };
+    if (!pkg) pkg = { location: '' };
 
     const writeStream = changelog.pipe(changelogFileStream(pkg));
 
