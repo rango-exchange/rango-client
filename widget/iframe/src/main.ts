@@ -8,7 +8,7 @@ import {
 import { canParse } from './utils';
 
 // Actual app that will be loaded inside the iframe.
-const WIDGET_URL = 'https://widget.rango.exchange/';
+const WIDGET_URL = 'http://localhost:3002';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
 const RANGO_WIDGET_IFRAME_ID = 'rango-widget-iframe';
 
@@ -27,6 +27,7 @@ interface Features {
  * esm supports for `exports` in package json which will be useful for this use case.
  * The bellow type should come from `widget/embedded/src/hooks/useIframe/useIframe.types.ts`.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Messages = any;
 
 export class RangoWidget {

@@ -16,9 +16,9 @@ import {
   BLOCKCHAIN_LIST_SIZE_COMPACT_MODE,
 } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
+import useScreenDetect from '../../hooks/useScreenDetect';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 
 import { Blockchains } from './BlockchainsSection.styles';
@@ -28,7 +28,8 @@ const NUMBER_OF_LOADING = 12;
 
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
-  const { showCompactTokenSelector } = useUiStore();
+  const { isLowHeightScreen } = useScreenDetect();
+  const showCompactTokenSelector = isLowHeightScreen;
   const blockchainsList = usePrepareBlockchainList(blockchains, {
     limit: showCompactTokenSelector
       ? BLOCKCHAIN_LIST_SIZE_COMPACT_MODE
