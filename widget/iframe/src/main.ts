@@ -8,7 +8,7 @@ import {
 import { canParse } from './utils';
 
 // Actual app that will be loaded inside the iframe.
-const WIDGET_URL = 'http://localhost:3002';
+const WIDGET_URL = 'https://widget.rango.exchange/';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
 const RANGO_WIDGET_IFRAME_ID = 'rango-widget-iframe';
 

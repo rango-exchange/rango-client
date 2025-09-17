@@ -1,6 +1,9 @@
 import { css, styled } from '@rango-dev/ui';
 
-import { WIDGET_MAX_HEIGHT } from './Layout.constants';
+import {
+  WIDGET_HEIGHT_FOR_SMALL_SCREENS,
+  WIDGET_MAX_HEIGHT,
+} from './Layout.constants';
 
 export const LayoutContainer = css({
   borderRadius: '$primary',
@@ -42,7 +45,7 @@ export const Container = styled('div', {
       isIframe: false,
       css: {
         '@media screen and (max-height: 799px)': {
-          height: 500,
+          height: WIDGET_HEIGHT_FOR_SMALL_SCREENS,
         },
       },
     },

@@ -12,7 +12,7 @@ const MIN_TABLET_WIDTH = 480;
 const MIN_NOTEBOOK_WIDTH = 768;
 const MIN_LARGE_SCREEN_WIDTH = 1024;
 const MIN_EXTRA_LARGE_SCREEN_WIDTH = 1200;
-const MAX_lOW_HEIGHT_DEVICE = 800;
+const MAX_LOW_SCREEN_HEIGHT = 800;
 
 const useScreenDetect = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -37,7 +37,7 @@ const useScreenDetect = () => {
         window.innerWidth <= MIN_EXTRA_LARGE_SCREEN_WIDTH
     );
     setIsExtraLargeScreen(window.innerWidth > MIN_EXTRA_LARGE_SCREEN_WIDTH);
-    setIsLowHeightScreen(window.window.innerHeight < MAX_lOW_HEIGHT_DEVICE);
+    setIsLowHeightScreen(window.innerHeight < MAX_LOW_SCREEN_HEIGHT);
   };
 
   useLayoutEffect(() => {
