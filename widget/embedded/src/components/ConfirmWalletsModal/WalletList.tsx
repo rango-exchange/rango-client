@@ -229,7 +229,6 @@ export function WalletList(props: PropTypes) {
               </WatermarkedModal>
             )}
             <SelectableWallet
-              hasDeepLink={checkHasDeepLink(wallet.type)}
               key={wallet.type}
               id="widget-wallets-list-selectable-wallet-btn"
               description={getWalletDescription()}

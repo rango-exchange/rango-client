@@ -26,4 +26,6 @@ export type TokensBalance = {
   [key: TokenHash]: Balance;
 };
 
-export type WalletInfoWithExtra = WalletInfo;
+export type WalletInfoWithExtra = WalletInfo & {
+  hasDeepLink: boolean;
+};

@@ -1,3 +1,4 @@
+import type { useDeepLink } from '../hooks/useDeepLink';
 import type { BalanceState, ConnectedWallet } from '../store/slices/wallets';
 import type {
   Balance,
@@ -21,7 +22,6 @@ import {
 } from '@rango-dev/ui';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
-  detectInstallLink,
   getCosmosExperimentalChainInfo,
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
@@ -60,6 +60,8 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
+  checkHasDeepLink: ReturnType<typeof useDeepLink>['checkHasDeepLink'],
+  getWalletLink: ReturnType<typeof useDeepLink>['getWalletLink'],
   list: WalletType[],
   chain?: string
 ): ExtendedModalWalletInfo[] {
@@ -85,7 +87,6 @@ export function mapWalletTypesToWalletInfo(
       const {
         name,
         img: image,
-        installLink,
         showOnMobile,
         needsNamespace,
         supportedChains,
@@ -100,11 +101,12 @@ export function mapWalletTypesToWalletInfo(
       return {
         title: name,
         image,
-        link: detectInstallLink(installLink),
+        link: getWalletLink(type),
         state,
         type,
         showOnMobile,
         needsNamespace,
+        hasDeepLink: checkHasDeepLink(type),
         blockchainTypes,
         needsDerivationPath,
         properties,

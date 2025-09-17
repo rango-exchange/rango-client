@@ -45,7 +45,7 @@ export function useWalletList(params?: Params): API {
   const { state, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
-  const { checkHasDeepLink } = useDeepLink();
+  const { checkHasDeepLink, getWalletLink } = useDeepLink();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes = configWalletsToWalletName(
@@ -55,6 +55,8 @@ export function useWalletList(params?: Params): API {
   let wallets = mapWalletTypesToWalletInfo(
     state,
     getWalletInfo,
+    checkHasDeepLink,
+    getWalletLink,
     listAvailableWalletTypes,
     chain
   );
