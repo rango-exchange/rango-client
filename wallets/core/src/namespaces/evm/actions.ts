@@ -40,16 +40,26 @@ export function connect(
       }
     }
 
-    const result = await getAccounts(evmInstance);
+    const providerAccounts = await getAccounts(evmInstance);
 
+    /*
+     * Ensure that the provider returns at least one valid account before proceeding.
+     * This prevents cases (e.g., MetaMask bug) where a user connects with an account
+     * that has no associated EVM address, leaving the dApp without any usable accounts.
+     */
+    if (!providerAccounts.accounts || !providerAccounts.accounts.length) {
+      throw new Error(
+        'No accounts were returned by the provider. Please make sure your wallet has an active EVM-compatible account selected.'
+      );
+    }
     const formattedAccounts = formatAccountsToCAIP(
-      result.accounts,
-      result.chainId
+      providerAccounts.accounts,
+      providerAccounts.chainId
     );
 
     return {
       accounts: formattedAccounts,
-      network: result.chainId,
+      network: providerAccounts.chainId,
     };
   };
 }
