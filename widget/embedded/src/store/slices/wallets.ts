@@ -1,4 +1,5 @@
 import type { AppStoreState } from './types';
+import type { Balance, Blockchain, Wallet } from '../../types';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { Asset, Token, WalletDetail } from 'rango-sdk';
 
@@ -8,15 +9,11 @@ import { ZERO } from '../../constants/numbers';
 import { BALANCE_SEPARATOR } from '../../constants/wallets';
 import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
-import {
-  type Balance,
-  type Wallet,
-  WalletEventTypes,
-  WidgetEvents,
-} from '../../types';
+import { WalletEventTypes, WidgetEvents } from '../../types';
 import { memoizedResult } from '../../utils/common';
 import { isAccountAndWalletMatched } from '../../utils/wallets';
 import { keepLastUpdated } from '../middlewares/keepLastUpdated';
+import { useQuoteStore } from '../quote';
 import {
   computeNextBalancesWithNewPrices,
   computeNextStateAfterWalletBalanceRemoval,
@@ -47,6 +44,7 @@ export type AggregatedBalanceState = {
 export interface ConnectedWallet extends Wallet {
   explorerUrl: string | null;
   selected: boolean;
+  isSource?: boolean;
   loading: boolean;
   error: boolean;
   namespace?: Namespace;
@@ -80,12 +78,29 @@ function matchWalletDetailsWithConnectedWallet(
   );
 }
 
+export type SelectedWallet = {
+  address: string;
+  type: string;
+  blockchain: string;
+};
+
+type SelectedWalletKind = 'source' | 'destination';
+
 export interface WalletsSlice {
   _balances: BalanceState;
   _aggregatedBalances: AggregatedBalanceState;
   connectedWallets: ConnectedWallet[];
   fetchingWallets: boolean;
   lastUpdatedAt: number;
+
+  selectedWallet: (kind: SelectedWalletKind) => ConnectedWallet | undefined;
+  setSelectedWallet: (kind: SelectedWalletKind, wallet: SelectedWallet) => void;
+  isSelectedWalletStillRelevant: (kind: SelectedWalletKind) => boolean;
+  clearSelectedWallet: (kind: SelectedWalletKind) => void;
+  tryMatchWalletForBlockchain: (
+    kind: SelectedWalletKind,
+    blockchain: Blockchain
+  ) => void;
 
   setConnectedWalletAsRefetching: (accounts: Wallet[]) => void;
   setConnectedWalletHasError: (accounts: Wallet[]) => void;
@@ -160,7 +175,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     connectedWallets: [],
     fetchingWallets: false,
     lastUpdatedAt: +new Date(),
-
     // Actions
     setConnectedWalletAsRefetching: (accounts: Wallet[]) => {
       set((state) => {
@@ -258,20 +272,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       if (walletsNeedToBeAdded.length > 0) {
         const newConnectedWallets: ConnectedWallet[] = walletsNeedToBeAdded.map(
           (account) => {
-            /*
-             * When a wallet is connecting, we will check if there is any `selected` wallet before, if not, we will consider this new wallet as connected.
-             * In this way, when user tries to swap, we selected a wallet by default and don't need to do an extra click in ConfirmWalletModal
-             */
-            const shouldMarkWalletAsSelected = !connectedWallets.some(
-              (connectedWallet) =>
-                connectedWallet.chain === account.chain &&
-                connectedWallet.selected &&
-                /**
-                 * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
-                 * This check is there to make sure the chosen wallet doesn't end up unselected.
-                 */
-                connectedWallet.walletType !== account.walletType
-            );
+            const { fromToken } = useQuoteStore.getState();
+            const shouldMarkWalletAsSource =
+              account.chain === fromToken?.blockchain &&
+              !connectedWallets.some(
+                (connectedWallet) =>
+                  fromToken &&
+                  connectedWallet.chain === fromToken.blockchain &&
+                  connectedWallet.selected &&
+                  connectedWallet.isSource
+              );
 
             return {
               address: account.address,
@@ -279,15 +289,18 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               isContractWallet: account.isContractWallet,
               explorerUrl: null,
               walletType: account.walletType,
-              selected: shouldMarkWalletAsSelected,
+              selected: false,
               namespace: namespace,
               derivationPath: derivationPath,
               loading: false,
               error: false,
+              ...(shouldMarkWalletAsSource && {
+                selected: true,
+                isSource: true,
+              }),
             };
           }
         );
-
         set((state) => {
           /*
            * If wallet connected before and only need to update the address we should remove the old value and then add new conncted value.
@@ -304,13 +317,21 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
               );
             });
 
+          const connectedWallets = [
+            ...connectedWalletsWithoutSameWalletAndBlockchain,
+            ...newConnectedWallets,
+          ];
+
           return {
-            connectedWallets: [
-              ...connectedWalletsWithoutSameWalletAndBlockchain,
-              ...newConnectedWallets,
-            ],
+            connectedWallets,
           };
         });
+
+        const sourceWallet = get().selectedWallet('source');
+        const fromToken = useQuoteStore.getState().fromToken;
+        if (!sourceWallet && fromToken) {
+          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        }
       }
     },
     fetchCustomTokensBalances: async (params) => {
@@ -441,6 +462,74 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
+    selectedWallet: () => {
+      const selectedWalletFlag = 'isSource';
+      return get().connectedWallets.find(
+        (connectedWallet) =>
+          connectedWallet.selected && connectedWallet[selectedWalletFlag]
+      );
+    },
+    setSelectedWallet: (kind, wallet) => {
+      const selectedWalletFlag = 'isSource';
+      get().clearSelectedWallet(kind);
+      const nextConnectedWallets = get()
+        .connectedWallets.slice()
+        .map((connectedWallet) => {
+          const walletsMatched =
+            connectedWallet.chain === wallet.blockchain &&
+            connectedWallet.address === wallet.address &&
+            connectedWallet.walletType === wallet.type;
+          if (walletsMatched) {
+            return {
+              ...connectedWallet,
+              selected: true,
+              [selectedWalletFlag]: true,
+            };
+          }
+          return connectedWallet;
+        });
+      set({ connectedWallets: nextConnectedWallets });
+    },
+    isSelectedWalletStillRelevant: (kind) => {
+      const selectedToken =
+        kind === 'source' ? useQuoteStore.getState().fromToken : undefined;
+      const selectedWallet =
+        kind === 'source' ? get().selectedWallet('source') : undefined;
+
+      return selectedToken?.blockchain === selectedWallet?.chain;
+    },
+    clearSelectedWallet: () => {
+      const selectedWalletFlag = 'isSource';
+      const nextConnectedWallets = get()
+        .connectedWallets.slice()
+        .map((connectedWallet) => {
+          if (connectedWallet.selected && connectedWallet.isSource) {
+            return {
+              ...connectedWallet,
+              selected: false,
+              [selectedWalletFlag]: false,
+            };
+          }
+
+          return connectedWallet;
+        });
+
+      set({ connectedWallets: nextConnectedWallets });
+    },
+    tryMatchWalletForBlockchain: (kind, blockchain) => {
+      const { setSelectedWallet, connectedWallets } = get();
+
+      const lastConnectedCompatibleWallet = connectedWallets.findLast(
+        (wallet) => wallet.chain === blockchain
+      );
+      if (lastConnectedCompatibleWallet) {
+        setSelectedWallet(kind, {
+          address: lastConnectedCompatibleWallet.address,
+          blockchain: lastConnectedCompatibleWallet.chain,
+          type: lastConnectedCompatibleWallet.walletType,
+        });
+      }
+    },
     newWalletConnected: async (accounts, namespace, derivationPath) => {
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
@@ -506,6 +595,12 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         set({
           connectedWallets: nextConnectedWallets,
         });
+
+        const fromToken = useQuoteStore.getState().fromToken;
+        const sourceWallet = get().selectedWallet('source');
+        if (fromToken && !sourceWallet) {
+          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        }
       }
     },
     disconnectWallet: (walletType) => {
@@ -536,6 +631,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         set({
           connectedWallets: nextConnectedWallets,
         });
+
+        const fromToken = useQuoteStore.getState().fromToken;
+        const sourceWallet = get().selectedWallet('source');
+        if (fromToken && !sourceWallet) {
+          get().clearSelectedWallet('source');
+          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        }
       }
     },
     /*

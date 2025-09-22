@@ -27,6 +27,7 @@ export { default as DisconnectIcon } from './Disconnect.js';
 export { default as DocumentIcon } from './Document.js';
 export { default as DocumentationIcon } from './Documentation.js';
 export { default as DoneIcon } from './Done.js';
+export { default as EditIcon } from './Edit.js';
 export { default as EvmCategoryIcon } from './EvmCategory.js';
 export { default as ErrorIcon } from './Error.js';
 export { default as ExchangeIcon } from './Exchange.js';

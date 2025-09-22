@@ -1,4 +1,5 @@
 import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types.js';
+import type { ReactElement } from 'react';
 
 export type BaseProps = {
   id: string;
@@ -21,7 +22,7 @@ export type BaseProps = {
   loading?: boolean;
   error?: boolean;
   disabled?: boolean;
-  label: string;
+  label?: string | ReactElement;
   sharpBottomStyle?: boolean;
   onClickToken: () => void;
   tooltipContainer?: HTMLElement;
@@ -29,11 +30,7 @@ export type BaseProps = {
 
 type FromProps = {
   mode: 'From';
-  balance?: string;
-  loadingBalance: boolean;
-  onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
-  anyWalletConnected: boolean;
   onInputBlur?: (inputAmount: string) => void;
 };
 
@@ -45,4 +42,7 @@ type ToProps = {
 };
 
 export type SwapInputPropTypes = BaseProps &
-  (FromProps | ToProps) & { tooltipContainer?: HTMLElement };
+  (FromProps | ToProps) & {
+    tooltipContainer?: HTMLElement;
+    moreInfo?: ReactElement;
+  };

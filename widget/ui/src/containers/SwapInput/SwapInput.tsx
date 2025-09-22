@@ -1,6 +1,5 @@
 import type { SwapInputPropTypes } from './SwapInput.types.js';
 
-import { i18n } from '@lingui/core';
 import React from 'react';
 
 import {
@@ -14,30 +13,20 @@ import { UI_ID } from '../../constants/index.js';
 
 import {
   amountStyles,
-  balanceStyles,
   Container,
   formStyles,
   InputAmount,
   labelContainerStyles,
   labelStyles,
-  MaxButton,
   textStyles,
   TokenSectionContainer,
+  TokenValue,
   UsdPrice,
   ValueTypography,
 } from './SwapInput.styles.js';
 import { TokenSection } from './TokenSection.js';
 
 export function SwapInput(props: SwapInputPropTypes) {
-  const showBalance =
-    'balance' in props &&
-    !props.loading &&
-    !props.loadingBalance &&
-    props.token.displayName &&
-    props.anyWalletConnected;
-
-  const showBalanceSkeleton =
-    'balance' in props && (props.loading || props.loadingBalance);
   const price = props.price;
 
   const isUsdValueZeroOrFalsy =
@@ -60,28 +49,6 @@ export function SwapInput(props: SwapInputPropTypes) {
           <Typography variant="body" size="small" className={textStyles()}>
             {props.label}
           </Typography>
-          {showBalance && (
-            <div className={balanceStyles()}>
-              <Typography className={textStyles()} variant="body" size="xsmall">
-                {i18n.t('Balance')}: {props.balance}
-              </Typography>
-              <Divider direction="horizontal" size={4} />
-              <MaxButton
-                variant="default"
-                size="xsmall"
-                id={`${props.id}-max-btn`}
-                onClick={props.onSelectMaxBalance}>
-                <Typography variant="body" size="xsmall">
-                  {i18n.t('Max')}
-                </Typography>
-              </MaxButton>
-            </div>
-          )}
-          {showBalanceSkeleton && (
-            <div className={balanceStyles()}>
-              <Skeleton variant="text" size="large" width={105} />
-            </div>
-          )}
         </div>
       </div>
       <div className={formStyles()}>
@@ -143,36 +110,40 @@ export function SwapInput(props: SwapInputPropTypes) {
                   })}
                 />
               </NumericTooltip>
-              {'percentageChange' in props ? (
-                <PriceImpact
-                  size="medium"
-                  tooltipProps={{
-                    container: props.tooltipContainer,
-                    side: 'bottom',
-                  }}
-                  outputUsdValue={price.usdValue}
-                  realOutputUsdValue={price.realUsdValue}
-                  error={price.error}
-                  percentageChange={props.percentageChange}
-                  warningLevel={props.warningLevel}
-                />
-              ) : (
-                <NumericTooltip
-                  content={price.realUsdValue}
-                  container={props.tooltipContainer}
-                  open={isUsdValueZeroOrFalsy ? false : undefined}
-                  side="bottom">
-                  <ValueTypography hasWarning={!!price.error}>
-                    <UsdPrice variant="body" size="medium">
-                      {displayUsdValue}
-                    </UsdPrice>
-                  </ValueTypography>
-                </NumericTooltip>
-              )}
             </>
           )}
         </div>
       </div>
+      <Divider size={4} />
+      <TokenValue>
+        {'percentageChange' in props ? (
+          <PriceImpact
+            size="medium"
+            tooltipProps={{
+              container: props.tooltipContainer,
+              side: 'bottom',
+            }}
+            outputUsdValue={price.usdValue}
+            realOutputUsdValue={price.realUsdValue}
+            error={price.error}
+            percentageChange={props.percentageChange}
+            warningLevel={props.warningLevel}
+          />
+        ) : (
+          <NumericTooltip
+            content={price.realUsdValue}
+            container={props.tooltipContainer}
+            open={isUsdValueZeroOrFalsy ? false : undefined}
+            side="bottom">
+            <ValueTypography hasWarning={!!price.error}>
+              <UsdPrice variant="body" size="medium">
+                {displayUsdValue}
+              </UsdPrice>
+            </ValueTypography>
+          </NumericTooltip>
+        )}
+        {props.moreInfo}
+      </TokenValue>
     </Container>
   );
 }
