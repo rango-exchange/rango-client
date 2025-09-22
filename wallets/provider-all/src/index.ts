@@ -19,7 +19,7 @@ import * as keplr from '@rango-dev/provider-keplr';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
-import * as metamask from '@rango-dev/provider-metamask';
+import { versions as metamask } from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
@@ -98,7 +98,7 @@ export const allProviders = (
   return [
     lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
     lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(metamask)),
+    metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
     lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),

@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -18,8 +19,8 @@ import {
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { metamask as metamask_instance } from './helpers.js';
-import signer from './signer.js';
+import signer from '../signer.js';
+import { metamask as metamask_instance, type Provider } from '../utils.js';
 
 const WALLET = WalletTypes.META_MASK;
 
@@ -49,7 +50,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
@@ -74,3 +76,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     supportedChains: evms,
   };
 };
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  getSigners,
+  getWalletInfo,
+  canSwitchNetworkTo,
+  canEagerConnect,
+});
+
+export { buildLegacyProvider };
