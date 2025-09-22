@@ -22,6 +22,7 @@ import { ListContainer } from '../../components/MoreWalletsToSelect/MoreWalletsT
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { isBrowserSupportClipboardPaste } from '../../utils/common';
 import { isValidTokenAddress } from '../../utils/meta';
 
 import {
@@ -74,8 +75,6 @@ export function DestinationWalletsPage() {
     return null;
   }
 
-  const isFirefox = navigator?.userAgent.includes('Firefox');
-
   const handleClear = () => {
     resetState();
     setCustomDestination(null);
@@ -92,7 +91,7 @@ export function DestinationWalletsPage() {
           <CloseIcon size={8} color="white" />
         </IconButton>
       );
-    } else if (!isFirefox) {
+    } else if (isBrowserSupportClipboardPaste()) {
       return (
         <Button
           id="widget-destination-wallets-page-custom-destination-paste-icon-btn"

@@ -40,9 +40,6 @@ export function MoreWalletsToSelect(props: PropTypes) {
           <WalletList
             chain={blockchain}
             isSelected={isSelected}
-            onShowMore={() => {
-              //
-            }}
             selectWallet={selectWallet}
           />
         </ListContainer>

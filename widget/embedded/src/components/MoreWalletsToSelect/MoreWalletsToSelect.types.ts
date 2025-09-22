@@ -1,8 +1,6 @@
-import type { Wallet } from '../../types';
+import type { PropTypes as WalletListPropTypes } from '../ConfirmWalletsModal/WalletList.type';
 
 export type PropTypes = {
   blockchain: string;
-  isSelected: (walletType: string, blockchain: string) => boolean;
-  selectWallet: (wallet: Wallet) => void;
   onClickBack?: () => void;
-};
+} & Pick<WalletListPropTypes, 'isSelected' | 'selectWallet'>;

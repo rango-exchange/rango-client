@@ -27,7 +27,7 @@ import { SelectedWalletButton } from '../SelectedWallet/SelectedWalletButton';
 import { SwapInputLabel } from '../SwapInputLabel/SwapInputLabel';
 
 export function DestinationInput(props: PropTypes) {
-  const { fetchingQuote, onClickToken } = props;
+  const { fetchingQuote, isExpandable, onClickToken } = props;
   const { fetchStatus: fetchingMetaStatus } = useAppStore();
   const destinationWallet = useAppStore().selectedWallet('destination');
   const {
@@ -91,6 +91,7 @@ export function DestinationInput(props: PropTypes) {
       <SwapInput
         mode="To"
         id="widget-swap-to-input"
+        sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
         fetchingQuote={fetchingQuote}
         chain={{
           displayName: toBlockchain?.displayName || '',
