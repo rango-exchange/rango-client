@@ -315,7 +315,6 @@ export const useQuoteStore = createSelectors(
         set({
           quoteWalletsConfirmed: false,
           selectedWallets: [],
-          customDestination: null,
         }),
       setQuoteWarningsConfirmed: (flag) =>
         set({ quoteWarningsConfirmed: flag }),

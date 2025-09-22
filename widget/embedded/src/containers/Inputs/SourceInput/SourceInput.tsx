@@ -25,7 +25,7 @@ import { SelectedWalletButton } from '../SelectedWallet/SelectedWalletButton';
 import { SwapInputLabel } from '../SwapInputLabel/SwapInputLabel';
 
 import { MaxBalance } from './MaxBalance/MaxBalance';
-import { FromContainer } from './SourceInput.styles';
+import { Container } from './SourceInput.styles';
 
 export function SourceInput(props: PropTypes) {
   const { onClickToken } = props;
@@ -94,7 +94,7 @@ export function SourceInput(props: PropTypes) {
   };
 
   return (
-    <FromContainer>
+    <Container>
       <SwapInputLabel
         label={i18n.t('From')}
         suffix={
@@ -148,6 +148,6 @@ export function SourceInput(props: PropTypes) {
         tooltipContainer={getContainer()}
       />
       <SwitchFromAndToButton />
-    </FromContainer>
+    </Container>
   );
 }

@@ -68,6 +68,9 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   const navigateBack = useNavigateBack();
   const { manager } = useManager();
   const { isTablet, isMobile } = useScreenDetect();
+  const navigateBackSettingsRef = useRef<{
+    defaultPrevented: boolean;
+  }>({ defaultPrevented: false });
   const pendingSwaps: PendingSwap[] = getPendingSwaps(manager).map(
     ({ swap }) => swap
   );
@@ -176,9 +179,16 @@ function Layout(props: PropsWithChildren<PropTypes>) {
           showBackButton ? (
             <BackButton
               onClick={() => {
-                navigateBack();
                 // As an example, used in routes page to add a custom logic when navigating back to the home page.
-                header.onBack?.();
+                header.onBack?.({
+                  preventDefault: () =>
+                    (navigateBackSettingsRef.current = {
+                      defaultPrevented: true,
+                    }),
+                });
+                if (!navigateBackSettingsRef.current.defaultPrevented) {
+                  navigateBack();
+                }
               }}
             />
           ) : null
