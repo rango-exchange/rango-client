@@ -205,7 +205,7 @@ export function useLegacyProviders(
        */
       document.addEventListener('readystatechange', initWhenPageIsReady);
     });
-  }, []);
+  }, [props.providers]);
 
   // Setting supported blockchains on instances
   useEffect(() => {
@@ -222,7 +222,7 @@ export function useLegacyProviders(
         });
       });
     }
-  }, [props.allBlockChains]);
+  }, [props.allBlockChains, props.providers]);
 
   // Setting event handler on instances
   useEffect(() => {

@@ -22,6 +22,7 @@
     "@rango-dev/logging-console": "^0.11.0",
     "@rango-dev/logging-subscriber": "^0.11.0",
     "@rango-dev/widget-embedded": "^0.50.1-next.7",
+    "@privy-io/react-auth": "^2.24.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

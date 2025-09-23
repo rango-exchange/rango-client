@@ -1,5 +1,6 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
+import { usePrivy } from '@privy-io/react-auth';
 import { Widget } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
@@ -9,11 +10,15 @@ import {
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './constants';
+import { usePrivyProvider } from './usePrivyProvider';
 
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
   const configParam = searchParams.get('config');
+  const privyProvider = usePrivyProvider();
+
+  const { exportWallet } = usePrivy();
 
   let config: WidgetConfig | undefined = undefined;
 
@@ -41,6 +46,7 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        wallets: ['metamask', privyProvider],
       };
     }
     if (!!config) {
@@ -50,7 +56,17 @@ export function App() {
 
   return (
     <Routes>
-      <Route path="/*" element={<Widget config={configRef.current} />} />
+      <Route
+        path="/*"
+        element={
+          <div>
+            <button id="yo" onClick={async () => exportWallet()}>
+              Export Wallet
+            </button>
+            <Widget config={configRef.current} />
+          </div>
+        }
+      />
     </Routes>
   );
 }
