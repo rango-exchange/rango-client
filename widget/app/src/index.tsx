@@ -19,7 +19,7 @@ const root = createRoot(container);
 
 root.render(
   <PrivyProvider
-    appId="cmd5rsmwf00del30mzcyhyael"
+    appId="cmfuz5c0k00gfju0cacxr36so"
     config={{
       /*
        * appearance: {
