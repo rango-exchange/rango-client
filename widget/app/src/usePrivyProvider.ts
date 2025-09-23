@@ -1,22 +1,47 @@
-import type { BlockchainMeta } from 'rango-types';
+import type { ConnectedStandardSolanaWallet } from '@privy-io/react-auth/solana';
+import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
+import type { Transaction, VersionedTransaction } from '@solana/web3.js';
+import type {
+  BlockchainMeta,
+  GenericSigner,
+  SolanaTransaction,
+} from 'rango-types';
 
 import { usePrivy, useWallets as usePrivyWallets } from '@privy-io/react-auth';
+import {
+  useConnectedStandardWallets,
+  useExportWallet,
+} from '@privy-io/react-auth/solana';
 import { DefaultEvmSigner } from '@rango-dev/signer-evm';
-import { getEvmAccounts } from '@rango-dev/wallets-shared';
+import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
+import {
+  canEagerlyConnectToEvm,
+  getEvmAccounts,
+} from '@rango-dev/wallets-shared';
 import { type ProviderInterface } from '@rango-dev/widget-embedded';
+import base58 from 'bs58';
 import {
   DefaultSignerFactory,
   evmBlockchains,
   isEvmBlockchain,
+  solanaBlockchain,
   TransactionType,
 } from 'rango-types';
 import { useCallback, useEffect, useRef } from 'react';
 
 const USER_CHECK_INTERVAL = 500;
 
-export function usePrivyProvider(): ProviderInterface {
+export function usePrivyProvider(): {
+  provider: ProviderInterface;
+  exportEvmWallet: () => Promise<void>;
+  exportSolanaWallet: () => Promise<void>;
+} {
   const { user, login, logout, ready } = usePrivy();
-  const { wallets: privyWallets } = usePrivyWallets();
+  const { wallets: privyEvmWallets } = usePrivyWallets();
+  const { wallets: privySolanaWallets } = useConnectedStandardWallets();
+
+  const { exportWallet: exportEvmWallet } = usePrivy();
+  const { exportWallet: exportSolanaWallet } = useExportWallet();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const instanceRef = useRef<Map<string, any | null>>();
@@ -27,9 +52,11 @@ export function usePrivyProvider(): ProviderInterface {
     }
 
     const instances = new Map();
-    const wallet = await privyWallets?.[0]?.getEthereumProvider();
+    const evmWallet = await privyEvmWallets?.[0]?.getEthereumProvider();
+    const solanaWallet = privySolanaWallets?.[0];
 
-    instances.set('ETH', wallet);
+    instances.set('ETH', evmWallet);
+    instances.set('Solana', solanaWallet);
     instanceRef.current = instances;
   };
 
@@ -45,7 +72,7 @@ export function usePrivyProvider(): ProviderInterface {
   }, [ready]);
   useEffect(() => {
     void updateInstance();
-  }, [privyWallets]);
+  }, [privyEvmWallets, privySolanaWallets]);
   const loginRef = useRef(login);
   useEffect(() => {
     loginRef.current = login;
@@ -57,13 +84,22 @@ export function usePrivyProvider(): ProviderInterface {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const connect = async (): Promise<any> => {
     if (!!instanceRef.current?.get('ETH')) {
-      const provider = instanceRef.current?.get('ETH');
-      const { accounts, chainId } = await getEvmAccounts(provider);
+      const evmProvider = instanceRef.current?.get('ETH');
+      const solanaProvider = instanceRef.current?.get('Solana');
+      const result = [];
+      if (evmProvider) {
+        const evmResult = await getEvmAccounts(evmProvider);
+        result.push(evmResult);
+      }
+      if (solanaProvider && solanaProvider.address) {
+        result.push({
+          accounts: [solanaProvider.address],
+          chainId: 'SOLANA',
+        });
+      }
 
-      return {
-        accounts,
-        chainId,
-      };
+      console.log('connect', result);
+      return result;
     }
     await loginRef.current();
     const getUserPromise = new Promise((resolve) => {
@@ -82,17 +118,11 @@ export function usePrivyProvider(): ProviderInterface {
     return result;
   };
 
-  const canEagerConnect = async () => {
+  const canEagerConnect = async ({ meta }: { meta: BlockchainMeta[] }) => {
     try {
       if (!!instanceRef.current?.get('ETH')) {
-        const provider = instanceRef.current.get('ETH');
-        const accounts: string[] = await provider?.request({
-          method: 'eth_accounts',
-        });
-
-        if (accounts.length) {
-          return true;
-        }
+        const instance = instanceRef.current.get('ETH');
+        return await canEagerlyConnectToEvm({ instance, meta });
       }
       return false;
     } catch {
@@ -127,8 +157,16 @@ export function usePrivyProvider(): ProviderInterface {
 
   const getSigners = async () => {
     const signers = new DefaultSignerFactory();
-    const provider = instanceRef.current?.get('ETH');
-    signers.registerSigner(TransactionType.EVM, new DefaultEvmSigner(provider));
+    const evmProvider = instanceRef.current?.get('ETH');
+    const solanaProvider = instanceRef.current?.get('Solana');
+    signers.registerSigner(
+      TransactionType.EVM,
+      new DefaultEvmSigner(evmProvider)
+    );
+    signers.registerSigner(
+      TransactionType.SOLANA,
+      new SolanaSigner(solanaProvider)
+    );
 
     return signers;
   };
@@ -144,28 +182,63 @@ export function usePrivyProvider(): ProviderInterface {
   );
 
   return {
-    config: {
-      type: 'privy',
-    },
-    connect,
-    disconnect,
-    getInstance,
-    canEagerConnect,
-    switchNetwork,
-    getSigners,
-    canSwitchNetworkTo,
-    // switchNetwork,
-    getWalletInfo: (allBlockChains: BlockchainMeta[]) => {
-      const evms = evmBlockchains(allBlockChains);
-      return {
-        name: 'Privy',
-        img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/privy/icon.svg',
-        installLink: {
-          DEFAULT: 'https://www.privy.io/',
-        },
-        color: '#dac7ae',
-        supportedChains: evms,
-      };
+    exportEvmWallet,
+    exportSolanaWallet,
+    provider: {
+      config: {
+        type: 'privy',
+      },
+      connect,
+      disconnect,
+      getInstance,
+      canEagerConnect,
+      switchNetwork,
+      getSigners,
+      canSwitchNetworkTo,
+      // switchNetwork,
+      getWalletInfo: (allBlockChains: BlockchainMeta[]) => {
+        const evms = evmBlockchains(allBlockChains);
+        const solana = solanaBlockchain(allBlockChains);
+        return {
+          name: 'Privy',
+          img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/privy/icon.svg',
+          installLink: {
+            DEFAULT: 'https://www.privy.io/',
+          },
+          color: '#dac7ae',
+          supportedChains: [...evms, ...solana],
+        };
+      },
     },
   };
+}
+
+export class SolanaSigner implements GenericSigner<SolanaTransaction> {
+  private provider: ConnectedStandardSolanaWallet;
+  constructor(provider: ConnectedStandardSolanaWallet) {
+    this.provider = provider;
+  }
+
+  async signMessage(msg: string): Promise<string> {
+    const encodedMessage = new TextEncoder().encode(msg);
+    const signedMessage = await this.provider.signMessage({
+      message: encodedMessage,
+    });
+    return base58.encode(signedMessage.signedMessage);
+  }
+  async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
+    const DefaultSolanaSigner: SolanaWeb3Signer = async (
+      solanaWeb3Transaction: Transaction | VersionedTransaction
+    ) => {
+      const signature = await this.provider.signTransaction({
+        transaction: solanaWeb3Transaction.serialize(),
+      });
+      return signature.signedTransaction;
+    };
+    const hash = await generalSolanaTransactionExecutor(
+      tx,
+      DefaultSolanaSigner
+    );
+    return { hash };
+  }
 }

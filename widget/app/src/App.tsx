@@ -1,6 +1,5 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
-import { usePrivy } from '@privy-io/react-auth';
 import { Widget } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
@@ -16,9 +15,11 @@ export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
   const configParam = searchParams.get('config');
-  const privyProvider = usePrivyProvider();
-
-  const { exportWallet } = usePrivy();
+  const {
+    provider: privyProvider,
+    exportEvmWallet,
+    exportSolanaWallet,
+  } = usePrivyProvider();
 
   let config: WidgetConfig | undefined = undefined;
 
@@ -60,9 +61,14 @@ export function App() {
         path="/*"
         element={
           <div>
-            <button id="yo" onClick={async () => exportWallet()}>
-              Export Wallet
-            </button>
+            <div>
+              <button id="export-evm-btn" onClick={exportEvmWallet}>
+                Export EVM Wallet
+              </button>
+              <button id="export-solana-btn" onClick={exportSolanaWallet}>
+                Export Solana Wallet
+              </button>
+            </div>
             <Widget config={configRef.current} />
           </div>
         }
