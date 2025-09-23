@@ -10,11 +10,13 @@ import { Status, SYNC_POLLING_INTERVAL } from './types';
 export type ManagerContext = object;
 export type QueueName = string;
 export type QueueID = string;
+
+export type BlockedReason = Record<string, unknown>;
 export type BlockedTask = {
   queue_id: string;
   task_id: string;
   action: string;
-  reason: Record<string, unknown>;
+  reason: BlockedReason;
   storage: {
     get: () => QueueStorage;
     set: (data: QueueStorage) => QueueStorage;
@@ -34,11 +36,13 @@ export interface ExecuterActions<
   schedule: (actionName: V) => void;
   setStorage: SetStorage<T>;
   getStorage: () => T;
-  block: (reason: Record<string, unknown>) => void;
+  block: (reason: BlockedReason) => void;
   unblock: () => void;
   context: C;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WhenTaskBlockedEvent = any;
 export interface QueueDef<
   T extends QueueStorage = QueueStorage,
   V extends string = string,
@@ -51,7 +55,7 @@ export interface QueueDef<
   events?: Partial<QueueEventHandlers>;
   run: V[];
   whenTaskBlocked?: (
-    event: any,
+    event: WhenTaskBlockedEvent,
     params: {
       queue_id: string;
       queue: Queue;
@@ -82,6 +86,8 @@ interface ManagerOptions {
   isPaused?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type _Storage = any;
 export interface QueueInfo {
   name: QueueName;
   createdAt: number;
@@ -90,8 +96,8 @@ export interface QueueInfo {
   actions: {
     run: () => void;
     cancel: () => void;
-    setStorage: SetStorage<any>;
-    getStorage: () => any;
+    setStorage: SetStorage<_Storage>;
+    getStorage: () => _Storage;
   };
 }
 
@@ -240,6 +246,7 @@ class Manager {
       this.execute();
       return queue_id;
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       throw new Error((e as any)?.message);
     }
   }
@@ -643,7 +650,7 @@ class Manager {
   }
 
   private getContext() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     return this.context?.current || {};
   }
