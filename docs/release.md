@@ -1,98 +1,136 @@
-# Release
 
-## How we are releasing a new version?
+# **Release Guide**
 
-A release can be a lib or an app/client release. We are publishing our libs to `npm` and deploying our apps (client) on `vercel`.
+## Overview
 
-If a package is client, you need to add the package name to `scripts/deploy/config.mjs` and then after getting a `PROJECT_ID` from Vercel, you need to set it as environment variable as well.
+A release can involve:
 
-There are main commands:
+* **Libraries** (published to `npm`)
+* **Apps/Clients** (deployed to Vercel)
 
-`yarn run publish` for publishing our NPM packages.
-`yarn run deploy` to deploy apps on Vercel.
+If a package is a client, ensure:
 
-### Publish flow
+* The package name is listed in `scripts/deploy/config.mjs`.
+* You have a `PROJECT_ID` from Vercel set as an environment variable.
 
-#### Publish
+---
 
-Our publish script will do these steps:
+## **Key Commands**
 
-1. Get the last release (by using git tags) and calculate changes since then.
-2. Bump the version for changed packages.
-3. Create changelog, git tags and github release, and publish them to NPM.
-4. Make a publish commit and push the updated packages (version) and tags to origin.
+* `yarn run publish` → Publishes NPM packages.
+* `yarn run deploy` → Deploys apps to Vercel.
 
-Note:
-Libs will be published under `next` tag on npm, which means you need to use `yarn add @rango/test-package@next` to install the published version whenever you need.
+---
 
-#### Production release
+## **Publish Flow**
 
-There is a workflow called `Production Release`, you just need to run this workflow manually and then it will automatically published.
+The `publish` script performs:
 
-### Deploy flow
+1. Gets the last release (via git tags) and calculates changes.
+2. Bumps versions for changed packages.
+3. Creates changelogs, git tags, and GitHub releases.
+4. Publishes updated packages to NPM.
+5. Pushes updated package versions and tags to origin.
 
-You should manually trigger the `deploy` workflow.
+**If run on `main` branch**, the publish script will also:
 
-By running `yarn run deploy`, it will build all the apps/clients then will try to deploy them on vercel.
+* Automatically bump `widget/app` and/or `widget/playground` versions if changed.
+* Automatically update the root `CHANGELOG.md`.
 
-If the workflow is running on `next` branch, it will be deployed as Vercel's `preview`. If not, it's production release.
+**Note:** Libraries are published under the `next` tag on npm. To install them:
 
-All the apps published by `prerelease` workflow will be published under the Vercel's `preview` environment.
-
-## How you can release a new version?
-
-### Next (Staging)
-
-A publish will be triggered when a **Pull Request** has been merged.
-
-### Production
-
-Follow these steps for the release:
-
-#### 1. Run the `Production Release` workflow manually.
-
-For releasing production, you need to run `Production Release` workflow, it will pull the latest translation changes on `next` branch and checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
-
-#### 2. When workflow finished running, increase `widget/app` and `widget/playground` version and update changelog.
-
-You should submit a pull request to the main branch from a new hotfix branch, incrementing the minor version by 1. Additionally, please remember to update the 'CHANGELOG.md' file located at the root of the repository. To do this you can follow the following steps:
-
-1. If widget has any updates:
-
-```shell
-cd widget/app
-yarn version --minor --no-git-tag-version
+```sh
+yarn add @rango-dev/widget-embedded@next
 ```
 
-2. if playground has any changes:
+---
 
-```shell
-cd widget/playground
-yarn version --minor --no-git-tag-version
+## **Deploy Flow**
+
+Running `yarn run deploy`:
+
+* Builds all apps/clients.
+* Deploys them to Vercel.
+
+**Branch behavior:**
+
+* On `next` → Deploys to Vercel **Preview** environment.
+* On `main` → Deploys to **Production** environment.
+
+---
+
+## **Release Types**
+
+### **Next (Staging)**
+
+A publish to **Preview** is triggered automatically when a Pull Request is merged into `next`.
+
+---
+
+### **Production**
+
+
+Run the **`Production Release`** workflow.
+It will:
+
+1. **Sync `main` with `next`**
+
+   * Pull latest translations on `next`.
+   * Merge `next` into `main` using `--no-ff`.
+
+2. **Publish** *(on `main`)*
+
+   * Automatically bump `widget/app` and/or `widget/playground` versions if changed.
+   * Automatically update the root `CHANGELOG.md`.
+   * Publish to NPM.
+
+3. **Deploy**
+
+   * Build and deploy apps to Vercel (Preview).
+   * **You must copy the deploy URLs from the logs.**
+
+4. **Promote** *(manual step)*
+
+   * Promote the widget and playground deployments to **Production** in Vercel.
+
+5. **Sync `next` with `main`**
+
+   * Merge `main` back into `next` to keep branches in sync.
+
+**After finishing:**
+
+* Send a highlight note on Telegram [like this](https://t.me/c/1797229876/15255/23609).
+* Update `widget-examples`:
+
+  ```sh
+  yarn add @rango-dev/widget-embedded@latest
+  ```
+
+  Open a PR to ensure all examples are on the latest version.
+
+---
+
+
+
+## **Visual Diagram**
+
+```
+                ┌─────────────────────┐
+                │    Automatic Flow   │
+                └─────────────────────┘
+                          │
+                Run "Production Release"
+                          │
+                          ▼
+     ┌─────────────────────────────────────────────┐
+     │ 1. Sync main ← next                         │
+     │ 2. Publish (bump + changelog + NPM publish) │
+     │ 3. Deploy (Preview)                         │
+     │ 4. Promote to Production (manual)           │
+     │ 5. Sync next (main → next)               │
+     └─────────────────────────────────────────────┘
+                          │
+                          ▼
+              Send Telegram note + update widget-examples
 ```
 
-3. Then you need to update `/CHANGELOG.md` (root) and list all the changes into widget or playground. you can use the template at the end of list. _Don't forget to use correct date and version (that you've ran before)._
-
-4. Finally, you can commit your changes, run the following commands from workspace's root:
-
-```shell
-git add CHANGELOG.md
-git add widget/app/package.json
-git add widget/playground/package.json
-
-git commit -m "chore(release): deploy" -m "[skip ci]"
-```
-
-#### 3. Run the `Deploy` workflow if the publish was successful.
-
-#### 4. Promote our clients (widget and playground) to production on Vercel (ask the team if you don't have access).
-
-#### 5. Run the Post-Release workflow, which will merge the `main` branch into the `next` branch to keep it in sync.
-
-**NOTE 1:**
-
-Ensure you send a highlight note on Telegram [like this](https://t.me/c/1797229876/15255/23609) at the end.
-
-**NOTE 2:**
-
-Ensure you update widget-examples using `yarn add @rango-dev/widget-embedded@latest`. Then open a new PR on the repo to ensure all examples are on the latest version.
