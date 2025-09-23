@@ -1,0 +1,18 @@
+name: "Sync Branch"
+description: "Syncs main branch to next or vice versa"
+
+inputs:
+  prod:
+    description: "Whether it is for prod sync"
+    required: false
+    default: "false"
+    type: boolean
+
+runs:
+  using: "composite"
+  steps:
+    - name: Sync branch
+      run: yarn run sync-branch ${{ inputs.prod == 'true' && '--prod' || '' }}
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}

@@ -2,9 +2,11 @@ name: Publish
 on:
   push:
     branches:
-      - 'main'
       - 'next'
+  workflow_dispatch:
 
+  workflow_call:
+    
 concurrency:
   group: package-publishing
 
