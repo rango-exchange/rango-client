@@ -15,10 +15,12 @@ import {
   Container,
   flexShrink,
   flexShrinkFix,
+  horizontalUsdValueText,
+  RealAmountWrapper,
   textTruncate,
   TokenAmountWrapper,
   TokenInfoRow,
-  TokenNameText,
+  TokenNameWrapper,
   tooltipRootStyle,
   usdValueStyles,
   usdValueText,
@@ -61,18 +63,16 @@ export function TokenAmount(props: PropTypes) {
             </Typography>
           )}
           <TokenInfoRow className={flexShrinkFix()}>
-            <Typography
-              size="medium"
-              variant="title"
-              ref={realValueRef}
-              className={`${textTruncate()} ${flexShrinkFix()}`}
-              style={{ fontWeight: 600 }}>
-              {props.price.realValue}
-            </Typography>
-            {props.price.realValue && isRealValueTruncated && (
-              <>
-                <Divider direction="horizontal" size={2} />
-
+            <RealAmountWrapper>
+              <Typography
+                size="medium"
+                variant="title"
+                ref={realValueRef}
+                className={`${textTruncate()} ${flexShrinkFix()}`}
+                style={{ fontWeight: 600 }}>
+                {props.price.realValue}
+              </Typography>
+              {props.price.realValue && isRealValueTruncated && (
                 <NumericTooltip
                   styles={{ root: tooltipRootStyle }}
                   content={props.price.realValue}
@@ -80,27 +80,33 @@ export function TokenAmount(props: PropTypes) {
                   container={props.tooltipContainer}>
                   <InfoIcon size={12} color="gray" />
                 </NumericTooltip>
-              </>
-            )}
-            <Divider direction="horizontal" size={8} />
-            <TokenNameText
-              size="medium"
-              variant="title"
-              className={textTruncate()}
-              ref={displayNameRef}
-              style={{ fontWeight: 400 }}>
-              {props.token.displayName}
-            </TokenNameText>
-            {isDisplayNameTruncated && (
-              <>
-                <Divider direction="horizontal" size={2} />
+              )}
+            </RealAmountWrapper>
+            <TokenNameWrapper>
+              <Typography
+                size="medium"
+                variant="title"
+                className={`${textTruncate()} token-name-text`}
+                ref={displayNameRef}
+                style={{ fontWeight: 400 }}>
+                {props.token.displayName}
+              </Typography>
+              {isDisplayNameTruncated && (
                 <Tooltip
                   content={props.token.displayName}
-                  container={props.tooltipContainer}>
+                  container={props.tooltipContainer}
+                  styles={{
+                    content: {
+                      maxWidth: 250,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    },
+                  }}>
                   <InfoIcon size={12} color="gray" />
                 </Tooltip>
-              </>
-            )}
+              )}
+            </TokenNameWrapper>
           </TokenInfoRow>
         </div>
       </TokenAmountWrapper>
@@ -127,13 +133,10 @@ export function TokenAmount(props: PropTypes) {
           {props.type === 'output' && (
             <PriceImpact
               className={`${
-                props.direction === 'horizontal'
-                  ? usdValueText()
-                  : verticalUsdValueText()
+                props.direction === 'vertical'
+                  ? verticalUsdValueText()
+                  : horizontalUsdValueText()
               } ${flexShrinkFix()} ${flexShrink()}`}
-              style={{
-                ...(props.direction === 'horizontal' && { flexWrap: 'wrap' }),
-              }}
               size="small"
               tooltipProps={{ container: props.tooltipContainer, side: 'top' }}
               outputUsdValue={props.price.usdValue}
