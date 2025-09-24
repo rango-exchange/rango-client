@@ -98,7 +98,6 @@ export function usePrivyProvider(): {
         });
       }
 
-      console.log('connect', result);
       return result;
     }
     await loginRef.current();

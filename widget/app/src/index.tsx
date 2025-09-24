@@ -21,14 +21,7 @@ root.render(
   <PrivyProvider
     appId="cmfuz5c0k00gfju0cacxr36so"
     config={{
-      /*
-       * appearance: {
-       *   theme: 'dark',
-       *   loginMessage: 'yo welcome',
-       *   landingHeader: 'header welcome',
-       * },
-       * Create embedded wallets for users who don't have a wallet
-       */ solana: {
+      solana: {
         rpcs: {
           'solana:mainnet': {
             rpc: createSolanaRpc(
