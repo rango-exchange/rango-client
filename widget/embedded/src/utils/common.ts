@@ -280,3 +280,8 @@ export function memoizedResult(): <R>(fn: () => R, key: number | string) => R {
     return result;
   };
 }
+
+export function isBrowserSupportClipboardPaste() {
+  const isFirefox = navigator?.userAgent.includes('Firefox');
+  return !isFirefox;
+}

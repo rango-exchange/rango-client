@@ -3,6 +3,7 @@ export const navigationRoutes = {
   fromSwap: 'from-swap',
   toSwap: 'to-swap',
   sourceWallet: 'source-wallet',
+  destinationWallet: 'destination-wallet',
   blockchains: 'blockchains',
   settings: 'settings',
   customTokens: 'custom-tokens',
