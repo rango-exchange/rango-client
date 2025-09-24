@@ -1,4 +1,4 @@
-import type { SelectedQuote } from '../types';
+import type { SelectedQuote, SwapButtonState } from '../types';
 
 import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
@@ -68,6 +68,8 @@ export function Home() {
     setSlippage,
     setCustomSlippage,
   } = useAppStore();
+  const sourceWallet = useAppStore().selectedWallet('source');
+  const destinationWallet = useAppStore().selectedWallet('destination');
 
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
@@ -78,6 +80,9 @@ export function Home() {
   const needsToWarnEthOnPath = false;
 
   const swapButtonState = getSwapButtonState({
+    fromToken,
+    toToken,
+    selectedWallets: { sourceWallet, destinationWallet },
     fetchMetaStatus,
     fetchingQuote: loading,
     inputAmount,
@@ -148,6 +153,33 @@ export function Home() {
     setCustomSlippage(slippage);
   };
 
+  const swapButtonActionMap: Record<
+    NonNullable<SwapButtonState['action']>,
+    () => void
+  > = {
+    'connect-wallet': () =>
+      emitPreventableEvent({ type: UiEventTypes.CLICK_CONNECT_WALLET }, () =>
+        onHandleNavigation(navigationRoutes.wallets)
+      ),
+    'select-source-token': () => onHandleNavigation(navigationRoutes.fromSwap),
+    'select-destination-token': () =>
+      onHandleNavigation(navigationRoutes.toSwap),
+    'select-source-wallet': () =>
+      onHandleNavigation(navigationRoutes.sourceWallet),
+    'select-destination-wallet': () =>
+      onHandleNavigation(navigationRoutes.destinationWallet),
+    'confirm-warning': () => setShowQuoteWarningModal(true),
+    'confirm-swap': () => onHandleNavigation(navigationRoutes.confirmSwap),
+  };
+
+  const onClickSwapButton = () => {
+    const { action } = swapButtonState;
+
+    if (action) {
+      swapButtonActionMap[action]();
+    }
+  };
+
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
@@ -172,18 +204,7 @@ export function Home() {
               swapButtonState.action === 'confirm-warning' && <WarningIcon />
             }
             fullWidth
-            onClick={() => {
-              if (swapButtonState.action === 'connect-wallet') {
-                emitPreventableEvent(
-                  { type: UiEventTypes.CLICK_CONNECT_WALLET },
-                  () => onHandleNavigation(navigationRoutes.wallets)
-                );
-              } else if (swapButtonState.action === 'confirm-warning') {
-                setShowQuoteWarningModal(true);
-              } else {
-                onHandleNavigation(navigationRoutes.confirmSwap);
-              }
-            }}>
+            onClick={onClickSwapButton}>
             {swapButtonState.title}
           </Button>
         }
