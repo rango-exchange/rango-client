@@ -345,7 +345,6 @@ export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  maxWidth: '$30',
 });
 
 export const AmountText = styled(Typography, {
@@ -354,6 +353,9 @@ export const AmountText = styled(Typography, {
   whiteSpace: 'nowrap',
   minWidth: 0,
   flex: '0 1 auto',
+  '&.input-amount-text': {
+    flexShrink: 3,
+  },
 });
 
 export const MoreStep = styled('div', {
@@ -397,5 +399,4 @@ export const UsdValueText = styled(Typography, {
   whiteSpace: 'nowrap',
   flex: '0 1 auto',
   minWidth: 0,
-  flexShrink: 3,
 });

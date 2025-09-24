@@ -128,3 +128,12 @@ export const UsdPrice = styled(Typography, {
   textOverflow: 'ellipsis',
   maxWidth: 147,
 });
+
+export const textTruncate = css({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '100%',
+  display: 'block',
+  whiteSpace: 'nowrap',
+  minWidth: 0,
+});

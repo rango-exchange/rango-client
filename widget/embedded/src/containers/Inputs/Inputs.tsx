@@ -13,8 +13,7 @@ import {
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
-  USD_VALUE_MAX_DECIMALS,
-  USD_VALUE_MIN_DECIMALS,
+  USD_VALUE_DEFAULT_DECIMALS,
 } from '../../constants/routing';
 import { useSwapMode } from '../../hooks/useSwapMode';
 import { useAppStore } from '../../store/AppStore';
@@ -101,8 +100,8 @@ export function Inputs(props: PropTypes) {
               ? undefined
               : numberToString(
                   inputUsdValue,
-                  USD_VALUE_MIN_DECIMALS,
-                  USD_VALUE_MAX_DECIMALS
+                  USD_VALUE_DEFAULT_DECIMALS,
+                  USD_VALUE_DEFAULT_DECIMALS
                 ),
             realUsdValue: priceImpactInputCanNotBeComputed
               ? undefined
@@ -164,8 +163,8 @@ export function Inputs(props: PropTypes) {
             ? undefined
             : numberToString(
                 outputUsdValue,
-                USD_VALUE_MIN_DECIMALS,
-                USD_VALUE_MAX_DECIMALS
+                USD_VALUE_DEFAULT_DECIMALS,
+                USD_VALUE_DEFAULT_DECIMALS
               ),
           realValue: outputAmount?.toString(),
           realUsdValue: priceImpactOutputCanNotBeComputed

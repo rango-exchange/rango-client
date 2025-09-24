@@ -7,6 +7,7 @@ export const Container = styled('div', {
   alignItems: 'center',
   overflow: 'hidden',
   minWidth: 0,
+  gap: 4,
 });
 
 export const ValueTypography = styled('div', {
@@ -16,6 +17,10 @@ export const ValueTypography = styled('div', {
     minWidth: 0,
     flexShrink: 1,
     maxWidth: '100%',
+  },
+  '& .percentage-value': {
+    flex: '1 1 0',
+    minWidth: 0,
   },
   '& ._typography': {
     $$color: '$colors$neutral600',
