@@ -22,6 +22,10 @@
     "@rango-dev/logging-console": "^0.11.0",
     "@rango-dev/logging-subscriber": "^0.11.0",
     "@rango-dev/widget-embedded": "^0.50.1-next.7",
+    "@privy-io/react-auth": "^2.24.0",
+    "@solana/kit": "^3.0.3",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.91.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

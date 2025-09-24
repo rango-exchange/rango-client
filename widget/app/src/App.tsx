@@ -9,11 +9,17 @@ import {
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './constants';
+import { usePrivyProvider } from './usePrivyProvider';
 
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
   const configParam = searchParams.get('config');
+  const {
+    provider: privyProvider,
+    exportEvmWallet,
+    exportSolanaWallet,
+  } = usePrivyProvider();
 
   let config: WidgetConfig | undefined = undefined;
 
@@ -41,6 +47,7 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        wallets: ['metamask', privyProvider],
       };
     }
     if (!!config) {
@@ -50,7 +57,22 @@ export function App() {
 
   return (
     <Routes>
-      <Route path="/*" element={<Widget config={configRef.current} />} />
+      <Route
+        path="/*"
+        element={
+          <div>
+            <div>
+              <button id="export-evm-btn" onClick={exportEvmWallet}>
+                Export EVM Wallet
+              </button>
+              <button id="export-solana-btn" onClick={exportSolanaWallet}>
+                Export Solana Wallet
+              </button>
+            </div>
+            <Widget config={configRef.current} />
+          </div>
+        }
+      />
     </Routes>
   );
 }
