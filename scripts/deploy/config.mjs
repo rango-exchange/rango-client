@@ -7,6 +7,7 @@ export const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 export const ENABLE_PREVIEW_DEPLOY = process.env.ENABLE_PREVIEW_DEPLOY;
 export const ROOT_PACKAGE_NAME = 'rango-client';
 export const WIDGET_APP_PACKAGE_NAME = `${scope}/widget-app`;
+export const WIDGET_EMBEDDED_PACKAGE_NAME = `${scope}/widget-embedded`;
 export const PLAYGROUND_PACKAGE_NAME = `${scope}/widget-playground`;
 const QUEUE_MANAGER_PACKAGE_NAME = `${scope}/queue-manager-demo`;
 const STORYBOOK_PACKAGE_NAME = `${scope}/storybook`;
