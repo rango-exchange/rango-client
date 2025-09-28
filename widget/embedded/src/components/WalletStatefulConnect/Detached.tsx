@@ -25,6 +25,7 @@ export function Detached(props: PropTypes) {
     value,
     selectedNamespaces,
     onConfirm,
+    confirmText = i18n.t('Done'),
     onDisconnectWallet,
     navigateToDerivationPath,
   } = props;
@@ -173,7 +174,7 @@ export function Detached(props: PropTypes) {
         id="widget-name-space-confirm-btn"
         type="primary"
         onClick={onConfirm}>
-        {i18n.t('Done')}
+        {confirmText}
       </StyledButton>
     </>
   );
