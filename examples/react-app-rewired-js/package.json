@@ -29,12 +29,6 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
