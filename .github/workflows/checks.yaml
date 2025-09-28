@@ -136,11 +136,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
-
+      - name: Prepare
+        uses: ./.github/actions/prepare
       - name: Build examples
         run: node ./scripts/build-examples/command.mjs 
