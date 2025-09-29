@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.50.0...provider-metamask@0.51.0) (2025-09-29)
+
+
+### Features
+
+* migrate metamask to hub ([9ef1b5a](https://github.com/rango-exchange/rango-client/commit/9ef1b5a600945c8467b500a686a96cf081f3fb6e))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.49.0...provider-metamask@0.50.0) (2025-09-06)
 
 

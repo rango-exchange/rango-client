@@ -1,3 +1,13 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/ui@0.53.0...ui@0.54.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* handle long names and numbers ([066e8a1](https://github.com/rango-exchange/rango-client/commit/066e8a1ca97919047a446df8022dbbf2bab2da5a))
+* use wallet image container for connect modals ([b71a210](https://github.com/rango-exchange/rango-client/commit/b71a210bdf48448f4322514997e5298a46c3ffd8))
+
+
+
 # [0.53.0](https://github.com/rango-exchange/rango-client/compare/ui@0.52.0...ui@0.53.0) (2025-09-06)
 
 

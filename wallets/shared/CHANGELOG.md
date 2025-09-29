@@ -1,3 +1,7 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.50.0...wallets-shared@0.51.0) (2025-09-29)
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.49.0...wallets-shared@0.50.0) (2025-09-06)
 
 

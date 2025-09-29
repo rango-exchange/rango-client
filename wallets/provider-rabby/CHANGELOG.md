@@ -1,3 +1,12 @@
+# [0.18.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.17.0...provider-rabby@0.18.0) (2025-09-29)
+
+
+### Features
+
+* implement changeAccountSubscriber builder ([8e2ca97](https://github.com/rango-exchange/rango-client/commit/8e2ca9783fcd57445ca558e688c402a30aba3686))
+
+
+
 # [0.17.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.16.0...provider-rabby@0.17.0) (2025-09-06)
 
 
