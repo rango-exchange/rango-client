@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-safepal@0.51.0...provider-safepal@0.52.0) (2025-09-29)
+
+
+### Features
+
+* migrate safepal to hub ([9abf9c9](https://github.com/rango-exchange/rango-client/commit/9abf9c9be4c009e55570b15b0c048b8554f681bc))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-safepal@0.50.0...provider-safepal@0.51.0) (2025-09-06)
 
 

@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.51.0...provider-phantom@0.52.0) (2025-09-29)
+
+
+### Features
+
+* implement changeAccountSubscriber builder ([8e2ca97](https://github.com/rango-exchange/rango-client/commit/8e2ca9783fcd57445ca558e688c402a30aba3686))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.50.0...provider-phantom@0.51.0) (2025-09-06)
 
 

@@ -1,3 +1,19 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.50.0...widget-embedded@0.51.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* handle long names and numbers ([066e8a1](https://github.com/rango-exchange/rango-client/commit/066e8a1ca97919047a446df8022dbbf2bab2da5a))
+* use wallet image container for connect modals ([b71a210](https://github.com/rango-exchange/rango-client/commit/b71a210bdf48448f4322514997e5298a46c3ffd8))
+
+
+### Features
+
+* add single selection to detached modal ([07c7d44](https://github.com/rango-exchange/rango-client/commit/07c7d44ffd3def69e83c54d988c1279ac68d5889))
+* make detached confirm text customizable ([d4dc8e7](https://github.com/rango-exchange/rango-client/commit/d4dc8e739a24962e1d94ec02c496b6f8ebb34318))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.49.0...widget-embedded@0.50.0) (2025-09-06)
 
 
