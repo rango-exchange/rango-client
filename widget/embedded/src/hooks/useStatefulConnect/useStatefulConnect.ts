@@ -17,7 +17,7 @@ import {
 import { initState, reducer, type State } from './useStatefulConnect.state';
 import { ResultStatus } from './useStatefulConnect.types';
 
-interface UseStatefulConnect {
+export interface UseStatefulConnect {
   handleConnect: (
     wallet: WalletInfoWithExtra,
     options?: HandleConnectOptions
