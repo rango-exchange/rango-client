@@ -1,4 +1,5 @@
 import type { WidgetProps } from './containers/Widget';
+import type { UseStatefulConnect } from './hooks/useStatefulConnect';
 import type { ConnectedWallet } from './store/slices/wallets';
 import type {
   BlockchainAndTokenConfig,
@@ -131,6 +132,7 @@ export type {
   QuoteEventData,
   UiEventData,
   WalletInfoWithExtra,
+  UseStatefulConnect,
 };
 export {
   Widget,
