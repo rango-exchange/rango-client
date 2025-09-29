@@ -1,20 +1,20 @@
 {
   "name": "@rango-dev/provider-ledger",
-  "version": "0.21.0",
+  "version": "0.21.1-next.5",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices,",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ledger --splitting --external-all-except @ledgerhq/errors,@ledgerhq/hw-app-eth,@ledgerhq/hw-app-solana,@ledgerhq/hw-transport-webhid,@ledgerhq/types-cryptoassets,@ledgerhq/types-devices  --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -28,7 +28,8 @@
     "@ledgerhq/types-cryptoassets": "^7.11.0",
     "@ledgerhq/types-devices": "^6.24.0",
     "@rango-dev/signer-solana": "^0.44.0",
-    "@rango-dev/wallets-shared": "^0.50.0",
+    "@rango-dev/wallets-core": "^0.49.1-next.4",
+    "@rango-dev/wallets-shared": "^0.50.1-next.4",
     "@solana/web3.js": "^1.91.4",
     "@types/w3c-web-hid": "^1.0.2",
     "bs58": "^5.0.0",

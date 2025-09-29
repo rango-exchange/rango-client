@@ -1,17 +1,18 @@
 import type { ConnectStatusProps } from './ConnectStatus.types';
 
 import { i18n } from '@lingui/core';
-import { Image, MessageBox, WalletState } from '@rango-dev/ui';
+import {
+  Image,
+  MessageBox,
+  WalletImageContainer,
+  WalletState,
+} from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
 import { mapStatusToWalletState } from '../../utils/wallets';
 
-import {
-  LogoContainer,
-  Spinner,
-  WalletImageContainer,
-} from './ConnectStatus.styles';
+import { LogoContainer, Spinner } from './ConnectStatus.styles';
 
 export function ConnectStatus(props: ConnectStatusProps) {
   // See `wallet` notes on its type definition

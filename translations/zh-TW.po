@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-03 07:31\n"
+"PO-Revision-Date: 2025-09-22 07:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
+msgid "This wallet can only connect to one chain at a time."
+msgstr "此錢包一次只能連接一條鏈。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "目前，某些事務正在運行並由其他瀏覽器選項卡處理。
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "確認"
@@ -134,22 +139,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "位址 {destination} 與區塊鏈位址模式不符。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
 msgid "via"
 msgstr "透過"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "此令牌不屬於我們驗證的令牌清單的一部分。請核實其來源並確保在繼續之前了解所有相關風險。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
 msgid "Import Anyway"
 msgstr "仍然導入"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
 msgid "Learn More"
 msgstr "了解更多"
 
@@ -252,37 +257,37 @@ msgid "(Currently not supported)"
 msgstr "（目前不支援）"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
 msgstr "滑點錯誤"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:154
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
 msgstr "滑點警告"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:157
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
 msgstr "橋限位誤差"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:245
+#: widget/embedded/src/components/Quote/Quote.tsx:242
 msgid "Yours: {amount} {symbol}"
 msgstr "你的： {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
+#: widget/embedded/src/components/Quote/Quote.tsx:263
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "建議的最低滑點： {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:287
+#: widget/embedded/src/components/Quote/Quote.tsx:284
 msgid "Yours: {userSlippage}"
 msgstr "你的： {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:425
+#: widget/embedded/src/components/Quote/Quote.tsx:431
 msgid "See All Routes"
 msgstr "查看所有路線"
 
@@ -298,7 +303,7 @@ msgstr "Gas & 費用說明"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "細節"
 
@@ -380,22 +385,22 @@ msgid "Maximum Output"
 msgstr "最大輸出"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
 msgid "Swapping"
 msgstr "交換"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:45
 msgid "Gas cost"
 msgstr "天然氣成本"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:53
 msgid "Receiving"
 msgstr "接收"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:57
 msgid "Price impact"
 msgstr "價格影響"
 
@@ -600,7 +605,7 @@ msgstr "刪除"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
 msgid "Try again"
 msgstr "再試一次"
 
@@ -612,8 +617,8 @@ msgstr "查看交易"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "連接"
@@ -624,24 +629,24 @@ msgid "Swap Successful"
 msgstr "兌換成功"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:82
 msgid "Transaction Failed"
 msgstr "交易失敗"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
 msgid "Done"
 msgstr "完畢"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:123
 msgid "Diagnosis"
 msgstr "診斷"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:135
 msgid "See Details"
 msgstr "看詳情"
 
@@ -668,8 +673,8 @@ msgstr "不，繼續"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "連接 {wallet}"
@@ -735,67 +740,67 @@ msgid "Select Token"
 msgstr "選擇代幣"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Wallet Connected"
 msgstr "錢包已連接"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "您的錢包已連接，您可以用它來兌換。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
 msgid "Failed to Connect"
 msgstr "連線失敗"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
 msgid "Your wallet is not connected. Please try again."
 msgstr "您的錢包未連接。請再試一次。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Connecting to your wallet"
 msgstr "連接到您的錢包"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
 msgid "Click connect in your wallet popup."
 msgstr "點擊錢包彈出視窗中的“連接”。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
 msgid "Select Derivation Path"
 msgstr "選擇推導路徑"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "為了連接到 {type}，您必須先選擇派生路徑"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
 msgid "Choose Derivation Path Template"
 msgstr "選擇派生路徑模板"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
 msgid "Enter Path"
 msgstr "輸入路徑"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
 msgid "Enter Index"
 msgstr "輸入索引"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "該錢包支援多條鏈。選擇您想要連接或斷開的鏈條。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
 msgid "Disconnect wallet"
 msgstr "斷開錢包"
 
@@ -836,29 +841,29 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "您已拒絕將 {blockchainDisplayName} 鏈添加到您的錢包中。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "斷開"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "該錢包支援多條鏈。選擇您想要連接的鏈。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "此錢包一次只能連接一條鏈。 "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "取消全選"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "選擇全部"
@@ -1387,18 +1392,18 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:83
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:117
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "透過 {swapper}交換 {fromChain}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:90
 msgid "Bridge from {fromChain} via {swapper}"
 msgstr "由 {fromChain} 經由 {swapper}架設橋樑"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:124
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "經 {swapper}橋接在 {toChain}"
 
@@ -1413,12 +1418,12 @@ msgid "In progress"
 msgstr "進行中"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:140
 msgid "Waiting for the swap transaction"
 msgstr "等待掉期交易"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:141
 msgid "Waiting for the bridge transaction"
 msgstr "等待橋接交易"
 
@@ -1469,12 +1474,12 @@ msgid "Clear all"
 msgstr "全部清除"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:57
 msgid "Balance"
 msgstr "平衡"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Max"
 msgstr "最大限度"
 

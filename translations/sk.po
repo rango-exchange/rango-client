@@ -8,7 +8,7 @@ msgstr ""
 "Language: sk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-03 07:31\n"
+"PO-Revision-Date: 2025-09-22 07:22\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: sk\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Táto peňaženka sa môže pripojiť iba k jednému reťazcu naraz."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "V súčasnosti sú niektoré transakcie spustené a spracovávané inou 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Potvrďte"
@@ -134,22 +139,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adresa {destination} sa nezhoduje so vzorom adresy blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
 msgid "via"
 msgstr "cez"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Tento token nie je súčasťou nášho zoznamu overených tokenov. overte si jeho zdroj a pred pokračovaním sa uistite, že rozumiete všetkým súvisiacim rizikám."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
 msgid "Import Anyway"
 msgstr "Napriek tomu importovať"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
 msgid "Learn More"
 msgstr "Zistite viac"
 
@@ -252,37 +257,37 @@ msgid "(Currently not supported)"
 msgstr "(Momentálne nie je podporované)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
 msgstr "Chyba sklzu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:154
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
 msgstr "Upozornenie na sklz"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:157
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
 msgstr "Chyba limitu mosta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:245
+#: widget/embedded/src/components/Quote/Quote.tsx:242
 msgid "Yours: {amount} {symbol}"
 msgstr "Váš: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
+#: widget/embedded/src/components/Quote/Quote.tsx:263
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "Minimálny odporúčaný sklz: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:287
+#: widget/embedded/src/components/Quote/Quote.tsx:284
 msgid "Yours: {userSlippage}"
 msgstr "Váš: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:425
+#: widget/embedded/src/components/Quote/Quote.tsx:431
 msgid "See All Routes"
 msgstr "Pozrite si všetky trasy"
 
@@ -298,7 +303,7 @@ msgstr "Vysvetlenie plynu a poplatkov"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Podrobnosti"
 
@@ -380,22 +385,22 @@ msgid "Maximum Output"
 msgstr "Maximálny výkon"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
 msgid "Swapping"
 msgstr "Výmena"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:45
 msgid "Gas cost"
 msgstr "Náklady na plyn"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:53
 msgid "Receiving"
 msgstr "Prijímanie"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:57
 msgid "Price impact"
 msgstr "Vplyv na cenu"
 
@@ -600,7 +605,7 @@ msgstr "Odstrániť"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
 msgid "Try again"
 msgstr "Skúste to znova"
 
@@ -612,8 +617,8 @@ msgstr "Zobraziť transakciu"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "Pripojte sa"
@@ -624,24 +629,24 @@ msgid "Swap Successful"
 msgstr "Výmena bola úspešná"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:82
 msgid "Transaction Failed"
 msgstr "Transakcia zlyhala"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
 msgid "Done"
 msgstr "Hotovo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:123
 msgid "Diagnosis"
 msgstr "Diagnóza"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:135
 msgid "See Details"
 msgstr "Pozri Podrobnosti"
 
@@ -668,8 +673,8 @@ msgstr "Nie, pokračovať"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Pripojiť {wallet}"
@@ -735,67 +740,67 @@ msgid "Select Token"
 msgstr "Vyberte položku Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Wallet Connected"
 msgstr "Peňaženka je pripojená"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Vaša peňaženka je pripojená, môžete ju použiť na výmenu."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
 msgid "Failed to Connect"
 msgstr "Nepodarilo sa pripojiť"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
 msgid "Your wallet is not connected. Please try again."
 msgstr "Vaša peňaženka nie je pripojená. Skúste to znova."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Connecting to your wallet"
 msgstr "Pripojenie k vašej peňaženke"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
 msgid "Click connect in your wallet popup."
 msgstr "Vo vyskakovacom okne peňaženky kliknite na Pripojiť."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
 msgid "Select Derivation Path"
 msgstr "Vyberte cestu odvodenia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Ak sa chcete pripojiť k {type}, musíte najprv vybrať cestu odvodenia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
 msgid "Choose Derivation Path Template"
 msgstr "Vyberte možnosť Šablóna odvodenej cesty"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
 msgid "Enter Path"
 msgstr "Zadajte cestu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
 msgid "Enter Index"
 msgstr "Zadajte index"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Táto peňaženka podporuje viacero reťazcov. Vyberte si, ktoré reťazce chcete pripojiť alebo odpojiť."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
 msgid "Disconnect wallet"
 msgstr "Odpojiť peňaženku"
 
@@ -836,29 +841,29 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Odmietli ste pridať reťazec {blockchainDisplayName} do vašej peňaženky."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Odpojiť"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Táto peňaženka podporuje viacero reťazcov. Vyberte si, ktoré reťazce chcete prepojiť."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Táto peňaženka sa môže pripojiť iba k jednému reťazcu naraz. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Zrušte výber všetkých"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Vybrať všetko"
@@ -1387,18 +1392,18 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:83
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:117
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Vymeňte na {fromChain} cez {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:90
 msgid "Bridge from {fromChain} via {swapper}"
 msgstr "Most z {fromChain} cez {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:124
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Most na {toChain} cez {swapper}"
 
@@ -1413,12 +1418,12 @@ msgid "In progress"
 msgstr "Prebieha"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:140
 msgid "Waiting for the swap transaction"
 msgstr "Čakanie na swapovú transakciu"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:141
 msgid "Waiting for the bridge transaction"
 msgstr "Čakanie na premosťovaciu transakciu"
 
@@ -1469,12 +1474,12 @@ msgid "Clear all"
 msgstr "Vymazať všetko"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:57
 msgid "Balance"
 msgstr "Zostatok"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Max"
 msgstr "Max"
 

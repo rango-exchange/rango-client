@@ -1,4 +1,5 @@
 import { styled } from '../../theme.js';
+import { Typography } from '../Typography/Typography.js';
 
 export const TokenContainer = styled('div', {
   display: 'flex',
@@ -61,9 +62,9 @@ export const LayoutLoading = styled('div', {
 });
 
 export const IconLoading = styled('div', {
-  display: 'flex',
   width: '$24',
   height: '$24',
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 });
@@ -73,4 +74,18 @@ export const LoadingContainer = styled('div', {
   padding: 0,
   alignItems: 'center',
   gap: 25,
+});
+
+export const TokenNameText = styled(Typography, {
+  maxWidth: '97px',
+});
+
+export const AmountText = styled(Typography, {
+  maxWidth: '$48',
+});
+
+export const FlexCenteredContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 });

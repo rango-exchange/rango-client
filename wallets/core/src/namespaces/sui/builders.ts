@@ -1,7 +1,13 @@
-import type { SuiActions } from './types.js';
+import type {
+  ChangeAccountSubscriberParams,
+  ProviderAPI,
+  SuiActions,
+} from './types.js';
+import type { WalletAccount } from '@mysten/wallet-standard';
 
 import { ActionBuilder } from '../../mod.js';
 import { CAIP } from '../../utils/mod.js';
+import { ChangeAccountSubscriberBuilder } from '../common/hooks/changeAccountSubscriber.js';
 import {
   type CaipAccount,
   connectAndUpdateStateForSingleNetwork,
@@ -10,8 +16,9 @@ import {
 } from '../common/mod.js';
 
 import { CAIP_NAMESPACE, CAIP_SUI_CHAIN_ID } from './constants.js';
-import { getInstanceOrThrow } from './utils.js';
+import { formatAccountsToCAIP, getInstanceOrThrow } from './utils.js';
 
+// Actions
 interface ConnectParams {
   name: string;
 }
@@ -42,3 +49,27 @@ export const connect = (params: ConnectParams) =>
 
 export const canEagerConnect = () =>
   new ActionBuilder<SuiActions, 'canEagerConnect'>('canEagerConnect');
+
+// Hooks
+export const changeAccountSubscriber = (
+  params: ChangeAccountSubscriberParams
+) =>
+  new ChangeAccountSubscriberBuilder<
+    { accounts: readonly WalletAccount[] },
+    ProviderAPI
+  >()
+    .getInstance(() => getInstanceOrThrow(params.name))
+    .validateEventPayload(
+      (event) =>
+        /*
+         * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
+         * A null value indicates no access to the account, requiring a disconnect and user reconnection.
+         */
+
+        event.accounts?.length !== 0
+    )
+    .format(async (_, event) => formatAccountsToCAIP(event.accounts))
+    .addEventListener((instance, callback) =>
+      instance.features['standard:events'].on('change', callback)
+    )
+    .removeEventListener((_, __) => {});

@@ -8,7 +8,7 @@ msgstr ""
 "Language: el\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-03 07:31\n"
+"PO-Revision-Date: 2025-09-22 07:22\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Αυτό το πορτοφόλι μπορεί να συνδεθεί μόνο σε μία αλυσίδα κάθε φορά."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "Επί του παρόντος, ορισμένες συναλλαγές 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Επιβεβαίωση"
@@ -134,22 +139,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Διεύθυνση {destination} δεν ταιριάζει με το μοτίβο διευθύνσεων blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
 msgid "via"
 msgstr "μέσω"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Αυτό το διακριτικό δεν αποτελεί μέρος της λίστας επαληθευμένων κουπονιών μας. Επαληθεύστε την πηγή του και βεβαιωθείτε ότι έχετε κατανοήσει όλους τους σχετικούς κινδύνους πριν προχωρήσετε."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
 msgid "Import Anyway"
 msgstr "Εισαγωγή πάντως"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
 msgid "Learn More"
 msgstr "Μάθετε περισσότερα"
 
@@ -252,37 +257,37 @@ msgid "(Currently not supported)"
 msgstr "(Προς το παρόν δεν υποστηρίζεται)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
 msgstr "Σφάλμα Ολίσθησης"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:154
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
 msgstr "Προειδοποίηση Ολίσθησης"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:157
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
 msgstr "Σφάλμα Ορίου Γέφυρας"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:245
+#: widget/embedded/src/components/Quote/Quote.tsx:242
 msgid "Yours: {amount} {symbol}"
 msgstr "Δικά σας: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
+#: widget/embedded/src/components/Quote/Quote.tsx:263
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "Ελάχιστη προτεινόμενη απόκλιση: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:287
+#: widget/embedded/src/components/Quote/Quote.tsx:284
 msgid "Yours: {userSlippage}"
 msgstr "Δικά σας: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:425
+#: widget/embedded/src/components/Quote/Quote.tsx:431
 msgid "See All Routes"
 msgstr "Δείτε Όλες Τις Διαδρομές"
 
@@ -298,7 +303,7 @@ msgstr "Εξήγηση Αερίου & Χρέους"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Λεπτομέρειες"
 
@@ -380,22 +385,22 @@ msgid "Maximum Output"
 msgstr "Μέγιστη Έξοδος"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
 msgid "Swapping"
 msgstr "Swapping"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:45
 msgid "Gas cost"
 msgstr "Κόστος αερίου"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:53
 msgid "Receiving"
 msgstr "Λήψη"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:57
 msgid "Price impact"
 msgstr "Αντίκτυπος τιμής"
 
@@ -600,7 +605,7 @@ msgstr "Διαγραφή"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
 msgid "Try again"
 msgstr "Προσπαθήστε ξανά"
 
@@ -612,8 +617,8 @@ msgstr "Προβολή συναλλαγής"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "Σύνδεση"
@@ -624,24 +629,24 @@ msgid "Swap Successful"
 msgstr "Swap Επιτυχής"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:82
 msgid "Transaction Failed"
 msgstr "Η Συναλλαγή Απέτυχε"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
 msgid "Done"
 msgstr "Ολοκληρώθηκε"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:123
 msgid "Diagnosis"
 msgstr "Διάγνωση"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:135
 msgid "See Details"
 msgstr "Δείτε Λεπτομέρειες"
 
@@ -668,8 +673,8 @@ msgstr "Όχι, Συνέχεια"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Σύνδεση {wallet}"
@@ -735,67 +740,67 @@ msgid "Select Token"
 msgstr "Επιλογή Διακριτικού"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Wallet Connected"
 msgstr "Συνδεδεμένο Πορτοφόλι"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Το πορτοφόλι σας είναι συνδεδεμένο, μπορείτε να το χρησιμοποιήσετε για ανταλλαγή."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
 msgid "Failed to Connect"
 msgstr "Αποτυχία σύνδεσης"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
 msgid "Your wallet is not connected. Please try again."
 msgstr "Το πορτοφόλι σας δεν είναι συνδεδεμένο. Παρακαλώ δοκιμάστε ξανά."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Connecting to your wallet"
 msgstr "Σύνδεση στο πορτοφόλι σας"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
 msgid "Click connect in your wallet popup."
 msgstr "Κάντε κλικ στη σύνδεση στο αναδυόμενο παράθυρο του πορτοφολιού."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
 msgid "Select Derivation Path"
 msgstr "Επιλέξτε Διαδρομή Παραγωγής"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Για να συνδεθείτε στο {type}, πρέπει πρώτα να επιλέξετε μια Διαδρομή Παραγωγής"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
 msgid "Choose Derivation Path Template"
 msgstr "Επιλέξτε Πρότυπο Διαδρομής Παραγωγής"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
 msgid "Enter Path"
 msgstr "Εισαγωγή Διαδρομής"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
 msgid "Enter Index"
 msgstr "Εισαγωγή Ευρετηρίου"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Αυτό το πορτοφόλι υποστηρίζει πολλαπλές αλυσίδες. Επιλέξτε ποιες αλυσίδες θέλετε να συνδέσετε ή να αποσυνδέσετε."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
 msgid "Disconnect wallet"
 msgstr "Αποσύνδεση πορτοφολιού"
 
@@ -836,29 +841,29 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Απορρίψατε την προσθήκη αλυσίδας {blockchainDisplayName} στο πορτοφόλι σας."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Αποσύνδεση"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Αυτό το πορτοφόλι υποστηρίζει πολλαπλές αλυσίδες. Επιλέξτε ποιες αλυσίδες θέλετε να συνδέσετε."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Αυτό το πορτοφόλι μπορεί να συνδεθεί μόνο σε μία αλυσίδα κάθε φορά. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Αποεπιλογή όλων"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Επιλογή όλων"
@@ -1387,18 +1392,18 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:83
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:117
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Εναλλαγή στο {fromChain} μέσω {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:90
 msgid "Bridge from {fromChain} via {swapper}"
 msgstr "Γέφυρα από {fromChain} μέσω {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:124
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Γέφυρα στο {toChain} μέσω {swapper}"
 
@@ -1413,12 +1418,12 @@ msgid "In progress"
 msgstr "Σε εξέλιξη"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:140
 msgid "Waiting for the swap transaction"
 msgstr "Αναμονή για τη συναλλαγή ανταλλαγής"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:141
 msgid "Waiting for the bridge transaction"
 msgstr "Αναμονή για τη συναλλαγή γέφυρας"
 
@@ -1469,12 +1474,12 @@ msgid "Clear all"
 msgstr "Εκκαθάριση όλων"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:57
 msgid "Balance"
 msgstr "Υπόλοιπο"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Max"
 msgstr "Μέγιστο"
 

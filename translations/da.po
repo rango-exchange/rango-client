@@ -8,7 +8,7 @@ msgstr ""
 "Language: da\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-03 07:31\n"
+"PO-Revision-Date: 2025-09-22 07:22\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: da\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Denne tegnebog kan kun oprette forbindelse til én kæde ad gangen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "I øjeblikket kører nogle transaktioner og håndteres af en anden brows
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Bekræfte"
@@ -134,22 +139,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adressen {destination} matcher ikke blockchain-adressemønsteret."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
 msgid "via"
 msgstr "via"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Dette token er ikke en del af vores bekræftede token-liste. bekræft venligst kilden og sørg for at forstå alle tilknyttede risici, før du fortsætter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
 msgid "Import Anyway"
 msgstr "Importer alligevel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
 msgid "Learn More"
 msgstr "Lær mere"
 
@@ -252,37 +257,37 @@ msgid "(Currently not supported)"
 msgstr "(Understøttes i øjeblikket ikke)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
 msgstr "Skridningsfejl"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:154
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
 msgstr "Advarsel om glidning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:157
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
 msgstr "Brogrænsefejl"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:245
+#: widget/embedded/src/components/Quote/Quote.tsx:242
 msgid "Yours: {amount} {symbol}"
 msgstr "Dine: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
+#: widget/embedded/src/components/Quote/Quote.tsx:263
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "Minimum foreslået glidning: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:287
+#: widget/embedded/src/components/Quote/Quote.tsx:284
 msgid "Yours: {userSlippage}"
 msgstr "Dine: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:425
+#: widget/embedded/src/components/Quote/Quote.tsx:431
 msgid "See All Routes"
 msgstr "Se alle ruter"
 
@@ -298,7 +303,7 @@ msgstr "Gas & gebyrforklaring"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Detaljer"
 
@@ -380,22 +385,22 @@ msgid "Maximum Output"
 msgstr "Maksimal output"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
 msgid "Swapping"
 msgstr "Bytte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:45
 msgid "Gas cost"
 msgstr "Gas omkostninger"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:53
 msgid "Receiving"
 msgstr "Modtager"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:57
 msgid "Price impact"
 msgstr "Prispåvirkning"
 
@@ -600,7 +605,7 @@ msgstr "Slet"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
 msgid "Try again"
 msgstr "Prøv igen"
 
@@ -612,8 +617,8 @@ msgstr "Se transaktion"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "Forbinde"
@@ -624,24 +629,24 @@ msgid "Swap Successful"
 msgstr "Swap vellykket"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:82
 msgid "Transaction Failed"
 msgstr "Transaktion mislykkedes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
 msgid "Done"
 msgstr "Færdig"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:123
 msgid "Diagnosis"
 msgstr "Diagnose"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:135
 msgid "See Details"
 msgstr "Se detaljer"
 
@@ -668,8 +673,8 @@ msgstr "Nej, fortsæt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Forbind {wallet}"
@@ -735,67 +740,67 @@ msgid "Select Token"
 msgstr "Vælg Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Wallet Connected"
 msgstr "Tegnebog tilsluttet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Din tegnebog er tilsluttet, du kan bruge den til at bytte."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
 msgid "Failed to Connect"
 msgstr "Kunne ikke oprette forbindelse"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
 msgid "Your wallet is not connected. Please try again."
 msgstr "Din tegnebog er ikke tilsluttet. Prøv venligst igen."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Connecting to your wallet"
 msgstr "Tilslutning til din tegnebog"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
 msgid "Click connect in your wallet popup."
 msgstr "Klik på tilslut i din tegnebogs popup."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
 msgid "Select Derivation Path"
 msgstr "Vælg Afledningssti"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "For at oprette forbindelse til {type}skal du først vælge en afledningssti"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
 msgid "Choose Derivation Path Template"
 msgstr "Vælg Afledningsstiskabelon"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
 msgid "Enter Path"
 msgstr "Indtast sti"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
 msgid "Enter Index"
 msgstr "Indtast indeks"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Denne tegnebog understøtter flere kæder. Vælg hvilke kæder du vil forbinde eller afbryde."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
 msgid "Disconnect wallet"
 msgstr "Afbryd tegnebogen"
 
@@ -836,29 +841,29 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Du har afvist at tilføje {blockchainDisplayName} -kæden til din tegnebog."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Afbryde"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Denne tegnebog understøtter flere kæder. Vælg hvilke kæder du vil forbinde."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Denne tegnebog kan kun oprette forbindelse til én kæde ad gangen. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Fravælg alle"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Vælg alle"
@@ -1387,18 +1392,18 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:83
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:117
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Byt på {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:90
 msgid "Bridge from {fromChain} via {swapper}"
 msgstr "Bro fra {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:124
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Bro til {toChain} via {swapper}"
 
@@ -1413,12 +1418,12 @@ msgid "In progress"
 msgstr "I gang"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:140
 msgid "Waiting for the swap transaction"
 msgstr "Venter på byttetransaktionen"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:141
 msgid "Waiting for the bridge transaction"
 msgstr "Venter på brotransaktionen"
 
@@ -1469,12 +1474,12 @@ msgid "Clear all"
 msgstr "Ryd alle"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:57
 msgid "Balance"
 msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Max"
 msgstr "Maks"
 

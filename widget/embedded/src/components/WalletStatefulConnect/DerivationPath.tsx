@@ -82,7 +82,6 @@ export function DerivationPath(props: PropTypes) {
 
   return (
     <>
-      <Divider size={20} />
       <MessageBox
         type="info"
         title={i18n.t('Select Derivation Path')}
@@ -95,8 +94,12 @@ export function DerivationPath(props: PropTypes) {
         icon={<Image src={image} size={45} />}
       />
 
-      <InputsContainer>
-        <InputLabel variant="body" size="xsmall" color="$neutral600">
+      <InputsContainer className="_derivation_path_inputs_container">
+        <InputLabel
+          variant="body"
+          size="xsmall"
+          color="$neutral600"
+          className="_derivation_path_input_label">
           {i18n.t('Choose Derivation Path Template')}
         </InputLabel>
         <Select
@@ -111,7 +114,11 @@ export function DerivationPath(props: PropTypes) {
           styles={{ trigger: derivationPathInputStyles }}
         />
         <Divider size={20} />
-        <InputLabel variant="body" size="xsmall" color="$neutral600">
+        <InputLabel
+          variant="body"
+          size="xsmall"
+          color="$neutral600"
+          className="_derivation_path_input_label">
           {isCustomOptionSelected
             ? i18n.t('Enter Path')
             : i18n.t('Enter Index')}

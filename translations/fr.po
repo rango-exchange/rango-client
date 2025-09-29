@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-03 07:31\n"
+"PO-Revision-Date: 2025-09-22 07:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Ce portefeuille ne peut se connecter qu'à une seule chaîne à la fois."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "Actuellement, certaines transactions sont en cours d'exécution et sont 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:136
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Valider"
@@ -134,22 +139,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "L'adresse {destination} ne correspond pas au modèle d'adresse blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:65
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
 msgid "via"
 msgstr "via"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:80
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Ce jeton ne fait pas partie de notre liste de jetons vérifiés. Veuillez vérifier sa source et assurez-vous de comprendre tous les risques associés avant de continuer."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:95
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
 msgid "Import Anyway"
 msgstr "Importer quand même"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:105
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
 msgid "Learn More"
 msgstr "Apprendre encore plus"
 
@@ -252,37 +257,37 @@ msgid "(Currently not supported)"
 msgstr "(Actuellement non pris en charge)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Error"
 msgstr "Erreur de Slippage"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:154
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Warning"
 msgstr "Avertissement de Slippage"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:157
+#: widget/embedded/src/components/Quote/Quote.tsx:153
 msgid "Bridge Limit Error"
 msgstr "Erreur de limite de pont"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:245
+#: widget/embedded/src/components/Quote/Quote.tsx:242
 msgid "Yours: {amount} {symbol}"
 msgstr "Vous: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:266
+#: widget/embedded/src/components/Quote/Quote.tsx:263
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "Glissement minimum suggéré : {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:287
+#: widget/embedded/src/components/Quote/Quote.tsx:284
 msgid "Yours: {userSlippage}"
 msgstr "Votre: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:425
+#: widget/embedded/src/components/Quote/Quote.tsx:431
 msgid "See All Routes"
 msgstr "Voir toutes les routes"
 
@@ -298,7 +303,7 @@ msgstr "Explication du gaz et des frais"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:132
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Détails du produit"
 
@@ -380,22 +385,22 @@ msgid "Maximum Output"
 msgstr "Sortie maximale"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
 msgid "Swapping"
 msgstr "Swapping"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:51
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:45
 msgid "Gas cost"
 msgstr "Coût du gaz"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:59
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:53
 msgid "Receiving"
 msgstr "Réception en cours"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:67
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:57
 msgid "Price impact"
 msgstr "Impact des prix"
 
@@ -600,7 +605,7 @@ msgstr "Supprimez"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:414
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:71
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
 msgid "Try again"
 msgstr "Réessayez"
 
@@ -612,8 +617,8 @@ msgstr "Voir la transaction"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:171
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
 msgid "Connect"
 msgstr "Connecter"
@@ -624,24 +629,24 @@ msgid "Swap Successful"
 msgstr "Echange Réussi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:81
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:82
 msgid "Transaction Failed"
 msgstr "La transaction a échoué"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:109
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:66
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
 msgid "Done"
 msgstr "Fait"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:122
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:123
 msgid "Diagnosis"
 msgstr "Diagnostic"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:134
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:135
 msgid "See Details"
 msgstr "Voir les détails"
 
@@ -668,8 +673,8 @@ msgstr "Non, continuer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:25
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Connecter {wallet}"
@@ -735,67 +740,67 @@ msgid "Select Token"
 msgstr "Sélectionner un jeton"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:27
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
 msgid "Wallet Connected"
 msgstr "Portefeuille connecté"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Votre portefeuille est connecté, vous pouvez l'utiliser pour échanger."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:39
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
 msgid "Failed to Connect"
 msgstr "Échec de la connexion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:41
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
 msgid "Your wallet is not connected. Please try again."
 msgstr "Votre portefeuille n'est pas connecté. Veuillez réessayer."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:50
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
 msgid "Connecting to your wallet"
 msgstr "Connexion à votre portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
 msgid "Click connect in your wallet popup."
 msgstr "Cliquez sur se connecter dans la fenêtre pop-up de votre portefeuille."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
 msgid "Select Derivation Path"
 msgstr "Sélectionner le chemin de dérivation"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:89
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Pour vous connecter à {type}, vous devez d'abord sélectionner un chemin de dérivation"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:100
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
 msgid "Choose Derivation Path Template"
 msgstr "Choisir le modèle de chemin de dérivation"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:116
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
 msgid "Enter Path"
 msgstr "Entrez le chemin d'accès"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:117
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
 msgid "Enter Index"
 msgstr "Entrer l'index"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Ce portefeuille prend en charge plusieurs chaînes. Choisissez celles que vous souhaitez connecter ou déconnecter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
 msgid "Disconnect wallet"
 msgstr "Déconnecter le portefeuille"
 
@@ -836,29 +841,29 @@ msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Vous avez rejeté l'ajout de la chaîne {blockchainDisplayName} à votre portefeuille."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:68
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Déconnecter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Ce portefeuille prend en charge plusieurs chaînes. Choisissez celles que vous souhaitez connecter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Ce portefeuille ne peut se connecter qu'à une seule chaîne à la fois. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:139
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Désélectionner tout"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:140
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Tout sélectionner"
@@ -1387,18 +1392,18 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:80
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:114
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:83
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:117
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Échanger sur {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:87
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:90
 msgid "Bridge from {fromChain} via {swapper}"
 msgstr "Pont de {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:121
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:124
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Pont vers {toChain} via {swapper}"
 
@@ -1413,12 +1418,12 @@ msgid "In progress"
 msgstr "En cours"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:114
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:140
 msgid "Waiting for the swap transaction"
 msgstr "En attente de la transaction d'échange"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:115
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:141
 msgid "Waiting for the bridge transaction"
 msgstr "En attente de la transaction de pont"
 
@@ -1469,12 +1474,12 @@ msgid "Clear all"
 msgstr "Effacer tout"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:57
 msgid "Balance"
 msgstr "Solde"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:75
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:66
 msgid "Max"
 msgstr "Max."
 

@@ -138,7 +138,8 @@ const namespacesStore: NamespaceStateCreator = (set, get) => ({
           get().namespaces.events.push(event);
         } else {
           const areSameAccounts =
-            currentAccounts.sort().toString() ===
+            // Clone the object from the Zustand store, as it's immutable, to avoid errors during sorting.
+            [...currentAccounts].sort().toString() ===
             (value as string[]).sort().toString();
 
           if (!areSameAccounts) {

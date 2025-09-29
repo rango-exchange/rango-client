@@ -5,13 +5,18 @@ export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'end',
   alignItems: 'center',
+  overflow: 'hidden',
+  minWidth: 0,
 });
 
 export const ValueTypography = styled('div', {
   display: 'flex',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+  '& .output-usd-value': {
+    flex: '1 1 auto',
+    minWidth: 0,
+    flexShrink: 1,
+    maxWidth: '100%',
+  },
   '& ._typography': {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {

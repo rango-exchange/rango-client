@@ -1,0 +1,41 @@
+name: Production Release
+on:
+  workflow_dispatch:
+
+jobs:
+  sync-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+      - name: Prepare
+        uses: ./.github/actions/prepare
+      - name: Run Sync Prod
+        uses: ./.github/actions/sync-branch
+        with:
+          prod: true
+
+  publish:
+    needs: sync-prod
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
+
+  deploy:
+    needs: publish
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    
+  sync-next:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+      - name: Prepare
+        uses: ./.github/actions/prepare
+      - name: Run Sync Next
+        uses: ./.github/actions/sync-branch

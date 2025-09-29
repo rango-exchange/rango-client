@@ -25,12 +25,6 @@ export const quoteSummaryItemStyles = css({
   alignItems: 'center',
 });
 
-export const tokenAmountStyles = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-});
-
 export const costStyles = css({
   paddingTop: '$15',
   display: 'flex',

@@ -14,7 +14,7 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
 
   return (
     <Container id={id}>
-      <IconHighlight type={type}>
+      <IconHighlight type={type} className="_message_box_icon_container">
         {icon || <StatusIcon type={type} />}
       </IconHighlight>
       <Divider size={4} />

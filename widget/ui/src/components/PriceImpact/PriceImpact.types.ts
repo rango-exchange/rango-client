@@ -11,6 +11,8 @@ export type PriceImpactPropTypes = {
   error?: string;
   percentageChange?: string | null;
   warningLevel?: PriceImpactWarningLevel;
+  style?: React.CSSProperties;
+  className?: string;
   tooltipProps?: {
     container?: TooltipPropTypes['container'];
     side?: TooltipPropTypes['side'];

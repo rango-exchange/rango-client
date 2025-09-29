@@ -2,10 +2,14 @@ import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { ProviderContext, Providers } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
+import type {
+  Accounts,
+  AccountsWithActiveChain,
+} from '@rango-dev/wallets-core/namespaces/common';
 import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { utils } from '@rango-dev/wallets-core/namespaces/evm';
-import { type WalletInfo } from '@rango-dev/wallets-shared';
+import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -23,6 +27,8 @@ import { useHubRefs } from './useHubRefs.js';
 import {
   getLegacyProvider,
   getSupportedChainsFromProvider,
+  isEvmNamespace,
+  isSolanaNamespace,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -43,6 +49,21 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
+
+  /*
+   * Params of each connection attempt for each wallet type are stored here.
+   * Derivation path from params is used in `mapHubEventsToLegacy` to be added to the payload of connect events.
+   */
+  const lastConnectAttemptParamsRef = useRef<{
+    [type: WalletType]: LegacyNamespaceInputForConnect[];
+  }>({});
+
+  const updateLastConnectAttemptParams = (
+    type: WalletType,
+    namespaces: LegacyNamespaceInputForConnect[] | undefined
+  ) => {
+    lastConnectAttemptParamsRef.current[type] = namespaces || [];
+  };
 
   const queueTask = createQueue({
     onError: (error, actions) => {
@@ -100,7 +121,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               getHub(),
               event,
               dataRef.current.onUpdateState,
-              dataRef.current.allBlockChains
+              {
+                allBlockChains: dataRef.current.allBlockChains,
+                lastConnectAttemptParams: lastConnectAttemptParamsRef.current,
+              }
             );
           } catch (e) {
             console.error(e);
@@ -190,6 +214,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         throw new Error('Passing namespace to `connect` is required.');
       }
 
+      updateLastConnectAttemptParams(type, namespaces);
+
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
       const targetNamespaces: [
         LegacyNamespaceInputForConnect,
@@ -216,14 +242,26 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             params.allBlockChains || []
           );
 
-          /*
-           * `connect` can have different interfaces (e.g. Solana -> .connect(), EVM -> .connect("0x1") ),
-           * our assumption here is all the `connect` hasn't chain or if they have, they will accept it in first argument.
-           * By this assumption, always passing a chain should be problematic since it will be ignored if the namespace's `connect` hasn't chain.
-           */
+          let connectNamespacePromise: () => Promise<
+            Accounts | string | AccountsWithActiveChain
+          >;
+
+          if (isSolanaNamespace(namespace)) {
+            connectNamespacePromise = async () =>
+              namespace.connect({
+                derivationPath: namespaceInput.derivationPath,
+              });
+          } else if (isEvmNamespace(namespace)) {
+            connectNamespacePromise = async () =>
+              namespace.connect(network, {
+                derivationPath: namespaceInput.derivationPath,
+              });
+          } else {
+            connectNamespacePromise = async () => namespace.connect();
+          }
+
           const connectNamespaceProcess = async () =>
-            namespace
-              .connect(network)
+            connectNamespacePromise()
               .then<ConnectResult>(transformHubResultToLegacyResult)
               .then((connectResult) => {
                 return {

@@ -196,17 +196,6 @@ export const rowStyles = css({
     marginLeft: '-$8',
   },
 });
-export const basicInfoStyles = css({
-  display: 'flex',
-  alignItems: 'center',
-  '.usd-value': {
-    $$color: '$colors$neutral600',
-    [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral700',
-    },
-    color: '$$color',
-  },
-});
 
 export const Trigger = styled(Collapsible.Trigger, {
   display: 'flex',
@@ -343,23 +332,28 @@ export const HorizontalSeparator = styled('div', {
   borderColor: '$$color',
 });
 
-export const FrameIcon = styled('div', {
-  width: '$16',
-  height: '$16',
-  justifyContent: 'center',
-  alignItems: 'center',
+export const BasicInfoOutput = styled('div', {
   display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: '$2',
+  flex: '1 1 auto',
+  minWidth: 0,
 });
 
-export const BasicInfoOutput = styled(Typography, {
+export const TokenNameText = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  letterSpacing: 0.4,
+  whiteSpace: 'nowrap',
+  maxWidth: '$30',
 });
 
-export const ContainerInfoOutput = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
+export const AmountText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  minWidth: 0,
+  flex: '0 1 auto',
 });
 
 export const MoreStep = styled('div', {
@@ -395,4 +389,13 @@ export const Line = styled('div', {
   [`.${darkTheme} &`]: {
     borderTopColor: '$neutral800',
   },
+});
+
+export const UsdValueText = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  flex: '0 1 auto',
+  minWidth: 0,
+  flexShrink: 3,
 });

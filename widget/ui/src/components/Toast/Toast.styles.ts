@@ -333,6 +333,8 @@ export const AlertFlexContainer = styled('div', {
 });
 
 export const StyledTypography = styled(Typography, {
+  overflowWrap: 'break-word',
+  wordBreak: 'break-word',
   variants: {
     hasColor: {
       false: {

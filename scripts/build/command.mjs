@@ -1,18 +1,16 @@
 import commandLineArgs from 'command-line-args';
 import * as esbuild from 'esbuild';
 import { $ } from 'execa';
-import { join } from 'path';
 import process from 'process';
 import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import {
   packageJson,
   packageNameWithoutScope,
-  printDirname,
 } from '../common/utils.mjs';
 import fs from 'fs/promises';
 import { BUILD_META_FILE_SUFFIX } from '../common/constants.mjs';
+import { packagePath } from '../common/path.mjs';
 
-const root = join(printDirname(), '..', '..');
 
 async function run() {
   const optionDefinitions = [
@@ -45,7 +43,7 @@ async function run() {
       'You should only use one of `external` or `external-all-except` at the sametime.'
     );
 
-  const pkgPath = `${root}/${path}`;
+  const pkgPath = packagePath(path);
   const pkg = packageJson(path);
   const packageName = packageNameWithoutScope(pkg.name);
 

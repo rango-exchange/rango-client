@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-unisat",
-  "version": "0.6.0",
+  "version": "0.6.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.49.0",
-    "@rango-dev/wallets-shared": "^0.50.0",
+    "@rango-dev/wallets-core": "^0.49.1-next.4",
+    "@rango-dev/wallets-shared": "^0.50.1-next.4",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.1.89"
   },

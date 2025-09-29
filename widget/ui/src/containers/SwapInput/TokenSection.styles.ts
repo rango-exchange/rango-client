@@ -114,3 +114,10 @@ export const SymbolTooltipContent = styled(Typography, {
   maxWidth: 217,
   lineBreak: 'anywhere',
 });
+
+export const BlockChainTypography = styled(Typography, {
+  maxWidth: 96,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});

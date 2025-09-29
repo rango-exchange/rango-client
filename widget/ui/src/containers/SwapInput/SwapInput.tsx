@@ -23,8 +23,6 @@ import {
   MaxButton,
   textStyles,
   TokenSectionContainer,
-  UsdPrice,
-  ValueTypography,
 } from './SwapInput.styles.js';
 import { TokenSection } from './TokenSection.js';
 
@@ -39,13 +37,6 @@ export function SwapInput(props: SwapInputPropTypes) {
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
   const price = props.price;
-
-  const isUsdValueZeroOrFalsy =
-    !props.price.usdValue || props.price.usdValue === '0';
-
-  const displayUsdValue =
-    props.price.error ||
-    (isUsdValueZeroOrFalsy ? '0.00' : `~$${props.price.usdValue}`);
 
   return (
     <Container
@@ -144,32 +135,24 @@ export function SwapInput(props: SwapInputPropTypes) {
                   })}
                 />
               </NumericTooltip>
-              {'percentageChange' in props ? (
-                <PriceImpact
-                  size="medium"
-                  tooltipProps={{
-                    container: props.tooltipContainer,
-                    side: 'bottom',
-                  }}
-                  outputUsdValue={price.usdValue}
-                  realOutputUsdValue={price.realUsdValue}
-                  error={price.error}
-                  percentageChange={props.percentageChange}
-                  warningLevel={props.warningLevel}
-                />
-              ) : (
-                <NumericTooltip
-                  content={price.realUsdValue}
-                  container={props.tooltipContainer}
-                  open={isUsdValueZeroOrFalsy ? false : undefined}
-                  side="bottom">
-                  <ValueTypography hasWarning={!!price.error}>
-                    <UsdPrice variant="body" size="medium">
-                      {displayUsdValue}
-                    </UsdPrice>
-                  </ValueTypography>
-                </NumericTooltip>
-              )}
+              <PriceImpact
+                size="medium"
+                tooltipProps={{
+                  container: props.tooltipContainer,
+                  side: 'bottom',
+                }}
+                outputUsdValue={price.usdValue}
+                realOutputUsdValue={price.realUsdValue}
+                percentageChange={
+                  'percentageChange' in props
+                    ? props.percentageChange
+                    : undefined
+                }
+                warningLevel={
+                  'percentageChange' in props ? props.warningLevel : undefined
+                }
+                error={price.error}
+              />
             </>
           )}
         </div>

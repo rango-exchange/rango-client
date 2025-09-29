@@ -1,10 +1,15 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { Hub, Provider } from '@rango-dev/wallets-core';
+import type { Hub, Provider, ProxiedNamespace } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
+import type { CosmosActions } from '@rango-dev/wallets-core/namespaces/cosmos';
+import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
+import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
+import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
+import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { Event } from '@rango-dev/wallets-core/store';
 
 import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
@@ -13,6 +18,7 @@ import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
+  type WalletType,
 } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
@@ -88,7 +94,12 @@ export function mapHubEventsToLegacy(
   hub: Hub,
   event: Event,
   onUpdateState: WalletEventHandler,
-  allBlockChains: ProviderProps['allBlockChains']
+  metadata: {
+    allBlockChains: ProviderProps['allBlockChains'];
+    lastConnectAttemptParams: {
+      [type: WalletType]: LegacyNamespaceInputForConnect[];
+    };
+  }
 ): void {
   const provider = hub.get(event.provider);
   if (!provider) {
@@ -108,11 +119,18 @@ export function mapHubEventsToLegacy(
     : undefined;
   let accounts: string[] | null = null;
   let network: string | null = null;
+  let derivationPath: string | undefined;
 
   if (namespace) {
     const [getNamespaceState] = namespace.state();
     accounts = getNamespaceState().accounts;
     network = getNamespaceState().network;
+
+    if (metadata.lastConnectAttemptParams[event.provider]) {
+      derivationPath = metadata.lastConnectAttemptParams[event.provider].find(
+        (namespace) => namespace.namespace === namespaceId
+      )?.derivationPath;
+    }
   }
 
   const [getProviderState] = provider.state();
@@ -123,12 +141,13 @@ export function mapHubEventsToLegacy(
     accounts,
     network,
     reachable: true,
+    derivationPath,
   };
 
   const eventInfo = {
     supportedBlockchains: getSupportedChainsFromProvider(
       provider,
-      allBlockChains
+      metadata.allBlockChains
     ),
     isContractWallet: false,
     isHub: true,
@@ -369,4 +388,19 @@ export function synchronizeHubWithConfigProviders(
       hub.remove(registeredProvider.id);
     }
   });
+}
+
+export function isSolanaNamespace(
+  ns: ProxiedNamespace<
+    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
+  >
+): ns is ProxiedNamespace<SolanaActions> & { namespaceId: 'Solana' } {
+  return ns.namespaceId === 'Solana';
+}
+export function isEvmNamespace(
+  ns: ProxiedNamespace<
+    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
+  >
+): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
+  return ns.namespaceId === 'EVM';
 }

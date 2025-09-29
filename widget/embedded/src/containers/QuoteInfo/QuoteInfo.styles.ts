@@ -8,6 +8,9 @@ export const QuoteContainer = styled('div', {
 });
 export const FooterStepAlarm = styled('div', {
   paddingBottom: '$15',
+  '& .from-amount-text': {
+    wordBreak: 'break-word',
+  },
   variants: {
     dense: {
       true: {
