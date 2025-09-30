@@ -1,14 +1,24 @@
+import type { WalletStandardSolanaInstance } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { getWallets } from '@wallet-standard/app';
+
+import {
+  SOLANA_WALLET_STANDARD_MAINNET,
+  WALLET_STANDARD_NAME,
+} from './constants.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
 
 export function metamask(): Provider | null {
   const { ethereum } = window;
-
+  const solana = getSolanaWalletInstance();
   if (!ethereum || !isEthereumMetamaskProvider(ethereum)) {
+    return null;
+  }
+  if (!solana) {
     return null;
   }
 
@@ -16,6 +26,9 @@ export function metamask(): Provider | null {
 
   if (ethereum) {
     instances.set(LegacyNetworks.ETHEREUM, ethereum);
+  }
+  if (solana) {
+    instances.set(LegacyNetworks.SOLANA, solana);
   }
 
   return instances;
@@ -106,6 +119,16 @@ export function evmMetamask(): EvmProviderApi {
 
   return evmInstance as EvmProviderApi;
 }
+export function solanaMetamask(): WalletStandardSolanaInstance {
+  const instances = metamask();
+  const solanaInstance = instances?.get(LegacyNetworks.SOLANA);
+  if (!solanaInstance) {
+    throw new Error(
+      'Metamask not injected or EVM not enabled. Please check your wallet.'
+    );
+  }
+  return solanaInstance as WalletStandardSolanaInstance;
+}
 export function getInstanceOrThrow(): Provider {
   const instances = metamask();
 
@@ -114,4 +137,13 @@ export function getInstanceOrThrow(): Provider {
   }
 
   return instances;
+}
+function getSolanaWalletInstance() {
+  return getWallets()
+    .get()
+    .find(
+      (wallet) =>
+        wallet.name === WALLET_STANDARD_NAME &&
+        wallet.chains.includes(SOLANA_WALLET_STANDARD_MAINNET)
+    ) as WalletStandardSolanaInstance;
 }
