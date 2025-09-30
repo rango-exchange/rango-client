@@ -1,5 +1,6 @@
 import type {
   GenerateDeepLink,
+  Provider,
   ProviderMetadata,
   VersionedProviders,
 } from '@rango-dev/wallets-core';
@@ -75,7 +76,7 @@ export type ProviderProps = PropsWithChildren<{
   autoConnect?: boolean;
   providers: VersionedProviders[];
   configs?: {
-    wallets?: (WalletType | LegacyProviderInterface)[];
+    wallets?: (WalletType | LegacyProviderInterface | Provider)[];
   };
 }>;
 
