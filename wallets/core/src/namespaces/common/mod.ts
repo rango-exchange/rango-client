@@ -6,6 +6,7 @@ export {
   intoConnectionFinished,
   recommended as afterRecommended,
 } from './after.js';
+export { ChangeAccountSubscriberBuilder } from './hooks/changeAccountSubscriber.js';
 export {
   connectAndUpdateStateForMultiNetworks,
   connectAndUpdateStateForSingleNetwork,
