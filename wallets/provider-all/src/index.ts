@@ -1,6 +1,7 @@
 import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
 import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
+import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import * as bitget from '@rango-dev/provider-bitget';
@@ -48,7 +49,7 @@ import { isWalletExcluded, lazyProvider } from './helpers.js';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
-  selectedProviders?: (WalletType | ProviderInterface)[];
+  selectedProviders?: (WalletType | ProviderInterface | Provider)[];
   trezor?: TrezorEnvironments;
   tonConnect?: TonConnectEnvironments;
 }
