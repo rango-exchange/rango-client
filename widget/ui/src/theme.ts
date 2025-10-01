@@ -233,6 +233,8 @@ export const rangoDarkColors = {
   neutral300: '#0F142E',
   neutral400: '#111733',
   neutral500: '#161C38',
+  neutral600: '#929292',
+  neutral700: '#C0C0C0',
   neutral800: '#B8B8B8',
   neutral900: '#E9E9E9',
   background: '#070917',

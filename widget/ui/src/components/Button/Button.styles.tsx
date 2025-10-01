@@ -61,7 +61,6 @@ export const ButtonBase = styled('button', {
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
-            backgroundColor: '$neutral700',
           },
           color: '$$color',
           pointerEvents: 'none',
@@ -141,7 +140,6 @@ export const ButtonBase = styled('button', {
           background: '$neutral600',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
-            backgroundColor: '$neutral700',
           },
           color: '$$color',
           pointerEvents: 'none',
