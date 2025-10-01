@@ -27,6 +27,7 @@ interface Features {
  * esm supports for `exports` in package json which will be useful for this use case.
  * The bellow type should come from `widget/embedded/src/hooks/useIframe/useIframe.types.ts`.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Messages = any;
 
 export class RangoWidget {
