@@ -25,7 +25,7 @@ function canEagerConnect(getInstance: () => WalletStandardSolanaInstance) {
 
     if (!solanaInstance) {
       throw new Error(
-        'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
+        'Trying to eagerly connect to your Solana wallet, but it seems that its instance is not available.'
       );
     }
 

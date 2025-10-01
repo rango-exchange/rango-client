@@ -18,9 +18,6 @@ export function metamask(): Provider | null {
   if (!ethereum || !isEthereumMetamaskProvider(ethereum)) {
     return null;
   }
-  if (!solana) {
-    return null;
-  }
 
   const instances: Provider = new Map();
 
@@ -124,7 +121,7 @@ export function solanaMetamask(): WalletStandardSolanaInstance {
   const solanaInstance = instances?.get(LegacyNetworks.SOLANA);
   if (!solanaInstance) {
     throw new Error(
-      'Metamask not injected or EVM not enabled. Please check your wallet.'
+      'Metamask Solana instance is not available. Ensure that Solana support is enabled in your wallet.'
     );
   }
   return solanaInstance as WalletStandardSolanaInstance;
