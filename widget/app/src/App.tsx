@@ -1,7 +1,11 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
-import { Widget } from '@rango-dev/widget-embedded';
-import React, { useRef } from 'react';
+import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import {
+  pickProviderVersionWithFallbackToLegacy,
+  Widget,
+} from '@rango-dev/widget-embedded';
+import React, { useMemo, useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 
 import {
@@ -10,12 +14,28 @@ import {
   WC_PROJECT_ID,
 } from './constants';
 
+export function generateProviders() {
+  const allProviders = getAllProviders({
+    walletconnect2: {
+      WC_PROJECT_ID: WC_PROJECT_ID,
+    },
+    trezor: { manifest: TREZOR_MANIFEST },
+    tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+  });
+  const allBuiltProviders = allProviders.map((build) => build());
+  const providers = allBuiltProviders.map((builtProvider) =>
+    pickProviderVersionWithFallbackToLegacy(builtProvider)
+  );
+  return providers;
+}
+
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
   const configParam = searchParams.get('config');
 
   let config: WidgetConfig | undefined = undefined;
+  const providers = useMemo(() => generateProviders(), []);
 
   if (!configRef.current) {
     if (!!configParam) {
@@ -41,6 +61,7 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        wallets: providers,
       };
     }
     if (!!config) {

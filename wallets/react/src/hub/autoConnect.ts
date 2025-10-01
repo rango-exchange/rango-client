@@ -1,6 +1,6 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub, Provider } from '@rango-dev/wallets-core';
+import type { Hub } from '@rango-dev/wallets-core';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
@@ -8,6 +8,7 @@ import type {
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+import { Provider } from '@rango-dev/wallets-core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
 import { Result } from 'ts-results';
 
@@ -174,7 +175,7 @@ async function tryRunCanEagerConnect(
 export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
-  wallets?: (WalletType | LegacyProviderInterface)[];
+  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
 }): Promise<void> {
   const { getHub, allBlockChains, wallets } = deps;
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
@@ -185,9 +186,18 @@ export async function autoConnect(deps: {
   if (walletIds.length) {
     const eagerConnectQueue: Promise<unknown>[] = [];
 
+    const configWalletNames = wallets?.map((wallet) => {
+      if (typeof wallet === 'string') {
+        return wallet;
+      }
+      if (wallet instanceof Provider) {
+        return wallet.id;
+      }
+      return wallet.config.type;
+    });
     // Run `.connect` if `.canEagerConnect` returns `true`.
     walletIds.forEach(async (providerName) => {
-      if (wallets && !wallets.includes(providerName)) {
+      if (configWalletNames && !configWalletNames.includes(providerName)) {
         console.warn(
           'Trying to run auto connect for a wallet which is not included in config. Desired wallet:',
           providerName
