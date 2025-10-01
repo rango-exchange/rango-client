@@ -7,12 +7,13 @@ import { useSyncUrlAndStore } from '../hooks/useSyncUrlAndStore';
 import { AddCustomTokenPage } from '../pages/AddCustomTokenPage';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { CustomTokensPage } from '../pages/CustomTokensPage';
-import { DestinationWalletsPage } from '../pages/DestinationWalletPage/DestinationWalletPage';
+import { DestinationWalletPage } from '../pages/DestinationWalletPage/DestinationWalletPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LanguagePage } from '../pages/LanguagePage';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcePage';
 import { RoutesPage } from '../pages/Routes';
+import { RouteWalletsPage } from '../pages/RouteWalletsPage/RouteWalletsPage';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemPage/index';
 import { SettingsPage } from '../pages/SettingsPage';
@@ -45,7 +46,11 @@ export function AppRoutes() {
     },
     {
       path: navigationRoutes.destinationWallet,
-      element: <DestinationWalletsPage />,
+      element: <DestinationWalletPage />,
+    },
+    {
+      path: navigationRoutes.routeWallets,
+      element: <RouteWalletsPage />,
     },
     {
       path: navigationRoutes.fromSwap,

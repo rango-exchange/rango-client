@@ -15,7 +15,8 @@ export type SwapButtonState = {
     | 'select-source-token'
     | 'select-destination-token'
     | 'select-source-wallet'
-    | 'select-destination-wallet';
+    | 'select-destination-wallet'
+    | 'select-route-wallets';
 };
 
 export type ConvertedToken = {

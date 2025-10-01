@@ -184,6 +184,8 @@ export function Home() {
       onHandleNavigation(navigationRoutes.destinationWallet),
     'confirm-warning': () => setShowQuoteWarningModal(true),
     'confirm-swap': () => onHandleNavigation(navigationRoutes.confirmSwap),
+    'select-route-wallets': () =>
+      onHandleNavigation(navigationRoutes.routeWallets),
   };
 
   const onClickSwapButton = () => {

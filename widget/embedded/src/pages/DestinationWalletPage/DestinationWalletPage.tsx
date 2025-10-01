@@ -33,7 +33,7 @@ import {
 
 const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 
-export function DestinationWalletsPage() {
+export function DestinationWalletPage() {
   const { toBlockchain, customDestination, setCustomDestination } =
     useQuoteStore();
   const destinationWallet = useAppStore().selectedWallet('destination');
@@ -121,10 +121,13 @@ export function DestinationWalletsPage() {
     resetState();
     setShowMoreWallets(false);
     clearSelectedWallet('destination');
-    setSelectedWallet('destination', {
-      address: wallet.address,
-      blockchain: wallet.chain,
-      type: wallet.walletType,
+    setSelectedWallet({
+      kind: 'destination',
+      wallet: {
+        address: wallet.address,
+        blockchain: wallet.chain,
+        type: wallet.walletType,
+      },
     });
   };
 
