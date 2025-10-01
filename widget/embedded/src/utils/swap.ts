@@ -303,6 +303,14 @@ export function getSwapButtonState(params: {
       disabled: false,
     };
   }
+  const requiredChains = getQuoteChains({ quote, filter: 'required' });
+  if (requiredChains.length > 1) {
+    return {
+      title: swapButtonTitles().swap,
+      action: 'select-route-wallets',
+      disabled: false,
+    };
+  }
   return {
     title: swapButtonTitles().swap,
     action: 'confirm-swap',
