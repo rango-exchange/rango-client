@@ -1,8 +1,10 @@
 import { css, styled } from '@rango-dev/ui';
 
 import {
-  WIDGET_HEIGHT_FOR_SMALL_SCREENS,
+  LARGE_SCREEN_MIN_HEIGHT,
   WIDGET_MAX_HEIGHT,
+  WIDGET_MIN_HEIGHT_FOR_LARGE_SCREENS,
+  WIDGET_MIN_HEIGHT_FOR_SMALL_SCREENS,
 } from './Layout.constants';
 
 export const LayoutContainer = css({
@@ -19,19 +21,19 @@ export const Container = styled('div', {
   minWidth: '300px',
   maxWidth: '390px',
   backgroundColor: '$background',
+  maxHeight: WIDGET_MAX_HEIGHT,
   variants: {
     height: {
       auto: {
         height: 'auto',
-        maxHeight: WIDGET_MAX_HEIGHT,
       },
       fixed: {
-        height: WIDGET_MAX_HEIGHT,
+        height: '100%',
+        minHeight: WIDGET_MIN_HEIGHT_FOR_SMALL_SCREENS,
+        [`@media screen and (min-height: ${LARGE_SCREEN_MIN_HEIGHT})`]: {
+          minHeight: WIDGET_MIN_HEIGHT_FOR_LARGE_SCREENS,
+        },
       },
-    },
-    isIframe: {
-      true: {},
-      false: {},
     },
     showBanner: {
       true: {
@@ -39,17 +41,6 @@ export const Container = styled('div', {
       },
     },
   },
-  compoundVariants: [
-    {
-      height: 'fixed',
-      isIframe: false,
-      css: {
-        '@media screen and (max-height: 799px)': {
-          height: WIDGET_HEIGHT_FOR_SMALL_SCREENS,
-        },
-      },
-    },
-  ],
 });
 
 export const Content = styled('div', {

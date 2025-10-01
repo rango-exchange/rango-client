@@ -12,7 +12,6 @@ const MIN_TABLET_WIDTH = 480;
 const MIN_NOTEBOOK_WIDTH = 768;
 const MIN_LARGE_SCREEN_WIDTH = 1024;
 const MIN_EXTRA_LARGE_SCREEN_WIDTH = 1200;
-const MAX_LOW_SCREEN_HEIGHT = 800;
 
 const useScreenDetect = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -20,7 +19,6 @@ const useScreenDetect = () => {
   const [isNotebook, setIsNotebook] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [isExtraLargeScreen, setIsExtraLargeScreen] = useState(false);
-  const [isLowHeightScreen, setIsLowHeightScreen] = useState(false);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= MIN_TABLET_WIDTH);
@@ -37,7 +35,6 @@ const useScreenDetect = () => {
         window.innerWidth <= MIN_EXTRA_LARGE_SCREEN_WIDTH
     );
     setIsExtraLargeScreen(window.innerWidth > MIN_EXTRA_LARGE_SCREEN_WIDTH);
-    setIsLowHeightScreen(window.innerHeight < MAX_LOW_SCREEN_HEIGHT);
   };
 
   useLayoutEffect(() => {
@@ -52,7 +49,6 @@ const useScreenDetect = () => {
     isNotebook,
     isLargeScreen,
     isExtraLargeScreen,
-    isLowHeightScreen,
   };
 };
 

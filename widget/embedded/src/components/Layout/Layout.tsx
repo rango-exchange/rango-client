@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
@@ -21,6 +21,7 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
+import { COMPACT_TOKEN_SELECTOR_THRESHOLD } from './Layout.constants';
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import {
   BannerContainer,
@@ -59,6 +60,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     showActivateTabModal,
     setShowActivateTabModal,
     activateCurrentTab,
+    setShowCompactTokenSelector,
   } = useUiStore();
   const navigateBack = useNavigateBack();
   const { manager } = useManager();
@@ -127,14 +129,34 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     setOpenRefreshModal(fetchStatus === 'failed');
   }, [fetchStatus]);
 
+  useLayoutEffect(() => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect) {
+          setShowCompactTokenSelector(
+            entry.contentRect.height <
+              parseInt(COMPACT_TOKEN_SELECTOR_THRESHOLD)
+          );
+        }
+      }
+    });
+
+    observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Container
       height={height}
       id={WIDGET_UI_ID.SWAP_BOX_ID}
       className={`${activeTheme()} ${LayoutContainer()}`}
       ref={containerRef}
-      showBanner={showBanner}
-      isIframe={isAppLoadedIntoIframe()}>
+      showBanner={showBanner}>
       <Header
         prefix={
           showBackButton ? (
