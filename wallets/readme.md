@@ -135,7 +135,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | 
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌  |
+| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |

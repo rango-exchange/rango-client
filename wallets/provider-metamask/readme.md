@@ -7,9 +7,7 @@ More about implementation status can be found [here](../readme.md).
 ## Implementation notes/limitations
 
 ### Group
-
-#### 🚧 Solana
-MetaMask supports both **EVM** and **Solana**, but this integration currently supports **only EVM** and **Solana** is under construction.
+MetaMask supports both **EVM** and **Solana**.
 
 ### Feature
 
