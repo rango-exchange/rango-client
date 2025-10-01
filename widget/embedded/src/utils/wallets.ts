@@ -549,3 +549,46 @@ export function checkIsWalletPartiallyConnected(
     )
   );
 }
+
+export function suggestRouteWalletsBasedOnSourceWallet(
+  quote: SelectedQuote,
+  sourceWallet: ConnectedWallet,
+  connectedWallets: ConnectedWallet[]
+): ConnectedWallet[] {
+  const routeBlockchains: string[] = getQuoteChains({
+    filter: 'required',
+    quote,
+  });
+
+  const walletsByBlockchain = connectedWallets.reduce((map, wallet) => {
+    if (!map.has(wallet.chain)) {
+      map.set(wallet.chain, []);
+    }
+    map.get(wallet.chain)!.push(wallet);
+    return map;
+  }, new Map<string, ConnectedWallet[]>());
+
+  const pickWallet = (
+    wallets: ConnectedWallet[],
+    source: ConnectedWallet
+  ): ConnectedWallet | undefined =>
+    // 1. exact match (address + type)
+    wallets.find(
+      (w) => w.address === source.address && w.walletType === source.walletType
+    ) ??
+    // 2. same address, different type
+    wallets.find((w) => w.address === source.address) ??
+    // 3. same type, different address
+    wallets.find((w) => w.walletType === source.walletType) ??
+    // 4. fallback → last wallet in that blockchain
+    wallets.at(-1);
+
+  return routeBlockchains.flatMap((blockchain) => {
+    const wallets = walletsByBlockchain.get(blockchain);
+    if (!wallets?.length) {
+      return [];
+    }
+    const picked = pickWallet(wallets, sourceWallet);
+    return picked ? [picked] : [];
+  });
+}

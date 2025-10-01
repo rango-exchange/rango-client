@@ -38,10 +38,13 @@ export function SourceWalletPage() {
       blockchain={sourceBlockchain}
       isSelected={isSelected}
       selectWallet={(wallet) => {
-        setSelectedWallet('source', {
-          address: wallet.address,
-          blockchain: wallet.chain,
-          type: wallet.walletType,
+        setSelectedWallet({
+          kind: 'source',
+          wallet: {
+            address: wallet.address,
+            blockchain: wallet.chain,
+            type: wallet.walletType,
+          },
         });
       }}
     />
