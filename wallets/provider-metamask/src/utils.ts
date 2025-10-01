@@ -1,4 +1,8 @@
-import type { WalletStandardSolanaInstance } from './types.js';
+import type {
+  MetamaskEvmProviderApi,
+  Provider,
+  WalletStandardSolanaInstance,
+} from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
@@ -8,9 +12,6 @@ import {
   SOLANA_WALLET_STANDARD_MAINNET,
   WALLET_STANDARD_NAME,
 } from './constants.js';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
 
 export function metamask(): Provider | null {
   const { ethereum } = window;
@@ -30,7 +31,7 @@ export function metamask(): Provider | null {
 
   return instances;
 }
-function isEthereumMetamaskProvider(ethereum: Provider): boolean {
+function isEthereumMetamaskProvider(ethereum: MetamaskEvmProviderApi): boolean {
   if (!ethereum?.isMetaMask) {
     return false;
   }
@@ -93,9 +94,6 @@ function isEthereumMetamaskProvider(ethereum: Provider): boolean {
     return false;
   }
   if (ethereum.isZerion) {
-    return false;
-  }
-  if (ethereum.isPhantom) {
     return false;
   }
   if (ethereum.isSafePal) {
