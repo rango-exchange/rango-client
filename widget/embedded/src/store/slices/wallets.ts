@@ -12,7 +12,10 @@ import { httpService } from '../../services/httpService';
 import { WalletEventTypes, WidgetEvents } from '../../types';
 import { memoizedResult } from '../../utils/common';
 import { isValidTokenAddress } from '../../utils/meta';
-import { isAccountAndWalletMatched } from '../../utils/wallets';
+import {
+  isAccountAndWalletMatched,
+  suggestRouteWalletsBasedOnSourceWallet,
+} from '../../utils/wallets';
 import { keepLastUpdated } from '../middlewares/keepLastUpdated';
 import { useQuoteStore } from '../quote';
 import {
@@ -47,6 +50,7 @@ export interface ConnectedWallet extends Wallet {
   selected: boolean;
   isSource?: boolean;
   isDestination?: boolean;
+  isRoute?: boolean;
   loading: boolean;
   error: boolean;
   namespace?: Namespace;
@@ -86,11 +90,12 @@ export type SelectedWallet = {
   blockchain: string;
 };
 
-type SelectedWalletKind = 'source' | 'destination';
+type SelectedWalletKind = 'source' | 'destination' | 'route';
 
 const SELECTED_WALLETS_FLAG = {
   source: 'isSource',
   destination: 'isDestination',
+  route: 'isRoute',
 } as const;
 
 export interface WalletsSlice {
@@ -100,14 +105,24 @@ export interface WalletsSlice {
   fetchingWallets: boolean;
   lastUpdatedAt: number;
 
-  selectedWallet: (kind: SelectedWalletKind) => ConnectedWallet | undefined;
-  setSelectedWallet: (kind: SelectedWalletKind, wallet: SelectedWallet) => void;
-  isSelectedWalletStillRelevant: (kind: SelectedWalletKind) => boolean;
+  selectedWallet: {
+    (kind: 'source' | 'destination'): ConnectedWallet | undefined;
+    (kind: 'route'): { [key: Blockchain]: ConnectedWallet };
+  };
+  setSelectedWallet: (
+    params:
+      | { kind: 'source' | 'destination'; wallet: SelectedWallet }
+      | { kind: 'route'; wallets: ConnectedWallet[] }
+  ) => void;
+  isSelectedWalletStillRelevant: (
+    kind: Exclude<SelectedWalletKind, 'route'>
+  ) => boolean;
   clearSelectedWallet: (kind: SelectedWalletKind) => void;
   tryMatchWalletForBlockchain: (
-    kind: SelectedWalletKind,
+    kind: Exclude<SelectedWalletKind, 'route'>,
     blockchain: Blockchain
   ) => void;
+  suggestRouteWallets: () => void;
   checkAndClearCustomDestinationIfNeeded: () => void;
 
   setConnectedWalletAsRefetching: (accounts: Wallet[]) => void;
@@ -492,28 +507,84 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
-    selectedWallet: (kind) => {
+    selectedWallet: ((kind) => {
+      if (kind === 'route') {
+        const selectedRouteWallets = get().connectedWallets.filter(
+          (connectedWallet) =>
+            connectedWallet.selected && connectedWallet.isRoute
+        );
+        const routeWalletsMap: { [key: Blockchain]: ConnectedWallet } = {};
+        selectedRouteWallets.forEach((selectedWallet) => {
+          routeWalletsMap[selectedWallet.chain] = selectedWallet;
+        });
+
+        return routeWalletsMap;
+      }
+
       return get().connectedWallets.find(
         (connectedWallet) =>
           connectedWallet.selected &&
           connectedWallet[SELECTED_WALLETS_FLAG[kind]]
       );
-    },
-    setSelectedWallet: (kind, wallet) => {
-      get().clearSelectedWallet(kind);
+    }) as WalletsSlice['selectedWallet'],
+    setSelectedWallet: (params) => {
+      if (params.kind === 'route') {
+        set((prevState) => {
+          const nextConnectedWallets = prevState.connectedWallets.map(
+            (connectedWallet) => {
+              const walletsMatched = params.wallets.some(
+                (wallet) =>
+                  wallet.chain === connectedWallet.chain &&
+                  wallet.address === connectedWallet.address &&
+                  wallet.walletType === connectedWallet.walletType
+              );
+              const blockchainMatched = params.wallets.some(
+                (wallet) => wallet.chain === connectedWallet.chain
+              );
+              if (walletsMatched) {
+                return { ...connectedWallet, selected: true, isRoute: true };
+              } else if (
+                blockchainMatched &&
+                connectedWallet.isRoute &&
+                connectedWallet.selected
+              ) {
+                const stillSelected = Object.entries(
+                  SELECTED_WALLETS_FLAG
+                ).some(
+                  ([otherKind, flag]) =>
+                    otherKind !== params.kind && connectedWallet[flag]
+                );
 
+                return {
+                  ...connectedWallet,
+                  selected: stillSelected,
+                  isRoute: false,
+                };
+              }
+              return connectedWallet;
+            }
+          );
+          return {
+            connectedWallets: nextConnectedWallets,
+          };
+        });
+
+        return;
+      }
+
+      get().clearSelectedWallet(params.kind);
       const nextConnectedWallets = get()
         .connectedWallets.slice()
         .map((connectedWallet) => {
           const walletsMatched =
-            connectedWallet.chain === wallet.blockchain &&
-            connectedWallet.address === wallet.address &&
-            connectedWallet.walletType === wallet.type;
+            connectedWallet.chain === params.wallet.blockchain &&
+            connectedWallet.address === params.wallet.address &&
+            connectedWallet.walletType === params.wallet.type;
           if (walletsMatched) {
             return {
               ...connectedWallet,
               selected: true,
-              [SELECTED_WALLETS_FLAG[kind]]: true,
+              [SELECTED_WALLETS_FLAG[params.kind]]: true,
             };
           }
           return connectedWallet;
@@ -533,10 +604,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
     },
     clearSelectedWallet: (kind) => {
       const selectedWalletFlag = SELECTED_WALLETS_FLAG[kind];
-      const otherSelectedWalletFlag =
-        selectedWalletFlag === SELECTED_WALLETS_FLAG.source
-          ? SELECTED_WALLETS_FLAG.destination
-          : SELECTED_WALLETS_FLAG.source;
 
       const nextConnectedWallets = get()
         .connectedWallets.slice()
@@ -545,9 +612,12 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
             connectedWallet.selected &&
             connectedWallet[SELECTED_WALLETS_FLAG[kind]]
           ) {
+            const stillSelected = Object.entries(SELECTED_WALLETS_FLAG).some(
+              ([otherKind, flag]) => otherKind !== kind && connectedWallet[flag]
+            );
             return {
               ...connectedWallet,
-              selected: !!connectedWallet[otherSelectedWalletFlag],
+              selected: stillSelected,
               [selectedWalletFlag]: false,
             };
           }
@@ -564,11 +634,32 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         (wallet) => wallet.chain === blockchain
       );
       if (lastConnectedCompatibleWallet) {
-        setSelectedWallet(kind, {
-          address: lastConnectedCompatibleWallet.address,
-          blockchain: lastConnectedCompatibleWallet.chain,
-          type: lastConnectedCompatibleWallet.walletType,
+        setSelectedWallet({
+          kind,
+          wallet: {
+            address: lastConnectedCompatibleWallet.address,
+            blockchain: lastConnectedCompatibleWallet.chain,
+            type: lastConnectedCompatibleWallet.walletType,
+          },
         });
+      }
+    },
+    suggestRouteWallets: () => {
+      const { connectedWallets, setSelectedWallet } = get();
+      const selectedQuote = useQuoteStore.getState().selectedQuote;
+
+      const sourceWallet = connectedWallets.find(
+        (connectedWallet) =>
+          connectedWallet.selected && connectedWallet.isSource
+      );
+      if (sourceWallet && selectedQuote) {
+        const nextSelectedWallets = suggestRouteWalletsBasedOnSourceWallet(
+          selectedQuote,
+          sourceWallet,
+          connectedWallets
+        );
+
+        setSelectedWallet({ kind: 'route', wallets: nextSelectedWallets });
       }
     },
     checkAndClearCustomDestinationIfNeeded: () => {
