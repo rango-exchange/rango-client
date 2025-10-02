@@ -139,4 +139,4 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
       - name: Build examples
-        run: node ./scripts/build-examples/command.mjs 
+        uses: ./.github/actions/build-examples
