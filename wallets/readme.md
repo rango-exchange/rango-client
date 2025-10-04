@@ -147,9 +147,9 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
-| CoinBase     |  ⚠️            | ✅             | ✅           |  Injected                 | ❌            |
+| CoinBase     | ⚠️             | ✅             | ✅           |  Injected                 | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
-| MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| MetaMask     | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
