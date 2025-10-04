@@ -137,6 +137,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | 🚧   | ✅     | 🚧     | 🚧  | 🚧  |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | 
@@ -147,9 +148,10 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
-| CoinBase     |  ⚠️            | ✅             | ✅           |  Injected                 | ❌            |
+| CoinBase     | ⚠️             | ✅             | ✅           |  Injected                 | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| OKX          | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
@@ -176,7 +178,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Ledger         | Ethereum,Solana                                                                                                         | -                                                 | &cross;              | https://www.ledger.com/              |
 | Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                                                                               | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
 | Metamask       | EVM                                                                                                                     | -                                                 | &check;              | -                                    |
-| OKX            | EVM,Solana,Cosmos                                                                                                       | Cosmos                                            | &check;              | https://www.okx.com/web3             |
 | Ready          | Starknet                                                                                                                | -                                                 | &check;              | https://www.ready.co/                |
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare       | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com                 |
