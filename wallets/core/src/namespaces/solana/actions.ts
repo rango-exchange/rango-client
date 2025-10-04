@@ -24,3 +24,21 @@ export function connect(
     return formatAccountsToCAIP(result.accounts);
   };
 }
+export function canEagerConnect(instance: () => ProviderAPI) {
+  return async () => {
+    const solanaInstance = instance();
+
+    if (!solanaInstance) {
+      throw new Error(
+        'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
+      );
+    }
+
+    try {
+      const result = await solanaInstance.connect({ onlyIfTrusted: true });
+      return !!result;
+    } catch {
+      return false;
+    }
+  };
+}
