@@ -1,13 +1,21 @@
+import type {
+  MetamaskEvmProviderApi,
+  Provider,
+  WalletStandardSolanaInstance,
+} from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { getWallets } from '@wallet-standard/app';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
+import {
+  SOLANA_WALLET_STANDARD_MAINNET,
+  WALLET_STANDARD_NAME,
+} from './constants.js';
 
 export function metamask(): Provider | null {
   const { ethereum } = window;
-
+  const solana = getSolanaWalletInstance();
   if (!ethereum || !isEthereumMetamaskProvider(ethereum)) {
     return null;
   }
@@ -17,10 +25,13 @@ export function metamask(): Provider | null {
   if (ethereum) {
     instances.set(LegacyNetworks.ETHEREUM, ethereum);
   }
+  if (solana) {
+    instances.set(LegacyNetworks.SOLANA, solana);
+  }
 
   return instances;
 }
-function isEthereumMetamaskProvider(ethereum: Provider): boolean {
+function isEthereumMetamaskProvider(ethereum: MetamaskEvmProviderApi): boolean {
   if (!ethereum?.isMetaMask) {
     return false;
   }
@@ -85,9 +96,6 @@ function isEthereumMetamaskProvider(ethereum: Provider): boolean {
   if (ethereum.isZerion) {
     return false;
   }
-  if (ethereum.isPhantom) {
-    return false;
-  }
   if (ethereum.isSafePal) {
     return false;
   }
@@ -106,6 +114,16 @@ export function evmMetamask(): EvmProviderApi {
 
   return evmInstance as EvmProviderApi;
 }
+export function solanaMetamask(): WalletStandardSolanaInstance {
+  const instances = metamask();
+  const solanaInstance = instances?.get(LegacyNetworks.SOLANA);
+  if (!solanaInstance) {
+    throw new Error(
+      'Metamask Solana instance is not available. Ensure that Solana support is enabled in your wallet.'
+    );
+  }
+  return solanaInstance as WalletStandardSolanaInstance;
+}
 export function getInstanceOrThrow(): Provider {
   const instances = metamask();
 
@@ -114,4 +132,13 @@ export function getInstanceOrThrow(): Provider {
   }
 
   return instances;
+}
+function getSolanaWalletInstance() {
+  return getWallets()
+    .get()
+    .find(
+      (wallet) =>
+        wallet.name === WALLET_STANDARD_NAME &&
+        wallet.chains.includes(SOLANA_WALLET_STANDARD_MAINNET)
+    ) as WalletStandardSolanaInstance;
 }
