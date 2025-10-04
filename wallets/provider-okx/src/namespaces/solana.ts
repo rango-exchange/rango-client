@@ -30,27 +30,10 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
-export const canEagerConnectAction = async () => {
-  const solanaInstance = solanaOKX();
-
-  if (!solanaInstance) {
-    throw new Error(
-      'Trying to eagerly connect to your Solana wallet, but seems its instance is not available.'
-    );
-  }
-
-  try {
-    const result = await solanaInstance.connect({ onlyIfTrusted: true });
-    return !!result;
-  } catch {
-    return false;
-  }
-};
-
 const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
-  .action(canEagerConnectAction)
+  .action(actions.canEagerConnect(solanaOKX))
   .build();
 
 const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
