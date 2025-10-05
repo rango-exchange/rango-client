@@ -1,4 +1,5 @@
 import type { SupportedWalletsPropTypes } from './RouteWalletsPage.types';
+import type { ConfirmSwapFetchResult } from '../../hooks/useConfirmSwap/useConfirmSwap.types';
 import type { Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
@@ -7,10 +8,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WalletList } from '../../components/ConfirmWalletsModal/WalletList';
+import { InsufficientBalanceModal } from '../../components/IsufficientBalanceModal/InsufficientBalanceModal';
 import { Layout } from '../../components/Layout';
 import { MoreWalletsToSelect } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect';
 import { ListContainer } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect.styles';
 import { navigationRoutes } from '../../constants/navigationRoutes';
+import { useConfirmSwap } from '../../hooks/useConfirmSwap';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
@@ -55,12 +58,17 @@ export function SupportedWallets(props: SupportedWalletsPropTypes) {
 }
 
 export function RouteWalletsPage() {
-  const { selectedQuote } = useQuoteStore();
+  const { fromToken, selectedQuote, customDestination } = useQuoteStore();
+  const sourceWallet = useAppStore().selectedWallet('source');
+  const destinationWallet = useAppStore().selectedWallet('destination');
   const routeWallets = useAppStore().selectedWallet('route');
-  console.log({ routeWallets });
   const { connectedWallets, setSelectedWallet, suggestRouteWallets } =
     useAppStore();
   const navigate = useNavigate();
+  const { fetch: confirmSwap, loading } = useConfirmSwap();
+  const [confirmSwapResult, setConfirmSwapResult] =
+    useState<ConfirmSwapFetchResult | null>(null);
+  const [showBalanceWarningModal, setShowBalanceWarningModal] = useState(false);
   const [showRouteWalletsError, setShowRouteWalletsError] = useState(false);
   const [showMoreWalletsFor, setShowMoreWalletsFor] = useState<string | null>(
     null
@@ -108,6 +116,42 @@ export function RouteWalletsPage() {
     }
   };
 
+  const navigateToConfirmSwapPage = () =>
+    navigate('../' + navigationRoutes.confirmSwap, {
+      replace: true,
+    });
+
+  const onConfirm = () => {
+    if (sourceWallet && (destinationWallet || customDestination)) {
+      void confirmSwap({
+        selectedWallets: [sourceWallet].concat(destinationWallet || []),
+        customDestination,
+      }).then((result) => {
+        setConfirmSwapResult(result);
+        if (result.warnings?.balance?.messages.length) {
+          setShowBalanceWarningModal(true);
+          return;
+        }
+        useQuoteStore.setState({
+          confirmSwapData: { proceedAnyway: false, result: result.response },
+        });
+        navigateToConfirmSwapPage();
+      });
+    }
+  };
+
+  const onConfirmBalanceWarning = () => {
+    if (confirmSwapResult?.response) {
+      useQuoteStore.setState({
+        confirmSwapData: {
+          proceedAnyway: true,
+          result: confirmSwapResult.response,
+        },
+      });
+      navigateToConfirmSwapPage();
+    }
+  };
+
   const handleConfirmWallets = () => {
     const everyRequiredWalletsSelected = !requiredBlockchains.some(
       (blockchain) => !routeWallets?.[blockchain]
@@ -117,7 +161,8 @@ export function RouteWalletsPage() {
       setShowRouteWalletsError(true);
       return;
     }
-    navigate('../' + navigationRoutes.confirmSwap);
+
+    onConfirm();
   };
 
   return (
@@ -136,6 +181,7 @@ export function RouteWalletsPage() {
           footer={
             <Button
               id="widget-route-wallets-page-confirm-btn"
+              loading={loading}
               onClick={handleConfirmWallets}
               variant="contained"
               type="primary"
@@ -176,6 +222,15 @@ export function RouteWalletsPage() {
               ))}
             </div>
           </Container>
+          <InsufficientBalanceModal
+            tokenSymbol={fromToken?.symbol ?? ''}
+            open={showBalanceWarningModal}
+            onClose={() => setShowBalanceWarningModal(false)}
+            onConfirm={onConfirmBalanceWarning}
+            onChangeWallet={() => {
+              navigate('../' + navigationRoutes.sourceWallet);
+            }}
+          />
         </Layout>
       )}
     </>

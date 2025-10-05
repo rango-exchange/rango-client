@@ -200,8 +200,9 @@ export function getSwapButtonState(params: {
   fromToken: Token | null;
   toToken: Token | null;
   selectedWallets: {
-    sourceWallet?: ConnectedWallet;
-    destinationWallet?: ConnectedWallet;
+    sourceWallet?: Wallet;
+    destinationWallet?: Wallet;
+    customDestination?: string;
   };
   fetchMetaStatus: FetchStatus;
   anyWalletConnected: boolean;
@@ -304,6 +305,22 @@ export function getSwapButtonState(params: {
     };
   }
   const requiredChains = getQuoteChains({ quote, filter: 'required' });
+
+  if (requiredChains.length === 1) {
+    const walletAddressError =
+      !selectedWallets.customDestination &&
+      selectedWallets.sourceWallet?.address !==
+        selectedWallets.destinationWallet?.address;
+
+    if (walletAddressError) {
+      return {
+        title: swapButtonTitles().swap,
+        action: 'show-wallet-address-error',
+        disabled: false,
+      };
+    }
+  }
+
   if (requiredChains.length > 1) {
     return {
       title: swapButtonTitles().swap,
@@ -599,7 +616,6 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
         [p: string]: {
           address: string;
           walletType: WalletType;
-          derivationPath?: string;
         };
       },
       selectedWallet
@@ -607,7 +623,6 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
       (selectedWalletsMap[selectedWallet.chain] = {
         address: selectedWallet.address,
         walletType: selectedWallet.walletType,
-        derivationPath: selectedWallet.derivationPath,
       }),
       selectedWalletsMap
     ),
