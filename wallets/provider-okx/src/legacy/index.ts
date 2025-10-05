@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -14,18 +15,16 @@ import {
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
+  getSolanaAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-types';
 
-import {
-  getSolanaAccounts,
-  okx_instance,
-  OKX_WALLET_SUPPORTED_CHAINS,
-} from './helpers.js';
-import signer from './signer.js';
+import { OKX_WALLET_SUPPORTED_CHAINS } from '../constants.js';
+import signer from '../signer.js';
+import { okx } from '../utils.js';
 
 const WALLET = WalletTypes.OKX;
 
@@ -34,20 +33,22 @@ export const config = {
   defaultNetwork: Networks.ETHEREUM,
 };
 
-export const getInstance = okx_instance;
+export const getInstance = okx;
 export const connect: Connect = async ({ instance, meta }) => {
-  let results: ProviderConnectResult[] = [];
+  const results: ProviderConnectResult[] = [];
 
-  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const evmInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
-  if (evm_instance) {
-    const evm = await getEvmAccounts(evm_instance);
-    results.push(evm);
+  if (evmInstance) {
+    const evmResults = await getEvmAccounts(evmInstance);
+    results.push(evmResults);
   }
 
   const solanaResults = await getSolanaAccounts(instance);
 
-  results = [...results, ...solanaResults];
+  results.push(
+    ...(Array.isArray(solanaResults) ? solanaResults : [solanaResults])
+  );
 
   return results;
 };
@@ -60,8 +61,14 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, meta }) => {
       .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
 
     updateAccounts(addresses, eth_chainId);
-    const [{ accounts, chainId }] = await getSolanaAccounts(instance);
-    updateAccounts(accounts, chainId);
+    const solanaResults = await getSolanaAccounts(instance);
+    const resultsArray = Array.isArray(solanaResults)
+      ? solanaResults
+      : [solanaResults];
+
+    resultsArray.forEach(({ chainId, accounts }) => {
+      updateAccounts(accounts, chainId);
+    });
   };
   ethInstance?.on?.('accountsChanged', handleEvmAccountsChanged);
 
@@ -84,7 +91,10 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -112,3 +122,16 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
   ),
 });
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+});
+
+export { buildLegacyProvider };

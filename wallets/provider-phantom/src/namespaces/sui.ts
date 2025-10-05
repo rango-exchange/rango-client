@@ -6,11 +6,11 @@ import {
   builders as commonBuilders,
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
+import { actions as solanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import { builders, hooks } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
-
-import { canEagerConnectAction as solanaCanEagerConnectAction } from './solana.js';
+import { solanaPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   hooks.changeAccountSubscriber({
@@ -39,7 +39,7 @@ const disconnect = commonBuilders
 const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
-  .action(solanaCanEagerConnectAction)
+  .action(solanaActions.canEagerConnect(solanaPhantom))
   .build();
 
 const sui = new NamespaceBuilder<SuiActions>('Sui', WALLET_ID)
