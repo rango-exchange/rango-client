@@ -1,8 +1,8 @@
 import type { ConfirmSwapWarnings, QuoteError, Wallet } from '../../types';
-import type { PendingSwap } from 'rango-types';
+import type { ConfirmRouteResponse } from 'rango-sdk';
 
 export type ConfirmSwapFetchResult = {
-  swap: PendingSwap | null;
+  response: ConfirmRouteResponse['result'] | null;
   error: QuoteError | null;
   warnings: ConfirmSwapWarnings | null;
 };

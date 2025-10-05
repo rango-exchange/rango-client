@@ -2,17 +2,11 @@ import type { ConfirmSwap } from './useConfirmSwap.types';
 import type { ConfirmRouteRequest } from 'rango-sdk';
 
 import { warn } from '@rango-dev/logging-core';
-import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import {
-  type PendingSwapSettings,
-  QuoteErrorType,
-  type SelectedQuote,
-} from '../../types';
-import { getWalletsForNewSwap } from '../../utils/swap';
+import { QuoteErrorType, type SelectedQuote } from '../../types';
 import { useFetchConfirmQuote } from '../useFetchConfirmQuote';
 
 import {
@@ -34,9 +28,7 @@ export function useConfirmSwap(): ConfirmSwap {
   } = useQuoteStore();
 
   const { slippage, customSlippage } = useAppStore();
-  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
   const { findToken } = useAppStore();
 
   const userSlippage = customSlippage || slippage;
@@ -53,7 +45,7 @@ export function useConfirmSwap(): ConfirmSwap {
     if (!fromToken || !toToken || !inputAmount) {
       return {
         quote: null,
-        swap: null,
+        response: null,
         error: null,
         warnings: null,
       };
@@ -95,10 +87,6 @@ export function useConfirmSwap(): ConfirmSwap {
           requestAmount: result.requestAmount,
         };
         setSelectedQuote(currentQuote);
-        const swapSettings: PendingSwapSettings = {
-          slippage: userSlippage.toString(),
-          disabledSwappersGroups: disabledLiquiditySources,
-        };
 
         const confirmSwapWarnings = generateWarnings({
           previousQuote: initialQuote ?? undefined,
@@ -112,20 +100,9 @@ export function useConfirmSwap(): ConfirmSwap {
 
         resetAlerts();
 
-        const proceedAnyway = !!confirmSwapWarnings.balance;
-
-        const swap = calculatePendingSwap(
-          inputAmount.toString(),
-          result,
-          getWalletsForNewSwap(selectedWallets),
-          swapSettings,
-          proceedAnyway ? false : true,
-          { blockchains, tokens }
-        );
-
         return {
           quote: currentQuote,
-          swap,
+          response: response.result,
           error: null,
           warnings: confirmSwapWarnings,
         };
@@ -142,7 +119,7 @@ export function useConfirmSwap(): ConfirmSwap {
           },
         });
       }
-      return { swap: null, error: quoteError, warnings: null };
+      return { response: null, error: quoteError, warnings: null };
     }
   };
 

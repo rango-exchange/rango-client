@@ -1,3 +1,4 @@
+import type { ConfirmSwapFetchResult } from '../hooks/useConfirmSwap/useConfirmSwap.types';
 import type { SelectedQuote, SwapButtonState } from '../types';
 
 import { i18n } from '@lingui/core';
@@ -7,16 +8,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HeaderButtons } from '../components/HeaderButtons';
+import { InsufficientBalanceModal } from '../components/IsufficientBalanceModal/InsufficientBalanceModal';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SameTokensWarning } from '../components/SameTokensWarning';
 import { SlippageWarningsAndErrors } from '../components/SlippageWarningsAndErrors/SlippageWarningsAndErrors';
 import { SwapMetrics } from '../components/SwapMetrics';
+import { WalletAddressErrorModal } from '../components/WalletAddressErrorModal/WalletAddressErrorModal';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SLIPPAGES } from '../constants/swapSettings';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
+import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
@@ -49,6 +53,7 @@ export function Home() {
     error: quoteError,
     warning: quoteWarning,
     quotes,
+    customDestination,
     setSelectedQuote,
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
@@ -56,6 +61,8 @@ export function Home() {
   } = useQuoteStore();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
+  const [confirmSwapResult, setConfirmSwapResult] =
+    useState<ConfirmSwapFetchResult | null>(null);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
   const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
@@ -72,7 +79,13 @@ export function Home() {
   const destinationWallet = useAppStore().selectedWallet('destination');
 
   const { isActiveTab } = useUiStore();
+  const {
+    fetch: confirmSwap,
+    loading: fetchingConfirmationQuote,
+    cancelFetch,
+  } = useConfirmSwap();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
+  const [showWalletAddressError, setShowWalletAddressError] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
 
   const slippageValidation = getSlippageValidation(currentSlippage);
@@ -82,7 +95,11 @@ export function Home() {
   const swapButtonState = getSwapButtonState({
     fromToken,
     toToken,
-    selectedWallets: { sourceWallet, destinationWallet },
+    selectedWallets: {
+      sourceWallet,
+      destinationWallet: destinationWallet,
+      customDestination: customDestination ?? undefined,
+    },
     fetchMetaStatus,
     fetchingQuote: loading,
     inputAmount,
@@ -169,7 +186,25 @@ export function Home() {
     'select-destination-wallet': () =>
       onHandleNavigation(navigationRoutes.destinationWallet),
     'confirm-warning': () => setShowQuoteWarningModal(true),
-    'confirm-swap': () => onHandleNavigation(navigationRoutes.confirmSwap),
+    'show-wallet-address-error': () => setShowWalletAddressError(true),
+    'confirm-swap': () => {
+      if (sourceWallet && (destinationWallet || customDestination)) {
+        void confirmSwap({
+          selectedWallets: [sourceWallet].concat(destinationWallet || []),
+          customDestination,
+        }).then((result) => {
+          setConfirmSwapResult(result);
+          if (result.warnings?.balance?.messages.length) {
+            setShowQuoteWarningModal(true);
+            return;
+          }
+          useQuoteStore.setState({
+            confirmSwapData: { proceedAnyway: false, result: result.response },
+          });
+          onHandleNavigation(navigationRoutes.confirmSwap);
+        });
+      }
+    },
     'select-route-wallets': () =>
       onHandleNavigation(navigationRoutes.routeWallets),
   };
@@ -182,6 +217,18 @@ export function Home() {
     }
   };
 
+  const onConfirmBalanceWarning = () => {
+    if (confirmSwapResult?.response) {
+      useQuoteStore.setState({
+        confirmSwapData: {
+          proceedAnyway: true,
+          result: confirmSwapResult?.response,
+        },
+      });
+      navigate(navigationRoutes.confirmSwap);
+    }
+  };
+
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
@@ -191,8 +238,23 @@ export function Home() {
     setIsVisibleExpanded(hasInputs);
   }, [hasInputs]);
 
+  useEffect(() => {
+    return cancelFetch;
+  }, []);
+
   return (
     <MainContainer>
+      <InsufficientBalanceModal
+        open={!!confirmSwapResult?.warnings?.balance?.messages.length}
+        tokenSymbol={fromToken?.symbol ?? ''}
+        onClose={() => setConfirmSwapResult(null)}
+        onConfirm={onConfirmBalanceWarning}
+      />
+      <WalletAddressErrorModal
+        open={showWalletAddressError}
+        onClose={() => setShowWalletAddressError(false)}
+        onConfirm={() => setShowWalletAddressError(false)}
+      />
       <Layout
         height="auto"
         footer={
@@ -201,6 +263,7 @@ export function Home() {
             id={`widget-swap-${swapButtonState.action}-btn`}
             type="primary"
             size="large"
+            loading={fetchingConfirmationQuote}
             disabled={swapButtonState.disabled || !isActiveTab}
             prefix={
               swapButtonState.action === 'confirm-warning' && <WarningIcon />
