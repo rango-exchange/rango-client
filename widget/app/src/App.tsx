@@ -41,6 +41,15 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        /*
+         * TODO:
+         *
+         * This is a temp config and should be removed before merging.
+         */
+        deepLinking: {
+          appHost: 'app.rango.exchange',
+          targetUrl: 'https://app.rango.exchange/bridge',
+        },
       };
     }
     if (!!config) {
