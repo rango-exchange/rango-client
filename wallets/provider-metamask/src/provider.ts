@@ -2,6 +2,7 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
+import { solana } from './namespaces/solana.js';
 import { metamask as metamask } from './utils.js';
 
 const buildProvider = () =>
@@ -16,6 +17,7 @@ const buildProvider = () =>
     })
     .config('metadata', metadata)
     .add('evm', evm)
+    .add('solana', solana)
     .build();
 
 export { buildProvider };
