@@ -43,7 +43,13 @@ const useScreenDetect = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return { isMobile, isTablet, isNotebook, isLargeScreen, isExtraLargeScreen };
+  return {
+    isMobile,
+    isTablet,
+    isNotebook,
+    isLargeScreen,
+    isExtraLargeScreen,
+  };
 };
 
 export default useScreenDetect;

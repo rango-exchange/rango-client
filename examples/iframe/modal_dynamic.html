@@ -14,7 +14,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        content: "";
+        content: '';
       }
       .modal {
         position: fixed;
@@ -82,21 +82,27 @@
     <div class="modal">
       <div id="rango-widget-container"></div>
     </div>
-    <script src="https://api.rango.exchange/widget/iframe.bundle.min.js"></script>
+    <script src="../../widget/iframe/dist/index.js"></script>
     <script defer type="text/javascript">
       const config = {
         from: {
-          blockchain: "ETH",
+          blockchain: 'ETH',
         },
         amount: 1,
         // This API key is only for test purpose. Don't use it in production.
-        apiKey: "c6381a79-2817-4602-83bf-6a641a409e32",
+        apiKey: 'c6381a79-2817-4602-83bf-6a641a409e32',
         // This project id is only for test purpose. Don't use it in production.
         // Get your Wallet Connect project id from https://cloud.walletconnect.com/
-        walletConnectProjectId: "e24844c5deb5193c1c14840a7af6a40b",
+        walletConnectProjectId: 'e24844c5deb5193c1c14840a7af6a40b',
       };
 
-      rangoWidget.init(config);
+      rangoWidget
+        .init(config, {
+          clientUrl: 'http://localhost:5500',
+          widgetUrl: 'http://localhost:3002',
+          rootId: 'rango-widget-container',
+        })
+        .activate('dynamicHeight');
     </script>
   </body>
 </html>
