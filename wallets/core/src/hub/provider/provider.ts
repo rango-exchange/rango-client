@@ -9,7 +9,7 @@ import type {
 } from './types.js';
 import type { FindProxiedNamespace } from '../../builders/mod.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
-import type { ProviderConfig, ProviderInfo, Store } from '../store/mod.js';
+import type { ProviderConfig, Store } from '../store/mod.js';
 
 const VERSION = '1.0';
 
@@ -137,6 +137,7 @@ export class Provider {
         case 'installed':
         case 'connected':
         case 'connecting':
+        case 'derivationPath':
           return state[name];
         default:
           throw new Error('Unhandled state for provider');
@@ -180,14 +181,12 @@ export class Provider {
    * provider.info();
    * ```
    */
-  public info(): ProviderInfo | undefined {
+  public info(): ProviderConfig['info'] | undefined {
     const store = this.#store;
     if (!store) {
-      return this.#configs;
+      return this.#configs.info;
     }
-    const config = store.getState().providers.list[this.id].config;
-
-    return { metadata: config.metadata, deepLink: config.deepLink };
+    return store.getState().providers.list[this.id].config.info;
   }
 
   /**

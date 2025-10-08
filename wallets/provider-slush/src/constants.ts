@@ -1,4 +1,4 @@
-import { type ProviderMetadata } from '@rango-dev/wallets-core';
+import { type ProviderInfo } from '@rango-dev/wallets-core';
 import {
   type BlockchainMeta,
   type SuiBlockchainMeta,
@@ -10,7 +10,7 @@ import getSigners from './signer.js';
 export const WALLET_ID = 'slush';
 export const WALLET_NAME_IN_WALLET_STANDARD = 'Slush';
 
-export const metadata: ProviderMetadata = {
+export const info: ProviderInfo = {
   name: 'Slush',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/slush/icon.svg',
   extensions: {

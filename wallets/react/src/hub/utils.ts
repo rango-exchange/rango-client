@@ -80,7 +80,7 @@ export function getSupportedChainsFromProvider(
 ) {
   const namespacesProperty = provider
     .info()
-    ?.metadata.properties?.find((property) => property.name === 'namespaces');
+    ?.properties?.find((property) => property.name === 'namespaces');
 
   const supportedChains =
     namespacesProperty?.value.data.flatMap((namespace) =>

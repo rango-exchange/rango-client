@@ -1,4 +1,4 @@
-import { type ProviderMetadata } from '@rango-dev/wallets-core';
+import { type ProviderInfo } from '@rango-dev/wallets-core';
 import { type BlockchainMeta, evmBlockchains } from 'rango-types';
 
 import getSigners from './signer.js';
@@ -6,7 +6,7 @@ import { evmRabby } from './utils.js';
 
 export const WALLET_ID = 'rabby';
 
-export const metadata: ProviderMetadata = {
+export const info: ProviderInfo = {
   name: 'Rabby',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/rabby/icon.svg',
   extensions: {

@@ -178,9 +178,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
       const namespacesProperty = provider
         .info()
-        ?.metadata?.properties?.find(
-          (property) => property.name === 'namespaces'
-        );
+        ?.properties?.find((property) => property.name === 'namespaces');
 
       if (!dataRef.current.allBlockChains) {
         throw new Error(`Blockchains are not available`);
@@ -360,7 +358,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         throw new Error('Your provider should have required `info`.');
       }
 
-      const providerProperties = info.metadata.properties;
+      const providerProperties = info.properties;
 
       const signerProperty = providerProperties?.find(
         (property) => property.name === 'signers'
@@ -386,14 +384,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         DEFAULT: '',
       };
 
-      const { metadata, deepLink } = info;
-      const { extensions } = metadata;
       // `extensions` in legacy format was uppercase and also `DEFAULT` was used instead of `homepage`
-      Object.keys(extensions).forEach((k) => {
+      Object.keys(info.extensions).forEach((k) => {
         const key = k as ExtensionLink;
 
         if (key === 'homepage') {
-          installLink.DEFAULT = extensions[key] || '';
+          installLink.DEFAULT = info.extensions[key] || '';
         }
 
         const allowedKeys: ExtensionLink[] = [
@@ -407,11 +403,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             WalletInfo['installLink'],
             string
           >;
-          installLink[upperCasedKey] = extensions[key] || '';
+          installLink[upperCasedKey] = info.extensions[key] || '';
         }
       });
 
-      const providerProperties = metadata.properties;
+      const providerProperties = info.properties;
 
       const namespacesProperty = providerProperties?.find(
         (property) => property.name === 'namespaces'
@@ -424,8 +420,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       );
 
       return {
-        name: metadata.name,
-        img: metadata.icon,
+        name: info.name,
+        img: info.icon,
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
@@ -439,9 +435,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         showOnMobile: detailsProperty?.value?.showOnMobile,
         needsNamespace: namespacesProperty?.value,
         needsDerivationPath: derivationPathProperty?.value,
-        generateDeepLink: deepLink,
+
         isHub: true,
-        properties: metadata.properties,
+        properties: wallet.info()?.properties,
       };
     },
     providers() {

@@ -1,4 +1,4 @@
-import { type ProviderMetadata } from '@rango-dev/wallets-core';
+import { type ProviderInfo } from '@rango-dev/wallets-core';
 import {
   type BlockchainMeta,
   evmBlockchains,
@@ -10,7 +10,7 @@ import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'trust-wallet';
 
-export const metadata: ProviderMetadata = {
+export const info: ProviderInfo = {
   name: 'Trust Wallet',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/trustwallet/icon.svg',
   extensions: {
