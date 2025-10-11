@@ -7,8 +7,6 @@ export type {
   Subscriber,
   SubscriberCleanUp,
   Context,
-  GenerateDeepLink,
-  DeepLinkContext,
 } from './hub/mod.js';
 export type { AnyFunction } from './types/mod.js';
 export {

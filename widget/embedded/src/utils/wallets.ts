@@ -96,6 +96,7 @@ export function mapWalletTypesToWalletInfo(
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
       );
+
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
@@ -112,6 +113,7 @@ export function mapWalletTypesToWalletInfo(
       };
     });
 }
+
 export function walletAndSupportedChainsNames(
   supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {

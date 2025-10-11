@@ -1,5 +1,4 @@
 import type {
-  GenerateDeepLink,
   Provider,
   ProviderMetadata,
   VersionedProviders,
@@ -170,7 +169,6 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  generateDeepLink?: GenerateDeepLink;
   getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;

@@ -18,13 +18,6 @@ const buildProvider = () =>
       }
     })
     .config('metadata', metadata)
-    .config('deepLink', (context) => {
-      const ref = `https://${context.appHost}`;
-      const deepLinkDestination = `${context.targetUrl}?autoConnect=${WALLET_ID}`;
-      return `https://phantom.app/ul/browse/${encodeURIComponent(
-        deepLinkDestination
-      )}?ref=${encodeURIComponent(ref)}`;
-    })
     .add('solana', solana)
     .add('evm', evm)
     .add('utxo', utxo)

@@ -15,7 +15,6 @@ import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
-import { useDeepLink } from '../hooks/useDeepLink';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -46,7 +45,7 @@ export function WalletsPage() {
   const blockchains = useAppStore().blockchains();
   const { config } = useAppStore();
   const { state } = useWallets();
-  const { checkHasDeepLink, getWalletLink } = useDeepLink();
+
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<WalletInfoWithExtra>();
   const isActiveTab = useUiStore.use.isActiveTab();
@@ -95,19 +94,15 @@ export function WalletsPage() {
               wallet,
               namespacesState
             );
-
-            let walletState = wallet.state;
-            if (isWalletPartiallyConnected) {
-              // If the wallet is connected to only a subset of namespaces, and the user has the option to connect to additional ones, we label the wallet as `Partially Connected`
-              walletState = WalletState.PARTIALLY_CONNECTED;
-            }
             return (
               <Wallet
                 key={key}
                 {...wallet}
-                state={walletState}
-                hasDeepLink={checkHasDeepLink(wallet.type)}
-                link={getWalletLink(wallet.type)}
+                state={
+                  isWalletPartiallyConnected
+                    ? WalletState.PARTIALLY_CONNECTED
+                    : wallet.state
+                }
                 container={getContainer()}
                 onClick={() => handleWalletItemClick(wallet)}
                 isLoading={fetchMetaStatus === 'loading'}

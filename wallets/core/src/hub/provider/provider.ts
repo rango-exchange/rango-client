@@ -187,7 +187,7 @@ export class Provider {
     }
     const config = store.getState().providers.list[this.id].config;
 
-    return { metadata: config.metadata, deepLink: config.deepLink };
+    return { metadata: config.metadata };
   }
 
   /**
