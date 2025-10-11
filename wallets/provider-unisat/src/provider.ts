@@ -1,6 +1,6 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
-import { info, WALLET_ID } from './constants.js';
+import { metadata, WALLET_ID } from './constants.js';
 import { utxo } from './namespaces/utxo.js';
 import { unisat as unisatInstance } from './utils.js';
 
@@ -14,7 +14,7 @@ const buildProvider = () =>
         console.debug('[unisat] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', metadata)
     .add('utxo', utxo)
     .build();
 

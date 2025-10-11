@@ -1,6 +1,6 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
-import { info, WALLET_ID } from './constants.js';
+import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { rabby as rabbyInstance } from './utils.js';
 
@@ -13,7 +13,7 @@ const buildProvider = () =>
         console.debug('[rabby] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', metadata)
     .add('evm', evm)
     .build();
 
