@@ -173,6 +173,9 @@ export function useLegacyProviders(
 
       return result;
     },
+    hubProvider() {
+      throw new Error('This method is not available on legacy providers.');
+    },
   };
 
   // Initialize instances

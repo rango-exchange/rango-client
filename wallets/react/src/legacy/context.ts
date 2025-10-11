@@ -31,6 +31,9 @@ const defaultContext: ProviderContext = {
   getSigners() {
     throw new Error(defaultErrorMessage);
   },
+  hubProvider() {
+    throw new Error(defaultErrorMessage);
+  },
 };
 
 export const WalletContext = createContext<ProviderContext>(defaultContext);

@@ -4,6 +4,7 @@ import type {
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
+import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyConnectResult as ConnectResult } from '@rango-dev/wallets-core/legacy';
 import type {
   Meta,
@@ -42,6 +43,7 @@ export enum SwapActionTypes {
   SCHEDULE_NEXT_STEP = 'SCHEDULE_NEXT_STEP',
   CREATE_TRANSACTION = 'CREATE_TRANSACTION',
   EXECUTE_TRANSACTION = 'EXECUTE_TRANSACTION',
+  EXECUTE_XRPL_TRANSACTION = 'EXECUTE_XRPL_TRANSACTION',
   CHECK_TRANSACTION_STATUS = 'CHECK_TRANSACTION_STATUS',
 }
 
@@ -67,6 +69,7 @@ export interface SwapQueueContext extends QueueContext {
   meta: Meta;
   wallets: Wallet | null;
   providers: Providers;
+  hubProvider: (type: WalletType) => Provider;
   getSigners: (type: WalletType) => Promise<SignerFactory>;
   switchNetwork: (
     wallet: WalletType,
