@@ -9,7 +9,7 @@ export { Provider } from './provider/mod.js';
 export type { CommonNamespaces, CommonNamespaceKeys } from './provider/mod.js';
 
 export { Hub } from './hub.js';
-export type { Store, State, ProviderInfo } from './store/mod.js';
+export type { Store, State, ProviderMetadata } from './store/mod.js';
 export {
   createStore,
   guessProviderStateSelector,
