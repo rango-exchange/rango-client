@@ -1,7 +1,7 @@
 import type { PropTypes } from './HeaderButtons.types';
 
 import { i18n } from '@lingui/core';
-import { Image, Tooltip, WalletIcon } from '@rango-dev/ui';
+import { Image, Tooltip, WalletIcon, WalletState } from '@rango-dev/ui';
 import React from 'react';
 
 import { useWalletList } from '../../hooks/useWalletList';
@@ -16,7 +16,9 @@ import {
 function WalletButton(props: PropTypes) {
   const { list } = useWalletList();
   const connectedWallets = list.filter(
-    (wallet) => wallet.state === 'connected'
+    (wallet) =>
+      wallet.state === WalletState.CONNECTED ||
+      wallet.state === WalletState.PARTIALLY_CONNECTED
   );
   const content = !connectedWallets.length ? (
     i18n.t('Connect Wallet')
