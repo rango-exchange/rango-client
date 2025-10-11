@@ -63,6 +63,8 @@ export enum Networks {
   TON = 'TON',
   BASE = 'BASE',
   SUI = 'SUI',
+  XRPL = 'XRPL',
+
   // Using instead of null
   Unknown = 'Unkown',
 }
