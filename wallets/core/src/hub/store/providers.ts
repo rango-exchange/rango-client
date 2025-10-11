@@ -50,7 +50,7 @@ type SignersProperty = Property<
   }
 >;
 
-export type ProviderInfo = {
+export type ProviderMetadata = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
@@ -63,8 +63,10 @@ export type ProviderInfo = {
 };
 
 export interface ProviderConfig {
-  info: ProviderInfo;
+  metadata: ProviderMetadata;
 }
+
+export type ProviderInfo = ProviderConfig;
 
 interface ProviderData {
   installed: boolean;

@@ -13,7 +13,10 @@ export type Context = {
   state: () => [GetState, SetState];
 };
 
-export type State = Omit<LegacyState, 'reachable' | 'accounts' | 'network'>;
+export type State = Omit<
+  LegacyState,
+  'reachable' | 'accounts' | 'network' | 'derivationPath'
+>;
 export type SetState = <K extends keyof Pick<State, 'installed'>>(
   name: K,
   value: State[K]

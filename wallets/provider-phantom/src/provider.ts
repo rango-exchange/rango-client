@@ -1,6 +1,6 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
-import { info, WALLET_ID } from './constants.js';
+import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
 import { sui } from './namespaces/sui.js';
@@ -17,7 +17,7 @@ const buildProvider = () =>
         console.debug('[phantom] instance detected.', context);
       }
     })
-    .config('info', info)
+    .config('metadata', metadata)
     .add('solana', solana)
     .add('evm', evm)
     .add('utxo', utxo)

@@ -1,7 +1,7 @@
 export type {
   Store,
   State,
-  ProviderInfo,
+  ProviderMetadata,
   CommonNamespaces,
   CommonNamespaceKeys,
   Subscriber,
