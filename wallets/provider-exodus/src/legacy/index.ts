@@ -1,3 +1,4 @@
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -14,18 +15,16 @@ import {
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
+  getSolanaAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain, isSolanaBlockchain } from 'rango-types';
 
-import {
-  exodus_instances,
-  EXODUS_WALLET_SUPPORTED_CHAINS,
-  getSolanaAccounts,
-} from './helpers.js';
-import signer from './signer.js';
+import { EXODUS_WALLET_SUPPORTED_CHAINS } from '../constants.js';
+import signer from '../signer.js';
+import { exodus } from '../utils.js';
 
 const WALLET = WalletTypes.EXODUS;
 
@@ -34,19 +33,21 @@ export const config = {
   // TODO: Get from evm networks
   defaultNetwork: Networks.ETHEREUM,
 };
-export const getInstance = exodus_instances;
+export const getInstance = exodus;
 
 export const connect: Connect = async ({ instance, meta }) => {
-  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
-  let results: ProviderConnectResult[] = [];
+  const evmInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const results: ProviderConnectResult[] = [];
 
-  if (evm_instance) {
-    const evm = await getEvmAccounts(evm_instance);
+  if (evmInstance) {
+    const evm = await getEvmAccounts(evmInstance);
     results.push(evm);
   }
 
   const solanaResults = await getSolanaAccounts(instance);
-  results = [...results, ...solanaResults];
+  results.push(
+    ...(Array.isArray(solanaResults) ? solanaResults : [solanaResults])
+  );
   return results;
 };
 
@@ -102,7 +103,10 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
+export const getSigners: (provider: Provider) => Promise<SignerFactory> =
+  signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -129,3 +133,16 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
   ),
 });
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  switchNetwork,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+  canEagerConnect,
+});
+
+export { buildLegacyProvider };
