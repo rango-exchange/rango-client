@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/xrpl",
+  "type": "module",
+  "main": "../../dist/namespaces/xrpl/mod.js",
+  "module": "../../dist/namespaces/xrpl/mod.js",
+  "types": "../../dist/namespaces/xrpl/mod.d.ts",
+  "sideEffects": false
+}

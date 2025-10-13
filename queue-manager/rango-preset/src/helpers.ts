@@ -174,6 +174,7 @@ export const getCurrentStepTx = (
     tronTransaction,
     tonTransaction,
     suiTransaction,
+    xrplTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -186,7 +187,8 @@ export const getCurrentStepTx = (
     tronApprovalTransaction ||
     tronTransaction ||
     tonTransaction ||
-    suiTransaction
+    suiTransaction ||
+    xrplTransaction
   );
 };
 
@@ -210,6 +212,7 @@ export const setCurrentStepTx = (
   currentStep.tronTransaction = null;
   currentStep.tonTransaction = null;
   currentStep.suiTransaction = null;
+  currentStep.xrplTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -774,6 +777,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
+    swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
@@ -1104,11 +1108,11 @@ export function handleRejectedSign(
 
     const currentStep = getCurrentStep(swap)!;
 
-    const sourceWallet = getRelatedWallet(swap, currentStep);
     if (swap.status === 'failed') {
       return;
     }
 
+    const sourceWallet = getRelatedWallet(swap, currentStep);
     const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
       prettifyErrorMessage(error);
 
