@@ -496,6 +496,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     suggestAndConnect(_type, _network): never {
       throw new Error('`suggestAndConnect` is not implemented');
     },
+    hubProvider() {
+      throw new Error(
+        'Unreachable code. the method has been implemented in main adapter instance.'
+      );
+    },
   };
 
   return api;

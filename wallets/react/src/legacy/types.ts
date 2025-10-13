@@ -67,6 +67,7 @@ export type ProviderContext = {
   getSigners(type: WalletType): Promise<SignerFactory>;
   getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
+  hubProvider(type: WalletType): Provider;
 };
 
 export type ProviderProps = PropsWithChildren<{
