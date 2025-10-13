@@ -21,7 +21,7 @@ export const metadata: ProviderMetadata = {
       'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
     brave:
       'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
-    homepage: 'https://www.okx.com/web3',
+    homepage: 'https://www.exodus.com/download',
   },
   properties: [
     {
