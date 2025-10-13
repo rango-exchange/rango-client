@@ -29,6 +29,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     connect,
     canSwitchNetworkTo,
     getWalletInfo,
+    hubProvider,
   } = useWallets();
 
   const swapQueueDef = useMemo(() => {
@@ -98,6 +99,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     canSwitchNetworkTo,
     state,
     isMobileWallet,
+    hubProvider,
   };
 
   const isActiveTab = useUiStore.use.isActiveTab();
