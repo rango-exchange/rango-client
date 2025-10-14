@@ -16,10 +16,6 @@ export type {
   NamespaceConnectedEvent,
   NamespaceSwitchedAccountEvent,
 } from './events.js';
-export type {
-  ProviderMetadata,
-  ProviderConfig,
-  ProviderInfo,
-} from './providers.js';
+export type { ProviderInfo, ProviderConfig } from './providers.js';
 export type { NamespaceConfig, NamespaceData } from './namespaces.js';
 export { createStore } from './store.js';

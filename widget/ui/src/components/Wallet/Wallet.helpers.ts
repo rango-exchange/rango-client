@@ -1,10 +1,10 @@
-import type { Info, MakeInfoOptions } from './Wallet.types.js';
+import type { Info } from './Wallet.types.js';
 
 import { i18n } from '@lingui/core';
 
 import { WalletState } from './Wallet.types.js';
 
-export function makeInfo(state: WalletState, options?: MakeInfoOptions): Info {
+export function makeInfo(state: WalletState): Info {
   switch (state) {
     case WalletState.CONNECTED:
       return {
@@ -19,13 +19,6 @@ export function makeInfo(state: WalletState, options?: MakeInfoOptions): Info {
         tooltipText: i18n.t('Connect other chains'),
       };
     case WalletState.NOT_INSTALLED:
-      if (options?.hasDeepLink) {
-        return {
-          color: 'info500',
-          description: i18n.t('Open'),
-          tooltipText: i18n.t('Open'),
-        };
-      }
       return {
         color: 'info500',
         description: i18n.t('Install'),
