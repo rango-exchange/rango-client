@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import { NamespaceBuilder, ProviderBuilder } from '../src/builders/mod.js';
 import { Hub } from '../src/hub/hub.js';
 import { createStore, type Store } from '../src/hub/store/mod.js';
-import { garbageWalletMetaData } from '../src/test-utils/fixtures.js';
+import { garbageWalletInfo } from '../src/test-utils/fixtures.js';
 
 describe('check hub', () => {
   const walletName = 'garbage-wallet';
@@ -41,8 +41,8 @@ describe('check hub', () => {
       .action('connect', evmConnect)
       .build();
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'metadata',
-      garbageWalletMetaData
+      'info',
+      garbageWalletInfo
     );
     garbageWalletBuilder.add('evm', evmNamespace);
     const garbageWallet = garbageWalletBuilder.build();
@@ -62,8 +62,8 @@ describe('check hub', () => {
   });
   test('should remove wallet from both hub and store', async () => {
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(
-      'metadata',
-      garbageWalletMetaData
+      'info',
+      garbageWalletInfo
     );
     const garbageWallet = garbageWalletBuilder.build();
 

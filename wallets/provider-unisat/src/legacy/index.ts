@@ -8,7 +8,7 @@ import {
   type TransferBlockchainMeta,
 } from 'rango-types';
 
-import { metadata, WALLET_ID } from '../constants.js';
+import { info, WALLET_ID } from '../constants.js';
 import signer from '../signer.js';
 import { type Provider, unisat as unisat_instance } from '../utils.js';
 
@@ -28,11 +28,11 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   }
 
   return {
-    name: metadata.name,
-    img: metadata.icon,
+    name: info.name,
+    img: info.icon,
     installLink: {
-      CHROME: metadata.extensions.chrome,
-      DEFAULT: metadata.extensions.homepage || '',
+      CHROME: info.extensions.chrome,
+      DEFAULT: info.extensions.homepage || '',
     },
     color: '#e9983d',
     needsNamespace: {

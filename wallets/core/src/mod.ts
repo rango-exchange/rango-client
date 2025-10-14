@@ -1,14 +1,12 @@
 export type {
   Store,
   State,
-  ProviderMetadata,
+  ProviderInfo,
   CommonNamespaces,
   CommonNamespaceKeys,
   Subscriber,
   SubscriberCleanUp,
   Context,
-  GenerateDeepLink,
-  DeepLinkContext,
 } from './hub/mod.js';
 export type { AnyFunction } from './types/mod.js';
 export {

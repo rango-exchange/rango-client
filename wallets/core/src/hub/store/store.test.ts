@@ -14,7 +14,7 @@ describe('checking store', () => {
   test('new providers can be added to store', () => {
     const id = 'sol-or-something';
     const info = {
-      metadata: {
+      info: {
         name: 'sol grabage wallet',
         icon: 'http://somewhere.world',
         extensions: {
@@ -31,16 +31,18 @@ describe('checking store', () => {
   });
   test('provider can be removed from store', () => {
     const id = 'sol-or-something';
-    const metadata = {
-      name: 'sol grabage wallet',
-      icon: 'http://somewhere.world',
-      extensions: {
-        homepage: 'http://somewhere.world',
+    const info = {
+      info: {
+        name: 'sol grabage wallet',
+        icon: 'http://somewhere.world',
+        extensions: {
+          homepage: 'http://somewhere.world',
+        },
       },
     };
 
     const { getState } = hubStore;
-    getState().providers.addProvider(id, { metadata });
+    getState().providers.addProvider(id, info);
     expect(getState().providers.list[id]).toBeDefined();
     expect(Object.keys(getState().providers.list).length).toBe(1);
     getState().providers.removeProvider(id);

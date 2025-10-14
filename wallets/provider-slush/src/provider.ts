@@ -1,6 +1,6 @@
 import { ProviderBuilder } from '@rango-dev/wallets-core';
 
-import { metadata, WALLET_ID } from './constants.js';
+import { info, WALLET_ID } from './constants.js';
 import { sui } from './namespaces/sui.js';
 import { suiWalletInstance } from './utils.js';
 
@@ -13,7 +13,7 @@ const buildProvider = () =>
         console.debug('[slush] instance detected.', context);
       }
     })
-    .config('metadata', metadata)
+    .config('info', info)
     .add('sui', sui)
     .build();
 

@@ -125,6 +125,7 @@ export function mapWalletTypesToWalletInfo(
       };
     });
 }
+
 export function walletAndSupportedChainsNames(
   supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {

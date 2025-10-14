@@ -1,5 +1,4 @@
 import type { State as WalletState } from './wallet.js';
-import type { GenerateDeepLink } from '../mod.js';
 import type { Namespace } from '../namespaces/common/mod.js';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
@@ -124,7 +123,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  generateDeepLink?: GenerateDeepLink;
+
   needsDerivationPath?: NeedsDerivationPath;
   needsNamespace?: NeedsNamespace;
 };
