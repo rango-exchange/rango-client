@@ -1,6 +1,11 @@
 import { css, styled } from '@rango-dev/ui';
 
-import { WIDGET_MAX_HEIGHT, WIDGET_MIN_HEIGHT } from './Layout.constants';
+import {
+  LARGE_SCREEN_MIN_HEIGHT,
+  WIDGET_MAX_HEIGHT,
+  WIDGET_MIN_HEIGHT_FOR_LARGE_SCREENS,
+  WIDGET_MIN_HEIGHT_FOR_SMALL_SCREENS,
+} from './Layout.constants';
 
 export const LayoutContainer = css({
   borderRadius: '$primary',
@@ -16,16 +21,18 @@ export const Container = styled('div', {
   minWidth: '300px',
   maxWidth: '390px',
   backgroundColor: '$background',
+  maxHeight: WIDGET_MAX_HEIGHT,
   variants: {
     height: {
       auto: {
         height: 'auto',
-        maxHeight: WIDGET_MAX_HEIGHT,
       },
       fixed: {
-        minHeight: WIDGET_MIN_HEIGHT,
-        maxHeight: WIDGET_MAX_HEIGHT,
-        height: WIDGET_MAX_HEIGHT,
+        height: '100%',
+        minHeight: WIDGET_MIN_HEIGHT_FOR_SMALL_SCREENS,
+        [`@media screen and (min-height: ${LARGE_SCREEN_MIN_HEIGHT})`]: {
+          minHeight: WIDGET_MIN_HEIGHT_FOR_LARGE_SCREENS,
+        },
       },
     },
     showBanner: {
