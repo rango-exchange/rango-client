@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-22 07:22\n"
+"PO-Revision-Date: 2025-10-25 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: hi\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
-msgid "This wallet can only connect to one chain at a time."
-msgstr "यह वॉलेट एक समय में केवल एक ही चेन से जुड़ सकता है।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -109,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "आपको {blockchainName} वॉलेट कनेक्ट करना होगा।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "{chain} श्रृंखला जोड़ें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
 msgid "Chain not connected"
 msgstr "चेन कनेक्ट नहीं है"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
 msgid "Show more wallets"
 msgstr "अधिक वॉलेट दिखाएं"
 
@@ -201,7 +196,7 @@ msgid "History"
 msgstr "इतिहास"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:24
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "वॉलेट कनेक्ट करें"
@@ -618,8 +613,8 @@ msgstr "लेन-देन देखें"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "जोड़ना"
 
@@ -636,7 +631,7 @@ msgstr "लेन - देन विफल"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "हो गया"
 
@@ -673,7 +668,7 @@ msgstr "नहीं, जारी रखें"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
@@ -718,8 +713,8 @@ msgstr "{wallet}स्थापित करें"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "स्थापित करना"
 
@@ -740,32 +735,32 @@ msgid "Select Token"
 msgstr "टोकन चुनें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:31
 msgid "Wallet Connected"
 msgstr "वॉलेट कनेक्टेड"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:32
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "आपका वॉलेट कनेक्ट हो गया है, आप इसका उपयोग स्वैप करने के लिए कर सकते हैं।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:43
 msgid "Failed to Connect"
 msgstr "जोडने में विफल"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:45
 msgid "Your wallet is not connected. Please try again."
 msgstr "आपका वॉलेट कनेक्ट नहीं है। कृपया पुनः प्रयास करें।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:54
 msgid "Connecting to your wallet"
 msgstr "अपने वॉलेट से कनेक्ट करना"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:55
 msgid "Click connect in your wallet popup."
 msgstr "अपने वॉलेट पॉपअप में कनेक्ट पर क्लिक करें।"
 
@@ -795,14 +790,19 @@ msgid "Enter Index"
 msgstr "सूचकांक दर्ज करें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "यह वॉलेट कई चेन को सपोर्ट करता है। चुनें कि आप कौन सी चेन को कनेक्ट या डिस्कनेक्ट करना चाहते हैं।"
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:86
+msgid "This wallet can only connect to one chain at a time."
+msgstr "यह वॉलेट एक समय में केवल एक ही चेन से जुड़ सकता है।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:111
 msgid "Disconnect wallet"
 msgstr "वॉलेट डिस्कनेक्ट करें"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "यह वॉलेट कई चेन को सपोर्ट करता है। चुनें कि आप कौन सी चेन को कनेक्ट या डिस्कनेक्ट करना चाहते हैं।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
@@ -852,18 +852,18 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "यह वॉलेट कई चेन को सपोर्ट करता है। चुनें कि आप किन चेन को कनेक्ट करना चाहते हैं।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "यह वॉलेट एक समय में केवल एक ही चेन से जुड़ सकता है। "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "सबको अचयनित करो"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "सबका चयन करें"
@@ -1246,13 +1246,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "स्वैप विवरण प्रदर्शित करने के लिए अनुरोध आईडी आवश्यक है।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:73
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
+#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "वॉलेट कनेक्ट करें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:88
+#: widget/embedded/src/pages/WalletsPage.tsx:82
 msgid "Choose a wallet to connect."
 msgstr "कनेक्ट करने के लिए एक वॉलेट चुनें."
 
@@ -1438,28 +1438,22 @@ msgid "Connect other chains"
 msgstr "अन्य श्रृंखलाओं को जोड़ें"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "खुला"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "कनेक्ट कर रहा हूँ..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "कनेक्ट"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "डिस्कनेक्ट किया गया"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "आपको वॉलेट को सही स्थिति पास करनी होगी।"
 

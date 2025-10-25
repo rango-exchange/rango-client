@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-22 07:22\n"
+"PO-Revision-Date: 2025-10-25 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
-msgid "This wallet can only connect to one chain at a time."
-msgstr "Ten portfel może być podłączony tylko do jednego łańcucha na raz."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -109,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Musisz połączyć portfel {blockchainName}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "Dodaj łańcuch {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
 msgid "Chain not connected"
 msgstr "Łańcuch nie jest podłączony"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
 msgid "Show more wallets"
 msgstr "Pokaż więcej portfeli"
 
@@ -201,7 +196,7 @@ msgid "History"
 msgstr "Historia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:24
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Połącz portfel"
@@ -618,8 +613,8 @@ msgstr "Zobacz transakcję"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Połącz"
 
@@ -636,7 +631,7 @@ msgstr "Transakcja nie powiodła się"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "Gotowe"
 
@@ -673,7 +668,7 @@ msgstr "Nie, Kontynuuj"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
@@ -718,8 +713,8 @@ msgstr "Zainstaluj {wallet}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "Zainstaluj"
 
@@ -740,32 +735,32 @@ msgid "Select Token"
 msgstr "Wybierz token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:31
 msgid "Wallet Connected"
 msgstr "Portfel połączony"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:32
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Twój portfel jest połączony, możesz go użyć do zamiany."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:43
 msgid "Failed to Connect"
 msgstr "Nie udało się połączyć"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:45
 msgid "Your wallet is not connected. Please try again."
 msgstr "Twój portfel nie jest połączony. Spróbuj ponownie."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:54
 msgid "Connecting to your wallet"
 msgstr "Łączenie z portfelem"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:55
 msgid "Click connect in your wallet popup."
 msgstr "Kliknij połączenie w wyskakującym oknie portfela."
 
@@ -795,14 +790,19 @@ msgid "Enter Index"
 msgstr "Wprowadź indeks"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "Ten portfel obsługuje wiele łańcuchów. Wybierz łańcuchy, które chcesz połączyć lub rozłączyć."
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:86
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Ten portfel może być podłączony tylko do jednego łańcucha na raz."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:111
 msgid "Disconnect wallet"
 msgstr "Odłącz portfel"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Ten portfel obsługuje wiele łańcuchów. Wybierz łańcuchy, które chcesz połączyć lub rozłączyć."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
@@ -852,18 +852,18 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "Ten portfel obsługuje wiele łańcuchów. Wybierz łańcuchy, które chcesz połączyć."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Ten portfel może być podłączony tylko do jednego łańcucha na raz. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Odznacz wszystkie"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Zaznacz wszystkie"
@@ -1246,13 +1246,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Identyfikator żądania jest niezbędny do wyświetlania szczegółów swapu."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:73
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
+#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Połącz portfele"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:88
+#: widget/embedded/src/pages/WalletsPage.tsx:82
 msgid "Choose a wallet to connect."
 msgstr "Wybierz portfel do połączenia."
 
@@ -1438,28 +1438,22 @@ msgid "Connect other chains"
 msgstr "Połącz inne łańcuchy"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "Otwarte"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "Łączenie..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "Łączenie"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "Rozłączony"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "musisz przekazać poprawny stan Wallet."
 
