@@ -6,7 +6,7 @@ import {
   getCategoriesCount,
   SelectableCategoryList,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainList } from '../components/BlockchainList';
@@ -16,6 +16,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
+import { filterBlockchainsWithAtLeastOneToken } from '../utils/common';
 
 interface PropTypes {
   type: 'source' | 'destination' | 'custom-token';
@@ -37,7 +38,12 @@ export function SelectBlockchainPage(props: PropTypes) {
   const blockchains = useAppStore().blockchains({
     type,
   });
-  const activeCategoriesCount = getCategoriesCount(blockchains);
+  const tokens = useAppStore().tokens();
+  const filteredBlockchains = useMemo(
+    () => filterBlockchainsWithAtLeastOneToken(blockchains, tokens),
+    [blockchains.length, tokens.length]
+  );
+  const activeCategoriesCount = getCategoriesCount(filteredBlockchains);
 
   const showCategory = !props.hideCategory && activeCategoriesCount !== 1;
 
@@ -53,7 +59,10 @@ export function SelectBlockchainPage(props: PropTypes) {
         } else {
           const blockchainNativeToken = findNativeToken(blockchain);
           if (blockchainNativeToken) {
-            setToToken({ token: blockchainNativeToken, meta: { blockchains } });
+            setToToken({
+              token: blockchainNativeToken,
+              meta: { blockchains },
+            });
           }
         }
       }
@@ -72,7 +81,7 @@ export function SelectBlockchainPage(props: PropTypes) {
             <SelectableCategoryList
               setCategory={setBlockchainCategory}
               category={blockchainCategory}
-              blockchains={blockchains}
+              blockchains={filteredBlockchains}
               isLoading={fetchStatus === 'loading'}
             />
             <Divider size={24} />
@@ -93,7 +102,7 @@ export function SelectBlockchainPage(props: PropTypes) {
         <Divider size={16} />
 
         <BlockchainList
-          list={blockchains}
+          list={filteredBlockchains}
           showTitle={type !== 'custom-token'}
           searchedFor={searchedFor}
           blockchainCategory={blockchainCategory}

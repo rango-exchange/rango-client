@@ -1,5 +1,5 @@
 import type { WalletInfoWithExtra } from '../types';
-import type { Token } from 'rango-sdk';
+import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { BlockchainCategories, WalletState } from '@rango-dev/ui';
 import { TransactionType } from 'rango-sdk';
@@ -279,4 +279,19 @@ export function memoizedResult(): <R>(fn: () => R, key: number | string) => R {
 
     return result;
   };
+}
+
+export function filterBlockchainsWithAtLeastOneToken(
+  blockchains: BlockchainMeta[],
+  tokens: Token[]
+) {
+  const blockchainsWithAtLeastOneToken = new Set<string>();
+
+  tokens.forEach((token) => {
+    blockchainsWithAtLeastOneToken.add(token.blockchain);
+  });
+
+  return blockchains.filter((blockchain) =>
+    blockchainsWithAtLeastOneToken.has(blockchain.name)
+  );
 }
