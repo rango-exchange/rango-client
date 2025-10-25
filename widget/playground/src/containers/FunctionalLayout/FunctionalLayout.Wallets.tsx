@@ -36,8 +36,8 @@ export function WalletSection() {
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
-      if (state('metamask').connected) {
-        void disconnect(WalletTypes.META_MASK);
+      if (state(WalletTypes.KEPLR).connected) {
+        void disconnect(WalletTypes.KEPLR);
       }
     }
     onChangeBooleansConfig('externalWallets', checked);
@@ -94,7 +94,7 @@ export function WalletSection() {
         </SwitchField>
         <Divider size={16} />
         <Typography size="small" variant="body" color="neutral600">
-          It's a sample using metamask, You can use your own wallet or what we
+          It's a sample using Keplr, You can use your own wallet or what we
           already implemented, check it out here.
         </Typography>
         <Divider size={16} />
@@ -107,15 +107,15 @@ export function WalletSection() {
             disabled={!externalWallets}
             className={connectButtonStyles()}
             onClick={() => {
-              if (state('metamask').connected) {
-                void disconnect('metamask');
+              if (state(WalletTypes.KEPLR).connected) {
+                void disconnect(WalletTypes.KEPLR);
               } else {
-                void connect('metamask');
+                void connect(WalletTypes.KEPLR);
               }
             }}>
-            {externalWallets && state('metamask').connected
-              ? 'Disconnect MetaMask'
-              : 'Connect MetaMask'}
+            {externalWallets && state(WalletTypes.KEPLR).connected
+              ? 'Disconnect Keplr'
+              : 'Connect Keplr'}
           </Button>
         </Footer>
       </ExternalSection>
