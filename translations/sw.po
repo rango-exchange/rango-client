@@ -8,7 +8,7 @@ msgstr ""
 "Language: sw\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-22 07:22\n"
+"PO-Revision-Date: 2025-10-25 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: sw\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:82
-msgid "This wallet can only connect to one chain at a time."
-msgstr "Pochi hii inaweza tu kuunganishwa kwa mnyororo mmoja kwa wakati mmoja."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -109,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Unahitaji kuunganisha mkoba {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:169
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "Ongeza {chain} mnyororo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:174
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
 msgid "Chain not connected"
 msgstr "Mnyororo haujaunganishwa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
 msgid "Show more wallets"
 msgstr "Onyesha pochi zaidi"
 
@@ -201,7 +196,7 @@ msgid "History"
 msgstr "Historia"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:24
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Unganisha Wallet"
@@ -618,8 +613,8 @@ msgstr "Tazama muamala"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:178
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:44
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Unganisha"
 
@@ -636,7 +631,7 @@ msgstr "Muamala Umeshindwa"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:176
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "Imekamilika"
 
@@ -673,7 +668,7 @@ msgstr "Hapana, Endelea"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:150
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
 #: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
@@ -718,8 +713,8 @@ msgstr "Sakinisha {wallet}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:32
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
 msgstr "Sakinisha"
 
@@ -740,32 +735,32 @@ msgid "Select Token"
 msgstr "Chagua Tokeni"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:28
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:31
 msgid "Wallet Connected"
 msgstr "Wallet Imeunganishwa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:29
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:32
 msgid "Your wallet is connected, you can use it to swap."
 msgstr "Pochi yako imeunganishwa, unaweza kuitumia kubadilishana."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:40
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:43
 msgid "Failed to Connect"
 msgstr "Imeshindwa Kuunganisha"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:42
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:45
 msgid "Your wallet is not connected. Please try again."
 msgstr "Mkoba wako haujaunganishwa. Tafadhali jaribu tena."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:51
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:54
 msgid "Connecting to your wallet"
 msgstr "Inaunganisha kwenye pochi yako"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:52
+#: widget/embedded/src/components/WalletStatefulConnect/ConnectStatus.tsx:55
 msgid "Click connect in your wallet popup."
 msgstr "Bofya unganisha kwenye dirisha ibukizi la mkoba wako."
 
@@ -795,14 +790,19 @@ msgid "Enter Index"
 msgstr "Ingiza Index"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:153
-msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
-msgstr "Mkoba huu unasaidia minyororo mingi. Chagua minyororo ambayo ungependa kuunganisha au kutenganisha."
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:86
+msgid "This wallet can only connect to one chain at a time."
+msgstr "Pochi hii inaweza tu kuunganishwa kwa mnyororo mmoja kwa wakati mmoja."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:101
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:111
 msgid "Disconnect wallet"
 msgstr "Tenganisha pochi"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
+msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
+msgstr "Mkoba huu unasaidia minyororo mingi. Chagua minyororo ambayo ungependa kuunganisha au kutenganisha."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
@@ -852,18 +852,18 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "Mkoba huu unasaidia minyororo mingi. Chagua minyororo ambayo ungependa kuunganisha."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:128
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Mkoba huu unaweza tu kuunganishwa kwa mnyororo mmoja kwa wakati mmoja. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:145
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Deselect all"
 msgstr "Acha kuchagua zote"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:146
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 msgid "Select all"
 msgstr "Chagua zote"
@@ -1246,13 +1246,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Kitambulisho cha ombi ni muhimu ili kuonyesha maelezo ya kubadilishana."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:73
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:16
+#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Unganisha Pochi"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:88
+#: widget/embedded/src/pages/WalletsPage.tsx:82
 msgid "Choose a wallet to connect."
 msgstr "Chagua mkoba ili kuunganisha."
 
@@ -1438,28 +1438,22 @@ msgid "Connect other chains"
 msgstr "Unganisha minyororo mingine"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:26
-msgid "Open"
-msgstr "Fungua"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Connecting ..."
 msgstr "Inaunganisha..."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:38
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connecting"
 msgstr "Inaunganisha"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:43
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:36
 msgid "Disconnected"
 msgstr "Imetenganishwa"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Wallet/Wallet.helpers.ts:47
+#: widget/ui/src/components/Wallet/Wallet.helpers.ts:40
 msgid "you need to pass a correct state to Wallet."
 msgstr "unahitaji kupitisha hali sahihi kwa Wallet."
 
