@@ -10,6 +10,7 @@ import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
 import { isAppLoadedIntoIframe } from '../../hooks/useIframe/useIframe.helpers';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
+import useScreenDetect from '../../hooks/useScreenDetect';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
 import { tabManager, useUiStore } from '../../store/ui';
@@ -21,7 +22,10 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 import { RefreshModal } from '../RefreshModal';
 
-import { COMPACT_TOKEN_SELECTOR_THRESHOLD } from './Layout.constants';
+import {
+  COMPACT_TOKEN_SELECTOR_THRESHOLD,
+  WIDGET_MAX_HEIGHT,
+} from './Layout.constants';
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import {
   BannerContainer,
@@ -43,7 +47,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   const {
     config: { features, theme },
   } = useAppStore();
-  const { watermark } = useUiStore();
+  const { watermark, setShowCompactTokenSelector } = useUiStore();
 
   const hasWatermark = watermark === 'FULL';
   const { activeTheme } = useTheme(theme || {});
@@ -60,10 +64,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     showActivateTabModal,
     setShowActivateTabModal,
     activateCurrentTab,
-    setShowCompactTokenSelector,
   } = useUiStore();
   const navigateBack = useNavigateBack();
   const { manager } = useManager();
+  const { isTablet, isMobile } = useScreenDetect();
   const pendingSwaps: PendingSwap[] = getPendingSwaps(manager).map(
     ({ swap }) => swap
   );
@@ -130,25 +134,35 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   }, [fetchStatus]);
 
   useLayoutEffect(() => {
-    if (!containerRef.current) {
-      return;
-    }
+    const isFixedHeight =
+      height === 'auto' || !containerRef.current || isAppLoadedIntoIframe();
+    const isSmallScreen = isMobile || isTablet;
 
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentRect) {
-          setShowCompactTokenSelector(
-            entry.contentRect.height <
-              parseInt(COMPACT_TOKEN_SELECTOR_THRESHOLD)
-          );
-        }
+    const handler = () => {
+      if (isFixedHeight) {
+        return;
       }
-    });
 
-    observer.observe(containerRef.current);
+      if (isSmallScreen) {
+        containerRef.current.style.height = `${
+          window.innerHeight - containerRef.current.offsetTop
+        }px`;
+      } else {
+        containerRef.current.style.height = `${WIDGET_MAX_HEIGHT}px`;
+      }
 
-    return () => observer.disconnect();
-  }, []);
+      setShowCompactTokenSelector(
+        parseFloat(containerRef.current.style.height) <
+          COMPACT_TOKEN_SELECTOR_THRESHOLD
+      );
+    };
+
+    handler();
+
+    window.addEventListener('resize', handler);
+
+    return () => window.removeEventListener('resize', handler);
+  }, [height, isMobile, isTablet]);
 
   return (
     <Container
