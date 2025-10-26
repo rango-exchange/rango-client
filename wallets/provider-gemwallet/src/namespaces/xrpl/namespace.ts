@@ -49,10 +49,10 @@ const canEagerConnect = new ActionBuilder<XRPLActions, 'canEagerConnect'>(
   })
   .build();
 
-export const namespace = new NamespaceBuilder<XRPLActions>('XRPL', WALLET_ID)
-  .action(connect)
-  .action(canEagerConnect)
-  .action('accountLines', async (_, account, options) => {
+const accountLines = new ActionBuilder<XRPLActions, 'accountLines'>(
+  'accountLines'
+)
+  .action(async (_, account, options) => {
     const client = new Client(XRPL_PUBLIC_SERVER);
     await client.connect();
 
@@ -66,4 +66,10 @@ export const namespace = new NamespaceBuilder<XRPLActions>('XRPL', WALLET_ID)
     await client.disconnect();
     return response.result.lines;
   })
+  .build();
+
+export const namespace = new NamespaceBuilder<XRPLActions>('XRPL', WALLET_ID)
+  .action(connect)
+  .action(canEagerConnect)
+  .action(accountLines)
   .build();

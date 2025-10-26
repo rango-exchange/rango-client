@@ -56,11 +56,7 @@ export function fromTrustSetTransactionDataToGemWalletRequest(
   data: XrplTrustSetTransactionData
 ): SetTrustlineRequest {
   return {
-    limitAmount: {
-      currency: data.LimitAmount.currency,
-      value: data.LimitAmount.value,
-      issuer: data.LimitAmount.issuer,
-    },
+    limitAmount: data.LimitAmount,
     memos: fromPaymentTransactionMemoToGemWalletMemo(data.Memos),
     flags: data.Flags,
   };
@@ -69,17 +65,18 @@ export function fromTrustSetTransactionDataToGemWalletRequest(
 export function fromPaymentTransactionDataToGemWalletRequest(
   data: XrplPaymentTransactionData
 ): SendPaymentRequest {
+  let amount: SendPaymentRequest['amount'];
   if (isMPTokenAmount(data.Amount)) {
     throw new Error("Current implemented signer doesn't have support for MPT");
+  } else if (isIssuedCurrencyAmount(data.Amount)) {
+    amount = data.Amount;
+  } else if (typeof data.Amount === 'string') {
+    amount = data.Amount;
+  } else {
+    throw new Error(
+      "There is an unexpected type for Amount. current signer doesn't have support for that."
+    );
   }
-
-  const amount = isIssuedCurrencyAmount(data.Amount)
-    ? {
-        currency: data.Amount.currency,
-        value: data.Amount.value,
-        issuer: data.Amount.issuer,
-      }
-    : data.Amount;
 
   return {
     amount,
