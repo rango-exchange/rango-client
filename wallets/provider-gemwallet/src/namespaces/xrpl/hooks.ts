@@ -2,8 +2,7 @@ import type { XRPLActions } from '@rango-dev/wallets-core/namespaces/xrpl';
 
 import { on } from '@gemwallet/api';
 import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
-
-import { formatAddressToCAIP } from './helpers.js';
+import { utils } from '@rango-dev/wallets-core/namespaces/xrpl';
 
 type WalletChangedEventPayload = {
   wallet: {
@@ -16,7 +15,7 @@ export function changeAccountSubscriberBuilder() {
   return new ChangeAccountSubscriberBuilder<WalletChangedEventPayload, true>()
     .getInstance(() => true)
     .format(async (_, payload) => [
-      formatAddressToCAIP(payload.wallet.publicAddress),
+      utils.formatAddressToCAIP(payload.wallet.publicAddress),
     ])
     .addEventListener((_, callback) => {
       on('walletChanged', callback);

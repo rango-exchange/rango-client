@@ -2,13 +2,12 @@ import type { XRPLActions } from '@rango-dev/wallets-core/namespaces/xrpl';
 
 import { getAddress } from '@gemwallet/api';
 import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders } from '@rango-dev/wallets-core/namespaces/xrpl';
+import { builders, utils } from '@rango-dev/wallets-core/namespaces/xrpl';
 import { Client } from 'xrpl';
 
 import { WALLET_ID, XRPL_PUBLIC_SERVER } from '../../constants.js';
 import { checkInstallationOnLoad } from '../../utils.js';
 
-import { formatAddressToCAIP } from './helpers.js';
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -22,7 +21,7 @@ const connect = builders
       throw new Error(`Couldn't access to your wallet address.`);
     }
 
-    return [formatAddressToCAIP(response.result.address)];
+    return [utils.formatAddressToCAIP(response.result.address)];
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)

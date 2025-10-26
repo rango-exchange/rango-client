@@ -1,7 +1,5 @@
 import { isInstalled } from '@gemwallet/api';
 
-export type Provider = Map<string, unknown>;
-
 export async function checkInstallationOnLoad(): Promise<boolean> {
   return new Promise((resolve, reject) => {
     window.addEventListener('load', () => {

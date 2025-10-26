@@ -1,4 +1,8 @@
-import type { SendPaymentRequest, SetTrustlineRequest } from '@gemwallet/api';
+import type {
+  Memo,
+  SendPaymentRequest,
+  SetTrustlineRequest,
+} from '@gemwallet/api';
 import type {
   XrplPaymentTransactionData,
   XrplTransactionDataIssuedCurrencyAmount,
@@ -6,46 +10,33 @@ import type {
   XrplTrustSetTransactionData,
 } from 'rango-types/mainApi';
 
-import {
-  CAIP_NAMESPACE,
-  CAIP_XRPL_CHAIN_ID,
-} from '@rango-dev/wallets-core/namespaces/xrpl';
-import { CAIP } from '@rango-dev/wallets-core/utils';
-
-export function formatAddressToCAIP(address: string): string {
-  return CAIP.AccountId.format({
-    address,
-    chainId: {
-      namespace: CAIP_NAMESPACE,
-      reference: CAIP_XRPL_CHAIN_ID,
-    },
-  });
-}
-
 function isIssuedCurrencyAmount(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  amount: any
+  amount: XrplPaymentTransactionData['Amount']
 ): amount is XrplTransactionDataIssuedCurrencyAmount {
   return (
     typeof amount === 'object' &&
+    // @ts-expect-error it never throw an runtime error, since we are checking it should be an object first
     typeof amount.currency === 'string' &&
+    // @ts-expect-error it never throw an runtime error, since we are checking it should be an object first
     typeof amount.issuer === 'string' &&
     typeof amount.value === 'string'
   );
 }
 
 function isMPTokenAmount(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  amount: any
+  amount: XrplPaymentTransactionData['Amount']
 ): amount is XrplTransactionDataMPTAmount {
   return (
     typeof amount === 'object' &&
+    // @ts-expect-error it never throw an runtime error, since we are checking it should be an object first
     typeof amount.mpt_issuance_id === 'string' &&
     typeof amount.value === 'string'
   );
 }
 
-function toGemWalletMemo(memos: XrplPaymentTransactionData['Memos']) {
+function fromPaymentTransactionMemoToGemWalletMemo(
+  memos: XrplPaymentTransactionData['Memos']
+): Memo[] {
   if (!memos) {
     return [];
   }
@@ -61,7 +52,7 @@ function toGemWalletMemo(memos: XrplPaymentTransactionData['Memos']) {
   });
 }
 
-export function toGemWalletTrustlineRequest(
+export function fromTrustSetTransactionDataToGemWalletRequest(
   data: XrplTrustSetTransactionData
 ): SetTrustlineRequest {
   return {
@@ -70,12 +61,12 @@ export function toGemWalletTrustlineRequest(
       value: data.LimitAmount.value,
       issuer: data.LimitAmount.issuer,
     },
-    memos: toGemWalletMemo(data.Memos),
+    memos: fromPaymentTransactionMemoToGemWalletMemo(data.Memos),
     flags: data.Flags,
   };
 }
 
-export function toGemWalletPaymentRequest(
+export function fromPaymentTransactionDataToGemWalletRequest(
   data: XrplPaymentTransactionData
 ): SendPaymentRequest {
   if (isMPTokenAmount(data.Amount)) {
@@ -94,7 +85,7 @@ export function toGemWalletPaymentRequest(
     amount,
     destination: data.Destination,
     destinationTag: data.DestinationTag,
-    memos: toGemWalletMemo(data.Memos),
+    memos: fromPaymentTransactionMemoToGemWalletMemo(data.Memos),
     flags: data.Flags,
   };
 }
