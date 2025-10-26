@@ -4,8 +4,8 @@ import { sendPayment, setTrustline } from '@gemwallet/api';
 import { type GenericSigner, SignerError } from 'rango-types';
 
 import {
-  toGemWalletPaymentRequest,
-  toGemWalletTrustlineRequest,
+  fromPaymentTransactionDataToGemWalletRequest,
+  fromTrustSetTransactionDataToGemWalletRequest,
 } from './helpers.js';
 
 export class Signer implements GenericSigner<XrplTransaction> {
@@ -15,7 +15,9 @@ export class Signer implements GenericSigner<XrplTransaction> {
 
   async signAndSendTx(tx: XrplTransaction): Promise<{ hash: string }> {
     if (tx.data.TransactionType === 'TrustSet') {
-      const result = await setTrustline(toGemWalletTrustlineRequest(tx.data));
+      const result = await setTrustline(
+        fromTrustSetTransactionDataToGemWalletRequest(tx.data)
+      );
 
       if (result.type === 'reject') {
         throw new Error('The request has been rejected', {
@@ -24,14 +26,18 @@ export class Signer implements GenericSigner<XrplTransaction> {
       }
 
       if (!result.result) {
-        throw new Error('This should be unreachable code. update later.');
+        throw new Error(
+          'Unexpected error where the result is not returned. (type: UnreachableCode)'
+        );
       }
 
       return {
         hash: result.result.hash,
       };
     } else if (tx.data.TransactionType === 'Payment') {
-      const result = await sendPayment(toGemWalletPaymentRequest(tx.data));
+      const result = await sendPayment(
+        fromPaymentTransactionDataToGemWalletRequest(tx.data)
+      );
 
       if (result.type === 'reject') {
         throw new Error('The request has been rejected', {
@@ -40,7 +46,9 @@ export class Signer implements GenericSigner<XrplTransaction> {
       }
 
       if (!result.result) {
-        throw new Error('This should be unreachable code. update later.');
+        throw new Error(
+          'Unexpected error where the result is not returned. (type: UnreachableCode)'
+        );
       }
 
       return {
@@ -48,6 +56,6 @@ export class Signer implements GenericSigner<XrplTransaction> {
       };
     }
 
-    throw new Error('Unsupported tranasction type');
+    throw new Error('Unsupported transaction type');
   }
 }

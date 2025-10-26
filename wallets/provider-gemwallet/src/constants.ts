@@ -19,7 +19,6 @@ export const info: ProviderMetadata = {
   properties: [
     {
       name: 'namespaces',
-      // if you are adding a new namespace, don't forget to also update `getWalletInfo`
       value: {
         selection: 'multiple',
         data: [
