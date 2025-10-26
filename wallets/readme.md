@@ -131,23 +131,24 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 ## By Group
 
-| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
-| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
-| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | 
-| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
-| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
-| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
-| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | 
-| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
-| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
+| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI | XRPL |
+| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- | ---- |
+| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌   |
+| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌   |
+| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌   |
+| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  | ❌   |
+| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌   |
+| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  | ❌   |
+| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌   |
+| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  | ❌   |
+| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌   |
+| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅   |
 
 ## By Feature
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
-| CoinBase     | ⚠️             | ✅             | ✅           |  Injected                 | ❌            |
+| CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | MetaMask     | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
@@ -156,6 +157,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
+| GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
