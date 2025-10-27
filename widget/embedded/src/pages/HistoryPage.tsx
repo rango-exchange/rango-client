@@ -40,6 +40,9 @@ const HistoryGroupedListContainer = styled('div', {
   flexDirection: 'column',
   gap: 15,
   height: '100%',
+  // See note on https://github.com/rango-exchange/rango-client/pull/1284
+  minHeight: 0,
+  flexGrow: 1,
 });
 
 const SearchAndFilterBar = styled('div', {
