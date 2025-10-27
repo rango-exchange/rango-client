@@ -69,8 +69,12 @@ export const Title = styled('div', {
 });
 export const List = styled('ul', {
   flexGrow: 1,
+  height: '100%',
   padding: 0,
   margin: 0,
+  // See note on https://github.com/rango-exchange/rango-client/pull/1284
+  display: 'flex',
+  flexDirection: 'column',
   listStyle: 'none',
 
   '& li': {

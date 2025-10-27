@@ -195,6 +195,11 @@ export function TokenList(props: PropTypes) {
   const renderList = () => {
     return (
       <VirtualizedList
+        style={{
+          // See note on https://github.com/rango-exchange/rango-client/pull/1284
+          flexGrow: 1,
+          minHeight: 0,
+        }}
         itemContent={(index) => {
           const token = tokens[index];
           if (token === 'skeleton') {
