@@ -28,6 +28,9 @@ jobs:
 
       - name: Prepare
         uses: ./.github/actions/prepare
+      
+      - name: Build Clients
+        run: node ./scripts/build-clients/command.mjs
 
       - name: Deploy packages
         id: deploy-packages

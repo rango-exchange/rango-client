@@ -4,25 +4,22 @@ description: 'Setting up Git, NodeJS and authenticate.'
 runs:
   using: 'composite'
   steps:
-    - name: Setup NodeJS
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'yarn'
-        registry-url: 'https://registry.npmjs.org'
-
     - name: Git
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       shell: 'bash'
 
-    - name: Restore cache
+    - name: Cache dependencies
       uses: actions/cache@v4
+      id: cache
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+          
     - name: Install packages
+      if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
       shell: 'bash'

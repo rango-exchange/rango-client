@@ -4,9 +4,6 @@ description: 'Links the current widget embedded package to example projects and 
 runs:
   using: 'composite'
   steps:
-    - name: 🔨 Build Widget Package
-      run: yarn run build:widget
-      shell: bash
 
     - name: 🔗 Link Core Packages
       run: |
@@ -17,53 +14,99 @@ runs:
         echo "✅ Packages linked successfully"
         echo "::endgroup::"
       shell: bash
+      
+    - name: ⚙️ Cache example node_modules
+      id: cache-examples
+      uses: actions/cache@v4
+      with:
+        path: |
+          examples/*/node_modules
+        key: ${{ runner.os }}-examples-${{ hashFiles('examples/**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-examples-
 
-    - name: 📦 Setup Example Projects
+    - name: 📦 Install Example Dependencies
+      if: steps.cache-examples.outputs.cache-hit != 'true'
       run: |
-        echo "::group::🔍 Scanning and configuring example projects"
+        echo "::group::🔍 Installing dependencies for example projects"
         for dir in ./examples/*; do
           if [ -f "$dir/package.json" ]; then
             echo ""
             echo "📂 Processing: $dir"
-            echo "  🔗 Linking @rango-dev/widget-embedded..."
-            yarn --cwd $dir link @rango-dev/widget-embedded
-            yarn --cwd $dir link react
-            yarn --cwd $dir link react-dom
             echo "  📥 Installing dependencies..."
-            yarn --cwd $dir
-            echo "  ✅ Setup complete for $dir"
+            yarn --cwd $dir --prefer-offline
+            echo "  ✅ Installation complete for $dir"
           fi
         done
         echo ""
-        echo "🎉 All example projects configured successfully"
+        echo "🎉 All example dependencies installed"
         echo "::endgroup::"
       shell: bash
 
-    - name: ⚙️ Configure Vite Build Settings
+    - name: 🔗 Link Packages to Examples
+      run: |
+        echo "::group::🔗 Linking packages to example projects"
+        for dir in ./examples/*; do
+          if [ -f "$dir/package.json" ]; then
+            echo "📂 Linking in: $(basename $dir)"
+            yarn --cwd $dir link @rango-dev/widget-embedded
+            yarn --cwd $dir link react
+            yarn --cwd $dir link react-dom
+          fi
+        done
+        echo "✅ All packages linked successfully"
+        echo "::endgroup::"
+      shell: bash
+
+    - name: ⚙️ Copy Vite Configuration Files
       run: |
         echo "::group::⚙️ Updating Vite configurations"
         cp -rf scripts/build-examples/vite.config.ts examples/vite
         cp -rf scripts/build-examples/vite.vue.config.ts examples/vue/vite.config.ts
-        echo "  📦 Adding vite-plugin-node-polyfills to Vite example..."
-        yarn --cwd examples/vite add -D vite-plugin-node-polyfills@0.17.0
-        echo "  📦 Adding vite-plugin-node-polyfills to Vue example..."
-        yarn --cwd examples/vue add -D vite-plugin-node-polyfills@0.17.0
-        echo "✅ Vite configurations updated"
+        echo "✅ Vite configurations copied"
         echo "::endgroup::"
       shell: bash
 
-    - name: 🚀 Build All Examples
+    - name: 📦 Add Vite Plugin Dependencies
+      if: steps.cache-examples.outputs.cache-hit != 'true'
       run: |
-        echo "::group::🚀 Building all example projects"
+        echo "::group::📦 Adding vite-plugin-node-polyfills"
+        echo "  📦 Adding to Vite example..."
+        yarn --cwd examples/vite add -D vite-plugin-node-polyfills@0.17.0
+        echo "  📦 Adding to Vue example..."
+        yarn --cwd examples/vue add -D vite-plugin-node-polyfills@0.17.0
+        echo "✅ Vite plugin dependencies added"
+        echo "::endgroup::"
+      shell: bash
+
+    - name: 🚀 Build All Examples (Concurrent)
+      run: |
+        echo "::group::🚀 Building all examples concurrently"
+
+        # Build the list of commands dynamically
+        cmds=()
+        names=()
+
         for dir in ./examples/*; do
-          if [ -f "$dir/package.json" ]; then
-            echo ""
-            echo "🏗️ Building: $dir"
-            yarn --cwd $dir build
-            echo "✅ Build complete: $dir"
+          if [ -f "$dir/package.json" ]; then            
+            name=$(basename "$dir")
+            cmds+=("yarn --cwd $dir build")
+            names+=("$name")
           fi
         done
-        echo ""
-        echo "🎊 All examples built successfully!"
+
+        if [ ${#cmds[@]} -eq 0 ]; then
+          echo "⚠️ No example projects found to build."
+          exit 0
+        fi
+
+        # Join arrays into comma-separated strings
+        name_list=$(IFS=,; echo "${names[*]}")
+
+        yarn concurrently --kill-others-on-fail \
+          --names "$name_list" \
+          "${cmds[@]}"
+
+        echo "🎊 All examples built successfully! "
         echo "::endgroup::"
       shell: bash
