@@ -2,7 +2,7 @@
 'use strict';
 import process from 'node:process';
 import { workspacePackages } from '../common/utils.mjs';
-import { build } from '../publish/build.mjs';
+import { ciBuild } from './ciBuild.mjs';
 
 async function run() {  
   const packages = await workspacePackages();
@@ -11,7 +11,7 @@ async function run() {
   console.log('these packages will be built:', packagesToBeBuild.map(pkg=>pkg.name).join(', ')) ;
 
   console.log(`🔨 Start building...`);
-  await build(packagesToBeBuild);
+  await ciBuild(packagesToBeBuild);
   console.log('🔨 Finish building');
 }
 
