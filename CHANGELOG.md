@@ -1,3 +1,28 @@
+## Widget [0.47.0] (2025-10-29)
+_includes `@rango-dev/widget-embedded@0.52.0`_
+
+### Bug Fixes
+
+* add blockchains without token to meta ([3cfba19](https://github.com/rango-exchange/rango-client/commit/3cfba19f19ab1e794240d4bc6c3a9f1529964852))
+* filter blockchains with at least one token in select blockchain page ([1ab904a](https://github.com/rango-exchange/rango-client/commit/1ab904a87dbf95bc6ab5acee44ac46af0a3fd6fa))
+* replace metamask with keplr in playground external wallet ([dedb5c1](https://github.com/rango-exchange/rango-client/commit/dedb5c17fdf3ebedcad77d2dd563e350aa55a834))
+* virtual list dynamic height ([599624c](https://github.com/rango-exchange/rango-client/commit/599624c412cf8286e2390fbea446cfb231646c13))
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+* add show and hide icons ([6ead385](https://github.com/rango-exchange/rango-client/commit/6ead385d869c643b43da5936e9e118888c96e8b4))
+* add solana support to metamask ([7d7f521](https://github.com/rango-exchange/rango-client/commit/7d7f52172c4a4699ec1caa8896cedacab958bf34))
+* simplify and update widget height calculation ([b6a1e3c](https://github.com/rango-exchange/rango-client/commit/b6a1e3c85a54ae82c4ffd6d2d0adb10e69734bbd))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
 ## Widget [0.46.0] (2025-09-29)
 _includes `@rango-dev/widget-embedded@0.51.0`_
 
