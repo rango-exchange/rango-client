@@ -1,3 +1,12 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.53.0...provider-all@0.54.0) (2025-10-29)
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+
+
+
 # [0.53.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.52.0...provider-all@0.53.0) (2025-09-29)
 
 
