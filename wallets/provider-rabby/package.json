@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-rabby",
-  "version": "0.18.1-next.1",
+  "version": "0.19.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.40.0",
-    "@rango-dev/wallets-core": "^0.50.1-next.1",
-    "@rango-dev/wallets-shared": "^0.51.1-next.1",
+    "@rango-dev/wallets-core": "^0.51.0",
+    "@rango-dev/wallets-shared": "^0.52.0",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {

@@ -1,3 +1,17 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/ui@0.54.0...ui@0.55.0) (2025-10-29)
+
+
+### Features
+
+* add show and hide icons ([6ead385](https://github.com/rango-exchange/rango-client/commit/6ead385d869c643b43da5936e9e118888c96e8b4))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
 # [0.54.0](https://github.com/rango-exchange/rango-client/compare/ui@0.53.0...ui@0.54.0) (2025-09-29)
 
 

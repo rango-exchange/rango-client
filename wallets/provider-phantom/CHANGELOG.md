@@ -1,3 +1,12 @@
+# [0.53.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.52.0...provider-phantom@0.53.0) (2025-10-29)
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
 # [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.51.0...provider-phantom@0.52.0) (2025-09-29)
 
 

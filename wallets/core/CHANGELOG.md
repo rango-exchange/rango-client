@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.50.0...wallets-core@0.51.0) (2025-10-29)
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.49.0...wallets-core@0.50.0) (2025-09-29)
 
 
