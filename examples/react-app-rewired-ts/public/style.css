@@ -1,4 +1,9 @@
+html, body {
+  height: 100%;
+}
+
 #root {
   display: flex;
   justify-content: center;
+  height: 100%;
 }
