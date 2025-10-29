@@ -1,0 +1,69 @@
+name: 'Build Examples'
+description: 'Links the current widget embedded package to example projects and builds them'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔨 Build Widget Package
+      run: yarn run build:widget
+      shell: bash
+
+    - name: 🔗 Link Core Packages
+      run: |
+        echo "::group::🔗 Creating symbolic links for widget and React dependencies"
+        yarn link --cwd widget/embedded
+        yarn link --cwd node_modules/react
+        yarn link --cwd node_modules/react-dom
+        echo "✅ Packages linked successfully"
+        echo "::endgroup::"
+      shell: bash
+
+    - name: 📦 Setup Example Projects
+      run: |
+        echo "::group::🔍 Scanning and configuring example projects"
+        for dir in ./examples/*; do
+          if [ -f "$dir/package.json" ]; then
+            echo ""
+            echo "📂 Processing: $dir"
+            echo "  🔗 Linking @rango-dev/widget-embedded..."
+            yarn --cwd $dir link @rango-dev/widget-embedded
+            yarn --cwd $dir link react
+            yarn --cwd $dir link react-dom
+            echo "  📥 Installing dependencies..."
+            yarn --cwd $dir
+            echo "  ✅ Setup complete for $dir"
+          fi
+        done
+        echo ""
+        echo "🎉 All example projects configured successfully"
+        echo "::endgroup::"
+      shell: bash
+
+    - name: ⚙️ Configure Vite Build Settings
+      run: |
+        echo "::group::⚙️ Updating Vite configurations"
+        cp -rf scripts/build-examples/vite.config.ts examples/vite
+        cp -rf scripts/build-examples/vite.vue.config.ts examples/vue/vite.config.ts
+        echo "  📦 Adding vite-plugin-node-polyfills to Vite example..."
+        yarn --cwd examples/vite add -D vite-plugin-node-polyfills@0.17.0
+        echo "  📦 Adding vite-plugin-node-polyfills to Vue example..."
+        yarn --cwd examples/vue add -D vite-plugin-node-polyfills@0.17.0
+        echo "✅ Vite configurations updated"
+        echo "::endgroup::"
+      shell: bash
+
+    - name: 🚀 Build All Examples
+      run: |
+        echo "::group::🚀 Building all example projects"
+        for dir in ./examples/*; do
+          if [ -f "$dir/package.json" ]; then
+            echo ""
+            echo "🏗️ Building: $dir"
+            yarn --cwd $dir build
+            echo "✅ Build complete: $dir"
+          fi
+        done
+        echo ""
+        echo "🎊 All examples built successfully!"
+        echo "::endgroup::"
+      shell: bash

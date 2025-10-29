@@ -7,9 +7,7 @@ export const garbageWalletMetaData: ProviderConfig['metadata'] = {
     homepage: 'https://app.rango.exchange',
   },
 };
-export const garbageWalletDeepLink: ProviderConfig['deepLink'] = () =>
-  'garbage link';
+
 export const garbageWalletInfo: ProviderInfo = {
   metadata: garbageWalletMetaData,
-  deepLink: garbageWalletDeepLink,
 };

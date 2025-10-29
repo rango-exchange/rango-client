@@ -1,5 +1,6 @@
 import type { Language, theme } from '@rango-dev/ui';
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/dist/legacy/mod';
+import type { Provider } from '@rango-dev/wallets-core';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
@@ -175,19 +176,7 @@ export type TrezorManifest = {
   appUrl: string;
   email: string;
 };
-/**
- * `DeepLinking`
- *
- * @property {string} [targetUrl]
- * - The URL to be opened in the provider's in-app browser.
- *
- * @property {string} [appHost]
- * - The full domain of the app, excluding the protocol (https://), path, and query parameters.
- */
-export type DeepLinking = {
-  targetUrl: string;
-  appHost: string;
-};
+
 /**
  *
  * @property {string} manifestUrl - The URL of the TON Connect [manifest]{@link https://github.com/ton-connect/docs/blob/main/requests-responses.md#app-manifest}, containing the Dapp metadata to be displayed in the user’s wallet.
@@ -235,7 +224,6 @@ export type TonConnectConfig = {
  * @property {WidgetTheme} theme - The `theme` property is a part of the `WidgetConfig` type and is
  * used to specify the visual theme of the widget. It is of type `WidgetTheme`, which is an interface
  * that defines the various properties of the theme, such as colors, fonts, and others.
- * @property {DeepLinking} deepLinking - Configures deep linking parameters for providers that support it.
  * @property {boolean} externalWallets
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
  * @property {boolean} excludeLiquiditySources - The `excludeLiquiditySources` property is a boolean value that when you
@@ -272,13 +260,12 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | LegacyProviderInterface)[];
+  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
   language?: Language;
   theme?: WidgetTheme;
-  deepLinking?: DeepLinking;
   externalWallets?: boolean;
   excludeLiquiditySources?: boolean;
   features?: Features;

@@ -386,7 +386,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         DEFAULT: '',
       };
 
-      const { metadata, deepLink } = info;
+      const { metadata } = info;
       const { extensions } = metadata;
       // `extensions` in legacy format was uppercase and also `DEFAULT` was used instead of `homepage`
       Object.keys(extensions).forEach((k) => {
@@ -439,7 +439,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         showOnMobile: detailsProperty?.value?.showOnMobile,
         needsNamespace: namespacesProperty?.value,
         needsDerivationPath: derivationPathProperty?.value,
-        generateDeepLink: deepLink,
         isHub: true,
         properties: metadata.properties,
       };

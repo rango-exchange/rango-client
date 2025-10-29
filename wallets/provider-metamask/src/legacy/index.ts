@@ -20,7 +20,7 @@ import {
 import { evmBlockchains } from 'rango-types';
 
 import signer from '../signer.js';
-import { metamask as metamask_instance, type Provider } from '../utils.js';
+import { metamask as metamask_instance } from '../utils.js';
 
 const WALLET = WalletTypes.META_MASK;
 
@@ -49,7 +49,8 @@ export const subscribe: Subscribe = subscribeToEvm;
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Provider = any;
 export const getSigners: (provider: Provider) => Promise<SignerFactory> =
   signer;
 

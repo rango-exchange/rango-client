@@ -1,5 +1,5 @@
 import type {
-  GenerateDeepLink,
+  Provider,
   ProviderMetadata,
   VersionedProviders,
 } from '@rango-dev/wallets-core';
@@ -75,7 +75,7 @@ export type ProviderProps = PropsWithChildren<{
   autoConnect?: boolean;
   providers: VersionedProviders[];
   configs?: {
-    wallets?: (WalletType | LegacyProviderInterface)[];
+    wallets?: (WalletType | LegacyProviderInterface | Provider)[];
   };
 }>;
 
@@ -169,7 +169,6 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  generateDeepLink?: GenerateDeepLink;
   getSigners: (provider: InstanceType) => Promise<SignerFactory>;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;

@@ -7,7 +7,6 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { NamespaceBuilder } from '../../builders/namespace.js';
 import { ProviderBuilder } from '../../builders/provider.js';
 import {
-  garbageWalletDeepLink,
   garbageWalletInfo,
   garbageWalletMetaData,
 } from '../../test-utils/fixtures.js';
@@ -136,13 +135,10 @@ describe('check providers', () => {
 
   test('sets config properly', () => {
     const builder = new ProviderBuilder('garbage');
-    builder
-      .config('metadata', garbageWalletMetaData)
-      .config('deepLink', garbageWalletDeepLink);
+    builder.config('metadata', garbageWalletMetaData);
     const provider = builder.build().store(store);
 
     expect(provider.info()?.metadata).toStrictEqual(garbageWalletMetaData);
-    expect(provider.info()?.deepLink).toStrictEqual(garbageWalletDeepLink);
   });
 
   test('.init should works on Provider', () => {
