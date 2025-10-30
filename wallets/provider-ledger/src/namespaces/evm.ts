@@ -10,6 +10,7 @@ import {
   CAIP_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/evm';
 import { CAIP } from '@rango-dev/wallets-core/utils';
+import { ETHEREUM_CHAIN_ID } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants.js';
 import { setDerivationPath } from '../state.js';
@@ -50,9 +51,15 @@ const connect = builders
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();
 
+const getChainId = builders
+  .getChainId()
+  .action(() => ETHEREUM_CHAIN_ID)
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(getChainId)
   .build();
 
 export { evm };
