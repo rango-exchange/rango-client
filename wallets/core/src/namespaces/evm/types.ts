@@ -15,6 +15,7 @@ export interface EvmActions
   ) => Promise<AccountsWithActiveChain>;
   canEagerConnect: () => Promise<boolean>;
   canSwitchNetwork: (params: CanSwitchNetworkParams) => boolean;
+  getChainId: () => Promise<`0x${string}`>;
 }
 type CanSwitchNetworkParams = {
   network: string;

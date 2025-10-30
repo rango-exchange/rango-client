@@ -79,16 +79,9 @@ function useProviders(props: ProviderProps) {
 
       return legacyApi.getWalletInfo(type);
     },
+    // This method only returns the legacy providers.
     providers(): Providers {
-      let output: Providers = {};
-      if (hubProviders.length > 0) {
-        output = { ...output, ...hubApi.providers() };
-      }
-      if (legacyProviders.length > 0) {
-        output = { ...output, ...legacyApi.providers() };
-      }
-
-      return output;
+      return legacyApi.providers();
     },
     state(type): LegacyState {
       const hubProvider = findProviderByType(hubProviders, type);
