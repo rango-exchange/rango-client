@@ -65,11 +65,17 @@ const canSwitchNetwork = builders
   .action(actions.canSwitchNetwork())
   .build();
 
+const getChainId = builders
+  .getChainId()
+  .action(actions.getChainId(evmMetamask))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canSwitchNetwork)
   .action(canEagerConnect)
+  .action(getChainId)
   .build();
 
 export { evm };
