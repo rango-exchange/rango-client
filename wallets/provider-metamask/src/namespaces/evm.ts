@@ -1,6 +1,10 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
+import {
+  ActionBuilder,
+  type Context,
+  NamespaceBuilder,
+} from '@rango-dev/wallets-core';
 import {
   builders as commonBuilders,
   connectAndUpdateStateForMultiNetworks,
@@ -17,6 +21,17 @@ import {
 import { WALLET_ID } from '../constants.js';
 import { evmMetamask } from '../utils.js';
 
+type Token = {
+  address: string;
+  symbol: string;
+  decimals: number;
+  image: string;
+};
+
+type MetamaskActions = EvmActions & {
+  watchAsset: (token: Token) => Promise<boolean>;
+};
+
 const [changeAccountSubscriber, changeAccountCleanup] = builders
   .changeAccountSubscriber(evmMetamask)
   /*
@@ -29,7 +44,7 @@ const [changeAccountSubscriber, changeAccountCleanup] = builders
   })
   .build();
 
-const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
+const connect = new ActionBuilder<MetamaskActions, 'connect'>('connect')
   .action(actions.connect(evmMetamask))
   /*
    * Metamask Wallet's `connect` returns a list where the currently selected account
@@ -50,32 +65,62 @@ const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
   .after(intoConnectionFinished)
   .build();
 
-const canEagerConnect = builders
-  .canEagerConnect()
+const canEagerConnect = new ActionBuilder<MetamaskActions, 'canEagerConnect'>(
+  'canEagerConnect'
+)
   .action(actions.canEagerConnect(evmMetamask))
   .build();
 
 const disconnect = commonBuilders
-  .disconnect<EvmActions>()
+  .disconnect<MetamaskActions>()
   .after(changeAccountCleanup)
   .build();
 
-const canSwitchNetwork = builders
-  .canSwitchNetwork()
+const canSwitchNetwork = new ActionBuilder<MetamaskActions, 'canSwitchNetwork'>(
+  'canSwitchNetwork'
+)
   .action(actions.canSwitchNetwork())
   .build();
 
-const getChainId = builders
-  .getChainId()
+const getChainId = new ActionBuilder<MetamaskActions, 'getChainId'>(
+  'getChainId'
+)
   .action(actions.getChainId(evmMetamask))
   .build();
 
-const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+/*
+ * Requests that the user track the specified token in MetaMask.
+ * Returns a boolean indicating if the token was successfully added.
+ * @link https://docs.metamask.io/wallet/reference/json-rpc-methods/wallet_watchasset
+ */
+const watchAsset = new ActionBuilder<MetamaskActions, 'watchAsset'>(
+  'watchAsset'
+)
+  .action(async (_context: Context<MetamaskActions>, token: Token) => {
+    const instance = evmMetamask();
+    const isAdded = await instance.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: token.address,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          image: token.image,
+        },
+      },
+    });
+    return isAdded;
+  })
+  .build();
+
+const evm = new NamespaceBuilder<MetamaskActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canSwitchNetwork)
   .action(canEagerConnect)
   .action(getChainId)
+  .action(watchAsset)
   .build();
 
 export { evm };
