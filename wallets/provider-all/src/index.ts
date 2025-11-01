@@ -39,6 +39,7 @@ import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import { versions as xverse } from '@rango-dev/provider-xverse';
 import {
   legacyProviderImportsToVersionsInterface,
   type VersionedProviders,
@@ -110,6 +111,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
     lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
+    xverse,
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
     safepal,
     lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
