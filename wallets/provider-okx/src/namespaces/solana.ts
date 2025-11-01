@@ -27,6 +27,9 @@ const connect = builders
 
 const disconnect = commonBuilders
   .disconnect<SolanaActions>()
+  .before(() => {
+    solanaOKX().disconnect();
+  })
   .after(changeAccountCleanup)
   .build();
 
