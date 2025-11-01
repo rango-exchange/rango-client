@@ -10,7 +10,8 @@ type RangoNamespace =
   | 'Starknet'
   | 'Tron'
   | 'Ton'
-  | 'Sui';
+  | 'Sui'
+  | 'XRPL';
 
 export type Namespace = RangoNamespace | (string & {});
 
