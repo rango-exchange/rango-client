@@ -39,5 +39,6 @@ declare global {
     tomo_evm?: any;
     solflare?: any;
     unisat?: any;
+    XverseProviders?: any;
   }
 }

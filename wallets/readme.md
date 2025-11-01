@@ -143,6 +143,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | 
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
+| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
 
 ## By Feature
 
@@ -158,6 +159,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
+| Xverse       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
