@@ -8,6 +8,7 @@ const buildProvider = () =>
   new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();
+      // TODO: We should remove this after we solved not initiating issue.
       setTimeout(() => {
         if (unisatInstance()) {
           setState('installed', true);

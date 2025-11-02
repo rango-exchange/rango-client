@@ -25,9 +25,6 @@ const connect = builders
     if (accountsResult.result?.addresses?.length === 0) {
       throw new Error("Couldn't find any address!");
     }
-    if (accountsResult.result?.network?.bitcoin?.name !== 'Mainnet') {
-      throw new Error('Please turn off testnet mode!');
-    }
     return utils.formatAccountsToCAIP(
       accountsResult.result.addresses
         .filter((address) => address.purpose === 'payment')

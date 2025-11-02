@@ -43,6 +43,7 @@ export async function getBitcoinAccounts(): Promise<XVerseResponse> {
   const instance = bitcoinXverse();
   const requestResult = await instance.request('wallet_connect', {
     addresses: ['payment'],
+    network: 'Mainnet',
   });
 
   if (requestResult.error?.message) {
