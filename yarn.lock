@@ -4003,11 +4003,6 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.6.tgz#22958c042e10b67463997bd6ea7115fe28cbcaf9"
   integrity sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==
 
-"@gemwallet/api@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@gemwallet/api/-/api-3.8.0.tgz#46bc47789848c7ac9cc620613e0a1757dc8668a1"
-  integrity sha512-hZ6XC0mVm3Q54cgonrzk6tHS/wUMjtPHyqsqbtlnNGPouCR7OIfEDo5Y802qLZ5ah6PskhsK0DouVnwUykEM8Q==
-
 "@gql.tada/cli-utils@1.6.3":
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/@gql.tada/cli-utils/-/cli-utils-1.6.3.tgz#b893cec74908da4df0602691e2e0b1497fda8cda"
