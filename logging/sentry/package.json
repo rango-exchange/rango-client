@@ -20,7 +20,7 @@
     "@sentry/browser": "^7.119.1"
   },
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path logging/sentry",
+    "build": "rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
