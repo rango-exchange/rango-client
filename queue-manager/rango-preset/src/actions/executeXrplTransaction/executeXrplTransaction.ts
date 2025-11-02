@@ -47,7 +47,6 @@ export async function executeXrplTransaction(
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap)!;
   const onFinish = () => {
-    // TODO resetClaimedBy is undefined here
     if (actions.context.resetClaimedBy) {
       actions.context.resetClaimedBy();
     }
@@ -61,7 +60,7 @@ export async function executeXrplTransaction(
 
   /*
    * Checking the current transaction state to determine the next step.
-   * It will either be Err, indicating process should stop, or Ok, indicating process should continu.
+   * It will either be Err, indicating process should stop, or Ok, indicating process should continue.
    */
   const nextStateResult = produceNextStateForTransaction(actions);
   const tx = getCurrentStepTx(currentStep);
@@ -71,7 +70,7 @@ export async function executeXrplTransaction(
     return;
   }
 
-  // this is also checking in `produceNextStateForTransaction.` check it here again to be resiliant for future changes.
+  // This has been checked inproduceNextStateForTransaction. Checking it in here would make it more resilient for future changes.
   if (!tx) {
     handleErr(
       new Err({
@@ -105,7 +104,7 @@ export async function executeXrplTransaction(
         nextStatus: 'failed',
         nextStepStatus: 'failed',
         message:
-          'Unexpected Error: We do support only XRPL tranasaction with Payment type',
+          'Unexpected Error: We only support XRPL transactions with payment type',
         details: undefined,
         errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
       })
@@ -113,7 +112,7 @@ export async function executeXrplTransaction(
     return;
   }
 
-  // On sucess, we should update Swap object and also call notifier
+  // On success, we should update Swap object and also call notifier
   onNextStateOk(actions, nextStateResult.val);
 
   const sourceWallet = getRelatedWallet(swap, currentStep);
@@ -164,7 +163,7 @@ export async function executeXrplTransaction(
     const lines = await xrplNamespace.accountLines(sourceWallet.address, {
       peer: account,
     });
-    const isTruslineAlreadyOpened = !!lines.find((trustline) => {
+    const isTruslineAlreadyOpened = lines.some((trustline) => {
       return (
         trustline.currency === currency &&
         trustline.account === account &&
