@@ -87,8 +87,8 @@
     "conventional-commits-parser": "^6.2.0",
     "conventional-recommended-bump": "^11.2.0",
     "crypto-browserify": "^3.12.0",
-    "esbuild": "^0.20.1",
-    "esbuild-plugins-node-modules-polyfill": "^1.6.6",
+    "esbuild": "^0.25.4",
+    "esbuild-plugins-node-modules-polyfill": "^1.7.1",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-rango": "^0.0.1",
@@ -111,6 +111,7 @@
     "prettier": "^2.7.1",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
+    "rangutopia": "^0.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.3.1",
@@ -127,7 +128,8 @@
     "valibot": "^0.38.0",
     "react-refresh": "0.9.0",
     "protobufjs": "^6.11.4",
-    "@types/node": "^20.17.19"
+    "@types/node": "^20.17.19",
+    "esbuild": "0.25.4"
   },
   "@parcel/resolver-default": {
     "packageExports": true

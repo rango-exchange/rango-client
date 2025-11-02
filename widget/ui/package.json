@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "dev": "yarn bundle --watch",
-    "build": "node ../../scripts/build/command.mjs --path widget/ui",
+    "build": "rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "build:icons": "svgr svgs/resources/fill --config-file svgs/configs/.svgrrc.default.cjs",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
