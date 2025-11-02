@@ -11,12 +11,14 @@ import { builders } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { utxoBuilders } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { utxoHooks } from '../hooks/utxo.js';
 import { bitcoinXverse, getBitcoinAccounts } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = utxoBuilders
   .changeAccountSubscriber(bitcoinXverse)
   .build();
-
+const [disconnectSubscriber, disconnectCleanup] =
+  utxoHooks.getDisconnectSubscriber(bitcoinXverse);
 const connect = builders
   .connect()
   .action(async function () {
@@ -32,13 +34,16 @@ const connect = builders
     );
   })
   .before(changeAccountSubscriber)
+  .before(disconnectSubscriber)
   .or(changeAccountCleanup)
+  .or(disconnectCleanup)
   .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders
   .disconnect<UtxoActions>()
   .after(changeAccountCleanup)
+  .after(disconnectCleanup)
   .build();
 
 const utxo = new NamespaceBuilder<UtxoActions>('UTXO', WALLET_ID)
