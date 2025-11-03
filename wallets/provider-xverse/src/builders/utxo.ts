@@ -13,7 +13,7 @@ import { XVERSE_ACCESS_DENIED_ERROR_CODE } from '../constants.js';
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
   new ChangeAccountSubscriberBuilder<XVerseEvent, ProviderAPI>()
     .getInstance(getInstance)
-    .validateEventPayload((event) => !!event)
+    .validateEventPayload((event) => !!event?.addresses?.length)
     .format(async (_, event) => {
       return utils.formatAccountsToCAIP(
         event.addresses
@@ -21,6 +21,7 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
           .map((address) => address.address)
       );
     })
+    .setConfig({ invalidEventBehavior: 'reconnect' })
     .addEventListener((instance, callback) => {
       return instance.addListener('accountChange', callback);
     })
