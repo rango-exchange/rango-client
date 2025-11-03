@@ -103,7 +103,7 @@
     "globals": "^15.14.0",
     "happy-dom": "^14.12.0",
     "lint-staged": "^13.2.2",
-    "nx": "16.2.1",
+    "nx": "^22.0.2",
     "os-browserify": "^0.3.0",
     "parcel": "^2.11.0",
     "patch-package": "^8.0.0",
