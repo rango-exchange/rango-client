@@ -159,7 +159,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
-| Xverse       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
+| Xverse       | ✅             | 🚧             | ✅           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 

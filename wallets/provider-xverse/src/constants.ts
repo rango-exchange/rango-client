@@ -7,6 +7,7 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const XVERSE_INJECTION_DELAY_MS = 1000;
+export const XVERSE_ACCESS_DENIED_ERROR_CODE = -32002;
 export const WALLET_ID = 'xverse';
 
 export const metadata: ProviderMetadata = {

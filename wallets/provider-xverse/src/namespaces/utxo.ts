@@ -17,8 +17,12 @@ import { bitcoinXverse, getBitcoinAccounts } from '../utils.js';
 const [changeAccountSubscriber, changeAccountCleanup] = utxoBuilders
   .changeAccountSubscriber(bitcoinXverse)
   .build();
+
 const [disconnectSubscriber, disconnectCleanup] =
   utxoHooks.getDisconnectSubscriber(bitcoinXverse);
+
+const canEagerConnect = utxoBuilders.canEagerConnect(bitcoinXverse).build();
+
 const connect = builders
   .connect()
   .action(async function () {
@@ -49,6 +53,7 @@ const disconnect = commonBuilders
 const utxo = new NamespaceBuilder<UtxoActions>('UTXO', WALLET_ID)
   .action(connect)
   .action(disconnect)
+  .action(canEagerConnect)
   .build();
 
 export { utxo };
