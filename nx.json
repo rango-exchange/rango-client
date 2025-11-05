@@ -17,6 +17,7 @@
     "build": {
       "dependsOn": ["^build"],
       "cache": true,
+      "inputs": ["{projectRoot}/**/*", "!{projectRoot}/**/*.md"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/build"]
     },
     "dev": {
