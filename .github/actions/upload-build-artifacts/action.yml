@@ -22,5 +22,6 @@ runs:
           **/dist/**
           ./translations/*.ts
           !**/node_modules/**
+          ./.nx/cache
         retention-days: 30
         overwrite: true

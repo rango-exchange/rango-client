@@ -26,5 +26,8 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],
     "production": ["default"]
+  },
+  "tui": {
+    "enabled": false
   }
 }
