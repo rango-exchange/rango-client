@@ -1,4 +1,7 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "parallel": 7,
+  "defaultBase": "next",
   "affected": {
     "defaultBase": "next"
   },
@@ -12,17 +15,16 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true
     },
     "dev": {
       "dependsOn": ["^build"]
     }
   },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],
     "production": ["default"]
-  },
-  "defaultBase": "next"
+  }
 }

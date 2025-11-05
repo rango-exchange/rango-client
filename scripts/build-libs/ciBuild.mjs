@@ -20,7 +20,6 @@ export async function ciBuild(pkgs, prebuiltLibs = false) {
   return;
 }
 async function buildWithDependencies(pkgs) {
-  const PARALLEL_PROCESSS_NUMBER = '20';
   const projects = pkgs.map((pkg) => pkg.name).join(',');
   const result = await execa('yarn', [
     'nx',
@@ -29,8 +28,6 @@ async function buildWithDependencies(pkgs) {
     'build',
     '--projects',
     projects,
-    '--parallel',
-    PARALLEL_PROCESSS_NUMBER,
   ])
     .then(({ stdout }) => stdout)
     .catch((err) => {
