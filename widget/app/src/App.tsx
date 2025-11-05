@@ -37,7 +37,8 @@ export function App() {
        */
 
       config = {
-        apiKey: '',
+        apiKey: '4a624ab5-16ff-4f96-90b7-ab00ddfc342c',
+        apiUrl: 'http://127.0.0.1:8080',
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
