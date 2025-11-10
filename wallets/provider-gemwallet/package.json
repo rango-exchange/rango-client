@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-shared": "0.51.1-next.0",
+    "@rango-dev/wallets-shared": "0.52.1-next.1",
     "@gemwallet/api": "^3.8.0",
     "xrpl": "^4.2.0",
     "rango-types": "^0.1.89"
