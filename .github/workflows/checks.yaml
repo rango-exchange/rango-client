@@ -4,7 +4,20 @@ on:
     types: [opened, reopened, synchronize, labeled]
 
 jobs:
-  check:
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Prepare
+        uses: ./.github/actions/prepare
+      - name: Checking Conventional Commits
+        run: node ./scripts/check-conventional-commits/command.mjs
+        env:
+          REF: ${{ github.ref }}
+
+  build-libs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,31 +26,54 @@ jobs:
 
       - name: Prepare
         uses: ./.github/actions/prepare
-
-      - name: Checking Conventional Commits
-        run: node ./scripts/check-conventional-commits/command.mjs
-        env:
-          REF: ${{ github.ref }}
-
       - name: Extract new translation keys and check if any error exists
         run: node ./scripts/lingui/command.js extract --clean
 
       - name: Compile new translation keys
         run: yarn run i18n:compile
-
-      - name: Test
-        run: |
-          node ./scripts/build-libs/command.mjs
-          yarn run test
-
-      #In the test step, we build all packages, and the build meta files are generated.
-      #Therefore, this step should be executed after the test step.
-      - id: upload_artifacts
+      - name: Build Libs
+        run: node ./scripts/build-libs/command.mjs
+      - id: upload-artifacts
         name: Upload Build Artifacts
         uses: ./.github/actions/upload-build-artifacts
+    outputs:
+      hashed_branch: ${{ steps.upload-artifacts.outputs.hashed }}
 
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: build-libs
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download Build Information For Current Branch
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{needs.build-libs.outputs.hashed_branch}}
+      - name: Prepare
+        uses: ./.github/actions/prepare
+      - name: Test
+        run: yarn run test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-libs, run-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Prepare
+        uses: ./.github/actions/prepare
+      - name: Download Build Information For Current Branch
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ${{needs.build-libs.outputs.hashed_branch}}
+      - name: Build Clients
+        run: node ./scripts/build-clients/command.mjs --focus
       # for preview deployment for specific project, add vercel project id in environment section
       - name: Preview Deployment
+        continue-on-error: true
         id: deploy
         run: |
           yarn global add vercel
@@ -62,7 +98,7 @@ jobs:
   # add job for each project that you want has preview deployment
   app-preview:
     runs-on: ubuntu-latest
-    needs: check
+    needs: deploy
     environment:
       name: app-preview
       url: ${{ steps.seturl.outputs.url }}
@@ -70,12 +106,12 @@ jobs:
       - name: Extract Preview URL
         id: seturl
         run: |
-          echo "url=${{ needs.check.outputs.app_url }}">> $GITHUB_OUTPUT
-          echo "Preview URL: ${{ needs.check.outputs.app_url}}"
+          echo "url=${{ needs.deploy.outputs.app_url }}">> $GITHUB_OUTPUT
+          echo "Preview URL: ${{ needs.deploy.outputs.app_url}}"
 
   playground-preview:
     runs-on: ubuntu-latest
-    needs: check
+    needs: deploy
     environment:
       name: playground-preview
       url: ${{ steps.seturl.outputs.url }}
@@ -83,12 +119,12 @@ jobs:
       - name: Extract Preview URL
         id: seturl
         run: |
-          echo "url=${{ needs.check.outputs.playground_url }}">> $GITHUB_OUTPUT
-          echo "Preview URL: ${{ needs.check.outputs.playground_url}}"
+          echo "url=${{ needs.deploy.outputs.playground_url }}">> $GITHUB_OUTPUT
+          echo "Preview URL: ${{ needs.deploy.outputs.playground_url}}"
 
   storybook-preview:
     runs-on: ubuntu-latest
-    needs: check
+    needs: deploy
     environment:
       name: storybook-preview
       url: ${{ steps.seturl.outputs.url }}
@@ -96,18 +132,17 @@ jobs:
       - name: Extract Preview URL
         id: seturl
         run: |
-          echo "url=${{ needs.check.outputs.storybook_url }}">> $GITHUB_OUTPUT
-          echo "Preview URL: ${{ needs.check.outputs.storybook_url}}"
+          echo "url=${{ needs.deploy.outputs.storybook_url }}">> $GITHUB_OUTPUT
+          echo "Preview URL: ${{ needs.deploy.outputs.storybook_url}}"
 
   analyze-bundle:
-    needs: check
+    needs: [build-libs, run-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
-
       - name: Prepare
         uses: ./.github/actions/prepare
 
@@ -115,9 +150,7 @@ jobs:
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: ${{steps.upload_artifacts.outputs.hashed}}
-          path: 'current-branch'
-
+          name: ${{needs.build-libs.outputs.hashed_branch}}
       - name: Hash Target Branch Name
         id: hash_target_branch_name
         run: |
@@ -131,6 +164,7 @@ jobs:
           GH_REPOSITORY: ${{ github.repository }}
   build-examples:
     runs-on: ubuntu-latest
+    needs: build-libs
     steps:
       - uses: actions/checkout@v4
         with:
@@ -138,5 +172,9 @@ jobs:
           ref: ${{ github.ref }}
       - name: Prepare
         uses: ./.github/actions/prepare
+      - name: Download Build Information For Current Branch
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{needs.build-libs.outputs.hashed_branch}}
       - name: Build examples
         uses: ./.github/actions/build-examples

@@ -2,7 +2,7 @@
 'use strict';
 import process from 'node:process';
 import { workspacePackages } from '../common/utils.mjs';
-import { build } from '../publish/build.mjs';
+import { build } from './build.mjs';
 
 async function run() {  
   const packages = await workspacePackages();
