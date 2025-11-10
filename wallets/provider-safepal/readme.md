@@ -14,6 +14,10 @@ The wallet also supports **TON, Sui, Tron, and Aptos**, but these namespaces are
 
 ### Feature
 
+#### ⚠️ Connect
+- SafePal Wallet sometimes returns **non-EVM addresses** (e.g., **Solana addresses**) during connect, which can incorrectly set invalid addresses for the EVM network.  
+- In such cases, the integration will **display an error** to prevent incorrect address usage.
+
 #### ⚠️ Switch Account
 - On **Solana**, switching accounts triggers a **full page reload**.
 - Since **auto-connect is not supported**, the wallet **does not reconnect automatically** after reload.
