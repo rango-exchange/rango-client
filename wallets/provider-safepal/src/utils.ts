@@ -1,6 +1,7 @@
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { isEvmAddress } from '@rango-dev/wallets-shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
@@ -35,4 +36,16 @@ export function getInstanceOrThrow(): Provider {
   }
 
   return instances;
+}
+/**
+ * Return true if address is a valid EVM address.
+ * Accepts:
+ *  - all-lowercase or all-uppercase 0x-prefixed hex (non-checksummed - allowed)
+ *  - checksummed (mixed-case according to EIP-55)
+ */
+export function isValidEvmAddress(address: string): boolean {
+  // Pick wallet address.
+  const walletAddress = address.split(':')[2];
+
+  return isEvmAddress(walletAddress);
 }
