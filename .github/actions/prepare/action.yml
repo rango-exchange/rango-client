@@ -23,3 +23,7 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
       shell: 'bash'
+    - name: Call prepare on cache hit
+      if: steps.cache.outputs.cache-hit != 'false'
+      run: yarn prepare
+      shell: 'bash'
