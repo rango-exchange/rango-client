@@ -13,7 +13,7 @@ import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
-import * as exodus from '@rango-dev/provider-exodus';
+import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
 import * as keplr from '@rango-dev/provider-keplr';
@@ -116,7 +116,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
     coinbase,
     lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(exodus)),
+    exodus,
     lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
     okx,
     lazyProvider(legacyProviderImportsToVersionsInterface(tokenpocket)),

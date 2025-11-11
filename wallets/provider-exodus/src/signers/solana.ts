@@ -1,10 +1,10 @@
-import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
+import {
+  DefaultSolanaSigner,
+  type SolanaExternalProvider,
+} from '@rango-dev/signer-solana';
 import base58 from 'bs58';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SolanaExternalProvider = any;
-
-export class CustomSolanaSigner extends DefaultSolanaSigner {
+export class ExodusSolanaSigner extends DefaultSolanaSigner {
   constructor(provider: SolanaExternalProvider) {
     super(provider);
   }
