@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { useIsTruncated } from 'src/hooks/useIsTruncated.js';
 import { InfoIcon } from 'src/icons/index.js';
 
-import { Divider, NumericTooltip, Typography } from '../index.js';
+import { NumericTooltip, Typography } from '../index.js';
 import { textTruncate } from '../TokenAmount/TokenAmount.styles.js';
 
 import { Container, ValueTypography } from './PriceImpact.styles.js';
@@ -19,6 +19,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
     warningLevel,
     error,
     tooltipProps,
+    style,
     ...rest
   } = props;
 
@@ -29,8 +30,22 @@ export function PriceImpact(props: PriceImpactPropTypes) {
     realOutputUsdValue || '',
     realOutputUsdValueRef
   );
+
+  const percentageValueRef = useRef<HTMLSpanElement | null>(null);
+  const isPercentageValueTruncated = useIsTruncated(
+    `(-${percentageChange}%)`,
+    percentageValueRef
+  );
+
   return (
-    <Container {...rest}>
+    <Container
+      {...rest}
+      style={{
+        ...style,
+        ...(isPercentageValueTruncated && {
+          flexWrap: 'wrap',
+        }),
+      }}>
       {outputUsdValue && (
         <ValueTypography className={textTruncate()}>
           <Typography
@@ -53,8 +68,11 @@ export function PriceImpact(props: PriceImpactPropTypes) {
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <ValueTypography hasError={hasError} hasWarning={hasWarning}>
-          <Divider direction="horizontal" size={4} />
-          <Typography size={size} variant="body">
+          <Typography
+            ref={percentageValueRef}
+            className="percentage-value"
+            size={size}
+            variant="body">
             {outputUsdValue &&
               percentageChange &&
               `(${

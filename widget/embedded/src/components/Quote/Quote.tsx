@@ -435,7 +435,11 @@ export function Quote(props: QuoteProps) {
         </div>
         {type === 'basic' && (
           <BasicInfoOutput>
-            <AmountText ref={inputValueRef} size="small" variant="body">
+            <AmountText
+              className="input-amount-text"
+              ref={inputValueRef}
+              size="small"
+              variant="body">
               {input.value}
             </AmountText>
             {isInputValueTruncated && (
