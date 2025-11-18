@@ -2,6 +2,8 @@ name: Deploy
 on:
   workflow_dispatch:
 
+  workflow_call:
+    
 jobs:
   deploy-it:
     runs-on: ubuntu-latest
@@ -10,9 +12,12 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
-
+          
       - name: Prepare
         uses: ./.github/actions/prepare
+        
+      - name: Build Clients
+        run: node ./scripts/build-clients/command.mjs
 
       - name: Deploy packages
         run: |

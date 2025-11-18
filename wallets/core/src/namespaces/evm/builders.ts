@@ -45,3 +45,6 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
     .removeEventListener((instance, callback) => {
       instance.removeListener?.('accountsChanged', callback);
     });
+
+export const getChainId = () =>
+  new ActionBuilder<EvmActions, 'getChainId'>('getChainId');

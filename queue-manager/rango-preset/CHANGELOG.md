@@ -1,3 +1,16 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.53.0...queue-manager-rango-preset@0.54.0) (2025-10-29)
+
+
+
+# [0.53.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.52.0...queue-manager-rango-preset@0.53.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* fix update and reset network status in execute transaction ([8cd631f](https://github.com/rango-exchange/rango-client/commit/8cd631f78e0360cd96e9f8675d31b23bb1e8a73b))
+
+
+
 # [0.52.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.51.0...queue-manager-rango-preset@0.52.0) (2025-09-06)
 
 

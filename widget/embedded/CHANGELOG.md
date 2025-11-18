@@ -1,3 +1,41 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.51.0...widget-embedded@0.52.0) (2025-10-29)
+
+
+### Bug Fixes
+
+* add blockchains without token to meta ([3cfba19](https://github.com/rango-exchange/rango-client/commit/3cfba19f19ab1e794240d4bc6c3a9f1529964852))
+* filter blockchains with at least one token in select blockchain page ([1ab904a](https://github.com/rango-exchange/rango-client/commit/1ab904a87dbf95bc6ab5acee44ac46af0a3fd6fa))
+* virtual list dynamic height ([599624c](https://github.com/rango-exchange/rango-client/commit/599624c412cf8286e2390fbea446cfb231646c13))
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+* simplify and update widget height calculation ([b6a1e3c](https://github.com/rango-exchange/rango-client/commit/b6a1e3c85a54ae82c4ffd6d2d0adb10e69734bbd))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.50.0...widget-embedded@0.51.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* handle long names and numbers ([066e8a1](https://github.com/rango-exchange/rango-client/commit/066e8a1ca97919047a446df8022dbbf2bab2da5a))
+* use wallet image container for connect modals ([b71a210](https://github.com/rango-exchange/rango-client/commit/b71a210bdf48448f4322514997e5298a46c3ffd8))
+
+
+### Features
+
+* add single selection to detached modal ([07c7d44](https://github.com/rango-exchange/rango-client/commit/07c7d44ffd3def69e83c54d988c1279ac68d5889))
+* make detached confirm text customizable ([d4dc8e7](https://github.com/rango-exchange/rango-client/commit/d4dc8e739a24962e1d94ec02c496b6f8ebb34318))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.49.0...widget-embedded@0.50.0) (2025-09-06)
 
 

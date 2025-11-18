@@ -79,16 +79,9 @@ function useProviders(props: ProviderProps) {
 
       return legacyApi.getWalletInfo(type);
     },
+    // This method only returns the legacy providers.
     providers(): Providers {
-      let output: Providers = {};
-      if (hubProviders.length > 0) {
-        output = { ...output, ...hubApi.providers() };
-      }
-      if (legacyProviders.length > 0) {
-        output = { ...output, ...legacyApi.providers() };
-      }
-
-      return output;
+      return legacyApi.providers();
     },
     state(type): LegacyState {
       const hubProvider = findProviderByType(hubProviders, type);
@@ -107,6 +100,17 @@ function useProviders(props: ProviderProps) {
       }
 
       return await legacyApi.suggestAndConnect(type, network);
+    },
+    hubProvider(type) {
+      const hubProvider = findProviderByType(hubProviders, type);
+
+      if (hubProvider) {
+        return hubProvider;
+      }
+
+      throw new Error(
+        `You're trying to access ${type} provider which is not found in hub providers. you may try to access a legacy provider or it's not been registered yet.`
+      );
     },
   };
 

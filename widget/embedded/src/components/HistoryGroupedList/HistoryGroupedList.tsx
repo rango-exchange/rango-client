@@ -81,6 +81,11 @@ export function HistoryGroupedList(props: PropTypes) {
 
   return (
     <GroupedVirtualizedList
+      style={{
+        // See note on https://github.com/rango-exchange/rango-client/pull/1284
+        flexGrow: 1,
+        minHeight: 0,
+      }}
       endReached={() => {
         if (loadedItems.current < list.length) {
           loadMore();

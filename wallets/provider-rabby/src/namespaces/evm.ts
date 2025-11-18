@@ -40,11 +40,17 @@ const canEagerConnect = builders
   .action(actions.canEagerConnect(evmRabby))
   .build();
 
+const getChainId = builders
+  .getChainId()
+  .action(actions.getChainId(evmRabby))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
   .action(canSwitchNetwork)
+  .action(getChainId)
   .build();
 
 export { evm };

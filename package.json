@@ -1,6 +1,6 @@
 {
   "name": "rango-client",
-  "version": "0.45.0",
+  "version": "0.48.0",
   "private": true,
   "engines": {
     "node": ">=20",
@@ -43,8 +43,7 @@
     "format": "nx run-many --target=format",
     "publish": "node ./scripts/publish/command.mjs",
     "deploy": "node ./scripts/deploy/command.mjs",
-    "release-prod": "node ./scripts/release/command.mjs",
-    "post-release-prod": "node ./scripts/post-release/command.mjs",
+    "sync-branch": "node ./scripts/sync-branch/command.mjs",
     "upgrade-all": "node ./scripts/upgrade-all/command.mjs --project ",
     "i18n:extract": "lingui extract --clean",
     "i18n:compile": "lingui compile --typescript",

@@ -1,3 +1,21 @@
+# [0.23.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.22.0...provider-ledger@0.23.0) (2025-10-29)
+
+
+
+# [0.22.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.21.0...provider-ledger@0.22.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* fix dynamic import issue in provider ledger ([b997aa3](https://github.com/rango-exchange/rango-client/commit/b997aa39782eea98374d5de8dde79c6cc839b687))
+
+
+### Features
+
+* migrate ledger provider to use hub ([a114101](https://github.com/rango-exchange/rango-client/commit/a114101bd9c317ec5c82c6146a6e88813bcbebf3))
+
+
+
 # [0.21.0](https://github.com/rango-exchange/rango-client/compare/provider-ledger@0.20.0...provider-ledger@0.21.0) (2025-09-06)
 
 

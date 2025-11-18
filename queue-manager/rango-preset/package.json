@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.52.1-next.4",
+  "version": "0.54.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -36,6 +36,7 @@
   "dependencies": {
     "@rango-dev/logging-core": "^0.11.0",
     "rango-types": "^0.1.89",
+    "ts-results": "^3.3.0",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

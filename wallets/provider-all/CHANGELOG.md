@@ -1,3 +1,24 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.53.0...provider-all@0.54.0) (2025-10-29)
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+
+
+
+# [0.53.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.52.0...provider-all@0.53.0) (2025-09-29)
+
+
+### Features
+
+* migrate Coinbase to use Hub ([d7236e4](https://github.com/rango-exchange/rango-client/commit/d7236e4b65f8a955c819ca1eb22c74a37da94022))
+* migrate ledger provider to use hub ([a114101](https://github.com/rango-exchange/rango-client/commit/a114101bd9c317ec5c82c6146a6e88813bcbebf3))
+* migrate metamask to hub ([9ef1b5a](https://github.com/rango-exchange/rango-client/commit/9ef1b5a600945c8467b500a686a96cf081f3fb6e))
+* migrate safepal to hub ([9abf9c9](https://github.com/rango-exchange/rango-client/commit/9abf9c9be4c009e55570b15b0c048b8554f681bc))
+
+
+
 # [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.51.0...provider-all@0.52.0) (2025-09-06)
 
 

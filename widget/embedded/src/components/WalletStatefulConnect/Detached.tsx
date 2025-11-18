@@ -25,6 +25,7 @@ export function Detached(props: PropTypes) {
     value,
     selectedNamespaces,
     onConfirm,
+    confirmText = i18n.t('Done'),
     onDisconnectWallet,
     navigateToDerivationPath,
   } = props;
@@ -74,7 +75,10 @@ export function Detached(props: PropTypes) {
     if (!!singleSelection) {
       return (
         <>
-          <Divider size={20} />
+          <Divider
+            size={20}
+            className="_detached_namespace_list_header_alert_top_divider"
+          />
           <Alert
             id="widget-wallet-stateful-connect-alert"
             variant="alarm"
@@ -83,13 +87,19 @@ export function Detached(props: PropTypes) {
               'This wallet can only connect to one chain at a time.'
             )}
           />
-          <Divider size={30} />
+          <Divider
+            size={30}
+            className="_detached_namespace_list_header_alert_bottom_divider"
+          />
         </>
       );
     }
     return (
       <>
-        <Divider size={30} />
+        <Divider
+          size={30}
+          className="_detached_namespace_list_header_button_top_divider"
+        />
         <NamespacesHeader>
           <Button
             id="widget-detached-disconnect-wallet-btn"
@@ -101,7 +111,10 @@ export function Detached(props: PropTypes) {
             {i18n.t('Disconnect wallet')}
           </Button>
         </NamespacesHeader>
-        <Divider size={16} />
+        <Divider
+          size={16}
+          className="_detached_namespace_list_header_button_bottom_divider"
+        />
       </>
     );
   };
@@ -173,7 +186,7 @@ export function Detached(props: PropTypes) {
         id="widget-name-space-confirm-btn"
         type="primary"
         onClick={onConfirm}>
-        {i18n.t('Done')}
+        {confirmText}
       </StyledButton>
     </>
   );

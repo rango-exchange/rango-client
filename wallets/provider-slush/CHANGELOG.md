@@ -1,3 +1,16 @@
+# [0.8.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.7.0...provider-slush@0.8.0) (2025-10-29)
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+# [0.7.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.6.0...provider-slush@0.7.0) (2025-09-29)
+
+
+
 # [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.5.0...provider-slush@0.6.0) (2025-09-06)
 
 

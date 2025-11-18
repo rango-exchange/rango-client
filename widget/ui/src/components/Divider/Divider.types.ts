@@ -7,4 +7,5 @@ type BaseSizes = Exclude<BaseProps['size'], object>;
 export interface PropTypes {
   size?: BaseSizes;
   direction?: 'vertical' | 'horizontal';
+  className?: string;
 }

@@ -16,9 +16,6 @@ const buildProvider = () =>
       }
     })
     .config('metadata', metadata)
-    .config('deepLink', (context) => {
-      return `https://link.trustwallet.com/open_url?coin_id=60&url=${context.targetUrl}?autoConnect=${WALLET_ID}`;
-    })
     .add('evm', evm)
     .add('solana', solana)
     .build();

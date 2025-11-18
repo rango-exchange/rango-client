@@ -1,8 +1,11 @@
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
+import { ActionBuilder, NamespaceBuilder } from '@rango-dev/wallets-core';
 import {
   builders as commonBuilders,
+  connectAndUpdateStateForMultiNetworks,
+  intoConnecting,
+  intoConnectionFinished,
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
 import {
@@ -26,12 +29,25 @@ const [changeAccountSubscriber, changeAccountCleanup] = builders
   })
   .build();
 
-const connect = builders
-  .connect()
+const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
   .action(actions.connect(evmMetamask))
+  /*
+   * Metamask Wallet's `connect` returns a list where the currently selected account
+   * is always the first item. We're directly taking this first item as the active account.
+   *
+   * ***NOTE***: Please keep it synced with `wallets/core/src/namespaces/solana/builders.ts`.
+   *
+   */
+  .and((_, connectResult) => ({
+    ...connectResult,
+    accounts: [connectResult.accounts[0]],
+  }))
+  .and(connectAndUpdateStateForMultiNetworks)
+  .before(intoConnecting)
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)
+  .after(intoConnectionFinished)
   .build();
 
 const canEagerConnect = builders
@@ -49,11 +65,17 @@ const canSwitchNetwork = builders
   .action(actions.canSwitchNetwork())
   .build();
 
+const getChainId = builders
+  .getChainId()
+  .action(actions.getChainId(evmMetamask))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canSwitchNetwork)
   .action(canEagerConnect)
+  .action(getChainId)
   .build();
 
 export { evm };

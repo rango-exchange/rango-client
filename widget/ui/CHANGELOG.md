@@ -1,3 +1,27 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/ui@0.54.0...ui@0.55.0) (2025-10-29)
+
+
+### Features
+
+* add show and hide icons ([6ead385](https://github.com/rango-exchange/rango-client/commit/6ead385d869c643b43da5936e9e118888c96e8b4))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/ui@0.53.0...ui@0.54.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* handle long names and numbers ([066e8a1](https://github.com/rango-exchange/rango-client/commit/066e8a1ca97919047a446df8022dbbf2bab2da5a))
+* use wallet image container for connect modals ([b71a210](https://github.com/rango-exchange/rango-client/commit/b71a210bdf48448f4322514997e5298a46c3ffd8))
+
+
+
 # [0.53.0](https://github.com/rango-exchange/rango-client/compare/ui@0.52.0...ui@0.53.0) (2025-09-06)
 
 

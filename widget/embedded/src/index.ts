@@ -1,4 +1,5 @@
 import type { WidgetProps } from './containers/Widget';
+import type { UseStatefulConnect } from './hooks/useStatefulConnect';
 import type { ConnectedWallet } from './store/slices/wallets';
 import type {
   BlockchainAndTokenConfig,
@@ -86,6 +87,7 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from './types';
+import { pickProviderVersionWithFallbackToLegacy } from './utils/providers';
 import { customizedThemeTokens } from './utils/ui';
 
 export const StatefulConnect = {
@@ -131,6 +133,7 @@ export type {
   QuoteEventData,
   UiEventData,
   WalletInfoWithExtra,
+  UseStatefulConnect,
 };
 export {
   Widget,
@@ -180,6 +183,7 @@ export type {
 // Internal function and enum exports for Rango
 export {
   readAccountAddress,
+  pickProviderVersionWithFallbackToLegacy,
   Networks,
   WalletEvents,
   WalletTypes,

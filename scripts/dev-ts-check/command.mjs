@@ -8,7 +8,7 @@ import { awake } from '../dev-watch/utils.mjs';
 import { rootPath } from '../common/path.mjs';
 
 const nx = join(rootPath(), 'node_modules', '.bin', 'nx');
-
+const cwd = rootPath();
 async function run() {
   const optionDefinitions = [{ name: 'project', type: String }];
   const { project } = commandLineArgs(optionDefinitions);

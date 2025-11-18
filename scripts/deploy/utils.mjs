@@ -21,6 +21,7 @@ import { mkdir } from 'node:fs/promises';
 
 import { fileURLToPath } from 'node:url';
 import { packagePath } from '../common/path.mjs';
+import { getDeployableClients } from '../build-clients/utils.mjs';
 
 export function getVercelProjectId(packageName) {
   return VERCEL_PACKAGES[packageName];
@@ -64,7 +65,15 @@ export async function deploySingleProjectToVercel(pkg) {
 
   const vercelResult = await execa(
     'vercel',
-    [pkg.location, '--prebuilt', '--token', VERCEL_TOKEN],
+    [
+      'deploy',
+      pkg.location,
+      '--prebuilt',
+      '--token',
+      VERCEL_TOKEN,
+      '--target',
+      deployTo,
+    ],
     { env }
   )
     .then((result) => result.stdout)
@@ -111,26 +120,7 @@ export function groupPackagesForDeploy(packages) {
 }
 
 export async function getClientsListToBeDeployed() {
-  /*
-    Deploys packages based on the state of the `ENABLE_PREVIEW_DEPLOY` environment variable.
-    if ENABLE_PREVIEW_DEPLOY is true, only packages that has project id in workflow environments will be deployed.
-    else private packages will be deployed.
- */
-
-  // Detect last release and what packages has changed since then.
-  const packages = await workspacePackages();
-  const listPackagesToBeDeployed = packages.filter((pkg) => {
-    if (EXCLUDED_PACKAGES.includes(pkg.name)) return false;
-
-    if (ENABLE_PREVIEW_DEPLOY) {
-      const hasProjectId =
-        getVercelProjectId(pkg.name) &&
-        getVercelProjectId(pkg.name) !== 'NOT SET';
-      return pkg.private && hasProjectId;
-    } else {
-      return pkg.private;
-    }
-  });
+  const listPackagesToBeDeployed = await getDeployableClients();
 
   if (ENABLE_PREVIEW_DEPLOY) {
     console.log('preview deployment is enabled.');

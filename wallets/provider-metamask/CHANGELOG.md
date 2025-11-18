@@ -1,3 +1,21 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.51.0...provider-metamask@0.52.0) (2025-10-29)
+
+
+### Features
+
+* add solana support to metamask ([7d7f521](https://github.com/rango-exchange/rango-client/commit/7d7f52172c4a4699ec1caa8896cedacab958bf34))
+
+
+
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.50.0...provider-metamask@0.51.0) (2025-09-29)
+
+
+### Features
+
+* migrate metamask to hub ([9ef1b5a](https://github.com/rango-exchange/rango-client/commit/9ef1b5a600945c8467b500a686a96cf081f3fb6e))
+
+
+
 # [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.49.0...provider-metamask@0.50.0) (2025-09-06)
 
 

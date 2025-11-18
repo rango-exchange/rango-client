@@ -98,3 +98,19 @@ export function canSwitchNetwork(): FunctionWithContext<
     return filterAndGetEvmBlockchainNames(supportedChains).includes(network);
   };
 }
+
+export function getChainId(
+  instance: () => ProviderAPI | undefined
+): FunctionWithContext<EvmActions['getChainId'], Context> {
+  return async () => {
+    const evmInstance = instance();
+
+    if (!evmInstance) {
+      throw new Error(
+        'Trying to get chain id from your EVM wallet, but instance is not available.'
+      );
+    }
+
+    return evmInstance.request({ method: 'eth_chainId' });
+  };
+}

@@ -275,29 +275,6 @@ export function getAllLegacyProviders(
   return legacyProviders;
 }
 
-export function getLegacyProvider(
-  allProviders: VersionedProviders[],
-  type: string
-): LegacyProviderInterface {
-  const legacyProviders: LegacyProviderInterface[] =
-    getAllLegacyProviders(allProviders);
-
-  const provider = legacyProviders.find((legacyProvider) => {
-    return legacyProvider.config.type === type;
-  });
-
-  if (!provider) {
-    console.warn(
-      `You have a provider that doesn't have legacy provider. It causes some problems since we need some legacy functionality. Provider Id: ${type}`
-    );
-    throw new Error(
-      `You need to have legacy implementation to use some methods. Provider Id: ${type}`
-    );
-  }
-
-  return provider;
-}
-
 /**
  * In legacy mode, for those who have switch network functionality (like evm), we are using an enum for network names
  * this enum only has meaning for us, and when we are going to connect an instance (e.g. window.ethereum) we should pass chain id.

@@ -1,3 +1,11 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-ready@0.51.0...provider-ready@0.52.0) (2025-10-29)
+
+
+
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-ready@0.50.0...provider-ready@0.51.0) (2025-09-29)
+
+
+
 # 0.50.0 (2025-09-06)
 
 

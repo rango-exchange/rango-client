@@ -1,3 +1,71 @@
+## Widget [0.48.0] (2025-11-18)
+_includes `@rango-dev/widget-embedded@0.53.0`_
+
+### Bug Fixes
+
+* validate evm address for safepal connect ([729d252](https://github.com/rango-exchange/rango-client/commit/729d252164dc15b2ba962ba13d79c10b87b48d6c))
+
+
+### Features
+
+* adding hubProvider to wallets-adapter ([5b97ed5](https://github.com/rango-exchange/rango-client/commit/5b97ed5159acd15d63926dbf9b7d5584f3cd1815))
+* migrate exodus to the hub ([ee42344](https://github.com/rango-exchange/rango-client/commit/ee4234473b50350e6e08f04a6943d40fd740ddcf))
+* migrate okx provider to the hub ([f4fefc8](https://github.com/rango-exchange/rango-client/commit/f4fefc808afd3a4e5a7582c976ca4caaff2b64a8))
+
+
+
+## Widget [0.47.0] (2025-10-29)
+_includes `@rango-dev/widget-embedded@0.52.0`_
+
+### Bug Fixes
+
+* add blockchains without token to meta ([3cfba19](https://github.com/rango-exchange/rango-client/commit/3cfba19f19ab1e794240d4bc6c3a9f1529964852))
+* filter blockchains with at least one token in select blockchain page ([1ab904a](https://github.com/rango-exchange/rango-client/commit/1ab904a87dbf95bc6ab5acee44ac46af0a3fd6fa))
+* replace metamask with keplr in playground external wallet ([dedb5c1](https://github.com/rango-exchange/rango-client/commit/dedb5c17fdf3ebedcad77d2dd563e350aa55a834))
+* virtual list dynamic height ([599624c](https://github.com/rango-exchange/rango-client/commit/599624c412cf8286e2390fbea446cfb231646c13))
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+* add show and hide icons ([6ead385](https://github.com/rango-exchange/rango-client/commit/6ead385d869c643b43da5936e9e118888c96e8b4))
+* add solana support to metamask ([7d7f521](https://github.com/rango-exchange/rango-client/commit/7d7f52172c4a4699ec1caa8896cedacab958bf34))
+* simplify and update widget height calculation ([b6a1e3c](https://github.com/rango-exchange/rango-client/commit/b6a1e3c85a54ae82c4ffd6d2d0adb10e69734bbd))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+## Widget [0.46.0] (2025-09-29)
+_includes `@rango-dev/widget-embedded@0.51.0`_
+
+### Bug Fixes
+
+* connect queue precalling ([b421f62](https://github.com/rango-exchange/rango-client/commit/b421f62252f5fdbb023ba6732c2fca6d3670376a))
+* fix dynamic import issue in provider ledger ([b997aa3](https://github.com/rango-exchange/rango-client/commit/b997aa39782eea98374d5de8dde79c6cc839b687))
+* fix update and reset network status in execute transaction ([8cd631f](https://github.com/rango-exchange/rango-client/commit/8cd631f78e0360cd96e9f8675d31b23bb1e8a73b))
+* handle long names and numbers ([066e8a1](https://github.com/rango-exchange/rango-client/commit/066e8a1ca97919047a446df8022dbbf2bab2da5a))
+* no evm compatible account available bug ([6e782f0](https://github.com/rango-exchange/rango-client/commit/6e782f034ffdfd8a55bfc893ce55617910310466))
+* read publickey from instance if connect response was empty on solana ([5899196](https://github.com/rango-exchange/rango-client/commit/58991961dce2dcf0468197b0777798aa6a1f7c36))
+* use wallet image container for connect modals ([b71a210](https://github.com/rango-exchange/rango-client/commit/b71a210bdf48448f4322514997e5298a46c3ffd8))
+
+
+### Features
+
+* add single selection to detached modal ([07c7d44](https://github.com/rango-exchange/rango-client/commit/07c7d44ffd3def69e83c54d988c1279ac68d5889))
+* implement changeAccountSubscriber builder ([8e2ca97](https://github.com/rango-exchange/rango-client/commit/8e2ca9783fcd57445ca558e688c402a30aba3686))
+* make detached confirm text customizable ([d4dc8e7](https://github.com/rango-exchange/rango-client/commit/d4dc8e739a24962e1d94ec02c496b6f8ebb34318))
+* migrate Coinbase to use Hub ([d7236e4](https://github.com/rango-exchange/rango-client/commit/d7236e4b65f8a955c819ca1eb22c74a37da94022))
+* migrate ledger provider to use hub ([a114101](https://github.com/rango-exchange/rango-client/commit/a114101bd9c317ec5c82c6146a6e88813bcbebf3))
+* migrate metamask to hub ([9ef1b5a](https://github.com/rango-exchange/rango-client/commit/9ef1b5a600945c8467b500a686a96cf081f3fb6e))
+* migrate safepal to hub ([9abf9c9](https://github.com/rango-exchange/rango-client/commit/9abf9c9be4c009e55570b15b0c048b8554f681bc))
+* use existing format account method for subscriber ([f08e6f9](https://github.com/rango-exchange/rango-client/commit/f08e6f94e3edc2241893f8ff3ec9ea1bd79cf81b))
+
+
+
 ## Widget [0.45.0] (2025-09-06)
 
 _includes `@rango-dev/widget-embedded@0.50.0`_

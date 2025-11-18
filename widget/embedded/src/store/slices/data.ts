@@ -355,33 +355,22 @@ export const createDataSlice: StateCreator<
       >();
       const tokensMapByBlockchainName: DataSlice['_tokensMapByBlockchainName'] =
         {};
-      const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
       const swappers: SwapperMeta[] = response.swappers.filter(
         (swapper) => swapper.enabled
       );
-      const blockchainsWithAtLeastOneToken = new Set();
-
-      response.tokens.forEach((token) => {
-        blockchainsWithAtLeastOneToken.add(token.blockchain);
-
-        tokens.push(token);
-      });
 
       const sortedBlockchain = response.blockchains.sort(
         (a, b) => a.sort - b.sort
       );
 
       sortedBlockchain.forEach((blockchain) => {
-        if (
-          blockchain.enabled &&
-          blockchainsWithAtLeastOneToken.has(blockchain.name)
-        ) {
+        if (blockchain.enabled) {
           blockchainsMapByName.set(blockchain.name, blockchain);
         }
       });
 
-      tokens.forEach((token) => {
+      response.tokens.forEach((token) => {
         const tokenHash = createTokenHash(token);
         if (!tokensMapByBlockchainName[token.blockchain]) {
           tokensMapByBlockchainName[token.blockchain] = [];

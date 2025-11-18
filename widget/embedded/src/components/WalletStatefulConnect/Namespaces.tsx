@@ -120,7 +120,10 @@ export function Namespaces(props: PropTypes) {
       />
       {singleNamespace ? (
         <>
-          <Divider size={20} />
+          <Divider
+            size={20}
+            className="_initial_namespace_list_header_alert_top_divider"
+          />
           <Alert
             id="widget-wallet-stateful-connect-alert"
             variant="alarm"
@@ -129,11 +132,17 @@ export function Namespaces(props: PropTypes) {
               'This wallet can only connect to one chain at a time. '
             )}
           />
-          <Divider size={30} />
+          <Divider
+            size={30}
+            className="_initial_namespace_list_header_alert_bottom_divider"
+          />
         </>
       ) : (
         <>
-          <Divider size={30} />
+          <Divider
+            size={30}
+            className="_initial_namespace_list_header_button_top_divider"
+          />
           <Button
             style={{ marginLeft: 'auto' }}
             id="widget-name-space-select-all-btn"
@@ -145,7 +154,10 @@ export function Namespaces(props: PropTypes) {
               ? i18n.t('Deselect all')
               : i18n.t('Select all')}
           </Button>
-          <Divider size={10} />
+          <Divider
+            size={10}
+            className="_initial_namespace_list_header_button_bottom_divider"
+          />
         </>
       )}
       <NamespaceList>

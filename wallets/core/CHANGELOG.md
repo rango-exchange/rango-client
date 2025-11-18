@@ -1,3 +1,33 @@
+# [0.51.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.50.0...wallets-core@0.51.0) (2025-10-29)
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.49.0...wallets-core@0.50.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* no evm compatible account available bug ([6e782f0](https://github.com/rango-exchange/rango-client/commit/6e782f034ffdfd8a55bfc893ce55617910310466))
+* read publickey from instance if connect response was empty on solana ([5899196](https://github.com/rango-exchange/rango-client/commit/58991961dce2dcf0468197b0777798aa6a1f7c36))
+
+
+### Features
+
+* add single selection to detached modal ([07c7d44](https://github.com/rango-exchange/rango-client/commit/07c7d44ffd3def69e83c54d988c1279ac68d5889))
+* implement changeAccountSubscriber builder ([8e2ca97](https://github.com/rango-exchange/rango-client/commit/8e2ca9783fcd57445ca558e688c402a30aba3686))
+* migrate Coinbase to use Hub ([d7236e4](https://github.com/rango-exchange/rango-client/commit/d7236e4b65f8a955c819ca1eb22c74a37da94022))
+* migrate ledger provider to use hub ([a114101](https://github.com/rango-exchange/rango-client/commit/a114101bd9c317ec5c82c6146a6e88813bcbebf3))
+* migrate metamask to hub ([9ef1b5a](https://github.com/rango-exchange/rango-client/commit/9ef1b5a600945c8467b500a686a96cf081f3fb6e))
+* migrate safepal to hub ([9abf9c9](https://github.com/rango-exchange/rango-client/commit/9abf9c9be4c009e55570b15b0c048b8554f681bc))
+* use existing format account method for subscriber ([f08e6f9](https://github.com/rango-exchange/rango-client/commit/f08e6f94e3edc2241893f8ff3ec9ea1bd79cf81b))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.48.0...wallets-core@0.49.0) (2025-09-06)
 
 

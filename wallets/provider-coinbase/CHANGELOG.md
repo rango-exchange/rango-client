@@ -1,3 +1,16 @@
+# [0.53.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.52.0...provider-coinbase@0.53.0) (2025-10-29)
+
+
+
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.51.0...provider-coinbase@0.52.0) (2025-09-29)
+
+
+### Features
+
+* migrate Coinbase to use Hub ([d7236e4](https://github.com/rango-exchange/rango-client/commit/d7236e4b65f8a955c819ca1eb22c74a37da94022))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.50.0...provider-coinbase@0.51.0) (2025-09-06)
 
 

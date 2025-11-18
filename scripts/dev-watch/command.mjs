@@ -8,6 +8,7 @@ import { watch } from './subcommands/watch.mjs';
 import { awake } from './utils.mjs';
 import { rootPath } from '../common/path.mjs';
 
+const cwd = rootPath();
 const nx = join(rootPath(), 'node_modules', '.bin', 'nx');
 
 async function run() {

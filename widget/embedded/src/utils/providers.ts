@@ -95,7 +95,7 @@ export function matchAndGenerateProviders({
   return allProviders;
 }
 
-function pickProviderVersionWithFallbackToLegacy(
+export function pickProviderVersionWithFallbackToLegacy(
   provider: VersionedProviders
 ): BothProvidersInterface {
   try {

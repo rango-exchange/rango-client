@@ -1,3 +1,32 @@
+# [0.38.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.37.0...wallets-react@0.38.0) (2025-10-29)
+
+
+### Features
+
+* add hub provider to widget config wallets ([79b2b13](https://github.com/rango-exchange/rango-client/commit/79b2b136480e0600fa918c5092f3e245bd4e39eb))
+
+
+### Reverts
+
+* Revert "feat: implement deep linking" ([a0b0edc](https://github.com/rango-exchange/rango-client/commit/a0b0edcc052bfea69af2037b73c0bb6a9b38c2a9))
+
+
+
+# [0.37.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.36.0...wallets-react@0.37.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* connect queue precalling ([b421f62](https://github.com/rango-exchange/rango-client/commit/b421f62252f5fdbb023ba6732c2fca6d3670376a))
+
+
+### Features
+
+* add single selection to detached modal ([07c7d44](https://github.com/rango-exchange/rango-client/commit/07c7d44ffd3def69e83c54d988c1279ac68d5889))
+* migrate ledger provider to use hub ([a114101](https://github.com/rango-exchange/rango-client/commit/a114101bd9c317ec5c82c6146a6e88813bcbebf3))
+
+
+
 # [0.36.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.35.0...wallets-react@0.36.0) (2025-09-06)
 
 
