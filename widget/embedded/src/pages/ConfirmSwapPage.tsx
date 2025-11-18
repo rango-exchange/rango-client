@@ -1,9 +1,6 @@
 import type { ConfirmSwapFetchResult } from '../hooks/useConfirmSwap/useConfirmSwap.types';
-import type { PendingSwapSettings } from '../types';
 
 import { i18n } from '@lingui/core';
-import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
-import { useManager } from '@rango-dev/queue-manager-react';
 import {
   Alert,
   Button,
@@ -27,7 +24,6 @@ import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { QuoteErrorType, QuoteWarningType } from '../types';
 import { isQuoteWarningConfirmationRequired } from '../utils/quote';
-import { getWalletsForNewSwap } from '../utils/swap';
 import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
@@ -63,20 +59,14 @@ export function ConfirmSwapPage() {
   //TODO: move component's logics to a custom hook
   const {
     selectedQuote,
-    inputAmount,
     quoteWarningsConfirmed,
     confirmSwapData,
     customDestination,
     setInputAmount,
   } = useQuoteStore();
-  const { disabledLiquiditySources, customSlippage, slippage } = useAppStore();
-  const tokens = useAppStore().tokens();
-  const blockchains = useAppStore().blockchains();
-  const sourceWallet = useAppStore().selectedWallet('source');
-  const destinationWallet = useAppStore().selectedWallet('destination');
+  const { disabledLiquiditySources } = useAppStore();
   const { isActiveTab } = useUiStore();
   const navigate = useNavigate();
-  const { manager } = useManager();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
   const [isConfirming, setIsConfirming] = useState(false);
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
@@ -84,53 +74,34 @@ export function ConfirmSwapPage() {
     fetch: confirmSwap,
     loading: fetchingConfirmationQuote,
     cancelFetch,
+    addSwap,
   } = useConfirmSwap();
   const [confirmSwapResult, setConfirmSwapResult] =
     useState<ConfirmSwapFetchResult>({
-      response: confirmSwapData.result,
+      quoteData: confirmSwapData.quoteData,
       error: null,
       warnings: null,
     });
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
+  const sourceWallet = useAppStore().selectedWallet('source');
+  const destinationWallet = useAppStore().selectedWallet('destination');
   const selectedWalletsForConfirmation = sourceWallet
     ? [sourceWallet].concat(destinationWallet ?? [])
     : [];
 
   const addNewSwap = async () => {
-    const data = confirmSwapResult.response || confirmSwapData.result;
-    if (data) {
-      try {
-        const userSlippage = customSlippage || slippage;
-        const swapSettings: PendingSwapSettings = {
-          slippage: userSlippage.toString(),
-          disabledSwappersGroups: disabledLiquiditySources,
-        };
-
-        const swap = calculatePendingSwap(
-          inputAmount.toString(),
-          data,
-          getWalletsForNewSwap(selectedWalletsForConfirmation ?? []),
-          swapSettings,
-          confirmSwapData.proceedAnyway,
-          { blockchains, tokens }
-        );
-        await manager?.create(
-          'swap',
-          { swapDetails: swap },
-          { id: swap.requestId }
-        );
-
-        const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.response?.requestId}`;
-        navigate(swap_url, {
-          replace: true,
-        });
-        setTimeout(() => {
-          setInputAmount('');
-        }, 0);
-      } catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setDbErrorMessage('Error: ' + (e as any)?.message);
-      }
+    try {
+      await addSwap(confirmSwapResult.quoteData);
+      const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.quoteData?.requestId}`;
+      navigate(swap_url, {
+        replace: true,
+      });
+      setTimeout(() => {
+        setInputAmount('');
+      }, 0);
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setDbErrorMessage('Error: ' + (e as any)?.message);
     }
   };
 
@@ -156,17 +127,15 @@ export function ConfirmSwapPage() {
   const onRefresh = async () => {
     setConfirmSwapResult({
       error: null,
-      response: null,
+      quoteData: null,
       warnings: null,
     });
-    confirmSwap({
+
+    const res = await confirmSwap({
       selectedWallets: selectedWalletsForConfirmation ?? [],
       customDestination,
-    })
-      .then((res) => {
-        setConfirmSwapResult(res);
-      })
-      .catch((error) => console.error(error));
+    });
+    setConfirmSwapResult(res);
   };
 
   useEffect(() => {

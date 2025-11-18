@@ -1,13 +1,13 @@
 import type { PropTypes } from './InsufficientFeeModal.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button, Image, MessageBox, Typography } from '@rango-dev/ui';
+import { Button, MessageBox } from '@rango-dev/ui';
 import React from 'react';
 
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
-import { WarningItem } from './InsufficientFeeModal.styles';
+import { InsufficientFeeWarning } from './InsufficientFeeWarning';
 
 export function InsufficientFeeModal(props: PropTypes) {
   const { open, onClose, onConfirm, warnings } = props;
@@ -30,34 +30,11 @@ export function InsufficientFeeModal(props: PropTypes) {
         </Button>
       }>
       <MessageBox title={i18n.t('Insufficient account balance')} type="warning">
-        {warnings.map((warning) => (
-          <WarningItem key={warning.selectedWallet.blockchain}>
-            <div>
-              <Image src={warning.selectedWallet.image} size={20} />
-              <Alert
-                type="warning"
-                variant="alarm"
-                title={i18n.t('Network fee')}
-              />
-            </div>
-            <div>
-              <Typography variant="body" size="medium">
-                {i18n.t('Required Balance:')}
-              </Typography>
-              <Typography variant="title" size="small">
-                {warning.requiredBalance}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="body" size="medium">
-                {i18n.t('Your Balance:')}
-              </Typography>
-              <Typography variant="title" size="small">
-                {warning.userBalance}
-              </Typography>
-            </div>
-          </WarningItem>
-        ))}
+        {warnings.map((warning) => {
+          const key =
+            warning.selectedWallet.address + warning.selectedWallet.blockchain;
+          return <InsufficientFeeWarning key={key} warning={warning} />;
+        })}
       </MessageBox>
     </WatermarkedModal>
   );

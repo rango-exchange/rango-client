@@ -1,4 +1,3 @@
-import type { ConfirmSwapFetchResult } from '../hooks/useConfirmSwap/useConfirmSwap.types';
 import type { SelectedQuote, SwapButtonState } from '../types';
 
 import { i18n } from '@lingui/core';
@@ -20,7 +19,7 @@ import { SLIPPAGES } from '../constants/swapSettings';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
-import { useConfirmSwap } from '../hooks/useConfirmSwap';
+import { useHandleConfirmSwap } from '../hooks/useHandleConfirmSwap';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
@@ -61,8 +60,6 @@ export function Home() {
   } = useQuoteStore();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
-  const [confirmSwapResult, setConfirmSwapResult] =
-    useState<ConfirmSwapFetchResult | null>(null);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
   const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
@@ -80,13 +77,17 @@ export function Home() {
 
   const { isActiveTab } = useUiStore();
   const {
-    fetch: confirmSwap,
+    handleConfirmSwap,
+    confirmSwapResult,
     loading: fetchingConfirmationQuote,
     cancelFetch,
-  } = useConfirmSwap();
+    clear: clearConfirmSwapState,
+  } = useHandleConfirmSwap();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const [showWalletAddressError, setShowWalletAddressError] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
+  const showBalanceWarning =
+    !!confirmSwapResult?.warnings?.balance?.messages.length;
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
@@ -187,24 +188,7 @@ export function Home() {
       onHandleNavigation(navigationRoutes.destinationWallet),
     'confirm-warning': () => setShowQuoteWarningModal(true),
     'show-wallet-address-error': () => setShowWalletAddressError(true),
-    'confirm-swap': () => {
-      if (sourceWallet && (destinationWallet || customDestination)) {
-        void confirmSwap({
-          selectedWallets: [sourceWallet].concat(destinationWallet || []),
-          customDestination,
-        }).then((result) => {
-          setConfirmSwapResult(result);
-          if (result.warnings?.balance?.messages.length) {
-            setShowQuoteWarningModal(true);
-            return;
-          }
-          useQuoteStore.setState({
-            confirmSwapData: { proceedAnyway: false, result: result.response },
-          });
-          onHandleNavigation(navigationRoutes.confirmSwap);
-        });
-      }
-    },
+    'confirm-swap': handleConfirmSwap,
     'select-route-wallets': () =>
       onHandleNavigation(navigationRoutes.routeWallets),
   };
@@ -218,11 +202,11 @@ export function Home() {
   };
 
   const onConfirmBalanceWarning = () => {
-    if (confirmSwapResult?.response) {
+    if (confirmSwapResult?.quoteData) {
       useQuoteStore.setState({
         confirmSwapData: {
           proceedAnyway: true,
-          result: confirmSwapResult?.response,
+          quoteData: confirmSwapResult?.quoteData,
         },
       });
       navigate(navigationRoutes.confirmSwap);
@@ -247,7 +231,7 @@ export function Home() {
       <InsufficientBalanceModal
         open={!!confirmSwapResult?.warnings?.balance?.messages.length}
         tokenSymbol={fromToken?.symbol ?? ''}
-        onClose={() => setConfirmSwapResult(null)}
+        onClose={clearConfirmSwapState}
         onConfirm={onConfirmBalanceWarning}
       />
       <WalletAddressErrorModal
@@ -345,7 +329,7 @@ export function Home() {
                 skipAlerts={!!slippageValidation}
                 couldChangeSettings={true}
                 refetchQuote={fetchQuote}
-                showWarningModal={showQuoteWarningModal}
+                showWarningModal={showQuoteWarningModal || showBalanceWarning}
                 confirmationDisabled={!isActiveTab}
                 onOpenWarningModal={() => setShowQuoteWarningModal(true)}
                 onCloseWarningModal={() => setShowQuoteWarningModal(false)}

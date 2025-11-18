@@ -80,7 +80,7 @@ export interface QuoteState {
   warning: QuoteWarning | null;
   confirmSwapData: {
     proceedAnyway: boolean;
-    result: ConfirmRouteResponse['result'] | null;
+    quoteData: ConfirmRouteResponse['result'] | null;
   };
   resetQuote: () => void;
   resetAlerts: () => void;
@@ -125,7 +125,7 @@ export const useQuoteStore = createSelectors(
       warning: null,
       confirmSwapData: {
         proceedAnyway: false,
-        result: null,
+        quoteData: null,
       },
       selectedWallets: [],
       customDestination: null,

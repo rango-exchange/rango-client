@@ -1,12 +1,16 @@
 import type { ConfirmSwap } from './useConfirmSwap.types';
-import type { ConfirmRouteRequest } from 'rango-sdk';
+import type { PendingSwapSettings, SelectedQuote } from '../../types';
+import type { ConfirmRouteRequest, ConfirmRouteResponse } from 'rango-sdk';
 
 import { warn } from '@rango-dev/logging-core';
+import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { useManager } from '@rango-dev/queue-manager-react';
 import { useEffect } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { QuoteErrorType, type SelectedQuote } from '../../types';
+import { QuoteErrorType } from '../../types';
+import { getWalletsForNewSwap } from '../../utils/swap';
 import { useFetchConfirmQuote } from '../useFetchConfirmQuote';
 
 import {
@@ -24,12 +28,20 @@ export function useConfirmSwap(): ConfirmSwap {
     setSelectedQuote,
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
+    confirmSwapData,
     resetAlerts,
   } = useQuoteStore();
+  const { manager } = useManager();
 
-  const { slippage, customSlippage } = useAppStore();
+  const { slippage, customSlippage, disabledLiquiditySources } = useAppStore();
   const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const { findToken } = useAppStore();
+  const sourceWallet = useAppStore().selectedWallet('source');
+  const destinationWallet = useAppStore().selectedWallet('destination');
+  const selectedWalletsForConfirmation = sourceWallet
+    ? [sourceWallet].concat(destinationWallet ?? [])
+    : [];
 
   const userSlippage = customSlippage || slippage;
 
@@ -44,8 +56,7 @@ export function useConfirmSwap(): ConfirmSwap {
 
     if (!fromToken || !toToken || !inputAmount) {
       return {
-        quote: null,
-        response: null,
+        quoteData: null,
         error: null,
         warnings: null,
       };
@@ -65,11 +76,13 @@ export function useConfirmSwap(): ConfirmSwap {
     };
 
     try {
-      return await fetchQuote(requestBody, true).then((response) => {
-        const { result } = response;
+      return await fetchQuote(requestBody, true).then((fetchQuoteResponse) => {
+        const { result } = fetchQuoteResponse;
 
         if (!result) {
-          throw new Error(response.error ?? 'Error fetching updated quote');
+          throw new Error(
+            fetchQuoteResponse.error ?? 'Error fetching updated quote'
+          );
         }
 
         throwErrorIfResponseIsNotValid({
@@ -101,8 +114,7 @@ export function useConfirmSwap(): ConfirmSwap {
         resetAlerts();
 
         return {
-          quote: currentQuote,
-          response: response.result,
+          quoteData: result,
           error: null,
           warnings: confirmSwapWarnings,
         };
@@ -119,13 +131,39 @@ export function useConfirmSwap(): ConfirmSwap {
           },
         });
       }
-      return { response: null, error: quoteError, warnings: null };
+      return { quoteData: null, error: quoteError, warnings: null };
+    }
+  };
+
+  const addSwap = async (quoteData?: ConfirmRouteResponse['result']) => {
+    const data = quoteData || confirmSwapData.quoteData;
+    if (data) {
+      const userSlippage = customSlippage || slippage;
+      const swapSettings: PendingSwapSettings = {
+        slippage: userSlippage.toString(),
+        disabledSwappersGroups: disabledLiquiditySources,
+      };
+
+      const swap = calculatePendingSwap(
+        inputAmount.toString(),
+        data,
+        getWalletsForNewSwap(selectedWalletsForConfirmation ?? []),
+        swapSettings,
+        confirmSwapData.proceedAnyway,
+        { blockchains, tokens }
+      );
+      await manager?.create(
+        'swap',
+        { swapDetails: swap },
+        { id: swap.requestId }
+      );
     }
   };
 
   return {
     loading,
     fetch,
+    addSwap,
     cancelFetch,
   };
 }

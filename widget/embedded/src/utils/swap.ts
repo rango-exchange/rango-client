@@ -306,6 +306,11 @@ export function getSwapButtonState(params: {
   }
   const requiredChains = getQuoteChains({ quote, filter: 'required' });
 
+  /**
+   * For a simple on-chain swap,
+   * the user must select a single address for both the source and destination wallets on the chosen blockchain,
+   * as we cannot send multiple wallet addresses for one blockchain to the server.
+   */
   if (requiredChains.length === 1) {
     const walletAddressError =
       !selectedWallets.customDestination &&
