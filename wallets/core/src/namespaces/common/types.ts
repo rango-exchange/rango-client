@@ -21,5 +21,7 @@ export interface CommonActions {
 export interface AutoImplementedActionsByRecommended {
   disconnect: () => void;
 }
-
+export interface MustImplementActions {
+  connect: () => Promise<string | string[]>;
+}
 export type Provider = Map<string, unknown>;

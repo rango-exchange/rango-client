@@ -7,6 +7,7 @@ import { ChangeAccountSubscriberBuilder } from './changeAccountSubscriber.js';
 
 interface TestNamespaceActions {
   disconnect: () => void;
+  connect: () => void;
 }
 
 describe('check changeAccountSubscriber', () => {
@@ -34,8 +35,9 @@ describe('check changeAccountSubscriber', () => {
   const setupNamespace = () => {
     const actions = new Map();
     const disconnectAction = vi.fn();
+    const connectAction = vi.fn();
     actions.set('disconnect', disconnectAction);
-
+    actions.set('connect', connectAction);
     const store = createStore();
     const ns = new Namespace<TestNamespaceActions>('evm', 'garbage provider', {
       actions,

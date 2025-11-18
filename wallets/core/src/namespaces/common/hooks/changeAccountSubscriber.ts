@@ -3,8 +3,14 @@ import type {
   SubscriberCleanUp,
 } from '../../../hub/namespaces/types.js';
 import type { Subscriber } from '../../../mod.js';
-import type { AutoImplementedActionsByRecommended } from '../types.js';
+import type {
+  AutoImplementedActionsByRecommended,
+  MustImplementActions,
+} from '../types.js';
 
+type Config = {
+  invalidEventBehavior?: 'disconnect' | 'reconnect';
+};
 export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
   #getInstance: (() => ProviderAPI) | null = null;
   #format:
@@ -21,7 +27,9 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
   #removeEventListener:
     | ((instance: ProviderAPI, callback: (event: EventType) => void) => void)
     | null = null;
-
+  #config: Config = {
+    invalidEventBehavior: 'disconnect',
+  };
   /**
    * Sets the function that provides the provider API instance.
    *
@@ -110,9 +118,15 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
     this.#removeEventListener = operator;
     return this;
   }
+
+  public setConfig(config: Config) {
+    this.#config = { ...this.#config, ...config };
+    return this;
+  }
   public build<
     ActionsType extends Actions<ActionsType> &
-      Actions<AutoImplementedActionsByRecommended>
+      Actions<AutoImplementedActionsByRecommended> &
+      Actions<MustImplementActions>
   >(): [Subscriber<ActionsType>, SubscriberCleanUp<ActionsType>] {
     if (this.#getInstance === null) {
       throw new Error(this.#getErrorMessage('getInstance'));
@@ -142,45 +156,52 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
     const validateEventPayload = this.#validateEventPayload;
     let subscriber: (event: EventType) => void;
     let unsubscribe: (() => void) | void;
-    return [
-      async (context) => {
-        const [, setState] = context.state();
-        const instance = getInstance();
+    const subscriberCleanup: SubscriberCleanUp<ActionsType> = (_, err) => {
+      /**
+       * Call the cleanup function if addEventListener returned one.
+       * This handles providers that return an unsubscribe function from their event listeners.
+       */
+      if (unsubscribe && typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+      const instance = getInstance();
 
-        if (!instance) {
-          throw new Error(
-            'Trying to subscribe to your wallet, but seems its instance is not available.'
-          );
-        }
-        subscriber = async (event) => {
-          if (!!validateEventPayload && !validateEventPayload(event)) {
+      /**
+       * Always call removeEventListener as well to handle the on/off pattern.
+       * This ensures cleanup works regardless of which pattern the provider uses.
+       */
+      removeEventListener(instance, subscriber);
+
+      // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
+      return err;
+    };
+    const addSubscriber: Subscriber<ActionsType> = async (context) => {
+      const [getState, setState] = context.state();
+      const instance = getInstance();
+
+      if (!instance) {
+        throw new Error(
+          'Trying to subscribe to your wallet, but seems its instance is not available.'
+        );
+      }
+      subscriber = async (event) => {
+        if (!!validateEventPayload && !validateEventPayload(event)) {
+          if (this.#config.invalidEventBehavior === 'reconnect') {
+            if (!getState('connecting')) {
+              subscriberCleanup(context);
+              await context.action('connect');
+            }
+          } else {
             context.action('disconnect');
-            return;
           }
-          setState('accounts', await format(instance, event));
-        };
-        unsubscribe = addEventListener(instance, subscriber);
-      },
-      (_, err) => {
-        /**
-         * Call the cleanup function if addEventListener returned one.
-         * This handles providers that return an unsubscribe function from their event listeners.
-         */
-        if (unsubscribe && typeof unsubscribe === 'function') {
-          unsubscribe();
+
+          return;
         }
-        const instance = getInstance();
-
-        /**
-         * Always call removeEventListener as well to handle the on/off pattern.
-         * This ensures cleanup works regardless of which pattern the provider uses.
-         */
-        removeEventListener(instance, subscriber);
-
-        // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
-        return err;
-      },
-    ];
+        setState('accounts', await format(instance, event));
+      };
+      unsubscribe = addEventListener(instance, subscriber);
+    };
+    return [addSubscriber, subscriberCleanup];
   }
   #getErrorMessage(operatorName: string) {
     return `Required "${operatorName}" operation has not been set for "changeAccountSubscriber"`;
