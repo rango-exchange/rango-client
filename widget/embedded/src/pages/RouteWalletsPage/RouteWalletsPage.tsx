@@ -17,8 +17,8 @@ import { useHandleConfirmSwap } from '../../hooks/useHandleConfirmSwap';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { getQuoteChains } from '../../utils/wallets';
 
+import { getRouteBlockchains } from './RouteWalletsPage.helpers';
 import { Container, Title } from './RouteWalletsPage.styles';
 
 const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
@@ -91,11 +91,7 @@ export function RouteWalletsPage() {
     return null;
   }
 
-  const requiredBlockchains = getQuoteChains({
-    quote: selectedQuote,
-    filter: 'required',
-  });
-
+  const requiredBlockchains = getRouteBlockchains(selectedQuote);
   const isSelected = (walletType: string, blockchain: string) => {
     const wallet = routeWallets?.[blockchain];
     return !!wallet && wallet.walletType === walletType;
