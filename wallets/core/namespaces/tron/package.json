@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/tron",
+  "type": "module",
+  "main": "../../dist/namespaces/tron/mod.js",
+  "module": "../../dist/namespaces/tron/mod.js",
+  "types": "../../dist/namespaces/tron/mod.d.ts",
+  "sideEffects": false
+}

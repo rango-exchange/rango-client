@@ -5,6 +5,7 @@ import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { SuiActions } from '../../namespaces/sui/mod.js';
+import type { TronActions } from '../../namespaces/tron/types.js';
 import type { UtxoActions } from '../../namespaces/utxo/mod.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
 import type { Prettify } from '../../types/utils.js';
@@ -32,6 +33,7 @@ export interface CommonNamespaces {
   cosmos: CosmosActions;
   sui: SuiActions;
   utxo: UtxoActions;
+  tron: TronActions;
 }
 
 export type CommonNamespaceKeys = Prettify<keyof CommonNamespaces>;
