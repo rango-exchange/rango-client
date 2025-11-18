@@ -20,6 +20,7 @@ import type {
   QueueType,
   SetStorage,
 } from '@rango-dev/queue-manager-core';
+import type { Provider } from '@rango-dev/wallets-core';
 import type {
   Meta,
   Network,
@@ -675,6 +676,27 @@ async function getChainId(provider: any): Promise<string | number | null> {
   }
 }
 
+export async function getProviderChainId(
+  providers: Providers,
+  hubProvider: (type: WalletType) => Provider,
+  walletType: string
+) {
+  const legacyProvider = getEvmProvider(providers, walletType);
+  if (legacyProvider) {
+    const chainId = await getChainId(legacyProvider);
+    return chainId;
+  }
+
+  // Legacy provider was not found, try to get the chain id from hub provider.
+  const provider = hubProvider(walletType);
+  const evmNamespace = provider.get('evm');
+  if (!evmNamespace) {
+    throw new Error('EVM namespace not found for wallet type: ' + walletType);
+  }
+  const chainId = evmNamespace.getChainId();
+  return chainId;
+}
+
 /**
  * For running a swap safely, we need to make sure about the state of wallet
  * which means the netowrk/chain of wallet should be exactly on what a transaction needs.
@@ -684,7 +706,8 @@ export async function isNetworkMatchedForTransaction(
   step: PendingSwapStep,
   wallet: Wallet | null,
   meta: Meta,
-  providers: Providers
+  providers: Providers,
+  hubProvider: (type: WalletType) => Provider
 ): Promise<boolean> {
   if (isWalletNull(wallet)) {
     return false;
@@ -702,8 +725,11 @@ export async function isNetworkMatchedForTransaction(
     try {
       const sourceWallet = swap.wallets[fromNamespace.network];
       if (sourceWallet) {
-        const provider = getEvmProvider(providers, sourceWallet.walletType);
-        const chainId: number | string | null = await getChainId(provider);
+        const chainId = await getProviderChainId(
+          providers,
+          hubProvider,
+          sourceWallet.walletType
+        );
         if (chainId) {
           const blockChain = getBlockChainNameFromId(
             chainId,

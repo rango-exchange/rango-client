@@ -133,13 +133,15 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
-| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | 
+| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
+| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | 🚧   | ✅     | 🚧     | 🚧  | 🚧  |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
-| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | 
+| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
 
@@ -147,9 +149,11 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
-| CoinBase     | ⚠️             | ✅             | ✅           |  Injected                 | ❌            |
+| CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
+| Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
-| MetaMask     | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
+| MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| OKX          | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
@@ -168,15 +172,11 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
 | Cosmostation   | EVM,Cosmos,Aptos,Sui                                                                                                    | Aptos,Sui                                         | &check;              | https://cosmostation.io/             |
 | Enkrypt        | EVM                                                                                                                     | BTC,Polkadot                                      | &check;              | https://www.enkrypt.com/             |
-| Exodus         | BTC,Evm,Cardano,Solana,Algorand                                                                                         | BTC,Cardano,Algorand                              | &check;              | https://www.exodus.com/              |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                                                                                              | Cosmos,Polkadot                                   | &check;              | https://frontier.xyz/                |
 | Halo           | -                                                                                                                       | -                                                 | &cross;              | https://halo.social/                 |
 | Keplr          | Cosmos                                                                                                                  | -                                                 | &cross;              | https://www.keplr.app/               |
 | Leap Cosmos    | Cosmos                                                                                                                  | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
-| Ledger         | Ethereum,Solana                                                                                                         | -                                                 | &cross;              | https://www.ledger.com/              |
 | Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                                                                               | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
-| Metamask       | EVM                                                                                                                     | -                                                 | &check;              | -                                    |
-| OKX            | EVM,Solana,Cosmos                                                                                                       | Cosmos                                            | &check;              | https://www.okx.com/web3             |
 | Ready          | Starknet                                                                                                                | -                                                 | &check;              | https://www.ready.co/                |
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare       | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com                 |
@@ -189,4 +189,3 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TronLink       | Tron                                                                                                                    | -                                                 | &cross;              | -                                    |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |
-| UniSat         | BTC                                                                                                                     | -                                                 | &cross;              | https://unisat.io/io/                |

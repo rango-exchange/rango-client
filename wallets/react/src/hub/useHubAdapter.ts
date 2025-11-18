@@ -1,5 +1,5 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
-import type { ProviderContext, Providers } from '../index.js';
+import type { ProviderContext } from '../index.js';
 import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 import type {
@@ -25,7 +25,6 @@ import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
-  getLegacyProvider,
   getSupportedChainsFromProvider,
   isEvmNamespace,
   isSolanaNamespace,
@@ -444,18 +443,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       };
     },
     providers() {
-      const output: Providers = {};
-
-      Array.from(getHub().getAll().keys()).forEach((id) => {
-        try {
-          const provider = getLegacyProvider(params.allVersionedProviders, id);
-          output[id] = provider.getInstance();
-        } catch (e) {
-          console.warn(e);
-        }
-      });
-
-      return output;
+      throw new Error('This method is not available on hub providers.');
     },
     state(type) {
       const hubState = getHub().state();
@@ -495,6 +483,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     },
     suggestAndConnect(_type, _network): never {
       throw new Error('`suggestAndConnect` is not implemented');
+    },
+    hubProvider() {
+      throw new Error(
+        'Unreachable code. the method has been implemented in main adapter instance.'
+      );
     },
   };
 

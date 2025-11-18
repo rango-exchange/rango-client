@@ -1,4 +1,3 @@
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type {
   ProviderAPI,
   UtxoActions,
@@ -16,6 +15,10 @@ import {
 } from '@rango-dev/wallets-core/namespaces/common';
 import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
 import {
+  actions as solanaActions,
+  type SolanaActions,
+} from '@rango-dev/wallets-core/namespaces/solana';
+import {
   builders,
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
@@ -27,9 +30,7 @@ import {
 } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants.js';
-import { bitcoinPhantom } from '../utils.js';
-
-import { canEagerConnectAction as solanaCanEagerConnectAction } from './solana.js';
+import { bitcoinPhantom, solanaPhantom } from '../utils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyFunction = (...args: any[]) => any;
@@ -158,7 +159,7 @@ const disconnect = commonBuilders
 const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
-  .action(solanaCanEagerConnectAction)
+  .action(solanaActions.canEagerConnect(solanaPhantom))
   .build();
 
 const utxo = new NamespaceBuilder<UtxoActions>('UTXO', WALLET_ID)

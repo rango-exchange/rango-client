@@ -13,7 +13,7 @@ import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
-import * as exodus from '@rango-dev/provider-exodus';
+import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
 import * as keplr from '@rango-dev/provider-keplr';
@@ -21,7 +21,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
-import * as okx from '@rango-dev/provider-okx';
+import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
 import * as ready from '@rango-dev/provider-ready';
@@ -116,9 +116,9 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
     coinbase,
     lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(exodus)),
+    exodus,
     lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(okx)),
+    okx,
     lazyProvider(legacyProviderImportsToVersionsInterface(tokenpocket)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
