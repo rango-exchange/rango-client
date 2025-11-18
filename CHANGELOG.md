@@ -1,3 +1,19 @@
+## Widget [0.48.0] (2025-11-18)
+_includes `@rango-dev/widget-embedded@0.53.0`_
+
+### Bug Fixes
+
+* validate evm address for safepal connect ([729d252](https://github.com/rango-exchange/rango-client/commit/729d252164dc15b2ba962ba13d79c10b87b48d6c))
+
+
+### Features
+
+* adding hubProvider to wallets-adapter ([5b97ed5](https://github.com/rango-exchange/rango-client/commit/5b97ed5159acd15d63926dbf9b7d5584f3cd1815))
+* migrate exodus to the hub ([ee42344](https://github.com/rango-exchange/rango-client/commit/ee4234473b50350e6e08f04a6943d40fd740ddcf))
+* migrate okx provider to the hub ([f4fefc8](https://github.com/rango-exchange/rango-client/commit/f4fefc808afd3a4e5a7582c976ca4caaff2b64a8))
+
+
+
 ## Widget [0.47.0] (2025-10-29)
 _includes `@rango-dev/widget-embedded@0.52.0`_
 
