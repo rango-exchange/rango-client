@@ -65,7 +65,15 @@ export async function deploySingleProjectToVercel(pkg) {
 
   const vercelResult = await execa(
     'vercel',
-    [pkg.location, '--prebuilt', '--token', VERCEL_TOKEN],
+    [
+      'deploy',
+      pkg.location,
+      '--prebuilt',
+      '--token',
+      VERCEL_TOKEN,
+      '--target',
+      deployTo,
+    ],
     { env }
   )
     .then((result) => result.stdout)
