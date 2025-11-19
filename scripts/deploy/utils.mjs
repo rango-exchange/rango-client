@@ -44,36 +44,36 @@ export async function deploySingleProjectToVercel(pkg) {
 
   console.log(`start deploying ${pkg.name} (environment: ${deployTo})...`);
 
-  await execa(
-    'vercel',
-    [
-      'pull',
-      '--cwd',
-      pkg.location,
-      '--environment',
-      deployTo,
-      '--token',
-      VERCEL_TOKEN,
-      '--yes',
-    ],
-    { env }
+  // Don't want to show the token in logs.
+  const vercelTokenArg = ['--token', VERCEL_TOKEN];
+  const vercelPullCliArgs = [
+    'pull',
+    '--cwd',
+    pkg.location,
+    '--environment',
+    deployTo,
+    '--yes',
+  ];
+  await execa('vercel', vercelPullCliArgs.concat(vercelTokenArg), { env });
+
+  console.log(
+    `vercel pulled project info for ${
+      pkg.name
+    } using 'vercel ${vercelPullCliArgs.join(' ')}'. `
   );
 
   const currentDir = dirname(fileURLToPath(import.meta.url));
   const configPath = join(currentDir, 'vercel.json');
   await makeOutputFolderForBuildOutputApi(pkg.location, configPath);
 
+  const vercelDeployCliArgs = ['deploy', pkg.location, '--prebuilt'];
+  if (deployTo === 'production') {
+    vercelDeployCliArgs.push('--prod', '--skip-domain');
+  }
+
   const vercelResult = await execa(
     'vercel',
-    [
-      'deploy',
-      pkg.location,
-      '--prebuilt',
-      '--token',
-      VERCEL_TOKEN,
-      '--target',
-      deployTo,
-    ],
+    vercelDeployCliArgs.concat(vercelTokenArg),
     { env }
   )
     .then((result) => result.stdout)
@@ -82,6 +82,12 @@ export async function deploySingleProjectToVercel(pkg) {
         `An error occurred on deploy ${pkg.name} package \n\n command: vercel ${pkg.location} --prebuilt \n\n message: \n ${err.message} \n\n stderr:\n ${err.stderr} \n\n stack: ${err.stack}`
       );
     });
+
+  console.log(
+    `vercel deployed ${
+      pkg.name
+    } artifacts using 'vercel ${vercelDeployCliArgs.join(' ')}'.`
+  );
 
   // Run tail -1 on the stdout to get the last line, because `vercel` command returns the URL in the last line.
   const urlPreview = await execa('tail', ['-1'], { input: vercelResult })
