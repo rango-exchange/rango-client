@@ -13,7 +13,12 @@ const changeAccountSubscriber = (
     WalletStandardSolanaInstance
   >()
     .getInstance(getInstance)
-    .validateEventPayload((accounts) => !!accounts.accounts?.length)
+    .onSwitchAccount((event, context) => {
+      if (!event.payload.accounts?.length) {
+        context.action('disconnect');
+        event.preventDefault();
+      }
+    })
     .format(async (_, event) =>
       utils.formatAccountsToCAIP(
         event.accounts!.map((account) => account.address)

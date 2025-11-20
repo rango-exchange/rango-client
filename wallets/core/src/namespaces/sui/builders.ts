@@ -59,15 +59,16 @@ export const changeAccountSubscriber = (
     ProviderAPI
   >()
     .getInstance(() => getInstanceOrThrow(params.name))
-    .validateEventPayload(
-      (event) =>
-        /*
-         * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
-         * A null value indicates no access to the account, requiring a disconnect and user reconnection.
-         */
-
-        event.accounts?.length !== 0
-    )
+    /*
+     * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
+     * A null value indicates no access to the account, requiring a disconnect and user reconnection.
+     */
+    .onSwitchAccount((event, context) => {
+      if (!event.payload.accounts?.length) {
+        context.action('disconnect');
+        event.preventDefault();
+      }
+    })
     .format(async (_, event) => formatAccountsToCAIP(event.accounts))
     .addEventListener((instance, callback) =>
       instance.features['standard:events'].on('change', callback)
