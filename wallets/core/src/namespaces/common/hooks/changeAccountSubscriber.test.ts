@@ -99,22 +99,26 @@ describe('check changeAccountSubscriber', () => {
     });
   });
 
-  test('calls disconnect if event is not valid', () => {
-    const { context, disconnectAction } = setupNamespace();
+  test('wont update accounts if preventDefault called', async () => {
+    const { context } = setupNamespace();
     const spiedAddEventListener = vi.fn(garbageAddEventListener);
-
+    const [getState, setState] = context.state();
+    setState('accounts', ['Initial State']);
     builder
       .getInstance(() => garbageProvider)
       .format(garbageFormatter)
       .addEventListener(spiedAddEventListener)
-      .validateEventPayload((event) => !event)
+      .onSwitchAccount((event) => {
+        event.preventDefault();
+      })
       .removeEventListener(garbageRemoveEventListener);
 
     const [subscriber] = builder.build();
 
-    expect(disconnectAction).toHaveBeenCalledTimes(0);
     subscriber(context);
-    expect(disconnectAction).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(getState('accounts')?.[0]).toBe('Initial State');
+    });
   });
 
   test('calls removeEventListener', () => {

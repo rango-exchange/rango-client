@@ -8,15 +8,29 @@ import {
 import {
   actions,
   builders,
-  hooks,
+  utils,
 } from '@rango-dev/wallets-core/namespaces/evm';
 
 import { WALLET_ID } from '../constants.js';
 import { evmOKX } from '../utils.js';
 
-const [changeAccountSubscriber, changeAccountCleanup] =
-  hooks.changeAccountSubscriber(evmOKX);
-
+const [changeAccountSubscriber, changeAccountCleanup] = builders
+  .changeAccountSubscriber(evmOKX)
+  /*
+   * Okx wallet may call the `changeAccount` event with `null` value
+   * but we shouldn't disconnect in this case.
+   */
+  .onSwitchAccount((event) => {
+    if (!event.payload.length) {
+      event.preventDefault();
+    }
+  })
+  .format(async (instance, event) => {
+    const chainId = await instance.request({ method: 'eth_chainId' });
+    // The wallet may emit a `null` value in its `sent` event.
+    return utils.formatAccountsToCAIP(event.filter(Boolean), chainId);
+  })
+  .build();
 const connect = builders
   .connect()
   .action(actions.connect(evmOKX))
