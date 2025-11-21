@@ -5,7 +5,7 @@ import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import * as bitget from '@rango-dev/provider-bitget';
-import * as braavos from '@rango-dev/provider-braavos';
+import { versions as braavos } from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
 import * as clover from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
@@ -125,7 +125,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
+    braavos,
     ledger,
     rabby,
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),

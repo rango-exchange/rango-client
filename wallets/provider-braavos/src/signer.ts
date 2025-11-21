@@ -1,12 +1,29 @@
+import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import { DefaultStarknetSigner } from '@rango-dev/signer-starknet';
-import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import {
+  dynamicImportWithRefinedError,
+  getNetworkInstance,
+} from '@rango-dev/wallets-shared';
+import { DefaultSignerFactory, TransactionType } from 'rango-types';
 
 export default async function getSigners(
-  provider: any
+  provider: Provider
 ): Promise<SignerFactory> {
   const signers = new DefaultSignerFactory();
-  signers.registerSigner(TxType.STARKNET, new DefaultStarknetSigner(provider));
+
+  const starknetProvider = getNetworkInstance(
+    provider,
+    LegacyNetworks.STARKNET
+  );
+
+  const { DefaultStarknetSigner } = await dynamicImportWithRefinedError(
+    async () => await import('@rango-dev/signer-starknet')
+  );
+  signers.registerSigner(
+    TransactionType.STARKNET,
+    new DefaultStarknetSigner(starknetProvider)
+  );
   return signers;
 }
