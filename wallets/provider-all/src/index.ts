@@ -7,7 +7,7 @@ import type { ProviderInterface } from '@rango-dev/wallets-react';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
-import * as clover from '@rango-dev/provider-clover';
+import { versions as clover } from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
@@ -110,7 +110,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
     lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
+    clover,
     safepal,
     lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
