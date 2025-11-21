@@ -31,6 +31,9 @@ export function mapCaipNamespaceToLegacyNetworkName(
   if (chainId.namespace === 'sui') {
     return chainId.reference.toUpperCase();
   }
+  if (chainId.namespace === 'starknet') {
+    return chainId.namespace.toUpperCase();
+  }
 
   return chainId.reference;
 }
