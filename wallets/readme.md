@@ -133,6 +133,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
+| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
@@ -153,6 +154,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
@@ -176,7 +178,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------- | ------------------------------------ |
 | Bitget         | Bitcoin,EVM,Tron,Solana,Cosmos,Aptos,Sui                                                                                | Bitcoin,Solana,Cosmos,Aptos,Sui                   | &check;              | https://web3.bitget.com/             |
 | Braavos        | Starknet                                                                                                                | -                                                 | &check;              | https://braavos.app/                 |
-| Brave          | EVM, Solana                                                                                                             | -                                                 | &check;              | https://brave.com/wallet/            |
 | Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge                                                                              | Polkadot,Kadena,Aptos,BTC,Doge                    | &check;              | https://wallet.clover.finance        |
 | Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
 | Cosmostation   | EVM,Cosmos,Aptos,Sui                                                                                                    | Aptos,Sui                                         | &check;              | https://cosmostation.io/             |
