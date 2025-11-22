@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tonconnect",
-  "version": "0.14.1-next.1",
+  "version": "0.15.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
