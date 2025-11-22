@@ -1,3 +1,7 @@
+## [0.40.1](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.40.0...wallets-react@0.40.1) (2025-11-22)
+
+
+
 # [0.38.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.37.0...wallets-react@0.38.0) (2025-10-29)
 
 
