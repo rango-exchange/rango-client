@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/starknet",
+  "type": "module",
+  "main": "../../dist/namespaces/starknet/mod.js",
+  "module": "../../dist/namespaces/starknet/mod.js",
+  "types": "../../dist/namespaces/starknet/mod.d.ts",
+  "sideEffects": false
+}

@@ -4,6 +4,7 @@ import type { LegacyState } from '../../legacy/mod.js';
 import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
+import type { StarknetActions } from '../../namespaces/starknet/types.js';
 import type { SuiActions } from '../../namespaces/sui/mod.js';
 import type { UtxoActions } from '../../namespaces/utxo/mod.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
@@ -32,6 +33,7 @@ export interface CommonNamespaces {
   cosmos: CosmosActions;
   sui: SuiActions;
   utxo: UtxoActions;
+  starknet: StarknetActions;
 }
 
 export type CommonNamespaceKeys = Prettify<keyof CommonNamespaces>;
