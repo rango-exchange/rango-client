@@ -29,7 +29,7 @@ import * as safe from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
 import * as solflare from '@rango-dev/provider-solflare';
-import * as taho from '@rango-dev/provider-taho';
+import { versions as taho } from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
@@ -126,7 +126,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
+    taho,
     lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
     ledger,
     rabby,
