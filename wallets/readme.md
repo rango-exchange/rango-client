@@ -134,6 +134,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
+| [Exodus](provider-enkrypt/readme.md)            | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
@@ -152,6 +153,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
+| Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
