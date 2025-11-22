@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.54.1-next.2",
+  "version": "0.55.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

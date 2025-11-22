@@ -41,7 +41,7 @@ export async function getGithubReleaseFor(pkg) {
  * @param {import('./typedefs.mjs').Package} pkg
  */
 export async function makeGithubRelease(pkg) {
-  const notes = '';
+  let notes = '';
   for await (let chunk of generateChangelog(pkg)) {
     notes += chunk;
   }

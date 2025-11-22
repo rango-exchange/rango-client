@@ -8,14 +8,28 @@ import {
 import {
   actions,
   builders,
-  hooks,
+  utils,
 } from '@rango-dev/wallets-core/namespaces/solana';
 
 import { WALLET_ID } from '../constants.js';
 import { solanaOKX } from '../utils.js';
 
-const [changeAccountSubscriber, changeAccountCleanup] =
-  hooks.changeAccountSubscriber(solanaOKX);
+const [changeAccountSubscriber, changeAccountCleanup] = builders
+  .changeAccountSubscriber(solanaOKX)
+  /*
+   * Okx wallet may call the `changeAccount` event with `null` value
+   * but we shouldn't disconnect in this case.
+   */
+  .onSwitchAccount((event) => {
+    if (!event.payload) {
+      event.preventDefault();
+    }
+  })
+  .format(async (_, event) => {
+    // The wallet may emit a `null` value in its `sent` event.
+    return utils.formatAccountsToCAIP(event ? [event] : []);
+  })
+  .build();
 
 const connect = builders
   .connect()

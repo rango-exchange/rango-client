@@ -1,16 +1,30 @@
 import type {
   Actions,
+  Context,
   SubscriberCleanUp,
 } from '../../../hub/namespaces/types.js';
 import type { Subscriber } from '../../../mod.js';
 import type { AutoImplementedActionsByRecommended } from '../types.js';
+
+type OnSwitchAccountEvent<EventType> = {
+  payload: EventType;
+  preventDefault: () => void;
+};
 
 export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
   #getInstance: (() => ProviderAPI) | null = null;
   #format:
     | ((instance: ProviderAPI, event: EventType) => Promise<string[]>)
     | null = null;
-  #validateEventPayload: ((event: EventType) => boolean) | null = null;
+  #onSwitchAccount:
+    | (<
+        ActionsType extends Actions<ActionsType> &
+          Actions<AutoImplementedActionsByRecommended>
+      >(
+        event: OnSwitchAccountEvent<EventType>,
+        context: Context<ActionsType>
+      ) => void)
+    | null = null;
 
   #addEventListener:
     | ((
@@ -55,17 +69,45 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
   }
 
   /**
-   * Sets the event payload validation function (optional).
+   * Set a handler that runs whenever a **switch-account** event occurs.
    *
-   * @param operator - Function that validates if an event payload is valid
-   * @returns The builder instance for method chaining
+   * The provided operator is called with:
+   * - `event`: An object containing:
+   *    - `payload`: The event payload associated with the account switch.
+   *    - `preventDefault`: A function that prevents the default switch-account
+   *       behavior (e.g., updating the active accounts list).
+   * - `context`: The execution context of the current flow or action.
+   *
+   * Calling `event.preventDefault()` inside the handler cancels the built-in
+   * account switching logic.
+   *
+   * @param operator - A function invoked on each switch-account event.
+   *   It receives `(event, context)` and can call `event.preventDefault()` to
+   *   stop the default behavior.
+   *
+   * @returns The builder instance for method chaining.
+   *
    * @example
-   * ```typescript
-   * builder.validateEventPayload(event => !!event)
+   * ```ts
+   * builder.onSwitchAccount((event, context) => {
+   *   if (!event.payload.userConfirmed) {
+   *     event.preventDefault(); // cancel default account switch
+   *   }
+   *
+   *   console.log("Switching account:", event.payload.accountId);
+   * });
    * ```
    */
-  public validateEventPayload(operator: (event: EventType) => boolean) {
-    this.#validateEventPayload = operator;
+  public onSwitchAccount(
+    operator: <
+      ActionsType extends Actions<ActionsType> &
+        Actions<AutoImplementedActionsByRecommended>
+    >(
+      event: OnSwitchAccountEvent<EventType>,
+      context: Context<ActionsType>
+    ) => void
+  ) {
+    this.#onSwitchAccount = operator;
     return this;
   }
 
@@ -139,7 +181,8 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
     const format = this.#format;
     const addEventListener = this.#addEventListener;
     const removeEventListener = this.#removeEventListener;
-    const validateEventPayload = this.#validateEventPayload;
+    const onSwitchAccount = this.#onSwitchAccount;
+
     let subscriber: (event: EventType) => void;
     let unsubscribe: (() => void) | void;
     return [
@@ -153,8 +196,18 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
           );
         }
         subscriber = async (event) => {
-          if (!!validateEventPayload && !validateEventPayload(event)) {
-            context.action('disconnect');
+          let shouldProceedWithDefault = true;
+
+          onSwitchAccount?.(
+            {
+              payload: event,
+              preventDefault: () => {
+                shouldProceedWithDefault = false;
+              },
+            },
+            context
+          );
+          if (!shouldProceedWithDefault) {
             return;
           }
           setState('accounts', await format(instance, event));
