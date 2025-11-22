@@ -24,7 +24,7 @@ import { versions as metamask } from '@rango-dev/provider-metamask';
 import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
-import * as ready from '@rango-dev/provider-ready';
+import { versions as ready } from '@rango-dev/provider-ready';
 import * as safe from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
@@ -104,7 +104,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
     lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
     phantom,
-    lazyProvider(legacyProviderImportsToVersionsInterface(ready)),
+    ready,
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
     lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
