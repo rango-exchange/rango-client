@@ -1,3 +1,7 @@
+## Widget [0.50.0] (2025-11-22)
+_includes `@rango-dev/widget-embedded@0.54.1`_
+
+
 ## Widget [0.49.0] (2025-11-22)
 _includes `@rango-dev/widget-embedded@0.54.0`_
 
