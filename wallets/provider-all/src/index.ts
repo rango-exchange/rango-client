@@ -12,7 +12,7 @@ import * as coin98 from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
-import * as enkrypt from '@rango-dev/provider-enkrypt';
+import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
@@ -109,7 +109,7 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
     lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
+    enkrypt,
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
     xverse,
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
