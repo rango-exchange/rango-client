@@ -132,7 +132,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 ## By Group
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
-| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
+| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- | --- |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
@@ -144,6 +144,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
+| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅  |
 
 ## By Feature
 
@@ -160,6 +161,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
+| GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
