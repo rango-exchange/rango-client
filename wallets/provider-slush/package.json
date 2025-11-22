@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-slush",
-  "version": "0.8.1-next.1",
+  "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
