@@ -1,3 +1,17 @@
+## Widget [0.49.0] (2025-11-22)
+_includes `@rango-dev/widget-embedded@0.54.0`_
+
+### Bug Fixes
+
+* resolve GitHub release changelog generation failure ([7e225a9](https://github.com/rango-exchange/rango-client/commit/7e225a91f6b007b23f38fae60435fa7e20559ee6))
+
+
+### Features
+
+* changed `validateEventPayload` to `onSwitchAccount` ([89fe9a8](https://github.com/rango-exchange/rango-client/commit/89fe9a83aef2132f4c67200da0c9cd9120661441))
+
+
+
 ## Widget [0.48.0] (2025-11-18)
 _includes `@rango-dev/widget-embedded@0.53.0`_
 
