@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.46.1-next.0",
+  "version": "0.47.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

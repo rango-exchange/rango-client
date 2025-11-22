@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-frontier",
-  "version": "0.54.1-next.0",
+  "version": "0.55.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
