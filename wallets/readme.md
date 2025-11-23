@@ -133,6 +133,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
+| [Clover](provider-clover/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
@@ -149,6 +150,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Clover       | ✅             | ✅             | ✅           | Injected                  | ⚠️            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
