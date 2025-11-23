@@ -1,6 +1,7 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { PendingSwapStep } from 'rango-types';
+
+import { type PendingSwapStep, TransactionType } from 'rango-types';
 
 import {
   getCurrentStep,
@@ -37,7 +38,11 @@ export function scheduleNextStep({
 
   if (!!currentStep && !isFailed) {
     if (isTxAlreadyCreated(swap, currentStep)) {
-      schedule(SwapActionTypes.EXECUTE_TRANSACTION);
+      if (currentStep.fromBlockchain === TransactionType.XRPL) {
+        schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+      } else {
+        schedule(SwapActionTypes.EXECUTE_TRANSACTION);
+      }
       return next();
     }
 
