@@ -49,11 +49,15 @@ The wallet supports UTXO-based networks, but they are **not implemented** in the
 ### Feature
 
 #### ⚠️ Disconnect
-After a dApp is disconnected, it **cannot reconnect automatically** unless the user also manually disconnects from the wallet itself.  
+The disconnect function will not work for this wallet, as it attempts to invoke disconnect on the connect method for private key imported wallets.
+If the user disconnects the dApp from the wallet itself, we won't disconnect ourself. But we will get disconnected after refreshing the page.
+If the user connects the wallet to one account, switches to another account, and then disconnects one of the two from the wallet, the dApp automatically switches to the remaining account that wasn’t disconnected.
+
+
 
 #### ⚠️ Switch Account
-Switching accounts from the wallet interface **is not reflected in the dApp**.  
-The previously connected account remains active until the user performs a **full disconnect and reconnect**.  
+If you switch accounts while still connected to the application, the `accountChanged` event will only emit for the last connected namespace. In result of that, the account for previously connected namespaces will not get updated and requires a disconnect and reconnect to properly connect to the desired account.
+Also, when you call connect on a previously connected namespace, it doesn't return the address of the new account the user switched to. To prevent the user from being stuck in such situation, we call `disconnect` on the wallet whenever user disconnects the wallet from the provider. This results in a limitation which is explained in the `Disconnect` section.
 
 
 ---
