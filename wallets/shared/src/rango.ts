@@ -75,6 +75,7 @@ export enum WalletTypes {
   SOLFLARE = 'solflare',
   SLUSH = 'slush',
   TON_CONNECT = 'tonconnect',
+  XVERSE = 'xverse',
 }
 
 export const namespaces: Record<
