@@ -41,6 +41,9 @@ const connect = builders
 
 const disconnect = commonBuilders
   .disconnect<EvmActions>()
+  .before(() => {
+    evmOKX().disconnect();
+  })
   .after(changeAccountCleanup)
   .build();
 
