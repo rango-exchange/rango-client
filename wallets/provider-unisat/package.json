@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.52.1-next.1",
+    "@rango-dev/wallets-core": "^0.53.0",
     "@rango-dev/wallets-shared": "^0.54.1",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.1.89"
