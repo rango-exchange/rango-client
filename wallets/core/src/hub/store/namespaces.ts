@@ -21,6 +21,8 @@ export interface NamespaceData {
   network: null | string;
   connected: boolean;
   connecting: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  connectArgs: Record<string, any> | null;
 }
 
 interface NamespaceInfo {
@@ -73,6 +75,7 @@ const namespacesStore: NamespaceStateCreator = (set, get) => ({
       network: null,
       connected: false,
       connecting: false,
+      connectArgs: null,
     };
 
     const item = {

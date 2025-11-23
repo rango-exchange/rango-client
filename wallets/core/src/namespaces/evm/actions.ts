@@ -17,7 +17,10 @@ export function connect(
   instance: () => ProviderAPI,
   options?: ConnectOptions
 ): FunctionWithContext<EvmActions['connect'], Context> {
-  return async (_context, chain) => {
+  return async (context, chain) => {
+    // Setting connect args to be used on other actions
+    const [, setState] = context.state();
+    setState('connectArgs', { chain });
     const evmInstance = instance();
 
     if (!evmInstance) {
