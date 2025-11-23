@@ -6,6 +6,7 @@ export function disconnect(context: Context): void {
   setState('accounts', null);
   setState('connected', false);
   setState('connecting', false);
+  setState('connectArgs', null);
 }
 
 export const recommended = [['disconnect', disconnect] as const];
