@@ -9,7 +9,7 @@ import {
 } from '@rango-dev/wallets-core/namespaces/utxo';
 
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<OkxBtcAddress, ProviderAPI>()
+  new ChangeAccountSubscriberBuilder<OkxBtcAddress, ProviderAPI, UtxoActions>()
     .getInstance(getInstance)
     /*
      * Okx wallet may call the `changeAccount` event with `null` value

@@ -11,16 +11,18 @@ type OnSwitchAccountEvent<EventType> = {
   preventDefault: () => void;
 };
 
-export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
+export class ChangeAccountSubscriberBuilder<
+  EventType,
+  ProviderAPI,
+  ActionsType extends Actions<ActionsType> &
+    Actions<AutoImplementedActionsByRecommended>
+> {
   #getInstance: (() => ProviderAPI) | null = null;
   #format:
     | ((instance: ProviderAPI, event: EventType) => Promise<string[]>)
     | null = null;
   #onSwitchAccount:
-    | (<
-        ActionsType extends Actions<ActionsType> &
-          Actions<AutoImplementedActionsByRecommended>
-      >(
+    | ((
         event: OnSwitchAccountEvent<EventType>,
         context: Context<ActionsType>
       ) => void)
@@ -99,10 +101,7 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
    * ```
    */
   public onSwitchAccount(
-    operator: <
-      ActionsType extends Actions<ActionsType> &
-        Actions<AutoImplementedActionsByRecommended>
-    >(
+    operator: (
       event: OnSwitchAccountEvent<EventType>,
       context: Context<ActionsType>
     ) => void
@@ -152,10 +151,7 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
     this.#removeEventListener = operator;
     return this;
   }
-  public build<
-    ActionsType extends Actions<ActionsType> &
-      Actions<AutoImplementedActionsByRecommended>
-  >(): [Subscriber<ActionsType>, SubscriberCleanUp<ActionsType>] {
+  public build(): [Subscriber<ActionsType>, SubscriberCleanUp<ActionsType>] {
     if (this.#getInstance === null) {
       throw new Error(this.#getErrorMessage('getInstance'));
     }
@@ -197,7 +193,6 @@ export class ChangeAccountSubscriberBuilder<EventType, ProviderAPI> {
         }
         subscriber = async (event) => {
           let shouldProceedWithDefault = true;
-
           onSwitchAccount?.(
             {
               payload: event,

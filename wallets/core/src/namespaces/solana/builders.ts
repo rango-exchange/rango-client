@@ -19,7 +19,7 @@ export const connect = () =>
 
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<string, ProviderAPI>()
+  new ChangeAccountSubscriberBuilder<string, ProviderAPI, SolanaActions>()
     .getInstance(getInstance)
     /*
      * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.
