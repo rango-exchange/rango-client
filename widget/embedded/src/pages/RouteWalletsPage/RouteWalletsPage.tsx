@@ -1,5 +1,5 @@
 import type { SupportedWalletsPropTypes } from './RouteWalletsPage.types';
-import type { ConfirmSwapFetchResult } from '../../hooks/useConfirmSwap/useConfirmSwap.types';
+import type { ConfirmSwapFetchResult } from '../../hooks/useHandleSwap/useHandleSwap.types';
 import type { Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
@@ -8,12 +8,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WalletList } from '../../components/ConfirmWalletsModal/WalletList';
-import { InsufficientBalanceModal } from '../../components/IsufficientBalanceModal/InsufficientBalanceModal';
+import { InsufficientBalanceModal } from '../../components/InsufficientBalanceModal';
 import { Layout } from '../../components/Layout';
 import { MoreWalletsToSelect } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect';
 import { ListContainer } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect.styles';
 import { navigationRoutes } from '../../constants/navigationRoutes';
-import { useHandleConfirmSwap } from '../../hooks/useHandleConfirmSwap';
+import { useConfirmSwap } from '../../hooks/useConfirmSwap';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
@@ -58,7 +58,7 @@ export function SupportedWallets(props: SupportedWalletsPropTypes) {
 }
 
 export function RouteWalletsPage() {
-  const { fromToken, selectedQuote } = useQuoteStore();
+  const { selectedQuote } = useQuoteStore();
   const routeWallets = useAppStore().selectedWallet('route');
   const { connectedWallets, setSelectedWallet, suggestRouteWallets } =
     useAppStore();
@@ -68,14 +68,14 @@ export function RouteWalletsPage() {
     confirmSwapResult,
     clear: resetConfirmSwapState,
     loading,
-  } = useHandleConfirmSwap();
+  } = useConfirmSwap();
   useState<ConfirmSwapFetchResult | null>(null);
   const [showRouteWalletsError, setShowRouteWalletsError] = useState(false);
   const [showMoreWalletsFor, setShowMoreWalletsFor] = useState<string | null>(
     null
   );
   const showBalanceWarningModal =
-    !!confirmSwapResult?.warnings?.balance?.messages.length;
+    !!confirmSwapResult?.warnings?.balance?.messages;
 
   useEffect(() => {
     suggestRouteWallets();
@@ -203,13 +203,10 @@ export function RouteWalletsPage() {
             </div>
           </Container>
           <InsufficientBalanceModal
-            tokenSymbol={fromToken?.symbol ?? ''}
             open={showBalanceWarningModal}
             onClose={resetConfirmSwapState}
             onConfirm={onConfirmBalanceWarning}
-            onChangeWallet={() => {
-              navigate('../' + navigationRoutes.sourceWallet);
-            }}
+            warnings={confirmSwapResult?.warnings?.balance?.messages}
           />
         </Layout>
       )}

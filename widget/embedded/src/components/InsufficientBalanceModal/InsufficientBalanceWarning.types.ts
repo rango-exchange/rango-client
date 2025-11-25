@@ -1,7 +1,6 @@
-import type { SelectedWallet } from '../../store/slices/wallets';
-
 export type Warning = {
-  selectedWallet: SelectedWallet & { image: string };
+  assetSymbol: string;
+  title: string;
   requiredBalance: string;
   userBalance: string;
 };

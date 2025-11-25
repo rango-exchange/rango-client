@@ -6,7 +6,7 @@ import { Divider, FullExpandedQuote, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 import { QuoteInfo } from '../../containers/QuoteInfo';
-import { getQuoteError } from '../../hooks/useConfirmSwap/useConfirmSwap.helpers';
+import { getQuoteError } from '../../hooks/useHandleSwap/useHandleSwap.helpers';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { QuoteErrorType, type SelectedQuote } from '../../types';

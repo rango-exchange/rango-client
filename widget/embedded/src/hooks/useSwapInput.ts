@@ -17,11 +17,11 @@ import { isRoutingEnabled } from '../utils/settings';
 import { createQuoteRequestBody } from '../utils/swap';
 import { areTokensEqual } from '../utils/wallets';
 
+import { useFetchAllQuotes } from './useFetchAllQuotes';
 import {
   handleQuoteErrors,
   throwErrorIfResponseIsNotValid,
-} from './useConfirmSwap/useConfirmSwap.helpers';
-import { useFetchAllQuotes } from './useFetchAllQuotes';
+} from './useHandleSwap/useHandleSwap.helpers';
 
 const DEBOUNCE_DELAY = 600;
 

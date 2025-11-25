@@ -1,5 +1,3 @@
-import type { ConfirmSwapFetchResult } from '../hooks/useConfirmSwap/useConfirmSwap.types';
-
 import { i18n } from '@lingui/core';
 import {
   Alert,
@@ -14,6 +12,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
+import { InsufficientBalanceModal } from '../components/InsufficientBalanceModal';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -61,7 +60,6 @@ export function ConfirmSwapPage() {
     selectedQuote,
     quoteWarningsConfirmed,
     confirmSwapData,
-    customDestination,
     setInputAmount,
   } = useQuoteStore();
   const { disabledLiquiditySources } = useAppStore();
@@ -71,23 +69,36 @@ export function ConfirmSwapPage() {
   const [isConfirming, setIsConfirming] = useState(false);
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const {
-    fetch: confirmSwap,
+    handleConfirmSwap,
+    confirmSwapResult,
     loading: fetchingConfirmationQuote,
     cancelFetch,
     addSwap,
+    clear: clearConfirmSwapState,
   } = useConfirmSwap();
-  const [confirmSwapResult, setConfirmSwapResult] =
-    useState<ConfirmSwapFetchResult>({
-      quoteData: confirmSwapData.quoteData,
-      error: null,
-      warnings: null,
-    });
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
-  const sourceWallet = useAppStore().selectedWallet('source');
-  const destinationWallet = useAppStore().selectedWallet('destination');
-  const selectedWalletsForConfirmation = sourceWallet
-    ? [sourceWallet].concat(destinationWallet ?? [])
-    : [];
+
+  useEffect(() => {
+    const disabledLiquiditySourceReset =
+      !!prevDisabledLiquiditySources.current.length &&
+      !disabledLiquiditySources.length;
+    if (disabledLiquiditySourceReset) {
+      void onRefresh();
+    }
+    prevDisabledLiquiditySources.current = disabledLiquiditySources;
+  }, [disabledLiquiditySources.length]);
+
+  useLayoutEffect(() => {
+    if (!selectedQuote?.requestId) {
+      navigate(`../${location.search}`);
+    }
+
+    return cancelFetch;
+  }, []);
+
+  if (!confirmSwapResult?.quoteData) {
+    return null;
+  }
 
   const addNewSwap = async () => {
     try {
@@ -125,36 +136,18 @@ export function ConfirmSwapPage() {
   };
 
   const onRefresh = async () => {
-    setConfirmSwapResult({
-      error: null,
-      quoteData: null,
-      warnings: null,
-    });
-
-    const res = await confirmSwap({
-      selectedWallets: selectedWalletsForConfirmation ?? [],
-      customDestination,
-    });
-    setConfirmSwapResult(res);
+    void handleConfirmSwap();
   };
 
-  useEffect(() => {
-    const disabledLiquiditySourceReset =
-      !!prevDisabledLiquiditySources.current.length &&
-      !disabledLiquiditySources.length;
-    if (disabledLiquiditySourceReset) {
-      void onRefresh();
-    }
-    prevDisabledLiquiditySources.current = disabledLiquiditySources;
-  }, [disabledLiquiditySources.length]);
-
-  useLayoutEffect(() => {
-    if (!selectedQuote?.requestId) {
-      navigate(`../${location.search}`);
-    }
-
-    return cancelFetch;
-  }, []);
+  const onConfirmBalanceWarning = async () => {
+    useQuoteStore.setState({
+      confirmSwapData: {
+        proceedAnyway: true,
+        quoteData: confirmSwapResult?.quoteData,
+      },
+    });
+    await addNewSwap();
+  };
 
   const quoteWarning = confirmSwapResult.warnings?.quote ?? null;
   const quoteError = confirmSwapResult.error;
@@ -221,6 +214,15 @@ export function ConfirmSwapPage() {
           </div>
         </Buttons>
       }>
+      <InsufficientBalanceModal
+        open={
+          !confirmSwapData.proceedAnyway &&
+          !!confirmSwapResult?.warnings?.balance?.messages
+        }
+        onClose={clearConfirmSwapState}
+        onConfirm={onConfirmBalanceWarning}
+        warnings={confirmSwapResult?.warnings?.balance?.messages}
+      />
       <PageContainer>
         <div className={descriptionStyles()}>
           <Typography variant="title" size="small">

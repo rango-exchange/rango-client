@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HeaderButtons } from '../components/HeaderButtons';
-import { InsufficientBalanceModal } from '../components/IsufficientBalanceModal/InsufficientBalanceModal';
+import { InsufficientBalanceModal } from '../components/InsufficientBalanceModal';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SameTokensWarning } from '../components/SameTokensWarning';
@@ -19,7 +19,7 @@ import { SLIPPAGES } from '../constants/swapSettings';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
-import { useHandleConfirmSwap } from '../hooks/useHandleConfirmSwap';
+import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
@@ -82,12 +82,11 @@ export function Home() {
     loading: fetchingConfirmationQuote,
     cancelFetch,
     clear: clearConfirmSwapState,
-  } = useHandleConfirmSwap();
+  } = useConfirmSwap();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const [showWalletAddressError, setShowWalletAddressError] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
-  const showBalanceWarning =
-    !!confirmSwapResult?.warnings?.balance?.messages.length;
+  const showBalanceWarning = !!confirmSwapResult?.warnings?.balance?.messages;
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
@@ -138,7 +137,9 @@ export function Home() {
   const showSlippageAlerts = showSwapMetrics && !!slippageValidation;
 
   const onClickRefresh =
-    (!!selectedQuote || quoteError) && !showQuoteWarningModal
+    (!!selectedQuote || quoteError) &&
+    !showQuoteWarningModal &&
+    !showBalanceWarning
       ? fetchQuote
       : undefined;
 
@@ -229,10 +230,10 @@ export function Home() {
   return (
     <MainContainer>
       <InsufficientBalanceModal
-        open={!!confirmSwapResult?.warnings?.balance?.messages.length}
-        tokenSymbol={fromToken?.symbol ?? ''}
+        open={showBalanceWarning}
         onClose={clearConfirmSwapState}
         onConfirm={onConfirmBalanceWarning}
+        warnings={confirmSwapResult?.warnings?.balance?.messages}
       />
       <WalletAddressErrorModal
         open={showWalletAddressError}
@@ -337,7 +338,7 @@ export function Home() {
                 onConfirmWarningModal={() => {
                   setShowQuoteWarningModal(false);
                   setQuoteWarningsConfirmed(true);
-                  onHandleNavigation(navigationRoutes.confirmSwap);
+                  void handleConfirmSwap();
                 }}
                 onChangeSettings={() =>
                   onHandleNavigation(navigationRoutes.settings)

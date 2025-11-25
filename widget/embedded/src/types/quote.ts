@@ -8,6 +8,7 @@ import type {
   RouteTag,
   RoutingResultType,
   SwapResult,
+  WalletRequiredAssets,
 } from 'rango-sdk';
 
 export enum QuoteErrorType {
@@ -98,7 +99,18 @@ export type QuoteWarning =
 
 export type ConfirmSwapWarnings = {
   quote: QuoteWarning | null;
-  balance: { messages: string[] } | null;
+  balance: {
+    messages: Record<
+      string,
+      {
+        reason: WalletRequiredAssets['reason'];
+        asset: Asset;
+        blockchain: string;
+        currentAmount: string;
+        requiredAmount: string;
+      }[]
+    > | null;
+  } | null;
 };
 
 export type QuoteResponse = {
