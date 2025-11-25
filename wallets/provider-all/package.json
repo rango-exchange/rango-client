@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.56.2-next.5",
+  "version": "0.56.2-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -29,7 +29,7 @@
     "@rango-dev/provider-coinbase": "^0.55.2-next.3",
     "@rango-dev/provider-cosmostation": "^0.54.2-next.3",
     "@rango-dev/provider-default": "^0.51.2-next.3",
-    "@rango-dev/provider-enkrypt": "^0.54.2-next.3",
+    "@rango-dev/provider-enkrypt": "^0.54.2-next.4",
     "@rango-dev/provider-exodus": "^0.55.2-next.3",
     "@rango-dev/provider-frontier": "^0.55.2-next.3",
     "@rango-dev/provider-halo": "^0.54.2-next.3",
