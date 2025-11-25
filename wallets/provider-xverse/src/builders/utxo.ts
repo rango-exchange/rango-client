@@ -11,7 +11,7 @@ import {
 import { XVERSE_ACCESS_DENIED_ERROR_CODE } from '../constants.js';
 
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<XVerseEvent, ProviderAPI>()
+  new ChangeAccountSubscriberBuilder<XVerseEvent, ProviderAPI, UtxoActions>()
     .getInstance(getInstance)
     /*
      * Xverse wallet may call the `changeAccount` event with `empty` value

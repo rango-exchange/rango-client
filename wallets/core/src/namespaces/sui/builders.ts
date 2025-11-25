@@ -56,7 +56,8 @@ export const changeAccountSubscriber = (
 ) =>
   new ChangeAccountSubscriberBuilder<
     { accounts: readonly WalletAccount[] },
-    ProviderAPI
+    ProviderAPI,
+    SuiActions
   >()
     .getInstance(() => getInstanceOrThrow(params.name))
     /*
