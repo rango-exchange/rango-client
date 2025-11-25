@@ -1,10 +1,4 @@
-import type {
-  ConfirmSwap,
-  ConfirmSwapFetchResult,
-} from '../hooks/useConfirmSwap/useConfirmSwap.types';
-
 import { i18n } from '@lingui/core';
-import { useManager } from '@rango-dev/queue-manager-react';
 import {
   Alert,
   Button,
@@ -13,13 +7,12 @@ import {
   IconButton,
   styled,
   Typography,
-  WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
+import { InsufficientBalanceModal } from '../components/InsufficientBalanceModal';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -65,65 +58,61 @@ export function ConfirmSwapPage() {
   //TODO: move component's logics to a custom hook
   const {
     selectedQuote,
-    setInputAmount,
-    selectedWallets,
-    quoteWalletsConfirmed,
-    customDestination,
     quoteWarningsConfirmed,
+    confirmSwapData,
+    setInputAmount,
   } = useQuoteStore();
+  const { disabledLiquiditySources } = useAppStore();
+  const { isActiveTab } = useUiStore();
   const navigate = useNavigate();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
-
-  const showWalletsOnInit = !quoteWalletsConfirmed;
-  const [showWallets, setShowWallets] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
-  const { isActiveTab } = useUiStore();
-  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
-  const { manager } = useManager();
   const {
-    fetch: confirmSwap,
+    handleConfirmSwap,
+    confirmSwapResult,
     loading: fetchingConfirmationQuote,
     cancelFetch,
+    addSwap,
+    clear: clearConfirmSwapState,
   } = useConfirmSwap();
-  const [confirmSwapResult, setConfirmSwapResult] =
-    useState<ConfirmSwapFetchResult>({
-      swap: null,
-      error: null,
-      warnings: null,
-    });
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
 
-  const onConfirmSwap: ConfirmSwap['fetch'] = async ({
-    selectedWallets,
-    customDestination,
-  }) => {
-    const result = await confirmSwap?.({ selectedWallets, customDestination });
+  useEffect(() => {
+    const disabledLiquiditySourceReset =
+      !!prevDisabledLiquiditySources.current.length &&
+      !disabledLiquiditySources.length;
+    if (disabledLiquiditySourceReset) {
+      void onRefresh();
+    }
+    prevDisabledLiquiditySources.current = disabledLiquiditySources;
+  }, [disabledLiquiditySources.length]);
 
-    setConfirmSwapResult(result);
-    return result;
-  };
+  useLayoutEffect(() => {
+    if (!selectedQuote?.requestId) {
+      navigate(`../${location.search}`);
+    }
+
+    return cancelFetch;
+  }, []);
+
+  if (!confirmSwapResult?.quoteData) {
+    return null;
+  }
 
   const addNewSwap = async () => {
-    if (confirmSwapResult.swap && quoteWalletsConfirmed) {
-      try {
-        await manager?.create(
-          'swap',
-          { swapDetails: confirmSwapResult.swap },
-          { id: confirmSwapResult.swap.requestId }
-        );
-
-        const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.swap.requestId}`;
-        navigate(swap_url, {
-          replace: true,
-        });
-        setTimeout(() => {
-          setInputAmount('');
-        }, 0);
-      } catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setDbErrorMessage('Error: ' + (e as any)?.message);
-      }
+    try {
+      await addSwap(confirmSwapResult.quoteData);
+      const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.quoteData?.requestId}`;
+      navigate(swap_url, {
+        replace: true,
+      });
+      setTimeout(() => {
+        setInputAmount('');
+      }, 0);
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setDbErrorMessage('Error: ' + (e as any)?.message);
     }
   };
 
@@ -147,53 +136,18 @@ export function ConfirmSwapPage() {
   };
 
   const onRefresh = async () => {
-    setConfirmSwapResult({
-      error: null,
-      swap: null,
-      warnings: null,
-    });
-    confirmSwap({ selectedWallets, customDestination })
-      .then((res) => {
-        setConfirmSwapResult(res);
-      })
-      .catch((error) => console.error(error));
+    void handleConfirmSwap();
   };
 
-  useEffect(() => {
-    const disabledLiquiditySourceReset =
-      !!prevDisabledLiquiditySources.current.length &&
-      !disabledLiquiditySources.length;
-    if (disabledLiquiditySourceReset) {
-      void onRefresh();
-    }
-    prevDisabledLiquiditySources.current = disabledLiquiditySources;
-  }, [disabledLiquiditySources.length]);
-
-  useEffect(() => {
-    if (showWalletsOnInit) {
-      cancelFetch();
-    }
-  }, [showWalletsOnInit]);
-
-  useEffect(() => {
-    if (showWalletsOnInit) {
-      setShowWallets(showWalletsOnInit);
-    }
-  }, [showWalletsOnInit]);
-
-  useEffect(() => {
-    if (!showWalletsOnInit) {
-      confirmSwap({ selectedWallets, customDestination })
-        .then((result) => setConfirmSwapResult(result))
-        .catch((error) => console.error(error));
-    }
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!selectedQuote?.requestId) {
-      navigate(`../${location.search}`);
-    }
-  }, [selectedQuote?.requestId]);
+  const onConfirmBalanceWarning = async () => {
+    useQuoteStore.setState({
+      confirmSwapData: {
+        proceedAnyway: true,
+        quoteData: confirmSwapResult?.quoteData,
+      },
+    });
+    await addNewSwap();
+  };
 
   const quoteWarning = confirmSwapResult.warnings?.quote ?? null;
   const quoteError = confirmSwapResult.error;
@@ -258,28 +212,17 @@ export function ConfirmSwapPage() {
               {i18n.t('Start Swap')}
             </Button>
           </div>
-          <IconButton
-            id="widget-confirm-swap-wallet-icon-btn"
-            variant="contained"
-            type="primary"
-            size="large"
-            loading={fetchingConfirmationQuote || isConfirming}
-            disabled={!isActiveTab}
-            onClick={setShowWallets.bind(null, true)}>
-            <WalletIcon size={24} />
-          </IconButton>
         </Buttons>
       }>
-      {showWallets && (
-        <ConfirmWalletsModal
-          open={showWallets}
-          onClose={() => setShowWallets(false)}
-          onCancel={cancelFetch}
-          loading={fetchingConfirmationQuote}
-          onCheckBalance={onConfirmSwap}
-        />
-      )}
-
+      <InsufficientBalanceModal
+        open={
+          !confirmSwapData.proceedAnyway &&
+          !!confirmSwapResult?.warnings?.balance?.messages
+        }
+        onClose={clearConfirmSwapState}
+        onConfirm={onConfirmBalanceWarning}
+        warnings={confirmSwapResult?.warnings?.balance?.messages}
+      />
       <PageContainer>
         <div className={descriptionStyles()}>
           <Typography variant="title" size="small">
@@ -288,9 +231,7 @@ export function ConfirmSwapPage() {
           <div className={iconStyles()}>
             <RefreshButton
               onClick={
-                !fetchingConfirmationQuote &&
-                !showWallets &&
-                !showQuoteWarningModal
+                !fetchingConfirmationQuote && !showQuoteWarningModal
                   ? onRefresh
                   : undefined
               }
