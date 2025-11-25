@@ -66,7 +66,10 @@ export type ProviderContext = {
   providers(): Providers;
   getSigners(type: WalletType): Promise<SignerFactory>;
   getWalletInfo(type: WalletType): ExtendedWalletInfo;
-  suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
+  suggestAndConnect(
+    type: WalletType,
+    namespace: LegacyNamespaceInputForConnect
+  ): Promise<ConnectResult>;
   hubProvider(type: WalletType): Provider;
 };
 
