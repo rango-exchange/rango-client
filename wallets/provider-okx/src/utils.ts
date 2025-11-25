@@ -1,6 +1,7 @@
-import type { Provider } from './types.js';
+import type { OkxBtcAddress, Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
+import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
@@ -16,7 +17,9 @@ export function okx(): Provider | null {
   if (okxwallet.solana) {
     instances.set(LegacyNetworks.SOLANA, okxwallet.solana);
   }
-
+  if (okxwallet.bitcoin) {
+    instances.set(LegacyNetworks.BTC, okxwallet.bitcoin);
+  }
   return instances;
 }
 
@@ -55,4 +58,26 @@ export function solanaOKX(): SolanaProviderApi {
   }
 
   return solanaInstance as SolanaProviderApi;
+}
+export function bitcoinOKX(): UtxoProviderApi {
+  const instance = okx();
+  const bitcoinInstance = instance?.get(LegacyNetworks.BTC);
+
+  if (!bitcoinInstance) {
+    throw new Error(
+      'OKX Wallet not injected or Utxo not enabled. Please check your wallet.'
+    );
+  }
+
+  return bitcoinInstance as UtxoProviderApi;
+}
+export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
+  const instance = bitcoinOKX();
+  const requestResult = await instance.connect();
+
+  if (requestResult.error?.message) {
+    throw new Error(requestResult.error.message);
+  }
+
+  return requestResult;
 }
