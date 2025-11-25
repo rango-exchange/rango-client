@@ -138,7 +138,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
-| [OKX](provider-okx/readme.md)                   | ⚠️  | 🚧   | ✅     | 🚧     | 🚧  | 🚧  |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧     | 🚧  | 🚧  |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
