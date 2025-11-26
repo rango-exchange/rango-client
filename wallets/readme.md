@@ -144,7 +144,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  |
-| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
+| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
 
@@ -164,6 +164,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| Token Pocket | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 
