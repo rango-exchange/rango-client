@@ -143,6 +143,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
+| [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | 🚧  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
@@ -162,8 +163,9 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
-| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
+| Solflare     | ⚠️             | ❌             | ✅           | Injected                  | ✅            |
 | Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 
