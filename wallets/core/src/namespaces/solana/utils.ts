@@ -13,7 +13,7 @@ export async function getAccounts(provider: ProviderAPI) {
    * Fallback for wallets like Coinbase that return no response on connect.
    * If solanaResponse is undefined, use the provider's publicKey directly.
    */
-  const account = solanaResponse
+  const account = solanaResponse?.publicKey
     ? solanaResponse.publicKey.toString()
     : provider.publicKey.toString();
   return {
