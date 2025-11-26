@@ -30,7 +30,7 @@ import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
 import * as solflare from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
-import * as tokenpocket from '@rango-dev/provider-tokenpocket';
+import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
@@ -121,7 +121,7 @@ export const allProviders = (
     exodus,
     lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
     okx,
-    lazyProvider(legacyProviderImportsToVersionsInterface(tokenpocket)),
+    tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),

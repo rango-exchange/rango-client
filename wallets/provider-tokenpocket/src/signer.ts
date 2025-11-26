@@ -1,4 +1,4 @@
-import type { LegacyNetworkProviderMap } from '@rango-dev/wallets-core/legacy';
+import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import {
@@ -6,16 +6,19 @@ import {
   getNetworkInstance,
   Networks,
 } from '@rango-dev/wallets-shared';
-import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+import { DefaultSignerFactory, TransactionType } from 'rango-types';
 
 export default async function getSigners(
-  provider: LegacyNetworkProviderMap
+  provider: Provider
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
     async () => await import('@rango-dev/signer-evm')
   );
-  signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
+  signers.registerSigner(
+    TransactionType.EVM,
+    new DefaultEvmSigner(ethProvider)
+  );
   return signers;
 }

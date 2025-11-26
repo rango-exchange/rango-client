@@ -26,6 +26,7 @@ declare global {
     starknet_argentX?: any;
     starknet_braavos?: any;
     tronLink?: any;
+    tokenpocket?: any;
     kucoin?: any;
     leap?: any;
     frontier?: any;
