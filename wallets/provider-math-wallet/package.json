@@ -3,25 +3,24 @@
   "version": "0.55.2-next.3",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-math-wallet --splitting",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-math-wallet --splitting --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@cosmjs/stargate": "^0.31.0",
     "@rango-dev/signer-evm": "^0.40.0",
     "@rango-dev/signer-solana": "^0.46.1",
     "@rango-dev/wallets-core": "^0.53.1-next.2",
