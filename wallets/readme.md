@@ -134,9 +134,10 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [Exodus](provider-enkrypt/readme.md)            | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
+| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
+| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
 | [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧     | 🚧  | 🚧  |
@@ -156,6 +157,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
 | Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
+| MathWallet   | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | OKX          | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
@@ -183,7 +185,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Halo           | -                                                                                                                       | -                                                 | &cross;              | https://halo.social/                 |
 | Keplr          | Cosmos                                                                                                                  | -                                                 | &cross;              | https://www.keplr.app/               |
 | Leap Cosmos    | Cosmos                                                                                                                  | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
-| Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                                                                               | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
 | Ready          | Starknet                                                                                                                | -                                                 | &check;              | https://www.ready.co/                |
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare       | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com                 |

@@ -19,7 +19,7 @@ import * as halo from '@rango-dev/provider-halo';
 import * as keplr from '@rango-dev/provider-keplr';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
-import * as mathwallet from '@rango-dev/provider-math-wallet';
+import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
 import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
@@ -119,7 +119,7 @@ export const allProviders = (
     coinbase,
     lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
     exodus,
-    lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
+    mathwallet,
     okx,
     tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
