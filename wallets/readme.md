@@ -137,6 +137,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Exodus](provider-enkrypt/readme.md)            | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
 | [Keplr](provider-keplr/readme.md)               | 🚧  | ❌   | ❌     | ✅     | ❌  | ❌  |
+| [Leap](provider-leap-cosmos/readme.md)          | 🚧  | ❌   | 🚧     | ✅     | ❌  | 🚧  |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
