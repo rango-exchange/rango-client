@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.56.2-next.6",
+  "version": "0.56.2-next.7",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -47,7 +47,7 @@
     "@rango-dev/provider-slush": "^0.10.2-next.3",
     "@rango-dev/provider-solflare": "^0.21.2-next.3",
     "@rango-dev/provider-taho": "^0.54.2-next.4",
-    "@rango-dev/provider-tokenpocket": "^0.54.2-next.3",
+    "@rango-dev/provider-tokenpocket": "^0.54.2-next.4",
     "@rango-dev/provider-tomo": "^0.21.2-next.3",
     "@rango-dev/provider-tonconnect": "^0.16.2-next.3",
     "@rango-dev/provider-trezor": "^0.21.2-next.3",
