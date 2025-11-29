@@ -5,6 +5,7 @@ declare global {
     // Some dependencies can override global environments, so maybe we needed to make some changes to make them compatible.
     // This should be optional to `provider-solfare` can be compiled. see: `@solflare-wallet/metamask-sdk/lib/cjs/types.d.ts(74,18)`
     ethereum?: any;
+    braveEthereum?: any;
     braveSolana?: any;
     BinanceChain?: any;
     clover?: any;
