@@ -146,6 +146,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |
+| [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅  |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |
 
@@ -166,6 +167,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| TronLink     | ✅             | ❌             | ✅           | Injected                  | ❌            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 
@@ -194,6 +196,5 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TokenPocket    | EVM                                                                                                                     | -                                                 | &check;              | https://extension.tokenpocket.pro/#/ |
 | Tomo           | EVM,Cosmos,BTC                                                                                                          | Cosmos,BTC                                        | &check;              | https://tomo.inc/                    |
 | Trezor         | Ethereum,Solana                                                                                                         | Solana                                            | &cross;              | https://trezor.io/                   |
-| TronLink       | Tron                                                                                                                    | -                                                 | &cross;              | -                                    |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |
