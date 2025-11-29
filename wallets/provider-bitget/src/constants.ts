@@ -1,7 +1,9 @@
 import { type ProviderMetadata } from '@rango-dev/wallets-core';
+import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
   type BlockchainMeta,
   evmBlockchains,
+  type TransferBlockchainMeta,
   tronBlockchain,
 } from 'rango-types';
 
@@ -39,6 +41,16 @@ export const metadata: ProviderMetadata = {
             id: 'TRON',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               tronBlockchain(allBlockchains),
+          },
+          {
+            label: 'BTC',
+            value: 'UTXO',
+            id: 'BTC',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is TransferBlockchainMeta =>
+                  chain.name === LegacyNetworks.BTC
+              ),
           },
         ],
       },

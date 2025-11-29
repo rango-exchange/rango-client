@@ -133,7 +133,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- |
-| [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅  | ❌  |
+| [Bitget](provider-bitget/readme.md)             | ✅  | ✅   | 🚧     | ❌     | ❌  | ✅  | ❌  |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
 | [Exodus](provider-enkrypt/readme.md)            | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |
