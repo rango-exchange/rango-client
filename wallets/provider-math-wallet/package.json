@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-math-wallet",
-  "version": "0.55.2-next.3",
+  "version": "0.55.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
