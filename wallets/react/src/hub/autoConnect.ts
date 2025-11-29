@@ -5,11 +5,16 @@ import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type {
+  Accounts,
+  AccountsWithActiveChain,
+  Namespace,
+} from '@rango-dev/wallets-core/namespaces/common';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { Provider } from '@rango-dev/wallets-core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
+import { cosmosBlockchains } from 'rango-types';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
@@ -18,6 +23,7 @@ import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
   convertNamespaceNetworkToEvmChainId,
+  isCosmosNamespace,
   isEvmNamespace,
 } from './utils.js';
 
@@ -75,10 +81,32 @@ async function eagerConnect(
       const chain = evmChain || info.network;
 
       return async () => {
-        const connectNamespacePromise = isEvmNamespace(namespace)
-          ? namespace.connect(chain)
-          : namespace.connect();
-        return await connectNamespacePromise.catch((e) => {
+        let connectNamespacePromise: () => Promise<
+          Accounts | AccountsWithActiveChain
+        >;
+        if (isEvmNamespace(namespace)) {
+          connectNamespacePromise = async () => namespace.connect(chain);
+        } else if (isCosmosNamespace(namespace)) {
+          const cosmosBlockChains = cosmosBlockchains(
+            params.allBlockChains || []
+          ).filter((chain) => !!chain.chainId);
+          connectNamespacePromise = async () => {
+            return namespace.connect({
+              chainIds: cosmosBlockChains
+                .filter((chain) => chain.info && !chain.info.experimental)
+                ?.map((chain) => chain.chainId!),
+              customChainIds: cosmosBlockChains
+                .filter((chain) => chain.info?.experimental)
+                .map((chain) => chain.chainId!),
+            });
+          };
+        } else {
+          connectNamespacePromise = async () => namespace.connect();
+        }
+        try {
+          await connectNamespacePromise();
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (e: any) {
           /*
            * Since we check for connect failures using `instanceof Error`
            * this check is added here to make sure the thrown error always is an instance of `Error`
@@ -87,7 +115,7 @@ async function eagerConnect(
             throw e;
           }
           throw new Error(e);
-        });
+        }
       };
     }
   );
