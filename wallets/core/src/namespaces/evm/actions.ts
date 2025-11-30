@@ -1,4 +1,9 @@
-import type { ConnectOptions, EvmActions, ProviderAPI } from './types.js';
+import type {
+  ConnectOptions,
+  EvmActions,
+  ProviderAccounts,
+  ProviderAPI,
+} from './types.js';
 import type { Context } from '../../hub/namespaces/mod.js';
 import type { CanEagerConnect } from '../../hub/namespaces/types.js';
 import type { FunctionWithContext } from '../../types/actions.js';
@@ -43,7 +48,17 @@ export function connect(
       }
     }
 
-    const providerAccounts = await getAccounts(evmInstance);
+    let providerAccounts: ProviderAccounts;
+    /*
+     * The `getAccounts` function can be optionally provided through `options`
+     * to handle getting address and chainId of the specific wallet provider.
+     * This approach is necessary because not all providers follow the same conventions.
+     */
+    if (options?.getAccounts) {
+      providerAccounts = await options.getAccounts(evmInstance);
+    } else {
+      providerAccounts = await getAccounts(evmInstance);
+    }
 
     /*
      * Ensure that the provider returns at least one valid account before proceeding.
