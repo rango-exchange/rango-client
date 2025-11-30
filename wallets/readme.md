@@ -131,29 +131,33 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 ## By Group
 
-| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | SUI |
-| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | --- |
-| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
-| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  |
-| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  |
-| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  |
-| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ✅  |
-| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧     | 🚧  | 🚧  |
-| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  |
-| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ✅  |
-| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  |
-| [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  |
-| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | 🚧  |
-| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
-| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  |
+
+| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI |
+| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- |
+| [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅  | ❌  |
+| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |
+| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
+| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ❌  | ✅  |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |
+| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |
+| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅  |
+| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |
+| [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |
+| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌  | 🚧  |
+| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |
+| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |
+| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |
 
 ## By Feature
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
