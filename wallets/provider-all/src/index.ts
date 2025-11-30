@@ -4,7 +4,7 @@ import type { Environments as WalletConnectEnvironments } from '@rango-dev/provi
 import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
-import * as bitget from '@rango-dev/provider-bitget';
+import { versions as bitget } from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
 import * as clover from '@rango-dev/provider-clover';
@@ -108,8 +108,8 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(ready)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
-    lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
     enkrypt,
+    bitget,
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
     xverse,
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
