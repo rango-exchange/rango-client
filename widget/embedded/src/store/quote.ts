@@ -1,6 +1,7 @@
 import type { TokenData } from '../components/TokenList/TokenList.types';
 import type {
   BlockchainMeta,
+  ConfirmRouteResponse,
   MetaResponse,
   MultiRouteResponse,
   PreferenceType,
@@ -69,7 +70,6 @@ export interface QuoteState {
   fromToken: TokenData | null;
   sortStrategy: PreferenceType;
   toToken: TokenData | null;
-  quoteWalletsConfirmed: boolean;
   selectedWallets: Wallet[];
   quoteWarningsConfirmed: boolean;
   refetchQuote: boolean;
@@ -78,6 +78,10 @@ export interface QuoteState {
   customDestination: string | null;
   error: QuoteError | null;
   warning: QuoteWarning | null;
+  confirmSwapData: {
+    proceedAnyway: boolean;
+    quoteData: ConfirmRouteResponse['result'] | null;
+  };
   resetQuote: () => void;
   resetAlerts: () => void;
 
@@ -96,7 +100,6 @@ export interface QuoteState {
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: () => void;
-  setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
   setCustomDestination: (address: string | null) => void;
   resetQuoteWallets: () => void;
@@ -120,7 +123,10 @@ export const useQuoteStore = createSelectors(
       quotes: null,
       error: null,
       warning: null,
-      quoteWalletsConfirmed: false,
+      confirmSwapData: {
+        proceedAnyway: false,
+        quoteData: null,
+      },
       selectedWallets: [],
       customDestination: null,
       quoteWarningsConfirmed: false,
@@ -305,15 +311,10 @@ export const useQuoteStore = createSelectors(
           outputUsdValue: new BigNumber(0),
           selectedQuote: null,
         })),
-      setQuoteWalletConfirmed: (flag) =>
-        set({
-          quoteWalletsConfirmed: flag,
-        }),
       setSelectedWallets: (wallets) => set({ selectedWallets: wallets }),
       setCustomDestination: (address) => set({ customDestination: address }),
       resetQuoteWallets: () =>
         set({
-          quoteWalletsConfirmed: false,
           selectedWallets: [],
         }),
       setQuoteWarningsConfirmed: (flag) =>

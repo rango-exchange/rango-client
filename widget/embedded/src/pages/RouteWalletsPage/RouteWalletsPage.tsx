@@ -1,4 +1,5 @@
 import type { SupportedWalletsPropTypes } from './RouteWalletsPage.types';
+import type { ConfirmSwapFetchResult } from '../../hooks/useHandleSwap/useHandleSwap.types';
 import type { Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
@@ -7,15 +8,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WalletList } from '../../components/ConfirmWalletsModal/WalletList';
+import { InsufficientBalanceModal } from '../../components/InsufficientBalanceModal';
 import { Layout } from '../../components/Layout';
 import { MoreWalletsToSelect } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect';
 import { ListContainer } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect.styles';
 import { navigationRoutes } from '../../constants/navigationRoutes';
+import { useConfirmSwap } from '../../hooks/useConfirmSwap';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { getQuoteChains } from '../../utils/wallets';
 
+import { getRouteBlockchains } from './RouteWalletsPage.helpers';
 import { Container, Title } from './RouteWalletsPage.styles';
 
 const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
@@ -57,14 +60,22 @@ export function SupportedWallets(props: SupportedWalletsPropTypes) {
 export function RouteWalletsPage() {
   const { selectedQuote } = useQuoteStore();
   const routeWallets = useAppStore().selectedWallet('route');
-  console.log({ routeWallets });
   const { connectedWallets, setSelectedWallet, suggestRouteWallets } =
     useAppStore();
   const navigate = useNavigate();
+  const {
+    handleConfirmSwap,
+    confirmSwapResult,
+    clear: resetConfirmSwapState,
+    loading,
+  } = useConfirmSwap();
+  useState<ConfirmSwapFetchResult | null>(null);
   const [showRouteWalletsError, setShowRouteWalletsError] = useState(false);
   const [showMoreWalletsFor, setShowMoreWalletsFor] = useState<string | null>(
     null
   );
+  const showBalanceWarningModal =
+    !!confirmSwapResult?.warnings?.balance?.messages;
 
   useEffect(() => {
     suggestRouteWallets();
@@ -80,11 +91,7 @@ export function RouteWalletsPage() {
     return null;
   }
 
-  const requiredBlockchains = getQuoteChains({
-    quote: selectedQuote,
-    filter: 'required',
-  });
-
+  const requiredBlockchains = getRouteBlockchains(selectedQuote);
   const isSelected = (walletType: string, blockchain: string) => {
     const wallet = routeWallets?.[blockchain];
     return !!wallet && wallet.walletType === walletType;
@@ -108,6 +115,23 @@ export function RouteWalletsPage() {
     }
   };
 
+  const navigateToConfirmSwapPage = () =>
+    navigate('../' + navigationRoutes.confirmSwap, {
+      replace: true,
+    });
+
+  const onConfirmBalanceWarning = () => {
+    if (confirmSwapResult?.quoteData) {
+      useQuoteStore.setState({
+        confirmSwapData: {
+          proceedAnyway: true,
+          quoteData: confirmSwapResult.quoteData,
+        },
+      });
+      navigateToConfirmSwapPage();
+    }
+  };
+
   const handleConfirmWallets = () => {
     const everyRequiredWalletsSelected = !requiredBlockchains.some(
       (blockchain) => !routeWallets?.[blockchain]
@@ -117,7 +141,8 @@ export function RouteWalletsPage() {
       setShowRouteWalletsError(true);
       return;
     }
-    navigate('../' + navigationRoutes.confirmSwap);
+
+    void handleConfirmSwap();
   };
 
   return (
@@ -136,6 +161,7 @@ export function RouteWalletsPage() {
           footer={
             <Button
               id="widget-route-wallets-page-confirm-btn"
+              loading={loading}
               onClick={handleConfirmWallets}
               variant="contained"
               type="primary"
@@ -176,6 +202,12 @@ export function RouteWalletsPage() {
               ))}
             </div>
           </Container>
+          <InsufficientBalanceModal
+            open={showBalanceWarningModal}
+            onClose={resetConfirmSwapState}
+            onConfirm={onConfirmBalanceWarning}
+            warnings={confirmSwapResult?.warnings?.balance?.messages}
+          />
         </Layout>
       )}
     </>
