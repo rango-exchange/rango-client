@@ -1,6 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
@@ -18,6 +19,9 @@ export function bitget(): Provider | null {
 
   if (bitkeep.tronLink) {
     instances.set(LegacyNetworks.TRON, bitkeep.tronLink);
+  }
+  if (bitkeep.unisat) {
+    instances.set(LegacyNetworks.BTC, bitkeep.unisat);
   }
 
   if (instances.size === 0) {
@@ -62,4 +66,16 @@ export function tronBitget(): TronProviderApi {
   }
 
   return tronInstance;
+}
+export function utxoBitget(): UtxoProviderApi {
+  const instance = bitget();
+  const utxoInstance = instance?.get(LegacyNetworks.BTC);
+
+  if (!utxoInstance) {
+    throw new Error(
+      'Bitget not injected or BTC not enabled. Please check your wallet.'
+    );
+  }
+
+  return utxoInstance;
 }
