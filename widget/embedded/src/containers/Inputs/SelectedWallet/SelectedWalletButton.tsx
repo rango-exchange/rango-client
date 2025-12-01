@@ -14,6 +14,8 @@ const WALLET_ADDRESS_ELLIPSIS_LENGTH = 4;
 export function SelectedWalletButton(props: PropTypes) {
   const { onClickWallet, relatedWallet } = props;
   const { t } = useTranslation();
+  const address = relatedWallet?.address;
+  const image = relatedWallet?.image;
 
   return (
     <WalletButton onClick={onClickWallet} variant="contained">
@@ -22,13 +24,17 @@ export function SelectedWalletButton(props: PropTypes) {
           {t('Connect Wallet')}
         </Typography>
       )}
-      {relatedWallet && (
+      {address && (
         <div className="flex">
-          <Image size={16} src={relatedWallet.image} />
-          <Divider direction="horizontal" size={4} />
+          {image && (
+            <>
+              <Image size={16} src={image} />
+              <Divider direction="horizontal" size={4} />
+            </>
+          )}
           <Typography variant="body" size="small" color="neutral800">
             {getConciseAddress(
-              relatedWallet.address,
+              address,
               WALLET_ADDRESS_MAX_CHARS,
               WALLET_ADDRESS_ELLIPSIS_LENGTH
             )}

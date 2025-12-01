@@ -295,3 +295,8 @@ export function filterBlockchainsWithAtLeastOneToken(
     blockchainsWithAtLeastOneToken.has(blockchain.name)
   );
 }
+
+export function isBrowserSupportClipboardPaste() {
+  const isFirefox = navigator?.userAgent.includes('Firefox');
+  return !isFirefox;
+}
