@@ -6,6 +6,6 @@ export type PropTypes = {
   isSelected: (walletType: string, chain: string) => boolean;
   selectWallet: (wallet: Wallet) => void;
   limit?: number;
-  onShowMore: () => void;
+  onShowMore?: () => void;
   onConnect?: (walletType: string) => void;
 };

@@ -2,6 +2,7 @@ import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import { Image } from '../common/index.js';
+import { Divider } from '../Divider/Divider.js';
 import { Typography } from '../Typography/index.js';
 
 import {
@@ -46,6 +47,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
           {title}
         </Title>
 
+        <Divider size={8} />
         <Typography
           variant="body"
           size="xsmall"
