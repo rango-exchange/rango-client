@@ -15,6 +15,7 @@ import { RoutesPage } from '../pages/Routes';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemPage/index';
 import { SettingsPage } from '../pages/SettingsPage';
+import { SourceWalletPage } from '../pages/SourceWalletPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 
@@ -36,6 +37,10 @@ export function AppRoutes() {
     {
       path: navigationRoutes.routes,
       element: <RoutesPage />,
+    },
+    {
+      path: navigationRoutes.sourceWallet,
+      element: <SourceWalletPage />,
     },
     {
       path: navigationRoutes.fromSwap,

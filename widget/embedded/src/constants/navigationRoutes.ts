@@ -2,6 +2,7 @@ export const navigationRoutes = {
   home: '/',
   fromSwap: 'from-swap',
   toSwap: 'to-swap',
+  sourceWallet: 'source-wallet',
   blockchains: 'blockchains',
   settings: 'settings',
   customTokens: 'custom-tokens',
