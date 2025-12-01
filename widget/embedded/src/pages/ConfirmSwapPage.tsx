@@ -61,6 +61,7 @@ export function ConfirmSwapPage() {
     quoteWarningsConfirmed,
     confirmSwapData,
     setInputAmount,
+    setConfirmSwapData,
   } = useQuoteStore()();
   const { disabledLiquiditySources } = useAppStore();
   const { isActiveTab } = useUiStore();
@@ -140,11 +141,9 @@ export function ConfirmSwapPage() {
   };
 
   const onConfirmBalanceWarning = async () => {
-    useQuoteStore.setState({
-      confirmSwapData: {
-        proceedAnyway: true,
-        quoteData: confirmSwapResult?.quoteData,
-      },
+    setConfirmSwapData({
+      proceedAnyway: true,
+      quoteData: confirmSwapResult?.quoteData,
     });
     await addNewSwap();
   };
