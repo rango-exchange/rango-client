@@ -7,6 +7,7 @@ import { useSyncUrlAndStore } from '../hooks/useSyncUrlAndStore';
 import { AddCustomTokenPage } from '../pages/AddCustomTokenPage';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { CustomTokensPage } from '../pages/CustomTokensPage';
+import { DestinationWalletsPage } from '../pages/DestinationWalletPage/DestinationWalletPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LanguagePage } from '../pages/LanguagePage';
@@ -41,6 +42,10 @@ export function AppRoutes() {
     {
       path: navigationRoutes.sourceWallet,
       element: <SourceWalletPage />,
+    },
+    {
+      path: navigationRoutes.destinationWallet,
+      element: <DestinationWalletsPage />,
     },
     {
       path: navigationRoutes.fromSwap,
