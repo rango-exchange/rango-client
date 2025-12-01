@@ -18,7 +18,7 @@ import { tabManager } from '../../store/ui';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
 import { useSyncNotifications } from '../useSyncNotifications';
-import { useUpdateSelectedWallets } from '../useUpdateSelectedWalelts.ts';
+import { useUpdateSelectedWallets } from '../useUpdateSelectedWallets.ts';
 
 export function useBootstrap() {
   useForceAutoConnect();
