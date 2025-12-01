@@ -53,6 +53,10 @@ export function AppRoutes() {
       element: <RouteWalletsPage />,
     },
     {
+      path: navigationRoutes.routeWallets,
+      element: <RouteWalletsPage />,
+    },
+    {
       path: navigationRoutes.fromSwap,
       children: [
         {
