@@ -15,15 +15,20 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
   >()
     .getInstance(getInstance)
     .onSwitchAccount((event, context) => {
-      if (!event.payload.data.isTronLink || !event.payload.data.message) {
+      if (
+        !event.payload.data.isBitkeep ||
+        event.payload.data.message?.action !== 'accountsChanged'
+      ) {
         event.preventDefault();
-        if (event.payload.data.message.action == 'accountsChanged') {
-          context.action('disconnect');
-        }
+        return;
+      }
+      if (!event.payload.data.message.data.address) {
+        event.preventDefault();
+        context.action('disconnect');
       }
     })
     .format(async (_, accounts) =>
-      utils.formatAccountsToCAIP([accounts.data.message.address])
+      utils.formatAccountsToCAIP([accounts.data.message.data.address])
     )
     .addEventListener((_, callback) => {
       window.addEventListener('message', callback);
