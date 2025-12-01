@@ -204,6 +204,12 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
 }
 
 export function getSwapButtonState(params: {
+  fromToken: Token | null;
+  toToken: Token | null;
+  selectedWallets: {
+    sourceWallet?: ConnectedWallet;
+    destinationWallet?: ConnectedWallet;
+  };
   fetchMetaStatus: FetchStatus;
   anyWalletConnected: boolean;
   fetchingQuote: boolean;
@@ -214,6 +220,9 @@ export function getSwapButtonState(params: {
   needsToWarnEthOnPath: boolean;
 }): SwapButtonState {
   const {
+    fromToken,
+    toToken,
+    selectedWallets,
     fetchMetaStatus,
     anyWalletConnected,
     fetchingQuote,
@@ -223,6 +232,7 @@ export function getSwapButtonState(params: {
     error,
     needsToWarnEthOnPath,
   } = params;
+
   if (fetchMetaStatus !== 'success') {
     return {
       title: swapButtonTitles().connectWallet,
@@ -230,12 +240,56 @@ export function getSwapButtonState(params: {
       disabled: true,
     };
   }
-  if (!anyWalletConnected) {
+  if (!fromToken && !toToken && !anyWalletConnected) {
     return {
       title: swapButtonTitles().connectWallet,
       action: 'connect-wallet',
       disabled: false,
     };
+  }
+  if (!fromToken) {
+    return {
+      title: swapButtonTitles().selectToken,
+      action: 'select-source-token',
+      disabled: false,
+    };
+  }
+  if (!toToken) {
+    return {
+      title: swapButtonTitles().selectToken,
+      action: 'select-destination-token',
+      disabled: false,
+    };
+  }
+  if (!inputAmount) {
+    return {
+      title: swapButtonTitles().enterAmount,
+      disabled: true,
+    };
+  }
+  if (quote) {
+    const sourceBlockchain = quote.swaps[0]?.from.blockchain;
+    const destinationBlockchain =
+      quote.swaps[quote.swaps.length - 1]?.to.blockchain;
+
+    if (!selectedWallets.sourceWallet) {
+      return {
+        title: i18n.t('Connect {sourceBlockchain} Wallet', {
+          sourceBlockchain: sourceBlockchain,
+        }),
+        action: 'select-source-wallet',
+        disabled: false,
+      };
+    }
+    if (!selectedWallets.destinationWallet) {
+      return {
+        title: i18n.t('Connect {destinationBlockchain} Wallet', {
+          destinationBlockchain,
+        }),
+        action: 'select-destination-wallet',
+        disabled: false,
+      };
+    }
   }
   if (fetchingQuote || !quote || error || !inputAmount || inputAmount === '0') {
     return {
