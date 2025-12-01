@@ -14,9 +14,11 @@ export type Provider = Map<
 >;
 
 export type TronChangeAccountEvent = {
-  isTronLink: boolean;
+  isBitkeep: boolean;
   message: {
     action: string;
-    address: string;
+    data: {
+      address: string;
+    };
   };
 };
