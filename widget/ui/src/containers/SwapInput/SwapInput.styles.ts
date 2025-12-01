@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '../../components/index.js';
+import { TextField, Typography } from '../../components/index.js';
 import { css, darkTheme, styled } from '../../theme.js';
 
 export const textStyles = css();
@@ -11,6 +11,8 @@ export const Container = styled('div', {
   backgroundColor: '$$color',
   borderRadius: '$xm',
   padding: '$15',
+  borderTopLeftRadius: '$0',
+  borderTopRightRadius: '$0',
   variants: {
     sharpBottomStyle: {
       true: {
@@ -43,18 +45,11 @@ export const InputAmount = styled(TextField, {
     cursor: 'unset',
   },
 });
-export const MaxButton = styled(Button, {
-  $$color: '$colors$secondary200',
-  [`.${darkTheme} &`]: {
-    $$color: '$colors$secondary800',
-  },
-  backgroundColor: '$$color',
-  '& ._typography': {
-    color: '$colors$secondary500',
-    [`.${darkTheme} &`]: {
-      color: '$colors$secondary250',
-    },
-  },
+
+export const TokenValue = styled('div', {
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  justifyContent: 'space-between',
 });
 
 export const ValueTypography = styled('div', {
@@ -97,12 +92,6 @@ export const TokenSectionContainer = styled('div', {
 export const labelStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
-});
-
-export const balanceStyles = css({
-  display: 'flex',
-  justifyContent: 'center',
   alignItems: 'center',
 });
 
