@@ -1,3 +1,7 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.55.1...provider-coinbase@0.56.0) (2025-12-02)
+
+
+
 ## [0.55.1](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.55.0...provider-coinbase@0.55.1) (2025-11-22)
 
 

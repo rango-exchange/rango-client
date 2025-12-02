@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-enkrypt@0.54.1...provider-enkrypt@0.55.0) (2025-12-02)
+
+
+### Features
+
+* mirgrate enkrypt to the hub ([f7bdafb](https://github.com/rango-exchange/rango-client/commit/f7bdafb32d1ce286e347d354d30af0bdba98c18d))
+
+
+
 ## [0.54.1](https://github.com/rango-exchange/rango-client/compare/provider-enkrypt@0.54.0...provider-enkrypt@0.54.1) (2025-11-22)
 
 

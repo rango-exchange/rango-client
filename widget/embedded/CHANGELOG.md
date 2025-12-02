@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.54.1...widget-embedded@0.55.0) (2025-12-02)
+
+
+### Features
+
+* enable forced namespaces in useStatefulConnect hook ([26ab717](https://github.com/rango-exchange/rango-client/commit/26ab7173c3d6ce9b831285334c295977c16ec476))
+
+
+
 ## [0.54.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.54.0...widget-embedded@0.54.1) (2025-11-22)
 
 
