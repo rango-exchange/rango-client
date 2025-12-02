@@ -4,22 +4,22 @@ import type { Environments as WalletConnectEnvironments } from '@rango-dev/provi
 import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
-import * as bitget from '@rango-dev/provider-bitget';
+import { versions as bitget } from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
-import * as brave from '@rango-dev/provider-brave';
+import { versions as brave } from '@rango-dev/provider-brave';
 import * as clover from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
-import * as enkrypt from '@rango-dev/provider-enkrypt';
+import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
 import * as keplr from '@rango-dev/provider-keplr';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
-import * as mathwallet from '@rango-dev/provider-math-wallet';
+import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
 import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
@@ -29,8 +29,8 @@ import * as safe from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
 import * as solflare from '@rango-dev/provider-solflare';
-import * as taho from '@rango-dev/provider-taho';
-import * as tokenpocket from '@rango-dev/provider-tokenpocket';
+import { versions as taho } from '@rango-dev/provider-taho';
+import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
@@ -39,6 +39,7 @@ import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import { versions as xverse } from '@rango-dev/provider-xverse';
 import {
   legacyProviderImportsToVersionsInterface,
   type VersionedProviders,
@@ -107,24 +108,25 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(ready)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
-    lazyProvider(legacyProviderImportsToVersionsInterface(bitget)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(enkrypt)),
+    enkrypt,
+    bitget,
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
+    xverse,
     lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
     safepal,
-    lazyProvider(legacyProviderImportsToVersionsInterface(brave)),
+    brave,
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
     coinbase,
     lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
     exodus,
-    lazyProvider(legacyProviderImportsToVersionsInterface(mathwallet)),
+    mathwallet,
     okx,
-    lazyProvider(legacyProviderImportsToVersionsInterface(tokenpocket)),
+    tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(taho)),
+    taho,
     lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
     ledger,
     rabby,

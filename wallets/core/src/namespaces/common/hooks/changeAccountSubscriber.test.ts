@@ -1,3 +1,6 @@
+import type { Actions } from '../../../hub/namespaces/types.js';
+import type { AutoImplementedActionsByRecommended } from '../types.js';
+
 import { waitFor } from '@testing-library/dom';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
@@ -29,7 +32,11 @@ describe('check changeAccountSubscriber', () => {
     __: (event: string[]) => void
   ) => {};
 
-  let builder: ChangeAccountSubscriberBuilder<string[], typeof garbageProvider>;
+  let builder: ChangeAccountSubscriberBuilder<
+    string[],
+    typeof garbageProvider,
+    Actions<AutoImplementedActionsByRecommended>
+  >;
 
   const setupNamespace = () => {
     const actions = new Map();

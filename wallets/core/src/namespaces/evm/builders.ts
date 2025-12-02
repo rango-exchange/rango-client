@@ -24,7 +24,7 @@ export const canSwitchNetwork = () =>
 
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<string[], ProviderAPI>()
+  new ChangeAccountSubscriberBuilder<string[], ProviderAPI, EvmActions>()
     .getInstance(getInstance)
     /*
      * In some wallets, when a user switches to an account not yet connected to the dApp, it returns null.

@@ -1,7 +1,7 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { NamespaceData, WalletType } from '@rango-dev/wallets-shared';
+import type { NamespaceData } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
@@ -29,7 +29,10 @@ export interface UseStatefulConnect {
   handleDisconnect: (wallet: WalletInfoWithExtra) => Promise<Result>;
   handleDerivationPath: (
     wallet: ExtendedModalWalletInfo,
-    path: string
+    path: string,
+    options?: {
+      forceConnectToNamespaces?: Namespace[];
+    }
   ) => Promise<Result>;
   getState(): State;
   resetState(section?: 'derivation'): void;
@@ -51,9 +54,9 @@ export function useStatefulConnect(): UseStatefulConnect {
   const [connectState, dispatch] = useReducer(reducer, initState);
 
   const runConnect = async (
-    type: WalletType,
+    wallet: ExtendedModalWalletInfo,
     namespaces?: NamespaceData[],
-    _options?: HandleConnectOptions
+    options?: HandleConnectOptions & { disconnectOnError?: boolean }
   ): Promise<{ status: ResultStatus }> => {
     /*
      * When running this function, it means all optional steps (like namespace and derivation path) has passed, or wallet doesn't need them at all.
@@ -68,13 +71,23 @@ export function useStatefulConnect(): UseStatefulConnect {
         ...namespaceInput,
         network: undefined,
       }));
-      await connect(type, legacyNamespacesInput);
+      await connect(wallet.type, legacyNamespacesInput);
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       const message = e?.message
         ? `Error: ${e.message}`
         : 'An unknown error happened during connecting wallet.';
+
+      if (options?.disconnectOnError) {
+        try {
+          await handleDisconnect(wallet);
+        } catch {
+          console.warn(
+            'An error happened during disconnecting wallet after error on connecting.'
+          );
+        }
+      }
 
       throw new Error(message, { cause: e });
     }
@@ -87,6 +100,7 @@ export function useStatefulConnect(): UseStatefulConnect {
     status: ResultStatus;
   }> => {
     const isDisconnected = wallet.state === WalletState.DISCONNECTED;
+    const forceConnectToNamespaces = options?.forceConnectToNamespaces;
 
     if (isDisconnected) {
       /*
@@ -107,9 +121,49 @@ export function useStatefulConnect(): UseStatefulConnect {
             ?.value
         : wallet.needsDerivationPath;
 
+      // Forced namespaces are used to bypass namespace selection flow.
+      if (forceConnectToNamespaces) {
+        const notAvailableForcedNamespace = forceConnectToNamespaces.find(
+          (namespace) =>
+            !needsNamespace?.data?.map((item) => item.value).includes(namespace)
+        );
+        if (notAvailableForcedNamespace) {
+          throw new Error(
+            `One of the forced namespaces is not available in the wallet. Forced namespace: ${notAvailableForcedNamespace}`
+          );
+        }
+
+        if (forceConnectToNamespaces.length > 1 && needsDerivationPath) {
+          throw new Error(
+            'Derivation path is not supported when multiple namespaces are selected.'
+          );
+        }
+
+        if (
+          forceConnectToNamespaces.length === 1 &&
+          forceConnectToNamespaces[0] &&
+          needsDerivationPath
+        ) {
+          dispatch({
+            type: 'needsDerivationPath',
+            payload: {
+              providerType: wallet.type,
+              providerImage: wallet.image,
+              namespace: forceConnectToNamespaces[0],
+            },
+          });
+          return { status: ResultStatus.DerivationPath };
+        }
+        return await runConnect(
+          wallet,
+          forceConnectToNamespaces.map((namespace) => ({ namespace })),
+          { ...options, disconnectOnError: true }
+        );
+      }
+
       // 1. Target wallet does not contain any namespaces
       if (!needsNamespace?.data?.length) {
-        return await runConnect(wallet.type, undefined, options);
+        return await runConnect(wallet, undefined, options);
       }
 
       // 2. Target wallet contains more than one namespace
@@ -140,7 +194,7 @@ export function useStatefulConnect(): UseStatefulConnect {
           return { status: ResultStatus.DerivationPath };
         }
         return await runConnect(
-          wallet.type,
+          wallet,
           needsNamespace?.data?.map((namespace) => ({
             namespace: namespace.value,
           })),
@@ -149,8 +203,13 @@ export function useStatefulConnect(): UseStatefulConnect {
       }
     }
 
-    // If the wallet is a hub wallet and it is connected (fully or partially) and it contains more than one namespace, we should display detached modal
-    if (!!wallet.isHub) {
+    /*
+     * If the wallet is a hub wallet and it is connected (fully or partially),
+     * and it contains more than one namespace,
+     * and forced namespaces are not enabled,
+     * we should display detached modal
+     */
+    if (!!wallet.isHub && !options?.forceConnectToNamespaces) {
       const needsNamespace = wallet.properties?.find(
         (item) => item.name === 'namespaces'
       )?.value;
@@ -242,7 +301,10 @@ export function useStatefulConnect(): UseStatefulConnect {
 
   const handleDerivationPath = async (
     wallet: ExtendedModalWalletInfo,
-    derivationPath: string
+    derivationPath: string,
+    options?: {
+      forceConnectToNamespaces?: Namespace[];
+    }
   ): Promise<Result> => {
     if (!derivationPath) {
       throw new Error(
@@ -255,7 +317,6 @@ export function useStatefulConnect(): UseStatefulConnect {
         'It seems you are filling derivation path without setting namespace before doing that. Please retry to connect.'
       );
     }
-    const type = connectState.derivationPath.providerType;
     const selectedNamespace = connectState.derivationPath.namespace;
     const namespaces = [{ namespace: selectedNamespace, derivationPath }];
 
@@ -263,7 +324,12 @@ export function useStatefulConnect(): UseStatefulConnect {
     const needsNamespace = isHub
       ? wallet.properties?.find((item) => item.name === 'namespaces')?.value
       : wallet.needsNamespace;
-    if (!!needsNamespace?.data && needsNamespace.data.length > 1) {
+
+    const namespaceIsAvailable =
+      !!needsNamespace?.data && needsNamespace.data.length > 1;
+    const forceConnectToNamespacesEnabled = !!options?.forceConnectToNamespaces;
+    // If forced namespaces are enabled, we should bypass detached modal and go directly to connect.
+    if (namespaceIsAvailable && !forceConnectToNamespacesEnabled) {
       dispatch({
         type: 'detached',
         payload: {
@@ -275,7 +341,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       return { status: ResultStatus.Detached };
     }
 
-    return await runConnect(type, namespaces);
+    return await runConnect(wallet, namespaces);
   };
 
   const getState = () => connectState;

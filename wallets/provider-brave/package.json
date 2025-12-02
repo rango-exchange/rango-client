@@ -1,20 +1,20 @@
 {
   "name": "@rango-dev/provider-brave",
-  "version": "0.56.1",
+  "version": "0.56.2-next.5",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-brave",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-brave --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.40.0",
     "@rango-dev/signer-solana": "^0.46.1",
-    "@rango-dev/wallets-core": "^0.52.1-next.1",
-    "@rango-dev/wallets-shared": "^0.54.1",
+    "@rango-dev/wallets-core": "^0.53.1-next.3",
+    "@rango-dev/wallets-shared": "^0.54.2-next.4",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {

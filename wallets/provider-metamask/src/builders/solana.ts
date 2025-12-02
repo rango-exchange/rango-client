@@ -2,7 +2,10 @@ import type { WalletStandardSolanaInstance } from '../types.js';
 import type { StandardEventsChangeProperties } from '@wallet-standard/features';
 
 import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
-import { utils } from '@rango-dev/wallets-core/namespaces/solana';
+import {
+  type SolanaActions,
+  utils,
+} from '@rango-dev/wallets-core/namespaces/solana';
 
 // Hooks
 const changeAccountSubscriber = (
@@ -10,7 +13,8 @@ const changeAccountSubscriber = (
 ) =>
   new ChangeAccountSubscriberBuilder<
     StandardEventsChangeProperties,
-    WalletStandardSolanaInstance
+    WalletStandardSolanaInstance,
+    SolanaActions
   >()
     .getInstance(getInstance)
     .onSwitchAccount((event, context) => {
