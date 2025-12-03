@@ -1,3 +1,12 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-brave@0.56.1...provider-brave@0.57.0) (2025-12-02)
+
+
+### Features
+
+* migrate brave to the hub ([7b68649](https://github.com/rango-exchange/rango-client/commit/7b686493dc463f9e5fa0510838da74a55b8bc63c))
+
+
+
 ## [0.56.1](https://github.com/rango-exchange/rango-client/compare/provider-brave@0.56.0...provider-brave@0.56.1) (2025-11-22)
 
 

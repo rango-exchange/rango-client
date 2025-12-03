@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.54.1...provider-taho@0.55.0) (2025-12-02)
+
+
+### Features
+
+* migrate taho to the hub ([1a9fb16](https://github.com/rango-exchange/rango-client/commit/1a9fb16a2d6f1c04e547b58e2a4eb72d582a0939))
+
+
+
 ## [0.54.1](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.54.0...provider-taho@0.54.1) (2025-11-22)
 
 

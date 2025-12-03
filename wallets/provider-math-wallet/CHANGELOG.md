@@ -1,3 +1,12 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.55.1...provider-math-wallet@0.56.0) (2025-12-02)
+
+
+### Features
+
+* migrate math wallet to the hub ([5bc83c6](https://github.com/rango-exchange/rango-client/commit/5bc83c61100534715c1d8469c15486552e6baeea))
+
+
+
 ## [0.55.1](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.55.0...provider-math-wallet@0.55.1) (2025-11-22)
 
 
