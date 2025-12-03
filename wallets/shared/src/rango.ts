@@ -49,7 +49,6 @@ export enum WalletTypes {
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
-  CLOVER = 'clover',
   READY = 'ready',
   FRONTIER = 'frontier',
   COSMOSTATION = 'cosmostation',
