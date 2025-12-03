@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-tokenpocket@0.54.1...provider-tokenpocket@0.55.0) (2025-12-02)
+
+
+### Features
+
+* migrate token-pocket to the hub ([d0c4d00](https://github.com/rango-exchange/rango-client/commit/d0c4d00df5c3a31bdf0aa27553771e462b2a75ad))
+
+
+
 ## [0.54.1](https://github.com/rango-exchange/rango-client/compare/provider-tokenpocket@0.54.0...provider-tokenpocket@0.54.1) (2025-11-22)
 
 

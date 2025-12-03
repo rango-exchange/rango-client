@@ -1,3 +1,18 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.56.1...provider-all@0.57.0) (2025-12-02)
+
+
+### Features
+
+* integrate xverse wallet ([5560aca](https://github.com/rango-exchange/rango-client/commit/5560aca41af54f676b0488e9efc1f00e487189d1))
+* migrate bitget to the hub ([07a425a](https://github.com/rango-exchange/rango-client/commit/07a425a0f3ecbfa38c324f561a478c15a9d49ec2))
+* migrate brave to the hub ([7b68649](https://github.com/rango-exchange/rango-client/commit/7b686493dc463f9e5fa0510838da74a55b8bc63c))
+* migrate math wallet to the hub ([5bc83c6](https://github.com/rango-exchange/rango-client/commit/5bc83c61100534715c1d8469c15486552e6baeea))
+* migrate taho to the hub ([1a9fb16](https://github.com/rango-exchange/rango-client/commit/1a9fb16a2d6f1c04e547b58e2a4eb72d582a0939))
+* migrate token-pocket to the hub ([d0c4d00](https://github.com/rango-exchange/rango-client/commit/d0c4d00df5c3a31bdf0aa27553771e462b2a75ad))
+* mirgrate enkrypt to the hub ([f7bdafb](https://github.com/rango-exchange/rango-client/commit/f7bdafb32d1ce286e347d354d30af0bdba98c18d))
+
+
+
 ## [0.56.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.56.0...provider-all@0.56.1) (2025-11-22)
 
 

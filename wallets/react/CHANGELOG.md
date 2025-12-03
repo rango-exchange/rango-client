@@ -1,3 +1,12 @@
+# [0.41.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.40.1...wallets-react@0.41.0) (2025-12-02)
+
+
+### Features
+
+* add tron namespace ([4a2fb70](https://github.com/rango-exchange/rango-client/commit/4a2fb70c2311dd7d451e2eafa8f0e29c5b30bbce))
+
+
+
 ## [0.40.1](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.40.0...wallets-react@0.40.1) (2025-11-22)
 
 

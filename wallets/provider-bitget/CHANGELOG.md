@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.51.1...provider-bitget@0.52.0) (2025-12-02)
+
+
+### Features
+
+* migrate bitget to the hub ([07a425a](https://github.com/rango-exchange/rango-client/commit/07a425a0f3ecbfa38c324f561a478c15a9d49ec2))
+
+
+
 ## [0.51.1](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.51.0...provider-bitget@0.51.1) (2025-11-22)
 
 

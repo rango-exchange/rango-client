@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.54.1...wallets-shared@0.55.0) (2025-12-02)
+
+
+### Features
+
+* integrate xverse wallet ([5560aca](https://github.com/rango-exchange/rango-client/commit/5560aca41af54f676b0488e9efc1f00e487189d1))
+
+
+
 ## [0.54.1](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.54.0...wallets-shared@0.54.1) (2025-11-22)
 
 

@@ -1,3 +1,14 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.53.0...wallets-core@0.54.0) (2025-12-02)
+
+
+### Features
+
+* add tron namespace ([4a2fb70](https://github.com/rango-exchange/rango-client/commit/4a2fb70c2311dd7d451e2eafa8f0e29c5b30bbce))
+* integrate xverse wallet ([5560aca](https://github.com/rango-exchange/rango-client/commit/5560aca41af54f676b0488e9efc1f00e487189d1))
+* storing `connectArgs` to the namespace state ([0e55dea](https://github.com/rango-exchange/rango-client/commit/0e55dea5af395540d4dbf71c4179bec4fcfa6bb5))
+
+
+
 # [0.51.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.50.0...wallets-core@0.51.0) (2025-10-29)
 
 

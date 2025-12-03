@@ -1,3 +1,17 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.55.1...provider-okx@0.56.0) (2025-12-02)
+
+
+### Bug Fixes
+
+* okx reconnect behaviour ([4fc9345](https://github.com/rango-exchange/rango-client/commit/4fc9345142ebc1e639dcf5943b146704d216c28c))
+
+
+### Features
+
+* add btc support to okx wallet ([1766334](https://github.com/rango-exchange/rango-client/commit/17663344e3a15c6eca500cf6aee73e1e2b8c54eb))
+
+
+
 ## [0.55.1](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.55.0...provider-okx@0.55.1) (2025-11-22)
 
 
