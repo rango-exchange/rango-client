@@ -23,7 +23,7 @@
   "dependencies": {
     "@rango-dev/provider-bitget": "^0.52.0",
     "@rango-dev/provider-braavos": "^0.49.0",
-    "@rango-dev/provider-brave": "^0.57.0",
+    "@rango-dev/provider-brave": " ^0.57.0",
     "@rango-dev/provider-clover": "^0.57.0",
     "@rango-dev/provider-coin98": "^0.57.0",
     "@rango-dev/provider-coinbase": "^0.56.0",
