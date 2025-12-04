@@ -27,7 +27,7 @@ import * as ready from '@rango-dev/provider-ready';
 import * as safe from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
-import * as solflare from '@rango-dev/provider-solflare';
+import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
@@ -129,7 +129,7 @@ export const allProviders = (
     ledger,
     rabby,
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
+    solflare,
     slush,
     unisat,
   ];

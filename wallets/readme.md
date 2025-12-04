@@ -147,6 +147,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅  |
 | [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |
+| [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |
 | [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌  | 🚧  |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |
@@ -170,9 +171,10 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
 | SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
-| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
+| Solflare     | ⚠️             | ❌             | ✅           | Injected                  | ✅            |
 | Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Token Pocket | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 
@@ -192,7 +194,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Leap Cosmos    | Cosmos                                                                                                                  | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
 | Ready          | Starknet                                                                                                                | -                                                 | &check;              | https://www.ready.co/                |
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
-| Solflare       | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com                 |
 | Solflare Snap  | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com/metamask        |
 | Station        | Terra Classic, Terra                                                                                                    | -                                                 | &cross;              | https://station.terra.money/         |
 | Taho           | ETH,Polygon,Arbitrum,Arbitrum,Avax,Binance,Fantom                                                                       | Fantom                                            | &cross;              | https://taho.xyz/                    |
