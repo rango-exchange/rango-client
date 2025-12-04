@@ -134,6 +134,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- |
+| [Binance](provider-binance/readme.md)           | ✅  | 🚧   | 🚧     | 🚧     | 🚧  | 🚧  | 🚧  |
 | [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅  | ❌  |
 | [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |
@@ -158,6 +159,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Binance      | ✅             | ✅             | ❌           | Injected                  | ❌            |
 | Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |

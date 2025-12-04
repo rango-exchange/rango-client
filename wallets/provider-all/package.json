@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@rango-dev/provider-binance": "^0.0.1",
     "@rango-dev/provider-bitget": "^0.52.1-next.0",
     "@rango-dev/provider-braavos": "^0.49.1-next.0",
     "@rango-dev/provider-brave": "^0.57.1-next.0",
-    "@rango-dev/provider-clover": "^0.57.0",
     "@rango-dev/provider-coin98": "^0.57.1-next.0",
     "@rango-dev/provider-coinbase": "^0.56.1-next.0",
     "@rango-dev/provider-cosmostation": "^0.55.1-next.0",
