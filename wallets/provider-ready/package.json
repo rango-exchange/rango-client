@@ -3,18 +3,14 @@
   "version": "0.55.1-next.2",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "typings": "dist/mod.d.ts",
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ready",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ready --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -23,6 +19,7 @@
   "dependencies": {
     "@rango-dev/signer-starknet": "^0.40.0",
     "@rango-dev/wallets-shared": "^0.55.1-next.2",
+    "@rango-dev/wallets-core": "^0.54.1-next.1",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {
