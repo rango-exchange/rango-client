@@ -22,6 +22,7 @@ import {
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
+import { convertCosmosMetaToChainRegistry } from './chainRegisteryConvertors.js';
 import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
@@ -502,8 +503,46 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       };
       return coreState;
     },
-    suggestAndConnect(_type, _network): never {
-      throw new Error('`suggestAndConnect` is not implemented');
+    async suggestAndConnect(type, namespace): Promise<ConnectResult> {
+      const provider = getHub().get(type);
+
+      if (!provider) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'suggestAndConnect'.`
+        );
+      }
+      const proxiedNamespace = provider.findByNamespace(namespace.namespace);
+      if (!proxiedNamespace) {
+        throw new Error(
+          `We couldn't find any matched namespace on your request provider. (requested namespace: ${namespace.namespace})`
+        );
+      }
+      if (!('suggest' in proxiedNamespace)) {
+        throw new Error('Suggest is not implemented on the provider');
+      }
+      if (!namespace.network) {
+        throw new Error('You should pass network to the suggest and connect');
+      }
+      if (isCosmosNamespace(proxiedNamespace)) {
+        const suggestedChainMeta = cosmosBlockchains(
+          params.allBlockChains || []
+        )
+          ?.filter((chain) => chain.info && chain.info.experimental)
+          .find((chain) => chain.name === namespace.network);
+        if (!suggestedChainMeta) {
+          throw new Error(
+            `We couldn't find the suggested chain (${namespace.network}) in our metadata.`
+          );
+        }
+        const { assetList, chain } =
+          convertCosmosMetaToChainRegistry(suggestedChainMeta);
+        await proxiedNamespace.suggest(chain, assetList);
+        const [connectResult] = await this.connect(type, [namespace]);
+        return connectResult;
+      }
+      throw new Error(
+        `Suggest has not been implemented for given chain: ${namespace.network}`
+      );
     },
     hubProvider() {
       throw new Error(
