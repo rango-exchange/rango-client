@@ -42,7 +42,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.25"
+    "@types/react-dom": "^18.0.25",
+    "@chain-registry/types": "2.0.110"
   },
   "publishConfig": {
     "access": "public"

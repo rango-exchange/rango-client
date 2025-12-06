@@ -61,7 +61,35 @@ export function WalletList(props: PropTypes) {
     setShowExperimentalChainModal(false);
     setAddingExperimentalChainStatus('in-progress');
     try {
-      await suggestAndConnect(wallet.walletType, wallet.chain);
+      // 1. Finding wallet with namespaces info.
+      const walletWithNamespace = list.find(
+        (wallet) => wallet.type === wallet.type
+      );
+
+      /*
+       * 2. Getting namespaces info.
+       * Legacy and hub have different structure to handle each situation.
+       */
+      const needsNamespace = walletWithNamespace?.isHub
+        ? walletWithNamespace.properties?.find(
+            (item) => item.name === 'namespaces'
+          )?.value
+        : walletWithNamespace?.needsNamespace;
+
+      // 3. Finding target namespace.
+      const allBlockChains = blockchains();
+      const namespace = needsNamespace?.data.find((ns) =>
+        ns
+          .getSupportedChains(allBlockChains)
+          .some((chain) => chain.name === wallet.chain)
+      );
+      if (!namespace) {
+        throw new Error('Requested chain is not supported');
+      }
+      await suggestAndConnect(wallet.walletType, {
+        namespace: namespace.value,
+        network: wallet.chain,
+      });
       setAddingExperimentalChainStatus('completed');
     } catch {
       setAddingExperimentalChainStatus('rejected');
@@ -143,7 +171,11 @@ export function WalletList(props: PropTypes) {
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
-          if (isDisconnected || isConnectedButDifferentThanTargetNamespace) {
+          if (
+            isDisconnected ||
+            (isConnectedButDifferentThanTargetNamespace &&
+              !couldAddExperimentalChain)
+          ) {
             setSelectedWalletToConnect(wallet);
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({

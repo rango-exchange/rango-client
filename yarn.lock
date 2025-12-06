@@ -2059,6 +2059,11 @@
   dependencies:
     "@noble/curves" "^1.7.0"
 
+"@chain-registry/types@2.0.110":
+  version "2.0.110"
+  resolved "https://registry.yarnpkg.com/@chain-registry/types/-/types-2.0.110.tgz#c113443c72e92173d9ce0597a73c938b6d7585c7"
+  integrity sha512-Y84yCxbJzeMTejYCiqTkHXbEOPHHBZurI9g++Sy8QF1TLyw4CJ0rgpCso35EhqaQiLpIabivWx+qXd0Y8biqEw==
+
 "@chromatic-com/storybook@^1.3.3":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@chromatic-com/storybook/-/storybook-1.3.3.tgz#102d173d7e67cbc7f974648eaa459aa3d3d53f91"
