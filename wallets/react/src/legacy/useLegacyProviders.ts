@@ -111,13 +111,16 @@ export function useLegacyProviders(
       return await Promise.allSettled(disconnect_promises);
     },
 
-    async suggestAndConnect(type, network) {
+    async suggestAndConnect(type, namespace) {
       const wallet = wallets.get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const walletInstance = getWalletInstance(wallet);
-      const result = await walletInstance.suggestAndConnect(network);
+      if (!namespace.network) {
+        throw new Error(`You should pass network to the suggestAndConnect`);
+      }
+      const result = await walletInstance.suggestAndConnect(namespace.network);
 
       return result;
     },
