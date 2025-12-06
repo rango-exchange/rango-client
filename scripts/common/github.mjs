@@ -171,6 +171,11 @@ export function checkEnvironments() {
     { name: 'check github release', value: should('checkGithubRelease') },
     { name: 'check git tags', value: should('checkGitTags') },
     { name: 'check versions on npm', value: should('checkNpm') },
+    {
+      name: 'create a commit after publish',
+      value: should('createPublishCommit'),
+    },
+    { name: 'create a tag after publish', value: should('createPublishTag') },
   ];
 
   console.log('Environments Variables:');
