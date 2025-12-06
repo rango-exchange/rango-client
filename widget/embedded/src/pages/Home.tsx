@@ -58,6 +58,7 @@ export function Home() {
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
+    setConfirmSwapData,
   } = useQuoteStore()();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
@@ -218,11 +219,9 @@ export function Home() {
 
   const onConfirmBalanceWarning = () => {
     if (confirmSwapResult?.quoteData) {
-      useQuoteStore.setState({
-        confirmSwapData: {
-          proceedAnyway: true,
-          quoteData: confirmSwapResult?.quoteData,
-        },
+      setConfirmSwapData({
+        proceedAnyway: true,
+        quoteData: confirmSwapResult?.quoteData,
       });
       navigate(navigationRoutes.confirmSwap);
     }

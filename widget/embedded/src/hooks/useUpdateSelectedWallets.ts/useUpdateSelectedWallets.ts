@@ -13,7 +13,8 @@ import { useQuoteStore } from '../../store/quote';
  * and trigger the wallet update method accordingly.
  */
 export function useUpdateSelectedWallets() {
-  const { fromToken, toToken, setCustomDestination } = useQuoteStore()();
+  const quoteStore = useQuoteStore()();
+  const { fromToken, toToken, setCustomDestination } = quoteStore;
   const {
     clearSelectedWallet,
     tryMatchWalletForBlockchain,
@@ -21,7 +22,10 @@ export function useUpdateSelectedWallets() {
   } = useAppStore();
 
   useEffect(() => {
-    const shouldUpdateSourceWallet = !isSelectedWalletStillRelevant('source');
+    const shouldUpdateSourceWallet = !isSelectedWalletStillRelevant(
+      'source',
+      quoteStore
+    );
     if (shouldUpdateSourceWallet) {
       clearSelectedWallet('source');
       if (fromToken) {
@@ -33,8 +37,10 @@ export function useUpdateSelectedWallets() {
   useEffect(() => {
     setCustomDestination(null);
 
-    const shouldUpdateDestinationWallet =
-      !isSelectedWalletStillRelevant('destination');
+    const shouldUpdateDestinationWallet = !isSelectedWalletStillRelevant(
+      'destination',
+      quoteStore
+    );
     if (shouldUpdateDestinationWallet) {
       clearSelectedWallet('destination');
       if (toToken) {

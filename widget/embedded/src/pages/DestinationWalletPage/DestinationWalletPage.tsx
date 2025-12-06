@@ -34,8 +34,8 @@ import {
 const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 
 export function DestinationWalletPage() {
-  const { toBlockchain, customDestination, setCustomDestination } =
-    useQuoteStore();
+  const quoteStore = useQuoteStore()();
+  const { toBlockchain, customDestination, setCustomDestination } = quoteStore;
   const destinationWallet = useAppStore().selectedWallet('destination');
   const {
     setSelectedWallet,
@@ -68,7 +68,7 @@ export function DestinationWalletPage() {
       setShowCustomDestinationMessage(true);
     }
 
-    return checkAndClearCustomDestinationIfNeeded;
+    return () => checkAndClearCustomDestinationIfNeeded(quoteStore);
   }, []);
 
   if (!toBlockchain) {

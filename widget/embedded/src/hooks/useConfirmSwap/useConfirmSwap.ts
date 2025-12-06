@@ -10,7 +10,8 @@ export function useConfirmSwap() {
   const { loading, cancelFetch, fetch: confirmSwap, addSwap } = useHandleSwap();
   const sourceWallet = useAppStore().selectedWallet('source');
   const destinationWallet = useAppStore().selectedWallet('destination');
-  const { customDestination, confirmSwapData } = useQuoteStore()();
+  const { customDestination, confirmSwapData, setConfirmSwapData } =
+    useQuoteStore()();
 
   const [confirmSwapResult, setConfirmSwapResult] =
     useState<ConfirmSwapFetchResult | null>({
@@ -35,11 +36,9 @@ export function useConfirmSwap() {
       return;
     }
 
-    useQuoteStore.setState({
-      confirmSwapData: {
-        proceedAnyway: false,
-        quoteData: result.quoteData,
-      },
+    setConfirmSwapData({
+      proceedAnyway: false,
+      quoteData: result.quoteData,
     });
   };
 

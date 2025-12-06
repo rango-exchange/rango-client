@@ -62,6 +62,11 @@ export type RetryQuote = {
   toToken?: Token;
   inputAmount: string;
 };
+
+export type ConfirmSwapData = {
+  proceedAnyway: boolean;
+  quoteData: ConfirmRouteResponse['result'] | null;
+};
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
   toBlockchain: BlockchainMeta | null;
@@ -80,10 +85,7 @@ export interface QuoteState {
   customDestination: string | null;
   error: QuoteError | null;
   warning: QuoteWarning | null;
-  confirmSwapData: {
-    proceedAnyway: boolean;
-    quoteData: ConfirmRouteResponse['result'] | null;
-  };
+  confirmSwapData: ConfirmSwapData;
   resetQuote: () => void;
   resetAlerts: () => void;
 
@@ -106,6 +108,7 @@ export interface QuoteState {
   setCustomDestination: (address: string | null) => void;
   resetQuoteWallets: () => void;
   setQuoteWarningsConfirmed: (flag: boolean) => void;
+  setConfirmSwapData: (data: ConfirmSwapData) => void;
 }
 
 const initializer: StateCreator<
@@ -325,6 +328,7 @@ const initializer: StateCreator<
       selectedWallets: [],
     }),
   setQuoteWarningsConfirmed: (flag) => set({ quoteWarningsConfirmed: flag }),
+  setConfirmSwapData: (data) => set({ confirmSwapData: data }),
 });
 
 const createSwapQuoteSelectors = create<QuoteState>()(

@@ -1,5 +1,6 @@
 import type { AppStoreState } from './types';
 import type { Balance, Blockchain, Wallet } from '../../types';
+import type { QuoteState } from '../quote';
 import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { Asset, Token, WalletDetail } from 'rango-sdk';
 
@@ -17,7 +18,6 @@ import {
   suggestRouteWalletsBasedOnSourceWallet,
 } from '../../utils/wallets';
 import { keepLastUpdated } from '../middlewares/keepLastUpdated';
-import { useQuoteStore } from '../quote';
 import {
   computeNextBalancesWithNewPrices,
   computeNextStateAfterWalletBalanceRemoval,
@@ -115,15 +115,16 @@ export interface WalletsSlice {
       | { kind: 'route'; wallets: ConnectedWallet[] }
   ) => void;
   isSelectedWalletStillRelevant: (
-    kind: Exclude<SelectedWalletKind, 'route'>
+    kind: Exclude<SelectedWalletKind, 'route'>,
+    quoteStore: QuoteState
   ) => boolean;
   clearSelectedWallet: (kind: SelectedWalletKind) => void;
   tryMatchWalletForBlockchain: (
     kind: Exclude<SelectedWalletKind, 'route'>,
     blockchain: Blockchain
   ) => void;
-  suggestRouteWallets: () => void;
-  checkAndClearCustomDestinationIfNeeded: () => void;
+  suggestRouteWallets: (quoteStore: QuoteState) => void;
+  checkAndClearCustomDestinationIfNeeded: (quoteStore: QuoteState) => void;
 
   setConnectedWalletAsRefetching: (accounts: Wallet[]) => void;
   setConnectedWalletHasError: (accounts: Wallet[]) => void;
@@ -139,6 +140,7 @@ export interface WalletsSlice {
     }
   ) => void;
   addConnectedWallet: (
+    quoteStore: QuoteState,
     accounts: Wallet[],
     namespace?: Namespace,
     derivationPath?: string
@@ -150,15 +152,20 @@ export interface WalletsSlice {
    * Add new accounts to store and fetch balances for them.
    */
   newWalletConnected: (
+    quoteStore: QuoteState,
     accounts: Wallet[],
     namespace?: Namespace,
     derivationPath?: string
   ) => Promise<void>;
-  disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
+  disconnectNamespaces: (
+    walletType: string,
+    namespaces: Namespace[],
+    quoteStore: QuoteState
+  ) => void;
   /**
    * Disconnect a wallet and clean up balances after that.
    */
-  disconnectWallet: (walletType: string) => void;
+  disconnectWallet: (walletType: string, quoteStore: QuoteState) => void;
   _changeSelectedWalletIfNeededOnRemove: (
     walletType: string,
     options?: { namespaces?: Namespace[] }
@@ -273,7 +280,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         };
       });
     },
-    addConnectedWallet: (accounts, namespace, derivationPath) => {
+    addConnectedWallet: (quoteStore, accounts, namespace, derivationPath) => {
       /*
        * When we are going to add a new account, there are two thing that can be happens:
        * 1. Wallet hasn't add yet.
@@ -295,7 +302,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       if (walletsNeedToBeAdded.length > 0) {
         const newConnectedWallets: ConnectedWallet[] = walletsNeedToBeAdded.map(
           (account) => {
-            const { fromToken, toToken } = useQuoteStore.getState();
+            const { fromToken, toToken } = quoteStore;
             const shouldMarkWalletAsSource =
               account.chain === fromToken?.blockchain &&
               !connectedWallets.some(
@@ -363,13 +370,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           };
         });
 
-        const fromToken = useQuoteStore.getState().fromToken;
+        const fromToken = quoteStore.fromToken;
         const sourceWallet = get().selectedWallet('source');
         if (fromToken && !sourceWallet) {
           get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
         }
 
-        const toToken = useQuoteStore.getState().toToken;
+        const toToken = quoteStore.toToken;
         const destinationWallet = get().selectedWallet('destination');
         if (!destinationWallet && toToken) {
           get().tryMatchWalletForBlockchain('destination', toToken.blockchain);
@@ -594,8 +601,8 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
 
       set({ connectedWallets: nextConnectedWallets });
     },
-    isSelectedWalletStillRelevant: (kind) => {
-      const { fromToken, toToken } = useQuoteStore.getState();
+    isSelectedWalletStillRelevant: (kind, quoteStore) => {
+      const { fromToken, toToken } = quoteStore;
       const selectedToken = kind === 'source' ? fromToken : toToken;
       const selectedWallet =
         kind === 'source'
@@ -646,9 +653,9 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         });
       }
     },
-    suggestRouteWallets: () => {
+    suggestRouteWallets: (quoteStore) => {
       const { connectedWallets, setSelectedWallet } = get();
-      const selectedQuote = useQuoteStore.getState().selectedQuote;
+      const selectedQuote = quoteStore.selectedQuote;
 
       const sourceWallet = connectedWallets.find(
         (connectedWallet) =>
@@ -664,9 +671,9 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         setSelectedWallet({ kind: 'route', wallets: nextSelectedWallets });
       }
     },
-    checkAndClearCustomDestinationIfNeeded: () => {
-      const destination = useQuoteStore.getState().customDestination;
-      const toBlockchain = useQuoteStore.getState().toBlockchain;
+    checkAndClearCustomDestinationIfNeeded: (quoteStore) => {
+      const destination = quoteStore.customDestination;
+      const toBlockchain = quoteStore.toBlockchain;
       const invalidAddress =
         toBlockchain &&
         destination &&
@@ -674,10 +681,15 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         !isValidTokenAddress(toBlockchain, destination);
 
       if (invalidAddress) {
-        useQuoteStore.getState().setCustomDestination(null);
+        quoteStore.setCustomDestination(null);
       }
     },
-    newWalletConnected: async (accounts, namespace, derivationPath) => {
+    newWalletConnected: async (
+      qutoeStore,
+      accounts,
+      namespace,
+      derivationPath
+    ) => {
       const newAccount = accounts[0];
       if (!newAccount) {
         return;
@@ -687,7 +699,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         payload: { walletType: newAccount.walletType, accounts },
       });
 
-      get().addConnectedWallet(accounts, namespace, derivationPath);
+      get().addConnectedWallet(qutoeStore, accounts, namespace, derivationPath);
 
       void get().fetchBalances(accounts);
     },
@@ -709,7 +721,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         _aggregatedBalances,
       });
     },
-    disconnectNamespaces: (walletType, requestedNamesapces) => {
+    disconnectNamespaces: (walletType, requestedNamesapces, quoteStore) => {
       const isTargetWalletExistsInConnectedWallets =
         get().connectedWallets.find(
           (wallet) => wallet.walletType === walletType
@@ -747,20 +759,20 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           connectedWallets: nextConnectedWallets,
         });
 
-        const fromToken = useQuoteStore.getState().fromToken;
+        const fromToken = quoteStore.fromToken;
         const sourceWallet = get().selectedWallet('source');
         if (fromToken && !sourceWallet) {
           get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
         }
 
-        const toToken = useQuoteStore.getState().toToken;
+        const toToken = quoteStore.toToken;
         const destinationWallet = get().selectedWallet('destination');
         if (toToken && !destinationWallet) {
           get().tryMatchWalletForBlockchain('destination', toToken.blockchain);
         }
       }
     },
-    disconnectWallet: (walletType) => {
+    disconnectWallet: (walletType, quoteStore) => {
       const isTargetWalletExistsInConnectedWallets =
         get().connectedWallets.find(
           (wallet) => wallet.walletType === walletType
@@ -789,13 +801,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           connectedWallets: nextConnectedWallets,
         });
 
-        const fromToken = useQuoteStore.getState().fromToken;
+        const fromToken = quoteStore.fromToken;
         const sourceWallet = get().selectedWallet('source');
         if (fromToken && !sourceWallet) {
           get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
         }
 
-        const toToken = useQuoteStore.getState().toToken;
+        const toToken = quoteStore.toToken;
         const destinationWallet = get().selectedWallet('destination');
         if (toToken && !destinationWallet) {
           get().tryMatchWalletForBlockchain('source', toToken.blockchain);
