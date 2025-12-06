@@ -3,6 +3,7 @@ import { gitTagFor } from '../common/git.mjs';
 import { detectChannel, githubReleaseFor } from '../common/github.mjs';
 import { npmVersionFor } from '../common/npm.mjs';
 import {
+  increaseVersion,
   increaseVersionForNext,
   increaseVersionForProd,
 } from '../common/version.mjs';
@@ -16,10 +17,7 @@ export async function update(pkg) {
   const channel = detectChannel();
 
   // Increase package version
-  const updatedPkg =
-    channel === 'prod'
-      ? await increaseVersionForProd(pkg)
-      : await increaseVersionForNext(pkg);
+  const updatedPkg = await increaseVersion(channel, pkg);
 
   const tag = should('checkGitTags') ? await gitTagFor(updatedPkg) : null;
 

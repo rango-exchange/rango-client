@@ -94,6 +94,55 @@ export async function increaseVersionForProd(pkg) {
   };
 }
 
+export async function increaseVersionForExperimental(pkg) {
+  // TODO
+  const commitId = 'abcd';
+  const date = '20251206';
+  const newVersion = `0.0.0-experimental-${commitId}-${date}`;
+  /** @type {import('./typedefs.mjs').IncreaseVersionResult} */
+  const versions = await execa('yarn', [
+    'workspace',
+    pkg.name,
+    'version',
+    newVersion,
+    '--no-git-tag-version',
+    '--json',
+  ])
+    .then((result) => result.stdout)
+    .then((output) => {
+      const versions = parseYarnVersionResult(output);
+
+      if (!versions.current && !versions.next) {
+        throw new IncreaseVersionFailedError(
+          `Couldn't extract versions from logs \n ${logs.join('\n')}`
+        );
+      }
+      return versions;
+    })
+    .catch((err) => {
+      if (err instanceof IncreaseVersionFailedError) throw err;
+
+      throw new IncreaseVersionFailedError(err.stderr);
+    });
+
+  return {
+    ...pkg,
+    version: versions.next,
+  };
+}
+
+export async function increaseVersion(channel, pkg) {
+  if (channel === 'prod') {
+    await increaseVersionForProd(pkg);
+  } else if (channel === 'next') {
+    await increaseVersionForNext(pkg);
+  } else if (channel === 'experimental') {
+    await increaseVersionForExperimental(pkg);
+  } else {
+    throw new Error(`Your target channel not supported. channel: ${channel}`);
+  }
+}
+
 /**
  *
  * Recommend next version based on Angular conventional commits

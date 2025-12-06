@@ -128,7 +128,7 @@ export async function createPullRequest(pr) {
 }
 
 export async function createComment(comment) {
-  const {commentBody, issueNumber} = comment;
+  const { commentBody, issueNumber } = comment;
 
   if (!issueNumber || !commentBody) {
     throw new GithubCommandError(
@@ -137,7 +137,13 @@ export async function createComment(comment) {
     );
   }
 
-    const output = await execa('gh', ['issue', 'comment', issueNumber, '--body', commentBody])
+  const output = await execa('gh', [
+    'issue',
+    'comment',
+    issueNumber,
+    '--body',
+    commentBody,
+  ])
     .then(({ stdout }) => stdout)
     .catch((err) => {
       throw new GithubCommandError(
@@ -145,7 +151,7 @@ export async function createComment(comment) {
       );
     });
 
-    return output;
+  return output;
 }
 
 export function checkEnvironments() {
@@ -165,6 +171,11 @@ export function checkEnvironments() {
     { name: 'check github release', value: should('checkGithubRelease') },
     { name: 'check git tags', value: should('checkGitTags') },
     { name: 'check versions on npm', value: should('checkNpm') },
+    {
+      name: 'create a commit after publish',
+      value: should('createPublishCommit'),
+    },
+    { name: 'create a tag after publish', value: should('createPublishTag') },
   ];
 
   console.log('Environments Variables:');
@@ -176,6 +187,8 @@ export function checkEnvironments() {
 export function detectChannel() {
   if (getEnvWithFallback('REF') === 'refs/heads/main') {
     return 'prod';
+  } else if (getEnvWithFallback('REF') === 'refs/heads/next') {
+    return 'next';
   }
-  return 'next';
+  return 'experimental';
 }
