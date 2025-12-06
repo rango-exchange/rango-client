@@ -2,6 +2,7 @@ import { execa } from 'execa';
 import { PUBLISH_COMMIT_SUBJECT } from './constants.mjs';
 import { GitError } from './errors.mjs';
 import { detectChannel } from './github.mjs';
+import { should } from './features.mjs';
 import { generateTagName, workspacePackages } from './utils.mjs';
 
 export async function isReleaseTagExistFor(pkg) {
@@ -132,6 +133,7 @@ export async function changed(since) {
 export async function getChangedPackagesFor(channel) {
   // Detect last release and what packages has changed since then.
   const useTagForDetectLastRelease = channel === 'prod';
+  // TODO: get head branch
   const baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
 
   const changedPkgs = await changed(baseCommit);
@@ -148,9 +150,21 @@ export async function getChangedPackagesFor(channel) {
  */
 export async function publishCommitAndTags(pkgs) {
   const channel = detectChannel();
-  const isTaggingSkipped = channel !== 'prod';
+  const isTaggingSkipped = should('createPublishTag');
+  const isCommittingSkipped = should('createPublishCommit');
   const subject = `${PUBLISH_COMMIT_SUBJECT}\n\n`;
   const tags = pkgs.map(generateTagName);
+
+  if (isCommittingSkipped && isTaggingSkipped) {
+    console.log('Creating commit and tag for this publish has been skipped.');
+    return;
+  }
+
+  if (isCommittingSkipped && !isTaggingSkipped) {
+    throw new Error(
+      'The enviroment has been setup correctly. when tag is enabled, commit should be enabled as well.'
+    );
+  }
 
   const list = tags.map((tag) => `- ${tag}`).join('\n');
   const message = subject + list;
