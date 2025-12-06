@@ -1,4 +1,4 @@
-import type { LegacyNetworkProviderMap } from '@rango-dev/wallets-core/legacy';
+import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import {
@@ -6,10 +6,10 @@ import {
   getNetworkInstance,
   Networks,
 } from '@rango-dev/wallets-shared';
-import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+import { DefaultSignerFactory, TransactionType } from 'rango-types';
 
 export default async function getSigners(
-  provider: LegacyNetworkProviderMap
+  provider: Provider
 ): Promise<SignerFactory> {
   const cosmosProvider = getNetworkInstance(provider, Networks.COSMOS);
   const signers = new DefaultSignerFactory();
@@ -17,7 +17,7 @@ export default async function getSigners(
     async () => await import('@rango-dev/signer-cosmos')
   );
   signers.registerSigner(
-    TxType.COSMOS,
+    TransactionType.COSMOS,
     new DefaultCosmosSigner(cosmosProvider)
   );
   return signers;

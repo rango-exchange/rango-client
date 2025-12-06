@@ -140,6 +140,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [Keplr](provider-keplr/readme.md)               | 🚧  | ❌   | ❌     | ✅     | ❌  | ❌  | ❌  |    ❌    |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
@@ -166,7 +167,8 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
-| Ledger       | ❌             | ❌             | ❌           | Transport                 | ✅            |
+| Keplr        | ✅             | ❌             | ❌           | Injected                  | ✅            |
+| Ledger       | ✅             | ❌             | ❌           | Transport                 | ✅            |
 | MathWallet   | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | OKX          | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
@@ -194,7 +196,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Enkrypt        | EVM                                                                                                                     | BTC,Polkadot                                      | &check;              | https://www.enkrypt.com/             |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                                                                                              | Cosmos,Polkadot                                   | &check;              | https://frontier.xyz/                |
 | Halo           | -                                                                                                                       | -                                                 | &cross;              | https://halo.social/                 |
-| Keplr          | Cosmos                                                                                                                  | -                                                 | &cross;              | https://www.keplr.app/               |
 | Leap Cosmos    | Cosmos                                                                                                                  | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
 rate ready to the hub)
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
