@@ -58,7 +58,8 @@ export function SupportedWallets(props: SupportedWalletsPropTypes) {
 }
 
 export function RouteWalletsPage() {
-  const { selectedQuote } = useQuoteStore();
+  const quoteStore = useQuoteStore()();
+  const { selectedQuote, setConfirmSwapData } = quoteStore;
   const routeWallets = useAppStore().selectedWallet('route');
   const { connectedWallets, setSelectedWallet, suggestRouteWallets } =
     useAppStore();
@@ -78,7 +79,7 @@ export function RouteWalletsPage() {
     !!confirmSwapResult?.warnings?.balance?.messages;
 
   useEffect(() => {
-    suggestRouteWallets();
+    suggestRouteWallets(quoteStore);
   }, []);
 
   useEffect(() => {
@@ -122,11 +123,9 @@ export function RouteWalletsPage() {
 
   const onConfirmBalanceWarning = () => {
     if (confirmSwapResult?.quoteData) {
-      useQuoteStore.setState({
-        confirmSwapData: {
-          proceedAnyway: true,
-          quoteData: confirmSwapResult.quoteData,
-        },
+      setConfirmSwapData({
+        proceedAnyway: true,
+        quoteData: confirmSwapResult.quoteData,
       });
       navigateToConfirmSwapPage();
     }
