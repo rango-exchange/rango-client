@@ -104,6 +104,7 @@ export async function increaseVersionForExperimental(pkg) {
     'workspace',
     pkg.name,
     'version',
+    '--new-version',
     newVersion,
     '--no-git-tag-version',
     '--json',

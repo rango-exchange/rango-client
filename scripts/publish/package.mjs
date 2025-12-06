@@ -2,11 +2,7 @@ import { should } from '../common/features.mjs';
 import { gitTagFor } from '../common/git.mjs';
 import { detectChannel, githubReleaseFor } from '../common/github.mjs';
 import { npmVersionFor } from '../common/npm.mjs';
-import {
-  increaseVersion,
-  increaseVersionForNext,
-  increaseVersionForProd,
-} from '../common/version.mjs';
+import { increaseVersion } from '../common/version.mjs';
 
 /**
  *
