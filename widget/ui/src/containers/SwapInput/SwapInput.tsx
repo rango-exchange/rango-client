@@ -106,7 +106,6 @@ export function SwapInput(props: SwapInputPropTypes) {
           )}
         </div>
       </div>
-      <Divider size={4} />
       <TokenValue>
         <PriceImpact
           size="medium"

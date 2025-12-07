@@ -12,8 +12,7 @@ export const Container = styled(Button, {
   minWidth: '130px',
   backgroundColor: 'transparent',
   borderRadius: '$xs',
-  paddingLeft: '0 !important',
-  paddingRight: '0 !important',
+  padding: '0 !important',
 
   color: '$neutral700',
   '&:disabled': {

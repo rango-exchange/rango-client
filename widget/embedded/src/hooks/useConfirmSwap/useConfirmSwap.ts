@@ -20,7 +20,7 @@ export function useConfirmSwap() {
       warnings: null,
     });
 
-  const handleConfirmSwap = async () => {
+  const handleConfirmSwap = async (callback?: () => void) => {
     if (!sourceWallet) {
       return;
     }
@@ -31,8 +31,7 @@ export function useConfirmSwap() {
     });
 
     setConfirmSwapResult(result);
-
-    if (result.warnings?.balance?.messages) {
+    if (result.warnings?.balance?.messages || result.error) {
       return;
     }
 
@@ -40,6 +39,7 @@ export function useConfirmSwap() {
       proceedAnyway: false,
       quoteData: result.quoteData,
     });
+    callback?.();
   };
 
   const clear = () => setConfirmSwapResult(null);

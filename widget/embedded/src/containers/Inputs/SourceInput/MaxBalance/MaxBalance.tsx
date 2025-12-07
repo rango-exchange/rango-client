@@ -16,7 +16,11 @@ export function MaxBalance(props: PropTypes) {
         <Skeleton variant="text" size="large" width={105} />
       ) : (
         <>
-          <Typography variant="body" size="xsmall" color="neutral600">
+          <Typography
+            variant="body"
+            size="xsmall"
+            color="neutral600"
+            className="max-balance">
             {t('Balance')}: {balance ?? '0.00'}
           </Typography>
           <Divider direction="horizontal" size={4} />

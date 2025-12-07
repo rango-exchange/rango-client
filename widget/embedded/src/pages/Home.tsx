@@ -1,7 +1,7 @@
 import type { SelectedQuote, SwapButtonState } from '../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
+import { Alert, Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { SameTokensWarning } from '../components/SameTokensWarning';
 import { SlippageWarningsAndErrors } from '../components/SlippageWarningsAndErrors/SlippageWarningsAndErrors';
 import { SwapMetrics } from '../components/SwapMetrics';
 import { WalletAddressErrorModal } from '../components/WalletAddressErrorModal/WalletAddressErrorModal';
+import { getQuoteErrorMessage } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SLIPPAGES } from '../constants/swapSettings';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
@@ -26,7 +27,7 @@ import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { UiEventTypes } from '../types';
+import { QuoteErrorType, UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
 import { emitPreventableEvent } from '../utils/events';
 import { getSlippageValidation } from '../utils/settings';
@@ -59,11 +60,11 @@ export function Home() {
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
     setConfirmSwapData,
+    resetAlerts,
   } = useQuoteStore()();
 
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
   const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
-
   const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
   const {
     config,
@@ -130,7 +131,6 @@ export function Home() {
 
   const currentQuoteWarning =
     slippageValidation?.quoteValidation || quoteWarning;
-
   const hasValidQuotes =
     !isExpandable || (isExpandable && quotes?.results.length);
   const hasWarningOrError = currentQuoteWarning || quoteError;
@@ -204,7 +204,9 @@ export function Home() {
       onHandleNavigation(navigationRoutes.destinationWallet),
     'confirm-warning': () => setShowQuoteWarningModal(true),
     'show-wallet-address-error': () => setShowWalletAddressError(true),
-    'confirm-swap': handleConfirmSwap,
+    'confirm-swap': async () => {
+      await handleConfirmSwap(() => navigate(navigationRoutes.confirmSwap));
+    },
     'select-route-wallets': () =>
       onHandleNavigation(navigationRoutes.routeWallets),
   };
@@ -218,6 +220,7 @@ export function Home() {
   };
 
   const onConfirmBalanceWarning = () => {
+    resetAlerts();
     if (confirmSwapResult?.quoteData) {
       setConfirmSwapData({
         proceedAnyway: true,
@@ -339,7 +342,7 @@ export function Home() {
                 skipAlerts={!!slippageValidation}
                 couldChangeSettings={true}
                 refetchQuote={fetchQuote}
-                showWarningModal={showQuoteWarningModal || showBalanceWarning}
+                showWarningModal={showQuoteWarningModal}
                 confirmationDisabled={!isActiveTab}
                 onOpenWarningModal={() => setShowQuoteWarningModal(true)}
                 onCloseWarningModal={() => setShowQuoteWarningModal(false)}
@@ -366,6 +369,20 @@ export function Home() {
               />
             </>
           )}
+
+          {!!confirmSwapResult?.error &&
+            confirmSwapResult.error.type === QuoteErrorType.REQUEST_FAILED && (
+              <>
+                <Divider size={8} />
+                <Alert
+                  type="error"
+                  variant="alarm"
+                  titleAlign="left"
+                  title={getQuoteErrorMessage(confirmSwapResult.error)}
+                />
+                <Divider size={8} />
+              </>
+            )}
           <SameTokensWarning />
         </PageContainer>
       </Layout>

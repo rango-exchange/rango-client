@@ -48,6 +48,7 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
+import { getRouteBlockchains } from '../pages/RouteWalletsPage/RouteWalletsPage.helpers';
 
 import { uniqueBy } from './common';
 import { isValidTokenAddress } from './meta';
@@ -313,7 +314,7 @@ export function getSwapButtonState(params: {
     };
   }
   const allChains = getQuoteChains({ quote, filter: 'all' });
-  const requiredChains = getQuoteChains({ quote, filter: 'required' });
+  const requiredChains = getRouteBlockchains(quote);
 
   /**
    * For a simple on-chain swap,
@@ -334,8 +335,7 @@ export function getSwapButtonState(params: {
       };
     }
   }
-
-  if (requiredChains.length > 1) {
+  if (requiredChains.length > 0) {
     return {
       title: swapButtonTitles().swap,
       action: 'select-route-wallets',
@@ -745,7 +745,7 @@ export function generateBalanceWarnings(
     if (!acc[item.blockchain]) {
       acc[item.blockchain] = [];
     }
-    acc[item.blockchain].push(item);
+    acc[item.blockchain]?.push(item);
     return acc;
   }, {});
 }

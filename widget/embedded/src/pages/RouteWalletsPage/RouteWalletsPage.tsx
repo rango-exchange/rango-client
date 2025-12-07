@@ -1,6 +1,5 @@
 import type { SupportedWalletsPropTypes } from './RouteWalletsPage.types';
 import type { ConfirmSwapFetchResult } from '../../hooks/useHandleSwap/useHandleSwap.types';
-import type { Wallet } from '../../types';
 
 import { i18n } from '@lingui/core';
 import { Alert, Button, Divider, Typography } from '@rango-dev/ui';
@@ -12,11 +11,13 @@ import { InsufficientBalanceModal } from '../../components/InsufficientBalanceMo
 import { Layout } from '../../components/Layout';
 import { MoreWalletsToSelect } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect';
 import { ListContainer } from '../../components/MoreWalletsToSelect/MoreWalletsToSelect.styles';
+import { getQuoteErrorMessage } from '../../constants/errors';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useConfirmSwap } from '../../hooks/useConfirmSwap';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { QuoteErrorType, type Wallet } from '../../types';
 
 import { getRouteBlockchains } from './RouteWalletsPage.helpers';
 import { Container, Title } from './RouteWalletsPage.styles';
@@ -132,6 +133,7 @@ export function RouteWalletsPage() {
   };
 
   const handleConfirmWallets = () => {
+    resetConfirmSwapState();
     const everyRequiredWalletsSelected = !requiredBlockchains.some(
       (blockchain) => !routeWallets?.[blockchain]
     );
@@ -141,7 +143,7 @@ export function RouteWalletsPage() {
       return;
     }
 
-    void handleConfirmSwap();
+    void handleConfirmSwap(() => navigateToConfirmSwapPage());
   };
 
   return (
@@ -170,6 +172,19 @@ export function RouteWalletsPage() {
             </Button>
           }>
           <Container>
+            {!!confirmSwapResult?.error &&
+              confirmSwapResult.error.type ===
+                QuoteErrorType.REQUEST_FAILED && (
+                <>
+                  <Alert
+                    type="error"
+                    variant="alarm"
+                    titleAlign="left"
+                    title={getQuoteErrorMessage(confirmSwapResult.error)}
+                  />
+                  <Divider size={8} />
+                </>
+              )}
             {showRouteWalletsError && (
               <>
                 <Alert
