@@ -30,7 +30,6 @@ export function useHandleSwap(): ConfirmSwap {
     selectedQuote: initialQuote,
     customDestination: customDestinationFromStore,
     confirmSwapData,
-    resetAlerts,
   } = useQuoteStore()();
   const { manager } = useManager();
   const { swapMode } = useSwapMode();
@@ -54,7 +53,10 @@ export function useHandleSwap(): ConfirmSwap {
   const fetch: ConfirmSwap['fetch'] = async (params) => {
     const selectedWallets = params.selectedWallets;
     const customDestination =
-      params?.customDestination ?? customDestinationFromStore;
+      params?.customDestination ??
+      selectedWallets[1]?.address ??
+      customDestinationFromStore ??
+      destinationWallet?.address;
 
     if (!fromToken || !toToken || !inputAmount) {
       return {
@@ -111,8 +113,6 @@ export function useHandleSwap(): ConfirmSwap {
           inputUsdValue,
           findToken,
         });
-
-        resetAlerts();
 
         return {
           quoteData: result,

@@ -75,7 +75,7 @@ export function InsufficientBalanceModal(props: PropTypes) {
                     messages.length > 1 && index !== messages.length - 1;
 
                   return (
-                    <Fragment key={message.blockchain}>
+                    <Fragment key={message.blockchain + message.asset.symbol}>
                       <InsufficientBalanceWarning
                         warning={{
                           title: warningItemReason[message.reason],

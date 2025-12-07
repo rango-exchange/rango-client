@@ -31,4 +31,8 @@ export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+
+  '& .max-balance': {
+    width: 'max-content',
+  },
 });

@@ -10,7 +10,7 @@ export const Container = styled('div', {
   },
   backgroundColor: '$$color',
   borderRadius: '$xm',
-  padding: '$15',
+  padding: '$8 $15',
   borderTopLeftRadius: '$0',
   borderTopRightRadius: '$0',
   variants: {
@@ -50,6 +50,7 @@ export const TokenValue = styled('div', {
   display: 'flex',
   flexDirection: 'row-reverse',
   justifyContent: 'space-between',
+  padding: '$4 0',
 });
 
 export const ValueTypography = styled('div', {
