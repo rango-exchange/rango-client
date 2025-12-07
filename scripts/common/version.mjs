@@ -3,6 +3,7 @@ import { IncreaseVersionFailedError } from './errors.mjs';
 import { Bumper } from 'conventional-recommended-bump';
 import { TAG_PACKAGE_PREFIX } from './changelog.mjs';
 import { ROOT_PACKAGE_NAME } from '../deploy/config.mjs';
+import { getLastCommitHashId } from './git.mjs';
 
 /**
  *
@@ -95,9 +96,14 @@ export async function increaseVersionForProd(pkg) {
 }
 
 export async function increaseVersionForExperimental(pkg) {
-  // TODO
-  const commitId = 'abcd';
-  const date = '20251206';
+  const now = new Date();
+  const yyyy = now.getUTCFullYear();
+  const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+  const dd = now.getUTCDate().toString().padStart(2, '0');
+  const date = `${yyyy}${mm}${dd}`;
+
+  const commitId = (await getLastCommitHashId()).slice(0, 8);
+
   const newVersion = `0.0.0-experimental-${commitId}-${date}`;
   /** @type {import('./typedefs.mjs').IncreaseVersionResult} */
   const versions = await execa('yarn', [
@@ -134,11 +140,11 @@ export async function increaseVersionForExperimental(pkg) {
 
 export async function increaseVersion(channel, pkg) {
   if (channel === 'prod') {
-    await increaseVersionForProd(pkg);
+    return await increaseVersionForProd(pkg);
   } else if (channel === 'next') {
-    await increaseVersionForNext(pkg);
+    return await increaseVersionForNext(pkg);
   } else if (channel === 'experimental') {
-    await increaseVersionForExperimental(pkg);
+    return await increaseVersionForExperimental(pkg);
   } else {
     throw new Error(`Your target channel not supported. channel: ${channel}`);
   }

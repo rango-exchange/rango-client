@@ -1,7 +1,7 @@
 import { execa } from 'execa';
 import { PUBLISH_COMMIT_SUBJECT } from './constants.mjs';
 import { GitError } from './errors.mjs';
-import { detectChannel } from './github.mjs';
+import { detectChannel, getBaseBranchForExperimental } from './github.mjs';
 import { should } from './features.mjs';
 import { generateTagName, workspacePackages } from './utils.mjs';
 
@@ -96,6 +96,16 @@ export async function getLastReleasedHashId(useTag = false) {
   }
 }
 
+export async function getBaseBranchCommitHashId(branch) {
+  const { stdout: hash } = await execa('git', ['merge-base', branch, 'HEAD']);
+  return hash.toString();
+}
+
+export async function getLastCommitHashId() {
+  const { stdout: hash } = await execa('git', ['rev-parse', 'HEAD']);
+  return hash.toString();
+}
+
 /**
  * Returns a list of changed packages since an specific commit.
  *
@@ -127,14 +137,19 @@ export async function changed(since) {
 /**
  * Getting changed packages by passing a distribution channel name.
  *
- * @param {'prod' | 'next'} channel
+ * @param {'prod' | 'next' | 'experimental'} channel
  * @returns {Promise<Array<import("./typedefs.mjs").Package>>}
  */
 export async function getChangedPackagesFor(channel) {
-  // Detect last release and what packages has changed since then.
-  const useTagForDetectLastRelease = channel === 'prod';
-  // TODO: get head branch
-  const baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
+  let baseCommit;
+  if (channel === 'experimental') {
+    const branch = getBaseBranchForExperimental();
+    baseCommit = await getBaseBranchCommitHashId(`origin/${branch}`);
+  } else {
+    // Detect last release and what packages has changed since then.
+    const useTagForDetectLastRelease = channel === 'prod';
+    baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
+  }
 
   const changedPkgs = await changed(baseCommit);
 

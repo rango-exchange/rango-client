@@ -182,6 +182,12 @@ export function checkEnvironments() {
   console.table(envs);
   console.log('Features:');
   console.table(features);
+  console.log('Release channel:', detectChannel());
+}
+
+// we want to experimental releases have a branch from `main`, but if this changed, we can add other branches (like `next`) to this.
+export function getBaseBranchForExperimental() {
+  return 'main';
 }
 
 export function detectChannel() {

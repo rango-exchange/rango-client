@@ -38,3 +38,5 @@ However it includes new features, but you shouldn't use it in production envirom
 There are some cases we don't want to merge a feature immediately in our pre-release channel (`next`) or production (`latest`), because sometimes there are big changes and should be measured with a/b testing or we are experimenting with the feature and using it internally to ensure we will deliver the right feature at its best shape for our users/library.
 For these cases, we will use experimental channel to handle these types of features and releass. it will be merged into pre-release channel eventually.
 We don't recommend to use experimental versions since they are less stable from `next` and `latest`, and may be removed entirely.
+
+Note: When preparing an experimental release from your branch, ensure that its base is the main branch.

@@ -19,7 +19,6 @@ import { should } from '../common/features.mjs';
 import { bumpClientAndRootVersionsAndGenerateRootChangelog } from './version-log.mjs';
 
 async function run() {
-  console.log('Hello');
   logAsSection('::group::🔍 Checking environments...');
   checkEnvironments();
   console.log('::endgroup::');
@@ -78,8 +77,6 @@ async function run() {
    * We are using esbuild so don't need to do anything.
    * but if we need, the potential solution is filtering parcel apps and run them secquentially.
    */
-
-  throw new Error('Intentional throwing.');
 
   logAsSection(`::group::🔨 Start building...`);
   await build(pkgs);
