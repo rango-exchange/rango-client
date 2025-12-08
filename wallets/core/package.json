@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.54.1-next.0",
+  "version": "0.0.0-experimental-936229e8-20251208",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
