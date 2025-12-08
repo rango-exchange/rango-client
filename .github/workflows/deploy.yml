@@ -12,7 +12,8 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
-          
+      - run: git pull  
+      
       - name: Prepare
         uses: ./.github/actions/prepare
         
