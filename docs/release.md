@@ -69,8 +69,12 @@ A publish to **Preview** is triggered automatically when a Pull Request is merge
 
 ### **Production**
 
+**Note:** Ensure that all modifications to the `Production Release` workflow are implemented as a hotfix to the `main` branch to guarantee that we have the most recent updates while executing the workflow.
+
 
 Run the **`Production Release`** workflow.
+
+
 It will:
 
 1. **Sync `main` with `next`**
