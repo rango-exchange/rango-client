@@ -1,3 +1,14 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.57.0...provider-all@0.58.0) (2025-12-09)
+
+
+### Features
+
+* migrate braavos to the hub ([2b34b8e](https://github.com/rango-exchange/rango-client/commit/2b34b8e537ff4f9fba3cccf0b46aa181c95595cc))
+* migrate ready to the hub ([15ccee9](https://github.com/rango-exchange/rango-client/commit/15ccee91244abc573c50f7d6b84c861ef52237be))
+* migrate solflare to the hub ([8aa1590](https://github.com/rango-exchange/rango-client/commit/8aa1590964aa0b169394840f3e1886ab9cd176c2))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.56.1...provider-all@0.57.0) (2025-12-02)
 
 

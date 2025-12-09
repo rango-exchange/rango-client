@@ -1,3 +1,12 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-ready@0.55.0...provider-ready@0.56.0) (2025-12-09)
+
+
+### Features
+
+* migrate ready to the hub ([15ccee9](https://github.com/rango-exchange/rango-client/commit/15ccee91244abc573c50f7d6b84c861ef52237be))
+
+
+
 # [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-ready@0.54.1...provider-ready@0.55.0) (2025-12-02)
 
 

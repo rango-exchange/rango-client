@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/provider-braavos@0.49.0...provider-braavos@0.50.0) (2025-12-09)
+
+
+### Features
+
+* migrate braavos to the hub ([2b34b8e](https://github.com/rango-exchange/rango-client/commit/2b34b8e537ff4f9fba3cccf0b46aa181c95595cc))
+
+
+
 # [0.49.0](https://github.com/rango-exchange/rango-client/compare/provider-braavos@0.48.1...provider-braavos@0.49.0) (2025-12-02)
 
 

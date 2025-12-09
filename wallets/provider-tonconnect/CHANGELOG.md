@@ -1,3 +1,7 @@
+# [0.18.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.17.0...provider-tonconnect@0.18.0) (2025-12-09)
+
+
+
 # [0.17.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.16.1...provider-tonconnect@0.17.0) (2025-12-02)
 
 
