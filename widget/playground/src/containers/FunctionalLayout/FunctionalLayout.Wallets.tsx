@@ -110,7 +110,9 @@ export function WalletSection() {
               if (state(WalletTypes.KEPLR).connected) {
                 void disconnect(WalletTypes.KEPLR);
               } else {
-                void connect(WalletTypes.KEPLR);
+                void connect(WalletTypes.KEPLR, [
+                  { namespace: 'Cosmos', network: 'cosmos' },
+                ]);
               }
             }}>
             {externalWallets && state(WalletTypes.KEPLR).connected
