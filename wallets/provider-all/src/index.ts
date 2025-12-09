@@ -15,7 +15,7 @@ import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
-import * as keplr from '@rango-dev/provider-keplr';
+import { versions as keplr } from '@rango-dev/provider-keplr';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
@@ -102,7 +102,7 @@ export const allProviders = (
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
+    keplr,
     phantom,
     ready,
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),

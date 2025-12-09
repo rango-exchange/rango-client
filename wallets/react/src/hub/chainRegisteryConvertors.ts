@@ -65,7 +65,9 @@ function convertToChain(
       rest: info.rest ? [{ address: info.rest }] : undefined,
     },
     explorers: convertExplorers(info),
-    logoURIs: meta.logo ? { png: meta.logo } : undefined,
+    logoURIs: meta.logo
+      ? { png: window.location.origin + meta.logo }
+      : undefined,
     keywords: info.experimental ? ['experimental'] : undefined,
   };
 
@@ -142,7 +144,7 @@ function convertToAssetList(info: CosmosChainInfo): CosmosAssetList {
     symbol: info.stakeCurrency.coinDenom,
     typeAsset: 'sdk.coin',
     logoURIs: info.stakeCurrency.coinImageUrl
-      ? { png: info.stakeCurrency.coinImageUrl }
+      ? { png: window.location.origin + info.stakeCurrency.coinImageUrl }
       : undefined,
     coingeckoId: info.stakeCurrency.coinGeckoId || undefined,
   });
@@ -171,7 +173,7 @@ function convertToAssetList(info: CosmosChainInfo): CosmosAssetList {
       symbol: currency.coinDenom,
       typeAsset: 'sdk.coin',
       logoURIs: currency.coinImageUrl
-        ? { png: currency.coinImageUrl }
+        ? { png: window.location.origin + currency.coinImageUrl }
         : undefined,
       coingeckoId: currency.coinGeckoId || undefined,
     });
