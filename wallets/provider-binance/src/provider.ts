@@ -2,13 +2,13 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
-import { binance as rabbyInstance } from './utils.js';
+import { binance as binanceInstance } from './utils.js';
 
 const buildProvider = () =>
   new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();
-      if (rabbyInstance()) {
+      if (binanceInstance()) {
         setState('installed', true);
         console.debug('[binance-wallet] instance detected.', context);
       }

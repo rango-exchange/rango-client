@@ -41,7 +41,7 @@ export function evmBinance(): EvmProviderApi {
 
   if (!evmInstance) {
     throw new Error(
-      'Rabby not injected or EVM not enabled. Please check your wallet.'
+      'Binance not injected or EVM not enabled. Please check your wallet.'
     );
   }
 

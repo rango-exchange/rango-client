@@ -30,9 +30,9 @@ export const metadata: ProviderMetadata = {
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/binance/icon.svg',
   extensions: {
     chrome:
-      'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch',
+      'https://chromewebstore.google.com/detail/binance-wallet/cadiboklkpojfamcoggejbbdjcoiljjk',
     brave:
-      'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch',
+      'https://chromewebstore.google.com/detail/binance-wallet/cadiboklkpojfamcoggejbbdjcoiljjk',
     homepage: 'https://www.binance.com/binancewallet',
   },
   properties: [
