@@ -1,3 +1,21 @@
+## Widget [0.52.0] (2025-12-09)
+_includes `@rango-dev/widget-embedded@0.56.0`_
+
+### Bug Fixes
+
+* **ci:** add pull step to deploy workflow ([21a3242](https://github.com/rango-exchange/rango-client/commit/21a3242ad0c484f1a1a61725624db033a4a546f0))
+
+
+### Features
+
+* add `starknet` namespace to the hub ([b500da5](https://github.com/rango-exchange/rango-client/commit/b500da5f2191c31be69119514865b6f9245968e5))
+* add cosmos namespace to the hub ([2b1539f](https://github.com/rango-exchange/rango-client/commit/2b1539ff01b6c270503a5d84fccaee064592a367))
+* migrate braavos to the hub ([2b34b8e](https://github.com/rango-exchange/rango-client/commit/2b34b8e537ff4f9fba3cccf0b46aa181c95595cc))
+* migrate ready to the hub ([15ccee9](https://github.com/rango-exchange/rango-client/commit/15ccee91244abc573c50f7d6b84c861ef52237be))
+* migrate solflare to the hub ([8aa1590](https://github.com/rango-exchange/rango-client/commit/8aa1590964aa0b169394840f3e1886ab9cd176c2))
+
+
+
 ## Widget [0.51.0] (2025-12-02)
 _includes `@rango-dev/widget-embedded@0.55.0`_
 
