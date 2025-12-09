@@ -236,8 +236,11 @@ export function mapHubEventsToLegacy(
           );
         }
 
-        const formattedAddresses = event.accounts.map(
-          fromAccountIdToLegacyAddressFormat
+        const formattedAddresses = event.accounts.map((accounts) =>
+          fromAccountIdToLegacyAddressFormat(
+            accounts,
+            metadata.allBlockChains || []
+          )
         );
         onUpdateState(
           event.provider,
@@ -380,4 +383,11 @@ export function isEvmNamespace(
   >
 ): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
   return ns.namespaceId === 'EVM';
+}
+export function isCosmosNamespace(
+  ns: ProxiedNamespace<
+    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
+  >
+): ns is ProxiedNamespace<CosmosActions> & { namespaceId: 'Cosmos' } {
+  return ns.namespaceId === 'Cosmos';
 }

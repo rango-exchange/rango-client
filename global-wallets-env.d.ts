@@ -8,8 +8,6 @@ declare global {
     braveEthereum?: any;
     braveSolana?: any;
     BinanceChain?: any;
-    clover?: any;
-    clover_solana?: any;
     cosmostation?: any;
     exodus?: any;
     solana?: any;

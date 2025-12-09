@@ -10,6 +10,7 @@ import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { utils } from '@rango-dev/wallets-core/namespaces/evm';
 import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
+import { cosmosBlockchains } from 'rango-types';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -26,6 +27,7 @@ import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   getSupportedChainsFromProvider,
+  isCosmosNamespace,
   isEvmNamespace,
   isSolanaNamespace,
   mapHubEventsToLegacy,
@@ -242,7 +244,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
           );
 
           let connectNamespacePromise: () => Promise<
-            Accounts | string | AccountsWithActiveChain
+            Accounts | AccountsWithActiveChain
           >;
 
           if (isSolanaNamespace(namespace)) {
@@ -255,6 +257,20 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               namespace.connect(network, {
                 derivationPath: namespaceInput.derivationPath,
               });
+          } else if (isCosmosNamespace(namespace)) {
+            const cosmosBlockChains = cosmosBlockchains(
+              params.allBlockChains || []
+            ).filter((chain) => !!chain.chainId);
+            connectNamespacePromise = async () => {
+              return namespace.connect({
+                chainIds: cosmosBlockChains
+                  .filter((chain) => chain.info && !chain.info.experimental)
+                  ?.map((chain) => chain.chainId!),
+                customChainIds: cosmosBlockChains
+                  .filter((chain) => chain.info?.experimental)
+                  .map((chain) => chain.chainId!),
+              });
+            };
           } else {
             connectNamespacePromise = async () => namespace.connect();
           }
@@ -459,7 +475,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const accounts = walletState.namespaces
         .filter((namespace) => namespace.connected)
         .flatMap((namespace) =>
-          namespace.accounts?.map(fromAccountIdToLegacyAddressFormat)
+          namespace.accounts?.map((accounts) =>
+            fromAccountIdToLegacyAddressFormat(
+              accounts,
+              params.allBlockChains || []
+            )
+          )
         )
         .filter((account): account is string => !!account);
 

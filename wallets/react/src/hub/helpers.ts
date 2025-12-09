@@ -3,16 +3,20 @@ import type {
   Accounts,
   AccountsWithActiveChain,
 } from '@rango-dev/wallets-core/namespaces/common';
+import type { BlockchainMeta } from 'rango-types';
 import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
+import { CAIP_NAMESPACE as CAIP_COSMOS_NAMESPACE } from '@rango-dev/wallets-core/namespaces/cosmos';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import { CAIP } from '@rango-dev/wallets-core/utils';
+import { getBlockChainNameFromId } from '@rango-dev/wallets-shared';
 import { Err, Ok } from 'ts-results';
 
 export function mapCaipNamespaceToLegacyNetworkName(
-  chainId: CAIP.ChainIdParams | string
+  chainId: CAIP.ChainIdParams | string,
+  allBlockChains: BlockchainMeta[]
 ): string {
   if (typeof chainId === 'string') {
     return chainId;
@@ -29,8 +33,20 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'BTC';
   }
 
+  if (chainId.namespace.toLowerCase() === CAIP_COSMOS_NAMESPACE) {
+    const network = getBlockChainNameFromId(chainId.reference, allBlockChains);
+    if (!network) {
+      throw new Error(
+        `Network didn't found for given chainId: ${chainId.reference}`
+      );
+    }
+    return network;
+  }
   if (chainId.namespace === 'sui' || chainId.reference === CAIP_TRON_CHAIN_ID) {
     return chainId.reference.toUpperCase();
+  }
+  if (chainId.namespace === 'starknet') {
+    return chainId.namespace.toUpperCase();
   }
 
   return chainId.reference;
@@ -43,9 +59,12 @@ export function mapCaipNamespaceToLegacyNetworkName(
  *
  * @see https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md
  */
-export function fromAccountIdToLegacyAddressFormat(account: string): string {
+export function fromAccountIdToLegacyAddressFormat(
+  account: string,
+  allBlockChains: BlockchainMeta[]
+): string {
   const { chainId, address } = CAIP.AccountId.parse(account);
-  const network = mapCaipNamespaceToLegacyNetworkName(chainId);
+  const network = mapCaipNamespaceToLegacyNetworkName(chainId, allBlockChains);
   return formatAddressWithNetwork(address, network);
 }
 

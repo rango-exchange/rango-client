@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tonconnect",
-  "version": "0.17.0",
+  "version": "0.17.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -24,7 +24,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-shared": "^0.55.0",
+    "@rango-dev/wallets-shared": "^0.55.1-next.2",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",

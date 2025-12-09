@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-metamask",
-  "version": "0.55.0",
+  "version": "0.55.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.40.0",
     "@rango-dev/signer-solana": "^0.46.1",
-    "@rango-dev/wallets-core": "^0.54.0",
-    "@rango-dev/wallets-shared": "^0.55.0",
+    "@rango-dev/wallets-core": "^0.54.1-next.1",
+    "@rango-dev/wallets-shared": "^0.55.1-next.2",
     "@wallet-standard/app": "^1.1.0",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.89"

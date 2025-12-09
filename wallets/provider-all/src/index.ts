@@ -5,9 +5,8 @@ import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import { versions as bitget } from '@rango-dev/provider-bitget';
-import * as braavos from '@rango-dev/provider-braavos';
+import { versions as braavos } from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
-import * as clover from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
@@ -24,11 +23,11 @@ import { versions as metamask } from '@rango-dev/provider-metamask';
 import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
-import * as ready from '@rango-dev/provider-ready';
+import { versions as ready } from '@rango-dev/provider-ready';
 import * as safe from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
-import * as solflare from '@rango-dev/provider-solflare';
+import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
@@ -105,14 +104,13 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
     lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
     phantom,
-    lazyProvider(legacyProviderImportsToVersionsInterface(ready)),
+    ready,
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
     enkrypt,
     bitget,
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
     xverse,
-    lazyProvider(legacyProviderImportsToVersionsInterface(clover)),
     safepal,
     brave,
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
@@ -127,11 +125,11 @@ export const allProviders = (
     lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     taho,
-    lazyProvider(legacyProviderImportsToVersionsInterface(braavos)),
+    braavos,
     ledger,
     rabby,
     lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(solflare)),
+    solflare,
     slush,
     unisat,
   ];
