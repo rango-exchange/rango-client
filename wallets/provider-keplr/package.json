@@ -7,12 +7,12 @@
   "main": "./dist/mod.js",
   "exports": {
     ".": {
-      "default": "./dist/mod.js",
-      "types": "./dist/mod.d.ts"
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
     },
     "./lib": {
-      "default": "./dist/lib.js",
-      "types": "./dist/lib.d.ts"
+      "types": "./dist/lib.d.ts",
+      "default": "./dist/lib.js"
     }
   },
   "typings": "dist/mod.d.ts",
