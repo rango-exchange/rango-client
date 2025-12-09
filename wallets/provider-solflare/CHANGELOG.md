@@ -1,3 +1,13 @@
+# [0.23.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.22.0...provider-solflare@0.23.0) (2025-12-09)
+
+
+### Features
+
+* migrate ready to the hub ([15ccee9](https://github.com/rango-exchange/rango-client/commit/15ccee91244abc573c50f7d6b84c861ef52237be))
+* migrate solflare to the hub ([8aa1590](https://github.com/rango-exchange/rango-client/commit/8aa1590964aa0b169394840f3e1886ab9cd176c2))
+
+
+
 # [0.22.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare@0.21.1...provider-solflare@0.22.0) (2025-12-02)
 
 

@@ -1,3 +1,13 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.54.0...wallets-core@0.55.0) (2025-12-09)
+
+
+### Features
+
+* add `starknet` namespace to the hub ([b500da5](https://github.com/rango-exchange/rango-client/commit/b500da5f2191c31be69119514865b6f9245968e5))
+* add cosmos namespace to the hub ([2b1539f](https://github.com/rango-exchange/rango-client/commit/2b1539ff01b6c270503a5d84fccaee064592a367))
+
+
+
 # [0.54.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.53.0...wallets-core@0.54.0) (2025-12-02)
 
 

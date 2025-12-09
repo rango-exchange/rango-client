@@ -1,3 +1,7 @@
+# [0.12.0](https://github.com/rango-exchange/rango-client/compare/provider-unisat@0.11.0...provider-unisat@0.12.0) (2025-12-09)
+
+
+
 # [0.11.0](https://github.com/rango-exchange/rango-client/compare/provider-unisat@0.10.1...provider-unisat@0.11.0) (2025-12-02)
 
 

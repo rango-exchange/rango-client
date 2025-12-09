@@ -1,3 +1,7 @@
+# [0.2.0](https://github.com/rango-exchange/rango-client/compare/provider-xverse@0.1.0...provider-xverse@0.2.0) (2025-12-09)
+
+
+
 # 0.1.0 (2025-12-02)
 
 

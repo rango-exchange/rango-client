@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-cosmostation",
-  "version": "0.55.1-next.2",
+  "version": "0.56.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@rango-dev/signer-cosmos": "^0.38.0",
     "@rango-dev/signer-evm": "^0.40.0",
-    "@rango-dev/wallets-core": "^0.54.1-next.1",
-    "@rango-dev/wallets-shared": "^0.55.1-next.2",
+    "@rango-dev/wallets-core": "^0.55.0",
+    "@rango-dev/wallets-shared": "^0.56.0",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {
