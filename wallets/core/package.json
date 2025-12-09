@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.55.0",
+  "version": "0.55.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -77,11 +77,11 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
+    "@chain-registry/types": "2.0.110",
     "caip": "^1.1.1",
     "immer": "^10.0.4",
     "rango-types": "^0.1.89",
-    "zustand": "^4.5.2",
-    "@chain-registry/types": "2.0.110"
+    "zustand": "^4.5.2"
   },
   "publishConfig": {
     "access": "public"
