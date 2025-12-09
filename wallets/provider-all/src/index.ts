@@ -16,7 +16,7 @@ import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
 import { versions as keplr } from '@rango-dev/provider-keplr';
-import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
+import { versions as leap } from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
@@ -122,7 +122,7 @@ export const allProviders = (
     tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
+    leap,
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     taho,
     braavos,

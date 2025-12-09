@@ -138,10 +138,11 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ✅    |
 | [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [Cosmostation](provider-cosmostation/readme.md) | ✅  | ❌   | ❌     | ✅     | ❌  | ❌  | ❌  |    ❌    |
 | [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Keplr](provider-keplr/readme.md)               | 🚧  | ❌   | ❌     | ✅     | ❌  | ❌  | ❌  |    ❌    |
-| [Cosmostation](provider-cosmostation/readme.md) | ✅  | ❌   | ❌     | ✅     | ❌  | ❌  | ❌  |    ❌    |
+| [Leap](provider-leap-cosmos/readme.md)          | 🚧  | ❌   | 🚧     | ✅     | ❌  | 🚧  | ❌  |    ❌    |
 | [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
