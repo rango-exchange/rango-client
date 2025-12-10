@@ -1,10 +1,12 @@
 import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 export type ProviderObject = {
   [LegacyNetworks.ETHEREUM]: EvmProviderApi;
   [LegacyNetworks.TRON]: TronProviderApi;
+  [LegacyNetworks.BTC]: UtxoProviderApi;
 };
 export type Provider = Map<
   keyof ProviderObject,
@@ -12,9 +14,11 @@ export type Provider = Map<
 >;
 
 export type TronChangeAccountEvent = {
-  isTronLink: boolean;
+  isBitkeep: boolean;
   message: {
     action: string;
-    address: string;
+    data: {
+      address: string;
+    };
   };
 };

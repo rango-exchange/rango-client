@@ -3,6 +3,7 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { tron } from './namespaces/tron.js';
+import { utxo } from './namespaces/utxo.js';
 import { bitget } from './utils.js';
 
 const buildProvider = () =>
@@ -18,7 +19,7 @@ const buildProvider = () =>
     .config('metadata', metadata)
     .add('tron', tron)
     .add('evm', evm)
-
+    .add('utxo', utxo)
     .build();
 
 export { buildProvider };
