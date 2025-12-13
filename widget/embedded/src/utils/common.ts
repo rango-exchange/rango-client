@@ -295,3 +295,14 @@ export function filterBlockchainsWithAtLeastOneToken(
     blockchainsWithAtLeastOneToken.has(blockchain.name)
   );
 }
+
+export function isBrowserSupportClipboardPaste() {
+  const isFirefox = navigator?.userAgent.includes('Firefox');
+  return !isFirefox;
+}
+
+export function uniqueBy<T>(arr: T[], key: keyof T) {
+  const map = new Map<unknown, T>();
+  arr.forEach((item) => map.set(item[key], item));
+  return Array.from(map.values());
+}
