@@ -39,4 +39,4 @@ There are some cases we don't want to merge a feature immediately in our pre-rel
 For these cases, we will use experimental channel to handle these types of features and releass. it will be merged into pre-release channel eventually.
 We don't recommend to use experimental versions since they are less stable from `next` and `latest`, and may be removed entirely.
 
-Note: When preparing an experimental release from your branch, ensure that its base is the main branch.
+**Note:** Experimental releases are triggered manually via GitHub Actions workflow dispatch from a feature branch. Your branch must be based on `main`.

@@ -12,6 +12,8 @@ const config = {
   checkGithubRelease: ['prod'],
   checkGitTags: ['prod'],
   checkNpm: ['prod', 'next'],
+  createPublishCommit: ['prod', 'next'],
+  createPublishTag: ['prod'],
 };
 
 /**
