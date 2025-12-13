@@ -165,17 +165,30 @@ export function checkEnvironments() {
     { name: 'check github release', value: should('checkGithubRelease') },
     { name: 'check git tags', value: should('checkGitTags') },
     { name: 'check versions on npm', value: should('checkNpm') },
+    {
+      name: 'create a commit after publish',
+      value: should('createPublishCommit'),
+    },
+    { name: 'create a tag after publish', value: should('createPublishTag') },
   ];
 
   console.log('Environments Variables:');
   console.table(envs);
   console.log('Features:');
   console.table(features);
+  console.log('Release channel:', detectChannel());
+}
+
+// All the experimental releases should be a branch of `main`, if this policy changed (like publish from other base branches like `next`), we can add it here.
+export function getBaseBranchForExperimental() {
+  return 'main';
 }
 
 export function detectChannel() {
   if (getEnvWithFallback('REF') === 'refs/heads/main') {
     return 'prod';
+  } else if (getEnvWithFallback('REF') === 'refs/heads/next') {
+    return 'next';
   }
-  return 'next';
+  return 'experimental';
 }

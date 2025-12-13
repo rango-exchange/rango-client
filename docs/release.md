@@ -61,6 +61,11 @@ Running `yarn run deploy`:
 
 ## **Release Types**
 
+### Experimental
+
+You can trigger an experimental release (base branch should be `main`) by running `Publish` workflow manually for your branch.
+
+
 ### **Next (Staging)**
 
 A publish to **Preview** is triggered automatically when a Pull Request is merged into `next`.

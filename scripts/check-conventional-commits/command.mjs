@@ -1,17 +1,30 @@
 import { execa } from 'execa';
 import { logAsSection } from '../publish/utils.mjs';
-import { detectChannel } from '../common/github.mjs';
+import {
+  detectChannel,
+  getBaseBranchForExperimental,
+} from '../common/github.mjs';
 import { CommitParser } from 'conventional-commits-parser';
 import { filterRevertedCommitsSync } from 'conventional-commits-filter';
 
 async function run() {
   const channel = detectChannel();
+  let baseBranch;
+  if (channel === 'prod') {
+    baseBranch = 'main';
+  } else if (channel === 'next') {
+    baseBranch = 'next';
+  } else if (channel === 'experimental') {
+    baseBranch = await getBaseBranchForExperimental();
+  } else {
+    throw new Error(`Unhandled channel. channel: ${channel}`);
+  }
 
-  logAsSection('Run...', `at ${channel}..HEAD`);
+  logAsSection('Run...', `at ${baseBranch}..HEAD`);
 
   const { stdout: logs } = await execa('git', [
     'log',
-    `origin/${channel}..HEAD`,
+    `origin/${baseBranch}..HEAD`,
     '--pretty=format:%B__________',
   ]);
   const commits = logs.split('__________').filter(Boolean);

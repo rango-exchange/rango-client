@@ -1,7 +1,8 @@
 import { execa } from 'execa';
 import { PUBLISH_COMMIT_SUBJECT } from './constants.mjs';
 import { GitError } from './errors.mjs';
-import { detectChannel } from './github.mjs';
+import { detectChannel, getBaseBranchForExperimental } from './github.mjs';
+import { should } from './features.mjs';
 import { generateTagName, workspacePackages } from './utils.mjs';
 
 export async function isReleaseTagExistFor(pkg) {
@@ -95,6 +96,28 @@ export async function getLastReleasedHashId(useTag = false) {
   }
 }
 
+export async function getBaseBranchCommitHashId(branch) {
+  const { stdout: hash } = await execa('git', ['merge-base', branch, 'HEAD']);
+  return hash.toString();
+}
+
+export async function getLastCommitHashId() {
+  const { stdout: hash } = await execa('git', ['rev-parse', 'HEAD']);
+  return hash.toString();
+}
+
+export async function isBranchAncestorOfHead(branch) {
+  const { exitCode } = await execa(
+    'git',
+    ['merge-base', '--is-ancestor', branch, 'HEAD'],
+    {
+      reject: false,
+    }
+  );
+
+  return exitCode === 0;
+}
+
 /**
  * Returns a list of changed packages since an specific commit.
  *
@@ -126,13 +149,24 @@ export async function changed(since) {
 /**
  * Getting changed packages by passing a distribution channel name.
  *
- * @param {'prod' | 'next'} channel
+ * @param {'prod' | 'next' | 'experimental'} channel
  * @returns {Promise<Array<import("./typedefs.mjs").Package>>}
  */
 export async function getChangedPackagesFor(channel) {
-  // Detect last release and what packages has changed since then.
-  const useTagForDetectLastRelease = channel === 'prod';
-  const baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
+  let baseCommit;
+  if (channel === 'experimental') {
+    const branch = getBaseBranchForExperimental();
+    const originBranch = `origin/${branch}`;
+    if (await isBranchAncestorOfHead(originBranch)) {
+      baseCommit = await getBaseBranchCommitHashId(originBranch);
+    } else {
+      throw new Error('Your branch must be based on `main`.');
+    }
+  } else {
+    // Detect last release and what packages has changed since then.
+    const useTagForDetectLastRelease = channel === 'prod';
+    baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
+  }
 
   const changedPkgs = await changed(baseCommit);
 
@@ -148,9 +182,21 @@ export async function getChangedPackagesFor(channel) {
  */
 export async function publishCommitAndTags(pkgs) {
   const channel = detectChannel();
-  const isTaggingSkipped = channel !== 'prod';
+  const isTaggingSkipped = !should('createPublishTag');
+  const isCommittingSkipped = !should('createPublishCommit');
   const subject = `${PUBLISH_COMMIT_SUBJECT}\n\n`;
   const tags = pkgs.map(generateTagName);
+
+  if (isCommittingSkipped && isTaggingSkipped) {
+    console.log('Creating commit and tag for this publish has been skipped.');
+    return;
+  }
+
+  if (isCommittingSkipped && !isTaggingSkipped) {
+    throw new Error(
+      'The enviroment has been setup correctly. when tag is enabled, commit should be enabled as well.'
+    );
+  }
 
   const list = tags.map((tag) => `- ${tag}`).join('\n');
   const message = subject + list;
