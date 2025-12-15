@@ -1,3 +1,12 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.56.0...provider-cosmostation@0.57.0) (2025-12-15)
+
+
+### Features
+
+* migrate cosmostation to the hub ([28ad149](https://github.com/rango-exchange/rango-client/commit/28ad14901d4a0827720b92519a2f8a564d334b14))
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.55.0...provider-cosmostation@0.56.0) (2025-12-09)
 
 

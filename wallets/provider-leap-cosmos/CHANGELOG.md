@@ -1,3 +1,12 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-leap-cosmos@0.56.0...provider-leap-cosmos@0.57.0) (2025-12-15)
+
+
+### Features
+
+* migrate leap cosmos to the hub ([9357f11](https://github.com/rango-exchange/rango-client/commit/9357f11db87da29404903b0464390f6f2ccad138))
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-leap-cosmos@0.55.0...provider-leap-cosmos@0.56.0) (2025-12-09)
 
 

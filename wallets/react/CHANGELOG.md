@@ -1,3 +1,13 @@
+# [0.43.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.42.0...wallets-react@0.43.0) (2025-12-15)
+
+
+### Features
+
+* implement suggest action for hub ([c23ca71](https://github.com/rango-exchange/rango-client/commit/c23ca7174cfa388870006482c177c778a047ca58))
+* migrate keplr to the hub ([4e28340](https://github.com/rango-exchange/rango-client/commit/4e283407af7957969a6ae7f0e4531c305fad968f))
+
+
+
 # [0.42.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.41.0...wallets-react@0.42.0) (2025-12-09)
 
 

@@ -1,3 +1,12 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.55.0...wallets-core@0.56.0) (2025-12-15)
+
+
+### Features
+
+* implement suggest action for hub ([c23ca71](https://github.com/rango-exchange/rango-client/commit/c23ca7174cfa388870006482c177c778a047ca58))
+
+
+
 # [0.55.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.54.0...wallets-core@0.55.0) (2025-12-09)
 
 

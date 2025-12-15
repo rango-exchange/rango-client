@@ -1,3 +1,13 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.56.0...widget-embedded@0.57.0) (2025-12-15)
+
+
+### Features
+
+* handle campaign tag in routes ([62006bc](https://github.com/rango-exchange/rango-client/commit/62006bc10fb165b758057e41505b5dcafbba5485))
+* implement suggest action for hub ([c23ca71](https://github.com/rango-exchange/rango-client/commit/c23ca7174cfa388870006482c177c778a047ca58))
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.55.0...widget-embedded@0.56.0) (2025-12-09)
 
 
