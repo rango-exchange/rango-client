@@ -1,3 +1,22 @@
+## Widget [0.53.0] (2025-12-15)
+_includes `@rango-dev/widget-embedded@0.57.0`_
+
+### Bug Fixes
+
+* kepler not connecting from playground ([f921b2c](https://github.com/rango-exchange/rango-client/commit/f921b2cb3691a8bea5cd5961909577d4ed36fef2))
+
+
+### Features
+
+* handle campaign tag in routes ([62006bc](https://github.com/rango-exchange/rango-client/commit/62006bc10fb165b758057e41505b5dcafbba5485))
+* implement suggest action for hub ([c23ca71](https://github.com/rango-exchange/rango-client/commit/c23ca7174cfa388870006482c177c778a047ca58))
+* migrate cosmostation to the hub ([28ad149](https://github.com/rango-exchange/rango-client/commit/28ad14901d4a0827720b92519a2f8a564d334b14))
+* migrate keplr to the hub ([4e28340](https://github.com/rango-exchange/rango-client/commit/4e283407af7957969a6ae7f0e4531c305fad968f))
+* migrate leap cosmos to the hub ([9357f11](https://github.com/rango-exchange/rango-client/commit/9357f11db87da29404903b0464390f6f2ccad138))
+* update key icon ([521d693](https://github.com/rango-exchange/rango-client/commit/521d693f0f6039bdfa414d22d34047d0b3a205d6))
+
+
+
 ## Widget [0.52.0] (2025-12-09)
 _includes `@rango-dev/widget-embedded@0.56.0`_
 
