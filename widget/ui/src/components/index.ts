@@ -41,6 +41,7 @@ export * from './StepDetails/index.js';
 export * from './Popover/index.js';
 export * from './Flags/index.js';
 export * from './Select/index.js';
+export * from './CampaignQuoteTag/index.js';
 export * from './QuoteTag/index.js';
 export * from './Tabs/index.js';
 export * from './CustomTokenWarning/index.js';

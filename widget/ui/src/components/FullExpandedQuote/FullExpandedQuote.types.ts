@@ -17,6 +17,13 @@ type BaseProps = {
   tooltipContainer?: HTMLElement;
   onClick?: () => void;
   selected?: boolean;
+  campaignTag?: {
+    id: string;
+    title: string;
+    backgroundUrl: string;
+    iconUrl: string;
+    linkUrl: string;
+  };
 };
 
 export type DataLoadedProps = {

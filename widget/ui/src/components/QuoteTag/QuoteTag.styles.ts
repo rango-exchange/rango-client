@@ -39,6 +39,7 @@ export const TagContainer = styled('div', {
           color: '$warning500',
         },
       },
+      CAMPAIGN: {},
     },
   },
 });
