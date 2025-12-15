@@ -36,7 +36,7 @@ export const metadata: ProviderMetadata = {
           {
             label: 'Cosmos',
             value: 'Cosmos',
-            id: 'Cosmos',
+            id: 'COSMOS',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               cosmosBlockchains(allBlockchains),
           },
