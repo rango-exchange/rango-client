@@ -5,6 +5,7 @@ import { i18n } from '@lingui/core';
 import React, { useState } from 'react';
 
 import { ErrorIcon, InfoIcon, WarningIcon } from '../../icons/index.js';
+import { CampaignQuoteTag } from '../CampaignQuoteTag/CampaignQuoteTag.js';
 import { ChainToken } from '../ChainToken/index.js';
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
@@ -57,6 +58,7 @@ export function FullExpandedQuote(props: PropTypes) {
     tooltipContainer,
     onClick,
     selected = false,
+    campaignTag,
     id,
   } = props;
   const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
@@ -79,13 +81,30 @@ export function FullExpandedQuote(props: PropTypes) {
           <>
             {props.quoteCost}
             <TagsContainer>
-              {props.tags.map((tag) => (
-                <QuoteTag
-                  key={tag.label}
-                  label={getTagLabel(tag.value as Tag, i18n.t)}
-                  value={tag.value}
-                />
-              ))}
+              {props.tags.map((tag) => {
+                if (tag.value === 'CAMPAIGN' && campaignTag) {
+                  return (
+                    <CampaignQuoteTag
+                      key={tag.label}
+                      backgroundUrl={campaignTag.backgroundUrl}
+                      iconUrl={campaignTag.iconUrl}
+                      linkUrl={campaignTag.linkUrl}
+                      title={campaignTag.title}
+                      routeTag={{
+                        label: getTagLabel(tag.value as Tag, i18n.t),
+                        value: tag.value,
+                      }}
+                    />
+                  );
+                }
+                return (
+                  <QuoteTag
+                    key={tag.label}
+                    label={getTagLabel(tag.value as Tag, i18n.t)}
+                    value={tag.value}
+                  />
+                );
+              })}
             </TagsContainer>
           </>
         )}

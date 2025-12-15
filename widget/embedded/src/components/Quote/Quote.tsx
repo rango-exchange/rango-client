@@ -5,6 +5,7 @@ import type { SwapResult } from 'rango-sdk';
 import { i18n } from '@lingui/core';
 import {
   Alert,
+  CampaignQuoteTag,
   Divider,
   FullExpandedQuote,
   InfoIcon,
@@ -110,6 +111,10 @@ export function Quote(props: QuoteProps) {
         USD_VALUE_MAX_DECIMALS
       )
     : '';
+  const {
+    config: { __UNSTABLE_OR_INTERNAL__ },
+  } = useAppStore();
+
   const priceImpact = getPriceImpact(input.usdValue, output.usdValue ?? null);
   const percentageChange = numberToString(
     priceImpact,
@@ -350,6 +355,7 @@ export function Quote(props: QuoteProps) {
       tooltipContainer={getExpanded()}
       steps={steps}
       tags={sortedQuoteTags}
+      campaignTag={__UNSTABLE_OR_INTERNAL__?.campaignTag}
       id="widget-quote-full-expanded-quote-container"
       quoteCost={
         <QuoteCostDetails
@@ -384,9 +390,18 @@ export function Quote(props: QuoteProps) {
             <TagContainer>
               {sortedQuoteTags.map((tag, index) => {
                 const key = `${tag.value}_${index}`;
+
                 return (
                   <React.Fragment key={key}>
-                    <QuoteTag label={tag.label} value={tag.value} />
+                    {tag.value == 'CAMPAIGN' &&
+                    __UNSTABLE_OR_INTERNAL__?.campaignTag ? (
+                      <CampaignQuoteTag
+                        routeTag={tag}
+                        {...__UNSTABLE_OR_INTERNAL__.campaignTag}
+                      />
+                    ) : (
+                      <QuoteTag label={tag.label} value={tag.value} />
+                    )}
                     <Divider size={4} direction="horizontal" />
                   </React.Fragment>
                 );
