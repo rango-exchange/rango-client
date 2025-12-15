@@ -1,3 +1,17 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.56.0...provider-keplr@0.57.0) (2025-12-15)
+
+
+### Bug Fixes
+
+* kepler not connecting from playground ([f921b2c](https://github.com/rango-exchange/rango-client/commit/f921b2cb3691a8bea5cd5961909577d4ed36fef2))
+
+
+### Features
+
+* migrate keplr to the hub ([4e28340](https://github.com/rango-exchange/rango-client/commit/4e283407af7957969a6ae7f0e4531c305fad968f))
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.55.0...provider-keplr@0.56.0) (2025-12-09)
 
 

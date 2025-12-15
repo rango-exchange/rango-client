@@ -1,3 +1,13 @@
+# [0.60.0](https://github.com/rango-exchange/rango-client/compare/ui@0.59.0...ui@0.60.0) (2025-12-15)
+
+
+### Features
+
+* handle campaign tag in routes ([62006bc](https://github.com/rango-exchange/rango-client/commit/62006bc10fb165b758057e41505b5dcafbba5485))
+* update key icon ([521d693](https://github.com/rango-exchange/rango-client/commit/521d693f0f6039bdfa414d22d34047d0b3a205d6))
+
+
+
 # [0.59.0](https://github.com/rango-exchange/rango-client/compare/ui@0.58.0...ui@0.59.0) (2025-12-09)
 
 

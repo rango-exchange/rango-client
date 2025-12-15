@@ -1,3 +1,7 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.56.0...provider-metamask@0.57.0) (2025-12-15)
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-metamask@0.55.0...provider-metamask@0.56.0) (2025-12-09)
 
 

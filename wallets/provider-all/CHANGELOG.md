@@ -1,3 +1,14 @@
+# [0.59.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.58.0...provider-all@0.59.0) (2025-12-15)
+
+
+### Features
+
+* migrate cosmostation to the hub ([28ad149](https://github.com/rango-exchange/rango-client/commit/28ad14901d4a0827720b92519a2f8a564d334b14))
+* migrate keplr to the hub ([4e28340](https://github.com/rango-exchange/rango-client/commit/4e283407af7957969a6ae7f0e4531c305fad968f))
+* migrate leap cosmos to the hub ([9357f11](https://github.com/rango-exchange/rango-client/commit/9357f11db87da29404903b0464390f6f2ccad138))
+
+
+
 # [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.57.0...provider-all@0.58.0) (2025-12-09)
 
 
