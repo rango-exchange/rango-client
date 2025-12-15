@@ -275,6 +275,13 @@ export type WidgetConfig = {
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;
     autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
+    campaignTag?: {
+      backgroundUrl: string;
+      linkUrl: string;
+      iconUrl: string;
+      title: string;
+      id: string;
+    };
     swapBoxBanner?: {
       element: ReactElement;
       routes?: string[];

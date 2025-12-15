@@ -27,6 +27,7 @@ export function getTagLabel(tag: Tag, t: I18n['t']): string {
     HIGH_IMPACT: t('High Impact'),
     LOWEST_FEE: t('Lowest Fee'),
     RECOMMENDED: t('Recommended'),
+    CAMPAIGN: t('Campaign'),
   };
   return data[tag];
 }

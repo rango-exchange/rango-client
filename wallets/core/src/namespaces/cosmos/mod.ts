@@ -1,4 +1,10 @@
-export type { CosmosActions, ProviderAPI } from './types.js';
+export type {
+  CosmosActions,
+  ProviderAPI,
+  CosmosChain,
+  CosmosAssetList,
+  CosmosChainAccounts,
+} from './types.js';
 export * as actions from './actions.js';
 export * as after from './after.js';
 export * as and from './and.js';

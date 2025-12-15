@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 09:16\n"
+"PO-Revision-Date: 2025-12-15 08:16\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -104,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Ви повинні підключити {blockchainName} гаманець."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
 msgid "Add {chain} chain"
 msgstr "Додати ланцюжок {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
 msgid "Chain not connected"
 msgstr "Ланцюг не підключений"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
 msgid "Show more wallets"
 msgstr "Показати більше гаманців"
 

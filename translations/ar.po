@@ -8,7 +8,7 @@ msgstr ""
 "Language: ar\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 09:16\n"
+"PO-Revision-Date: 2025-12-15 08:16\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
@@ -104,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "يجب عليك توصيل محفظة {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
 msgid "Add {chain} chain"
 msgstr "أضف سلسلة {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
 msgid "Chain not connected"
 msgstr "السلسلة غير متصلة"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
 msgid "Show more wallets"
 msgstr "عرض المزيد من المحافظ"
 

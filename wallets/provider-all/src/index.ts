@@ -9,14 +9,14 @@ import { versions as braavos } from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
 import * as coin98 from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
-import * as cosmostation from '@rango-dev/provider-cosmostation';
+import { versions as cosmostation } from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as halo from '@rango-dev/provider-halo';
-import * as keplr from '@rango-dev/provider-keplr';
-import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
+import { versions as keplr } from '@rango-dev/provider-keplr';
+import { versions as leap } from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
@@ -102,7 +102,7 @@ export const allProviders = (
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
     lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(keplr)),
+    keplr,
     phantom,
     ready,
     lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
@@ -115,14 +115,14 @@ export const allProviders = (
     brave,
     lazyProvider(legacyProviderImportsToVersionsInterface(coin98)),
     coinbase,
-    lazyProvider(legacyProviderImportsToVersionsInterface(cosmostation)),
+    cosmostation,
     exodus,
     mathwallet,
     okx,
     tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(leapCosmos)),
+    leap,
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     taho,
     braavos,

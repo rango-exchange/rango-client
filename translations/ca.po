@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 09:16\n"
+"PO-Revision-Date: 2025-12-15 08:16\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -104,17 +104,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Heu de connectar una cartera {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
 msgid "Add {chain} chain"
 msgstr "Afegeix {chain} cadena"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:173
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
 msgid "Chain not connected"
 msgstr "Cadena no connectada"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
 msgid "Show more wallets"
 msgstr "Mostra més carteres"
 

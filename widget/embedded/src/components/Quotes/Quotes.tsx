@@ -43,6 +43,9 @@ export function Quotes(props: PropTypes) {
   const container = propContainer || getContainer();
   const hasQuotes = !!quotes && quotes.results.length;
   const userSlippage = customSlippage ?? slippage;
+  const {
+    config: { __UNSTABLE_OR_INTERNAL__ },
+  } = useAppStore();
   const getQuoteWarning = (quote: MultiRouteSimulationResult) => {
     if (!fromToken || !toToken || !quotes) {
       return null;
@@ -85,7 +88,10 @@ export function Quotes(props: PropTypes) {
         Array.from({ length: ITEM_SKELETON_COUNT }, (_, index) => (
           <React.Fragment key={index}>
             {fullExpandedMode ? (
-              <FullExpandedQuote loading />
+              <FullExpandedQuote
+                campaignTag={__UNSTABLE_OR_INTERNAL__?.campaignTag}
+                loading
+              />
             ) : (
               <QuoteSkeleton
                 tagHidden={false}
