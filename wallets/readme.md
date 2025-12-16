@@ -133,7 +133,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI | StarkNet |
-| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- | -------- |
+|-------------------------------------------------| --- | ---- | ------ | ------ | --- | ---- | --- | -------- |
 | [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅  | ❌  |    ❌    |
 | [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ✅    |
 | [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
@@ -158,11 +158,12 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |    ❌    |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
-| ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+|--------------| -------------- | -------------- | ------------ | ------------------------- | ------------- |
 | Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
@@ -186,6 +187,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
+| Coin98       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
@@ -194,7 +196,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Bitget         | Bitcoin,EVM,Tron,Solana,Cosmos,Aptos,Sui                                                                                | Bitcoin,Solana,Cosmos,Aptos,Sui                   | &check;              | https://web3.bitget.com/             |
 | Brave          | EVM, Solana                                                                                                             | -                                                 | &check;              | https://brave.com/wallet/            |
 | Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge                                                                              | Polkadot,Kadena,Aptos,BTC,Doge                    | &check;              | https://wallet.clover.finance        |
-| Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
 | Enkrypt        | EVM                                                                                                                     | BTC,Polkadot                                      | &check;              | https://www.enkrypt.com/             |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                                                                                              | Cosmos,Polkadot                                   | &check;              | https://frontier.xyz/                |
 | Halo           | -                                                                                                                       | -                                                 | &cross;              | https://halo.social/                 |

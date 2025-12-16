@@ -8,7 +8,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
-import { CustomSolanaSigner } from './solana-signer.js';
+import { CustomSolanaSigner } from './signers/solana.js';
 
 export default async function getSigners(
   provider: LegacyNetworkProviderMap
