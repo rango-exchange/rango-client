@@ -19,7 +19,7 @@ import type {
   SwapResult,
   Token,
 } from 'rango-sdk';
-import type { PendingSwap, PendingSwapStep } from 'rango-types';
+import type { Asset, PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import {
@@ -701,7 +701,16 @@ export function isOutputAmountChangedExcessively(
 export function generateBalanceWarnings(
   quote: SelectedQuote,
   selectedWallets: Wallet[]
-) {
+): Record<
+  string,
+  {
+    reason: 'FEE' | 'FEE_AND_INPUT_ASSET' | 'INPUT_ASSET';
+    asset: Asset;
+    blockchain: string;
+    currentAmount: string;
+    requiredAmount: string;
+  }[]
+> | null {
   const fee = quote.validationStatus;
   const requiredWallets = getQuoteChains({ filter: 'required', quote });
 
