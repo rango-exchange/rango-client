@@ -1,6 +1,17 @@
+import type { Environments, Provider } from './types.js';
 import type { TonConnectUI } from '@tonconnect/ui';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
+import {
+  dynamicImportWithRefinedError,
+  Networks,
+} from '@rango-dev/wallets-shared';
+
+let tonConnectInstance: TonConnectUI;
+let envs: Environments;
+
+export function setEnvs(_envs: Environments) {
+  envs = _envs;
+}
 
 export async function getTonConnectUIModule() {
   const tonConnectUI = await dynamicImportWithRefinedError(
@@ -9,11 +20,31 @@ export async function getTonConnectUIModule() {
   return tonConnectUI;
 }
 
-export async function getTonCoreModule() {
-  const tonCore = await dynamicImportWithRefinedError(
-    async () => await import('@ton/core')
-  );
-  return tonCore;
+export async function initializeTonConnectInstance() {
+  if (!envs) {
+    throw new Error('Environments are not set');
+  }
+  const { TonConnectUI } = await getTonConnectUIModule();
+  if (!tonConnectInstance) {
+    tonConnectInstance = new TonConnectUI(envs);
+  }
+}
+
+export function tonConnect() {
+  if (!tonConnectInstance) {
+    throw new Error(
+      "TonConnect instance isn't initialized. Please ensure you have provided the TonConnect config."
+    );
+  }
+
+  return tonConnectInstance;
+}
+
+export function getInstanceOrThrow(): Provider {
+  const instance = tonConnect();
+
+  const instances = new Map([[Networks.TON, instance]]);
+  return instances as Provider;
 }
 
 export async function waitForConnection(
@@ -25,12 +56,12 @@ export async function waitForConnection(
         const walletConnected = !!state?.account.address;
 
         if (walletConnected) {
-          unsubscribeStatusChange();
+          unsubscribe();
           resolve(state.account.address);
         }
       },
       (error) => {
-        unsubscribeStatusChange();
+        unsubscribe();
         reject(error);
       }
     );
@@ -38,16 +69,15 @@ export async function waitForConnection(
     const unsubscribeModalStateChange = tonConnectUI.onModalStateChange(
       (modalState) => {
         if (modalState.closeReason === 'action-cancelled') {
-          unsubscribeStatusChange();
-          unsubscribeModalStateChange();
+          unsubscribe();
           reject(new Error('The action was canceled by the user'));
         }
       }
     );
-  });
-}
 
-export async function parseAddress(rawAddress: string): Promise<string> {
-  const tonCore = await getTonCoreModule();
-  return tonCore.Address.parse(rawAddress).toString({ bounceable: false });
+    const unsubscribe = () => {
+      unsubscribeStatusChange();
+      unsubscribeModalStateChange();
+    };
+  });
 }

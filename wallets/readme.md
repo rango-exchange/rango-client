@@ -158,11 +158,12 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |    ❌    |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ❌     | ✅  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
-| ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| ------------ | -------------- | -------------- | ------------ |---------------------------| ------------- |
 | Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
@@ -186,6 +187,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
+| TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
 
 # Supported Wallets (Legacy)
 
