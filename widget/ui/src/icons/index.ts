@@ -23,6 +23,7 @@ export { default as CustomerSupportIcon } from './CustomerSupport.js';
 export { default as DarkModeIcon } from './DarkMode.js';
 export { default as DeleteIcon } from './Delete.js';
 export { default as DesktopIcon } from './Desktop.js';
+export { default as DestinationWallet } from './DestinationWallet.js';
 export { default as DisconnectIcon } from './Disconnect.js';
 export { default as DocumentIcon } from './Document.js';
 export { default as DocumentationIcon } from './Documentation.js';

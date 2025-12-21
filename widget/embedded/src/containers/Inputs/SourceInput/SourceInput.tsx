@@ -17,10 +17,11 @@ import {
 } from '../../../constants/routing';
 import { useAppStore } from '../../../store/AppStore';
 import { useQuoteStore } from '../../../store/quote';
+import { createBalanceKey } from '../../../store/utils/wallets';
 import { getContainer } from '../../../utils/common';
 import { numberToString } from '../../../utils/numbers';
 import { canComputePriceImpact } from '../../../utils/swap';
-import { formatBalance, isFetchingBalance } from '../../../utils/wallets';
+import { formatBalance } from '../../../utils/wallets';
 import { SelectedWalletButton } from '../SelectedWallet/SelectedWalletButton';
 import { SwapInputLabel } from '../SwapInputLabel/SwapInputLabel';
 
@@ -29,11 +30,8 @@ import { Container } from './SourceInput.styles';
 
 export function SourceInput(props: PropTypes) {
   const { onClickToken } = props;
-  const {
-    connectedWallets,
-    getBalanceFor,
-    fetchStatus: fetchingMetaStatus,
-  } = useAppStore();
+  const { getBalancesForWalletAddress, fetchStatus: fetchingMetaStatus } =
+    useAppStore();
   const sourceWallet = useAppStore().selectedWallet('source');
   const {
     fromToken,
@@ -52,12 +50,17 @@ export function SourceInput(props: PropTypes) {
         image: getWalletInfo(sourceWallet.walletType).img,
       }
     : undefined;
-  const fetchingBalance = fromToken
-    ? isFetchingBalance(connectedWallets, fromToken.blockchain)
-    : false;
+  const fetchingBalance = !!sourceWallet?.loading;
 
-  const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
-  const fromTokenFormattedBalance = formatBalance(fromTokenBalance)?.amount;
+  const fromTokenBalance =
+    fromToken && sourceWallet
+      ? getBalancesForWalletAddress(sourceWallet.address)[
+          createBalanceKey(sourceWallet.address, fromToken)
+        ]
+      : null;
+  const fromTokenFormattedBalance = fromTokenBalance
+    ? formatBalance(fromTokenBalance)?.amount
+    : undefined;
 
   const fromBalanceAmount = fromTokenBalance
     ? new BigNumber(fromTokenBalance.amount).shiftedBy(
@@ -108,11 +111,13 @@ export function SourceInput(props: PropTypes) {
       <SwapInput
         id="widget-swap-from"
         moreInfo={
-          <MaxBalance
-            loading={fetchingBalance}
-            balance={fromTokenFormattedBalance}
-            onClickMaxBalance={setMaxBalanceAsInputAmount}
-          />
+          sourceWallet && (
+            <MaxBalance
+              loading={fetchingBalance}
+              balance={fromTokenFormattedBalance}
+              onClickMaxBalance={setMaxBalanceAsInputAmount}
+            />
+          )
         }
         mode="From"
         onInputChange={setInputAmount}

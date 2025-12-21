@@ -1,6 +1,12 @@
 import type { PropTypes } from './SelectedWalletButton.types';
 
-import { Divider, EditIcon, Image, Typography } from '@rango-dev/ui';
+import {
+  DestinationWallet,
+  Divider,
+  EditIcon,
+  Image,
+  Typography,
+} from '@rango-dev/ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -26,12 +32,16 @@ export function SelectedWalletButton(props: PropTypes) {
       )}
       {address && (
         <div className="flex">
-          {image && (
+          {
             <>
-              <Image size={16} src={image} />
+              {image ? (
+                <Image size={16} src={image} />
+              ) : (
+                <DestinationWallet color="secondary" size={16} />
+              )}
               <Divider direction="horizontal" size={4} />
             </>
-          )}
+          }
           <Typography variant="body" size="small" color="neutral800">
             {getConciseAddress(
               address,

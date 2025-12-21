@@ -347,11 +347,7 @@ function representAmountInNumber(amount: string, decimals: number): string {
   return new BigNumber(amount).shiftedBy(-decimals).toFixed();
 }
 
-export function formatBalance(balance: Balance | null): Balance | null {
-  if (!balance) {
-    return null;
-  }
-
+export function formatBalance(balance: Balance): Balance | null {
   const amount = representAmountInNumber(balance.amount, balance.decimals);
   const usdValue = balance.usdValue
     ? representAmountInNumber(balance.usdValue, balance.decimals)
@@ -481,14 +477,6 @@ export function getAddress({
       connectedWallet.chain === chain
   )?.address;
 }
-
-export const isFetchingBalance = (
-  connectedWallets: ConnectedWallet[],
-  blockchain: string
-) =>
-  !!connectedWallets.find(
-    (wallet) => wallet.chain === blockchain && wallet.loading
-  );
 
 export function hashWalletsState(walletsInfo: WalletInfoWithExtra[]) {
   return walletsInfo.map((w) => w.state).join('-');

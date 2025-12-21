@@ -1,0 +1,23 @@
+import type { SvgIconPropsWithChildren } from '../components/SvgIcon/index.js';
+
+import React, { createElement } from 'react';
+
+import { SvgIcon } from '../components/SvgIcon/index.js';
+
+function SvgDestinationWallet(props: SvgIconPropsWithChildren) {
+  return createElement(
+    SvgIcon,
+    props,
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(0 2.5714) scale(1.7142857)">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M0 2.5C0 1.11929 1.11929 0 2.5 0H10.8333C12.214 0 13.3333 1.11929 13.3333 2.5V8.16667C13.3333 9.54738 12.214 10.6667 10.8333 10.6667H2.5C1.11929 10.6667 0 9.54738 0 8.16667V2.5ZM1.08535 2H12.248C12.0421 1.4174 11.4864 1 10.8333 1H2.5C1.84689 1 1.29127 1.4174 1.08535 2ZM12.3333 3H1V4H4.5C4.77614 4 5 4.22386 5 4.5C5 5.14433 5.52233 5.66667 6.16667 5.66667H7.16667C7.811 5.66667 8.33333 5.14433 8.33333 4.5C8.33333 4.22386 8.55719 4 8.83333 4H12.3333V3Z"
+          fill="currentColor"
+        />
+      </g>
+    </svg>
+  );
+}
+export default SvgDestinationWallet;

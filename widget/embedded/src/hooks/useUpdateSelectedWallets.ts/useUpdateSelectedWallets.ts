@@ -14,7 +14,7 @@ import { useQuoteStore } from '../../store/quote';
  */
 export function useUpdateSelectedWallets() {
   const quoteStore = useQuoteStore()();
-  const { fromToken, toToken, setCustomDestination } = quoteStore;
+  const { fromBlockchain, toBlockchain, setCustomDestination } = quoteStore;
   const {
     clearSelectedWallet,
     tryMatchWalletForBlockchain,
@@ -28,11 +28,11 @@ export function useUpdateSelectedWallets() {
     );
     if (shouldUpdateSourceWallet) {
       clearSelectedWallet('source');
-      if (fromToken) {
-        tryMatchWalletForBlockchain('source', fromToken.blockchain);
+      if (fromBlockchain) {
+        tryMatchWalletForBlockchain('source', fromBlockchain.name);
       }
     }
-  }, [fromToken?.blockchain, fromToken?.address, fromToken?.symbol]);
+  }, [fromBlockchain?.name]);
 
   useEffect(() => {
     setCustomDestination(null);
@@ -43,9 +43,9 @@ export function useUpdateSelectedWallets() {
     );
     if (shouldUpdateDestinationWallet) {
       clearSelectedWallet('destination');
-      if (toToken) {
-        tryMatchWalletForBlockchain('destination', toToken.blockchain);
+      if (toBlockchain) {
+        tryMatchWalletForBlockchain('destination', toBlockchain.name);
       }
     }
-  }, [toToken?.blockchain, toToken?.address, toToken?.symbol]);
+  }, [toBlockchain?.name]);
 }

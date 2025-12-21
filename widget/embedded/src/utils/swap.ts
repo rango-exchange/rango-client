@@ -313,7 +313,7 @@ export function getSwapButtonState(params: {
       disabled: false,
     };
   }
-  const allChains = getQuoteChains({ quote, filter: 'all' });
+  // const allChains = getQuoteChains({ quote, filter: 'all' });
   const requiredChains = getRouteBlockchains(quote);
 
   /**
@@ -321,20 +321,24 @@ export function getSwapButtonState(params: {
    * the user must select a single address for both the source and destination wallets on the chosen blockchain,
    * as we cannot send multiple wallet addresses for one blockchain to the server.
    */
-  if (allChains.length === 1) {
-    const walletAddressError =
-      !selectedWallets.customDestination &&
-      selectedWallets.sourceWallet?.address !==
-        selectedWallets.destinationWallet?.address;
+  /*
+   * if (allChains.length === 1) {
+   *   const walletAddressError =
+   *     !selectedWallets.customDestination &&
+   *     selectedWallets.sourceWallet?.address !==
+   *       selectedWallets.destinationWallet?.address;
+   */
 
-    if (walletAddressError) {
-      return {
-        title: swapButtonTitles().swap,
-        action: 'show-wallet-address-error',
-        disabled: false,
-      };
-    }
-  }
+  /*
+   *   if (walletAddressError) {
+   *     return {
+   *       title: swapButtonTitles().swap,
+   *       action: 'show-wallet-address-error',
+   *       disabled: false,
+   *     };
+   *   }
+   * }
+   */
   if (requiredChains.length > 0) {
     return {
       title: swapButtonTitles().swap,

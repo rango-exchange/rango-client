@@ -302,22 +302,22 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       if (walletsNeedToBeAdded.length > 0) {
         const newConnectedWallets: ConnectedWallet[] = walletsNeedToBeAdded.map(
           (account) => {
-            const { fromToken, toToken } = quoteStore;
+            const { fromBlockchain, toBlockchain } = quoteStore;
             const shouldMarkWalletAsSource =
-              account.chain === fromToken?.blockchain &&
+              account.chain === fromBlockchain?.name &&
               !connectedWallets.some(
                 (connectedWallet) =>
-                  fromToken &&
-                  connectedWallet.chain === fromToken.blockchain &&
+                  fromBlockchain &&
+                  connectedWallet.chain === fromBlockchain.name &&
                   connectedWallet.selected &&
                   connectedWallet.isSource
               );
             const shouldMarkWalletAsDestination =
-              account.chain === toToken?.blockchain &&
+              account.chain === toBlockchain?.name &&
               !connectedWallets.some(
                 (connectedWallet) =>
-                  toToken &&
-                  connectedWallet.chain === toToken.blockchain &&
+                  toBlockchain &&
+                  connectedWallet.chain === toBlockchain.name &&
                   connectedWallet.selected &&
                   connectedWallet.isDestination
               );
@@ -370,16 +370,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           };
         });
 
-        const fromToken = quoteStore.fromToken;
+        const fromBlockchain = quoteStore.fromBlockchain;
         const sourceWallet = get().selectedWallet('source');
-        if (fromToken && !sourceWallet) {
-          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        if (fromBlockchain && !sourceWallet) {
+          get().tryMatchWalletForBlockchain('source', fromBlockchain.name);
         }
 
-        const toToken = quoteStore.toToken;
+        const toBlockchain = quoteStore.toBlockchain;
         const destinationWallet = get().selectedWallet('destination');
-        if (!destinationWallet && toToken) {
-          get().tryMatchWalletForBlockchain('destination', toToken.blockchain);
+        if (!destinationWallet && toBlockchain) {
+          get().tryMatchWalletForBlockchain('destination', toBlockchain.name);
         }
       }
     },
@@ -602,14 +602,19 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       set({ connectedWallets: nextConnectedWallets });
     },
     isSelectedWalletStillRelevant: (kind, quoteStore) => {
-      const { fromToken, toToken } = quoteStore;
-      const selectedToken = kind === 'source' ? fromToken : toToken;
+      const { fromBlockchain, toBlockchain } = quoteStore;
+      const selectedBlockchain =
+        kind === 'source' ? fromBlockchain : toBlockchain;
       const selectedWallet =
         kind === 'source'
           ? get().selectedWallet('source')
           : get().selectedWallet('destination');
 
-      return selectedToken?.blockchain === selectedWallet?.chain;
+      return get().connectedWallets.some(
+        (wallet) =>
+          wallet.chain === selectedBlockchain?.name &&
+          wallet.walletType === selectedWallet?.walletType
+      );
     },
     clearSelectedWallet: (kind) => {
       const selectedWalletFlag = SELECTED_WALLETS_FLAG[kind];
@@ -759,16 +764,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           connectedWallets: nextConnectedWallets,
         });
 
-        const fromToken = quoteStore.fromToken;
+        const fromBlockchain = quoteStore.fromBlockchain;
         const sourceWallet = get().selectedWallet('source');
-        if (fromToken && !sourceWallet) {
-          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        if (fromBlockchain && !sourceWallet) {
+          get().tryMatchWalletForBlockchain('source', fromBlockchain.name);
         }
 
-        const toToken = quoteStore.toToken;
+        const toBlockchain = quoteStore.toBlockchain;
         const destinationWallet = get().selectedWallet('destination');
-        if (toToken && !destinationWallet) {
-          get().tryMatchWalletForBlockchain('destination', toToken.blockchain);
+        if (toBlockchain && !destinationWallet) {
+          get().tryMatchWalletForBlockchain('destination', toBlockchain.name);
         }
       }
     },
@@ -801,16 +806,16 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           connectedWallets: nextConnectedWallets,
         });
 
-        const fromToken = quoteStore.fromToken;
+        const fromBlockchain = quoteStore.fromBlockchain;
         const sourceWallet = get().selectedWallet('source');
-        if (fromToken && !sourceWallet) {
-          get().tryMatchWalletForBlockchain('source', fromToken.blockchain);
+        if (fromBlockchain && !sourceWallet) {
+          get().tryMatchWalletForBlockchain('source', fromBlockchain.name);
         }
 
-        const toToken = quoteStore.toToken;
+        const toBlockchain = quoteStore.toBlockchain;
         const destinationWallet = get().selectedWallet('destination');
-        if (toToken && !destinationWallet) {
-          get().tryMatchWalletForBlockchain('source', toToken.blockchain);
+        if (toBlockchain && !destinationWallet) {
+          get().tryMatchWalletForBlockchain('source', toBlockchain.name);
         }
       }
     },

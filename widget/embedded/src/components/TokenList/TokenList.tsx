@@ -158,7 +158,10 @@ export function TokenList(props: PropTypes) {
         </Button>
       );
     }
-    const tokenBalance = formatBalance(getBalanceFor(token));
+    const tokenBalance = getBalanceFor(token);
+    const formattedTokenBalance = tokenBalance
+      ? formatBalance(tokenBalance)
+      : null;
 
     if (action) {
       return action(token);
@@ -174,18 +177,18 @@ export function TokenList(props: PropTypes) {
     }
 
     return (
-      tokenBalance && (
+      formattedTokenBalance && (
         <BalanceContainer>
           <TokenBalance variant="title" size="small">
-            {tokenBalance.amount}
+            {formattedTokenBalance.amount}
           </TokenBalance>
           <div />
-          {tokenBalance.usdValue && (
+          {formattedTokenBalance.usdValue && (
             <Typography
               variant="body"
               className={usdValueStyles()}
               size="xsmall">
-              {`$${tokenBalance.usdValue}`}
+              {`$${formattedTokenBalance.usdValue}`}
             </Typography>
           )}
         </BalanceContainer>
