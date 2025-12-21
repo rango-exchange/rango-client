@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.59.0",
+  "version": "0.59.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/provider-bitget": "^0.54.0",
+    "@rango-dev/provider-bitget": "^0.54.1-next.0",
     "@rango-dev/provider-braavos": "^0.51.0",
     "@rango-dev/provider-brave": "^0.59.0",
     "@rango-dev/provider-coin98": "^0.59.0",
