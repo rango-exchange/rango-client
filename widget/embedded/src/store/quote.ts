@@ -1,6 +1,7 @@
 import type { TokenData } from '../components/TokenList/TokenList.types';
 import type {
   BlockchainMeta,
+  ConfirmRouteResponse,
   MetaResponse,
   MultiRouteResponse,
   PreferenceType,
@@ -61,6 +62,11 @@ export type RetryQuote = {
   toToken?: Token;
   inputAmount: string;
 };
+
+export type ConfirmSwapData = {
+  proceedAnyway: boolean;
+  quoteData: ConfirmRouteResponse['result'] | null;
+};
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
   toBlockchain: BlockchainMeta | null;
@@ -71,7 +77,6 @@ export interface QuoteState {
   fromToken: TokenData | null;
   sortStrategy: PreferenceType;
   toToken: TokenData | null;
-  quoteWalletsConfirmed: boolean;
   selectedWallets: Wallet[];
   quoteWarningsConfirmed: boolean;
   refetchQuote: boolean;
@@ -80,6 +85,7 @@ export interface QuoteState {
   customDestination: string | null;
   error: QuoteError | null;
   warning: QuoteWarning | null;
+  confirmSwapData: ConfirmSwapData;
   resetQuote: () => void;
   resetAlerts: () => void;
 
@@ -98,11 +104,11 @@ export interface QuoteState {
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: (options?: { toToken?: Token }) => void;
-  setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
   setCustomDestination: (address: string | null) => void;
   resetQuoteWallets: () => void;
   setQuoteWarningsConfirmed: (flag: boolean) => void;
+  setConfirmSwapData: (data: ConfirmSwapData) => void;
 }
 
 const initializer: StateCreator<
@@ -132,7 +138,10 @@ const initializer: StateCreator<
   quotes: null,
   error: null,
   warning: null,
-  quoteWalletsConfirmed: false,
+  confirmSwapData: {
+    proceedAnyway: false,
+    quoteData: null,
+  },
   selectedWallets: [],
   customDestination: null,
   quoteWarningsConfirmed: false,
@@ -312,19 +321,14 @@ const initializer: StateCreator<
       outputUsdValue: new BigNumber(0),
       selectedQuote: null,
     })),
-  setQuoteWalletConfirmed: (flag) =>
-    set({
-      quoteWalletsConfirmed: flag,
-    }),
   setSelectedWallets: (wallets) => set({ selectedWallets: wallets }),
   setCustomDestination: (address) => set({ customDestination: address }),
   resetQuoteWallets: () =>
     set({
-      quoteWalletsConfirmed: false,
       selectedWallets: [],
-      customDestination: null,
     }),
   setQuoteWarningsConfirmed: (flag) => set({ quoteWarningsConfirmed: flag }),
+  setConfirmSwapData: (data) => set({ confirmSwapData: data }),
 });
 
 const createSwapQuoteSelectors = create<QuoteState>()(

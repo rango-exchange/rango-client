@@ -23,6 +23,7 @@ export const SwitchButtonContainer = styled('div', {
   left: '50%',
   transform: 'translate(-50%, 10%)',
   cursor: 'pointer',
+  zIndex: 10,
 });
 
 export const StyledButton = styled('div', {

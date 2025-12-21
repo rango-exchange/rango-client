@@ -1,4 +1,4 @@
-import type { ConfirmSwapFetchResult } from './useConfirmSwap.types';
+import type { ConfirmSwapFetchResult } from './useHandleSwap.types';
 import type { FindToken } from '../../store/slices/data';
 import type {
   ConfirmSwapWarnings,
@@ -8,7 +8,7 @@ import type {
   Wallet,
 } from '../../types';
 import type BigNumber from 'bignumber.js';
-import type { BlockchainMeta, SwapResult } from 'rango-sdk';
+import type { SwapResult } from 'rango-sdk';
 
 import { errorMessages } from '../../constants/errors';
 import { QuoteErrorType } from '../../types';
@@ -79,7 +79,6 @@ export function getQuoteError(swaps: SwapResult[]): QuoteErrorResponse | null {
 export function generateWarnings(params: {
   currentQuote: SelectedQuote;
   previousQuote?: SelectedQuote;
-  meta: { blockchains: BlockchainMeta[] };
   selectedWallets: Wallet[];
   userSlippage: number;
   inputUsdValue: BigNumber | null;
@@ -88,7 +87,6 @@ export function generateWarnings(params: {
   const {
     currentQuote,
     previousQuote,
-    meta,
     selectedWallets,
     userSlippage,
     findToken,
@@ -112,11 +110,10 @@ export function generateWarnings(params: {
 
   const balanceWarnings = generateBalanceWarnings(
     currentQuote,
-    selectedWallets,
-    meta.blockchains
+    selectedWallets
   );
 
-  const enoughBalance = balanceWarnings.length === 0;
+  const enoughBalance = !balanceWarnings;
 
   if (!enoughBalance) {
     output.balance = {

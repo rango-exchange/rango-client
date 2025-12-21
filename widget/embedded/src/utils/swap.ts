@@ -19,7 +19,7 @@ import type {
   SwapResult,
   Token,
 } from 'rango-sdk';
-import type { PendingSwap, PendingSwapStep } from 'rango-types';
+import type { Asset, PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import {
@@ -48,8 +48,10 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
+import { getRouteBlockchains } from '../pages/RouteWalletsPage/RouteWalletsPage.helpers';
 
-import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
+import { uniqueBy } from './common';
+import { isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
 import { getRequiredBalanceOfWallet } from './quote';
 import { getQuoteChains } from './wallets';
@@ -204,6 +206,13 @@ export function getLimitErrorMessage(swaps: SwapResult[]): {
 }
 
 export function getSwapButtonState(params: {
+  fromToken: Token | null;
+  toToken: Token | null;
+  selectedWallets: {
+    sourceWallet?: Wallet;
+    destinationWallet?: Wallet;
+    customDestination?: string;
+  };
   fetchMetaStatus: FetchStatus;
   anyWalletConnected: boolean;
   fetchingQuote: boolean;
@@ -214,6 +223,9 @@ export function getSwapButtonState(params: {
   needsToWarnEthOnPath: boolean;
 }): SwapButtonState {
   const {
+    fromToken,
+    toToken,
+    selectedWallets,
     fetchMetaStatus,
     anyWalletConnected,
     fetchingQuote,
@@ -223,6 +235,7 @@ export function getSwapButtonState(params: {
     error,
     needsToWarnEthOnPath,
   } = params;
+
   if (fetchMetaStatus !== 'success') {
     return {
       title: swapButtonTitles().connectWallet,
@@ -230,12 +243,56 @@ export function getSwapButtonState(params: {
       disabled: true,
     };
   }
-  if (!anyWalletConnected) {
+  if (!fromToken && !toToken && !anyWalletConnected) {
     return {
       title: swapButtonTitles().connectWallet,
       action: 'connect-wallet',
       disabled: false,
     };
+  }
+  if (!fromToken) {
+    return {
+      title: swapButtonTitles().selectToken,
+      action: 'select-source-token',
+      disabled: false,
+    };
+  }
+  if (!toToken) {
+    return {
+      title: swapButtonTitles().selectToken,
+      action: 'select-destination-token',
+      disabled: false,
+    };
+  }
+  if (!inputAmount) {
+    return {
+      title: swapButtonTitles().enterAmount,
+      disabled: true,
+    };
+  }
+  if (quote) {
+    const sourceBlockchain = quote.swaps[0]?.from.blockchain;
+    const destinationBlockchain =
+      quote.swaps[quote.swaps.length - 1]?.to.blockchain;
+
+    if (!selectedWallets.sourceWallet) {
+      return {
+        title: i18n.t('Connect {sourceBlockchain} Wallet', {
+          sourceBlockchain: sourceBlockchain,
+        }),
+        action: 'select-source-wallet',
+        disabled: false,
+      };
+    }
+    if (!selectedWallets.destinationWallet) {
+      return {
+        title: i18n.t('Connect {destinationBlockchain} Wallet', {
+          destinationBlockchain,
+        }),
+        action: 'select-destination-wallet',
+        disabled: false,
+      };
+    }
   }
   if (fetchingQuote || !quote || error || !inputAmount || inputAmount === '0') {
     return {
@@ -253,6 +310,39 @@ export function getSwapButtonState(params: {
     return {
       title: swapButtonTitles().ethWarning,
       action: 'confirm-warning',
+      disabled: false,
+    };
+  }
+  // const allChains = getQuoteChains({ quote, filter: 'all' });
+  const requiredChains = getRouteBlockchains(quote);
+
+  /**
+   * For a simple on-chain swap,
+   * the user must select a single address for both the source and destination wallets on the chosen blockchain,
+   * as we cannot send multiple wallet addresses for one blockchain to the server.
+   */
+  /*
+   * if (allChains.length === 1) {
+   *   const walletAddressError =
+   *     !selectedWallets.customDestination &&
+   *     selectedWallets.sourceWallet?.address !==
+   *       selectedWallets.destinationWallet?.address;
+   */
+
+  /*
+   *   if (walletAddressError) {
+   *     return {
+   *       title: swapButtonTitles().swap,
+   *       action: 'show-wallet-address-error',
+   *       disabled: false,
+   *     };
+   *   }
+   * }
+   */
+  if (requiredChains.length > 0) {
+    return {
+      title: swapButtonTitles().swap,
+      action: 'select-route-wallets',
       disabled: false,
     };
   }
@@ -544,7 +634,6 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
         [p: string]: {
           address: string;
           walletType: WalletType;
-          derivationPath?: string;
         };
       },
       selectedWallet
@@ -552,7 +641,6 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
       (selectedWalletsMap[selectedWallet.chain] = {
         address: selectedWallet.address,
         walletType: selectedWallet.walletType,
-        derivationPath: selectedWallet.derivationPath,
       }),
       selectedWalletsMap
     ),
@@ -612,22 +700,31 @@ export function isOutputAmountChangedExcessively(
 
 export function generateBalanceWarnings(
   quote: SelectedQuote,
-  selectedWallets: Wallet[],
-  blockchains: BlockchainMeta[]
-) {
+  selectedWallets: Wallet[]
+): Record<
+  string,
+  {
+    reason: 'FEE' | 'FEE_AND_INPUT_ASSET' | 'INPUT_ASSET';
+    asset: Asset;
+    blockchain: string;
+    currentAmount: string;
+    requiredAmount: string;
+  }[]
+> | null {
   const fee = quote.validationStatus;
   const requiredWallets = getQuoteChains({ filter: 'required', quote });
-  const walletsSortedByRequiredWallets = selectedWallets.sort(
-    (selectedWallet1, selectedWallet2) =>
-      requiredWallets.indexOf(selectedWallet1.chain) -
-      requiredWallets.indexOf(selectedWallet2.chain)
-  );
 
-  return walletsSortedByRequiredWallets
+  const walletsSortedByRequiredWallets = uniqueBy(
+    selectedWallets,
+    'chain'
+  ).sort(
+    (w1, w2) =>
+      requiredWallets.indexOf(w1.chain) - requiredWallets.indexOf(w2.chain)
+  );
+  const warnings = walletsSortedByRequiredWallets
     .flatMap((wallet) => getRequiredBalanceOfWallet(wallet, fee) || [])
     .filter((asset) => !asset.ok)
     .map((asset) => {
-      const symbol = asset.asset.symbol;
       const currentAmount = numberToString(
         new BigNumber(asset.currentAmount.amount).shiftedBy(
           -asset.currentAmount.decimals
@@ -635,6 +732,7 @@ export function generateBalanceWarnings(
         BALANCE_MIN_DECIMALS,
         BALANCE_MAX_DECIMALS
       );
+
       const requiredAmount = numberToString(
         new BigNumber(asset.requiredAmount.amount).shiftedBy(
           -asset.requiredAmount.decimals
@@ -642,31 +740,27 @@ export function generateBalanceWarnings(
         BALANCE_MIN_DECIMALS,
         BALANCE_MAX_DECIMALS
       );
-      let reason = '';
-      if (asset.reason === 'FEE') {
-        reason = i18n.t(' for network fee');
-      }
-      if (asset.reason === 'INPUT_ASSET') {
-        reason = i18n.t(' for swap');
-      }
-      if (asset.reason === 'FEE_AND_INPUT_ASSET') {
-        reason = i18n.t(' for input and network fee');
-      }
-      const warningMessage = i18n.t({
-        id: `Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet.`,
-        values: {
-          requiredAmount,
-          symbol,
-          reason,
-          currentAmount,
-          blockchain: getBlockchainShortNameFor(
-            asset.asset.blockchain,
-            blockchains
-          ),
-        },
-      });
-      return warningMessage;
+
+      return {
+        reason: asset.reason,
+        asset: asset.asset,
+        blockchain: asset.asset.blockchain,
+        currentAmount,
+        requiredAmount,
+      };
     });
+
+  if (warnings.length === 0) {
+    return null;
+  }
+
+  return warnings.reduce<Record<string, typeof warnings>>((acc, item) => {
+    if (!acc[item.blockchain]) {
+      acc[item.blockchain] = [];
+    }
+    acc[item.blockchain]?.push(item);
+    return acc;
+  }, {});
 }
 
 export function isNetworkStatusInWarningState(

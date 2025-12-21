@@ -7,14 +7,17 @@ import { useSyncUrlAndStore } from '../hooks/useSyncUrlAndStore';
 import { AddCustomTokenPage } from '../pages/AddCustomTokenPage';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { CustomTokensPage } from '../pages/CustomTokensPage';
+import { DestinationWalletPage } from '../pages/DestinationWalletPage/DestinationWalletPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LanguagePage } from '../pages/LanguagePage';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcePage';
 import { RoutesPage } from '../pages/Routes';
+import { RouteWalletsPage } from '../pages/RouteWalletsPage/RouteWalletsPage';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemPage/index';
 import { SettingsPage } from '../pages/SettingsPage';
+import { SourceWalletPage } from '../pages/SourceWalletPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 
@@ -36,6 +39,22 @@ export function AppRoutes() {
     {
       path: navigationRoutes.routes,
       element: <RoutesPage />,
+    },
+    {
+      path: navigationRoutes.sourceWallet,
+      element: <SourceWalletPage />,
+    },
+    {
+      path: navigationRoutes.destinationWallet,
+      element: <DestinationWalletPage />,
+    },
+    {
+      path: navigationRoutes.routeWallets,
+      element: <RouteWalletsPage />,
+    },
+    {
+      path: navigationRoutes.routeWallets,
+      element: <RouteWalletsPage />,
     },
     {
       path: navigationRoutes.fromSwap,

@@ -6,7 +6,3 @@ export const Container = styled('div', {
   gap: '$5',
   alignSelf: 'stretch',
 });
-
-export const FromContainer = styled('div', {
-  position: 'relative',
-});

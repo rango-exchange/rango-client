@@ -17,6 +17,7 @@ import { type Network } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 
 import { useAppStore } from '../../store/AppStore';
+import { useQuoteStore } from '../../store/quote';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -43,6 +44,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     removeBalancesForWallet,
     blockchains,
   } = useAppStore();
+  const quoteStore = useQuoteStore()();
 
   const { onConnectWalletHandler, onDisconnectWalletHandler } = params;
   const evmBasedChainNames = blockchains()
@@ -77,7 +79,12 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     );
 
     if (data.length) {
-      void newWalletConnected(data, info.namespace, state.derivationPath);
+      void newWalletConnected(
+        quoteStore,
+        data,
+        info.namespace,
+        state.derivationPath
+      );
     }
   };
 
@@ -101,7 +108,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     }
 
     if (event === Events.PROVIDER_DISCONNECTED) {
-      disconnectWallet(type);
+      disconnectWallet(type, quoteStore);
       if (!!onDisconnectWalletHandler.current) {
         onDisconnectWalletHandler.current(type);
       } else {
@@ -112,7 +119,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     }
 
     if (event === Events.NAMESPACE_DISCONNECTED) {
-      disconnectNamespaces(type, value);
+      disconnectNamespaces(type, value, quoteStore);
     }
   };
 
@@ -186,7 +193,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
           supportedChainNames,
         });
       } else {
-        disconnectWallet(type);
+        disconnectWallet(type, quoteStore);
         if (!!onDisconnectWalletHandler.current) {
           onDisconnectWalletHandler.current(type);
         } else {

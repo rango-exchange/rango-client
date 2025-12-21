@@ -347,11 +347,7 @@ function representAmountInNumber(amount: string, decimals: number): string {
   return new BigNumber(amount).shiftedBy(-decimals).toFixed();
 }
 
-export function formatBalance(balance: Balance | null): Balance | null {
-  if (!balance) {
-    return null;
-  }
-
+export function formatBalance(balance: Balance): Balance | null {
   const amount = representAmountInNumber(balance.amount, balance.decimals);
   const usdValue = balance.usdValue
     ? representAmountInNumber(balance.usdValue, balance.decimals)
@@ -482,14 +478,6 @@ export function getAddress({
   )?.address;
 }
 
-export const isFetchingBalance = (
-  connectedWallets: ConnectedWallet[],
-  blockchain: string
-) =>
-  !!connectedWallets.find(
-    (wallet) => wallet.chain === blockchain && wallet.loading
-  );
-
 export function hashWalletsState(walletsInfo: WalletInfoWithExtra[]) {
   return walletsInfo.map((w) => w.state).join('-');
 }
@@ -548,4 +536,47 @@ export function checkIsWalletPartiallyConnected(
       (namespace) => !walletState.namespaces?.get(namespace.value)?.connected
     )
   );
+}
+
+export function suggestRouteWalletsBasedOnSourceWallet(
+  quote: SelectedQuote,
+  sourceWallet: ConnectedWallet,
+  connectedWallets: ConnectedWallet[]
+): ConnectedWallet[] {
+  const routeBlockchains: string[] = getQuoteChains({
+    filter: 'required',
+    quote,
+  });
+
+  const walletsByBlockchain = connectedWallets.reduce((map, wallet) => {
+    if (!map.has(wallet.chain)) {
+      map.set(wallet.chain, []);
+    }
+    map.get(wallet.chain)!.push(wallet);
+    return map;
+  }, new Map<string, ConnectedWallet[]>());
+
+  const pickWallet = (
+    wallets: ConnectedWallet[],
+    source: ConnectedWallet
+  ): ConnectedWallet | undefined =>
+    // 1. exact match (address + type)
+    wallets.find(
+      (w) => w.address === source.address && w.walletType === source.walletType
+    ) ??
+    // 2. same address, different type
+    wallets.find((w) => w.address === source.address) ??
+    // 3. same type, different address
+    wallets.find((w) => w.walletType === source.walletType) ??
+    // 4. fallback → last wallet in that blockchain
+    wallets.at(-1);
+
+  return routeBlockchains.flatMap((blockchain) => {
+    const wallets = walletsByBlockchain.get(blockchain);
+    if (!wallets?.length) {
+      return [];
+    }
+    const picked = pickWallet(wallets, sourceWallet);
+    return picked ? [picked] : [];
+  });
 }
