@@ -265,7 +265,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             connectNamespacePromise = async () => {
               return namespace.connect({
                 chainIds: cosmosBlockChains
-                  .filter((chain) => chain.info && !chain.info.experimental)
+                  .filter((chain) => !chain.info || !chain.info.experimental)
                   ?.map((chain) => chain.chainId!),
                 customChainIds: cosmosBlockChains
                   .filter((chain) => chain.info?.experimental)
