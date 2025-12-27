@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-leap-cosmos",
-  "version": "0.57.0",
+  "version": "0.57.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/provider-keplr": "^0.57.0",
+    "@rango-dev/provider-keplr": "^0.57.1-next.0",
     "@rango-dev/signer-cosmos": "^0.38.0",
-    "@rango-dev/wallets-core": "^0.56.0",
-    "@rango-dev/wallets-shared": "^0.57.0",
+    "@rango-dev/wallets-core": "^0.56.1-next.0",
+    "@rango-dev/wallets-shared": "^0.57.1-next.0",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {
