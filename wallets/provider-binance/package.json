@@ -1,0 +1,32 @@
+{
+  "name": "@rango-dev/provider-binance",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-binance --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/signer-evm": "^0.40.0",
+    "@rango-dev/wallets-core": "^0.56.0",
+    "@rango-dev/wallets-shared": "^0.57.0",
+    "rango-types": "^0.1.89"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

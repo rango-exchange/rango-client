@@ -21,6 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@rango-dev/provider-binance": "^0.0.1",
     "@rango-dev/provider-bitget": "^0.54.1-next.0",
     "@rango-dev/provider-braavos": "^0.51.0",
     "@rango-dev/provider-brave": "^0.59.0",
