@@ -1,0 +1,1 @@
+export const TRUST_LINE_AMOUNT = '10000000000000';
