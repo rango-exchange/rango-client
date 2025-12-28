@@ -15,6 +15,7 @@ import * as defaultInjected from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
+import { versions as gemwallet } from '@rango-dev/provider-gemwallet';
 import * as halo from '@rango-dev/provider-halo';
 import { versions as keplr } from '@rango-dev/provider-keplr';
 import { versions as leap } from '@rango-dev/provider-leap-cosmos';
@@ -134,5 +135,6 @@ export const allProviders = (
     solflare,
     slush,
     unisat,
+    gemwallet,
   ];
 };

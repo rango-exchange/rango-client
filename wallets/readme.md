@@ -160,6 +160,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |    ❌    |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅   |   ❌   |
 
 ## By Feature
 
@@ -190,6 +191,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TronLink     | ✅             | ❌             | ✅           | Injected                  | ❌            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
+| GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
