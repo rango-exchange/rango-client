@@ -7,9 +7,13 @@ import type {
 export interface UtxoActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: () => Promise<Accounts>;
+  connect: (options?: ConnectOptions) => Promise<Accounts>;
   canEagerConnect: () => Promise<boolean>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;
+
+export type ConnectOptions = {
+  derivationPath?: string;
+};

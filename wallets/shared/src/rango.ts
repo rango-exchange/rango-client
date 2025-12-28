@@ -126,6 +126,13 @@ export const namespaces: Record<
   UTXO: {
     title: 'UTXO',
     mainBlockchain: 'BTC',
+    derivationPaths: [
+      {
+        id: `Native Segwit (m/84'/0'/0'/0/index)`,
+        label: `Native Segwit (m/84'/0'/0'/0/index)`,
+        generateDerivationPath: (index: string) => `84'/0'/0'/0/${index}`,
+      },
+    ],
   },
   Starknet: {
     title: 'Starknet',
