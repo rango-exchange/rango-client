@@ -31,6 +31,7 @@ import {
   isCosmosNamespace,
   isEvmNamespace,
   isSolanaNamespace,
+  isUtxoNamespace,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -248,7 +249,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
             Accounts | AccountsWithActiveChain
           >;
 
-          if (isSolanaNamespace(namespace)) {
+          if (isUtxoNamespace(namespace)) {
+            connectNamespacePromise = async () =>
+              namespace.connect({
+                derivationPath: namespaceInput.derivationPath,
+              });
+          } else if (isSolanaNamespace(namespace)) {
             connectNamespacePromise = async () =>
               namespace.connect({
                 derivationPath: namespaceInput.derivationPath,
@@ -273,6 +279,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               });
             };
           } else {
+            // TODO: can we show a warning here for devloper to let know the check should be added?
             connectNamespacePromise = async () => namespace.connect();
           }
 

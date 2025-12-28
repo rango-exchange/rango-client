@@ -370,6 +370,14 @@ export function synchronizeHubWithConfigProviders(
   });
 }
 
+export function isUtxoNamespace(
+  ns: ProxiedNamespace<
+    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
+  >
+): ns is ProxiedNamespace<UtxoActions> & { namespaceId: 'Solana' } {
+  return ns.namespaceId === 'UTXO';
+}
+
 export function isSolanaNamespace(
   ns: ProxiedNamespace<
     EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions

@@ -43,6 +43,13 @@ export const metadata: ProviderMetadata = {
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               allBlockchains.filter((chain) => chain.name === Networks.SOLANA),
           },
+          {
+            label: 'Bitcoin',
+            value: 'UTXO',
+            id: 'BTC',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter((chain) => chain.name === Networks.BTC),
+          },
         ],
       },
     },
@@ -79,6 +86,12 @@ export const metadata: ProviderMetadata = {
             label: `(m/44'/501'/0'/index)`,
             namespace: 'Solana',
             generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
+          },
+          {
+            id: `Native Segwit (m/84'/0'/0'/0/index)`,
+            label: `Native Segwit (m/84'/0'/0'/0/index)`,
+            namespace: 'UTXO',
+            generateDerivationPath: (index: string) => `84'/0'/0'/0/${index}`,
           },
         ],
       },

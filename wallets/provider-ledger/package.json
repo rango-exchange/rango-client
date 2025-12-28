@@ -21,10 +21,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@ledgerhq/errors": "^6.16.4",
-    "@ledgerhq/hw-app-eth": "^6.36.0",
-    "@ledgerhq/hw-app-solana": "^7.1.6",
-    "@ledgerhq/hw-transport-webhid": "^6.28.6",
+    "@ledgerhq/errors": "^6.27.1",
+    "@ledgerhq/hw-app-eth": "^7.0.1",
+    "@ledgerhq/hw-app-solana": "^7.6.1",
+    "@ledgerhq/hw-app-btc": "^10.13.1",
+    "@ledgerhq/hw-transport-webusb": "^6.29.14",
+    "@ledgerhq/hw-transport-webhid": "^6.30.10",
     "@ledgerhq/types-cryptoassets": "^7.11.0",
     "@ledgerhq/types-devices": "^6.24.0",
     "@rango-dev/signer-solana": "^0.46.1",

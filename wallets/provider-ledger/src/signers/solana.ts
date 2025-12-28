@@ -24,6 +24,11 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
   async signMessage(msg: string): Promise<string> {
     try {
       const transport = await transportConnect();
+
+      if (!transport) {
+        throw new Error('whatever sol');
+      }
+
       const LedgerAppSolana = (
         await dynamicImportWithRefinedError(
           async () => await import('@ledgerhq/hw-app-solana')
@@ -47,6 +52,10 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
         solanaWeb3Transaction: Transaction | VersionedTransaction
       ) => {
         const transport = await transportConnect();
+
+        if (!transport) {
+          throw new Error('whatever sol');
+        }
         const LedgerAppSolana = (
           await dynamicImportWithRefinedError(
             async () => await import('@ledgerhq/hw-app-solana')

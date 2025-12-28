@@ -3,6 +3,7 @@ import type Transport from '@ledgerhq/hw-transport';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { CAIP_SOLANA_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/solana';
+import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import {
   dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
@@ -24,6 +25,7 @@ export function ledger(): Provider | null {
 
   instances.set(LegacyNetworks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
   instances.set(LegacyNetworks.SOLANA, { chainId: LegacyNetworks.SOLANA });
+  instances.set(LegacyNetworks.BTC, { chainId: LegacyNetworks.BTC });
 
   return instances;
 }
@@ -65,6 +67,10 @@ export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
 export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
+    if (!transport) {
+      throw new Error('whatever');
+    }
+
     const LedgerAppEth = (
       await dynamicImportWithRefinedError(
         async () => await import('@ledgerhq/hw-app-eth')
@@ -93,6 +99,10 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
 export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
+
+    if (!transport) {
+      throw new Error('whatever');
+    }
     const LedgerAppSolana = (
       await dynamicImportWithRefinedError(
         async () => await import('@ledgerhq/hw-app-solana')
@@ -118,12 +128,47 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
   }
 }
 
+export async function getBitcoinAccounts(): Promise<ProviderConnectResult> {
+  try {
+    const transport = await transportConnect();
+
+    if (!transport) {
+      throw new Error('whatever');
+    }
+
+    const LedgerAppBitcoin = (
+      await dynamicImportWithRefinedError(
+        async () => await import('@ledgerhq/hw-app-btc')
+      )
+    ).default;
+    const bitcoin = new LedgerAppBitcoin({ transport, currency: 'bitcoin' });
+    const derivationPath = getDerivationPath();
+
+    const accounts: string[] = [];
+
+    // NOTE: We only support BIP84 for now, if you need to support taproot or legacy addresses, you will need to update `format` based on derivation path.
+    const result = await bitcoin.getWalletPublicKey(derivationPath, {
+      format: 'bech32',
+    });
+    accounts.push(result.bitcoinAddress);
+
+    return {
+      accounts: accounts,
+      chainId: CAIP_BITCOIN_CHAIN_ID,
+      derivationPath,
+    };
+  } catch (error: unknown) {
+    throw getLedgerError(error);
+  } finally {
+    await transportDisconnect();
+  }
+}
 let transportConnection: Transport | null = null;
 
 export async function transportConnect() {
   const TransportWebHID = (
     await dynamicImportWithRefinedError(
-      async () => await import('@ledgerhq/hw-transport-webhid')
+      async () => await import('@ledgerhq/hw-transport-webusb')
     )
   ).default;
 

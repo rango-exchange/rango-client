@@ -20,6 +20,10 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
     try {
       const transport = await transportConnect();
+
+      if (!transport) {
+        throw new Error('whatever eth');
+      }
       const LedgerAppEth = (
         await dynamicImportWithRefinedError(
           async () => await import('@ledgerhq/hw-app-eth')
@@ -68,6 +72,10 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
         Transaction.from(transaction).unsignedSerialized.substring(2); // Create unsigned transaction
 
       const transport = await transportConnect();
+
+      if (!transport) {
+        throw new Error('whatever eth');
+      }
       const LedgerHqAppEth = await dynamicImportWithRefinedError(
         async () => await import('@ledgerhq/hw-app-eth')
       );
