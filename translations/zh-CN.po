@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-15 08:16\n"
+"PO-Revision-Date: 2025-12-29 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -252,37 +252,37 @@ msgid "(Currently not supported)"
 msgstr "（目前不支持）"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Slippage Error"
 msgstr "翻转错误"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:150
+#: widget/embedded/src/components/Quote/Quote.tsx:155
 msgid "Slippage Warning"
 msgstr "翻转警告"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:158
 msgid "Bridge Limit Error"
 msgstr "桥接限制错误"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:242
+#: widget/embedded/src/components/Quote/Quote.tsx:247
 msgid "Yours: {amount} {symbol}"
 msgstr "你的： {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:263
+#: widget/embedded/src/components/Quote/Quote.tsx:268
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "建议的最低滑点： {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:284
+#: widget/embedded/src/components/Quote/Quote.tsx:289
 msgid "Yours: {userSlippage}"
 msgstr "你的： {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:431
+#: widget/embedded/src/components/Quote/Quote.tsx:446
 msgid "See All Routes"
 msgstr "查看所有路由"
 
@@ -350,7 +350,7 @@ msgid "Chains:"
 msgstr "链："
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:76
+#: widget/embedded/src/components/Quotes/Quotes.tsx:79
 msgid "Sort by"
 msgstr "排序方式"
 

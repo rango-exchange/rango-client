@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-15 08:16\n"
+"PO-Revision-Date: 2025-12-29 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -252,37 +252,37 @@ msgid "(Currently not supported)"
 msgstr "(वर्तमान में समर्थित नहीं)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Slippage Error"
 msgstr "फिसलन त्रुटि"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:150
+#: widget/embedded/src/components/Quote/Quote.tsx:155
 msgid "Slippage Warning"
 msgstr "फिसलन चेतावनी"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:158
 msgid "Bridge Limit Error"
 msgstr "ब्रिज सीमा त्रुटि"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:242
+#: widget/embedded/src/components/Quote/Quote.tsx:247
 msgid "Yours: {amount} {symbol}"
 msgstr "आपका: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:263
+#: widget/embedded/src/components/Quote/Quote.tsx:268
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "न्यूनतम सुझाया गया फिसलन: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:284
+#: widget/embedded/src/components/Quote/Quote.tsx:289
 msgid "Yours: {userSlippage}"
 msgstr "आपका: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:431
+#: widget/embedded/src/components/Quote/Quote.tsx:446
 msgid "See All Routes"
 msgstr "सभी रूट देखें"
 
@@ -350,7 +350,7 @@ msgid "Chains:"
 msgstr "जंजीरें:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:76
+#: widget/embedded/src/components/Quotes/Quotes.tsx:79
 msgid "Sort by"
 msgstr "इसके अनुसार क्रमबद्ध करें"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-15 08:16\n"
+"PO-Revision-Date: 2025-12-29 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -252,37 +252,37 @@ msgid "(Currently not supported)"
 msgstr "(Наразі не підтримується)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Slippage Error"
 msgstr "Помилка прокручування"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:150
+#: widget/embedded/src/components/Quote/Quote.tsx:155
 msgid "Slippage Warning"
 msgstr "Попередження про Slippage"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:158
 msgid "Bridge Limit Error"
 msgstr "Помилка обмеження мосту"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:242
+#: widget/embedded/src/components/Quote/Quote.tsx:247
 msgid "Yours: {amount} {symbol}"
 msgstr "Ваш: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:263
+#: widget/embedded/src/components/Quote/Quote.tsx:268
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "Мінімальне рекомендоване прослизання: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:284
+#: widget/embedded/src/components/Quote/Quote.tsx:289
 msgid "Yours: {userSlippage}"
 msgstr "Ваш: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:431
+#: widget/embedded/src/components/Quote/Quote.tsx:446
 msgid "See All Routes"
 msgstr "Побачити всі маршрути"
 
@@ -350,7 +350,7 @@ msgid "Chains:"
 msgstr "Ланцюги:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:76
+#: widget/embedded/src/components/Quotes/Quotes.tsx:79
 msgid "Sort by"
 msgstr "Сортувати за"
 

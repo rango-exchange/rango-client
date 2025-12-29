@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-15 08:16\n"
+"PO-Revision-Date: 2025-12-29 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -252,37 +252,37 @@ msgid "(Currently not supported)"
 msgstr "(현재 지원되지 않음)"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Slippage Error"
 msgstr "미끄러짐 오류"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:150
+#: widget/embedded/src/components/Quote/Quote.tsx:155
 msgid "Slippage Warning"
 msgstr "미끄러짐 경고"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:153
+#: widget/embedded/src/components/Quote/Quote.tsx:158
 msgid "Bridge Limit Error"
 msgstr "브리지 한계 오류"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:242
+#: widget/embedded/src/components/Quote/Quote.tsx:247
 msgid "Yours: {amount} {symbol}"
 msgstr "당신의: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:263
+#: widget/embedded/src/components/Quote/Quote.tsx:268
 msgid "Minimum suggested slippage: {minRequiredSlippage}"
 msgstr "제안된 최소 미끄러짐: {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:284
+#: widget/embedded/src/components/Quote/Quote.tsx:289
 msgid "Yours: {userSlippage}"
 msgstr "당신의: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:431
+#: widget/embedded/src/components/Quote/Quote.tsx:446
 msgid "See All Routes"
 msgstr "모든 경로 보기"
 
@@ -350,7 +350,7 @@ msgid "Chains:"
 msgstr "쇠사슬:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:76
+#: widget/embedded/src/components/Quotes/Quotes.tsx:79
 msgid "Sort by"
 msgstr "정렬 기준"
 
