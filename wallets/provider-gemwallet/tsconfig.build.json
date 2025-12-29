@@ -1,0 +1,12 @@
+{
+  // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
+  "extends": "../../tsconfig.libnext.json",
+  "include": ["src", "types"],
+  "files": ["../../global-wallets-env.d.ts"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "./src",
+    "lib": ["dom", "esnext"]
+    // match output dir to input dir. e.g. dist/index instead of dist/src/index
+  }
+}
