@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.59.1-next.3",
+  "version": "0.59.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -51,7 +51,7 @@
     "@rango-dev/provider-tomo": "^0.24.1-next.1",
     "@rango-dev/provider-tonconnect": "^0.19.1-next.1",
     "@rango-dev/provider-trezor": "^0.24.1-next.1",
-    "@rango-dev/provider-tron-link": "^0.57.1-next.2",
+    "@rango-dev/provider-tron-link": "^0.57.1-next.3",
     "@rango-dev/provider-trustwallet": "^0.57.1-next.1",
     "@rango-dev/provider-unisat": "^0.13.1-next.1",
     "@rango-dev/provider-walletconnect-2": "^0.51.1-next.1",
