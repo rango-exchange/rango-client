@@ -15,7 +15,6 @@ import * as defaultInjected from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
-import * as halo from '@rango-dev/provider-halo';
 import { versions as keplr } from '@rango-dev/provider-keplr';
 import { versions as leap } from '@rango-dev/provider-leap-cosmos';
 import { versions as ledger } from '@rango-dev/provider-ledger';
@@ -123,7 +122,6 @@ export const allProviders = (
     okx,
     tokenPocket,
     lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
     leap,
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
     taho,

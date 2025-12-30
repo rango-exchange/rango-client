@@ -27,7 +27,6 @@ declare global {
     starknet_braavos?: any;
     tronLink?: any;
     tokenpocket?: any;
-    kucoin?: any;
     leap?: any;
     frontier?: any;
     // This is for Station provider, `@terra-money/wallet-controller` adds this property to window automatically.
