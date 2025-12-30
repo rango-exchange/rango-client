@@ -1,3 +1,22 @@
+## Widget [0.54.0] (2025-12-30)
+_includes `@rango-dev/widget-embedded@0.58.0`_
+
+### Bug Fixes
+
+* handle switch account error on tronlink ([ed291d0](https://github.com/rango-exchange/rango-client/commit/ed291d0676b97cd6c5c87ea709ac590cd46feb1b))
+* more precise tron change account ([2515abf](https://github.com/rango-exchange/rango-client/commit/2515abf006653b3c40666a3a306c1c7cf5d50991))
+* prevent removing privy search params ([0ee97f1](https://github.com/rango-exchange/rango-client/commit/0ee97f153925d4c2b15872720ab40863a6f300b9))
+
+
+### Features
+
+* add btc to bitget wallet ([fd7b544](https://github.com/rango-exchange/rango-client/commit/fd7b5440367ff14839c51e5975960d9347d69aad))
+* integrate binance wallet ([ead71f4](https://github.com/rango-exchange/rango-client/commit/ead71f4fff37338faaab23c0b9ce6d0408daa433))
+* integrating xrpl blockchain ([d3f1dc7](https://github.com/rango-exchange/rango-client/commit/d3f1dc7271be0232b99fac25c20d8df853272ee9))
+* migrate tronlink to the hub ([ce087ed](https://github.com/rango-exchange/rango-client/commit/ce087ed21a2a7827d61f9613d2a3f278520d73ef))
+
+
+
 ## Widget [0.53.0] (2025-12-15)
 _includes `@rango-dev/widget-embedded@0.57.0`_
 
