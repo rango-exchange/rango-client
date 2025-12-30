@@ -1,3 +1,13 @@
+# [0.60.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.59.0...provider-all@0.60.0) (2025-12-30)
+
+
+### Features
+
+* integrate binance wallet ([ead71f4](https://github.com/rango-exchange/rango-client/commit/ead71f4fff37338faaab23c0b9ce6d0408daa433))
+* migrate tronlink to the hub ([ce087ed](https://github.com/rango-exchange/rango-client/commit/ce087ed21a2a7827d61f9613d2a3f278520d73ef))
+
+
+
 # [0.59.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.58.0...provider-all@0.59.0) (2025-12-15)
 
 

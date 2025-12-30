@@ -1,3 +1,12 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.57.0...widget-embedded@0.58.0) (2025-12-30)
+
+
+### Bug Fixes
+
+* prevent removing privy search params ([0ee97f1](https://github.com/rango-exchange/rango-client/commit/0ee97f153925d4c2b15872720ab40863a6f300b9))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.56.0...widget-embedded@0.57.0) (2025-12-15)
 
 

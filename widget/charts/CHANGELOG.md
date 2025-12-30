@@ -1,3 +1,7 @@
+# [0.23.0](https://github.com/rango-exchange/rango-client/compare/charts@0.22.0...charts@0.23.0) (2025-12-30)
+
+
+
 # [0.22.0](https://github.com/rango-exchange/rango-client/compare/charts@0.21.0...charts@0.22.0) (2025-12-15)
 
 
