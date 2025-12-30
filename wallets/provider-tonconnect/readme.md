@@ -7,7 +7,7 @@ More about implementation status can be found [here](../readme.md).
 ## Implementation notes/limitations
 
 #### ⚠️ Initialization
-You should call the `init` function with TonConnect configs before trying to use the wallet
+You should provide TonConnect configs in configs.walletOptions[WalletTypes.TON_CONNECT] (which equals configs.walletOptions.tonconnect)
 
 ### Feature
 
