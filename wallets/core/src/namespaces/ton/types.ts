@@ -7,13 +7,9 @@ import type {
 export interface TonActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (options?: ConnectOptions) => Promise<Accounts>;
+  connect: () => Promise<Accounts>;
   canEagerConnect: () => Promise<boolean>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;
-
-export type ConnectOptions = {
-  derivationPath?: string;
-};
