@@ -5,19 +5,18 @@ import { standardizeAndThrowError } from '@rango-dev/wallets-core/namespaces/com
 import { builders } from '@rango-dev/wallets-core/namespaces/ton';
 
 import { tonActions } from '../actions/ton.js';
-import { tonBuilders } from '../builders/ton.js';
 import { WALLET_ID } from '../constants.js';
+import { tonHooks } from '../hooks/ton.js';
 import { tonConnect } from '../utils.js';
 
-const [changeAccountSubscriber, changeAccountCleanup] = tonBuilders
-  .changeAccountSubscriber(tonConnect)
-  .build();
+const [disconnectSubscriber, disconnectCleanUp] =
+  tonHooks.getDisconnectSubscriber(tonConnect);
 
 const connect = builders
   .connect()
   .action(tonActions.connect(tonConnect))
-  .and(changeAccountSubscriber)
-  .or(changeAccountCleanup)
+  .and(disconnectSubscriber)
+  .or(disconnectCleanUp)
   .or(standardizeAndThrowError)
   .build();
 
@@ -28,7 +27,7 @@ const canEagerConnect = builders
 
 const disconnect = new ActionBuilder<TonActions, 'disconnect'>('disconnect')
   .action(tonActions.disconnect(tonConnect))
-  .after(changeAccountCleanup)
+  .after(disconnectCleanUp)
   .build();
 
 const ton = new NamespaceBuilder<TonActions>('Ton', WALLET_ID)

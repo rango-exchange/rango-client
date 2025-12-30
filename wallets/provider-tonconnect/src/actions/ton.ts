@@ -36,7 +36,9 @@ export function disconnect(
 ): FunctionWithContext<TonActions['disconnect'], Context> {
   return async (context) => {
     const tonInstance = getInstance();
-    await tonInstance.disconnect();
+    if (tonInstance.connected) {
+      await tonInstance.disconnect();
+    }
     commonActions.disconnect(context);
   };
 }
