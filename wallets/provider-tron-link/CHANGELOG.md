@@ -1,3 +1,17 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.57.0...provider-tron-link@0.58.0) (2025-12-30)
+
+
+### Bug Fixes
+
+* handle switch account error on tronlink ([ed291d0](https://github.com/rango-exchange/rango-client/commit/ed291d0676b97cd6c5c87ea709ac590cd46feb1b))
+
+
+### Features
+
+* migrate tronlink to the hub ([ce087ed](https://github.com/rango-exchange/rango-client/commit/ce087ed21a2a7827d61f9613d2a3f278520d73ef))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.56.0...provider-tron-link@0.57.0) (2025-12-15)
 
 

@@ -1,3 +1,12 @@
+# [0.57.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.56.0...wallets-core@0.57.0) (2025-12-30)
+
+
+### Features
+
+* integrating xrpl blockchain ([d3f1dc7](https://github.com/rango-exchange/rango-client/commit/d3f1dc7271be0232b99fac25c20d8df853272ee9))
+
+
+
 # [0.56.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.55.0...wallets-core@0.56.0) (2025-12-15)
 
 

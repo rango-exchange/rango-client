@@ -1,3 +1,13 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.57.0...wallets-shared@0.58.0) (2025-12-30)
+
+
+### Features
+
+* integrate binance wallet ([ead71f4](https://github.com/rango-exchange/rango-client/commit/ead71f4fff37338faaab23c0b9ce6d0408daa433))
+* integrating xrpl blockchain ([d3f1dc7](https://github.com/rango-exchange/rango-client/commit/d3f1dc7271be0232b99fac25c20d8df853272ee9))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.56.0...wallets-shared@0.57.0) (2025-12-15)
 
 

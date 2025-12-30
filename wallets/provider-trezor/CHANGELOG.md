@@ -1,3 +1,7 @@
+# [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.24.0...provider-trezor@0.25.0) (2025-12-30)
+
+
+
 # [0.24.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.23.0...provider-trezor@0.24.0) (2025-12-15)
 
 

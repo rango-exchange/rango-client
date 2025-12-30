@@ -1,3 +1,17 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.54.0...provider-bitget@0.55.0) (2025-12-30)
+
+
+### Bug Fixes
+
+* more precise tron change account ([2515abf](https://github.com/rango-exchange/rango-client/commit/2515abf006653b3c40666a3a306c1c7cf5d50991))
+
+
+### Features
+
+* add btc to bitget wallet ([fd7b544](https://github.com/rango-exchange/rango-client/commit/fd7b5440367ff14839c51e5975960d9347d69aad))
+
+
+
 # [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.53.0...provider-bitget@0.54.0) (2025-12-15)
 
 
