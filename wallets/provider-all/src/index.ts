@@ -31,7 +31,7 @@ import { versions as slush } from '@rango-dev/provider-slush';
 import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
-import * as tomo from '@rango-dev/provider-tomo';
+import { versions as tomo } from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
@@ -122,7 +122,7 @@ export const allProviders = (
     mathwallet,
     okx,
     tokenPocket,
-    lazyProvider(legacyProviderImportsToVersionsInterface(tomo)),
+    tomo,
     lazyProvider(legacyProviderImportsToVersionsInterface(halo)),
     leap,
     lazyProvider(legacyProviderImportsToVersionsInterface(frontier)),
