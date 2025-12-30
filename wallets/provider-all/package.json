@@ -31,7 +31,6 @@
     "@rango-dev/provider-default": "^0.54.1-next.1",
     "@rango-dev/provider-enkrypt": "^0.57.1-next.1",
     "@rango-dev/provider-exodus": "^0.58.1-next.1",
-    "@rango-dev/provider-frontier": "^0.58.1-next.1",
     "@rango-dev/provider-halo": "^0.57.1-next.1",
     "@rango-dev/provider-keplr": "^0.57.1-next.1",
     "@rango-dev/provider-leap-cosmos": "^0.57.1-next.1",
