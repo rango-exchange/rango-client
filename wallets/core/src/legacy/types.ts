@@ -9,6 +9,16 @@ export enum Networks {
   THORCHAIN = 'THOR',
   BCH = 'BCH',
   BINANCE = 'BNB',
+  BLAST = 'BLAST',
+  CELO = 'CELO',
+  LINEA = 'LINEA',
+  METIS = 'METIS',
+  SONIC = 'SONIC',
+  BERACHAIN = 'BERACHAIN',
+  ZETA_CHAIN = 'ZETA_CHAIN',
+  SCROLL = 'SCROLL',
+  ZKSYNC = 'ZKSYNC',
+  MONAD = 'MONAD',
   ETHEREUM = 'ETH',
   POLYGON = 'POLYGON',
   TERRA = 'TERRA',
@@ -62,6 +72,8 @@ export enum Networks {
   TON = 'TON',
   BASE = 'BASE',
   SUI = 'SUI',
+  XRPL = 'XRPL',
+
   // Using instead of null
   Unknown = 'Unkown',
 }

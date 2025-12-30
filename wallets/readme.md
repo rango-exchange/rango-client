@@ -134,6 +134,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI | StarkNet |
 | ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- | -------- |
+| [Binance](provider-binance/readme.md)           | ✅  | 🚧   | 🚧     | 🚧     | 🚧  | 🚧  | 🚧  |    ❌    |
 | [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅  | ❌  |    ❌    |
 | [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ✅    |
 | [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
@@ -155,6 +156,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌  | 🚧  |    ❌    |
+| [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅  |    ❌    |
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |    ❌    |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
@@ -163,6 +165,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
 | ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Binance      | ✅             | ✅             | ❌           | Injected                  | ❌            |
 | Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
@@ -184,6 +187,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Token Pocket | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
+| TronLink     | ✅             | ❌             | ✅           | Injected                  | ❌            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 
@@ -191,22 +195,14 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet         | Supported Chains                                                                                                        | Not Implemented                                   | Auto Connect Support | Source                               |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------- | ------------------------------------ |
-| Bitget         | Bitcoin,EVM,Tron,Solana,Cosmos,Aptos,Sui                                                                                | Bitcoin,Solana,Cosmos,Aptos,Sui                   | &check;              | https://web3.bitget.com/             |
-| Brave          | EVM, Solana                                                                                                             | -                                                 | &check;              | https://brave.com/wallet/            |
-| Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge                                                                              | Polkadot,Kadena,Aptos,BTC,Doge                    | &check;              | https://wallet.clover.finance        |
 | Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
-| Enkrypt        | EVM                                                                                                                     | BTC,Polkadot                                      | &check;              | https://www.enkrypt.com/             |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                                                                                              | Cosmos,Polkadot                                   | &check;              | https://frontier.xyz/                |
 | Halo           | -                                                                                                                       | -                                                 | &cross;              | https://halo.social/                 |
-| Leap Cosmos    | Cosmos                                                                                                                  | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
 rate ready to the hub)
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare Snap  | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com/metamask        |
 | Station        | Terra Classic, Terra                                                                                                    | -                                                 | &cross;              | https://station.terra.money/         |
-| Taho           | ETH,Polygon,Arbitrum,Arbitrum,Avax,Binance,Fantom                                                                       | Fantom                                            | &cross;              | https://taho.xyz/                    |
-| TokenPocket    | EVM                                                                                                                     | -                                                 | &check;              | https://extension.tokenpocket.pro/#/ |
 | Tomo           | EVM,Cosmos,BTC                                                                                                          | Cosmos,BTC                                        | &check;              | https://tomo.inc/                    |
 | Trezor         | Ethereum,Solana                                                                                                         | Solana                                            | &cross;              | https://trezor.io/                   |
-| TronLink       | Tron                                                                                                                    | -                                                 | &cross;              | -                                    |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |

@@ -4,6 +4,7 @@ import type { Environments as WalletConnectEnvironments } from '@rango-dev/provi
 import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
+import { versions as binance } from '@rango-dev/provider-binance';
 import { versions as bitget } from '@rango-dev/provider-bitget';
 import { versions as braavos } from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
@@ -33,7 +34,7 @@ import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import * as tomo from '@rango-dev/provider-tomo';
 import * as tonconnect from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
-import * as tronLink from '@rango-dev/provider-tron-link';
+import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
@@ -105,10 +106,11 @@ export const allProviders = (
     keplr,
     phantom,
     ready,
-    lazyProvider(legacyProviderImportsToVersionsInterface(tronLink)),
     trustwallet,
+    tronLink,
     enkrypt,
     bitget,
+    binance,
     lazyProvider(legacyProviderImportsToVersionsInterface(xdefi)),
     xverse,
     safepal,

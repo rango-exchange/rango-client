@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-xdefi",
-  "version": "0.59.0",
+  "version": "0.59.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -24,8 +24,8 @@
     "@rango-dev/signer-cosmos": "^0.38.0",
     "@rango-dev/signer-evm": "^0.40.0",
     "@rango-dev/signer-solana": "^0.46.1",
-    "@rango-dev/wallets-core": "^0.56.0",
-    "@rango-dev/wallets-shared": "^0.57.0",
+    "@rango-dev/wallets-core": "^0.56.1-next.1",
+    "@rango-dev/wallets-shared": "^0.57.1-next.1",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.89"
   },

@@ -3,6 +3,7 @@ import { IncreaseVersionFailedError } from './errors.mjs';
 import { Bumper } from 'conventional-recommended-bump';
 import { TAG_PACKAGE_PREFIX } from './changelog.mjs';
 import { ROOT_PACKAGE_NAME } from '../deploy/config.mjs';
+import { getLastCommitHashId } from './git.mjs';
 
 /**
  *
@@ -92,6 +93,67 @@ export async function increaseVersionForProd(pkg) {
     ...pkg,
     version: versions.next,
   };
+}
+
+/**
+ * Increasing the version by the following format: 0.0.0-experimental-lastCommitHash-yyyymmdd
+ *
+ * @param {import('./typedefs.mjs').Package} pkg
+ * @returns {Promise<import('./typedefs.mjs').Package>} Returns package with updated version
+ */
+export async function increaseVersionForExperimental(pkg) {
+  const now = new Date();
+  const yyyy = now.getUTCFullYear();
+  const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+  const dd = now.getUTCDate().toString().padStart(2, '0');
+  const date = `${yyyy}${mm}${dd}`;
+
+  const commitId = (await getLastCommitHashId()).slice(0, 8);
+
+  const newVersion = `0.0.0-experimental-${commitId}-${date}`;
+  /** @type {import('./typedefs.mjs').IncreaseVersionResult} */
+  const versions = await execa('yarn', [
+    'workspace',
+    pkg.name,
+    'version',
+    '--new-version',
+    newVersion,
+    '--no-git-tag-version',
+    '--json',
+  ])
+    .then((result) => result.stdout)
+    .then((output) => {
+      const versions = parseYarnVersionResult(output);
+
+      if (!versions.current && !versions.next) {
+        throw new IncreaseVersionFailedError(
+          `Couldn't extract versions from logs \n ${logs.join('\n')}`
+        );
+      }
+      return versions;
+    })
+    .catch((err) => {
+      if (err instanceof IncreaseVersionFailedError) throw err;
+
+      throw new IncreaseVersionFailedError(err.stderr);
+    });
+
+  return {
+    ...pkg,
+    version: versions.next,
+  };
+}
+
+export async function increaseVersion(channel, pkg) {
+  if (channel === 'prod') {
+    return await increaseVersionForProd(pkg);
+  } else if (channel === 'next') {
+    return await increaseVersionForNext(pkg);
+  } else if (channel === 'experimental') {
+    return await increaseVersionForExperimental(pkg);
+  } else {
+    throw new Error(`Your target channel not supported. channel: ${channel}`);
+  }
 }
 
 /**

@@ -44,6 +44,7 @@ export enum WalletTypes {
   WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
+  BINANCE = 'binance',
   PHANTOM = 'phantom',
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
@@ -141,6 +142,10 @@ export const namespaces: Record<
   Sui: {
     mainBlockchain: 'SUI',
     title: 'Sui',
+  },
+  XRPL: {
+    mainBlockchain: 'XRPL',
+    title: 'XRPL',
   },
 };
 

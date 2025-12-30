@@ -26,8 +26,12 @@ export type ProviderAPI = EIP1193Provider;
 // A 0x-prefixed hexadecimal string
 export type ChainId = string;
 export type Chain = AddEthereumChainParameter;
-
+export type ProviderAccounts = {
+  accounts: string[];
+  chainId: ChainId;
+};
 export type ConnectOptions = {
   switchOrAddNetwork?: (instance: ProviderAPI, chain: ChainId | Chain) => void;
+  getAccounts?: (provider: ProviderAPI) => Promise<ProviderAccounts>;
   derivationPath?: string;
 };

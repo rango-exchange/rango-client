@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.56.0",
+  "version": "0.56.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -54,6 +54,10 @@
     "./namespaces/tron": {
       "types": "./dist/namespaces/tron/mod.d.ts",
       "default": "./dist/namespaces/tron/mod.js"
+    },
+    "./namespaces/xrpl": {
+      "types": "./dist/namespaces/xrpl/mod.d.ts",
+      "default": "./dist/namespaces/xrpl/mod.js"
     }
   },
   "files": [
@@ -62,7 +66,7 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -74,7 +78,8 @@
     "@mysten/wallet-standard": "^0.13.26",
     "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "xrpl": "^4.2.0"
   },
   "dependencies": {
     "@chain-registry/types": "2.0.110",
@@ -82,6 +87,9 @@
     "immer": "^10.0.4",
     "rango-types": "^0.1.89",
     "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "xrpl": "^4.2.0"
   },
   "publishConfig": {
     "access": "public"

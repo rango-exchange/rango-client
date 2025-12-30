@@ -37,11 +37,14 @@ export function useSyncUrlAndStore() {
   const liquiditySourcesParamsRef = useRef<string>();
   const { findToken } = useAppStore();
   const getUrlSearchParams = () => {
-    const utmQueryParams: Record<string, string> = {};
+    const extraQueryParams: Record<string, string> = {};
 
     for (const [key, value] of searchParams.entries()) {
-      if (key.startsWith('utm_')) {
-        utmQueryParams[key] = value;
+      if (
+        key.startsWith('utm_') ||
+        key.startsWith('privy_') //these parameters are a required component of Privy’s OAuth login flow  https://docs.privy.io/recipes/react/cookies#middleware-setup
+      ) {
+        extraQueryParams[key] = value;
       }
     }
     const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
@@ -64,7 +67,7 @@ export function useSyncUrlAndStore() {
       autoConnect,
       clientUrl,
       liquiditySources,
-      utmQueryParams,
+      extraQueryParams,
       blockchain,
     };
   };
@@ -81,7 +84,7 @@ export function useSyncUrlAndStore() {
   };
 
   useEffect(() => {
-    const { autoConnect, clientUrl, utmQueryParams, blockchain } =
+    const { autoConnect, clientUrl, extraQueryParams, blockchain } =
       getUrlSearchParams();
 
     if (isInRouterContext && fetchMetaStatus === 'success') {
@@ -97,7 +100,7 @@ export function useSyncUrlAndStore() {
         [SearchParams.LIQUIDITY_SOURCES]: campaignMode
           ? liquiditySourcesParamsRef.current
           : undefined,
-        ...utmQueryParams,
+        ...extraQueryParams,
       });
     }
   }, [
