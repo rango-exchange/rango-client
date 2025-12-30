@@ -160,6 +160,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌  | 🚧  |    ❌    |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
@@ -190,6 +191,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TronLink     | ✅             | ❌             | ✅           | Injected                  | ❌            |
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
+| Tomo         | ✅             | ✅             | ✅           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
@@ -201,7 +203,6 @@ rate ready to the hub)
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare Snap  | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com/metamask        |
 | Station        | Terra Classic, Terra                                                                                                    | -                                                 | &cross;              | https://station.terra.money/         |
-| Tomo           | EVM,Cosmos,BTC                                                                                                          | Cosmos,BTC                                        | &check;              | https://tomo.inc/                    |
 | Trezor         | Ethereum,Solana                                                                                                         | Solana                                            | &cross;              | https://trezor.io/                   |
 | Wallet Connect | Evm,Solana,Cosmos                                                                                                       | Solana,Cosmos                                     | &cross;              | -                                    |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride |                                                   | &check;              | https://www.xdefi.io/                |
