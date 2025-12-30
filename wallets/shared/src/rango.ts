@@ -51,7 +51,6 @@ export enum WalletTypes {
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   READY = 'ready',
-  FRONTIER = 'frontier',
   COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
