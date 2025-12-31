@@ -161,6 +161,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
@@ -192,12 +193,12 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 | Tomo         | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Coin98       | ✅             | ✅             | ❌           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
 | Wallet         | Supported Chains                                                                                                        | Not Implemented                                   | Auto Connect Support | Source                               |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------- | ------------------------------------ |
-| Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei                                                            | Cosmos,TRON,Ton,Thorchain,Terra,BTC,Sui,Aptos,Sei | &cross;              | https://coin98.com/wallet            |
 rate ready to the hub)
 | Safe           | EVM                                                                                                                     | -                                                 | &check;              | https://safe.global/                 |
 | Solflare Snap  | Solana                                                                                                                  | -                                                 | &cross;              | https://solflare.com/metamask        |
