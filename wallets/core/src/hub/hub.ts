@@ -14,6 +14,15 @@ type RunAllResult = {
   namespaces: unknown[];
 };
 
+type RunAllArgs = {
+  [providerId: string]: {
+    provider?: unknown;
+    namespaces?: {
+      [namespaceId: string]: unknown;
+    };
+  };
+};
+
 interface HubOptions {
   store?: Store;
 }
@@ -25,8 +34,8 @@ export class Hub {
     this.#options = options ?? {};
   }
 
-  init() {
-    this.runAll('init');
+  init(args?: RunAllArgs) {
+    this.runAll('init', args);
   }
 
   /*
@@ -34,7 +43,7 @@ export class Hub {
    *
    *  TODO: Some of methods may accepts args, with this implementation we only limit to those one without any argument.
    */
-  runAll(action: string): RunAllResult[] {
+  runAll(action: string, args?: RunAllArgs): RunAllResult[] {
     const output: RunAllResult[] = [];
 
     // run action on all providers eagerConnect, disconnect
@@ -52,7 +61,10 @@ export class Hub {
       if (typeof providerMethod === 'function') {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore-next-line
-        providerOutput.provider = providerMethod.call(provider);
+        providerOutput.provider = providerMethod.call(
+          provider,
+          args?.[provider.id]?.provider
+        );
       }
 
       // Namespace instances can have their own `action` as well. we will call them as well.
@@ -62,7 +74,9 @@ export class Hub {
         // @ts-ignore-next-line
         const namespaceMethod = namespace[action];
         if (typeof namespaceMethod === 'function') {
-          const result = namespaceMethod();
+          const result = namespaceMethod(
+            args?.[provider.id]?.namespaces?.[namespace.namespaceId]
+          );
           providerOutput.namespaces.push(result);
         }
       }

@@ -86,7 +86,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   // Initialize instances
   useEffect(() => {
     const runOnInit = () => {
-      getHub().init();
+      getHub().init(params.configs?.walletOptions);
 
       rerender((currentRender) => currentRender + 1);
     };

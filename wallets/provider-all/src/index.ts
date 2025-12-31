@@ -30,10 +30,7 @@ import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import { versions as tomo } from '@rango-dev/provider-tomo';
-import {
-  versions as tonconnect,
-  init as tonconnectInit,
-} from '@rango-dev/provider-tonconnect';
+import { versions as tonconnect } from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
@@ -84,17 +81,6 @@ export const allProviders = (
   ) {
     if (!!options?.trezor?.manifest) {
       trezor.init(options.trezor);
-    }
-  }
-
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.TON_CONNECT,
-      name: 'tonconnect',
-    })
-  ) {
-    if (!!options?.tonConnect?.manifestUrl) {
-      tonconnectInit(options.tonConnect);
     }
   }
 
