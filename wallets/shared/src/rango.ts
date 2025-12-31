@@ -61,7 +61,6 @@ export enum WalletTypes {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
-  HALO = 'halo',
   LEAP = 'leap',
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
