@@ -161,6 +161,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ❌     | ✅  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
@@ -192,6 +193,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 | Tomo         | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
 
 # Supported Wallets (Legacy)
 

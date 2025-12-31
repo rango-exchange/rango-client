@@ -6,6 +6,7 @@ import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { StarknetActions } from '../../namespaces/starknet/types.js';
 import type { SuiActions } from '../../namespaces/sui/mod.js';
+import type { TonActions } from '../../namespaces/ton/types.js';
 import type { TronActions } from '../../namespaces/tron/types.js';
 import type { UtxoActions } from '../../namespaces/utxo/mod.js';
 import type { XRPLActions } from '../../namespaces/xrpl/mod.js';
@@ -38,6 +39,7 @@ export interface CommonNamespaces {
   tron: TronActions;
   starknet: StarknetActions;
   xrpl: XRPLActions;
+  ton: TonActions;
 }
 
 export type CommonNamespaceKeys = Prettify<keyof CommonNamespaces>;
