@@ -4,18 +4,16 @@ import { ProviderBuilder } from '@rango-dev/wallets-core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { ton } from './namespaces/ton.js';
-import { initializeTonConnectInstance, setEnvs } from './utils.js';
+import { tonConnect } from './utils.js';
 
 const buildProvider = () =>
   new ProviderBuilder(WALLET_ID)
     .init(async function (context, environments: Environments) {
       const [, setState] = context.state();
 
-      setEnvs(environments);
-
       async function initializeTon() {
         try {
-          await initializeTonConnectInstance();
+          await tonConnect.initialize(environments);
           console.debug('[ton] instance initialized.', context);
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (_) {

@@ -1,47 +1,14 @@
-import type { Environments, Provider } from './types.js';
+import type { Provider } from './types.js';
 import type { TonConnectUI } from '@tonconnect/ui';
 
-import {
-  dynamicImportWithRefinedError,
-  Networks,
-} from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 
-let tonConnectInstance: TonConnectUI;
-let envs: Environments;
+import { TonConnect } from './tonConnect.js';
 
-export function setEnvs(_envs: Environments) {
-  envs = _envs;
-}
-
-export async function getTonConnectUIModule() {
-  const tonConnectUI = await dynamicImportWithRefinedError(
-    async () => await import('@tonconnect/ui')
-  );
-  return tonConnectUI;
-}
-
-export async function initializeTonConnectInstance() {
-  if (!envs) {
-    throw new Error('Environments are not set');
-  }
-  const { TonConnectUI } = await getTonConnectUIModule();
-  if (!tonConnectInstance) {
-    tonConnectInstance = new TonConnectUI(envs);
-  }
-}
-
-export function tonConnect() {
-  if (!tonConnectInstance) {
-    throw new Error(
-      "TonConnect instance isn't initialized. Please ensure you have provided the TonConnect config."
-    );
-  }
-
-  return tonConnectInstance;
-}
+export const tonConnect = new TonConnect();
 
 export function getInstanceOrThrow(): Provider {
-  const instance = tonConnect();
+  const instance = tonConnect.getInstance();
 
   const instances = new Map([[Networks.TON, instance]]);
   return instances as Provider;

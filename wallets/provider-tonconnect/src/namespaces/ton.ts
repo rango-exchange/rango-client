@@ -10,11 +10,11 @@ import { tonHooks } from '../hooks/ton.js';
 import { tonConnect } from '../utils.js';
 
 const [disconnectSubscriber, disconnectCleanUp] =
-  tonHooks.getDisconnectSubscriber(tonConnect);
+  tonHooks.getDisconnectSubscriber(tonConnect.getInstance);
 
 const connect = builders
   .connect()
-  .action(tonActions.connect(tonConnect))
+  .action(tonActions.connect(tonConnect.getInstance))
   .and(disconnectSubscriber)
   .or(disconnectCleanUp)
   .or(standardizeAndThrowError)
@@ -22,11 +22,11 @@ const connect = builders
 
 const canEagerConnect = builders
   .canEagerConnect()
-  .action(tonActions.canEagerConnect(tonConnect))
+  .action(tonActions.canEagerConnect(tonConnect.getInstance))
   .build();
 
 const disconnect = new ActionBuilder<TonActions, 'disconnect'>('disconnect')
-  .action(tonActions.disconnect(tonConnect))
+  .action(tonActions.disconnect(tonConnect.getInstance))
   .after(disconnectCleanUp)
   .build();
 

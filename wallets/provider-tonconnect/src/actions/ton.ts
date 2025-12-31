@@ -8,7 +8,7 @@ import {
   utils,
 } from '@rango-dev/wallets-core/namespaces/ton';
 
-import { getTonConnectUIModule, waitForConnection } from '../utils.js';
+import { tonConnect, waitForConnection } from '../utils.js';
 
 export function connect(
   getInstance: () => TonConnectUI
@@ -16,7 +16,7 @@ export function connect(
   return async () => {
     const tonInstance = getInstance();
     const connectionRestored = await tonInstance.connectionRestored;
-    const { toUserFriendlyAddress } = await getTonConnectUIModule();
+    const { toUserFriendlyAddress } = tonConnect.getModule();
     let userFriendlyAddress: string;
 
     if (connectionRestored && tonInstance.account?.address) {
