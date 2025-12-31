@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitget",
-  "version": "0.55.1-next.0",
+  "version": "0.55.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,7 +24,7 @@
     "@rango-dev/signer-evm": "^0.40.0",
     "@rango-dev/signer-tron": "^0.39.0",
     "@rango-dev/wallets-core": "^0.57.0",
-    "@rango-dev/wallets-shared": "^0.58.1-next.0",
+    "@rango-dev/wallets-shared": "^0.58.1-next.1",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {

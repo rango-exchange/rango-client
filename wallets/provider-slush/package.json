@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-slush",
-  "version": "0.14.1-next.0",
+  "version": "0.14.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,7 +25,7 @@
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-sui": "^0.8.0",
     "@rango-dev/wallets-core": "^0.57.0",
-    "@rango-dev/wallets-shared": "^0.58.1-next.0",
+    "@rango-dev/wallets-shared": "^0.58.1-next.1",
     "rango-types": "^0.1.89"
   },
   "publishConfig": {
