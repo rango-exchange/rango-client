@@ -30,7 +30,7 @@ import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import { versions as tomo } from '@rango-dev/provider-tomo';
-import * as tonconnect from '@rango-dev/provider-tonconnect';
+import { versions as tonconnect } from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
@@ -84,23 +84,12 @@ export const allProviders = (
     }
   }
 
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.TON_CONNECT,
-      name: 'tonconnect',
-    })
-  ) {
-    if (!!options?.tonConnect?.manifestUrl) {
-      tonconnect.init(options.tonConnect);
-    }
-  }
-
   return [
     lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
     lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
+    tonconnect,
     keplr,
     phantom,
     ready,
