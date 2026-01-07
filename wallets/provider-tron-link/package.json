@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tron-link",
-  "version": "0.58.1-next.1",
+  "version": "0.58.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-tron": "^0.39.0",
-    "@rango-dev/wallets-core": "^0.57.0",
-    "@rango-dev/wallets-shared": "^0.58.1-next.1",
+    "@rango-dev/signer-tron": "^0.39.1-next.0",
+    "@rango-dev/wallets-core": "^0.57.1-next.0",
+    "@rango-dev/wallets-shared": "^0.58.1-next.2",
     "rango-types": "^0.1.93"
   },
   "publishConfig": {
