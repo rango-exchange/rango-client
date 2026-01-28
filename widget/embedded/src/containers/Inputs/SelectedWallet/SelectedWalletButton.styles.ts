@@ -20,5 +20,20 @@ export const WalletButton = styled(Button, {
         },
       },
     },
+    disabled: {
+      true: {
+        pointerEvents: 'none',
+        backgroundColor: 'color-mix(in srgb, $neutral 50%, transparent)',
+        '& ._typography': {
+          color: '$neutral600',
+        },
+        [`.${darkTheme} &`]: {
+          backgroundColor: '$neutral',
+          '& ._typography': {
+            color: '$neutral700',
+          },
+        },
+      },
+    },
   },
 });

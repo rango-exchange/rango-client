@@ -18,13 +18,16 @@ const WALLET_ADDRESS_MAX_CHARS = 4;
 const WALLET_ADDRESS_ELLIPSIS_LENGTH = 4;
 
 export function SelectedWalletButton(props: PropTypes) {
-  const { onClickWallet, relatedWallet } = props;
+  const { onClickWallet, disabled, relatedWallet } = props;
   const { t } = useTranslation();
   const address = relatedWallet?.address;
   const image = relatedWallet?.image;
 
   return (
-    <WalletButton onClick={onClickWallet} variant="contained">
+    <WalletButton
+      onClick={onClickWallet}
+      variant="contained"
+      disabled={disabled}>
       {!relatedWallet && (
         <Typography variant="label" size="medium" color="secondary">
           {t('Connect Wallet')}

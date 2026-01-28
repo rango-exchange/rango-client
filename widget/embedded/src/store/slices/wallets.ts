@@ -610,10 +610,13 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           ? get().selectedWallet('source')
           : get().selectedWallet('destination');
 
-      return get().connectedWallets.some(
-        (wallet) =>
-          wallet.chain === selectedBlockchain?.name &&
-          wallet.walletType === selectedWallet?.walletType
+      return (
+        selectedBlockchain?.name === selectedWallet?.chain &&
+        get().connectedWallets.some(
+          (wallet) =>
+            wallet.chain === selectedBlockchain?.name &&
+            wallet.walletType === selectedWallet?.walletType
+        )
       );
     },
     clearSelectedWallet: (kind) => {

@@ -102,6 +102,7 @@ export function SourceInput(props: PropTypes) {
         label={i18n.t('From')}
         suffix={
           <SelectedWalletButton
+            disabled={!fromToken}
             onClickWallet={onClickWallet}
             relatedWallet={relatedWallet}
           />

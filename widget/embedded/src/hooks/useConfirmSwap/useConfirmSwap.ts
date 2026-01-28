@@ -21,6 +21,11 @@ export function useConfirmSwap() {
     });
 
   const handleConfirmSwap = async (callback?: () => void) => {
+    setConfirmSwapResult({
+      quoteData: confirmSwapData.quoteData,
+      error: null,
+      warnings: null,
+    });
     if (!sourceWallet) {
       return;
     }

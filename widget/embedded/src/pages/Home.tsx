@@ -143,7 +143,10 @@ export function Home() {
     (!!selectedQuote || quoteError) &&
     !showQuoteWarningModal &&
     !showBalanceWarning
-      ? fetchQuote
+      ? () => {
+          fetchQuote();
+          clearConfirmSwapState();
+        }
       : undefined;
 
   const onHandleNavigation = (route: string) => {
@@ -350,7 +353,10 @@ export function Home() {
                 onConfirmWarningModal={() => {
                   setShowQuoteWarningModal(false);
                   setQuoteWarningsConfirmed(true);
-                  void handleConfirmSwap();
+                  console.log('go ahead');
+                  void handleConfirmSwap(() =>
+                    navigate(navigationRoutes.confirmSwap)
+                  );
                 }}
                 onChangeSettings={() =>
                   onHandleNavigation(navigationRoutes.settings)

@@ -83,6 +83,7 @@ export function DestinationInput(props: PropTypes) {
         suffix={
           <SelectedWalletButton
             onClickWallet={onClickWallet}
+            disabled={!toToken}
             relatedWallet={relatedWallet}
           />
         }
