@@ -39,3 +39,29 @@ export function stripTrailingZeros(input: string): string {
   const s = input.replace(/(\.\d*?[1-9])0+$/, '$1');
   return s.replace(/\.0+$/, '');
 }
+
+/**
+ * Normalize a numeric input string by removing all non-numeric characters
+ * except digits and a single decimal separator.
+ *
+ * This function:
+ * - strips letters, spaces, commas, and symbols
+ * - preserves digits (`0–9`)
+ * - keeps only the first `.` as the decimal point
+ *
+ * @example "300,222"     → "300222"
+ * @example "12a3.4b5"   → "123.45"
+ * @example "1.2.3.4"    → "1.234"
+ * @example ".5"         → ".5"
+ */
+export function parseNumericValue(value: string): string {
+  value = value
+    // 1. Remove everything except digits and dots
+    .replace(/[^\d.]/g, '')
+    // 2. Keep only the first dot
+    .replace(/\./g, (_, offset, string) =>
+      string.indexOf('.') === offset ? '.' : ''
+    );
+
+  return value;
+}
