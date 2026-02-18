@@ -119,8 +119,8 @@ export function SwapInput(props: SwapInputPropTypes) {
                   style={{ padding: 0 }}
                   value={price.value}
                   id={`${props.id}-input`}
-                  type={'onInputChange' in props ? 'number' : 'text'}
-                  step="any"
+                  type="text"
+                  inputMode="decimal"
                   size="large"
                   placeholder="0"
                   variant="ghost"
@@ -128,7 +128,6 @@ export function SwapInput(props: SwapInputPropTypes) {
                     onBlur: (event: React.ChangeEvent<HTMLInputElement>) =>
                       props.onInputBlur?.(event.target.value),
                   })}
-                  min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
                       props.onInputChange(event.target.value),

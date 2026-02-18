@@ -26,6 +26,7 @@ import {
 import { isPositiveNumber, sanitizeInputAmount } from '../utils/numbers';
 import {
   ensureLeadingZeroForDecimal,
+  parseNumericValue,
   removeLeadingZeros,
 } from '../utils/sanitizers';
 import { getUsdInputFrom, getUsdOutputFrom } from '../utils/swap';
@@ -249,7 +250,7 @@ const initializer: StateCreator<
     }));
   },
   setInputAmount: (amount) => {
-    let sanitized = amount;
+    let sanitized = parseNumericValue(amount);
     if (!isZeroValue(amount)) {
       // sanitize once a meaningful digit is entered (e.g. "00001" → "1")
       sanitized = removeLeadingZeros(sanitized);

@@ -134,5 +134,9 @@ export function sanitizeInputAmount(amount: string): string {
     return '0';
   }
 
+  if (amount.endsWith('.')) {
+    return amount.slice(0, -1);
+  }
+
   return stripTrailingZeros(amount);
 }
