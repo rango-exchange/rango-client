@@ -1,8 +1,7 @@
 import type { Tokens, WidgetVariant } from '../types';
 import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
 
-import { RANGO_PUBLIC_API_KEY } from '../constants';
-
+import { getApiKeyFromEnvOrNotSet } from './env';
 import { areTokensEqual } from './wallets';
 
 export interface Configs {
@@ -17,7 +16,7 @@ type TokensConfig =
     };
 
 let configs: Configs = {
-  API_KEY: RANGO_PUBLIC_API_KEY,
+  API_KEY: getApiKeyFromEnvOrNotSet(),
 };
 
 export function getConfig(name: keyof Configs) {

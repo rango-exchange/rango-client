@@ -24,9 +24,10 @@ jobs:
 
   deploy:
     needs: publish
+    environment: production
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
-    
+
   sync-next:
     needs: deploy
     runs-on: ubuntu-latest

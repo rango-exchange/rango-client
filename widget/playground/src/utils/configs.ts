@@ -4,6 +4,7 @@ import type { Token } from 'rango-sdk';
 import { initialConfig } from '../store/config';
 
 import { areTokensEqual, shallowEqual } from './common';
+import { getApiKeyFromEnvOrNotSet } from './env';
 import { filterConfig } from './export';
 
 interface Configs {
@@ -11,11 +12,6 @@ interface Configs {
   WC_PROJECT_ID: string;
 }
 
-/*
- * this API key is limited and
- * it is only for test purpose
- */
-export const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
 const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
 export const TREZOR_MANIFEST = {
   appUrl: 'https://widget.rango.exchange/',
@@ -25,7 +21,7 @@ export const TON_CONNECT_MANIFEST_URL =
   'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/manifests/tonconnect/manifest.json';
 
 const configs: Configs = {
-  API_KEY: RANGO_PUBLIC_API_KEY,
+  API_KEY: getApiKeyFromEnvOrNotSet(),
   WC_PROJECT_ID,
 };
 
