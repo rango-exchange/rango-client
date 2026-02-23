@@ -10,7 +10,7 @@ import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { initialConfig, useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
-import { RANGO_PUBLIC_API_KEY } from './utils/configs';
+import { getApiKeyFromEnvOrThrow } from './utils/env';
 import { filterConfig } from './utils/export';
 
 export function App() {
@@ -28,7 +28,7 @@ export function App() {
      * mounting multiple WidgetProviders may result in conflicts and unexpected behaviour.
      */
     externalWallets: true,
-    apiKey: RANGO_PUBLIC_API_KEY,
+    apiKey: getApiKeyFromEnvOrThrow(),
     features: {
       theme: 'hidden',
     },

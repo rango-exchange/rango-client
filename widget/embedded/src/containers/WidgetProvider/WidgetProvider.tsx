@@ -4,11 +4,12 @@ import type { PropsWithChildren } from 'react';
 import { setSolanaSignerConfig } from '@rango-dev/signer-solana';
 import React, { useEffect, useMemo } from 'react';
 
-import { DEFAULT_BASE_URL, RANGO_PUBLIC_API_KEY } from '../../constants';
+import { DEFAULT_BASE_URL } from '../../constants';
 import { useFetchApiConfig } from '../../hooks/useFetchApiConfig';
 import useFontLoader from '../../hooks/useFontLoader';
 import QueueManager from '../../QueueManager';
 import { initConfig } from '../../utils/configs';
+import { getApiKeyFromEnvOrThrow } from '../../utils/env';
 import { WidgetWallets } from '../Wallets';
 import { WidgetInfo } from '../WidgetInfo';
 
@@ -32,7 +33,7 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
 
   useMemo(() => {
     initConfig({
-      API_KEY: config?.apiKey || RANGO_PUBLIC_API_KEY,
+      API_KEY: config?.apiKey || getApiKeyFromEnvOrThrow(),
       BASE_URL: config?.apiUrl || DEFAULT_BASE_URL,
     });
   }, [config.apiKey, config.apiUrl]);

@@ -23,7 +23,7 @@ const providers = allProviders({
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);
-  const client = new RangoClient(process.env.REACT_APP_API_KEY as string);
+  const client = new RangoClient(process.env.REACT_APP_RANGO_API_KEY as string);
 
   // Because allBlockChains didn't use the BlockchainMeta type from rango-sdk, we have to use any type
   const [blockchains, setBlockChains] = useState<any>([]);
