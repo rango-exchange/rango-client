@@ -1,0 +1,69 @@
+name: Build & Deploy
+
+inputs:
+  PLAYGROUND_RANGO_API_KEY:
+    required: true
+    type: string 
+  RANGO_API_KEY:
+    required: true
+    type: string
+  VERCEL_ORG_ID:
+    required: true
+    type: string    
+  VERCEL_TOKEN:
+    required: true
+    type: string
+  VERCEL_PROJECT_WIDGET_CONFIG:
+    required: true
+    type: string    
+  VERCEL_PROJECT_WIDGET_APP:
+    required: true
+    type: string      
+  VERCEL_PROJECT_STORYBOOK:
+    required: true
+    type: string      
+  VERCEL_PROJECT_Q: 
+    required: true
+    type: string    
+  ENABLE_PREVIEW_DEPLOY:
+    type: boolean
+    default: false  
+
+outputs:
+  app_url:
+    description: "App Client Link"
+    value: ${{ steps.deploy-clients.outputs.widget-app-url }}
+  playground_url:
+    description: "Playground Client Link"
+    value: ${{ steps.deploy-clients.outputs.widget-playground-url }}    
+  storybook_url:
+    description: "Storybook Client Link"
+    value: ${{ steps.deploy-clients.outputs.storybook-url }}     
+
+    
+runs:
+  using: 'composite'             
+  steps:              
+    - name: Build Clients
+      shell: bash
+      run: node ./scripts/build-clients/command.mjs
+
+    - name: Deploy Clients
+      id: deploy-clients
+      shell: bash
+      run: |
+        yarn global add vercel
+        yarn run deploy
+      env:
+        REF: ${{ github.ref }}
+        GH_TOKEN: ${{ github.token }}
+        VERCEL_ORG_ID: ${{ inputs.VERCEL_ORG_ID }}
+        VERCEL_TOKEN: ${{ inputs.VERCEL_TOKEN }}
+        VERCEL_PROJECT_WIDGET_CONFIG: ${{ inputs.VERCEL_PROJECT_WIDGET_CONFIG }}
+        VERCEL_PROJECT_WIDGET_APP: ${{ inputs.VERCEL_PROJECT_WIDGET_APP }}
+        VERCEL_PROJECT_STORYBOOK: ${{ inputs.VERCEL_PROJECT_STORYBOOK }}
+        VERCEL_PROJECT_Q: ${{ inputs.VERCEL_PROJECT_Q }}
+        REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}
+        REACT_APP_RANGO_API_KEY: ${{ inputs.RANGO_API_KEY }}
+        ENABLE_PREVIEW_DEPLOY: ${{ inputs.ENABLE_PREVIEW_DEPLOY }}       
+
