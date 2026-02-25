@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - localization
+    env:          
+      REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
+      REACT_APP_RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,9 +48,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }} # widget playground
           VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }} # widget app
-          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }} # storybook
-          REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
-          REACT_APP_RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}
+          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }} # storybook          
 
           ENABLE_PREVIEW_DEPLOY: true
 

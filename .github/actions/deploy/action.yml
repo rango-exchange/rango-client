@@ -1,0 +1,40 @@
+name: Deploy
+
+inputs:
+  PLAYGROUND_RANGO_API_KEY:
+    required: true
+    type: string 
+  RANGO_API_KEY:
+    required: true
+    type: string
+  TEST_MODE:
+    required: true
+    type: string
+    
+runs:
+  using: 'composite'             
+  steps:
+    - name: Debug Variables
+      shell: 'bash'
+      run: |
+        echo "Full vars context: ${{ toJson(envs) }}"
+        echo "Full vars context: ${{ toJson(env) }}"          
+        echo "Playground API Key: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}"          
+        echo "Rango API Key: ${{ inputs.RANGO_API_KEY }}"          
+        echo "TEST_MODE: ${{ inputs.TEST_MODE }}"
+
+    - run: git pull  
+      shell: 'bash'
+    
+    - name: Prepare      
+      uses: ./.github/actions/prepare
+      
+      env:
+        REF: ${{ github.ref }}
+        GH_TOKEN: ${{ github.token }}
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+        VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
+        VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
+        VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}          
