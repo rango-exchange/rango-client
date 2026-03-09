@@ -27,7 +27,7 @@
     "@rango-dev/wallets-shared": "^0.58.1-next.2",
     "@wallet-standard/app": "^1.1.0",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.93"
+    "rango-types": "^0.1.95"
   },
   "devDependencies": {
     "@solana/wallet-standard-features": "^1.3.0",
