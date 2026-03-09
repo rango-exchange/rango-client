@@ -213,6 +213,7 @@ export const setCurrentStepTx = (
   currentStep.tonTransaction = null;
   currentStep.suiTransaction = null;
   currentStep.xrplTransaction = null;
+  currentStep.stellarTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -254,6 +255,9 @@ export const setCurrentStepTx = (
       break;
     case TransactionType.XRPL:
       currentStep.xrplTransaction = transaction;
+      break;
+    case TransactionType.STELLAR:
+      currentStep.stellarTransaction = transaction;
       break;
     default:
       ((x: never) => {

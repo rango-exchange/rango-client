@@ -145,6 +145,10 @@ export const namespaces: Record<
     mainBlockchain: 'XRPL',
     title: 'XRPL',
   },
+  Stellar: {
+    mainBlockchain: 'Stellar',
+    title: 'Stellar',
+  },
 };
 
 export type DerivationPath = {
