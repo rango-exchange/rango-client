@@ -63,8 +63,7 @@ export function produceNextStateForTransaction(
     });
   }
 
-  const hasAlreadyProceededToSign =
-    typeof swap.hasAlreadyProceededToSign === 'boolean';
+  const hasAlreadyProceededToSign = !!swap.hasAlreadyProceededToSign;
 
   if (isApproval) {
     return new Ok({
