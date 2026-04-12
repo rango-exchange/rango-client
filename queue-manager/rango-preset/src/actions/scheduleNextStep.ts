@@ -39,7 +39,7 @@ export function scheduleNextStep({
   if (!!currentStep && !isFailed) {
     if (isTxAlreadyCreated(swap, currentStep)) {
       if (currentStep.fromBlockchain === TransactionType.XRPL) {
-        schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+        schedule(SwapActionTypes.CHECK_XRPL_TRUSTLINE);
       } else {
         schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       }

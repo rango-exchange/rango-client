@@ -1064,39 +1064,53 @@ export function isRequiredWalletConnected(
   return { ok: matched, reason: 'account_miss_match' };
 }
 
+export function updateStorageOnSuccessfulSign(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  signResult: { hash: string; response?: any },
+  data: { isApproval: boolean }
+) {
+  const { setTransactionDataByHash } = inMemoryTransactionsData();
+  const { getStorage, context } = actions;
+  const { meta } = context;
+  const swap = getStorage().swapDetails;
+
+  const currentStep = getCurrentStep(swap)!;
+
+  const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
+  const explorerUrl = getScannerUrl(
+    signResult.hash,
+    currentStepNamespace.network,
+    meta.blockchains
+  );
+  setStepTransactionIds(
+    actions,
+    signResult.hash,
+    explorerUrl &&
+      (!signResult.response ||
+        (signResult.response && !signResult.response.hashRequiringUpdate))
+      ? {
+          url: explorerUrl,
+          description: data.isApproval ? 'Approve' : 'Swap',
+        }
+      : undefined
+  );
+  // response used for evm transactions to get receipt and track replaced
+  if (signResult.response) {
+    setTransactionDataByHash(signResult.hash, {
+      response: signResult.response,
+    });
+  }
+}
+
 export function handleSuccessfulSign(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
   data: { isApproval: boolean }
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ hash, response }: { hash: string; response?: any }) => {
-    const { setTransactionDataByHash } = inMemoryTransactionsData();
-    const { getStorage, next, schedule, context } = actions;
-    const { meta } = context;
-    const swap = getStorage().swapDetails;
-
-    const currentStep = getCurrentStep(swap)!;
-
-    const currentStepNamespace = getCurrentNamespaceOf(swap, currentStep);
-    const explorerUrl = getScannerUrl(
-      hash,
-      currentStepNamespace.network,
-      meta.blockchains
-    );
-    setStepTransactionIds(
-      actions,
-      hash,
-      explorerUrl && (!response || (response && !response.hashRequiringUpdate))
-        ? {
-            url: explorerUrl,
-            description: data.isApproval ? 'Approve' : 'Swap',
-          }
-        : undefined
-    );
-    // response used for evm transactions to get receipt and track replaced
-    if (response) {
-      setTransactionDataByHash(hash, { response });
-    }
+    const { schedule, next } = actions;
+    updateStorageOnSuccessfulSign(actions, { hash, response }, data);
     schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
     next();
   };

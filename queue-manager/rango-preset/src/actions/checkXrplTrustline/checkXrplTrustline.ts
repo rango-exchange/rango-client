@@ -1,8 +1,5 @@
-import type {
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from '../../types';
+import type { TargetToken } from './types';
+import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 import type { GenericSigner, XrplTransaction } from 'rango-types';
@@ -12,13 +9,10 @@ import {
   getCurrentStep,
   getCurrentStepTx,
   handleRejectedSign,
-  handleSuccessfulSign,
+  updateStorageOnSuccessfulSign,
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
-import {
-  ensureXrplNamespaceExists,
-  ensureXrplTransactionIsValid,
-} from '../checkXrplTrustline';
+import { SwapActionTypes } from '../../types';
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
 import {
   onNextStateError,
@@ -27,7 +21,14 @@ import {
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
 
-export async function executeXrplTransaction(
+import {
+  checkTruslineAlreadyOpened,
+  createTrustlineTransaction,
+  ensureXrplNamespaceExists,
+  ensureXrplTransactionIsValid,
+} from './utils';
+
+export async function checkXrplTrustline(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
   /*
@@ -41,7 +42,7 @@ export async function executeXrplTransaction(
     return;
   }
 
-  const { failed, getStorage, context } = actions;
+  const { failed, context, schedule, getStorage, next } = actions;
   const { meta, getSigners } = context;
 
   const swap = getStorage().swapDetails;
@@ -55,6 +56,11 @@ export async function executeXrplTransaction(
     if (actions.context.resetClaimedBy) {
       actions.context.resetClaimedBy();
     }
+  };
+  const onSuccessfulFinish = () => {
+    schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+    next();
+    onFinish();
   };
 
   const handleErr = (err: Err<NextTransactionStateError>) => {
@@ -100,31 +106,74 @@ export async function executeXrplTransaction(
   }
 
   /*
+   * 3. Do we need open a trustline for this transaction?
    *
-   * 3. Execute transaction
+   * Trust line only should be opened for issued token (not native), server is putting that data as precondition for us.
+   * If there is no need for that, we are skipping this step and consider it as done.
+   */
+  const trustlinePrecondition = transaction.val.preconditions.find(
+    (item) => item.type === 'XRPL_CHANGE_TRUSTLINE'
+  );
+  if (!trustlinePrecondition) {
+    onSuccessfulFinish();
+    return;
+  }
+
+  /*
+   *
+   * 4. Ensure trusline has been opened, then execute if needed.
    *
    */
   const chainId = meta.blockchains[transaction.val.blockChain]?.chainId;
   const walletSigners = await getSigners(sourceWallet.walletType);
 
-  const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
-    transaction.val.type
+  const token: TargetToken = {
+    currency: trustlinePrecondition.currency,
+    account: trustlinePrecondition.issuer,
+    amount: trustlinePrecondition.value,
+  };
+
+  // TODO: it's better to add some logic around `balance` to ensure we have enough capacity for the trust line. Now we only check it's already open or not.
+  const isTruslineAlreadyOpened = await checkTruslineAlreadyOpened(
+    trustlinePrecondition.wallet,
+    token,
+    {
+      namespace: namespace.val,
+    }
   );
 
-  try {
-    const result = await signer.signAndSendTx(
-      transaction.val,
-      walletAddress,
-      chainId
+  if (!isTruslineAlreadyOpened) {
+    const trustlineTx = createTrustlineTransaction(
+      trustlinePrecondition.wallet,
+      token
     );
 
-    handleSuccessfulSign(actions, {
-      isApproval: transaction.val.data.TransactionType === 'TrustSet',
-    })(result);
-  } catch (e) {
-    handleRejectedSign(actions)(e);
-  }
+    const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
+      transaction.val.type
+    );
 
-  // this works as `finally` for the iterator.
-  onFinish();
+    try {
+      const trustlineTransaction: XrplTransaction = {
+        ...transaction.val,
+        data: trustlineTx,
+      };
+      const result = await signer.signAndSendTx(
+        trustlineTransaction,
+        walletAddress,
+        chainId
+      );
+
+      updateStorageOnSuccessfulSign(actions, result, {
+        // TODO: approval has different meaning for EVM, we may need to add a third type called trustline for the following function.
+        isApproval: true,
+      });
+      onSuccessfulFinish();
+    } catch (e) {
+      handleRejectedSign(actions)(e);
+      onFinish();
+    }
+  } else {
+    onSuccessfulFinish();
+    return;
+  }
 }
