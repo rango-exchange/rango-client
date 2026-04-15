@@ -28,7 +28,7 @@
     "@rango-dev/wallets-shared": "^0.58.1-next.2",
     "@trezor/connect-web": "^9.5.0",
     "ethers": "^6.13.2",
-    "rango-types": "^0.1.95"
+    "rango-types": "^0.1.96"
   },
   "publishConfig": {
     "access": "public"

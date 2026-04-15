@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.95"
+    "rango-types": "^0.1.96"
   },
   "devDependencies": {
     "@mysten/sui": "^1.21.2",
