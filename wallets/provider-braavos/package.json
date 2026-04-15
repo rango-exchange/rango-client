@@ -24,7 +24,7 @@
     "@rango-dev/signer-starknet": "^0.40.1-next.0",
     "@rango-dev/wallets-core": "^0.57.1-next.0",
     "@rango-dev/wallets-shared": "^0.58.1-next.2",
-    "rango-types": "^0.1.95"
+    "rango-types": "^0.1.96"
   },
   "publishConfig": {
     "access": "public"
