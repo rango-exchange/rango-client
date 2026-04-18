@@ -18013,28 +18013,28 @@ range-parser@^1.2.1, range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-rango-sdk-basic@^0.1.75:
-  version "0.1.75"
-  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.75.tgz#0ba7386a3744281e600913d16017585f63097934"
-  integrity sha512-pUDB0sAvxRx0/7qcFDRCAnhGKOOc+vwZPrecV28zsogDLLiwgL2yqPd+7IGOjrHVZ0ntGzZwnUualQWmGb7RNQ==
+rango-sdk-basic@^0.1.76:
+  version "0.1.76"
+  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.76.tgz#fd47df4165b16809ed60429a158ac0d1affde147"
+  integrity sha512-SRt5a4c/XzGGKr9VONwXsALzUdhHd2Ysjf8JJLYWqglgwrdmf6tOLFst9jn4CLuuhrrQPHz7pbSdr9LC7gn2ZQ==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.96"
+    rango-types "^0.1.97"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.75:
-  version "0.1.75"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.75.tgz#152b9891ca0be8b984f7fbd9f79af1e790f85fca"
-  integrity sha512-HkTstVUBE52YskJTOHmh3W9Jc+H6UVkGfcn9HIJRpDGHVXRpNkO+WihJhMr9jhuIcCOelqRiulBXb23iqsBpGw==
+rango-sdk@^0.1.76:
+  version "0.1.76"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.76.tgz#9ed830232d74b0d3f480ab7dea44eb1ef6be5eea"
+  integrity sha512-4va4v/xEQ2FtnEAdhkp8+cJ2cvIixHTTUD+Q5YpkYt6C4iwFepkei7J+oOjXdiDsr3E/yVX8/NI1qJ0y1qz6Gw==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.96"
+    rango-types "^0.1.97"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.96:
-  version "0.1.96"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.96.tgz#398b42897602ed1c32d62a8a09bd514ce95b0798"
-  integrity sha512-gxueMedTtS0byXVaV0Z60Ud6K9dqMv4DazwiU53itcXEuJ9K+JC5xW4EXtUAVIegqCA6KbkMHQ5OLYTE0s4HTg==
+rango-types@^0.1.97:
+  version "0.1.97"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.97.tgz#2cf7a88018f5602058d48aa2c47da8624e336e2f"
+  integrity sha512-3GmizxMCEOul14QTB/s6pMCIFPDydiZE2pnMFePsAxeynge0WcR/0fBe2q/R4yATGqkEAyjwJGBGuix8bcn5tw==
 
 raw-body@2.5.2:
   version "2.5.2"

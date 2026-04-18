@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.96"
+    "rango-types": "^0.1.97"
   },
   "peerDependencies": {
     "@ton/core": ">=0.59.0",
