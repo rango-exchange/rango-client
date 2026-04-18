@@ -1,7 +1,11 @@
 import type { ProviderMetadata } from '@rango-dev/wallets-core';
 
 import { WalletTypes } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+import {
+  type BlockchainMeta,
+  evmBlockchains,
+  hyperliquidBlockchain,
+} from 'rango-types';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -28,8 +32,10 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              evmBlockchains(allBlockchains),
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) => [
+              ...evmBlockchains(allBlockchains),
+              ...hyperliquidBlockchain(allBlockchains),
+            ],
           },
         ],
       },

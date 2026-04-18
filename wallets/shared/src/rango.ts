@@ -173,6 +173,7 @@ export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.XDEFI,
 ];
 
+export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
 export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =

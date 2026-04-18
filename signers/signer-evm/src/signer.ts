@@ -1,3 +1,4 @@
+import type { TypedData } from './types.js';
 import type {
   AbstractProvider,
   Eip1193Provider,
@@ -97,6 +98,21 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
     return tx;
   }
 
+  async signTypedData(typedData: TypedData): Promise<string> {
+    try {
+      const signer = await this.provider.getSigner();
+      const signature = await signer.signTypedData(
+        typedData.domain,
+        typedData.types,
+        typedData.value
+      );
+
+      return signature;
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+    }
+  }
+
   async signMessage(msg: string): Promise<string> {
     try {
       const signer = await this.provider.getSigner(); // provides access to write operations
@@ -144,6 +160,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       try {
         const response = await signer.sendTransaction(transaction);
         return { hash: response.hash, response };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         // retrying EIP-1559 without v2 related fields
         if (
