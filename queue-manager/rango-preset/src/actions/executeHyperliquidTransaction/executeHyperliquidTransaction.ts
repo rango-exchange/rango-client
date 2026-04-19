@@ -160,6 +160,7 @@ export async function executeHyperliquidTransaction(
         errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
       })
     );
+    return;
   }
 
   onSuccessfulFinish();
