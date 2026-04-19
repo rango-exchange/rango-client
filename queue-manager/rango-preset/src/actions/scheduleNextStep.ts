@@ -40,6 +40,8 @@ export function scheduleNextStep({
     if (isTxAlreadyCreated(swap, currentStep)) {
       if (currentStep.fromBlockchain === TransactionType.XRPL) {
         schedule(SwapActionTypes.CHECK_XRPL_TRUSTLINE);
+      } else if (currentStep.fromBlockchain === TransactionType.HYPERLIQUID) {
+        schedule(SwapActionTypes.EXECUTE_HYPERLIQUID_TRANSACTION);
       } else {
         schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       }

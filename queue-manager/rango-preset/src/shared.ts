@@ -1,4 +1,3 @@
-import type { NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
   BlockchainMeta,
@@ -15,6 +14,8 @@ import type {
   WalletTypeAndAddress,
 } from 'rango-types';
 
+import { type NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
+import { HYPERLIQUID_SIGN_NETWORK } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 
 import { numberToString } from './numbers';
@@ -120,6 +121,7 @@ export const getCurrentNamespaceOf = (
   const suiNetwork = step.suiTransaction?.blockChain;
   const xrplNetwork = step.xrplTransaction?.blockChain;
   const stellarNetwork = step.stellarTransaction?.blockChain;
+  const hyperliquidNetwork = step.hyperliquidTransaction?.type;
 
   if (evmNetwork) {
     return {
@@ -165,6 +167,11 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'Stellar',
       network: stellarNetwork,
+    };
+  } else if (hyperliquidNetwork) {
+    return {
+      namespace: 'EVM',
+      network: HYPERLIQUID_SIGN_NETWORK,
     };
   } else if (!!step.transferTransaction) {
     const transferAddress = step.transferTransaction.fromWalletAddress;
@@ -246,6 +253,7 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     swap.wallets[step.stellarTransaction?.blockChain || ''] ||
+    swap.wallets[step.hyperliquidTransaction?.type || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? {
           address: step.transferTransaction.fromWalletAddress,
@@ -480,6 +488,7 @@ export function calculatePendingSwap(params: {
           suiTransaction: null,
           xrplTransaction: null,
           stellarTransaction: null,
+          hyperliquidTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,

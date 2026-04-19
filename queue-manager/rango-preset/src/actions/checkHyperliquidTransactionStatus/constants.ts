@@ -1,0 +1,10 @@
+export const HYPERLIQUID_EXPLORER_API_URL =
+  'https://rpc.hyperliquid.xyz/explorer';
+
+export const INTERVAL_FOR_CHECK_HYPERLIQUID_TRANSACTION_STATUS = 5_000;
+
+export enum GetHyperliquidTransactionHashError {
+  FETCH_ERROR = 'FETCH_ERROR',
+  RESPONSE_PARSING_ERROR = 'RESPONSE_PARSING_ERROR',
+  TRANSACTION_NOT_FOUND = 'TRANSACTION_NOT_FOUND',
+}

@@ -24,6 +24,7 @@ import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/walle
 import {
   detectInstallLink,
   getCosmosExperimentalChainInfo,
+  HYPERLIQUID_SIGN_NETWORK,
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
   Networks,
@@ -226,6 +227,14 @@ export function prepareAccountsForWalletStore(
            */
           addAccount(network, address.toLowerCase());
         });
+
+        const shouldAddHyperliquidAccount = evmChainsSupportedByWallet.includes(
+          HYPERLIQUID_SIGN_NETWORK
+        );
+
+        if (shouldAddHyperliquidAccount) {
+          addAccount(Networks.HYPERLIQUID, address.toLowerCase());
+        }
       }
     } else {
       addAccount(network, address);

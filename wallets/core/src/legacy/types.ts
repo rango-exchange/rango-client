@@ -73,6 +73,7 @@ export enum Networks {
   BASE = 'BASE',
   SUI = 'SUI',
   XRPL = 'XRPL',
+  HYPERLIQUID = 'HYPERLIQUID',
 
   // Using instead of null
   Unknown = 'Unkown',
