@@ -12,6 +12,7 @@ import {
   Typography,
 } from '../../components/index.js';
 
+import { textTruncate } from './SwapInput.styles.js';
 import {
   chainNameStyles,
   Container,
@@ -112,7 +113,7 @@ export function TokenSection(props: TokenSectionProps) {
               <Typography
                 variant="body"
                 size="medium"
-                className={chainNameStyles()}>
+                className={`${chainNameStyles()} ${textTruncate()}`}>
                 {getBodyContent()}
               </Typography>
             </>
