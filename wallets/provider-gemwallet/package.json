@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-gemwallet",
-  "version": "0.1.0",
+  "version": "0.1.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-shared": "0.58.1-next.2",
     "@gemwallet/api": "^3.8.0",
-    "xrpl": "^4.2.0",
-    "rango-types": "^0.1.95"
+    "@rango-dev/wallets-shared": "^0.58.1-next.3",
+    "rango-types": "^0.1.95",
+    "xrpl": "^4.2.0"
   },
   "publishConfig": {
     "access": "public"
