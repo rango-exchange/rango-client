@@ -466,7 +466,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       const { _balances, _aggregatedBalances } =
         computeNextStateAfterWalletBalanceRemoval(
           partialCurrentState,
-          walletType,
+          [walletType],
           options
         );
 
@@ -611,8 +611,10 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
       if (accounts.length === 0 || !accounts[0]) {
         return;
       }
-      // All the `accounts` have same `walletType` so we can pick the first one.
-      const walletType = accounts[0].walletType;
+
+      const walletTypes = [
+        ...new Set(accounts.map((account) => account.walletType)),
+      ];
 
       get().setConnectedWalletAsRefetching(accounts);
 
@@ -630,7 +632,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         return;
       }
       const walletsDetails = response.wallets;
-
       if (walletsDetails) {
         let nextBalances: BalanceState = get()._balances;
         let nextAggregatedBalances: AggregatedBalanceState =
@@ -657,7 +658,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           const { _balances, _aggregatedBalances } =
             computeNextStateAfterWalletBalanceRemoval(
               partialCurrentState,
-              walletType,
+              walletTypes,
               {
                 chains: [wallet.blockChain],
               }
@@ -672,7 +673,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
           if (
             !get().connectedWallets.find(
               (connectedWallet) =>
-                connectedWallet.walletType === walletType &&
+                walletTypes.includes(connectedWallet.walletType) &&
                 connectedWallet.address === wallet.address &&
                 connectedWallet.chain === wallet.blockChain
             )
@@ -715,11 +716,23 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         if (retryOnFailedBalances) {
           const failedWallets: Wallet[] = walletsDetails
             .filter((wallet) => wallet.failed)
-            .map((wallet) => ({
-              chain: wallet.blockChain,
-              walletType: walletType,
-              address: wallet.address,
-            }));
+            .map((wallet) => {
+              const walletType = get().connectedWallets.find(
+                (connectedWallet) =>
+                  connectedWallet.chain === wallet.blockChain &&
+                  connectedWallet.address
+              )?.walletType;
+              // Return null if there is no related connected wallet.
+              if (!walletType) {
+                return null;
+              }
+              return {
+                chain: wallet.blockChain,
+                walletType: walletType,
+                address: wallet.address,
+              };
+            })
+            .filter((wallet) => !!wallet);
           if (failedWallets.length > 0) {
             await get().fetchMainTokensBalances(failedWallets, {
               retryOnFailedBalances: false,
