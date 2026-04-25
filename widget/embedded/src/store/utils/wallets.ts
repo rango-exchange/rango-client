@@ -164,14 +164,14 @@ export function computeNextStateAfterWalletBalanceRemoval(
     _aggregatedBalances: AggregatedBalanceState;
     connectedWallets: ConnectedWallet[];
   },
-  walletType: string,
+  walletTypes: string[],
   options?: {
     chains?: string[];
     namespaces?: Namespace[];
   }
 ) {
   let walletsNeedsToBeRemoved = paritalCurrentState.connectedWallets.filter(
-    (connectedWallet) => connectedWallet.walletType === walletType
+    (connectedWallet) => walletTypes.includes(connectedWallet.walletType)
   );
 
   /*
@@ -181,7 +181,7 @@ export function computeNextStateAfterWalletBalanceRemoval(
    * So we only delete balance when there is no connected wallet that has access to that specific chain and address.
    */
   paritalCurrentState.connectedWallets.forEach((connectedWallet) => {
-    if (connectedWallet.walletType !== walletType) {
+    if (!walletTypes.includes(connectedWallet.walletType)) {
       walletsNeedsToBeRemoved = walletsNeedsToBeRemoved.filter((wallet) => {
         const isAnotherWalletHasSameAddressAndChain =
           wallet.chain === connectedWallet.chain &&
