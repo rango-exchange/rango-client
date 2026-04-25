@@ -162,6 +162,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌     | ❌  | ❌  | ❌  |    ❌    |
 | [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌  | ❌  |    ❌    |
+| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌  | ✅   |   ❌   |
 
 ## By Feature
 
@@ -194,6 +195,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
 | Tomo         | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Coin98       | ✅             | ✅             | ❌           | Injected                  | ❌            |
+| GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 
