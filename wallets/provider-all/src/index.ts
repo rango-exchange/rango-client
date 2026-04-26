@@ -14,6 +14,7 @@ import { versions as cosmostation } from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
+import { versions as freighter } from '@rango-dev/provider-freighter';
 import { versions as gemwallet } from '@rango-dev/provider-gemwallet';
 import { versions as keplr } from '@rango-dev/provider-keplr';
 import { versions as leap } from '@rango-dev/provider-leap-cosmos';
@@ -118,6 +119,7 @@ export const allProviders = (
     coinbase,
     cosmostation,
     exodus,
+    freighter,
     mathwallet,
     okx,
     tokenPocket,

@@ -1,0 +1,33 @@
+{
+  "name": "@rango-dev/provider-freighter",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-freighter --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@rango-dev/wallets-core": "^0.57.1-next.0",
+    "@rango-dev/wallets-shared": "^0.58.1-next.2",
+    "@stellar/freighter-api": "^6.0.1",
+    "@stellar/stellar-sdk": "^15.0.1",
+    "rango-types": "^0.1.95"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
