@@ -5,6 +5,7 @@ import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { StarknetActions } from '../../namespaces/starknet/types.js';
+import type { StellarActions } from '../../namespaces/stellar/types.js';
 import type { SuiActions } from '../../namespaces/sui/mod.js';
 import type { TronActions } from '../../namespaces/tron/types.js';
 import type { UtxoActions } from '../../namespaces/utxo/mod.js';
@@ -37,6 +38,7 @@ export interface CommonNamespaces {
   utxo: UtxoActions;
   tron: TronActions;
   starknet: StarknetActions;
+  stellar: StellarActions;
   xrpl: XRPLActions;
 }
 
