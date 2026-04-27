@@ -969,7 +969,7 @@ msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:138
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:133
 msgid "To"
 msgstr "To"
 
