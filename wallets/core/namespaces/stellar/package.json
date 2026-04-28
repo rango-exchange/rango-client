@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/stellar",
+  "type": "module",
+  "main": "../../dist/namespaces/stellar/mod.js",
+  "module": "../../dist/namespaces/stellar/mod.js",
+  "types": "../../dist/namespaces/stellar/mod.d.ts",
+  "sideEffects": false
+}
