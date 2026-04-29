@@ -1,3 +1,7 @@
+# [0.59.0](https://github.com/rango-exchange/rango-client/compare/provider-enkrypt@0.58.0...provider-enkrypt@0.59.0) (2026-04-29)
+
+
+
 # [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-enkrypt@0.57.0...provider-enkrypt@0.58.0) (2025-12-30)
 
 

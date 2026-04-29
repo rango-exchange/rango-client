@@ -1,3 +1,12 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.60.0...provider-coin98@0.61.0) (2026-04-29)
+
+
+### Features
+
+* migrated coin98 wallet to use the hub wallets api ([6b9789a](https://github.com/rango-exchange/rango-client/commit/6b9789aadc08e57e5b2f474883b40237c3903a64))
+
+
+
 # [0.60.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.59.0...provider-coin98@0.60.0) (2025-12-30)
 
 

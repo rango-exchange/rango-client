@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-tomo@0.25.0...provider-tomo@0.26.0) (2026-04-29)
+
+
+### Features
+
+* migrated tomo wallet to use hub apis ([0ae7cad](https://github.com/rango-exchange/rango-client/commit/0ae7cad7bfa267b5a617cbb06eb6aadb7136948f))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-tomo@0.24.0...provider-tomo@0.25.0) (2025-12-30)
 
 

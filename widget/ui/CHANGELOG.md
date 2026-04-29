@@ -1,3 +1,12 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/ui@0.61.0...ui@0.62.0) (2026-04-29)
+
+
+### Bug Fixes
+
+* allow users to enter text in the swap input and sanitize it into a valid number ([6a1850c](https://github.com/rango-exchange/rango-client/commit/6a1850c17346b2b4901400e9e69e03701d22fe7d))
+
+
+
 # [0.61.0](https://github.com/rango-exchange/rango-client/compare/ui@0.60.0...ui@0.61.0) (2025-12-30)
 
 

@@ -1,3 +1,12 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.57.0...wallets-core@0.58.0) (2026-04-29)
+
+
+### Features
+
+* integrating gemwallet ([750b0fc](https://github.com/rango-exchange/rango-client/commit/750b0fc72f1d4d6564ebf47e9c58e9f3efc9b3e5))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.56.0...wallets-core@0.57.0) (2025-12-30)
 
 
