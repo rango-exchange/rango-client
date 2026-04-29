@@ -1,3 +1,21 @@
+## Widget [0.55.0] (2026-04-29)
+_includes `@rango-dev/widget-embedded@0.59.0`_
+
+### Bug Fixes
+
+* allow users to enter text in the swap input and sanitize it into a valid number ([6a1850c](https://github.com/rango-exchange/rango-client/commit/6a1850c17346b2b4901400e9e69e03701d22fe7d))
+* different chain providers balance update ([557a451](https://github.com/rango-exchange/rango-client/commit/557a451281eceb603d8417d1babad8f001641379))
+* use the exact balance instead of the rounded value when the user clicks max balance ([aad83cc](https://github.com/rango-exchange/rango-client/commit/aad83cc829162584978202471a5bc27a29279d71))
+
+
+### Features
+
+* integrating gemwallet ([750b0fc](https://github.com/rango-exchange/rango-client/commit/750b0fc72f1d4d6564ebf47e9c58e9f3efc9b3e5))
+* migrated coin98 wallet to use the hub wallets api ([6b9789a](https://github.com/rango-exchange/rango-client/commit/6b9789aadc08e57e5b2f474883b40237c3903a64))
+* migrated tomo wallet to use hub apis ([0ae7cad](https://github.com/rango-exchange/rango-client/commit/0ae7cad7bfa267b5a617cbb06eb6aadb7136948f))
+
+
+
 ## Widget [0.54.0] (2025-12-30)
 _includes `@rango-dev/widget-embedded@0.58.0`_
 
