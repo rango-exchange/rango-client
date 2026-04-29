@@ -1,3 +1,14 @@
+# [0.59.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.58.0...widget-embedded@0.59.0) (2026-04-29)
+
+
+### Bug Fixes
+
+* allow users to enter text in the swap input and sanitize it into a valid number ([6a1850c](https://github.com/rango-exchange/rango-client/commit/6a1850c17346b2b4901400e9e69e03701d22fe7d))
+* different chain providers balance update ([557a451](https://github.com/rango-exchange/rango-client/commit/557a451281eceb603d8417d1babad8f001641379))
+* use the exact balance instead of the rounded value when the user clicks max balance ([aad83cc](https://github.com/rango-exchange/rango-client/commit/aad83cc829162584978202471a5bc27a29279d71))
+
+
+
 # [0.58.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.57.0...widget-embedded@0.58.0) (2025-12-30)
 
 

@@ -1,3 +1,14 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.60.0...provider-all@0.61.0) (2026-04-29)
+
+
+### Features
+
+* integrating gemwallet ([750b0fc](https://github.com/rango-exchange/rango-client/commit/750b0fc72f1d4d6564ebf47e9c58e9f3efc9b3e5))
+* migrated coin98 wallet to use the hub wallets api ([6b9789a](https://github.com/rango-exchange/rango-client/commit/6b9789aadc08e57e5b2f474883b40237c3903a64))
+* migrated tomo wallet to use hub apis ([0ae7cad](https://github.com/rango-exchange/rango-client/commit/0ae7cad7bfa267b5a617cbb06eb6aadb7136948f))
+
+
+
 # [0.60.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.59.0...provider-all@0.60.0) (2025-12-30)
 
 

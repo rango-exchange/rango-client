@@ -1,3 +1,7 @@
+# [0.59.0](https://github.com/rango-exchange/rango-client/compare/provider-tokenpocket@0.58.0...provider-tokenpocket@0.59.0) (2026-04-29)
+
+
+
 # [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-tokenpocket@0.57.0...provider-tokenpocket@0.58.0) (2025-12-30)
 
 
