@@ -119,6 +119,7 @@ export const getCurrentNamespaceOf = (
   const tonNetwork = step.tonTransaction?.blockChain;
   const suiNetwork = step.suiTransaction?.blockChain;
   const xrplNetwork = step.xrplTransaction?.blockChain;
+  const stellarNetwork = step.stellarTransaction?.blockChain;
 
   if (evmNetwork) {
     return {
@@ -159,6 +160,11 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'XRPL',
       network: xrplNetwork,
+    };
+  } else if (stellarNetwork) {
+    return {
+      namespace: 'Stellar',
+      network: stellarNetwork,
     };
   } else if (!!step.transferTransaction) {
     const transferAddress = step.transferTransaction.fromWalletAddress;
@@ -239,6 +245,7 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
+    swap.wallets[step.stellarTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? {
           address: step.transferTransaction.fromWalletAddress,
@@ -472,6 +479,7 @@ export function calculatePendingSwap(params: {
           tonTransaction: null,
           suiTransaction: null,
           xrplTransaction: null,
+          stellarTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,

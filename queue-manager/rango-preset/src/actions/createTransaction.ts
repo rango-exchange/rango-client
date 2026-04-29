@@ -1,8 +1,8 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
+import type { CreateTransactionRequest } from 'rango-sdk';
 
 import { warn } from '@rango-dev/logging-core';
-import { type CreateTransactionRequest, TransactionType } from 'rango-sdk';
 
 import {
   createStepFailedEvent,
@@ -72,11 +72,7 @@ export async function createTransaction(
 
       setStorage({ ...getStorage(), swapDetails: swap });
 
-      if (transaction?.blockChain === TransactionType.XRPL) {
-        schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
-      } else {
-        schedule(SwapActionTypes.EXECUTE_TRANSACTION);
-      }
+      schedule(SwapActionTypes.SCHEDULE_NEXT_STEP);
       next();
     } catch (error: unknown) {
       swap.status = 'failed';

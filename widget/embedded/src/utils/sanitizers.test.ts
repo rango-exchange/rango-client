@@ -4,6 +4,7 @@ import { describe, expect, test } from 'vitest';
 import {
   ensureLeadingZeroForDecimal,
   formatThousandsWithCommas,
+  parseNumericValue,
   removeLeadingZeros,
   replaceSpacesWithDash,
   stripTrailingZeros,
@@ -117,6 +118,48 @@ describe('check sanitization behaviors', () => {
 
     test('edge: no decimal point', () => {
       expect(stripTrailingZeros('1000')).toBe('1000');
+    });
+  });
+
+  describe('parseNumericValue', () => {
+    test('removes commas and keeps digits', () => {
+      expect(parseNumericValue('300,222')).toBe('300222');
+    });
+
+    test('removes letters and keeps only the first decimal', () => {
+      expect(parseNumericValue('12a3.4b5')).toBe('123.45');
+    });
+
+    test('removes extra dots and keeps the first one', () => {
+      expect(parseNumericValue('1.2.3.4')).toBe('1.234');
+    });
+
+    test('keeps a leading decimal', () => {
+      expect(parseNumericValue('.5')).toBe('.5');
+    });
+
+    test('removes symbols and letters', () => {
+      expect(parseNumericValue('$1,2a3.4!')).toBe('123.4');
+    });
+
+    test('returns empty string if no digits', () => {
+      expect(parseNumericValue('abc!@#')).toBe('');
+    });
+
+    test('handles empty string', () => {
+      expect(parseNumericValue('')).toBe('');
+    });
+
+    test('keeps only the first dot if string starts with multiple dots', () => {
+      expect(parseNumericValue('...123.45')).toBe('.12345');
+    });
+
+    test('handles string with only dots', () => {
+      expect(parseNumericValue('....')).toBe('.');
+    });
+
+    test('handles string with digits only', () => {
+      expect(parseNumericValue('123456')).toBe('123456');
     });
   });
 });

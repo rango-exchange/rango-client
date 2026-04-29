@@ -1,6 +1,7 @@
 import type { SwapQueueDef } from './types';
 
 import { checkStatus } from './actions/checkStatus';
+import { checkXrplTrustline } from './actions/checkXrplTrustline';
 import { createTransaction } from './actions/createTransaction';
 import { executeTransaction } from './actions/executeTransaction';
 import { executeXrplTransaction } from './actions/executeXrplTransaction';
@@ -28,6 +29,7 @@ export const swapQueueDef: SwapQueueDef = {
     [SwapActionTypes.CREATE_TRANSACTION]: createTransaction,
     [SwapActionTypes.EXECUTE_TRANSACTION]: executeTransaction,
     [SwapActionTypes.EXECUTE_XRPL_TRANSACTION]: executeXrplTransaction,
+    [SwapActionTypes.CHECK_XRPL_TRUSTLINE]: checkXrplTrustline,
     [SwapActionTypes.CHECK_TRANSACTION_STATUS]: checkStatus,
   },
   run: [SwapActionTypes.START],

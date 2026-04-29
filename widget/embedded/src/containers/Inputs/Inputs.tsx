@@ -116,14 +116,9 @@ export function Inputs(props: PropTypes) {
           loadingBalance={fetchingBalance}
           tooltipContainer={getContainer()}
           onSelectMaxBalance={() => {
-            const tokenBalanceReal = numberToString(
-              fromBalanceAmount,
-              fromTokenBalance?.decimals
-            );
-
             // if a token hasn't any value, we will reset the input by setting an empty string.
-            const nextInputAmount = !!fromTokenBalance?.amount
-              ? tokenBalanceReal.split(',').join('')
+            const nextInputAmount = fromBalanceAmount.isGreaterThan(ZERO)
+              ? fromBalanceAmount.toFixed()
               : '';
 
             setInputAmount(nextInputAmount);

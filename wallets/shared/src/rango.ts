@@ -51,7 +51,6 @@ export enum WalletTypes {
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   READY = 'ready',
-  FRONTIER = 'frontier',
   COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
@@ -62,7 +61,6 @@ export enum WalletTypes {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
-  HALO = 'halo',
   LEAP = 'leap',
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
@@ -146,6 +144,10 @@ export const namespaces: Record<
   XRPL: {
     mainBlockchain: 'XRPL',
     title: 'XRPL',
+  },
+  Stellar: {
+    mainBlockchain: 'Stellar',
+    title: 'Stellar',
   },
 };
 

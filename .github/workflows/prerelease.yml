@@ -14,11 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - localization
+    environment: next
+    env:          
+      REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
+      REACT_APP_RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare          
 
       - name: Checkout latest changes from 'next' branch with Crowdin updates
         run: |
@@ -26,33 +33,26 @@ jobs:
           git checkout next
           git pull origin next
 
-      - name: Prepare
-        uses: ./.github/actions/prepare
-      
-      - name: Build Clients
-        run: node ./scripts/build-clients/command.mjs
-
-      - name: Deploy packages
-        id: deploy-packages
-        run: |
-          yarn global add vercel
-          yarn run deploy
-        env:
-          REF: ${{ github.ref }}
-          GH_TOKEN: ${{ github.token }}
+      - name: Build & Deploy
+        uses: ./.github/actions/build-deploy
+        id: build-deploy
+        with:
+          PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
+          RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                        
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }} # widget playground
-          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }} # widget app
-          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }} # storybook
-
+          VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
+          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
+          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}          
           ENABLE_PREVIEW_DEPLOY: true
+
 
     outputs:
       # the structure of output variable is {packageNameWithoutScope}-url like: widget-app-url
-      app_url: ${{ steps.deploy-packages.outputs.widget-app-url }}
-      playground_url: ${{ steps.deploy-packages.outputs.widget-playground-url }}
-      storybook_url: ${{ steps.deploy-packages.outputs.storybook-url }}
+      app_url: ${{ steps.build-deploy.outputs.app_url }}
+      playground_url: ${{ steps.build-deploy.outputs.playground_url }}
+      storybook_url: ${{ steps.build-deploy.outputs.storybook_url }}
 
   # add job for each project that you want has preview deployment
   app-preview:

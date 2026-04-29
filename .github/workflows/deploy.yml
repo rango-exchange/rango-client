@@ -1,35 +1,28 @@
 name: Deploy
 on:
   workflow_dispatch:
-
-  workflow_call:
     
 jobs:
   deploy-it:
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
-    steps:
+    environment: next
+    steps:   
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          token: ${{ secrets.PAT }}
-      - run: git pull  
-      
-      - name: Prepare
-        uses: ./.github/actions/prepare
-        
-      - name: Build Clients
-        run: node ./scripts/build-clients/command.mjs
+          fetch-depth: 0    
 
-      - name: Deploy packages
-        run: |
-          yarn global add vercel
-          yarn run deploy
-        env:
-          REF: ${{ github.ref }}
-          GH_TOKEN: ${{ github.token }}
+      - name: Prepare
+        uses: ./.github/actions/prepare          
+
+      - name: Build & Deploy
+        uses: ./.github/actions/build-deploy
+        with:
+          PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
+          RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                        
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
           VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
           VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
-          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
+          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}          
