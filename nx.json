@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "next"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -24,5 +21,6 @@
     "sharedGlobals": [],
     "production": ["default"]
   },
-  "defaultBase": "next"
+  "defaultBase": "next",
+  "analytics": false
 }
