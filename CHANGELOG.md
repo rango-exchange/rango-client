@@ -1,3 +1,13 @@
+## Widget [0.56.0] (2026-05-02)
+_includes `@rango-dev/widget-embedded@0.59.1`_
+
+### Bug Fixes
+
+* add hyperliquid transaction to be compatible with rango-types ([de9ecb0](https://github.com/rango-exchange/rango-client/commit/de9ecb02ba97e1114581db0e017f667ab6868694))
+* rename preconditions to prerequisites ([5f9f1a4](https://github.com/rango-exchange/rango-client/commit/5f9f1a4e6ae769c6e9ab20dc9c80dcf677539211))
+
+
+
 ## Widget [0.55.0] (2026-04-29)
 _includes `@rango-dev/widget-embedded@0.59.0`_
 
