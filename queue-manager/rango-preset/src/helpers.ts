@@ -259,6 +259,9 @@ export const setCurrentStepTx = (
     case TransactionType.STELLAR:
       currentStep.stellarTransaction = transaction;
       break;
+    case TransactionType.HYPERLIQUID:
+      currentStep.hyperliquidTransaction = transaction;
+      break;
     default:
       ((x: never) => {
         throw new Error(`${x} was unhandled!`);
