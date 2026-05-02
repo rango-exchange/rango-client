@@ -108,13 +108,13 @@ export async function checkXrplTrustline(
   /*
    * 3. Do we need open a trustline for this transaction?
    *
-   * Trust line only should be opened for issued token (not native), server is putting that data as precondition for us.
+   * Trust line only should be opened for issued token (not native), server is putting that data as prerequisite for us.
    * If there is no need for that, we are skipping this step and consider it as done.
    */
-  const trustlinePrecondition = transaction.val.preconditions.find(
+  const trustlinePrerequisite = transaction.val.prerequisites.find(
     (item) => item.type === 'XRPL_CHANGE_TRUSTLINE'
   );
-  if (!trustlinePrecondition) {
+  if (!trustlinePrerequisite) {
     onSuccessfulFinish();
     return;
   }
@@ -128,14 +128,14 @@ export async function checkXrplTrustline(
   const walletSigners = await getSigners(sourceWallet.walletType);
 
   const token: TargetToken = {
-    currency: trustlinePrecondition.currency,
-    account: trustlinePrecondition.issuer,
-    amount: trustlinePrecondition.value,
+    currency: trustlinePrerequisite.currency,
+    account: trustlinePrerequisite.issuer,
+    amount: trustlinePrerequisite.value,
   };
 
   // TODO: it's better to add some logic around `balance` to ensure we have enough capacity for the trust line. Now we only check it's already open or not.
   const isTruslineAlreadyOpened = await checkTruslineAlreadyOpened(
-    trustlinePrecondition.wallet,
+    trustlinePrerequisite.wallet,
     token,
     {
       namespace: namespace.val,
@@ -144,7 +144,7 @@ export async function checkXrplTrustline(
 
   if (!isTruslineAlreadyOpened) {
     const trustlineTx = createTrustlineTransaction(
-      trustlinePrecondition.wallet,
+      trustlinePrerequisite.wallet,
       token
     );
 
