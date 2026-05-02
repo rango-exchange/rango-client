@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safepal",
-  "version": "0.60.1-next.0",
+  "version": "0.60.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.41.1-next.0",
-    "@rango-dev/signer-solana": "^0.47.1-next.0",
-    "@rango-dev/wallets-core": "^0.58.1-next.0",
-    "@rango-dev/wallets-shared": "^0.59.1-next.0",
+    "@rango-dev/signer-evm": "^0.41.1",
+    "@rango-dev/signer-solana": "^0.47.1",
+    "@rango-dev/wallets-core": "^0.58.1",
+    "@rango-dev/wallets-shared": "^0.59.1",
     "rango-types": "^0.1.98"
   },
   "publishConfig": {
