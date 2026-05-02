@@ -178,6 +178,13 @@ export const getCurrentNamespaceOf = (
       throw PrettyError.BlockchainMissing();
     }
 
+    if (utxoNetwork === 'ZCASH') {
+      return {
+        namespace: 'ZCASH',
+        network: utxoNetwork,
+      };
+    }
+
     return {
       namespace: 'UTXO',
       network: utxoNetwork,
