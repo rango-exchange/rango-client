@@ -73,6 +73,7 @@ export enum Networks {
   BASE = 'BASE',
   SUI = 'SUI',
   XRPL = 'XRPL',
+  ZCASH = 'ZCASH',
 
   // Using instead of null
   Unknown = 'Unkown',
