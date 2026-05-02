@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-xverse",
-  "version": "0.5.0",
+  "version": "0.5.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.58.0",
-    "@rango-dev/wallets-shared": "^0.59.0",
-    "rango-types": "^0.1.95"
+    "@rango-dev/wallets-core": "^0.58.1-next.0",
+    "@rango-dev/wallets-shared": "^0.59.1-next.0",
+    "rango-types": "^0.1.98"
   },
   "publishConfig": {
     "access": "public"

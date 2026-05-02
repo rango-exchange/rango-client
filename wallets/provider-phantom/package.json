@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.60.0",
+  "version": "0.60.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,12 +24,12 @@
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
-    "@rango-dev/signer-solana": "^0.47.0",
-    "@rango-dev/signer-sui": "^0.9.0",
-    "@rango-dev/wallets-core": "^0.58.0",
-    "@rango-dev/wallets-shared": "^0.59.0",
+    "@rango-dev/signer-solana": "^0.47.1-next.0",
+    "@rango-dev/signer-sui": "^0.9.1-next.0",
+    "@rango-dev/wallets-core": "^0.58.1-next.0",
+    "@rango-dev/wallets-shared": "^0.59.1-next.0",
     "bitcoinjs-lib": "^6.1.7",
-    "rango-types": "^0.1.95"
+    "rango-types": "^0.1.98"
   },
   "publishConfig": {
     "access": "public"

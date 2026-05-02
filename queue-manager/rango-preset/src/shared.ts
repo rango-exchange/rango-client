@@ -480,6 +480,7 @@ export function calculatePendingSwap(params: {
           suiTransaction: null,
           xrplTransaction: null,
           stellarTransaction: null,
+          hyperliquidTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,
