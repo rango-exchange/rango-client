@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/zcash",
+  "type": "module",
+  "main": "../../dist/namespaces/zcash/mod.js",
+  "module": "../../dist/namespaces/zcash/mod.js",
+  "types": "../../dist/namespaces/zcash/mod.d.ts",
+  "sideEffects": false
+}

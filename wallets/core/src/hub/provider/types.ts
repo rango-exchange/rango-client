@@ -9,6 +9,7 @@ import type { SuiActions } from '../../namespaces/sui/mod.js';
 import type { TronActions } from '../../namespaces/tron/types.js';
 import type { UtxoActions } from '../../namespaces/utxo/mod.js';
 import type { XRPLActions } from '../../namespaces/xrpl/mod.js';
+import type { ZcashActions } from '../../namespaces/zcash/types.js';
 import type { AnyFunction, FunctionWithContext } from '../../types/actions.js';
 import type { Prettify } from '../../types/utils.js';
 
@@ -38,6 +39,7 @@ export interface CommonNamespaces {
   tron: TronActions;
   starknet: StarknetActions;
   xrpl: XRPLActions;
+  zcash: ZcashActions;
 }
 
 export type CommonNamespaceKeys = Prettify<keyof CommonNamespaces>;
