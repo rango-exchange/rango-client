@@ -18,7 +18,12 @@ runs:
         key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-modules-
-          
+
+    - name: Setup Node.js                                                                                                                                                          
+      uses: actions/setup-node@v4                                                                                                                                                  
+      with:
+        node-version: '24'
+
     - name: Install packages
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
