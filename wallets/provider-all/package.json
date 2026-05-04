@@ -52,6 +52,7 @@
     "@rango-dev/provider-trezor": "^0.26.1",
     "@rango-dev/provider-tron-link": "^0.59.1",
     "@rango-dev/provider-trustwallet": "^0.59.1",
+    "@rango-dev/provider-vultisig": "^0.1.0",
     "@rango-dev/provider-unisat": "^0.15.1",
     "@rango-dev/provider-walletconnect-2": "^0.53.1",
     "@rango-dev/provider-xdefi": "^0.61.1",
