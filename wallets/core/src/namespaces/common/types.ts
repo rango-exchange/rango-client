@@ -12,7 +12,8 @@ type RangoNamespace =
   | 'Ton'
   | 'Sui'
   | 'XRPL'
-  | 'Stellar';
+  | 'Stellar'
+  | 'Zcash';
 
 export type Namespace = RangoNamespace | (string & {});
 

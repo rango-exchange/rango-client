@@ -180,7 +180,7 @@ export const getCurrentNamespaceOf = (
 
     if (utxoNetwork === 'ZCASH') {
       return {
-        namespace: 'ZCASH',
+        namespace: 'Zcash',
         network: utxoNetwork,
       };
     }

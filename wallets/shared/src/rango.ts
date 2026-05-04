@@ -149,6 +149,10 @@ export const namespaces: Record<
     mainBlockchain: 'Stellar',
     title: 'Stellar',
   },
+  Zcash: {
+    mainBlockchain: 'ZCASH',
+    title: 'Zcash',
+  },
 };
 
 export type DerivationPath = {
