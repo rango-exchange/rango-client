@@ -36,5 +36,6 @@ declare global {
     solflare?: any;
     unisat?: any;
     XverseProviders?: any;
+    vultisig?: any;
   }
 }
