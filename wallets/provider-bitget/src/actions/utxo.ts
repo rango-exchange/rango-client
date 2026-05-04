@@ -3,6 +3,7 @@ import {
   type FunctionWithContext,
 } from '@rango-dev/wallets-core';
 import {
+  CAIP_BITCOIN_CHAIN_ID,
   type ProviderAPI,
   utils,
   type UtxoActions,
@@ -21,7 +22,7 @@ export function connect(
     }
     const accounts = await utxoInstance.requestAccounts();
 
-    return utils.formatAccountsToCAIP(accounts);
+    return utils.formatAccountsToCAIP(accounts, CAIP_BITCOIN_CHAIN_ID);
   };
 }
 
