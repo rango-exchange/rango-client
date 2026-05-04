@@ -36,6 +36,7 @@ import * as trezor from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
+import { versions as vultisig } from '@rango-dev/provider-vultisig';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import { versions as xverse } from '@rango-dev/provider-xverse';
@@ -131,6 +132,7 @@ export const allProviders = (
     solflare,
     slush,
     unisat,
+    vultisig,
     gemwallet,
   ];
 };
