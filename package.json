@@ -3,7 +3,7 @@
   "version": "0.56.0",
   "private": true,
   "engines": {
-    "node": ">=20",
+    "node": ">=24",
     "npm": "please-use-yarn"
   },
   "workspaces": {
@@ -51,7 +51,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "commitlint": "commitlint --edit",
-    "postinstall": "patch-package && yarn workspace @rango-dev/signer-cosmos run patch-package"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "husky": "^8.0.3",
@@ -85,7 +85,7 @@
     "conventional-commits-filter": "^5.0.0",
     "conventional-commits-parser": "^6.2.0",
     "conventional-recommended-bump": "^11.2.0",
-    "crypto-browserify": "^3.12.0",
+    "crypto-browserify": "^3.12.1",
     "esbuild": "^0.20.1",
     "esbuild-plugins-node-modules-polyfill": "^1.6.6",
     "eslint": "^9.19.0",
@@ -100,11 +100,11 @@
     "execa": "^7.1.1",
     "filesize": "^10.1.2",
     "globals": "^15.14.0",
-    "happy-dom": "^14.12.0",
+    "happy-dom": "^20.9.0",
     "lint-staged": "^13.2.2",
     "nx": "^22.7.0",
     "os-browserify": "^0.3.0",
-    "parcel": "^2.11.0",
+    "parcel": "^2.16.4",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
@@ -119,7 +119,7 @@
     "tty-browserify": "^0.0.1",
     "typescript-eslint": "^8.21.0",
     "util": "^0.12.3",
-    "vitest": "^2.0.5",
+    "vitest": "^4.1.5",
     "vm-browserify": "^1.1.2"
   },
   "resolutions": {
