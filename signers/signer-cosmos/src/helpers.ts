@@ -4,7 +4,13 @@ import type { CosmosTransaction } from 'rango-types';
 
 import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
 import { SigningStargateClient } from '@cosmjs/stargate';
-import { cosmos } from '@keplr-wallet/cosmos';
+import { PubKey } from '@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys.js';
+import { SignMode } from '@keplr-wallet/proto-types/cosmos/tx/signing/v1beta1/signing.js';
+import {
+  AuthInfo,
+  TxBody,
+  TxRaw,
+} from '@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx.js';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import Long from 'long';
 import { SignerError, SignerErrorCode } from 'rango-types';
@@ -56,7 +62,9 @@ export const executeCosmosTransaction = async (
 
     if (signType === 'AMINO') {
       const signDoc = makeSignDoc(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         msgsWithoutType as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         fee as any,
         chainId,
         memo || undefined,
@@ -144,20 +152,23 @@ export function getsignedTx(
      * based on this link:
      * https://github.com/chainapsis/keplr-wallet/blob/40211c8dd75ccbdc4c868db9dc22599f4cb952e9/packages/stores/src/account/cosmos.ts#L508
      */
-    signedTx = cosmos.tx.v1beta1.TxRaw.encode({
-      bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
+    signedTx = TxRaw.encode({
+      bodyBytes: TxBody.encode({
         messages: cosmosTx.data.protoMsgs.map((m) => ({
-          type_url: m.type_url,
+          typeUrl: m.type_url,
           value: new Uint8Array(m.value),
         })),
+        timeoutHeight: '0',
+        extensionOptions: [],
+        nonCriticalExtensionOptions: [],
         memo: signResponse.signed.memo,
       }).finish(),
-      authInfoBytes: cosmos.tx.v1beta1.AuthInfo.encode({
+      authInfoBytes: AuthInfo.encode({
         signerInfos: [
           {
             publicKey: {
-              type_url: '/cosmos.crypto.secp256k1.PubKey',
-              value: cosmos.crypto.secp256k1.PubKey.encode({
+              typeUrl: '/cosmos.crypto.secp256k1.PubKey',
+              value: PubKey.encode({
                 key: Buffer.from(
                   signResponse.signature.pub_key.value,
                   'base64'
@@ -166,16 +177,19 @@ export function getsignedTx(
             },
             modeInfo: {
               single: {
-                mode: cosmos.tx.signing.v1beta1.SignMode
-                  .SIGN_MODE_LEGACY_AMINO_JSON,
+                mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
               },
+              multi: undefined,
             },
-            sequence: Long.fromString(signResponse.signed.sequence),
+            sequence: signResponse.signed.sequence,
           },
         ],
         fee: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           amount: signResponse.signed.fee.amount as any[],
-          gasLimit: Long.fromString(signResponse.signed.fee.gas),
+          gasLimit: signResponse.signed.fee.gas,
+          payer: '',
+          granter: '',
         },
       }).finish(),
       signatures: [Buffer.from(signResponse.signature.signature, 'base64')],

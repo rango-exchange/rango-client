@@ -23,13 +23,14 @@
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.31.0",
-    "@keplr-wallet/cosmos": "^0.9.12",
     "cosmjs-types": "^0.5.2",
-    "long": "^5.2.3",
-    "rango-types": "^0.1.98"
+    "long": "^4.0.0",
+    "rango-types": "^0.1.98",
+    "@keplr-wallet/proto-types": "^0.13.26"
   },
   "devDependencies": {
-    "@keplr-wallet/types": "^0.9.12"
+    "@keplr-wallet/types": "^0.13.26",
+    "starknet": "^8"
   },
   "resolutions": {
     "protobufjs": "^6.11.4"
