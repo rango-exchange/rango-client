@@ -3,6 +3,7 @@ import type { XVerseEvent } from '../types.js';
 import { ActionBuilder } from '@rango-dev/wallets-core';
 import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
 import {
+  CAIP_BITCOIN_CHAIN_ID,
   type ProviderAPI,
   utils,
   type UtxoActions,
@@ -26,7 +27,8 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
       return utils.formatAccountsToCAIP(
         event.addresses
           .filter((address) => address.purpose === 'payment')
-          .map((address) => address.address)
+          .map((address) => address.address),
+        CAIP_BITCOIN_CHAIN_ID
       );
     })
     .addEventListener((instance, callback) => {

@@ -2,16 +2,16 @@ import type { CaipAccount } from '../common/mod.js';
 
 import { AccountId } from 'caip';
 
-import { CAIP_BITCOIN_CHAIN_ID, CAIP_NAMESPACE } from './constants.js';
+import { CAIP_NAMESPACE } from './constants.js';
 
-export function formatAccountsToCAIP(accounts: string[]) {
+export function formatAccountsToCAIP(accounts: string[], chainId: string) {
   return accounts.map(
     (account) =>
       AccountId.format({
         address: account.toString(),
         chainId: {
           namespace: CAIP_NAMESPACE,
-          reference: CAIP_BITCOIN_CHAIN_ID,
+          reference: chainId,
         },
       }) as CaipAccount
   );

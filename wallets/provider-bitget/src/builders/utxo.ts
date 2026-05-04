@@ -1,6 +1,7 @@
 import { ActionBuilder } from '@rango-dev/wallets-core';
 import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
 import {
+  CAIP_BITCOIN_CHAIN_ID,
   type ProviderAPI,
   utils,
   type UtxoActions,
@@ -17,7 +18,10 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
     })
 
     .format(async (_, address) => {
-      return utils.formatAccountsToCAIP(address ? [address] : []);
+      return utils.formatAccountsToCAIP(
+        address ? [address] : [],
+        CAIP_BITCOIN_CHAIN_ID
+      );
     })
     .addEventListener((instance, callback) => {
       return instance.addListener('accountChanged', callback);

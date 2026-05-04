@@ -4,6 +4,7 @@ import {
   standardizeAndThrowError,
 } from '@rango-dev/wallets-core/namespaces/common';
 import {
+  CAIP_BITCOIN_CHAIN_ID,
   utils,
   type UtxoActions,
 } from '@rango-dev/wallets-core/namespaces/utxo';
@@ -28,7 +29,8 @@ const connect = builders
       throw new Error("Couldn't find any address!");
     }
     return utils.formatAccountsToCAIP(
-      accountsResult.result.addresses.map((address) => address.address)
+      accountsResult.result.addresses.map((address) => address.address),
+      CAIP_BITCOIN_CHAIN_ID
     );
   })
   .before(changeAccountSubscriber)
