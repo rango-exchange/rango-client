@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-cosmos",
-  "version": "0.39.1",
+  "version": "0.39.2-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,10 +23,10 @@
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.31.0",
+    "@keplr-wallet/proto-types": "^0.13.26",
     "cosmjs-types": "^0.5.2",
     "long": "^4.0.0",
-    "rango-types": "^0.1.98",
-    "@keplr-wallet/proto-types": "^0.13.26"
+    "rango-types": "^0.1.98"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.13.26",
