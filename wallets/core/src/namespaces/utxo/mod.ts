@@ -5,4 +5,8 @@ export * as before from './before.js';
 export * as builders from './builders.js';
 export * as utils from './utils.js';
 export type { ProviderAPI, UtxoActions } from './types.js';
-export { CAIP_NAMESPACE, CAIP_BITCOIN_CHAIN_ID } from './constants.js';
+export {
+  CAIP_NAMESPACE,
+  CAIP_BITCOIN_CHAIN_ID,
+  CAIP_ZCASH_CHAIN_ID,
+} from './constants.js';
