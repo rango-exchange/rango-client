@@ -101,6 +101,10 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
       {modalState === ModalState.DEFAULT_BLOCKCHAIN && (
         <OverlayPanel onBack={onBack}>
           <SingleList
+            marketingMetaData={{
+              configurationType: 'functional',
+              subject: 'select_default_chain',
+            }}
             onChange={handleDefaultBlockchainConfirm}
             list={filteredBlockchains.map((chain) => ({
               name: chain.displayName,
@@ -117,6 +121,10 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
       {modalState === ModalState.DEFAULT_TOKEN && (
         <OverlayPanel onBack={onBack}>
           <SingleList
+            marketingMetaData={{
+              configurationType: 'functional',
+              subject: 'select_default_token',
+            }}
             onChange={handleDefaultTokenConfirm}
             list={filteredTokens.map((token) => ({
               name: token.symbol,

@@ -112,6 +112,7 @@ export function General() {
           </FieldTitle>
           <Divider size={16} />
           <Select
+            id="style-layout-select-widget-variant"
             variant="outlined"
             container={
               document.getElementById(PLAYGROUND_CONTAINER_ID) as HTMLElement
@@ -186,6 +187,10 @@ export function General() {
       {modalState === ModalState.DEFAULT_FONT && (
         <OverlayPanel onBack={onBack}>
           <SingleList
+            marketingMetaData={{
+              configurationType: 'style',
+              subject: 'change_font',
+            }}
             onChange={handleFontChange}
             title="Fonts"
             icon={<FontIcon size={18} />}
@@ -198,6 +203,10 @@ export function General() {
       {modalState === ModalState.DEFAULT_LANGUAGE && (
         <OverlayPanel onBack={onBack}>
           <SingleList
+            marketingMetaData={{
+              configurationType: 'style',
+              subject: 'change_language',
+            }}
             onChange={handleLanguageChange}
             title="Default Language"
             icon={<LanguageIcon size={18} color="gray" />}
