@@ -72,10 +72,14 @@ export function MultiSelect(props: MuliSelectPropTypes) {
         <OverlayPanel onBack={onBack}>
           {type !== 'Tokens' ? (
             <MultiList
+              marketingMetaData={{
+                configurationType: 'functional',
+                subject: `select_${type.toLowerCase()}`,
+              }}
               defaultSelectedItems={props.defaultSelectedItems}
               type={type}
               list={list}
-              showCategory={type === 'Blockchains' || type === 'Wallets'}
+              showCategory={type === 'Chains' || type === 'Wallets'}
               icon={
                 type === 'Wallets' ? (
                   <WalletIcon size={18} />

@@ -10,6 +10,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
+import { GTMEvents } from '../../constants/events';
 import { useMetaStore } from '../../store/meta';
 import { SearchInput } from '../SearchInput';
 import { EmptyContainer, StyledButton } from '../SingleList/SingleList.styles';
@@ -33,6 +34,7 @@ export function MultiList(props: MultiListPropTypes) {
     type,
     onChange,
     showCategory,
+    marketingMetaData,
   } = props;
   const [category, setCategory] = useState<string>('ALL');
   const [searchValue, setSearchValue] = useState('');
@@ -82,6 +84,11 @@ export function MultiList(props: MultiListPropTypes) {
   };
 
   const handleConfirm = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: GTMEvents.CONFIRM_CONFIGURATION,
+      ...marketingMetaData,
+    });
     onChange(selectedItems.length === list.length ? undefined : selectedItems);
   };
 
