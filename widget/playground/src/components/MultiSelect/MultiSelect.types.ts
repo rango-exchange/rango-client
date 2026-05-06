@@ -8,6 +8,13 @@ export interface CommonListProps {
   onChange: (items?: string[]) => void;
 }
 
+export type MarketingMetaData = {
+  marketingMetaData?: {
+    configurationType: 'functional' | 'style';
+    subject: `select_${string}` | `change_${string}`;
+  };
+};
+
 interface TokensListProps {
   type: 'Tokens';
   list: TokenType[];

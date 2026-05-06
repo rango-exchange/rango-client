@@ -12,6 +12,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
+import { GTMEvents } from '../../constants/events';
 import { SearchInput } from '../SearchInput';
 
 import {
@@ -24,8 +25,15 @@ import {
 const PAGE_SIZE = 30;
 
 export function SingleList(props: PropTypes) {
-  const { list, onChange, defaultValue, title, icon, searchPlaceholder } =
-    props;
+  const {
+    list,
+    onChange,
+    defaultValue,
+    title,
+    icon,
+    searchPlaceholder,
+    marketingMetaData,
+  } = props;
   const [virtualList, setVirtualList] = useState(list);
   const [hasNextPage, setHasNextPage] = useState(true);
 
@@ -38,6 +46,11 @@ export function SingleList(props: PropTypes) {
     : list;
 
   const handleConfirm = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: GTMEvents.CONFIRM_CONFIGURATION,
+      ...marketingMetaData,
+    });
     onChange(item);
   };
 
