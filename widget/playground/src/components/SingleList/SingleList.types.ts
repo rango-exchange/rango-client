@@ -1,4 +1,6 @@
-export interface PropTypes {
+import type { MarketingMetaData } from '../MultiSelect/MultiSelect.types';
+
+export type PropTypes = {
   title: string;
   icon: React.ReactNode;
   defaultValue?: string | null;
@@ -10,4 +12,4 @@ export interface PropTypes {
     Icon?: React.ComponentType<{ size?: number }>;
   }[];
   searchPlaceholder?: string;
-}
+} & MarketingMetaData;
