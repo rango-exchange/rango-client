@@ -12,25 +12,18 @@ export const prepareTransaction = (
   recentBlockhash: string
 ): Transaction | VersionedTransaction => {
   if (tx.txType === 'VERSIONED') {
-    return prepareVersionedTransaction(tx, recentBlockhash);
+    return prepareVersionedTransaction(tx);
   }
 
   return prepareLegacyTransaction(tx, recentBlockhash);
 };
 
 export function prepareVersionedTransaction(
-  tx: SolanaTransaction,
-  recentBlockhash: string
+  tx: SolanaTransaction
 ): VersionedTransaction {
   const versionedTransaction = VersionedTransaction.deserialize(
     new Uint8Array(tx.serializedMessage || [])
   );
-  /*
-   * We shouldn't override the recent blockhash provided by the API
-   * Otherwise, the transaction will become invalid if partially signed by the API
-   */
-  versionedTransaction.message.recentBlockhash =
-    tx.recentBlockhash || recentBlockhash;
 
   tx.signatures.forEach(({ publicKey, signature }) => {
     versionedTransaction.addSignature(
