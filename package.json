@@ -31,7 +31,6 @@
     "build:all": "nx run-many --target=build",
     "build": "nx affected --target=build --parallel=5",
     "build:non-demo": "nx affected --target=build --parallel=5 --exclude=@rango-dev/queue-manager-demo,@rango-dev/widget-app,@rango-dev/widget-playground",
-    "dev:ui": "nx run @rango-dev/storybook:dev",
     "dev:queue-manager": "node ./scripts/dev-watch/command.mjs --project @rango-dev/queue-manager-demo",
     "dev:widget:type-checker": "node ./scripts/dev-ts-check/command.mjs --project @rango-dev/widget-app",
     "dev:widget:dev-server": "yarn --cwd ./widget/app/ dev",

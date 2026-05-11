@@ -19,9 +19,6 @@ inputs:
   VERCEL_PROJECT_WIDGET_APP:
     required: true
     type: string      
-  VERCEL_PROJECT_STORYBOOK:
-    required: true
-    type: string      
   VERCEL_PROJECT_Q: 
     required: true
     type: string    
@@ -36,9 +33,6 @@ outputs:
   playground_url:
     description: "Playground Client Link"
     value: ${{ steps.deploy-clients.outputs.widget-playground-url }}    
-  storybook_url:
-    description: "Storybook Client Link"
-    value: ${{ steps.deploy-clients.outputs.storybook-url }}     
 
     
 runs:
@@ -61,7 +55,6 @@ runs:
         VERCEL_TOKEN: ${{ inputs.VERCEL_TOKEN }}
         VERCEL_PROJECT_WIDGET_CONFIG: ${{ inputs.VERCEL_PROJECT_WIDGET_CONFIG }}
         VERCEL_PROJECT_WIDGET_APP: ${{ inputs.VERCEL_PROJECT_WIDGET_APP }}
-        VERCEL_PROJECT_STORYBOOK: ${{ inputs.VERCEL_PROJECT_STORYBOOK }}
         VERCEL_PROJECT_Q: ${{ inputs.VERCEL_PROJECT_Q }}
         REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}
         REACT_APP_RANGO_API_KEY: ${{ inputs.RANGO_API_KEY }}

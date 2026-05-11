@@ -23,7 +23,7 @@ For more information about the wallets, refer to the `/wallets/` directory.
 The Widget comprises high-level packages that include a user interface (UI) and different versions of our widget, which serves as a decentralized application (dApp).
 
 Here is the structure:
-`/widget/ui`: This directory contains our UI components and Storybook for visual development and testing.
+`/widget/ui`: This directory contains our UI components.
 `/widget/embedded`: Our react implementation of the widget. They are publishing as NPM packages.
 `/widget/app`: This directory houses a dApp that imports the embedded widget.
 `/widget/playground`: This directory offers a playground environment where you can test and obtain configurations for our widget.
