@@ -49,7 +49,6 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
           VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
-          VERCEL_PROJECT_STORYBOOK: ${{ secrets.VERCEL_PROJECT_STORYBOOK }}
           VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}          
 
 
