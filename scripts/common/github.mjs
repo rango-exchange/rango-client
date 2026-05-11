@@ -158,7 +158,6 @@ export function checkEnvironments() {
     VERCEL_PROJECT_Q: !!process.env.VERCEL_PROJECT_Q,
     VERCEL_PROJECT_WIDGET_CONFIG: !!process.env.VERCEL_PROJECT_WIDGET_CONFIG,
     VERCEL_PROJECT_WIDGET_APP: !!process.env.VERCEL_PROJECT_WIDGET_APP,
-    VERCEL_PROJECT_STORYBOOK: !!process.env.VERCEL_PROJECT_STORYBOOK,
   };
 
   const features = [
