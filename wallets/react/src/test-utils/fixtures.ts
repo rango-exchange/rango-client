@@ -18,7 +18,7 @@ export class MockEvmSigner implements GenericSigner<EvmTransaction> {
     _tx: EvmTransaction,
     _address: string,
     _chainId: string | null
-  ): Promise<{ hash: string; response?: any }> {
+  ): Promise<{ hash: string; response?: unknown }> {
     return {
       hash: '0x',
     };
@@ -96,6 +96,7 @@ export const blockchainsMeta: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.blockchain.com/btc/'],
       addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
       transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+      tokenUrl: null,
     },
   },
   {
@@ -130,6 +131,7 @@ export const blockchainsMeta: BlockchainMeta[] = [
       addressUrl: 'https://etherscan.io/address/{wallet}',
       transactionUrl: 'https://etherscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://etherscan.io/token/{address}',
     },
   },
   {
@@ -156,6 +158,7 @@ export const blockchainsMeta: BlockchainMeta[] = [
       blockExplorerUrls: ['https://solscan.io/'],
       addressUrl: 'https://solscan.io/account/{wallet}',
       transactionUrl: 'https://solscan.io/tx/{txHash}',
+      tokenUrl: 'https://solscan.io/token/{address}',
     },
   },
   {
@@ -233,6 +236,7 @@ export const blockchainsMeta: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.mintscan.io/cosmos/'],
       addressUrl: 'https://www.mintscan.io/cosmos/account/{wallet}',
       transactionUrl: 'https://www.mintscan.io/cosmos/txs/{txHash}',
+      tokenUrl: 'https://www.mintscan.io/cosmos/assets/{address}',
     },
   },
 ];
