@@ -5048,48 +5048,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/signer-cosmos@^0.39.1":
-  version "0.39.1"
-  resolved "https://registry.yarnpkg.com/@rango-dev/signer-cosmos/-/signer-cosmos-0.39.1.tgz#209b501a787c9893857e22a6f5718c930e317d31"
-  integrity sha512-l8lP65gO0p7gJuTvJIly95A6/WcVZj3l2RZ4EjpiFd5+7eUoVT39YE2yJzTFgkRmfjg7dTANLY9XzLI0zz/HXA==
-  dependencies:
-    "@cosmjs/launchpad" "^0.27.1"
-    "@cosmjs/stargate" "^0.31.0"
-    "@keplr-wallet/cosmos" "^0.9.12"
-    cosmjs-types "^0.5.2"
-    long "^5.2.3"
-    rango-types "^0.1.98"
-
-"@rango-dev/widget-embedded@^0.59.1":
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.59.1.tgz#d319ff0fcb2b0c97f9d3fe25cb7427c1dbdbcf98"
-  integrity sha512-4m7wt/PaGL8MgzamQcv6i3rSlQe+uK29YGcEkVOcULH9N3F1VCsYJAA60HfsSLcRqPQJj75Oe7T07qi4ReYByQ==
-  dependencies:
-    "@lingui/core" "4.2.1"
-    "@lingui/react" "4.2.1"
-    "@rango-dev/logging-core" "^0.12.1"
-    "@rango-dev/provider-all" "^0.61.1"
-    "@rango-dev/queue-manager-core" "^0.33.0"
-    "@rango-dev/queue-manager-rango-preset" "^0.61.1"
-    "@rango-dev/queue-manager-react" "^0.33.0"
-    "@rango-dev/signer-solana" "^0.47.1"
-    "@rango-dev/ui" "^0.62.1"
-    "@rango-dev/wallets-core" "^0.58.1"
-    "@rango-dev/wallets-react" "^0.45.1"
-    "@rango-dev/wallets-shared" "^0.59.1"
-    bignumber.js "^9.1.1"
-    copy-to-clipboard "^3.3.3"
-    dayjs "^1.11.7"
-    ethers "^6.13.2"
-    immer "^9.0.19"
-    mitt "^3.0.0"
-    rango-sdk "^0.1.77"
-    rango-types "^0.1.98"
-    react-i18next "^12.2.0"
-    react-router-dom "^6.8.0"
-    values.js "2.1.1"
-    zustand "^4.3.2"
-
 "@remix-run/router@1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.13.0.tgz#7e29c4ee85176d9c08cb0f4456bff74d092c5065"
@@ -12430,11 +12388,6 @@ long@^4.0.0:
   resolved "https://registry.yarnpkg.com/long/-/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
   integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
 
-long@^5.2.3:
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/long/-/long-5.3.2.tgz#1d84463095999262d7d7b7f8bfd4a8cc55167f83"
-  integrity sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==
-
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -13992,19 +13945,24 @@ rango-sdk-basic@^0.1.77:
     rango-types "^0.1.98"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.77:
-  version "0.1.77"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.77.tgz#46dcf58af265df405a6d94b32d9d4beec904ab40"
-  integrity sha512-Iwx8VVgezb3HZRXMyIbn5NEijCO11rgsHIOlUMB+UB4VKvcpBrTCRG2rmR6axXCdJUrln+8/itRRnSQIuhE5+g==
+rango-sdk@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.3.0.tgz#1c6883dea02dcbd9747649212c90637ead1afd91"
+  integrity sha512-TEeEQAcpuMGJcjxFxeWmgEEZQoT1p7yX/Gh9G6SurVp0E49AbpT1qZ+/euqjHI2R/L7AB2RJq5gOSvRx4OS8KQ==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.98"
+    rango-types "^0.3.0"
     uuid-random "^1.3.2"
 
 rango-types@^0.1.98:
   version "0.1.98"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.98.tgz#d8d6f2f552a933212d80f53b89b66ab0fd15fbd7"
   integrity sha512-6oD3QOK9jeHYNRQ7LAPKYDKf4THZ4QtsrfqLcKPQUF82AwBmXFGtod0ff+4TtNR1H/ygzM24MbPLk4MYCkRwag==
+
+rango-types@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.3.0.tgz#bf77815d5e4a6d7996a4e1128141d2fa869157a2"
+  integrity sha512-aUyGx8gnA5jG2KgAwxUPvfBFPedpZ9qimCz0xKsgh2x3DwgWEKfzjo1F/janhXUx8/e+UviYWmsthptY8lafiQ==
 
 react-color@^2.19.3:
   version "2.19.3"

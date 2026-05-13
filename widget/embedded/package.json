@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.59.2-next.0",
+  "version": "0.59.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -40,8 +40,8 @@
     "ethers": "^6.13.2",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
-    "rango-sdk": "^0.1.77",
-    "rango-types": "^0.1.98",
+    "rango-sdk": "^0.3.0",
+    "rango-types": "^0.3.0",
     "react-i18next": "^12.2.0",
     "react-router-dom": "^6.8.0",
     "values.js": "2.1.1",
