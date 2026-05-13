@@ -1,5 +1,7 @@
-import { Meta, Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { RawAccounts, Wallet } from './types';
+import type { RawAccounts, Wallet } from './types';
+import type { Meta } from '@rango-dev/wallets-shared';
+
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 
 const evmAddress = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
 const cosmosAddress = 'cosmos1unf2rcytjxfpz8x8ar63h4qeftadptg5r5qswd';
@@ -3628,6 +3630,7 @@ export const meta = {
         blockExplorerUrls: ['https://bscscan.com'],
         addressUrl: 'https://bscscan.com/address/{wallet}',
         transactionUrl: 'https://bscscan.com/tx/{txHash}',
+        tokenUrl: 'https://bscscan.com/token/{address}',
       },
     },
     POLYGON: {
@@ -3650,6 +3653,7 @@ export const meta = {
         blockExplorerUrls: ['https://polygonscan.com'],
         addressUrl: 'https://polygonscan.com/address/{wallet}',
         transactionUrl: 'https://polygonscan.com/tx/{txHash}',
+        tokenUrl: 'https://polygonscan.com/token/{address}',
       },
     },
     ETH: {
@@ -3672,6 +3676,7 @@ export const meta = {
         blockExplorerUrls: ['https://etherscan.io'],
         addressUrl: 'https://etherscan.io/address/{wallet}',
         transactionUrl: 'https://etherscan.io/tx/{txHash}',
+        tokenUrl: 'https://etherscan.io/token/{address}',
       },
     },
     OSMOSIS: {
@@ -3740,6 +3745,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/osmosis/txs/{txHash}',
         gasPriceStep: { low: 0, average: 0.025, high: 0.04 },
+        tokenUrl: 'https://www.mintscan.io/osmosis/assets/{address}',
       },
     },
     JUNO: {
@@ -3801,6 +3807,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/juno/txs/{txHash}',
         gasPriceStep: { low: 0.001, average: 0.0025, high: 0.004 },
+        tokenUrl: null,
       },
     },
     AVAX_CCHAIN: {
@@ -3823,6 +3830,7 @@ export const meta = {
         blockExplorerUrls: ['https://snowtrace.io'],
         addressUrl: 'https://snowtrace.io/address/{wallet}',
         transactionUrl: 'https://snowtrace.io/tx/{txHash}',
+        tokenUrl: 'https://snowtrace.dev/token/{address}',
       },
     },
     ARBITRUM: {
@@ -3845,6 +3853,7 @@ export const meta = {
         blockExplorerUrls: ['https://arbiscan.io'],
         addressUrl: 'https://arbiscan.io/address/{wallet}',
         transactionUrl: 'https://arbiscan.io/tx/{txHash}',
+        tokenUrl: 'https://arbiscan.io/token/{address}',
       },
     },
     COSMOS: {
@@ -3906,6 +3915,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/cosmos/txs/{txHash}',
         gasPriceStep: { low: 0.01, average: 0.025, high: 0.04 },
+        tokenUrl: 'https://www.mintscan.io/cosmos/assets/{address}',
       },
     },
     STARKNET: {
@@ -3950,6 +3960,7 @@ export const meta = {
         blockExplorerUrls: ['https://ftmscan.com'],
         addressUrl: 'https://ftmscan.com/address/{wallet}',
         transactionUrl: 'https://ftmscan.com/tx/{txHash}',
+        tokenUrl: 'https://explorer.fantom.network/token/{address}',
       },
     },
     OPTIMISM: {
@@ -3972,6 +3983,7 @@ export const meta = {
         blockExplorerUrls: ['https://optimistic.etherscan.io'],
         addressUrl: 'https://optimistic.etherscan.io/address/{wallet}',
         transactionUrl: 'https://optimistic.etherscan.io/tx/{txHash}',
+        tokenUrl: 'https://optimistic.etherscan.io/token/{address}',
       },
     },
     SOLANA: {
@@ -4009,6 +4021,7 @@ export const meta = {
         blockExplorerUrls: ['https://www.oklink.com/en/okc'],
         addressUrl: 'https://www.oklink.com/en/okc/address/{wallet}',
         transactionUrl: 'https://www.oklink.com/en/okc/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     CRONOS: {
@@ -4031,6 +4044,7 @@ export const meta = {
         blockExplorerUrls: ['https://cronoscan.com'],
         addressUrl: 'https://cronoscan.com/address/{wallet}',
         transactionUrl: 'https://cronoscan.com/tx/{txHash}',
+        tokenUrl: 'https://cronoscan.com/token/{address}',
       },
     },
     MOONRIVER: {
@@ -4053,6 +4067,7 @@ export const meta = {
         blockExplorerUrls: ['https://moonriver.moonscan.io'],
         addressUrl: 'https://moonriver.moonscan.io/address/{wallet}',
         transactionUrl: 'https://moonriver.moonscan.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     MOONBEAM: {
@@ -4075,6 +4090,7 @@ export const meta = {
         blockExplorerUrls: ['https://moonbeam.moonscan.io'],
         addressUrl: 'https://moonbeam.moonscan.io/address/{wallet}',
         transactionUrl: 'https://moonbeam.moonscan.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     HECO: {
@@ -4097,6 +4113,7 @@ export const meta = {
         blockExplorerUrls: ['https://hecoinfo.com'],
         addressUrl: 'https://hecoinfo.com/address/{wallet}',
         transactionUrl: 'https://hecoinfo.com/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     AURORA: {
@@ -4119,6 +4136,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.mainnet.aurora.dev'],
         addressUrl: 'https://explorer.mainnet.aurora.dev/address/{wallet}',
         transactionUrl: 'https://explorer.mainnet.aurora.dev/tx/{txHash}',
+        tokenUrl: 'https://explorer.mainnet.aurora.dev/token/{address}',
       },
     },
     HARMONY: {
@@ -4141,6 +4159,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.harmony.one'],
         addressUrl: 'https://explorer.harmony.one/address/{wallet}',
         transactionUrl: 'https://explorer.harmony.one/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     EVMOS: {
@@ -4163,6 +4182,7 @@ export const meta = {
         blockExplorerUrls: ['https://evm.evmos.org'],
         addressUrl: 'https://evm.evmos.org/address/{wallet}',
         transactionUrl: 'https://evm.evmos.org/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     SIF: {
@@ -4228,6 +4248,7 @@ export const meta = {
           average: 1500000000000,
           high: 2000000000000,
         },
+        tokenUrl: null,
       },
     },
     THOR: {
@@ -4319,6 +4340,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://www.mintscan.io/stargaze/txs/{txHash}',
         gasPriceStep: { low: 1, average: 1, high: 1 },
+        tokenUrl: null,
       },
     },
     BTC: {
@@ -4397,6 +4419,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/crypto-org/txs/{txHash}',
         gasPriceStep: { low: 0.025, average: 0.03, high: 0.04 },
+        tokenUrl: null,
       },
     },
     CHIHUAHUA: {
@@ -4458,6 +4481,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://ping.pub/chihuahua/tx/{txHash}',
         gasPriceStep: { low: 0.025, average: 0.03, high: 0.035 },
+        tokenUrl: null,
       },
     },
     BANDCHAIN: {
@@ -4519,6 +4543,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://cosmoscan.io/tx/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     COMDEX: {
@@ -4580,6 +4605,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://www.mintscan.io/comdex/txs/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     REGEN: {
@@ -4641,6 +4667,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://regen.aneka.io/txs/{txHash}',
         gasPriceStep: { low: 0.015, average: 0.025, high: 0.04 },
+        tokenUrl: null,
       },
     },
     IRIS: {
@@ -4702,6 +4729,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/iris/txs/{txHash}',
         gasPriceStep: { low: 0.2, average: 0.3, high: 0.4 },
+        tokenUrl: null,
       },
     },
     EMONEY: {
@@ -4771,6 +4799,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://emoney.bigdipper.live/transactions/{txHash}',
         gasPriceStep: { low: 1, average: 1, high: 1 },
+        tokenUrl: null,
       },
     },
     GNOSIS: {
@@ -4793,6 +4822,7 @@ export const meta = {
         blockExplorerUrls: ['https://blockscout.com/xdai/mainnet'],
         addressUrl: 'https://blockscout.com/xdai/mainnet/address/{wallet}',
         transactionUrl: 'https://blockscout.com/xdai/mainnet/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     LTC: {
@@ -4847,6 +4877,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.fuse.io'],
         addressUrl: 'https://explorer.fuse.io/address/{wallet}',
         transactionUrl: 'https://explorer.fuse.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     AKASH: {
@@ -4908,6 +4939,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/akash/txs/{txHash}',
         gasPriceStep: { low: 0.001, average: 0.0025, high: 0.004 },
+        tokenUrl: null,
       },
     },
     KI: {
@@ -4969,6 +5001,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/ki-chain/txs/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     KUJIRA: {
@@ -5030,6 +5063,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://finder.kujira.app/kaiyo-1/tx/{txHash}',
         gasPriceStep: { low: 0.01, average: 0.025, high: 0.03 },
+        tokenUrl: null,
       },
     },
     PERSISTENCE: {
@@ -5091,6 +5125,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/persistence/txs/{txHash}',
         gasPriceStep: { low: 0, average: 0.025, high: 0.04 },
+        tokenUrl: null,
       },
     },
     SENTINEL: {
@@ -5152,6 +5187,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/sentinel/txs/{txHash}',
         gasPriceStep: { low: 0.1, average: 0.25, high: 0.4 },
+        tokenUrl: null,
       },
     },
     STARNAME: {
@@ -5214,6 +5250,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer'],
         explorerUrlToTx: 'https://www.mintscan.io/starname/txs/{txHash}',
         gasPriceStep: { low: 1, average: 2, high: 3 },
+        tokenUrl: null,
       },
     },
     UMEE: {
@@ -5275,6 +5312,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://www.mintscan.io/umee/txs/{txHash}',
         gasPriceStep: { low: 0.05, average: 0.06, high: 0.1 },
+        tokenUrl: null,
       },
     },
     BITCANNA: {
@@ -5336,6 +5374,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
         explorerUrlToTx: 'https://www.mintscan.io/bitcanna/txs/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     DESMOS: {
@@ -5398,6 +5437,7 @@ export const meta = {
         explorerUrlToTx:
           'https://explorer.desmos.network/transactions/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     LUMNETWORK: {
@@ -5459,6 +5499,7 @@ export const meta = {
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
         explorerUrlToTx: 'https://www.mintscan.io/lum/txs/{txHash}',
         gasPriceStep: null,
+        tokenUrl: null,
       },
     },
     BOBA: {
@@ -5481,6 +5522,7 @@ export const meta = {
         blockExplorerUrls: ['https://bobascan.com/'],
         addressUrl: 'https://bobascan.com//address/{wallet}',
         transactionUrl: 'https://bobascan.com//tx/{txHash}',
+        tokenUrl: null,
       },
     },
   },
@@ -5945,6 +5987,7 @@ export const meta = {
         blockExplorerUrls: ['https://bscscan.com'],
         addressUrl: 'https://bscscan.com/address/{wallet}',
         transactionUrl: 'https://bscscan.com/tx/{txHash}',
+        tokenUrl: 'https://bscscan.com/token/{address}',
       },
     },
     {
@@ -5967,6 +6010,7 @@ export const meta = {
         blockExplorerUrls: ['https://polygonscan.com'],
         addressUrl: 'https://polygonscan.com/address/{wallet}',
         transactionUrl: 'https://polygonscan.com/tx/{txHash}',
+        tokenUrl: 'https://polygonscan.com/token/{address}',
       },
     },
     {
@@ -5989,6 +6033,7 @@ export const meta = {
         blockExplorerUrls: ['https://etherscan.io'],
         addressUrl: 'https://etherscan.io/address/{wallet}',
         transactionUrl: 'https://etherscan.io/tx/{txHash}',
+        tokenUrl: 'https://etherscan.io/token/{address}',
       },
     },
     {
@@ -6011,6 +6056,7 @@ export const meta = {
         blockExplorerUrls: ['https://snowtrace.io'],
         addressUrl: 'https://snowtrace.io/address/{wallet}',
         transactionUrl: 'https://snowtrace.io/tx/{txHash}',
+        tokenUrl: 'https://snowtrace.dev/token/{address}',
       },
     },
     {
@@ -6033,6 +6079,7 @@ export const meta = {
         blockExplorerUrls: ['https://arbiscan.io'],
         addressUrl: 'https://arbiscan.io/address/{wallet}',
         transactionUrl: 'https://arbiscan.io/tx/{txHash}',
+        tokenUrl: 'https://arbiscan.io/token/{address}',
       },
     },
     {
@@ -6055,6 +6102,7 @@ export const meta = {
         blockExplorerUrls: ['https://ftmscan.com'],
         addressUrl: 'https://ftmscan.com/address/{wallet}',
         transactionUrl: 'https://ftmscan.com/tx/{txHash}',
+        tokenUrl: 'https://explorer.fantom.network/token/{address}',
       },
     },
     {
@@ -6077,6 +6125,7 @@ export const meta = {
         blockExplorerUrls: ['https://optimistic.etherscan.io'],
         addressUrl: 'https://optimistic.etherscan.io/address/{wallet}',
         transactionUrl: 'https://optimistic.etherscan.io/tx/{txHash}',
+        tokenUrl: 'https://optimistic.etherscan.io/token/{address}',
       },
     },
     {
@@ -6099,6 +6148,7 @@ export const meta = {
         blockExplorerUrls: ['https://www.oklink.com/en/okc'],
         addressUrl: 'https://www.oklink.com/en/okc/address/{wallet}',
         transactionUrl: 'https://www.oklink.com/en/okc/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6121,6 +6171,7 @@ export const meta = {
         blockExplorerUrls: ['https://cronoscan.com'],
         addressUrl: 'https://cronoscan.com/address/{wallet}',
         transactionUrl: 'https://cronoscan.com/tx/{txHash}',
+        tokenUrl: 'https://cronoscan.com/token/{address}',
       },
     },
     {
@@ -6143,6 +6194,7 @@ export const meta = {
         blockExplorerUrls: ['https://moonriver.moonscan.io'],
         addressUrl: 'https://moonriver.moonscan.io/address/{wallet}',
         transactionUrl: 'https://moonriver.moonscan.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6165,6 +6217,7 @@ export const meta = {
         blockExplorerUrls: ['https://moonbeam.moonscan.io'],
         addressUrl: 'https://moonbeam.moonscan.io/address/{wallet}',
         transactionUrl: 'https://moonbeam.moonscan.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6187,6 +6240,7 @@ export const meta = {
         blockExplorerUrls: ['https://hecoinfo.com'],
         addressUrl: 'https://hecoinfo.com/address/{wallet}',
         transactionUrl: 'https://hecoinfo.com/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6209,6 +6263,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.mainnet.aurora.dev'],
         addressUrl: 'https://explorer.mainnet.aurora.dev/address/{wallet}',
         transactionUrl: 'https://explorer.mainnet.aurora.dev/tx/{txHash}',
+        tokenUrl: 'https://explorer.mainnet.aurora.dev/token/{address}',
       },
     },
     {
@@ -6231,6 +6286,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.harmony.one'],
         addressUrl: 'https://explorer.harmony.one/address/{wallet}',
         transactionUrl: 'https://explorer.harmony.one/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6253,6 +6309,7 @@ export const meta = {
         blockExplorerUrls: ['https://evm.evmos.org'],
         addressUrl: 'https://evm.evmos.org/address/{wallet}',
         transactionUrl: 'https://evm.evmos.org/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6275,6 +6332,7 @@ export const meta = {
         blockExplorerUrls: ['https://blockscout.com/xdai/mainnet'],
         addressUrl: 'https://blockscout.com/xdai/mainnet/address/{wallet}',
         transactionUrl: 'https://blockscout.com/xdai/mainnet/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6297,6 +6355,7 @@ export const meta = {
         blockExplorerUrls: ['https://explorer.fuse.io'],
         addressUrl: 'https://explorer.fuse.io/address/{wallet}',
         transactionUrl: 'https://explorer.fuse.io/tx/{txHash}',
+        tokenUrl: null,
       },
     },
     {
@@ -6319,6 +6378,7 @@ export const meta = {
         blockExplorerUrls: ['https://bobascan.com/'],
         addressUrl: 'https://bobascan.com//address/{wallet}',
         transactionUrl: 'https://bobascan.com//tx/{txHash}',
+        tokenUrl: null,
       },
     },
   ],
