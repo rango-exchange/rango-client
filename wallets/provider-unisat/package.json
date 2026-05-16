@@ -24,7 +24,7 @@
     "@rango-dev/wallets-core": "^0.58.2-next.0",
     "@rango-dev/wallets-shared": "^0.59.2-next.0",
     "bitcoinjs-lib": "^6.1.7",
-    "rango-types": "^0.3.0"
+    "rango-types": "^0.3.1-next.1"
   },
   "publishConfig": {
     "access": "public"

@@ -25,7 +25,7 @@
     "@cosmjs/stargate": "^0.31.0",
     "cosmjs-types": "^0.5.2",
     "long": "^4.0.0",
-    "rango-types": "^0.3.0"
+    "rango-types": "^0.3.1-next.1"
   },
   "devDependencies": {
     "@keplr-wallet/types": "^0.13.26",

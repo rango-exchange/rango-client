@@ -25,7 +25,7 @@
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",
-    "rango-types": "^0.3.0"
+    "rango-types": "^0.3.1-next.1"
   },
   "publishConfig": {
     "access": "public"
