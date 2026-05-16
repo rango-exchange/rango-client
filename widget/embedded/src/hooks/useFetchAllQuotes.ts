@@ -14,7 +14,10 @@ export function useFetchAllQuotes(): UseFetchResult<
     MultiRouteResponse
   >({
     request: async (requestBody, options) =>
-      await httpService().getAllRoutes(requestBody, options),
+      await httpService().getAllRoutes(
+        { ...requestBody, enableCentralizedSwappers: true },
+        options
+      ),
   });
 
   return { fetch, loading, cancelFetch };
