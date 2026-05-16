@@ -8,6 +8,7 @@ import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
 import { CAIP_NAMESPACE as CAIP_COSMOS_NAMESPACE } from '@rango-dev/wallets-core/namespaces/cosmos';
+import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@rango-dev/wallets-core/namespaces/ton';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import {
   CAIP_BITCOIN_CHAIN_ID,
@@ -38,6 +39,9 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'ZCASH';
   }
 
+  if (chainId.namespace.toLowerCase() === CAIP_TON_NAMESPACE) {
+    return 'TON';
+  }
   if (chainId.namespace.toLowerCase() === CAIP_COSMOS_NAMESPACE) {
     const network = getBlockChainNameFromId(chainId.reference, allBlockChains);
     if (!network) {
