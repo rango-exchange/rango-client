@@ -80,6 +80,14 @@ export type ProviderProps = PropsWithChildren<{
   providers: VersionedProviders[];
   configs?: {
     wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+    walletOptions?: {
+      [key: WalletType]: {
+        provider?: unknown;
+        namespaces?: {
+          [namespaceId: string]: unknown;
+        };
+      };
+    };
   };
 }>;
 
