@@ -163,6 +163,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       |
 | [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ✅  | ❌       |
 | [Vultisig](provider-vultisig/readme.md)         | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       |
+| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ❌     | ✅  | ❌  | ❌  |    ❌    |
 
 ## By Feature
 
@@ -197,6 +198,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Coin98       | ✅             | ✅             | ❌           | Injected                  | ❌            |
 | GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 | Vultisig     | ❌             | ❌             | ✅           | Injected                  | ❌            |
+| TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
 
 # Supported Wallets (Legacy)
 
