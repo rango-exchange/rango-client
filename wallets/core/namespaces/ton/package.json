@@ -1,0 +1,8 @@
+{
+  "name": "@rango-dev/wallets-core/namespaces/ton",
+  "type": "module",
+  "main": "../../dist/namespaces/ton/mod.js",
+  "module": "../../dist/namespaces/ton/mod.js",
+  "types": "../../dist/namespaces/ton/mod.d.ts",
+  "sideEffects": false
+}

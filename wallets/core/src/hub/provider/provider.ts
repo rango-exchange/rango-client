@@ -68,14 +68,14 @@ export class Provider {
    * provider.init()
    * ```
    */
-  public init(): void {
+  public init(args?: unknown): void {
     if (this.#initiated) {
       return;
     }
 
     const definedInitByUser = this.#extendInternalActions.init;
     if (definedInitByUser) {
-      definedInitByUser(this.#context());
+      definedInitByUser(this.#context(), args);
     }
 
     this.#initiated = true;
