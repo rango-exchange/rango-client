@@ -25,7 +25,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { createTintsAndShades } from '../../utils/colors';
 import { getContainer } from '../../utils/common';
-import { findBlockchain } from '../../utils/meta';
+import { createTokenExplorerAddress, findBlockchain } from '../../utils/meta';
 import { formatBalance } from '../../utils/wallets';
 import { ImportCustomToken } from '../ImportCustomToken';
 
@@ -318,19 +318,18 @@ export function TokenList(props: PropTypes) {
                   ) : undefined
                 }
                 description={
-                  typeof token !== 'string' &&
-                  !!blockchain.info &&
-                  !!address &&
-                  blockchain.type !== 'COSMOS'
+                  typeof token !== 'string' && !!address
                     ? renderDesc({
                         address,
                         token,
                         customCssForTag,
                         customCssForTagTitle,
                         name: token.name,
-                        url: blockchain.info.addressUrl
-                          .split('{wallet}')
-                          .join(address),
+                        url:
+                          createTokenExplorerAddress({
+                            contractAddress: address,
+                            blockchainMeta: blockchain,
+                          }) ?? '',
                       })
                     : token.name || undefined
                 }

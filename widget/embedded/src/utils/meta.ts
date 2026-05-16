@@ -70,3 +70,21 @@ export function isValidTokenAddress(
   const valid = regex.filter((r) => new RegExp(r).test(address)).length > 0;
   return valid;
 }
+
+export function createTokenExplorerAddress(params: {
+  contractAddress: string;
+  blockchainMeta: BlockchainMeta;
+}) {
+  const { contractAddress, blockchainMeta } = params;
+
+  // We don't have Cosmos explorer url in API.
+  if (blockchainMeta.type === 'COSMOS') {
+    return;
+  }
+
+  if (blockchainMeta.info?.tokenUrl) {
+    return blockchainMeta.info.tokenUrl.replace('{address}', contractAddress);
+  }
+
+  return blockchainMeta.info?.addressUrl.replace('{wallet}', contractAddress);
+}
