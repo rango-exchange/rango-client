@@ -25,7 +25,7 @@ export function mapCaipNamespaceToLegacyNetworkName(
   if (typeof chainId === 'string') {
     return chainId;
   }
-  const useNamespaceAsNetworkFor = ['solana', 'xrpl'];
+  const useNamespaceAsNetworkFor = ['solana', 'xrpl', 'stellar'];
 
   if (useNamespaceAsNetworkFor.includes(chainId.namespace.toLowerCase())) {
     return chainId.namespace.toUpperCase();
