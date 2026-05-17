@@ -17,11 +17,6 @@ export default async function getSigners(
       async () => await import('./signers/evm.js')
     )
   ).default;
-  const COSMOSSigner = (
-    await dynamicImportWithRefinedError(
-      async () => await import('./signers/cosmos.js')
-    )
-  ).default;
   const SOLANASigner = (
     await dynamicImportWithRefinedError(
       async () => await import('./signers/solana.js')
@@ -31,10 +26,6 @@ export default async function getSigners(
   signers.registerSigner(
     TxType.EVM,
     new EVMSigner(instance.client, instance.session)
-  );
-  signers.registerSigner(
-    TxType.COSMOS,
-    new COSMOSSigner(instance.client, instance.session)
   );
   signers.registerSigner(
     TxType.SOLANA,

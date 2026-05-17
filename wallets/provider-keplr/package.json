@@ -28,14 +28,15 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@chain-registry/keplr": "^2.0.110",
+    "@chain-registry/keplr": "^2.0.198",
     "@rango-dev/signer-cosmos": "^0.39.2-next.1",
     "@rango-dev/wallets-core": "^0.58.2-next.2",
     "@rango-dev/wallets-shared": "^0.59.2-next.2",
     "rango-types": "^0.4.0"
   },
   "devDependencies": {
-    "@keplr-wallet/types": "^0.11.21"
+    "@keplr-wallet/types": "^0.13.26",
+    "starknet": "^8"
   },
   "resolutions": {
     "@keplr-wallet/types/secretjs/protobufjs": "^6.11.4"
