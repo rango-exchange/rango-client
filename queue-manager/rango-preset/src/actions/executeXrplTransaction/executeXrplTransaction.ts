@@ -15,10 +15,7 @@ import {
   handleSuccessfulSign,
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
-import {
-  ensureXrplNamespaceExists,
-  ensureXrplTransactionIsValid,
-} from '../checkXrplTrustline';
+import { ensureXrplNamespaceExists } from '../checkXrplTrustline';
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
 import {
   onNextStateError,
@@ -26,6 +23,8 @@ import {
   produceNextStateForTransaction,
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+
+import { ensureXrplTransactionIsValid } from './helpers';
 
 export async function executeXrplTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>

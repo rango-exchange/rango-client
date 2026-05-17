@@ -2,63 +2,54 @@ import type { TargetToken } from './types';
 import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { GenericSigner, XrplTransaction } from 'rango-types';
-import type { Err } from 'ts-results';
+import type {
+  GenericSigner,
+  XrplChangeTrustLinePrerequisite,
+  XrplChangeTrustLinePrerequisiteResult,
+  XrplTransaction,
+} from 'rango-types';
+
+import { TransactionType, XRPL_CHANGE_TRUSTLINE_TYPE } from 'rango-types';
+import { Err } from 'ts-results';
 
 import {
   getCurrentStep,
   getCurrentStepTx,
   handleRejectedSign,
-  updateStorageOnSuccessfulSign,
+  updateStorageWithPrerequisiteResult,
 } from '../../helpers';
-import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { SwapActionTypes } from '../../types';
-import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
-import {
-  onNextStateError,
-  onNextStateOk,
-  produceNextStateForTransaction,
-} from '../common/produceNextStateForTransaction';
+import { onNextStateError } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
 
 import {
-  checkTruslineAlreadyOpened,
-  createTrustlineTransaction,
+  checkIfTrustLineIsAlreadyOpened,
+  createTrustLineTransaction,
+  ensureRequiredXrplWalletIsConnected,
   ensureXrplNamespaceExists,
-  ensureXrplTransactionIsValid,
+  getXrplWalletFromSwap,
 } from './utils';
 
 export async function checkXrplTrustline(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  /*
-   *
-   * 1. Ensure wallet is connected with a correct address.
-   *
-   */
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
-  if (checkResult.err) {
-    requestBlockQueue(actions, checkResult.val);
-    return;
-  }
-
   const { failed, context, schedule, getStorage, next } = actions;
   const { meta, getSigners } = context;
-
-  const swap = getStorage().swapDetails;
-  const currentStep = getCurrentStep(swap)!;
-  const currentTransactionFromStorage = getCurrentStepTx(currentStep);
-
-  const sourceWallet = getRelatedWallet(swap, currentStep);
-  const walletAddress = getCurrentAddressOf(swap, currentStep);
 
   const onFinish = () => {
     if (actions.context.resetClaimedBy) {
       actions.context.resetClaimedBy();
     }
   };
-  const onSuccessfulFinish = () => {
-    schedule(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+
+  const handlePrerequisiteMet = () => {
+    schedule(SwapActionTypes.CHECK_PREREQUISITES);
+    next();
+    onFinish();
+  };
+
+  const handleScheduleCheckXrplTrustLineTransactionStatus = () => {
+    schedule(SwapActionTypes.CHECK_XRPL_TRUSTLINE_TRANSACTION_STATUS);
     next();
     onFinish();
   };
@@ -70,110 +61,208 @@ export async function checkXrplTrustline(
   };
 
   /*
-   * Checking the current transaction state to determine the next step.
-   * It will either be Err, indicating process should stop, or Ok, indicating process should continue.
+   *
+   * 1. Ensure transaction is available.
+   *
    */
-  const nextStateResult = produceNextStateForTransaction(actions);
+  const swap = getStorage().swapDetails;
+  const currentStep = getCurrentStep(swap)!;
+  const currentTransactionFromStorage = getCurrentStepTx(currentStep);
 
-  if (nextStateResult.err) {
-    handleErr(nextStateResult);
+  if (!currentTransactionFromStorage) {
+    handleErr(
+      new Err({
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message: 'Unexpected Error: tx is null!',
+        details: undefined,
+        errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      })
+    );
     return;
   }
-
-  // On success, we should update Swap object and also call notifier
-  onNextStateOk(actions, nextStateResult.val);
 
   /*
    *
-   * 2. Ensure tx is supported, and namespace exists.
+   * 2. Check prerequisite status.
    *
    */
-  const transaction = await ensureXrplTransactionIsValid(
-    currentTransactionFromStorage
-  );
-  if (transaction.err) {
-    handleErr(transaction);
+  let unmetXrplChangeTrustLineMeta: {
+    prerequisite: XrplChangeTrustLinePrerequisite;
+    prerequisiteIndex: number;
+    prerequisiteResult: XrplChangeTrustLinePrerequisiteResult | undefined;
+  } | null = null;
+
+  const prerequisiteResults = currentStep.prerequisiteResults;
+
+  for (
+    let index = 0;
+    index < (currentTransactionFromStorage.prerequisites?.length || 0);
+    index++
+  ) {
+    const prerequisite = currentTransactionFromStorage.prerequisites[index];
+    if (prerequisite.type === XRPL_CHANGE_TRUSTLINE_TYPE) {
+      const prerequisiteResult = prerequisiteResults?.find(
+        (
+          prerequisiteResult
+        ): prerequisiteResult is XrplChangeTrustLinePrerequisiteResult =>
+          prerequisiteResult.prerequisiteIndex === index &&
+          prerequisiteResult.prerequisiteType === prerequisite.type
+      );
+
+      if (prerequisiteResult?.status !== 'success') {
+        unmetXrplChangeTrustLineMeta = {
+          prerequisite,
+          prerequisiteIndex: index,
+          prerequisiteResult,
+        };
+        break;
+      }
+    }
+  }
+
+  if (!unmetXrplChangeTrustLineMeta) {
+    handlePrerequisiteMet();
     return;
   }
 
-  const namespace = await ensureXrplNamespaceExists(
-    context,
-    sourceWallet.walletType
-  );
+  if (unmetXrplChangeTrustLineMeta.prerequisiteResult) {
+    switch (unmetXrplChangeTrustLineMeta.prerequisiteResult.status) {
+      case 'pending':
+        handleScheduleCheckXrplTrustLineTransactionStatus();
+        break;
+      case 'failed':
+        handleErr(
+          new Err({
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message:
+              'Unexpected Error: xrpl change trustline prerequisite failed!',
+            details: undefined,
+            errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+          })
+        );
+        break;
+      case 'success':
+        handlePrerequisiteMet();
+        return;
+      default:
+        handleErr(
+          new Err({
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message:
+              'Unexpected Error: xrpl change trustline prerequisite result is not valid!',
+            details: undefined,
+            errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+          })
+        );
+    }
+    return;
+  }
+
+  /*
+   *
+   * 3. Ensure XRPL wallet is connected.
+   *
+   */
+
+  const xrplWallet = getXrplWalletFromSwap(swap);
+  if (!xrplWallet) {
+    handleErr(
+      new Err({
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message: 'Unexpected Error: XRPL wallet was not found in the swap!',
+        details: undefined,
+        errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      })
+    );
+    return;
+  }
+  const namespace = await ensureXrplNamespaceExists(context, xrplWallet.type);
   if (namespace.err) {
     handleErr(namespace);
     return;
   }
 
-  /*
-   * 3. Do we need open a trustline for this transaction?
-   *
-   * Trust line only should be opened for issued token (not native), server is putting that data as prerequisite for us.
-   * If there is no need for that, we are skipping this step and consider it as done.
-   */
-  const trustlinePrerequisite = transaction.val.prerequisites.find(
-    (item) => item.type === 'XRPL_CHANGE_TRUSTLINE'
-  );
-  if (!trustlinePrerequisite) {
-    onSuccessfulFinish();
+  const ensureRequiredXrplWalletIsConnectedResult =
+    await ensureRequiredXrplWalletIsConnected(actions, xrplWallet);
+
+  if (ensureRequiredXrplWalletIsConnectedResult.err) {
+    requestBlockQueue(actions, ensureRequiredXrplWalletIsConnectedResult.val);
     return;
   }
 
   /*
    *
-   * 4. Ensure trusline has been opened, then execute if needed.
+   * 3. Check if trust line is already opened.
    *
    */
-  const chainId = meta.blockchains[transaction.val.blockChain]?.chainId;
-  const walletSigners = await getSigners(sourceWallet.walletType);
 
   const token: TargetToken = {
-    currency: trustlinePrerequisite.currency,
-    account: trustlinePrerequisite.issuer,
-    amount: trustlinePrerequisite.value,
+    currency: unmetXrplChangeTrustLineMeta.prerequisite.currency,
+    account: unmetXrplChangeTrustLineMeta.prerequisite.issuer,
+    amount: unmetXrplChangeTrustLineMeta.prerequisite.value,
   };
 
-  // TODO: it's better to add some logic around `balance` to ensure we have enough capacity for the trust line. Now we only check it's already open or not.
-  const isTruslineAlreadyOpened = await checkTruslineAlreadyOpened(
-    trustlinePrerequisite.wallet,
+  const trustLineIsAlreadyOpenedResult = await checkIfTrustLineIsAlreadyOpened(
+    unmetXrplChangeTrustLineMeta.prerequisite.wallet,
     token,
     {
       namespace: namespace.val,
     }
   );
 
-  if (!isTruslineAlreadyOpened) {
-    const trustlineTx = createTrustlineTransaction(
-      trustlinePrerequisite.wallet,
+  if (trustLineIsAlreadyOpenedResult.err) {
+    handleErr(trustLineIsAlreadyOpenedResult);
+    return;
+  }
+
+  if (trustLineIsAlreadyOpenedResult.val.trustLineIsAlreadyOpened) {
+    // If the required limit is 0, the trust line is already opened
+    handlePrerequisiteMet();
+    return;
+  }
+
+  /*
+   *
+   * 4. Create trust line transaction.
+   *
+   */
+
+  try {
+    // Create trust line transaction with the required limit
+    const trustlineTransaction = createTrustLineTransaction(
+      unmetXrplChangeTrustLineMeta.prerequisite.wallet,
       token
     );
 
+    const chainId = meta.blockchains['XRPL']?.chainId;
+    const walletSigners = await getSigners(xrplWallet.type);
     const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
-      transaction.val.type
+      TransactionType.XRPL
     );
 
-    try {
-      const trustlineTransaction: XrplTransaction = {
-        ...transaction.val,
-        data: trustlineTx,
-      };
-      const result = await signer.signAndSendTx(
-        trustlineTransaction,
-        walletAddress,
-        chainId
-      );
+    const result = await signer.signAndSendTx(
+      trustlineTransaction,
+      xrplWallet.address,
+      chainId
+    );
 
-      updateStorageOnSuccessfulSign(actions, result, {
-        // TODO: approval has different meaning for EVM, we may need to add a third type called trustline for the following function.
-        isApproval: true,
-      });
-      onSuccessfulFinish();
-    } catch (e) {
-      handleRejectedSign(actions)(e);
-      onFinish();
-    }
-  } else {
-    onSuccessfulFinish();
-    return;
+    const prerequisiteResult: XrplChangeTrustLinePrerequisiteResult = {
+      prerequisiteIndex: unmetXrplChangeTrustLineMeta.prerequisiteIndex,
+      prerequisiteType: XRPL_CHANGE_TRUSTLINE_TYPE,
+      status: 'pending',
+      data: {
+        executedTransactionHash: result.hash,
+      },
+    };
+
+    updateStorageWithPrerequisiteResult(actions, prerequisiteResult);
+    handleScheduleCheckXrplTrustLineTransactionStatus();
+  } catch (e) {
+    handleRejectedSign(actions)(e);
+    onFinish();
   }
 }

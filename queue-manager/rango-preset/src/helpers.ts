@@ -39,6 +39,7 @@ import type {
   PendingSwapStep,
   SignerErrorCode,
   StepStatus,
+  SwapStepStatus,
 } from 'rango-types';
 
 import { warn } from '@rango-dev/logging-core';
@@ -1065,6 +1066,38 @@ export function isRequiredWalletConnected(
     return address.toLocaleLowerCase() === accountAddress.toLocaleLowerCase();
   });
   return { ok: matched, reason: 'account_miss_match' };
+}
+
+export function updateStorageWithPrerequisiteResult(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  prerequisiteResult: SwapStepStatus['prerequisiteResults'][number]
+) {
+  const { getStorage, setStorage } = actions;
+  const swap = getStorage().swapDetails;
+  const currentStep = getCurrentStep(swap)!;
+
+  let updated = false;
+  for (let index = 0; index < currentStep.prerequisiteResults.length; index++) {
+    if (
+      currentStep.prerequisiteResults[index].prerequisiteIndex ===
+        prerequisiteResult.prerequisiteIndex &&
+      currentStep.prerequisiteResults[index].prerequisiteType ===
+        prerequisiteResult.prerequisiteType
+    ) {
+      currentStep.prerequisiteResults[index] = prerequisiteResult;
+      updated = true;
+      break;
+    }
+  }
+
+  if (!updated) {
+    currentStep.prerequisiteResults.push(prerequisiteResult);
+  }
+
+  setStorage({
+    ...getStorage(),
+    swapDetails: swap,
+  });
 }
 
 export function updateStorageOnSuccessfulSign(

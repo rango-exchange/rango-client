@@ -1,5 +1,2 @@
 export { checkXrplTrustline } from './checkXrplTrustline.js';
-export {
-  ensureXrplNamespaceExists,
-  ensureXrplTransactionIsValid,
-} from './utils.js';
+export { ensureXrplNamespaceExists } from './utils.js';
