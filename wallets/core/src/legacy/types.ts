@@ -69,6 +69,7 @@ export enum Networks {
   KONSTELLATION = 'KONSTELLATION',
   UMEE = 'UMEE',
   STARKNET = 'STARKNET',
+  STELLAR = 'STELLAR',
   TON = 'TON',
   BASE = 'BASE',
   SUI = 'SUI',
