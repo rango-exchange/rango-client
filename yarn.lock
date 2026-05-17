@@ -3234,14 +3234,6 @@
     long "^4.0.0"
     protobufjs "^6.11.2"
 
-"@keplr-wallet/proto-types@^0.13.26":
-  version "0.13.26"
-  resolved "https://registry.yarnpkg.com/@keplr-wallet/proto-types/-/proto-types-0.13.26.tgz#d89119f915998670511c8f28cca5957d5842a171"
-  integrity sha512-6sNWan9TSWcsdVBN28Je8FU7iX93HiaVYltGxeg5lf7e3dGDm9nINlfOetQXb+OFq5SL0vDZuYB/GUC144w92Q==
-  dependencies:
-    long "^4.0.0"
-    protobufjs "^6.11.2"
-
 "@keplr-wallet/simple-fetch@0.12.28":
   version "0.12.28"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/simple-fetch/-/simple-fetch-0.12.28.tgz#44225df5b329c823076280df1ec9930a21b1373e"
@@ -13936,33 +13928,28 @@ randomfill@^1.0.4:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-rango-sdk-basic@^0.1.77:
-  version "0.1.77"
-  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.77.tgz#3d3c090a8a5753b984aeb768b7a22153291f2d47"
-  integrity sha512-q7WyagpWOxA9Xhgw2VFFwnT2W604ZP7jRJpzptTN1fVNZ/NYIcU30jIxmKE2fYNhSbd7FvNHDeLMXw9b3eYrUg==
+rango-sdk-basic@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.4.0.tgz#dfd52a4cb509dad62109f4e65648c5d382c69dfb"
+  integrity sha512-QduZC0m2oDfJfEyRXNRnBud/0y3Ajdct7tKMziNbw2XPW6Bvl8LevhodSOeJbw0bpa9aiNoVWF5g+RIU/5EMow==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.1.98"
+    rango-types "^0.4.0"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.3.0.tgz#1c6883dea02dcbd9747649212c90637ead1afd91"
-  integrity sha512-TEeEQAcpuMGJcjxFxeWmgEEZQoT1p7yX/Gh9G6SurVp0E49AbpT1qZ+/euqjHI2R/L7AB2RJq5gOSvRx4OS8KQ==
+rango-sdk@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.4.0.tgz#4f134a35cabf057fa5431edafe97c4416b7eafcb"
+  integrity sha512-Yjyb9SIz0dtWjq8ze22NyZovS7dx2T3u3LJ9fb61OjUyD5w5rn0sH+GpWI1f3GjkoN21a1v7fGM4n7xV3mp/Qw==
   dependencies:
     axios "^1.7.4"
-    rango-types "^0.3.0"
+    rango-types "^0.4.0"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.98:
-  version "0.1.98"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.98.tgz#d8d6f2f552a933212d80f53b89b66ab0fd15fbd7"
-  integrity sha512-6oD3QOK9jeHYNRQ7LAPKYDKf4THZ4QtsrfqLcKPQUF82AwBmXFGtod0ff+4TtNR1H/ygzM24MbPLk4MYCkRwag==
-
-rango-types@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.3.0.tgz#bf77815d5e4a6d7996a4e1128141d2fa869157a2"
-  integrity sha512-aUyGx8gnA5jG2KgAwxUPvfBFPedpZ9qimCz0xKsgh2x3DwgWEKfzjo1F/janhXUx8/e+UviYWmsthptY8lafiQ==
+rango-types@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.4.0.tgz#799b1dfc126fbd9ddf70cc9889d73b3ff53fb313"
+  integrity sha512-I9h2KfrHxBrteaJiD+IFWjdGxgesr7XL/yuH82MIy/cSsbzIVrolt5pJVveESINkvkiKmQ6xVJmni0F0K9UewQ==
 
 react-color@^2.19.3:
   version "2.19.3"
