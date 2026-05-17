@@ -22,9 +22,8 @@
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
-    "@cosmjs/stargate": "^0.31.0",
+    "@cosmjs/stargate": "^0.34.0",
     "cosmjs-types": "^0.5.2",
-    "long": "^4.0.0",
     "rango-types": "^0.4.0"
   },
   "devDependencies": {
