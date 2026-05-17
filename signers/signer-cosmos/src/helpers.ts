@@ -12,7 +12,6 @@ import {
   TxRaw,
 } from '@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx.js';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
-import Long from 'long';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 const STARGATE_CLIENT_OPTIONS = {
@@ -113,10 +112,7 @@ export const executeCosmosTransaction = async (
         : [];
 
       const defaultGas = STARGATE_CLIENT_OPTIONS.gasLimits.transfer.toString();
-      const gasLimit =
-        typeof fee?.gas === 'string'
-          ? Long.fromString(fee?.gas).toString()
-          : defaultGas;
+      const gasLimit = typeof fee?.gas === 'string' ? fee?.gas : defaultGas;
       const broadcastTxRes = await sendingStargateClient.signAndBroadcast(
         cosmosTx.fromWalletAddress,
         msgsWithoutType,
