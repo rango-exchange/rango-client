@@ -455,6 +455,7 @@ export function calculatePendingSwap(params: {
 
           // status, tracking
           outputAmount: '',
+          prerequisiteResults: [],
           status: 'created',
           networkStatus: null,
           startTransactionTime: new Date().getTime(),
