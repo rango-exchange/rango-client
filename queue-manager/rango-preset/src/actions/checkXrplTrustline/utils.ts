@@ -9,6 +9,7 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PendingSwap, XrplTransaction } from 'rango-types';
 import type { Result } from 'ts-results';
 
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import BigNumber from 'bignumber.js';
 import { TransactionType } from 'rango-types';
 import { Err, Ok } from 'ts-results';
@@ -155,7 +156,12 @@ export async function ensureRequiredXrplWalletIsConnected(
     });
   }
 
-  if (!accounts?.find((account) => account === requiredWallet.address)) {
+  if (
+    !accounts?.find(
+      (account) =>
+        readAccountAddress(account).address === requiredWallet.address
+    )
+  ) {
     return new Err({
       reason: BlockReason.WAIT_FOR_CONNECT_WALLET,
       description: ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET(

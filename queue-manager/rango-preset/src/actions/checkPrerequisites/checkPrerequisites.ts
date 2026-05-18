@@ -63,7 +63,7 @@ export async function checkPrerequisites(
 
   const unmetPrerequisiteIndex = prerequisites.findIndex(
     (prerequisite, prerequisiteIndex) =>
-      checkIsPrerequisiteAlreadyMet(
+      !checkIsPrerequisiteAlreadyMet(
         { prerequisiteType: prerequisite.type, prerequisiteIndex },
         currentStep
       )
