@@ -31,6 +31,7 @@
     "@rango-dev/provider-default": "^0.56.2-next.2",
     "@rango-dev/provider-enkrypt": "^0.59.2-next.2",
     "@rango-dev/provider-exodus": "^0.60.2-next.2",
+    "@rango-dev/provider-freighter": "^0.1.0",
     "@rango-dev/provider-gemwallet": "^0.2.2-next.2",
     "@rango-dev/provider-keplr": "^0.59.2-next.2",
     "@rango-dev/provider-leap-cosmos": "^0.59.2-next.2",
