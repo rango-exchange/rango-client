@@ -5,8 +5,13 @@ import type {
 } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { GenericSigner, XrplTransaction } from 'rango-types';
-import type { Err } from 'ts-results';
+
+import {
+  type GenericSigner,
+  TransactionType,
+  type XrplTransaction,
+} from 'rango-types';
+import { Err } from 'ts-results';
 
 import {
   getCurrentStep,
@@ -14,9 +19,12 @@ import {
   handleRejectedSign,
   handleSuccessfulSign,
 } from '../../helpers';
-import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
-import { ensureXrplNamespaceExists } from '../checkXrplTrustline';
-import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
+import { getCurrentAddressOf } from '../../shared';
+import {
+  ensureRequiredXrplWalletIsConnected,
+  ensureXrplNamespaceExists,
+  getXrplWalletFromSwap,
+} from '../checkXrplTrustline';
 import {
   onNextStateError,
   onNextStateOk,
@@ -29,26 +37,8 @@ import { ensureXrplTransactionIsValid } from './helpers';
 export async function executeXrplTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  /*
-   *
-   * 1. Ensure wallet is connected with a correct address.
-   *
-   */
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
-  if (checkResult.err) {
-    requestBlockQueue(actions, checkResult.val);
-    return;
-  }
-
   const { failed, getStorage, context } = actions;
   const { meta, getSigners } = context;
-
-  const swap = getStorage().swapDetails;
-  const currentStep = getCurrentStep(swap)!;
-  const currentTransactionFromStorage = getCurrentStepTx(currentStep);
-
-  const sourceWallet = getRelatedWallet(swap, currentStep);
-  const walletAddress = getCurrentAddressOf(swap, currentStep);
 
   const onFinish = () => {
     if (actions.context.resetClaimedBy) {
@@ -61,6 +51,59 @@ export async function executeXrplTransaction(
     failed();
     onFinish();
   };
+
+  /*
+   *
+   * 1. Ensure transaction is available.
+   *
+   */
+  const swap = getStorage().swapDetails;
+  const currentStep = getCurrentStep(swap)!;
+  const currentTransactionFromStorage = getCurrentStepTx(currentStep);
+
+  const transaction = await ensureXrplTransactionIsValid(
+    currentTransactionFromStorage
+  );
+  if (transaction.err) {
+    handleErr(transaction);
+    return;
+  }
+
+  /*
+   *
+   * 2. Ensure wallet is connected with a correct address.
+   *
+   */
+
+  const xrplWallet = getXrplWalletFromSwap(swap);
+  if (!xrplWallet) {
+    handleErr(
+      new Err({
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message: 'Unexpected Error: Stellar wallet was not found in the swap!',
+        details: undefined,
+        errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      })
+    );
+    return;
+  }
+
+  const namespace = await ensureXrplNamespaceExists(context, xrplWallet.type);
+  if (namespace.err) {
+    handleErr(namespace);
+    return;
+  }
+
+  const ensureRequiredXrplWalletIsConnectedResult =
+    await ensureRequiredXrplWalletIsConnected(actions, xrplWallet);
+
+  if (ensureRequiredXrplWalletIsConnectedResult.err) {
+    requestBlockQueue(actions, ensureRequiredXrplWalletIsConnectedResult.val);
+    return;
+  }
+
+  const walletAddress = getCurrentAddressOf(swap, currentStep);
 
   /*
    * Checking the current transaction state to determine the next step.
@@ -78,39 +121,15 @@ export async function executeXrplTransaction(
 
   /*
    *
-   * 2. Ensure tx is supported, and namespace exists.
-   *
-   */
-  const transaction = await ensureXrplTransactionIsValid(
-    currentTransactionFromStorage
-  );
-  if (transaction.err) {
-    handleErr(transaction);
-    return;
-  }
-
-  const namespace = await ensureXrplNamespaceExists(
-    context,
-    sourceWallet.walletType
-  );
-  if (namespace.err) {
-    handleErr(namespace);
-    return;
-  }
-
-  /*
-   *
    * 3. Execute transaction
    *
    */
-  const chainId = meta.blockchains[transaction.val.blockChain]?.chainId;
-  const walletSigners = await getSigners(sourceWallet.walletType);
-
-  const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
-    transaction.val.type
-  );
-
   try {
+    const chainId = meta.blockchains['XRPL']?.chainId;
+    const walletSigners = await getSigners(xrplWallet.type);
+    const signer: GenericSigner<XrplTransaction> = walletSigners.getSigner(
+      TransactionType.XRPL
+    );
     const result = await signer.signAndSendTx(
       transaction.val,
       walletAddress,
