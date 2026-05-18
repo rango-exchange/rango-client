@@ -42,14 +42,8 @@ export async function checkXrplTrustline(
     }
   };
 
-  const handlePrerequisiteMet = () => {
+  const scheduleCheckPrerequisites = () => {
     schedule(SwapActionTypes.CHECK_PREREQUISITES);
-    next();
-    onFinish();
-  };
-
-  const handleScheduleCheckXrplTrustLineTransactionStatus = () => {
-    schedule(SwapActionTypes.CHECK_XRPL_TRUSTLINE_TRANSACTION_STATUS);
     next();
     onFinish();
   };
@@ -84,80 +78,41 @@ export async function checkXrplTrustline(
 
   /*
    *
-   * 2. Check prerequisite status.
+   * 2. Check if there is a prerequisite with XRPL_CHANGE_TRUSTLINE_TYPE that does not have any result.
    *
    */
   let unmetXrplChangeTrustLineMeta: {
     prerequisite: XrplChangeTrustLinePrerequisite;
     prerequisiteIndex: number;
-    prerequisiteResult: XrplChangeTrustLinePrerequisiteResult | undefined;
   } | null = null;
 
-  const prerequisiteResults = currentStep.prerequisiteResults;
-
   for (
-    let index = 0;
-    index < (currentTransactionFromStorage.prerequisites?.length || 0);
-    index++
+    let prerequisiteIndex = 0;
+    prerequisiteIndex < currentTransactionFromStorage.prerequisites.length;
+    prerequisiteIndex++
   ) {
-    const prerequisite = currentTransactionFromStorage.prerequisites[index];
+    const prerequisite =
+      currentTransactionFromStorage.prerequisites[prerequisiteIndex];
     if (prerequisite.type === XRPL_CHANGE_TRUSTLINE_TYPE) {
-      const prerequisiteResult = prerequisiteResults?.find(
+      const prerequisiteResult = currentStep.prerequisiteResults?.find(
         (
           prerequisiteResult
         ): prerequisiteResult is XrplChangeTrustLinePrerequisiteResult =>
-          prerequisiteResult.prerequisiteIndex === index &&
-          prerequisiteResult.prerequisiteType === prerequisite.type
+          prerequisiteResult.prerequisiteIndex === prerequisiteIndex &&
+          prerequisiteResult.prerequisiteType === XRPL_CHANGE_TRUSTLINE_TYPE
       );
 
-      if (prerequisiteResult?.status !== 'success') {
+      if (!prerequisiteResult) {
         unmetXrplChangeTrustLineMeta = {
           prerequisite,
-          prerequisiteIndex: index,
-          prerequisiteResult,
+          prerequisiteIndex,
         };
-        break;
       }
     }
   }
 
   if (!unmetXrplChangeTrustLineMeta) {
-    handlePrerequisiteMet();
-    return;
-  }
-
-  if (unmetXrplChangeTrustLineMeta.prerequisiteResult) {
-    switch (unmetXrplChangeTrustLineMeta.prerequisiteResult.status) {
-      case 'pending':
-        handleScheduleCheckXrplTrustLineTransactionStatus();
-        break;
-      case 'failed':
-        handleErr(
-          new Err({
-            nextStatus: 'failed',
-            nextStepStatus: 'failed',
-            message:
-              'Unexpected Error: xrpl change trustline prerequisite failed!',
-            details: undefined,
-            errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
-          })
-        );
-        break;
-      case 'success':
-        handlePrerequisiteMet();
-        return;
-      default:
-        handleErr(
-          new Err({
-            nextStatus: 'failed',
-            nextStepStatus: 'failed',
-            message:
-              'Unexpected Error: xrpl change trustline prerequisite result is not valid!',
-            details: undefined,
-            errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
-          })
-        );
-    }
+    scheduleCheckPrerequisites();
     return;
   }
 
@@ -220,8 +175,14 @@ export async function checkXrplTrustline(
   }
 
   if (trustLineIsAlreadyOpenedResult.val.trustLineIsAlreadyOpened) {
-    // If the required limit is 0, the trust line is already opened
-    handlePrerequisiteMet();
+    const prerequisiteResult: XrplChangeTrustLinePrerequisiteResult = {
+      prerequisiteIndex: unmetXrplChangeTrustLineMeta.prerequisiteIndex,
+      prerequisiteType: XRPL_CHANGE_TRUSTLINE_TYPE,
+      status: 'skipped',
+      data: null,
+    };
+    updateStorageWithPrerequisiteResult(actions, prerequisiteResult);
+    scheduleCheckPrerequisites();
     return;
   }
 
@@ -244,7 +205,7 @@ export async function checkXrplTrustline(
       TransactionType.XRPL
     );
 
-    const result = await signer.signAndSendTx(
+    const transactionResult = await signer.signAndSendTx(
       trustlineTransaction,
       xrplWallet.address,
       chainId
@@ -255,12 +216,12 @@ export async function checkXrplTrustline(
       prerequisiteType: XRPL_CHANGE_TRUSTLINE_TYPE,
       status: 'pending',
       data: {
-        executedTransactionHash: result.hash,
+        executedTransactionHash: transactionResult.hash,
       },
     };
 
     updateStorageWithPrerequisiteResult(actions, prerequisiteResult);
-    handleScheduleCheckXrplTrustLineTransactionStatus();
+    scheduleCheckPrerequisites();
   } catch (e) {
     handleRejectedSign(actions)(e);
     onFinish();

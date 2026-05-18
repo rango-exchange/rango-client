@@ -56,6 +56,7 @@ import {
   TransactionType,
 } from 'rango-types';
 
+import { matchesPrerequisiteKey } from './actions/checkPrerequisites/utils';
 import {
   DEFAULT_ERROR_CODE,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
@@ -1076,21 +1077,13 @@ export function updateStorageWithPrerequisiteResult(
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap)!;
 
-  let updated = false;
-  for (let index = 0; index < currentStep.prerequisiteResults.length; index++) {
-    if (
-      currentStep.prerequisiteResults[index].prerequisiteIndex ===
-        prerequisiteResult.prerequisiteIndex &&
-      currentStep.prerequisiteResults[index].prerequisiteType ===
-        prerequisiteResult.prerequisiteType
-    ) {
-      currentStep.prerequisiteResults[index] = prerequisiteResult;
-      updated = true;
-      break;
-    }
-  }
+  const index = currentStep.prerequisiteResults.findIndex((existing) =>
+    matchesPrerequisiteKey(existing, prerequisiteResult)
+  );
 
-  if (!updated) {
+  if (index >= 0) {
+    currentStep.prerequisiteResults[index] = prerequisiteResult;
+  } else {
     currentStep.prerequisiteResults.push(prerequisiteResult);
   }
 

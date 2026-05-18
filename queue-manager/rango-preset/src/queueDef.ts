@@ -1,6 +1,6 @@
 import type { SwapQueueDef } from './types';
 
-import { checkPrerequisites } from './actions/checkPrereuisites';
+import { checkPrerequisites } from './actions/checkPrerequisites';
 import { checkStatus } from './actions/checkStatus';
 import { checkXrplTrustline } from './actions/checkXrplTrustline';
 import { checkXrplTrustLineTransactionStatus } from './actions/checkXrplTrustlineTransactionStatus';

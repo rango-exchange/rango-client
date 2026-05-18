@@ -63,39 +63,13 @@ export async function checkXrplTrustLineTransactionStatus(
   let pendingXrplChangeTrustLinePrerequisiteResult: XrplChangeTrustLinePrerequisiteResult | null =
     null;
 
-  for (const prerequisiteResult of currentStep.prerequisiteResults || []) {
-    if (isXrplChangeTrustLinePrerequisiteResult(prerequisiteResult)) {
-      switch (prerequisiteResult.status) {
-        case 'pending':
-          pendingXrplChangeTrustLinePrerequisiteResult = prerequisiteResult;
-          break;
-        case 'success': // do nothing
-          break;
-        case 'failed':
-          handleErr(
-            new Err({
-              nextStatus: 'failed',
-              nextStepStatus: 'failed',
-              message:
-                'Unexpected Error: XRPL_CHANGE_TRUSTLINE prerequisite was failed!',
-              details: undefined,
-              errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
-            })
-          );
-          return;
-        default:
-          handleErr(
-            new Err({
-              nextStatus: 'failed',
-              nextStepStatus: 'failed',
-              message:
-                'Unexpected Error: XRPL_CHANGE_TRUSTLINE prerequisite result is not valid!',
-              details: undefined,
-              errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
-            })
-          );
-          return;
-      }
+  for (const prerequisiteResult of currentStep.prerequisiteResults) {
+    if (
+      isXrplChangeTrustLinePrerequisiteResult(prerequisiteResult) &&
+      prerequisiteResult.status === 'pending'
+    ) {
+      pendingXrplChangeTrustLinePrerequisiteResult = prerequisiteResult;
+      break;
     }
   }
 
