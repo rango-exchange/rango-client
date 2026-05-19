@@ -13,10 +13,10 @@ import React from 'react';
 
 import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
 import { getContainer } from '../../utils/common';
+import { createTokenExplorerUrl } from '../../utils/meta';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CUSTOM_TOKEN_LEARN_MORE_LINK } from './CustomTokenModal.constants';
-import { generateExplorerLink } from './CustomTokenModal.helpers';
 import {
   Container,
   FlexCenteredContainer,
@@ -29,7 +29,12 @@ const MAX_SYMBOL_LENGTH_THRESHOLD = 9;
 export function CustomTokenModal(props: PropTypes) {
   const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
 
-  const explorerLink = generateExplorerLink(token.address, blockchain);
+  const explorerLink = token.address
+    ? createTokenExplorerUrl({
+        contractAddress: token.address,
+        blockchainMeta: blockchain,
+      })
+    : undefined;
 
   const onClickLearnMore = () =>
     window.open(CUSTOM_TOKEN_LEARN_MORE_LINK, '_blank');
