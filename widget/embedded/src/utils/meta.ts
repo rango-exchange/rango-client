@@ -71,10 +71,10 @@ export function isValidTokenAddress(
   return valid;
 }
 
-export function createTokenExplorerAddress(params: {
+export function createTokenExplorerUrl(params: {
   contractAddress: string;
   blockchainMeta: BlockchainMeta;
-}) {
+}): string | undefined {
   const { contractAddress, blockchainMeta } = params;
 
   // We don't have Cosmos explorer url in API.

@@ -13,7 +13,7 @@ import React from 'react';
 
 import { DEFAULT_TOKEN_IMAGE_SRC } from '../../constants/customTokens';
 import { getContainer } from '../../utils/common';
-import { createTokenExplorerAddress } from '../../utils/meta';
+import { createTokenExplorerUrl } from '../../utils/meta';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CUSTOM_TOKEN_LEARN_MORE_LINK } from './CustomTokenModal.constants';
@@ -30,7 +30,7 @@ export function CustomTokenModal(props: PropTypes) {
   const { open, onClose, token, onExit, onSubmitClick, blockchain } = props;
 
   const explorerLink = token.address
-    ? createTokenExplorerAddress({
+    ? createTokenExplorerUrl({
         contractAddress: token.address,
         blockchainMeta: blockchain,
       })
