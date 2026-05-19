@@ -53,8 +53,6 @@ export async function checkIfTrustLineIsAlreadyOpened(
 ): Promise<
   Result<{ trustLineIsAlreadyOpened: boolean }, NextTransactionStateError>
 > {
-  const tokenAmount = new BigNumber(token.amount);
-
   try {
     // Get account lines for the account
     const accountLines = await options.namespace.accountLines(account, {
@@ -76,11 +74,11 @@ export async function checkIfTrustLineIsAlreadyOpened(
     }
 
     const lineLimit = new BigNumber(targetAccountLine.limit);
-    const lineBalance = new BigNumber(targetAccountLine.balance);
+    const targetLimit = new BigNumber(TRUST_LINE_INFINITE_VALUE);
 
     // If the account line is open, and contains a suitable limit, return true
     return new Ok({
-      trustLineIsAlreadyOpened: lineLimit.gte(lineBalance.plus(tokenAmount)),
+      trustLineIsAlreadyOpened: lineLimit.gte(targetLimit),
     });
   } catch {
     return new Err({
