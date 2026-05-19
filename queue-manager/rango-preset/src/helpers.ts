@@ -172,6 +172,7 @@ export const getCurrentStepTx = (
     transferTransaction,
     starknetApprovalTransaction,
     starknetTransaction,
+    stellarTransaction,
     tronApprovalTransaction,
     tronTransaction,
     tonTransaction,
@@ -186,6 +187,7 @@ export const getCurrentStepTx = (
     transferTransaction ||
     starknetApprovalTransaction ||
     starknetTransaction ||
+    stellarTransaction ||
     tronApprovalTransaction ||
     tronTransaction ||
     tonTransaction ||
@@ -786,6 +788,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
+    swap.wallets[step.stellarTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
