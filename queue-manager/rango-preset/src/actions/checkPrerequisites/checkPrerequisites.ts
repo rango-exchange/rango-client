@@ -16,6 +16,7 @@ import { onNextStateError } from '../common/produceNextStateForTransaction';
 
 import {
   checkIsPrerequisiteAlreadyMet,
+  handleUnmetStellarChangeTrustLinePrerequisite,
   handleUnmetXrplChangeTrustLinePrerequisite,
 } from './utils';
 
@@ -79,8 +80,9 @@ export async function checkPrerequisites(
         );
         break;
       case STELLAR_CHANGE_TRUSTLINE_TYPE:
-        result = new Err(
-          'Unexpected Error: STELLAR_CHANGE_TRUSTLINE prerequisite is not supported!'
+        result = handleUnmetStellarChangeTrustLinePrerequisite(
+          unmetPrerequisiteIndex,
+          currentStep
         );
         break;
       default:
