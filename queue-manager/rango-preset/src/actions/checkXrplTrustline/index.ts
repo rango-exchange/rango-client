@@ -1,5 +1,6 @@
 export { checkXrplTrustline } from './checkXrplTrustline.js';
 export {
   ensureXrplNamespaceExists,
-  ensureXrplTransactionIsValid,
+  ensureRequiredXrplWalletIsConnected,
+  getXrplWalletFromSwap,
 } from './utils.js';
