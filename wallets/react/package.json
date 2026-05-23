@@ -43,7 +43,8 @@
   "devDependencies": {
     "@chain-registry/types": "2.0.110",
     "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.25"
+    "@types/react-dom": "^18.0.25",
+    "@testing-library/react-hooks": "^8.0.1"
   },
   "publishConfig": {
     "access": "public"

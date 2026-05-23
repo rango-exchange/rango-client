@@ -99,7 +99,8 @@
   },
   "devDependencies": {
     "@types/urijs": "^1.19.26",
-    "xrpl": "^4.2.0"
+    "xrpl": "^4.2.0",
+    "@testing-library/dom": "^10.1.0"
   },
   "publishConfig": {
     "access": "public"
