@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.58.2-next.2",
+  "version": "0.58.2-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -98,9 +98,9 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.1.0",
     "@types/urijs": "^1.19.26",
-    "xrpl": "^4.2.0",
-    "@testing-library/dom": "^10.1.0"
+    "xrpl": "^4.2.0"
   },
   "publishConfig": {
     "access": "public"
