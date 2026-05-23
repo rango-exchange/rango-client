@@ -45,7 +45,16 @@
     "react-i18next": "^12.2.0",
     "react-router-dom": "^6.8.0",
     "values.js": "2.1.1",
-    "zustand": "^4.3.2"
+    "zustand": "^4.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "crypto-browserify": "^3.12.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "vm-browserify": "^1.1.2",
+    "@faker-js/faker": "^8.4.1"
   },
   "peerDependencies": {
     "react": ">=16",
