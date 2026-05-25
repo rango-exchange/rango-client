@@ -5816,6 +5816,14 @@
   resolved "https://registry.yarnpkg.com/@starknet-io/types-js/-/types-js-0.9.2.tgz#08a794a35f2785878812ebd151a261399900b594"
   integrity sha512-vWOc0FVSn+RmabozIEWcEny1I73nDGTvOrLYJsR1x7LGA3AZmqt4i/aW69o/3i2NN5CVP8Ok6G1ayRQJKye3Wg==
 
+"@stellar/freighter-api@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@stellar/freighter-api/-/freighter-api-6.0.1.tgz#93807387b84d56425b281d0bdb0da180c9de5503"
+  integrity sha512-eqwakEqSg+zoLuPpSbKyrX0pG8DQFzL/J5GtbfuMCmJI+h+oiC9pQ5C6QLc80xopZQKdGt8dUAFCmDMNdAG95w==
+  dependencies:
+    buffer "6.0.3"
+    semver "7.7.1"
+
 "@stellar/js-xdr@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@stellar/js-xdr/-/js-xdr-4.0.0.tgz#5c4bd396a71ea3aef7a91dee885cf8dd2e10c5cf"
