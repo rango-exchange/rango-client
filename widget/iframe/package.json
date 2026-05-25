@@ -15,6 +15,6 @@
     "parcel": "^2.16.4"
   },
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.59.2-next.5"
+    "@rango-dev/widget-embedded": "^0.59.2-next.6"
   }
 }
