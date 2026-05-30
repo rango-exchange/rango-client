@@ -9,6 +9,7 @@ import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
 import { Provider } from '@rango-dev/wallets-react';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
@@ -104,6 +105,11 @@ function Main(props: PropsWithChildren<PropTypes>) {
         autoConnect={!!isActiveTab}
         configs={{
           wallets: config.wallets,
+          walletOptions: {
+            [WalletTypes.TON_CONNECT]: {
+              provider: { manifestUrl: config.tonConnect?.manifestUrl },
+            },
+          },
         }}>
         {props.children}
       </Provider>

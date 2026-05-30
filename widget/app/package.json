@@ -17,11 +17,14 @@
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "parcel": "^2.16.4",
+    "vm-browserify": "^1.1.2"
+  },
   "dependencies": {
     "@rango-dev/logging-console": "^0.12.1",
     "@rango-dev/logging-subscriber": "^0.12.1",
-    "@rango-dev/widget-embedded": "^0.59.1",
+    "@rango-dev/widget-embedded": "^0.59.2-next.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

@@ -8,8 +8,12 @@ import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
 import { CAIP_NAMESPACE as CAIP_COSMOS_NAMESPACE } from '@rango-dev/wallets-core/namespaces/cosmos';
+import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@rango-dev/wallets-core/namespaces/ton';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
-import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
+import {
+  CAIP_BITCOIN_CHAIN_ID,
+  CAIP_ZCASH_CHAIN_ID,
+} from '@rango-dev/wallets-core/namespaces/utxo';
 import { CAIP } from '@rango-dev/wallets-core/utils';
 import { getBlockChainNameFromId } from '@rango-dev/wallets-shared';
 import { Err, Ok } from 'ts-results';
@@ -21,7 +25,7 @@ export function mapCaipNamespaceToLegacyNetworkName(
   if (typeof chainId === 'string') {
     return chainId;
   }
-  const useNamespaceAsNetworkFor = ['solana', 'xrpl'];
+  const useNamespaceAsNetworkFor = ['solana', 'xrpl', 'stellar'];
 
   if (useNamespaceAsNetworkFor.includes(chainId.namespace.toLowerCase())) {
     return chainId.namespace.toUpperCase();
@@ -31,8 +35,13 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'ETH';
   } else if (chainId.reference === CAIP_BITCOIN_CHAIN_ID) {
     return 'BTC';
+  } else if (chainId.reference === CAIP_ZCASH_CHAIN_ID) {
+    return 'ZCASH';
   }
 
+  if (chainId.namespace.toLowerCase() === CAIP_TON_NAMESPACE) {
+    return 'TON';
+  }
   if (chainId.namespace.toLowerCase() === CAIP_COSMOS_NAMESPACE) {
     const network = getBlockChainNameFromId(chainId.reference, allBlockChains);
     if (!network) {

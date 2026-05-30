@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.58.1",
+  "version": "0.58.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -43,6 +43,10 @@
       "types": "./dist/namespaces/starknet/mod.d.ts",
       "default": "./dist/namespaces/starknet/mod.js"
     },
+    "./namespaces/stellar": {
+      "types": "./dist/namespaces/stellar/mod.d.ts",
+      "default": "./dist/namespaces/stellar/mod.js"
+    },
     "./namespaces/sui": {
       "types": "./dist/namespaces/sui/mod.d.ts",
       "default": "./dist/namespaces/sui/mod.js"
@@ -58,6 +62,10 @@
     "./namespaces/xrpl": {
       "types": "./dist/namespaces/xrpl/mod.d.ts",
       "default": "./dist/namespaces/xrpl/mod.js"
+    },
+    "./namespaces/ton": {
+      "types": "./dist/namespaces/ton/mod.d.ts",
+      "default": "./dist/namespaces/ton/mod.js"
     }
   },
   "files": [
@@ -66,7 +74,7 @@
     "legacy"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/cosmos/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/stellar/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts,src/namespaces/ton/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -83,12 +91,15 @@
   },
   "dependencies": {
     "@chain-registry/types": "2.0.110",
+    "@stellar/stellar-sdk": "^15.0.1",
     "caip": "^1.1.1",
     "immer": "^10.0.4",
-    "rango-types": "^0.1.98",
+    "rango-types": "^0.5.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.1.0",
+    "@types/urijs": "^1.19.26",
     "xrpl": "^4.2.0"
   },
   "publishConfig": {

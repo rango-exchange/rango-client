@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-gemwallet",
-  "version": "0.2.1",
+  "version": "0.2.2-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@gemwallet/api": "^3.8.0",
-    "@rango-dev/wallets-shared": "^0.59.1",
-    "rango-types": "^0.1.98",
+    "@rango-dev/wallets-shared": "^0.59.2-next.5",
+    "rango-types": "^0.5.0",
     "xrpl": "^4.2.0"
   },
   "publishConfig": {

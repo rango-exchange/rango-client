@@ -14,6 +14,7 @@ import { versions as cosmostation } from '@rango-dev/provider-cosmostation';
 import * as defaultInjected from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
+import { versions as freighter } from '@rango-dev/provider-freighter';
 import { versions as gemwallet } from '@rango-dev/provider-gemwallet';
 import { versions as keplr } from '@rango-dev/provider-keplr';
 import { versions as leap } from '@rango-dev/provider-leap-cosmos';
@@ -31,11 +32,12 @@ import { versions as solflare } from '@rango-dev/provider-solflare';
 import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import { versions as tomo } from '@rango-dev/provider-tomo';
-import * as tonconnect from '@rango-dev/provider-tonconnect';
+import { versions as tonconnect } from '@rango-dev/provider-tonconnect';
 import * as trezor from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
+import { versions as vultisig } from '@rango-dev/provider-vultisig';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import { versions as xverse } from '@rango-dev/provider-xverse';
@@ -85,23 +87,12 @@ export const allProviders = (
     }
   }
 
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.TON_CONNECT,
-      name: 'tonconnect',
-    })
-  ) {
-    if (!!options?.tonConnect?.manifestUrl) {
-      tonconnect.init(options.tonConnect);
-    }
-  }
-
   return [
     lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
     lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(tonconnect)),
+    tonconnect,
     keplr,
     phantom,
     ready,
@@ -117,6 +108,7 @@ export const allProviders = (
     coin98,
     coinbase,
     cosmostation,
+    freighter,
     exodus,
     mathwallet,
     okx,
@@ -131,6 +123,7 @@ export const allProviders = (
     solflare,
     slush,
     unisat,
+    vultisig,
     gemwallet,
   ];
 };

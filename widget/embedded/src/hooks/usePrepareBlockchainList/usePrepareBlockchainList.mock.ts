@@ -95,6 +95,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://etherscan.io/address/{wallet}',
       transactionUrl: 'https://etherscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://etherscan.io/token/{address}',
     },
   },
   {
@@ -129,6 +130,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://bscscan.com/address/{wallet}',
       transactionUrl: 'https://bscscan.com/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://bscscan.com/token/{address}',
     },
   },
   {
@@ -163,6 +165,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://arbiscan.io/address/{wallet}',
       transactionUrl: 'https://arbiscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://arbiscan.io/token/{address}',
     },
   },
   {
@@ -197,6 +200,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://polygonscan.com/address/{wallet}',
       transactionUrl: 'https://polygonscan.com/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://polygonscan.com/token/{address}',
     },
   },
   {
@@ -231,6 +235,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://explorer.zksync.io/address/{wallet}',
       transactionUrl: 'https://explorer.zksync.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://explorer.zksync.io/token/{address}',
     },
   },
   {
@@ -264,6 +269,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://starkscan.co'],
       addressUrl: 'https://starkscan.co/contract/{wallet}',
       transactionUrl: 'https://starkscan.co/tx/{txHash}',
+      tokenUrl: 'https://voyager.online/token/{address}',
     },
   },
   {
@@ -298,6 +304,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://optimistic.etherscan.io/address/{wallet}',
       transactionUrl: 'https://optimistic.etherscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://optimistic.etherscan.io/token/{address}',
     },
   },
   {
@@ -332,6 +339,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://snowtrace.io/address/{wallet}',
       transactionUrl: 'https://snowtrace.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://snowtrace.dev/token/{address}',
     },
   },
   {
@@ -366,6 +374,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://zkevm.polygonscan.com/address/{wallet}',
       transactionUrl: 'https://zkevm.polygonscan.com/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://zkevm.polygonscan.com/token/{address}',
     },
   },
   {
@@ -400,6 +409,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://explorer.linea.build/address/{wallet}',
       transactionUrl: 'https://explorer.linea.build/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://lineascan.build/token/{address}',
     },
   },
   {
@@ -434,6 +444,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://tronscan.org/#/address/{wallet}',
       transactionUrl: 'https://tronscan.org/#/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://tronscan.org/#/token20/{address}',
     },
   },
   {
@@ -462,6 +473,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.blockchain.com/btc/'],
       addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
       transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+      tokenUrl: null,
     },
   },
   {
@@ -539,6 +551,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.04,
       },
+      tokenUrl: 'https://www.mintscan.io/cosmos/assets/{address}',
     },
   },
   {
@@ -623,6 +636,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.04,
       },
+      tokenUrl: 'https://www.mintscan.io/osmosis/assets/{address}',
     },
   },
   {
@@ -700,6 +714,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.05,
       },
+      tokenUrl: 'https://www.mintscan.io/neutron/assets/{address}',
     },
   },
   {
@@ -777,6 +792,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.03,
       },
+      tokenUrl: 'https://www.mintscan.io/noble/assets/{address}',
     },
   },
   {
@@ -803,6 +819,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.blockchain.com/btc/'],
       addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
       transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+      tokenUrl: 'https://solscan.io/token/{address}',
     },
   },
   {
@@ -837,6 +854,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://cronoscan.com/address/{wallet}',
       transactionUrl: 'https://cronoscan.com/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://cronoscan.com/token/{address}',
     },
   },
   {
@@ -892,6 +910,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://explorer.mainnet.aurora.dev/address/{wallet}',
       transactionUrl: 'https://explorer.mainnet.aurora.dev/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: 'https://explorer.mainnet.aurora.dev/token/{address}',
     },
   },
   {
@@ -968,6 +987,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://bobascan.com//address/{wallet}',
       transactionUrl: 'https://bobascan.com//tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1002,6 +1022,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://moonbeam.moonscan.io/address/{wallet}',
       transactionUrl: 'https://moonbeam.moonscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1036,6 +1057,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://moonriver.moonscan.io/address/{wallet}',
       transactionUrl: 'https://moonriver.moonscan.io/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1070,6 +1092,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://www.oklink.com/en/okc/address/{wallet}',
       transactionUrl: 'https://www.oklink.com/en/okc/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1104,6 +1127,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://blockexplorer.avax.boba.network/address/{wallet}',
       transactionUrl: 'https://blockexplorer.avax.boba.network/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1130,6 +1154,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.blockchain.com/btc/'],
       addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
       transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+      tokenUrl: null,
     },
   },
   {
@@ -1156,6 +1181,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       blockExplorerUrls: ['https://www.blockchain.com/btc/'],
       addressUrl: 'https://www.blockchain.com/btc/address/{wallet}',
       transactionUrl: 'https://www.blockchain.com/btc/tx/{txHash}',
+      tokenUrl: null,
     },
   },
   {
@@ -1190,6 +1216,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       addressUrl: 'https://hecoinfo.com/address/{wallet}',
       transactionUrl: 'https://hecoinfo.com/tx/{txHash}',
       enableGasV2: true,
+      tokenUrl: null,
     },
   },
   {
@@ -1267,6 +1294,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 1,
         high: 1,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1344,6 +1372,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.03,
         high: 0.04,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1421,6 +1450,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.03,
         high: 0.035,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1494,6 +1524,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
       explorerUrlToTx: 'https://cosmoscan.io/tx/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -1567,6 +1598,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
       explorerUrlToTx: 'https://www.mintscan.io/comdex/txs/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -1644,6 +1676,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.04,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1721,6 +1754,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.3,
         high: 0.4,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1806,6 +1840,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 1,
         high: 1,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -1883,6 +1918,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.0025,
         high: 0.004,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2002,6 +2038,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.0025,
         high: 0.04,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2079,6 +2116,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.0025,
         high: 0.01,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2156,6 +2194,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.015,
         high: 0.15,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2229,6 +2268,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
       explorerUrlToTx: 'https://explorebitsong.com/transactions/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -2306,6 +2346,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.0025,
         high: 0.004,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2379,6 +2420,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer'],
       explorerUrlToTx: 'https://www.mintscan.io/ki-chain/txs/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -2456,6 +2498,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.04,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2533,6 +2576,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 7,
         high: 9,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2610,6 +2654,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.025,
         high: 0.03,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2687,6 +2732,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.25,
         high: 0.4,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2764,6 +2810,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 500000000,
         high: 500000000,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2841,6 +2888,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.25,
         high: 0.3,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -2914,6 +2962,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
       explorerUrlToTx: 'https://www.mintscan.io/konstellation/txs/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -2991,6 +3040,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 2,
         high: 3,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -3064,6 +3114,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx'],
       explorerUrlToTx: 'https://www.mintscan.io/bitcanna/txs/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -3141,6 +3192,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
         average: 0.06,
         high: 0.1,
       },
+      tokenUrl: null,
     },
   },
   {
@@ -3214,6 +3266,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
       explorerUrlToTx: 'https://explorer.desmos.network/transactions/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
   {
@@ -3287,6 +3340,7 @@ export const sampleBlockchains: BlockchainMeta[] = [
       features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
       explorerUrlToTx: 'https://www.mintscan.io/lum/txs/{txHash}',
       gasPriceStep: null,
+      tokenUrl: null,
     },
   },
 ];

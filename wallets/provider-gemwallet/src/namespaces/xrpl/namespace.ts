@@ -50,6 +50,7 @@ const accountLines = new ActionBuilder<XRPLActions, 'accountLines'>(
     });
 
     await client.disconnect();
+
     return response.result.lines;
   })
   .build();

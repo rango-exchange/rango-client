@@ -32,7 +32,7 @@ const DEFAULT_CONFIG: WidgetConfig = {
   },
   tonConnect: {
     manifestUrl:
-      'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/manifests/tonconnect-manifest.json',
+      'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/manifests/tonconnect/manifest.json',
   },
 };
 

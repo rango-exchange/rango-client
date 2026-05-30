@@ -216,6 +216,7 @@ export function createEvmBlockchain(): EvmBlockchainMeta {
       addressUrl: faker.internet.url(),
       transactionUrl: faker.internet.url(),
       enableGasV2: faker.datatype.boolean(),
+      tokenUrl: faker.internet.url(),
     },
   };
 }

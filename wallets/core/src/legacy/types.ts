@@ -69,10 +69,12 @@ export enum Networks {
   KONSTELLATION = 'KONSTELLATION',
   UMEE = 'UMEE',
   STARKNET = 'STARKNET',
+  STELLAR = 'STELLAR',
   TON = 'TON',
   BASE = 'BASE',
   SUI = 'SUI',
   XRPL = 'XRPL',
+  ZCASH = 'ZCASH',
 
   // Using instead of null
   Unknown = 'Unkown',

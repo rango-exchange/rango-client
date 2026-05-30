@@ -39,6 +39,7 @@ import type {
   PendingSwapStep,
   SignerErrorCode,
   StepStatus,
+  SwapStepStatus,
 } from 'rango-types';
 
 import { warn } from '@rango-dev/logging-core';
@@ -55,6 +56,7 @@ import {
   TransactionType,
 } from 'rango-types';
 
+import { matchesPrerequisiteKey } from './actions/checkPrerequisites/utils';
 import {
   DEFAULT_ERROR_CODE,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
@@ -170,6 +172,7 @@ export const getCurrentStepTx = (
     transferTransaction,
     starknetApprovalTransaction,
     starknetTransaction,
+    stellarTransaction,
     tronApprovalTransaction,
     tronTransaction,
     tonTransaction,
@@ -184,6 +187,7 @@ export const getCurrentStepTx = (
     transferTransaction ||
     starknetApprovalTransaction ||
     starknetTransaction ||
+    stellarTransaction ||
     tronApprovalTransaction ||
     tronTransaction ||
     tonTransaction ||
@@ -784,6 +788,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
+    swap.wallets[step.stellarTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
@@ -1065,6 +1070,30 @@ export function isRequiredWalletConnected(
     return address.toLocaleLowerCase() === accountAddress.toLocaleLowerCase();
   });
   return { ok: matched, reason: 'account_miss_match' };
+}
+
+export function updateStorageWithPrerequisiteResult(
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  prerequisiteResult: SwapStepStatus['prerequisiteResults'][number]
+) {
+  const { getStorage, setStorage } = actions;
+  const swap = getStorage().swapDetails;
+  const currentStep = getCurrentStep(swap)!;
+
+  const index = currentStep.prerequisiteResults.findIndex((existing) =>
+    matchesPrerequisiteKey(existing, prerequisiteResult)
+  );
+
+  if (index >= 0) {
+    currentStep.prerequisiteResults[index] = prerequisiteResult;
+  } else {
+    currentStep.prerequisiteResults.push(prerequisiteResult);
+  }
+
+  setStorage({
+    ...getStorage(),
+    swapDetails: swap,
+  });
 }
 
 export function updateStorageOnSuccessfulSign(

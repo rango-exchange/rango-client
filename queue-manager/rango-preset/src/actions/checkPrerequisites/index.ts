@@ -1,0 +1,1 @@
+export { checkPrerequisites } from './checkPrerequisites';

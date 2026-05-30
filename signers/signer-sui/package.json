@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-sui",
-  "version": "0.9.1",
+  "version": "0.9.2-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.1.98"
+    "rango-types": "^0.5.0"
   },
   "devDependencies": {
     "@mysten/sui": "^1.21.2",
