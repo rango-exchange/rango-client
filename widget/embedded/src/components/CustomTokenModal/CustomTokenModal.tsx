@@ -54,7 +54,17 @@ export function CustomTokenModal(props: PropTypes) {
             {token.symbol}
           </TokenSymbolText>
           {token.symbol.length > MAX_SYMBOL_LENGTH_THRESHOLD && (
-            <Tooltip content={token.symbol} container={getContainer()}>
+            <Tooltip
+              styles={{
+                content: {
+                  maxWidth: 250,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                },
+              }}
+              content={token.symbol}
+              container={getContainer()}>
               <InfoIcon size={12} color="gray" />
             </Tooltip>
           )}

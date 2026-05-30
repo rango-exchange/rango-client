@@ -21,7 +21,7 @@ export function useIsTruncated(
     } else {
       setIsTruncated(false);
     }
-  }, [content, ref.current]);
+  }, [content]);
 
   return isTruncated;
 }
