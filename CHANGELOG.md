@@ -1,3 +1,28 @@
+## Widget [0.57.0] (2026-05-31)
+_includes `@rango-dev/widget-embedded@0.60.0`_
+
+### Bug Fixes
+
+* add prerequisiteResults to calculatePendingSwap to match the type changes ([1fcd496](https://github.com/rango-exchange/rango-client/commit/1fcd49655f15b8dc823f2cd0134b93a5c41eca00))
+* changed tonconnect manifest url to use the manifest in the assets repo ([99726dd](https://github.com/rango-exchange/rango-client/commit/99726ddedf7f25673af7f2559fa2dd4d373f7d42))
+* **ci:** add workspaces list hash to prepare action cache key ([ad567bf](https://github.com/rango-exchange/rango-client/commit/ad567bf4cc5a183e8e7ff81470a94a8795d40b5f))
+* eliminate long dependency ([4da6a92](https://github.com/rango-exchange/rango-client/commit/4da6a926c68bdf3cdb68e9e8a6549a0138c7452f))
+* fix build ([f83d9c9](https://github.com/rango-exchange/rango-client/commit/f83d9c9c8d23aba3c428e971939992ae7e4b15d9))
+
+
+### Features
+
+* add check prerequisites to rango preset ([30adf51](https://github.com/rango-exchange/rango-client/commit/30adf5130f72ec5071768f5a63486afdc563090e))
+* add stellar namespace to wallets core ([c72f4d8](https://github.com/rango-exchange/rango-client/commit/c72f4d833703e11ef082e628f13cfa25fcf72966))
+* add zcash chain to utxo namespace and make formatAccountsToCAIP reusable ([4e67ee5](https://github.com/rango-exchange/rango-client/commit/4e67ee5ea539b841a42e7a0fae220fa5ece482c9))
+* integrate freighter wallet ([8d39b94](https://github.com/rango-exchange/rango-client/commit/8d39b947e073ed16b2a4f09d1bd7e7b1e3df2047))
+* integrate stellar blockchain to rango preset ([6ba6f24](https://github.com/rango-exchange/rango-client/commit/6ba6f2470fdfc92af6d7f7faa1fd645a823cbf29))
+* integrate vultisig wallet ([8f1144a](https://github.com/rango-exchange/rango-client/commit/8f1144a2b90dd8ecf58584511fe066bd08ac7bbc))
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+* track confirm button click by configuration type ([97b4cf6](https://github.com/rango-exchange/rango-client/commit/97b4cf64ce79f37ac577e89fde46a7def6969182))
+
+
+
 ## Widget [0.56.0] (2026-05-02)
 _includes `@rango-dev/widget-embedded@0.59.1`_
 
