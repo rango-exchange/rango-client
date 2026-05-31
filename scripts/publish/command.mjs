@@ -17,6 +17,11 @@ import { update } from './package.mjs';
 import { build } from './build.mjs';
 import { should } from '../common/features.mjs';
 import { bumpClientAndRootVersionsAndGenerateRootChangelog } from './version-log.mjs';
+import {
+  upgradeAllDependents,
+  snapshotOriginalVersions,
+  revertDependentsForFailedPackages,
+} from './upgrade.mjs';
 
 async function run() {
   logAsSection('::group::🔍 Checking environments...');
@@ -52,16 +57,13 @@ async function run() {
 
   console.log('Next state:');
   console.table(
-    pkgs.map((pkg) => {
-      return {
-        name: pkg.name,
-        ...state.getState(pkg.name),
-      };
-    })
+    pkgs.map((pkg) => ({
+      name: pkg.name,
+      ...state.getState(pkg.name),
+    }))
   );
 
   throwIfUnableToProceed(pkgStates);
-
   console.log('::endgroup::');
 
   // 2. Generate root changelog and bump widget, app and root versions.
@@ -69,20 +71,37 @@ async function run() {
   await bumpClientAndRootVersionsAndGenerateRootChangelog();
   console.log('::endgroup::');
 
-  // 3. Build all packacges
-  /**
-   * IMPORTANT NOTE:
-   * We are all the libs in parallel, parcel has a limitation on running `parcel` instances.
-   * So if you are trying to build multiple parcel apps it goes through some erros. here, for publishing libs
-   * We are using esbuild so don't need to do anything.
-   * but if we need, the potential solution is filtering parcel apps and run them secquentially.
-   */
+  // 3. Upgrade dependents BEFORE building.
+  //
+  // Critical ordering fix: Nx must see the bumped dependency versions in
+  // package.json files before it starts resolving the build graph. Previously,
+  // upgradeDependents ran inside publishTask (after the build), so Nx was
+  // resolving stale versions and failing.
+  //
+  // We snapshot the *original* (pre-bump) version of each package so that if
+  // a publish fails later, we can surgically revert only the entries for the
+  // failed packages inside each dependent's package.json — without touching
+  // the entries that belong to packages that published successfully.
+  logAsSection('::group::⬆️  Upgrading dependents before build...');
 
+  // Snapshot original versions BEFORE the upgrade rewrites package.json files.
+  // `pkgs` here already has the bumped version from state.list(), so we read
+  // from `libPkgs` which still holds the original version strings.
+  const originalVersions = snapshotOriginalVersions(libPkgs);
+
+  await upgradeAllDependents(pkgs);
+  console.log('::endgroup::');
+
+  // 4. Build all packages (Nx now sees the correct, up-to-date versions).
+  //
+  // NOTE: We build all libs in parallel. Parcel has a limitation on concurrent
+  // instances, but for publishing we use esbuild, so this is not a concern.
+  // If a Parcel app is added later, filter it out and run it sequentially.
   logAsSection(`::group::🔨 Start building...`);
   await build(pkgs);
   console.log('::endgroup::');
 
-  // 4. Publish
+  // 5. Publish
   logAsSection(`::group::🚀 Start publishing...`);
   try {
     await tryPublish(pkgs, {
@@ -92,30 +111,49 @@ async function run() {
     console.error(e);
 
     /** @type {import('../common/typedefs.mjs').Package | undefined} */
-    const pkg = e.cause.pkg;
-    if (!pkg) {
+    const failedPkg = e.cause?.pkg;
+
+    if (!failedPkg) {
       console.error(
         "🚨 The error hasn't thrown `pkg`. Here is more information to debug"
       );
       console.log(state.toJSON());
     } else {
-      // Ignoring error since it's possible to file hasn't changed yet.
-      await addPkgFileChangesToStage(pkg).catch(console.warn);
+      // Stage whatever partial file changes exist for the failed package.
+      await addPkgFileChangesToStage(failedPkg).catch(console.warn);
+
+      // Determine which packages did NOT make it to npm.
+      // A package with npmVersion in state was published successfully.
+      const failedPkgs = pkgs.filter(
+        (pkg) => !state.getState(pkg.name, 'npmVersion')
+      );
+
+      // Surgically revert dependency entries for failed packages across the
+      // entire workspace. Dependents that reference multiple packages from this
+      // publish run will only have the failed packages' entries reverted —
+      // entries for successfully published packages are left at their new version.
+      if (failedPkgs.length > 0) {
+        console.warn(
+          `⏪ Reverting ${failedPkgs.length} failed package(s) from dependents: ` +
+            failedPkgs.map((p) => p.name).join(', ')
+        );
+        await revertDependentsForFailedPackages(
+          failedPkgs,
+          originalVersions
+        ).catch(console.warn);
+      }
     }
   }
 
   console.log('::endgroup::');
 
-  // 5. Tag and Push
-
-  /**
-   * Our final list will includes only packages that published on NPM.
-   * If a package failed on making changelog, github release, ...
-   * We are considering it's published and should handle those cases manually.
-   */
+  // 6. Tag and Push.
+  //
+  // Only include packages that were successfully published to npm.
+  // If a package failed mid-way (changelog, github release, etc.) we still
+  // treat it as published and handle those edge cases manually.
   const listPkgsForTag = state.list().filter((pkg) => {
-    const isPublishedOnNpm = !!state.getState(pkg.name, 'npmVersion');
-    return isPublishedOnNpm;
+    return !!state.getState(pkg.name, 'npmVersion');
   });
 
   logAsSection(
@@ -125,11 +163,8 @@ async function run() {
   if (listPkgsForTag.length > 0) {
     performance.mark(`start-publish-tagging`);
 
-    /**
-     * We don't need to tag and mention them while publishing, they have a separate github action.
-     * But we updated their package json to use the latest version of published libs
-     * So we should includes them in our commit.
-     */
+    // Client packages had their package.json updated to reference the new
+    // lib versions — include them in the commit even though they're not tagged.
     await sequentiallyRun(
       clientPkgs.map(
         (pkg) => () => addFileToStage(`${pkg.location}`).catch(console.warn)
@@ -139,20 +174,20 @@ async function run() {
     await publishCommitAndTags(listPkgsForTag);
     await push();
     performance.mark(`end-publish-tagging`);
-    const duration_build = performance.measure(
+    const duration_tagging = performance.measure(
       `publish-tagging`,
       `start-publish-tagging`,
       `end-publish-tagging`
     ).duration;
-    console.log(`Tagged. ${duration_build}ms`);
+    console.log(`Tagged. ${duration_tagging}ms`);
   } else {
     console.log('Skipped.');
   }
 
   console.log('::endgroup::');
 
-  // 6. Making github release
-  // NOTE: If any error happens in this step we are don't bail out the process and will continue. A warning will be shown.
+  // 7. Making github release.
+  // NOTE: Errors here are non-fatal — we log a warning and continue.
   console.log('::group::🐙 Github release');
   if (should('generateChangelog')) {
     if (listPkgsForTag.length > 0) {
@@ -169,12 +204,12 @@ async function run() {
       await Promise.all(tasks);
 
       performance.mark(`end-publish-gh-release`);
-      const duration_build = performance.measure(
+      const duration_release = performance.measure(
         `publish-gh-release`,
         `start-publish-gh-release`,
         `end-publish-gh-release`
       ).duration;
-      console.log(`Finished. ${duration_build}ms`);
+      console.log(`Finished. ${duration_release}ms`);
     } else {
       console.log('Skipped.');
     }
@@ -183,7 +218,7 @@ async function run() {
   }
   console.log('::endgroup::');
 
-  // 6. Report
+  // 8. Report
   console.log('::group::📊 Report');
   console.table(
     pkgs.map((pkg) => ({
