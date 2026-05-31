@@ -1,3 +1,7 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-safepal@0.60.1...provider-safepal@0.61.0) (2026-05-31)
+
+
+
 ## [0.60.1](https://github.com/rango-exchange/rango-client/compare/provider-safepal@0.60.0...provider-safepal@0.60.1) (2026-05-02)
 
 

@@ -1,3 +1,13 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.53.1...provider-walletconnect-2@0.54.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* eliminate long dependency ([4da6a92](https://github.com/rango-exchange/rango-client/commit/4da6a926c68bdf3cdb68e9e8a6549a0138c7452f))
+* fix build ([f83d9c9](https://github.com/rango-exchange/rango-client/commit/f83d9c9c8d23aba3c428e971939992ae7e4b15d9))
+
+
+
 ## [0.53.1](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.53.0...provider-walletconnect-2@0.53.1) (2026-05-02)
 
 

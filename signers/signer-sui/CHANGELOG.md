@@ -1,3 +1,7 @@
+# [0.10.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.9.1...signer-sui@0.10.0) (2026-05-31)
+
+
+
 ## [0.9.1](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.9.0...signer-sui@0.9.1) (2026-05-02)
 
 

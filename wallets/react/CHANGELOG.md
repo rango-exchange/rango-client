@@ -1,3 +1,19 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.45.1...wallets-react@0.46.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* fix build ([f83d9c9](https://github.com/rango-exchange/rango-client/commit/f83d9c9c8d23aba3c428e971939992ae7e4b15d9))
+
+
+### Features
+
+* add stellar namespace to wallets core ([c72f4d8](https://github.com/rango-exchange/rango-client/commit/c72f4d833703e11ef082e628f13cfa25fcf72966))
+* add zcash chain to utxo namespace and make formatAccountsToCAIP reusable ([4e67ee5](https://github.com/rango-exchange/rango-client/commit/4e67ee5ea539b841a42e7a0fae220fa5ece482c9))
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+
+
+
 ## [0.45.1](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.45.0...wallets-react@0.45.1) (2026-05-02)
 
 

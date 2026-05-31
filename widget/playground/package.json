@@ -26,11 +26,11 @@
     "vm-browserify": "^1.1.2"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.61.2-next.6",
-    "@rango-dev/ui": "^0.62.2-next.5",
-    "@rango-dev/wallets-react": "^0.45.2-next.5",
-    "@rango-dev/wallets-shared": "^0.59.2-next.5",
-    "@rango-dev/widget-embedded": "^0.59.2-next.6",
+    "@rango-dev/provider-all": "^0.62.0",
+    "@rango-dev/ui": "^0.63.0",
+    "@rango-dev/wallets-react": "^0.46.0",
+    "@rango-dev/wallets-shared": "^0.60.0",
+    "@rango-dev/widget-embedded": "^0.60.0",
     "rango-sdk": "^0.5.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",

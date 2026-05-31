@@ -1,3 +1,12 @@
+# [0.60.0](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.59.1...provider-keplr@0.60.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* eliminate long dependency ([4da6a92](https://github.com/rango-exchange/rango-client/commit/4da6a926c68bdf3cdb68e9e8a6549a0138c7452f))
+
+
+
 ## [0.59.1](https://github.com/rango-exchange/rango-client/compare/provider-keplr@0.59.0...provider-keplr@0.59.1) (2026-05-02)
 
 

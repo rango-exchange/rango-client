@@ -1,3 +1,18 @@
+# [0.60.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.59.1...widget-embedded@0.60.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* changed tonconnect manifest url to use the manifest in the assets repo ([99726dd](https://github.com/rango-exchange/rango-client/commit/99726ddedf7f25673af7f2559fa2dd4d373f7d42))
+* fix build ([f83d9c9](https://github.com/rango-exchange/rango-client/commit/f83d9c9c8d23aba3c428e971939992ae7e4b15d9))
+
+
+### Features
+
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+
+
+
 ## [0.59.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.59.0...widget-embedded@0.59.1) (2026-05-02)
 
 

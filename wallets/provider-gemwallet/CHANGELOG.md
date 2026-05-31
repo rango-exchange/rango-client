@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-gemwallet@0.2.1...provider-gemwallet@0.3.0) (2026-05-31)
+
+
+### Features
+
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+
+
+
 ## [0.2.1](https://github.com/rango-exchange/rango-client/compare/provider-gemwallet@0.2.0...provider-gemwallet@0.2.1) (2026-05-02)
 
 

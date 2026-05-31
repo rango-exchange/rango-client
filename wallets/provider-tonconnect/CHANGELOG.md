@@ -1,3 +1,12 @@
+# [0.22.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.21.1...provider-tonconnect@0.22.0) (2026-05-31)
+
+
+### Features
+
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+
+
+
 ## [0.21.1](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.21.0...provider-tonconnect@0.21.1) (2026-05-02)
 
 
