@@ -1,3 +1,12 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.60.1...provider-okx@0.61.0) (2026-05-31)
+
+
+### Features
+
+* add zcash chain to utxo namespace and make formatAccountsToCAIP reusable ([4e67ee5](https://github.com/rango-exchange/rango-client/commit/4e67ee5ea539b841a42e7a0fae220fa5ece482c9))
+
+
+
 ## [0.60.1](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.60.0...provider-okx@0.60.1) (2026-05-02)
 
 

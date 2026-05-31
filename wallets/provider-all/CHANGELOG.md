@@ -1,3 +1,14 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.61.1...provider-all@0.62.0) (2026-05-31)
+
+
+### Features
+
+* integrate freighter wallet ([8d39b94](https://github.com/rango-exchange/rango-client/commit/8d39b947e073ed16b2a4f09d1bd7e7b1e3df2047))
+* integrate vultisig wallet ([8f1144a](https://github.com/rango-exchange/rango-client/commit/8f1144a2b90dd8ecf58584511fe066bd08ac7bbc))
+* migrated tonconnect to the hub ([e525841](https://github.com/rango-exchange/rango-client/commit/e525841665ddeaa4bf72620ede54ad5e7e1328e6))
+
+
+
 ## [0.61.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.61.0...provider-all@0.61.1) (2026-05-02)
 
 

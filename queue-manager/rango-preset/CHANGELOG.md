@@ -1,3 +1,18 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.61.1...queue-manager-rango-preset@0.62.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* add prerequisiteResults to calculatePendingSwap to match the type changes ([1fcd496](https://github.com/rango-exchange/rango-client/commit/1fcd49655f15b8dc823f2cd0134b93a5c41eca00))
+
+
+### Features
+
+* add check prerequisites to rango preset ([30adf51](https://github.com/rango-exchange/rango-client/commit/30adf5130f72ec5071768f5a63486afdc563090e))
+* integrate stellar blockchain to rango preset ([6ba6f24](https://github.com/rango-exchange/rango-client/commit/6ba6f2470fdfc92af6d7f7faa1fd645a823cbf29))
+
+
+
 ## [0.61.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.61.0...queue-manager-rango-preset@0.61.1) (2026-05-02)
 
 

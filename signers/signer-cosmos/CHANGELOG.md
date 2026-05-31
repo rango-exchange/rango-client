@@ -1,3 +1,12 @@
+# [0.40.0](https://github.com/rango-exchange/rango-client/compare/signer-cosmos@0.39.1...signer-cosmos@0.40.0) (2026-05-31)
+
+
+### Bug Fixes
+
+* eliminate long dependency ([4da6a92](https://github.com/rango-exchange/rango-client/commit/4da6a926c68bdf3cdb68e9e8a6549a0138c7452f))
+
+
+
 ## [0.39.1](https://github.com/rango-exchange/rango-client/compare/signer-cosmos@0.39.0...signer-cosmos@0.39.1) (2026-05-02)
 
 
