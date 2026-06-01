@@ -1,6 +1,6 @@
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { Cell } from '@ton/core';
+import { Address, Cell } from '@ton/core';
 import { SignerError } from 'rango-types';
 
 export class DefaultTonSigner implements GenericSigner<TonTransaction> {
@@ -14,7 +14,17 @@ export class DefaultTonSigner implements GenericSigner<TonTransaction> {
   }
 
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
-    const { type, blockChain, ...transactionObjectForSign } = tx;
+    const { type, blockChain, from, messages, ...rest } = tx;
+
+    const transactionObjectForSign = {
+      ...rest,
+      ...(from && { from: Address.parse(from).toRawString() }),
+      messages: messages.map(({ stateInit, payload, ...msg }) => ({
+        ...msg,
+        ...(stateInit != null && { stateInit }),
+        ...(payload != null && { payload }),
+      })),
+    };
 
     const { result } = await this.provider.send({
       method: 'sendTransaction',
