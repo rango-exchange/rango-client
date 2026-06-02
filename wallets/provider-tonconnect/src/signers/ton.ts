@@ -1,7 +1,7 @@
 import type { TonConnectUI } from '@tonconnect/ui';
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { Cell } from '@ton/core';
+import { Address, Cell } from '@ton/core';
 import { CHAIN } from '@tonconnect/ui';
 import { SignerError } from 'rango-types';
 
@@ -17,9 +17,15 @@ export class CustomTonSigner implements GenericSigner<TonTransaction> {
   }
 
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
-    const { blockChain, type, ...txObjectForSign } = tx;
+    const { blockChain, type, from, messages, ...rest } = tx;
     const result = await this.provider.sendTransaction({
-      ...txObjectForSign,
+      ...rest,
+      ...(from && { from: Address.parse(from).toRawString() }),
+      messages: messages.map(({ stateInit, payload, ...msg }) => ({
+        ...msg,
+        ...(stateInit != null && { stateInit }),
+        ...(payload != null && { payload }),
+      })),
       network: CHAIN.MAINNET,
     });
 
