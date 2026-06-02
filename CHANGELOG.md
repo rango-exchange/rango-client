@@ -1,3 +1,12 @@
+## Widget [0.58.0] (2026-06-02)
+_includes `@rango-dev/widget-embedded@0.60.1`_
+
+### Bug Fixes
+
+* remove null values from ton signer data and use raw address format ([9ca3f69](https://github.com/rango-exchange/rango-client/commit/9ca3f691e2a6bfe83d2377a565fd69f5c2b8ae45))
+
+
+
 ## Widget [0.57.0] (2026-05-31)
 _includes `@rango-dev/widget-embedded@0.60.0`_
 
