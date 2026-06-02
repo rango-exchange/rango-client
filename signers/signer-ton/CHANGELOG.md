@@ -1,3 +1,12 @@
+## [0.28.1](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.28.0...signer-ton@0.28.1) (2026-06-02)
+
+
+### Bug Fixes
+
+* remove null values from ton signer data and use raw address format ([9ca3f69](https://github.com/rango-exchange/rango-client/commit/9ca3f691e2a6bfe83d2377a565fd69f5c2b8ae45))
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.27.1...signer-ton@0.28.0) (2026-05-31)
 
 
