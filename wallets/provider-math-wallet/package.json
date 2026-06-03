@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-math-wallet",
-  "version": "0.61.0",
+  "version": "0.61.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.42.0",
     "@rango-dev/signer-solana": "^0.48.0",
-    "@rango-dev/wallets-core": "^0.59.0",
-    "@rango-dev/wallets-shared": "^0.60.0",
+    "@rango-dev/wallets-core": "^0.59.1-next.0",
+    "@rango-dev/wallets-shared": "^0.60.1-next.0",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
