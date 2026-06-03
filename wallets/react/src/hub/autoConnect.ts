@@ -14,7 +14,6 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { Provider } from '@rango-dev/wallets-core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
-import { cosmosBlockchains } from 'rango-types';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
@@ -23,7 +22,6 @@ import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
   convertNamespaceNetworkToEvmChainId,
-  isCosmosNamespace,
   isEvmNamespace,
 } from './utils.js';
 
@@ -86,20 +84,6 @@ async function eagerConnect(
         >;
         if (isEvmNamespace(namespace)) {
           connectNamespacePromise = async () => namespace.connect(chain);
-        } else if (isCosmosNamespace(namespace)) {
-          const cosmosBlockChains = cosmosBlockchains(
-            params.allBlockChains || []
-          ).filter((chain) => !!chain.chainId);
-          connectNamespacePromise = async () => {
-            return namespace.connect({
-              chainIds: cosmosBlockChains
-                .filter((chain) => chain.info && !chain.info.experimental)
-                ?.map((chain) => chain.chainId!),
-              customChainIds: cosmosBlockChains
-                .filter((chain) => chain.info?.experimental)
-                .map((chain) => chain.chainId!),
-            });
-          };
         } else {
           connectNamespacePromise = async () => namespace.connect();
         }

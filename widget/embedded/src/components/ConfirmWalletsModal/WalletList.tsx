@@ -1,11 +1,9 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet } from '../../types';
 import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import { i18n } from '@lingui/core';
 import { warn } from '@rango-dev/logging-core';
 import {
-  Divider,
   makeInfo,
   SelectableWallet,
   Typography,
@@ -13,42 +11,24 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
-import { useWallets } from '../..';
-import { WIDGET_UI_ID } from '../../constants';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
-import { getBlockchainDisplayNameFor } from '../../utils/meta';
-import {
-  getAddress,
-  getConciseAddress,
-  isExperimentalChain,
-} from '../../utils/wallets';
-import { WatermarkedModal } from '../common/WatermarkedModal';
+import { getAddress, getConciseAddress } from '../../utils/wallets';
 import { StatefulConnectModal } from '../StatefulConnectModal';
-import { ExperimentalChain } from '../WalletStatefulConnect';
-import { ExperimentalChainStatus } from '../WalletStatefulConnect/ExperimentalChainStatus';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
 
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
-const TIME_TO_CLOSE_MODAL = 3_000;
 
 export function WalletList(props: PropTypes) {
   const { chain, quoteChains, isSelected, selectWallet, limit, onShowMore } =
     props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const { blockchains, connectedWallets } = useAppStore();
+  const { connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<ExtendedModalWalletInfo>();
-  const [experimentalChainWallet, setExperimentalChainWallet] =
-    useState<Wallet | null>(null);
-  const [showExperimentalChainModal, setShowExperimentalChainModal] =
-    useState(false);
-  const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
-    useState<'in-progress' | 'completed' | 'rejected' | null>(null);
-  const { suggestAndConnect } = useWallets();
   const { list } = useWalletList({
     chain,
   });
@@ -56,45 +36,6 @@ export function WalletList(props: PropTypes) {
   const [sortedList, setSortedList] = useState<ExtendedModalWalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
-
-  const addExperimentalChain = async (wallet: Wallet) => {
-    setShowExperimentalChainModal(false);
-    setAddingExperimentalChainStatus('in-progress');
-    try {
-      // 1. Finding wallet with namespaces info.
-      const walletWithNamespace = list.find(
-        (wallet) => wallet.type === wallet.type
-      );
-
-      /*
-       * 2. Getting namespaces info.
-       * Legacy and hub have different structure to handle each situation.
-       */
-      const needsNamespace = walletWithNamespace?.isHub
-        ? walletWithNamespace.properties?.find(
-            (item) => item.name === 'namespaces'
-          )?.value
-        : walletWithNamespace?.needsNamespace;
-
-      // 3. Finding target namespace.
-      const allBlockChains = blockchains();
-      const namespace = needsNamespace?.data.find((ns) =>
-        ns
-          .getSupportedChains(allBlockChains)
-          .some((chain) => chain.name === wallet.chain)
-      );
-      if (!namespace) {
-        throw new Error('Requested chain is not supported');
-      }
-      await suggestAndConnect(wallet.walletType, {
-        namespace: namespace.value,
-        network: wallet.chain,
-      });
-      setAddingExperimentalChainStatus('completed');
-    } catch {
-      setAddingExperimentalChainStatus('rejected');
-    }
-  };
 
   useEffect(() => {
     setSortedList((sortedList) => {
@@ -115,29 +56,6 @@ export function WalletList(props: PropTypes) {
     });
   }, [JSON.stringify(list)]);
 
-  const modalContainer = document.getElementById(
-    WIDGET_UI_ID.SWAP_BOX_ID
-  ) as HTMLDivElement;
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-    if (
-      addingExperimentalChainStatus === 'completed' ||
-      addingExperimentalChainStatus === 'rejected'
-    ) {
-      timeout = setTimeout(
-        () => setAddingExperimentalChainStatus(null),
-        TIME_TO_CLOSE_MODAL
-      );
-    }
-
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [addingExperimentalChainStatus]);
-
   return (
     <>
       {sortedList.slice(0, limit).map((wallet) => {
@@ -155,35 +73,11 @@ export function WalletList(props: PropTypes) {
         const isConnectedButDifferentThanTargetNamespace =
           isConnected && !!wallet.needsNamespace && !conciseAddress;
 
-        const experimentalChain = isExperimentalChain(blockchains(), chain);
-
-        const experimentalChainNotAdded = !connectedWallets.find(
-          (connectedWallet) =>
-            connectedWallet.walletType === wallet.type &&
-            connectedWallet.chain === chain
-        );
-
-        const couldAddExperimentalChain =
-          experimentalChain &&
-          experimentalChainNotAdded &&
-          wallet.state === WalletState.CONNECTED;
-
         const onSelectableWalletClick = async () => {
           const isDisconnected = wallet.state === WalletState.DISCONNECTED;
 
-          if (
-            isDisconnected ||
-            (isConnectedButDifferentThanTargetNamespace &&
-              !couldAddExperimentalChain)
-          ) {
+          if (isDisconnected || isConnectedButDifferentThanTargetNamespace) {
             setSelectedWalletToConnect(wallet);
-          } else if (couldAddExperimentalChain) {
-            setExperimentalChainWallet({
-              walletType: wallet.type,
-              chain,
-              address: address ?? '',
-            });
-            setShowExperimentalChainModal(true);
           } else {
             selectWallet({
               walletType: wallet.type,
@@ -196,12 +90,7 @@ export function WalletList(props: PropTypes) {
         const info = makeInfo(wallet.state);
 
         const getWalletDescription = () => {
-          if (couldAddExperimentalChain) {
-            return i18n.t({
-              id: 'Add {chain} chain',
-              values: { chain },
-            });
-          } else if (isConnectedButDifferentThanTargetNamespace) {
+          if (isConnectedButDifferentThanTargetNamespace) {
             return i18n.t('Chain not connected');
           } else if (conciseAddress) {
             return conciseAddress;
@@ -223,57 +112,17 @@ export function WalletList(props: PropTypes) {
           return info.color;
         };
 
-        const blockchainDisplayName: string | undefined =
-          experimentalChainWallet?.chain
-            ? getBlockchainDisplayNameFor(
-                experimentalChainWallet.chain,
-                blockchains()
-              )
-            : undefined;
         return (
-          <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
-            {!!experimentalChainWallet && (
-              <WatermarkedModal
-                id="widget-wallets-list-watermarked-modal"
-                open={!!experimentalChainWallet && showExperimentalChainModal}
-                container={modalContainer}
-                onClose={() => {
-                  setExperimentalChainWallet(null);
-                }}>
-                <ExperimentalChain
-                  id="widget-wallets-list-experimental-chain-container"
-                  displayName={blockchainDisplayName}
-                  onConfirm={() => {
-                    void addExperimentalChain(experimentalChainWallet);
-                  }}
-                />
-              </WatermarkedModal>
-            )}
-            {addingExperimentalChainStatus && (
-              <WatermarkedModal
-                id="widget-wallets-list-experimental-chain-watermarked-modal"
-                open={!!addingExperimentalChainStatus}
-                onClose={setAddingExperimentalChainStatus.bind(null, null)}
-                container={modalContainer}>
-                <ExperimentalChainStatus
-                  status={addingExperimentalChainStatus}
-                  displayName={blockchainDisplayName}
-                  image={wallet.image}
-                />
-                <Divider direction="vertical" size={32} />
-              </WatermarkedModal>
-            )}
-            <SelectableWallet
-              key={wallet.type}
-              id="widget-wallets-list-selectable-wallet-btn"
-              description={getWalletDescription()}
-              descriptionColor={getWalletDescriptionColor()}
-              onClick={onSelectableWalletClick}
-              selected={isSelected(wallet.type, chain)}
-              disabled={!isActiveTab}
-              {...wallet}
-            />
-          </React.Fragment>
+          <SelectableWallet
+            key={wallet.type}
+            id="widget-wallets-list-selectable-wallet-btn"
+            description={getWalletDescription()}
+            descriptionColor={getWalletDescriptionColor()}
+            onClick={onSelectableWalletClick}
+            selected={isSelected(wallet.type, chain)}
+            disabled={!isActiveTab}
+            {...wallet}
+          />
         );
       })}
       <StatefulConnectModal
@@ -301,7 +150,8 @@ export function WalletList(props: PropTypes) {
         <ShowMoreWallets
           selected={false}
           onClick={onShowMore}
-          id="widget-wallets-list-show-more-wallets-btn">
+          id="widget-wallets-list-show-more-wallets-btn"
+        >
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">

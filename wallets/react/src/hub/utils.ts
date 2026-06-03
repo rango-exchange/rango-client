@@ -5,7 +5,6 @@ import type {
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { CosmosActions } from '@rango-dev/wallets-core/namespaces/cosmos';
 import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
 import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
@@ -237,10 +236,7 @@ export function mapHubEventsToLegacy(
         }
 
         const formattedAddresses = event.accounts.map((accounts) =>
-          fromAccountIdToLegacyAddressFormat(
-            accounts,
-            metadata.allBlockChains || []
-          )
+          fromAccountIdToLegacyAddressFormat(accounts)
         );
         onUpdateState(
           event.provider,
@@ -299,8 +295,6 @@ export function convertNamespaceNetworkToEvmChainId(
 /**
  * We are passing an string for chain id (e.g. ETH, POLYGON), but wallet's instances (e.g. window.ethereum) needs chainId (e.g. 0x1).
  * This function will help us to map these strings to proper hex ids.
- *
- * If you need same functionality for other blockchain types (e.g. Cosmos), You can make a separate function and add it here.
  */
 export function tryConvertNamespaceNetworkToChainInfo(
   namespace: LegacyNamespaceInputForConnect,
@@ -371,23 +365,12 @@ export function synchronizeHubWithConfigProviders(
 }
 
 export function isSolanaNamespace(
-  ns: ProxiedNamespace<
-    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
-  >
+  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
 ): ns is ProxiedNamespace<SolanaActions> & { namespaceId: 'Solana' } {
   return ns.namespaceId === 'Solana';
 }
 export function isEvmNamespace(
-  ns: ProxiedNamespace<
-    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
-  >
+  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
 ): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
   return ns.namespaceId === 'EVM';
-}
-export function isCosmosNamespace(
-  ns: ProxiedNamespace<
-    EvmActions | SolanaActions | CosmosActions | SuiActions | UtxoActions
-  >
-): ns is ProxiedNamespace<CosmosActions> & { namespaceId: 'Cosmos' } {
-  return ns.namespaceId === 'Cosmos';
 }

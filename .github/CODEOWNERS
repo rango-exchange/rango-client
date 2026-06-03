@@ -23,24 +23,18 @@
 /wallets/provider-bitget @samobasquiat
 /wallets/provider-braavos @RanGojo @samobasquiat
 /wallets/provider-brave @Ikari-Shinji-re
-/wallets/provider-clover @RanGojo
 /wallets/provider-coin98 @Ikari-Shinji-re
 /wallets/provider-coinbase @yeager-eren
-/wallets/provider-cosmostation @Ikari-Shinji-re
 /wallets/provider-default @RanGojo
 /wallets/provider-enkrypt @Ikari-Shinji-re
 /wallets/provider-exodus @mikasackermn
-/wallets/provider-frontier @samobasquiat
 /wallets/provider-halo @samobasquiat
-/wallets/provider-keplr @RanGojo
-/wallets/provider-leap-cosmos @samobasquiat
 /wallets/provider-math-wallet @Ikari-Shinji-re
 /wallets/provider-metamask @yeager-eren
 /wallets/provider-okx @mikasackermn
 /wallets/provider-phantom @RanGojo @mikasackermn
 /wallets/provider-safe @samobasquiat
 /wallets/provider-safepal @Ikari-Shinji-re
-/wallets/provider-station @mikasackermn
 /wallets/provider-taho @mikasackermn
 /wallets/provider-tokenpocket @mikasackermn
 /wallets/provider-tron-link @RanGojo

@@ -43,7 +43,6 @@ export enum WalletTypes {
   META_MASK = 'metamask',
   WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
-  KEPLR = 'keplr',
   BINANCE = 'binance',
   PHANTOM = 'phantom',
   BITGET = 'bitget',
@@ -51,7 +50,6 @@ export enum WalletTypes {
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   READY = 'ready',
-  COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
   SAFE = 'safe',
@@ -61,9 +59,6 @@ export enum WalletTypes {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
-  LEAP = 'leap',
-  LEAP_COSMOS = 'leap-cosmos',
-  STATION = 'station',
   ENKRYPT = 'enkrypt',
   TAHO = 'taho',
   LEDGER = 'ledger',
@@ -117,10 +112,6 @@ export const namespaces: Record<
       },
     ],
   },
-  Cosmos: {
-    mainBlockchain: 'COSMOS',
-    title: 'Cosmos',
-  },
   UTXO: {
     title: 'UTXO',
     mainBlockchain: 'BTC',
@@ -166,14 +157,6 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.DOGE,
 ];
 
-export const KEPLR_COMPATIBLE_WALLETS: string[] = [
-  WalletTypes.KEPLR,
-  WalletTypes.COSMOSTATION,
-  WalletTypes.LEAP_COSMOS,
-  WalletTypes.XDEFI,
-];
-
-export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =
   'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2';

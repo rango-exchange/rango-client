@@ -131,40 +131,37 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 ## By Group
 
-| Wallet                                          | EVM | UTXO | Solana | Cosmos | TON | Tron | SUI | StarkNet | Stellar |
-| ----------------------------------------------- | --- | ---- | ------ | ------ | --- | ---- | --- | -------- | ------- |
-| [Binance](provider-binance/readme.md)           | ✅  | 🚧   | 🚧     | 🚧     | 🚧  | 🚧   | 🚧  | ❌       | ❌      |
-| [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌     | ❌  | ✅   | ❌  | ❌       | ❌      |
-| [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ✅       |
-| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Cosmostation](provider-cosmostation/readme.md) | ✅  | ❌   | ❌     | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Keplr](provider-keplr/readme.md)               | 🚧  | ❌   | ❌     | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Leap](provider-leap-cosmos/readme.md)          | 🚧  | ❌   | 🚧     | ✅     | ❌  | 🚧   | ❌  | ❌       | ❌      |
-| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
-| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Ready](provider-ready/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ✅       |
-| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌     | ❌  | ❌   | 🚧  | ❌       | ❌      |
-| [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
-| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [Vultisig](provider-vultisig/readme.md)         | ❌  | ⚠️   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
-| [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
+| Wallet                                          | EVM | UTXO | Solana | TON | Tron | SUI | StarkNet | Stellar |
+| ----------------------------------------------- | --- | ---- | ------ | --- | ---- | --- | -------- | ------- |
+| [Binance](provider-binance/readme.md)           | ✅  | 🚧   | 🚧     | 🚧  | 🚧   | 🚧  | ❌       | ❌      |
+| [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌  | ✅   | ❌  | ❌       | ❌      |
+| [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
+| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Phantom](provider-phantom/readme.md)           | ⚠️  | ⚠️   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
+| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ready](provider-ready/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
+| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌  | ❌   | 🚧  | ❌       | ❌      |
+| [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
+| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [Vultisig](provider-vultisig/readme.md)         | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
+| [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 
 ## By Feature
 
@@ -175,10 +172,8 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
-| Cosmostation | ⚠️             | ✅             | ⚠️           | Injected                  | ❌            |
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
-| Keplr        | ✅             | ❌             | ❌           | Injected                  | ✅            |
 | Ledger       | ✅             | ❌             | ❌           | Transport                 | ✅            |
 | MathWallet   | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
@@ -209,8 +204,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 rate ready to the hub)
 | Safe | EVM | - | &check; | https://safe.global/ |
-| Solflare Snap | Solana | - | &cross; | https://solflare.com/metamask |
-| Station | Terra Classic, Terra | - | &cross; | https://station.terra.money/ |
 | Trezor | Ethereum,Solana | Solana | &cross; | https://trezor.io/ |
-| Wallet Connect | Evm,Solana,Cosmos | Solana,Cosmos | &cross; | - |
-| XDefi | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride | | &check; | https://www.xdefi.io/ |
+| Wallet Connect | Evm,Solana | Solana | &cross; | - |
+| XDefi | EVM,Solana,Binance,BTC,LTC,Thorchain,Doge | | &check; | https://www.xdefi.io/ |

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { WalletConnectModal as WalletConnectModalType } from './wc-types.js';
 import type { WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
@@ -42,11 +43,6 @@ type FinalNamespaces = {
   [key in NAMESPACES]?: ProposalTypes.BaseRequiredNamespace;
 };
 
-/*
- * Some wallets like 1inch (android) has problem when we pass cosmos chains in optional namespace
- * Also some wallets like keplr mobile doesn't work when we don't pass cosmos chains in required namespace
- * It seems to be a bug in their current implementation.
- */
 export function generateOptionalNamespace(
   meta: BlockchainMeta[]
 ): FinalNamespaces | undefined {

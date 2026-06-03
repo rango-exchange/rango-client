@@ -6,7 +6,6 @@ export const PING_TIMEOUT = 10_000;
 export enum NAMESPACES {
   ETHEREUM = 'eip155',
   SOLANA = 'solana',
-  COSMOS = 'cosmos',
   POLKADOT = 'polkadot',
   CARDANO = 'cip34',
   ERLOND = 'elrond',
@@ -21,13 +20,6 @@ export enum SolanaRPCMethods {
   REQUEST_ACCOUNTS = 'solana_requestAccounts',
   SIGN_TRANSACTION = 'solana_signTransaction',
   SIGN_MESSAGE = 'solana_signMessage',
-}
-
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/cosmos-rpc
-export enum CosmosRPCMethods {
-  GET_ACCOUNTS = 'cosmos_getAccounts',
-  SIGN_DIRECT = 'cosmos_signDirect',
-  SIGN_AMINO = 'cosmos_signAmino',
 }
 
 // Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/ethereum-rpc
@@ -70,12 +62,6 @@ export const DEFAULT_ETHEREUM_METHODS = [
 export const DEFAULT_SOLANA_METHODS = [
   SolanaRPCMethods.SIGN_TRANSACTION,
   SolanaRPCMethods.SIGN_MESSAGE,
-];
-
-export const DEFAULT_COSMOS_METHODS = [
-  CosmosRPCMethods.GET_ACCOUNTS,
-  CosmosRPCMethods.SIGN_AMINO,
-  CosmosRPCMethods.SIGN_DIRECT,
 ];
 
 // refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md

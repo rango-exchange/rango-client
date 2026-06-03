@@ -81,7 +81,8 @@ const renderDesc = (props: RenderDescProps) => {
         <div
           className={`${tokenAddressStyles()} ${
             !name && tokenWithoutNameStyles()
-          }`}>
+          }`}
+        >
           {length > 10
             ? `${address.slice(0, 5)}...${address.slice(length - 6, length)}`
             : address}{' '}
@@ -90,7 +91,8 @@ const renderDesc = (props: RenderDescProps) => {
             href={url}
             target="_blank"
             rel="nofollow noreferrer"
-            onClick={(e) => e.stopPropagation()}>
+            onClick={(e) => e.stopPropagation()}
+          >
             <ExternalLinkIcon size={12} />
           </StyledLink>
         </div>
@@ -151,7 +153,8 @@ export function TokenList(props: PropTypes) {
           type="primary"
           size="small"
           className="widget-token-list-item-import-btn"
-          onClick={handleClick}>
+          onClick={handleClick}
+        >
           <Typography variant="body" size="xsmall" color="background">
             {t('import')}
           </Typography>
@@ -184,7 +187,8 @@ export function TokenList(props: PropTypes) {
             <Typography
               variant="body"
               className={usdValueStyles()}
-              size="xsmall">
+              size="xsmall"
+            >
               {`$${tokenBalance.usdValue}`}
             </Typography>
           )}
@@ -292,9 +296,7 @@ export function TokenList(props: PropTypes) {
                   </ImageSection>
                 }
                 title={
-                  blockchain.type === 'COSMOS' ||
-                  !!token.name ||
-                  (!token.name && !address) ? (
+                  !!token.name || (!token.name && !address) ? (
                     <Title>
                       <Typography variant="title" size="xmedium">
                         {token.symbol}
@@ -304,7 +306,8 @@ export function TokenList(props: PropTypes) {
                         <TagTitle
                           variant="body"
                           size="xsmall"
-                          css={customCssForTagTitle}>
+                          css={customCssForTagTitle}
+                        >
                           {token.blockchain}
                         </TagTitle>
                       </Tag>
@@ -318,10 +321,7 @@ export function TokenList(props: PropTypes) {
                   ) : undefined
                 }
                 description={
-                  typeof token !== 'string' &&
-                  !!blockchain.info &&
-                  !!address &&
-                  blockchain.type !== 'COSMOS'
+                  typeof token !== 'string' && !!blockchain.info && !!address
                     ? renderDesc({
                         address,
                         token,
