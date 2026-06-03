@@ -1,9 +1,9 @@
+import type { Namespace } from '@hub3js/namespaces';
 import type {
   LegacyNetwork as Network,
   LegacyWalletInfo as WalletInfo,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';

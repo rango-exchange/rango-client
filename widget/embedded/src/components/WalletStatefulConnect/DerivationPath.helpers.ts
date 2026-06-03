@@ -1,4 +1,4 @@
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@hub3js/namespaces';
 import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { namespaces } from '@rango-dev/wallets-shared';

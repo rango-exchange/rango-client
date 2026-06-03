@@ -3,7 +3,7 @@ import type {
   Context,
   Subscriber,
   SubscriberCleanUp,
-} from '@rango-dev/wallets-core';
+} from '@hub3js/core';
 import type { TonActions } from '@rango-dev/wallets-core/namespaces/ton';
 import type {
   ConnectedWallet,

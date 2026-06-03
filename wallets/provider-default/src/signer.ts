@@ -1,4 +1,4 @@
-import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/evm';
+import type { ProviderAPI } from '@hub3js/evm';
 import type { SignerFactory } from 'rango-types';
 
 import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';

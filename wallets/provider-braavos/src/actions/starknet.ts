@@ -1,4 +1,4 @@
-import type { Context, FunctionWithContext } from '@rango-dev/wallets-core';
+import type { Context, FunctionWithContext } from '@hub3js/core';
 
 import {
   CAIP_STARKNET_CHAIN_ID,

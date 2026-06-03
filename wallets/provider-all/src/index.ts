@@ -1,7 +1,8 @@
+import type { Provider } from '@hub3js/core';
+import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
 import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
-import type { Provider } from '@rango-dev/wallets-core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import { versions as binance } from '@rango-dev/provider-binance';
@@ -38,10 +39,7 @@ import { versions as vultisig } from '@rango-dev/provider-vultisig';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 import { versions as xverse } from '@rango-dev/provider-xverse';
-import {
-  legacyProviderImportsToVersionsInterface,
-  type VersionedProviders,
-} from '@rango-dev/wallets-core/utils';
+import { legacyProviderImportsToVersionsInterface } from '@rango-dev/wallets-core/utils';
 import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
 import { isWalletExcluded, lazyProvider } from './helpers.js';

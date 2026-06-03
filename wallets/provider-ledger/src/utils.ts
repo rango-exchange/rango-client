@@ -1,8 +1,8 @@
 import type Transport from '@ledgerhq/hw-transport';
 
+import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { CAIP_SOLANA_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/solana';
 import {
   dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,

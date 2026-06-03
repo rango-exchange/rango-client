@@ -2657,6 +2657,48 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
+"@hub3js/core@^0.60.1":
+  version "0.60.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/core/-/core-0.60.1.tgz#e4b4f190cbc383de34a255a474578d7177e59567"
+  integrity sha512-vHeJEW5e1SxmXpNckGreIZxWY90XMBr11CrD3RAfsGAVfqM4uJ0YFZxyuiQMxBdr88EGdj3pnU6ciEYPy9KBmg==
+  dependencies:
+    immer "^10.0.4"
+    rango-types "^0.5.0"
+    zustand "^4.5.2"
+
+"@hub3js/evm@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.2.1.tgz#fcbec4a96b28cda87d750b7ab92bf89b84e4cf59"
+  integrity sha512-H/IWo43jRBGLcmsyBSdcAD7HsGxiWDH9l93scbC1/d1AnKOxmG0pVwCiFFR3l1NODx/NikXdMovfO0pXuBtERA==
+  dependencies:
+    "@hub3js/std" "^0.1.1"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/namespaces@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.1.1.tgz#b9b93f25702de4bb655ae5270fb9fcda8953d0e1"
+  integrity sha512-1SnIPV0snvYO0ZhExK1D+ssikSp2vjMZR8PaLspRdg/qbcFEAI9oZ5U/67e5u7ikynRcEIWSv0wR/zaOd5FKYg==
+  dependencies:
+    "@hub3js/evm" "^0.2.1"
+    "@hub3js/solana" "^0.2.1"
+
+"@hub3js/solana@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.2.1.tgz#c41855832a72a5bf8a66a58997d914e0c7699f82"
+  integrity sha512-ss279okYhrN/omPwc1p0O/NaXmXe3aAdZAZyusepkWWOFqFjIbVb6j2yO+9f8Nb1uilCOghNS+QninAAGWb42g==
+  dependencies:
+    "@hub3js/std" "^0.1.1"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/std@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.1.1.tgz#440df6fe7e8ebf2b11d88f6ce339aa4a090b493e"
+  integrity sha512-of8ioIcP/obup0lqMe2wUbF6DXV38EdpNb4sAtj5W0epNCq3dfvpeBgPK1/1XOgqUpTb89ANgtvXGYDaS8GuUg==
+  dependencies:
+    caip "^1.1.1"
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"

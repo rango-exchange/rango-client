@@ -1,5 +1,5 @@
 import type { Provider } from './types.js';
-import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
+import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 

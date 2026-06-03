@@ -1,5 +1,5 @@
+import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 
 export type EnkryptEvmProvider = EvmProviderApi & {
   selectedAddress: string;

@@ -1,5 +1,5 @@
+import type { Provider } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type { Provider } from '@rango-dev/wallets-core';
 import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';

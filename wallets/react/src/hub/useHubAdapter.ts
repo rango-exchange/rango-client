@@ -1,14 +1,11 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { ProviderContext } from '../index.js';
-import type { Provider } from '@rango-dev/wallets-core';
+import type { Provider } from '@hub3js/core';
+import type { VersionedProviders } from '@hub3js/core/utils';
+import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
-import type {
-  Accounts,
-  AccountsWithActiveChain,
-} from '@rango-dev/wallets-core/namespaces/common';
-import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
-import { utils } from '@rango-dev/wallets-core/namespaces/evm';
+import { utils } from '@hub3js/evm';
 import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';

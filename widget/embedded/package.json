@@ -22,6 +22,9 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@hub3js/core": "^0.60.1",
+    "@hub3js/std": "^0.1.1",
+    "@hub3js/namespaces": "^0.1.1",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
     "@rango-dev/logging-core": "^0.12.1",

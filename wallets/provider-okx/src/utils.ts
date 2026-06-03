@@ -1,6 +1,6 @@
 import type { OkxBtcAddress, Provider } from './types.js';
-import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
-import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
+import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
+import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
@@ -57,7 +57,7 @@ export function solanaOKX(): SolanaProviderApi {
     );
   }
 
-  return solanaInstance as SolanaProviderApi;
+  return solanaInstance;
 }
 export function bitcoinOKX(): UtxoProviderApi {
   const instance = okx();
@@ -69,7 +69,7 @@ export function bitcoinOKX(): UtxoProviderApi {
     );
   }
 
-  return bitcoinInstance as UtxoProviderApi;
+  return bitcoinInstance;
 }
 export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
   const instance = bitcoinOKX();

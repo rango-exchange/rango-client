@@ -22,6 +22,10 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
+    "@hub3js/core": "^0.60.1",
+    "@hub3js/evm": "^0.2.1",
+    "@hub3js/solana": "^0.2.1",
+    "@hub3js/std": "^0.1.1",
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-solana": "^0.48.0",
@@ -29,6 +33,7 @@
     "@rango-dev/wallets-core": "^0.59.1-next.0",
     "@rango-dev/wallets-shared": "^0.60.1-next.0",
     "bitcoinjs-lib": "^6.1.7",
+    "caip": "^1.1.1",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {

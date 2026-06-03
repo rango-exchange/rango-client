@@ -2,9 +2,9 @@ import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
+import type { VersionedProviders } from '@hub3js/core/utils';
 
 import { allProviders as getAllProviders } from '@rango-dev/provider-all';
-import { type VersionedProviders } from '@rango-dev/wallets-core';
 
 import { cacheService } from '../../services/cacheService';
 import {

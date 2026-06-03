@@ -1,6 +1,6 @@
 import type { StellarActions } from '@rango-dev/wallets-core/namespaces/stellar';
 
-import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { utils } from '@rango-dev/wallets-core/namespaces/stellar';
 import { WatchWalletChanges } from '@stellar/freighter-api';
 

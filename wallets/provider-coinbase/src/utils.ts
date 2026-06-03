@@ -1,5 +1,5 @@
-import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
-import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
+import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
+import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';

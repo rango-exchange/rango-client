@@ -1,5 +1,5 @@
+import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 

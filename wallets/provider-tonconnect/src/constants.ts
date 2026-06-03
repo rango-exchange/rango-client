@@ -1,4 +1,4 @@
-import type { ProviderMetadata } from '@rango-dev/wallets-core';
+import type { ProviderMetadata } from '@hub3js/core';
 
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, tonBlockchain } from 'rango-types';

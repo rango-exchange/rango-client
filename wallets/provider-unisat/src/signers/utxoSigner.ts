@@ -1,6 +1,6 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { parseErrorAndThrowStandardizeError } from '@rango-dev/wallets-core/namespaces/common';
+import { parseErrorAndThrowStandardizeError } from '@hub3js/std/utils';
 import { Networks } from '@rango-dev/wallets-shared';
 import * as bitcoin from 'bitcoinjs-lib';
 import { SignerError } from 'rango-types';
