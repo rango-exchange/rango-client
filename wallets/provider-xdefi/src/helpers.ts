@@ -5,7 +5,14 @@ import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants.js';
 
-type Provider = Map<Network, any>;
+interface XfiInstance {
+  request: (
+    payload: { method: string; params: unknown[] },
+    callback: (error: unknown, result: unknown) => void
+  ) => void;
+}
+
+type Provider = Map<Network, XfiInstance>;
 
 export function xdefi() {
   const { xfi } = window;
@@ -39,9 +46,6 @@ export function xdefi() {
   if (xfi.mayachain) {
     instances.set(Networks.MAYA, xfi.mayachain);
   }
-  if (xfi.keplr) {
-    instances.set(Networks.COSMOS, xfi.keplr);
-  }
 
   return instances;
 }
@@ -68,21 +72,25 @@ export async function getNonEvmAccounts(
         instances.get(network) !== undefined
     )
     .map(async (network: Network) => {
-      return new Promise((resolve, reject) => {
+      return new Promise<ProviderConnectResult>((resolve, reject) => {
         const instance = instances.get(network);
+        if (!instance) {
+          reject(new Error(`No XDeFi instance for network ${network}`));
+          return;
+        }
         instance.request(
           {
             method: 'request_accounts',
             params: [],
           },
-          (error: any, accounts: any) => {
+          (error, accounts) => {
             if (error) {
               reject(error);
-              return error;
+              return;
             }
 
             const result = {
-              accounts,
+              accounts: accounts as string[],
               chainId: network,
             };
 
@@ -97,6 +105,14 @@ export async function getNonEvmAccounts(
   return results;
 }
 
+interface XdefiTransferParams {
+  asset: { chain: string; symbol: string; ticker: string };
+  from: string;
+  amount: { amount: string; decimals: number };
+  memo?: string;
+  recipient?: string;
+}
+
 export async function xdefiTransfer(
   blockchain: string,
   ticker: string,
@@ -104,32 +120,29 @@ export async function xdefiTransfer(
   amount: string,
   decimals: number,
   recipientAddress: string | null,
-  provider: any,
+  provider: XfiInstance,
   method: string,
   memo?: string
 ): Promise<string> {
   return new Promise(function (resolve, reject) {
-    const params = {
+    const params: XdefiTransferParams = {
       asset: { chain: blockchain, symbol: ticker, ticker: ticker },
       from: from,
       amount: { amount: amount, decimals: decimals },
       memo: memo,
-    } as any;
+    };
     if (recipientAddress) {
       params.recipient = recipientAddress;
     }
 
-    provider.request(
-      { method: method, params: [params] },
-      (error: any, result: any) => {
-        if (error) {
-          reject(
-            new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error)
-          );
-        } else {
-          resolve(result);
-        }
+    provider.request({ method: method, params: [params] }, (error, result) => {
+      if (error) {
+        reject(
+          new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error)
+        );
+      } else {
+        resolve(result as string);
       }
-    );
+    });
   });
 }

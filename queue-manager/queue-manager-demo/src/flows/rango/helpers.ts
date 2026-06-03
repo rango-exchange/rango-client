@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-throw-literal */
+/* eslint-disable @typescript-eslint/only-throw-error */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
@@ -26,6 +26,7 @@ import type {
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
+  BlockchainMeta,
   EvmBlockchainMeta,
   PendingSwap,
   PendingSwapStep,
@@ -40,12 +41,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
-import {
-  isCosmosBlockchain,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  SignerError,
-} from 'rango-types';
+import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';
 
 import { sampleRawAccounts } from './mock';
 import {
@@ -138,7 +134,6 @@ export function calculatePendingSwap(
         externalTransactionId: null,
         explorerUrl: null,
         trackingCode: null,
-        cosmosTransaction: null,
         solanaTransaction: null,
         evmTransaction: null,
         evmApprovalTransaction: null,
@@ -234,7 +229,7 @@ export const urlToToken = (s: string | null): TokenMeta | null => {
     // symbol: ps2[1], // this doesnt work for USDT.E (on avax) AVAX.WETH.E--0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab
     symbol: ps2.slice(1).join('.'),
     image: UNKNOWN_COIN_IMAGE,
-    blockchain: ps2[0] as Networks,
+    blockchain: ps2[0],
     address: ps1.length === 2 ? decodeURIComponent(ps1[1]) : null,
     usdPrice: null,
     isSecondaryCoin: false,
@@ -325,10 +320,10 @@ export const DEFAULT_WALLET_INJECTION_ERROR =
 
 export class PrettyError extends Error {
   private readonly detail?: string;
-  private readonly root?: any;
+  private readonly root?: unknown;
   private readonly code?: APIErrorCode;
 
-  constructor(code: APIErrorCode, m: string, root?: any, detail?: string) {
+  constructor(code: APIErrorCode, m: string, root?: unknown, detail?: string) {
     super(m);
     Object.setPrototypeOf(this, PrettyError.prototype);
     this.code = code;
@@ -337,9 +332,10 @@ export class PrettyError extends Error {
   }
 
   getErrorDetail(): ErrorDetail {
+    const rootObj = this.root as { error?: string } | null | undefined;
     const rawMessage =
-      typeof this.root === 'object' && this.root && this.root.error
-        ? this.root.error
+      typeof this.root === 'object' && rootObj && rootObj.error
+        ? rootObj.error
         : JSON.stringify(this.root);
     const rootStr =
       typeof this.root === 'string'
@@ -448,8 +444,8 @@ export async function createTransaction(
     }
 
     return result;
-  } catch (error: any) {
-    throw PrettyError.CreateTransaction(error.message);
+  } catch (error) {
+    throw PrettyError.CreateTransaction((error as Error).message);
   }
 }
 
@@ -524,7 +520,6 @@ export const getCurrentBlockchainOf = (
   const b1 =
     step.evmTransaction?.blockChain ||
     step.evmApprovalTransaction?.blockChain ||
-    step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
   if (b1) {
     return b1;
@@ -649,7 +644,7 @@ export const evmBasedChainsNamesSelector = (blockchains: AllBlockchains) =>
 
 export const walletsAndSupportedChainsMetaSelector = (
   blockchains: AllBlockchains
-): any | null => {
+): Record<WalletType, BlockchainMeta[]> | null => {
   // TODO WalletsAndSupportedChains can't find model for return type
   if (Object.entries(blockchains).length === 0) {
     return null;
@@ -659,13 +654,9 @@ export const walletsAndSupportedChainsMetaSelector = (
   );
   const evmBlockchains = blockchainsArray.filter(isEvmBlockchain);
   const solanaBlockchain = blockchainsArray.filter(isSolanaBlockchain);
-  const cosmosBlockchains = blockchainsArray.filter(isCosmosBlockchain);
   return {
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.KEPLR]: cosmosBlockchains.filter(
-      (blockchainMeta) => !!blockchainMeta.info
-    ),
     [WalletTypes.PHANTOM]: solanaBlockchain,
     [WalletTypes.XDEFI]: blockchainsArray.filter((blockchainMeta) =>
       [
@@ -685,8 +676,6 @@ export const walletsAndSupportedChainsMetaSelector = (
     ),
 
     [WalletTypes.TOKEN_POCKET]: evmBlockchains,
-    [WalletTypes.STATION]: [],
-    [WalletTypes.LEAP]: [],
     [WalletTypes.MATH]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.SAFEPAL]: [
       ...evmBlockchains,
@@ -698,15 +687,13 @@ export const walletsAndSupportedChainsMetaSelector = (
        */
     ],
     [WalletTypes.CLOVER]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.COSMOSTATION]: [
-      ...evmBlockchains,
-      ...cosmosBlockchains.filter((blockchainMeta) => !!blockchainMeta.info),
-    ],
     [WalletTypes.BRAVE]: [...evmBlockchains, ...solanaBlockchain],
   };
 };
 
-export const walletsAndSupportedChainsNamesSelector = (blockchains: any) => {
+export const walletsAndSupportedChainsNamesSelector = (
+  blockchains: AllBlockchains
+) => {
   const walletsAndSupportedChainsMeta =
     walletsAndSupportedChainsMetaSelector(blockchains);
   if (!walletsAndSupportedChainsMeta) {
@@ -718,7 +705,7 @@ export const walletsAndSupportedChainsNamesSelector = (blockchains: any) => {
   for (const key in walletsAndSupportedChainsMeta) {
     walletsAndSupportedChainsNames[key] = walletsAndSupportedChainsMeta[
       key
-    ].map((blockchainMeta: { name: any }) => blockchainMeta.name);
+    ].map((blockchainMeta) => blockchainMeta.name);
   }
   return walletsAndSupportedChainsNames;
 };
@@ -738,7 +725,6 @@ export async function requestSwap(
     POLYGON: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     FANTOM: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     AVAX_CCHAIN: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-    COSMOS: 'cosmos1unf2rcytjxfpz8x8ar63h4qeftadptg5r5qswd',
   };
   const swappersGroupsBlackList: string[] | undefined = [];
   const blockchainsWhiteList: string[] | undefined = [];
@@ -756,7 +742,7 @@ export async function requestSwap(
   );
 
   if (!bestRoute) {
-    throw 'No route found.';
+    throw new Error('No route found.');
   }
 
   const settings = {

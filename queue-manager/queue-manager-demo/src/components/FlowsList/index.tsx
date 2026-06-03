@@ -1,8 +1,10 @@
+import type { WalletType } from '@rango-dev/wallets-shared';
+
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { useEffect, useState } from 'react';
+
 import { requestSwap, urlToToken } from '../../flows/rango/helpers';
 import { FlowRunner } from '../FlowRunner';
-import { WalletType } from '@rango-dev/wallets-shared';
 
 interface PropTypes {
   connectedWallets: WalletType[];
@@ -13,7 +15,9 @@ function FlowsList(props: PropTypes) {
   const [fromToken, setFrom] = useState(
     'FANTOM.USDC--0x04068da6c83afcfa0e13ba15a6696662335d5b75'
   );
-  const [toToken, setTo] = useState('COSMOS.ATOM');
+  const [toToken, setTo] = useState(
+    'POLYGON.USDC--0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+  );
   const [input, setInput] = useState('10');
 
   useEffect(() => {
@@ -40,7 +44,7 @@ function FlowsList(props: PropTypes) {
     {
       title: 'Rango Swap (On-chain)',
       description: 'Run a swap using Rango flow.',
-      requirements: ['Please use Metamask & Keplr', 'USDC -> USDT'],
+      requirements: ['Please use Metamask', 'USDC -> USDT'],
       onRun: async () => {
         const from = urlToToken(
           'POLYGON.USDC--0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
@@ -59,12 +63,13 @@ function FlowsList(props: PropTypes) {
     {
       title: 'Rango Swap (Cross-chain)',
       description: 'Run a swap using Rango flow.',
-      requirements: ['Please use Metamask & Keplr (cosmos) for now.'],
+      requirements: ['Please use Metamask for now.'],
       children: (
         <div>
           <div>
             From:
             <input
+              id="rango-swap-cross-chain-from-input"
               type="text"
               value={fromToken}
               onChange={(e) => {
@@ -75,6 +80,7 @@ function FlowsList(props: PropTypes) {
           <div>
             To:
             <input
+              id="rango-swap-cross-chain-to-input"
               type="text"
               value={toToken}
               onChange={(e) => {
@@ -85,6 +91,7 @@ function FlowsList(props: PropTypes) {
           <div>
             Amount:
             <input
+              id="rango-swap-cross-chain-amount-input"
               type="text"
               value={input}
               onChange={(e) => {
@@ -109,8 +116,8 @@ function FlowsList(props: PropTypes) {
       title: 'Rango Parallel Swaps',
       description: 'Run multiple swaps at the same time using Rango flow.',
       requirements: [
-        'Please use Metamask & Keplr (cosmos) for now.',
-        'FTM -> ATOM and USDC -> USDT on polygon',
+        'Please use Metamask for now.',
+        'FTM -> USDC and USDC -> USDT on polygon',
       ],
       onRun: async () => {
         const from1 = urlToToken(
@@ -122,7 +129,9 @@ function FlowsList(props: PropTypes) {
         const from2 = urlToToken(
           'FANTOM.USDC--0x04068da6c83afcfa0e13ba15a6696662335d5b75'
         )!;
-        const to2 = urlToToken('COSMOS.ATOM')!;
+        const to2 = urlToToken(
+          'POLYGON.USDC--0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+        )!;
         const swap1 = await requestSwap('2', from1, to1);
         const swap2 = await requestSwap('10', from2, to2);
 
@@ -137,8 +146,8 @@ function FlowsList(props: PropTypes) {
 
   return (
     <div className="list">
-      {flows.map((flow, i) => (
-        <FlowRunner key={`flow-${i}`} {...flow} />
+      {flows.map((flow) => (
+        <FlowRunner key={flow.title} {...flow} />
       ))}
     </div>
   );

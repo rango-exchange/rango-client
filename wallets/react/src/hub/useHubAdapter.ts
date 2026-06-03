@@ -10,7 +10,6 @@ import type { VersionedProviders } from '@rango-dev/wallets-core/utils';
 
 import { utils } from '@rango-dev/wallets-core/namespaces/evm';
 import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
-import { cosmosBlockchains } from 'rango-types';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -22,13 +21,11 @@ import {
 import { useAutoConnect } from '../legacy/useAutoConnect.js';
 
 import { autoConnect } from './autoConnect.js';
-import { convertCosmosMetaToChainRegistry } from './chainRegisteryConvertors.js';
 import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
   getSupportedChainsFromProvider,
-  isCosmosNamespace,
   isEvmNamespace,
   isSolanaNamespace,
   mapHubEventsToLegacy,
@@ -258,20 +255,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
               namespace.connect(network, {
                 derivationPath: namespaceInput.derivationPath,
               });
-          } else if (isCosmosNamespace(namespace)) {
-            const cosmosBlockChains = cosmosBlockchains(
-              params.allBlockChains || []
-            ).filter((chain) => !!chain.chainId);
-            connectNamespacePromise = async () => {
-              return namespace.connect({
-                chainIds: cosmosBlockChains
-                  .filter((chain) => chain.info && !chain.info.experimental)
-                  ?.map((chain) => chain.chainId!),
-                customChainIds: cosmosBlockChains
-                  .filter((chain) => chain.info?.experimental)
-                  .map((chain) => chain.chainId!),
-              });
-            };
           } else {
             connectNamespacePromise = async () => namespace.connect();
           }
@@ -477,10 +460,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         .filter((namespace) => namespace.connected)
         .flatMap((namespace) =>
           namespace.accounts?.map((accounts) =>
-            fromAccountIdToLegacyAddressFormat(
-              accounts,
-              params.allBlockChains || []
-            )
+            fromAccountIdToLegacyAddressFormat(accounts)
           )
         )
         .filter((account): account is string => !!account);
@@ -522,23 +502,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       }
       if (!namespace.network) {
         throw new Error('You should pass network to the suggest and connect');
-      }
-      if (isCosmosNamespace(proxiedNamespace)) {
-        const suggestedChainMeta = cosmosBlockchains(
-          params.allBlockChains || []
-        )
-          ?.filter((chain) => chain.info && chain.info.experimental)
-          .find((chain) => chain.name === namespace.network);
-        if (!suggestedChainMeta) {
-          throw new Error(
-            `We couldn't find the suggested chain (${namespace.network}) in our metadata.`
-          );
-        }
-        const { assetList, chain } =
-          convertCosmosMetaToChainRegistry(suggestedChainMeta);
-        await proxiedNamespace.suggest(chain, assetList);
-        const [connectResult] = await this.connect(type, [namespace]);
-        return connectResult;
       }
       throw new Error(
         `Suggest has not been implemented for given chain: ${namespace.network}`

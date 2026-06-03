@@ -1,6 +1,5 @@
 import type {
   Asset,
-  CosmosTransaction,
   EvmTransaction,
   Network,
   SolanaTransaction,
@@ -38,9 +37,6 @@ export type SwapperId =
   | 'Binance Bridge'
   | 'OneInchBsc'
   | 'OneInchPolygon'
-  | 'Terra Bridge'
-  | 'TerraSwap'
-  | 'Osmosis'
   | 'Lido'
   | 'PoS Bridge'
   | 'Wormhole';
@@ -104,7 +100,6 @@ export type PendingSwapStep = {
   explorerUrl: SwapExplorerUrl[] | null;
   evmApprovalTransaction: EvmTransaction | null;
   evmTransaction: EvmTransaction | null;
-  cosmosTransaction: CosmosTransaction | null;
   transferTransaction: TransferTransaction | null;
   solanaTransaction: SolanaTransaction | null;
   diagnosisUrl: string | null;
@@ -245,12 +240,9 @@ export type BestRoute = {
 export const SWAPPER_ONE_INCH_ETH = 'OneInchEth';
 export const SWAPPER_ONE_INCH_BSC = 'OneInchBsc';
 export const SWAPPER_ONE_INCH_POLYGON = 'OneInchPolygon';
-export const SWAPPER_TERRA_BRIDGE = 'Terra Bridge';
 export const SWAPPER_LIDO = 'Lido';
-export const SWAPPER_TERRA_SWAP = 'TerraSwap';
 export const SWAPPER_THORCHAIN = 'ThorChain';
 export const SWAPPER_BINANCE_BRIDGE = 'Binance Bridge';
-export const SWAPPER_OSMOSIS = 'Osmosis';
 
 export const SWAPPER_ONE_INCH_LIST = [
   SWAPPER_ONE_INCH_ETH,

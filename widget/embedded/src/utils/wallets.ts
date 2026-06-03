@@ -23,13 +23,10 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
-  getCosmosExperimentalChainInfo,
   isEvmAddress,
-  KEPLR_COMPATIBLE_WALLETS,
   Networks,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { isCosmosBlockchain } from 'rango-types';
 
 import { ZERO } from '../constants/numbers';
 import {
@@ -313,35 +310,6 @@ function numberWithThousandSeparator(number: string | number): string {
   }
   return parts.join('.');
 }
-
-export const isExperimentalChain = (
-  blockchains: BlockchainMeta[],
-  wallet: string
-): boolean => {
-  const cosmosExperimentalChainInfo = getCosmosExperimentalChainInfo(
-    Object.entries(blockchains)
-      .map(([, blockchainMeta]) => blockchainMeta)
-      .filter(isCosmosBlockchain)
-  );
-  return (
-    cosmosExperimentalChainInfo &&
-    !!cosmosExperimentalChainInfo[wallet]?.experimental
-  );
-};
-
-export const getKeplrCompatibleConnectedWallets = (
-  selectableWallets: Wallet[]
-): WalletType[] => {
-  const connectedWalletTypes = new Set(
-    selectableWallets.map((wallet) => {
-      return wallet.walletType;
-    })
-  );
-
-  return KEPLR_COMPATIBLE_WALLETS.filter((compatibleWallet) =>
-    connectedWalletTypes.has(compatibleWallet)
-  );
-};
 
 function representAmountInNumber(amount: string, decimals: number): string {
   return new BigNumber(amount).shiftedBy(-decimals).toFixed();

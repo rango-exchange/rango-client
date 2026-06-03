@@ -1,7 +1,6 @@
 import { type BlockchainMeta, TransactionType } from 'rango-types';
 
 import {
-  CosmosCategoryIcon,
   EvmCategoryIcon,
   OtherCategoryIcon,
   UtxoCategoryIcon,
@@ -11,7 +10,6 @@ import { BlockchainCategories } from './SelectableCategoryList.types.js';
 
 export const blockchainCategoryIcons = {
   [BlockchainCategories.EVM]: EvmCategoryIcon,
-  [BlockchainCategories.COSMOS]: CosmosCategoryIcon,
   [BlockchainCategories.UTXO]: UtxoCategoryIcon,
   [BlockchainCategories.OTHER]: OtherCategoryIcon,
 };
@@ -19,7 +17,6 @@ export const blockchainCategoryIcons = {
 export const blockchainCategoryLabel = {
   [BlockchainCategories.ALL]: 'All',
   [BlockchainCategories.EVM]: 'EVM',
-  [BlockchainCategories.COSMOS]: 'Cosmos',
   [BlockchainCategories.UTXO]: 'UTXO',
   [BlockchainCategories.OTHER]: 'Other',
 };
@@ -33,7 +30,6 @@ const filterByType = (blockchain: BlockchainMeta, type: string): boolean => {
     case BlockchainCategories.OTHER:
       return (
         blockchain.type !== TransactionType.TRANSFER &&
-        blockchain.type !== TransactionType.COSMOS &&
         blockchain.type !== TransactionType.EVM
       );
     default:

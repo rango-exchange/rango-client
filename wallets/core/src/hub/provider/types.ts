@@ -1,7 +1,6 @@
 import type { FindProxiedNamespace } from '../../builders/mod.js';
 import type { Store } from '../../hub/mod.js';
 import type { LegacyState } from '../../legacy/mod.js';
-import type { CosmosActions } from '../../namespaces/cosmos/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { StarknetActions } from '../../namespaces/starknet/types.js';
@@ -34,7 +33,6 @@ export type GetState = {
 export interface CommonNamespaces {
   evm: EvmActions;
   solana: SolanaActions;
-  cosmos: CosmosActions;
   sui: SuiActions;
   utxo: UtxoActions;
   tron: TronActions;

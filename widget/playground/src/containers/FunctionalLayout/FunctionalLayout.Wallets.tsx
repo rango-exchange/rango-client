@@ -36,8 +36,8 @@ export function WalletSection() {
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
-      if (state(WalletTypes.KEPLR).connected) {
-        void disconnect(WalletTypes.KEPLR);
+      if (state(WalletTypes.PHANTOM).connected) {
+        void disconnect(WalletTypes.PHANTOM);
       }
     }
     onChangeBooleansConfig('externalWallets', checked);
@@ -94,7 +94,7 @@ export function WalletSection() {
         </SwitchField>
         <Divider size={16} />
         <Typography size="small" variant="body" color="neutral600">
-          It's a sample using Keplr, You can use your own wallet or what we
+          It's a sample using Phantom, You can use your own wallet or what we
           already implemented, check it out here.
         </Typography>
         <Divider size={16} />
@@ -107,17 +107,17 @@ export function WalletSection() {
             disabled={!externalWallets}
             className={connectButtonStyles()}
             onClick={() => {
-              if (state(WalletTypes.KEPLR).connected) {
-                void disconnect(WalletTypes.KEPLR);
+              if (state(WalletTypes.PHANTOM).connected) {
+                void disconnect(WalletTypes.PHANTOM);
               } else {
-                void connect(WalletTypes.KEPLR, [
-                  { namespace: 'Cosmos', network: 'cosmos' },
+                void connect(WalletTypes.PHANTOM, [
+                  { namespace: 'Solana', network: undefined },
                 ]);
               }
             }}>
-            {externalWallets && state(WalletTypes.KEPLR).connected
-              ? 'Disconnect Keplr'
-              : 'Connect Keplr'}
+            {externalWallets && state(WalletTypes.PHANTOM).connected
+              ? 'Disconnect Phantom'
+              : 'Connect Phantom'}
           </Button>
         </Footer>
       </ExternalSection>

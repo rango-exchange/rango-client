@@ -8,7 +8,6 @@ declare global {
     braveEthereum?: any;
     braveSolana?: any;
     BinanceChain?: any;
-    cosmostation?: any;
     binancew3w?: any;
     exodus?: any;
     solana?: any;
@@ -17,7 +16,6 @@ declare global {
     coinbaseWalletExtension?: any;
     coinbaseSolana?: any;
     coin98?: any;
-    keplr?: any;
     isSafePal?: any;
     safePal?: any;
     safepalProvider?: any;

@@ -211,7 +211,7 @@ export class Provider {
    *
    * Note: difference between namespace key and namespace id is the first one is setting from a predefined list the second one can be anything and will be chosen by library's user.
    *
-   * @param {string} id - evm, solana, cosmos, ... (CommonActions)
+   * @param {string} id - evm, solana, ... (CommonActions)
    */
   public get<K extends keyof CommonNamespaces>(
     id: K

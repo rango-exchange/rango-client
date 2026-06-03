@@ -13,7 +13,7 @@ import {
 
 describe('check legacy is working correctly', () => {
   test("initialize legacy provider and it's accessible", async () => {
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const list = [legacyProviderImportsToVersionsInterface(legacyProvider)];
 
       return <Provider providers={list}>{children}</Provider>;
@@ -48,7 +48,7 @@ describe('check legacy is working correctly', () => {
 
 describe('check legacy connect method is working', () => {
   test('throw an error if trying to connect to an undefined wallet', async () => {
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const list = [legacyProviderImportsToVersionsInterface(legacyProvider)];
 
       return <Provider providers={list}>{children}</Provider>;
@@ -64,7 +64,7 @@ describe('check legacy connect method is working', () => {
   });
 
   test('will be ignored and use first namespace when passing multiple namespaces', async () => {
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const list = [legacyProviderImportsToVersionsInterface(legacyProvider)];
 
       return <Provider providers={list}>{children}</Provider>;
@@ -89,7 +89,7 @@ describe('check legacy connect method is working', () => {
     expect(connectResult[0].network).toBe('eth');
   });
   test('update internal states correctly', async () => {
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const list = [legacyProviderImportsToVersionsInterface(legacyProvider)];
 
       return (
@@ -163,7 +163,7 @@ describe('check legacy switching network', () => {
   test('switch network & canSwitchNetworkTo', async () => {
     const switchNetwork = vi.fn();
 
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const extendLegacyProvider = { ...legacyProvider };
       extendLegacyProvider.canSwitchNetworkTo = ({ meta, network }) => {
         return !!meta.find((blockchain) => blockchain.name === network);
@@ -206,7 +206,7 @@ describe('check legacy switching network', () => {
       network: 'ETH',
     });
 
-    expect(result.current.canSwitchNetworkTo('legacy-garbage', 'COSMOS')).toBe(
+    expect(result.current.canSwitchNetworkTo('legacy-garbage', 'SOLANA')).toBe(
       true
     );
     expect(
@@ -217,14 +217,14 @@ describe('check legacy switching network', () => {
     await result.current.connect('legacy-garbage', [
       {
         namespace: 'EVM',
-        network: 'COSMOS',
+        network: 'SOLANA',
       },
     ]);
 
     expect(switchNetwork).toBeCalledTimes(1);
 
     expect(result.current.state('legacy-garbage')).toMatchObject({
-      network: 'COSMOS',
+      network: 'SOLANA',
     });
   });
 });
@@ -241,7 +241,7 @@ describe('check functionality related to connect', () => {
 
 describe('check signers', () => {
   test('should signers be accessible', async () => {
-    const wrapper = ({ children }: any) => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => {
       const list = [legacyProviderImportsToVersionsInterface(legacyProvider)];
 
       return <Provider providers={list}>{children}</Provider>;

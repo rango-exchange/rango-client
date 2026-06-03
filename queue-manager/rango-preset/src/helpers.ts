@@ -167,7 +167,6 @@ export const getCurrentStepTx = (
   const {
     evmTransaction,
     evmApprovalTransaction,
-    cosmosTransaction,
     solanaTransaction,
     transferTransaction,
     starknetApprovalTransaction,
@@ -182,7 +181,6 @@ export const getCurrentStepTx = (
   return (
     evmTransaction ||
     evmApprovalTransaction ||
-    cosmosTransaction ||
     solanaTransaction ||
     transferTransaction ||
     starknetApprovalTransaction ||
@@ -243,8 +241,7 @@ export const setCurrentStepTx = (
       }
       break;
     case TransactionType.COSMOS:
-      currentStep.cosmosTransaction = transaction;
-      break;
+      throw new Error('Cosmos transactions are no longer supported.');
     case TransactionType.SOLANA:
       currentStep.solanaTransaction = transaction;
       break;
@@ -784,7 +781,6 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||

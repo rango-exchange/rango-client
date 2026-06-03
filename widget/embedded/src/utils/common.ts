@@ -237,7 +237,6 @@ export const isBlockchainTypeInCategory = (
     case BlockchainCategories.OTHER:
       return (
         blockchainType !== TransactionType.TRANSFER &&
-        blockchainType !== TransactionType.COSMOS &&
         blockchainType !== TransactionType.EVM
       );
     default:

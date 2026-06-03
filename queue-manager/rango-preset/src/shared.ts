@@ -114,7 +114,6 @@ export const getCurrentNamespaceOf = (
   const tronNetwork =
     step.tronTransaction?.blockChain ||
     step.tronApprovalTransaction?.blockChain;
-  const cosmosNetwork = step.cosmosTransaction?.blockChain;
   const solanaNetwork = step.solanaTransaction?.blockChain;
   const tonNetwork = step.tonTransaction?.blockChain;
   const suiNetwork = step.suiTransaction?.blockChain;
@@ -135,11 +134,6 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'Tron',
       network: tronNetwork,
-    };
-  } else if (cosmosNetwork) {
-    return {
-      namespace: 'Cosmos',
-      network: cosmosNetwork,
     };
   } else if (solanaNetwork) {
     return {
@@ -240,7 +234,6 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||

@@ -1,3 +1,4 @@
+import type { LegacyNetworkProviderMap } from '@rango-dev/wallets-core/legacy';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -13,7 +14,6 @@ import {
   canSwitchNetworkToEvm,
   chooseInstance,
   getBlockChainNameFromId,
-  getCosmosAccounts,
   getEvmAccounts,
   getSolanaAccounts,
   Networks,
@@ -22,9 +22,8 @@ import {
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
-import { cosmosBlockchains, isCosmosBlockchain } from 'rango-types';
 
-import { SUPPORTED_COSMOS_CHAINS, SUPPORTED_ETH_CHAINS } from './constants.js';
+import { SUPPORTED_ETH_CHAINS } from './constants.js';
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers.js';
 import signer from './signer.js';
 
@@ -41,7 +40,6 @@ export const getInstance = xdefi_instances;
 export const connect: Connect = async ({ instance, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const solInstance = chooseInstance(instance, meta, Networks.SOLANA);
-  const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
 
   const evmResult = await getEvmAccounts(ethInstance);
   const nonEvmResults = await getNonEvmAccounts(instance);
@@ -50,33 +48,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     meta,
   });
 
-  const cosmosAccounts: ProviderConnectResult[] = [];
-  if (cosmosInstance) {
-    const cosmosBlockchainMeta = meta.filter(
-      (blockchainMeta: BlockchainMeta) =>
-        isCosmosBlockchain(blockchainMeta) &&
-        SUPPORTED_COSMOS_CHAINS.includes(blockchainMeta.name as Networks)
-    );
-    const requestedNetwork = Networks.COSMOS;
-
-    const cosmosResult = await getCosmosAccounts({
-      instance: cosmosInstance,
-      meta: cosmosBlockchainMeta,
-      network: requestedNetwork,
-    });
-    if (Array.isArray(cosmosResult)) {
-      cosmosAccounts.push(...cosmosResult);
-    } else {
-      cosmosAccounts.push(cosmosResult);
-    }
-  }
-
-  return [
-    evmResult,
-    ...nonEvmResults,
-    solanaAccounts as ProviderConnectResult,
-    ...cosmosAccounts,
-  ];
+  return [evmResult, ...nonEvmResults, solanaAccounts as ProviderConnectResult];
 };
 
 export const subscribe: Subscribe = ({
@@ -115,7 +87,9 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => Promise<SignerFactory> = signer;
+export const getSigners: (
+  provider: LegacyNetworkProviderMap
+) => Promise<SignerFactory> = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -127,22 +101,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const supportedCosmosChains = cosmosBlockchains(allBlockChains).filter(
-    (blockchainMeta: BlockchainMeta) =>
-      !!blockchainMeta.info &&
-      SUPPORTED_COSMOS_CHAINS.includes(blockchainMeta.name as Networks)
+  const supportedChains = allBlockChains.filter((blockchainMeta) =>
+    [
+      ...SUPPORTED_ETH_CHAINS,
+      ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
+      Networks.SOLANA,
+    ].includes(blockchainMeta.name as Networks)
   );
-
-  const supportedChains = [
-    ...allBlockChains.filter((blockchainMeta) =>
-      [
-        ...SUPPORTED_ETH_CHAINS,
-        ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-        Networks.SOLANA,
-      ].includes(blockchainMeta.name as Networks)
-    ),
-    ...supportedCosmosChains,
-  ];
   return {
     name: 'Ctrl',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',

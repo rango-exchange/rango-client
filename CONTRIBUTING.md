@@ -12,7 +12,7 @@ The folder structure is as follows:
 
 ### Wallets
 
-We have developed a unified interface for most Web3 wallets, including Bitcoin, EVM, Cosmos, Solana, TON, and more. The library provides a core module that acts as a state manager and provider for the final wallet interface. Each wallet is referred to as a provider and contains the implementation specific to that wallet.
+We have developed a unified interface for most Web3 wallets, including Bitcoin, EVM, Solana, TON, and more. The library provides a core module that acts as a state manager and provider for the final wallet interface. Each wallet is referred to as a provider and contains the implementation specific to that wallet.
 
 To add all our providers at once, simply pass the `provider-all`. If you only require specific providers, you can add them individually to your project by passing an array of `provider` objects.
 
