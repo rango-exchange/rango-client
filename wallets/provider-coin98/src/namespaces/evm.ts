@@ -1,11 +1,9 @@
-import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
+import type { EvmActions } from '@hub3js/evm';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import {
-  builders as commonBuilders,
-  standardizeAndThrowError,
-} from '@rango-dev/wallets-core/namespaces/common';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/evm';
+import { NamespaceBuilder } from '@hub3js/core';
+import { actions, builders } from '@hub3js/evm';
+import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { evmCoin98 } from '../utils.js';

@@ -1,18 +1,15 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub } from '@rango-dev/wallets-core';
+import type { Hub } from '@hub3js/core';
+import type { DefaultNamespaces, Namespace } from '@hub3js/namespaces';
+import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
-import type {
-  Accounts,
-  AccountsWithActiveChain,
-  Namespace,
-} from '@rango-dev/wallets-core/namespaces/common';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@hub3js/core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
 import { Result } from 'ts-results';
 
@@ -140,7 +137,7 @@ async function eagerConnect(
  */
 async function tryRunCanEagerConnect(
   namespaces: LegacyNamespaceInputForConnect[],
-  wallet: Provider
+  wallet: Provider<DefaultNamespaces>
 ): Promise<{
   successNamespaces: LegacyNamespaceInputForConnect[];
   failedNamespaces: LegacyNamespaceInputForConnect[];

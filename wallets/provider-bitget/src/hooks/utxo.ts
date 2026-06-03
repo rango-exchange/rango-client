@@ -1,8 +1,4 @@
-import type {
-  AnyFunction,
-  Subscriber,
-  SubscriberCleanUp,
-} from '@rango-dev/wallets-core';
+import type { AnyFunction, Subscriber, SubscriberCleanUp } from '@hub3js/core';
 import type {
   ProviderAPI,
   UtxoActions,

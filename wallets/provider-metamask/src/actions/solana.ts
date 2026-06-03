@@ -1,10 +1,7 @@
 import type { WalletStandardSolanaInstance } from '../types.js';
-import type { Context, FunctionWithContext } from '@rango-dev/wallets-core';
+import type { Context, FunctionWithContext } from '@hub3js/core';
 
-import {
-  type SolanaActions,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/solana';
+import { type SolanaActions, utils } from '@hub3js/solana';
 
 function connect(
   getInstance: () => WalletStandardSolanaInstance

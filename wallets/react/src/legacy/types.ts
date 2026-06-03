@@ -1,8 +1,7 @@
-import type {
-  Provider,
-  ProviderMetadata,
-  VersionedProviders,
-} from '@rango-dev/wallets-core';
+import type { Provider, ProviderMetadata } from '@hub3js/core';
+import type { NamespaceData } from '@hub3js/core/store';
+import type { VersionedProviders } from '@hub3js/core/utils';
+import type { Namespace } from '@hub3js/namespaces';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
@@ -12,8 +11,6 @@ import type {
   LegacyState as WalletState,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
-import type { NamespaceData } from '@rango-dev/wallets-core/store';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 

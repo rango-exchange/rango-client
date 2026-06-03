@@ -3,8 +3,8 @@ import type { WalletTypes } from '@rango-dev/wallets-shared';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 import type { BlockchainMeta } from 'rango-sdk';
 
+import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import { allProviders as getAllProviders } from '@rango-dev/provider-all';
-import { pickVersion, type VersionedProviders } from '@rango-dev/wallets-core';
 
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';

@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.60.1-next.0",
+    "@hub3js/core": "^0.60.1",
+    "@hub3js/std": "^0.1.1",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",

@@ -21,6 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@hub3js/core": "^0.60.1",
     "@rango-dev/provider-binance": "^0.3.1-next.0",
     "@rango-dev/provider-bitget": "^0.57.1-next.0",
     "@rango-dev/provider-braavos": "^0.54.1-next.0",

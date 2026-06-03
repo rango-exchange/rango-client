@@ -21,7 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.59.1-next.0",
+    "@hub3js/core": "^0.60.1",
+    "@hub3js/std": "^0.1.1",
     "@rango-dev/wallets-shared": "^0.60.1-next.0",
     "@stellar/freighter-api": "^6.0.1",
     "@stellar/stellar-sdk": "^15.0.1",

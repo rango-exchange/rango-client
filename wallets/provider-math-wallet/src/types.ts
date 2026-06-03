@@ -1,6 +1,6 @@
+import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
+import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import type { ProviderAPI as EvmProviderApi } from '@rango-dev/wallets-core/namespaces/evm';
-import type { ProviderAPI as SolanaProviderApi } from '@rango-dev/wallets-core/namespaces/solana';
 
 export type OkxBtcAddress = {
   address: string;

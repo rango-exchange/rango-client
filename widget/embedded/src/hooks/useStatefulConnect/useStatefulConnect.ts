@@ -1,6 +1,6 @@
 import type { HandleConnectOptions, Result } from './useStatefulConnect.types';
 import type { WalletInfoWithExtra } from '../../types';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@hub3js/namespaces';
 import type { NamespaceData } from '@rango-dev/wallets-shared';
 
 import { WalletState } from '@rango-dev/ui';

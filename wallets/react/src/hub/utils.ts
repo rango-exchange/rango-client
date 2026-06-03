@@ -1,19 +1,18 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { Hub, Provider, ProxiedNamespace } from '@rango-dev/wallets-core';
+import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
+import type { Event } from '@hub3js/core/store';
+import type { EvmActions } from '@hub3js/evm';
+import type { SolanaActions } from '@hub3js/solana';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { EvmActions } from '@rango-dev/wallets-core/namespaces/evm';
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
 import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
-import type { Event } from '@rango-dev/wallets-core/store';
 
+import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
-import { type VersionedProviders } from '@rango-dev/wallets-core/utils';
-import { pickVersion } from '@rango-dev/wallets-core/utils';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
