@@ -25,7 +25,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { createTintsAndShades } from '../../utils/colors';
 import { getContainer } from '../../utils/common';
-import { findBlockchain } from '../../utils/meta';
+import { createTokenExplorerUrl, findBlockchain } from '../../utils/meta';
 import { formatBalance } from '../../utils/wallets';
 import { ImportCustomToken } from '../ImportCustomToken';
 
@@ -81,8 +81,7 @@ const renderDesc = (props: RenderDescProps) => {
         <div
           className={`${tokenAddressStyles()} ${
             !name && tokenWithoutNameStyles()
-          }`}
-        >
+          }`}>
           {length > 10
             ? `${address.slice(0, 5)}...${address.slice(length - 6, length)}`
             : address}{' '}
@@ -91,8 +90,7 @@ const renderDesc = (props: RenderDescProps) => {
             href={url}
             target="_blank"
             rel="nofollow noreferrer"
-            onClick={(e) => e.stopPropagation()}
-          >
+            onClick={(e) => e.stopPropagation()}>
             <ExternalLinkIcon size={12} />
           </StyledLink>
         </div>
@@ -153,8 +151,7 @@ export function TokenList(props: PropTypes) {
           type="primary"
           size="small"
           className="widget-token-list-item-import-btn"
-          onClick={handleClick}
-        >
+          onClick={handleClick}>
           <Typography variant="body" size="xsmall" color="background">
             {t('import')}
           </Typography>
@@ -187,8 +184,7 @@ export function TokenList(props: PropTypes) {
             <Typography
               variant="body"
               className={usdValueStyles()}
-              size="xsmall"
-            >
+              size="xsmall">
               {`$${tokenBalance.usdValue}`}
             </Typography>
           )}
@@ -266,6 +262,13 @@ export function TokenList(props: PropTypes) {
             }
           };
 
+          const url = address
+            ? createTokenExplorerUrl({
+                contractAddress: address,
+                blockchainMeta: blockchain,
+              })
+            : undefined;
+
           return (
             <ListItemContainer>
               <StyledListItemButton
@@ -306,8 +309,7 @@ export function TokenList(props: PropTypes) {
                         <TagTitle
                           variant="body"
                           size="xsmall"
-                          css={customCssForTagTitle}
-                        >
+                          css={customCssForTagTitle}>
                           {token.blockchain}
                         </TagTitle>
                       </Tag>
@@ -321,16 +323,17 @@ export function TokenList(props: PropTypes) {
                   ) : undefined
                 }
                 description={
-                  typeof token !== 'string' && !!blockchain.info && !!address
+                  typeof token !== 'string' &&
+                  !!blockchain.info &&
+                  !!address &&
+                  !!url
                     ? renderDesc({
                         address,
                         token,
                         customCssForTag,
                         customCssForTagTitle,
                         name: token.name,
-                        url: blockchain.info.addressUrl
-                          .split('{wallet}')
-                          .join(address),
+                        url,
                       })
                     : token.name || undefined
                 }
