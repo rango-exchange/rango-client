@@ -70,3 +70,16 @@ export function isValidTokenAddress(
   const valid = regex.filter((r) => new RegExp(r).test(address)).length > 0;
   return valid;
 }
+
+export function createTokenExplorerUrl(params: {
+  contractAddress: string;
+  blockchainMeta: BlockchainMeta;
+}): string | undefined {
+  const { contractAddress, blockchainMeta } = params;
+
+  if (blockchainMeta.info?.tokenUrl) {
+    return blockchainMeta.info.tokenUrl.replace('{address}', contractAddress);
+  }
+
+  return blockchainMeta.info?.addressUrl.replace('{wallet}', contractAddress);
+}
