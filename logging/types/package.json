@@ -22,5 +22,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "url": "https://github.com/rango-exchange/rango-client.git"
   }
 }

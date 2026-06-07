@@ -21,12 +21,19 @@ import { rootPath } from './path.mjs';
 export async function publishOnNpm(pkg) {
   const channel = detectChannel();
   const distTag = channel === 'prod' ? 'latest' : channel;
-  const output = await execa('yarn', [
+  const output = await execa('npm', [
+    '-w',
+    pkg.name,
     'publish',
-    pkg.location,
     '--tag',
     distTag,
-  ])
+    '--ignore-scripts'
+  ], {
+    env: {
+      ...process.env,
+      npm_config_registry: 'https://registry.npmjs.org',
+    }
+  })
     .then(({ stdout }) => stdout)
     .catch((error) => {
       throw new NpmPublishError(error.stderr);

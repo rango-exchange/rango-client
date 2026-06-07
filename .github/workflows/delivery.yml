@@ -1,9 +1,27 @@
-name: Production Release
+name: Delivery
+# Each run announces what it actually is: a routine publish,
+# or the full production release when dispatched with `full_release`.
+run-name: >-
+  ${{ inputs.full_release && 'Production Release' || 'Publish' }}
+
 on:
+  push:
+    branches:
+      - 'next'
   workflow_dispatch:
+    inputs:
+      full_release:
+        description: 'Run full release pipeline (sync-prod, publish, deploy, sync-next)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: package-delivery
 
 jobs:
+  # Production-only: merge `next` into `main` before publishing.
   sync-prod:
+    if: ${{ inputs.full_release }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,13 +35,35 @@ jobs:
         with:
           prod: true
 
+  # The single OIDC entry point. This is the ONLY job/workflow that publishes,
+  # so it is the workflow filename registered as the trusted publisher for every
+  # package on npmjs.com. Runs on every push to `next` (prerelease) and as part
+  # of the full release on dispatch (after sync-prod, on `main`).
   publish:
     needs: sync-prod
-    uses: ./.github/workflows/publish.yml
-    secrets: inherit
+    if: ${{ always() && !cancelled() && (needs.sync-prod.result == 'success' || needs.sync-prod.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+      - run: git pull
 
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Publish
+        uses: ./.github/actions/publish
+
+  # Production-only: build and deploy clients to Vercel.
   deploy:
     needs: publish
+    if: ${{ inputs.full_release }}
     environment: production
     runs-on: ubuntu-latest
     env:          
@@ -51,9 +91,10 @@ jobs:
           VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
           VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}          
 
-
+  # Production-only: merge `main` back into `next` to keep branches in sync.
   sync-next:
     needs: deploy
+    if: ${{ inputs.full_release }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -32,6 +32,25 @@ The `publish` script performs:
 4. Publishes updated packages to NPM.
 5. Pushes updated package versions and tags to origin.
 
+**OIDC trusted publishing:** Publishing authenticates to npm via a short-lived OIDC token — no `NPM_TOKEN` secret needed. This requires each package to trust `delivery.yml`(the workflow you are publishing in it) in this repository on npmjs.com.
+
+OIDC only works for packages that have been published at least once. For a new package:
+
+1. Publish it manually the first time.
+2. Ensure `repository.url` is set in the package's `package.json` and the root `package.json`.
+3. Register it as a trusted publisher:
+   ```sh
+   npm trust github PACKAGE_NAME --file delivery.yml --allow-publish --yes
+   ```
+
+   To configure every workspace package at once, loop over the package names, e.g.:
+   ```sh
+   for pkg in $(yarn --silent workspaces list --json | jq -r 'select(.location != ".") | .name'); do
+     npm trust github "$pkg" --file delivery.yml --allow-publish --yes
+   done
+   ```
+   
+
 **If run on `main` branch**, the publish script will also:
 
 * Automatically bump `widget/app` and/or `widget/playground` versions if changed.
@@ -63,7 +82,7 @@ Running `yarn run deploy`:
 
 ### Experimental
 
-You can trigger an experimental release (base branch should be `main`) by running `Publish` workflow manually for your branch.
+You can trigger an experimental release (base branch should be `main`) by running the **`Delivery`** workflow manually from your branch (leave `full_release` unchecked).
 
 
 ### **Next (Staging)**
@@ -74,10 +93,9 @@ A publish to **Preview** is triggered automatically when a Pull Request is merge
 
 ### **Production**
 
-**Note:** Ensure that all modifications to the `Production Release` workflow are implemented as a hotfix to the `main` branch to guarantee that we have the most recent updates while executing the workflow.
+**Note:** Ensure that all modifications to the `Delivery` workflow are implemented as a hotfix to the `main` branch to guarantee that we have the most recent updates while executing the workflow.
 
-
-Run the **`Production Release`** workflow.
+Run the **`Delivery`** workflow manually with **`full_release`** checked.
 
 
 It will:
@@ -124,22 +142,20 @@ It will:
 ## **Visual Diagram**
 
 ```
-                ┌─────────────────────┐
-                │    Automatic Flow   │
-                └─────────────────────┘
-                          │
-                Run "Production Release"
-                          │
-                          ▼
-     ┌─────────────────────────────────────────────┐
-     │ 1. Sync main ← next                         │
-     │ 2. Publish (bump + changelog + NPM publish) │
-     │ 3. Deploy (Preview)                         │
-     │ 4. Promote to Production (manual)           │
-     │ 5. Sync next (main → next)               │
-     └─────────────────────────────────────────────┘
-                          │
-                          ▼
-              Send Telegram note + update widget-examples
+  push to `next` /                  workflow_dispatch
+  workflow_dispatch                  (full_release = true)
+  (full_release = false)                     │
+        │                                    │
+        ▼                                    ▼
+  ┌──────────┐              ┌──────────────────────────────────────┐
+  │ publish  │              │ 1. sync-prod  (next → main, --no-ff) │
+  │  (OIDC)  │              │ 2. publish    (OIDC, on main)        │
+  └──────────┘              │ 3. deploy     (Vercel Preview)       │
+  prerelease tag            │ 4. Promote to Production  (manual)   │
+  or experimental tag       │ 5. sync-next  (main → next)          │
+                            └──────────────────────────────────────┘
+                                             │
+                                             ▼
+                             Send Telegram note + update widget-examples
 ```
 
