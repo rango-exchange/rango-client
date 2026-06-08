@@ -82,9 +82,8 @@ export const allProviders = (
     }
   }
 
-  return [
+  console.log([
     lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
-    lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
     tonconnect,
@@ -117,5 +116,9 @@ export const allProviders = (
     unisat,
     vultisig,
     gemwallet,
+  ]);
+
+  return [
+    lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
   ];
 };
