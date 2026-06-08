@@ -1,9 +1,14 @@
+import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
+
 import { DefaultSolanaSigner } from '@rango-dev/signer-solana';
 import base58 from 'bs58';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SolanaExternalProvider = any;
-
+/**
+ * Ctrl's Solana provider signs messages via a direct `signMessage(bytes)` call
+ * (the standard wallet-adapter shape). `DefaultSolanaSigner` signs through
+ * `request({ method: 'signMessage' })`, which Ctrl does not support, so we keep the
+ * direct call and inherit everything else (incl. base58 output and `signAndSendTx`).
+ */
 export class CustomSolanaSigner extends DefaultSolanaSigner {
   constructor(provider: SolanaExternalProvider) {
     super(provider);

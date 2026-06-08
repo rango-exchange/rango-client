@@ -1,30 +1,33 @@
 {
-  "name": "@rango-dev/provider-xdefi",
+  "name": "@rango-dev/provider-ctrl",
   "version": "0.62.1-next.1",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-xdefi --splitting",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ctrl --inputs src/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@hub3js/core": "^0.60.1",
+    "@hub3js/evm": "^0.2.1",
+    "@hub3js/solana": "^0.2.1",
+    "@hub3js/std": "^0.1.1",
     "@rango-dev/signer-evm": "^0.42.0",
     "@rango-dev/signer-solana": "^0.48.0",
     "@rango-dev/wallets-core": "^0.59.1-next.0",
-    "@rango-dev/wallets-shared": "^0.60.1-next.1",
     "bs58": "^5.0.0",
     "rango-types": "^0.5.0"
   },
