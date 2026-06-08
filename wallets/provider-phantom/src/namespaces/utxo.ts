@@ -4,19 +4,16 @@ import type {
   UtxoActions,
 } from '@rango-dev/wallets-core/namespaces/utxo';
 
-import {
-  ActionBuilder,
-  NamespaceBuilder,
-  type Subscriber,
-  type SubscriberCleanUp,
-} from '@hub3js/core';
+import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import { actions as solanaActions, type SolanaActions } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import {
   builders,
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
+  utils,
 } from '@rango-dev/wallets-core/namespaces/utxo';
 import {
   Networks,
@@ -26,9 +23,6 @@ import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
 import { bitcoinPhantom, solanaPhantom } from '../utils.js';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyFunction = (...args: any[]) => any;
 
 type BtcAccount = {
   address: string;
@@ -49,69 +43,34 @@ const getBitcoinAccounts: () => Promise<ProviderConnectResult> = async () => {
   };
 };
 
-function getChangeAccountSubscriber(
-  instance: () => ProviderAPI | undefined
-): [Subscriber<UtxoActions>, SubscriberCleanUp<UtxoActions>] {
-  let eventCallback: AnyFunction;
-
-  // subscriber can be passed to `or`, it will get the error and should rethrow error to pass the error to next `or` or throw error.
-  return [
-    (context, err) => {
-      const bitcoinInstance = instance();
-
-      if (!bitcoinInstance) {
-        throw new Error(
-          'Trying to subscribe to your Solana wallet, but seems its instance is not available.'
-        );
-      }
-
-      const [, setState] = context.state();
-
-      eventCallback = (accounts: BtcAccount[]) => {
-        /*
-         * In Phantom, when user is switching to an account which is not connected to dApp yet, it returns an empty array on `accountsChanged`.
-         * So empty array means we don't have access to account and we need to disconnect and let the user connect the account.
-         */
-        if (!accounts.length) {
-          context.action('disconnect');
-          return;
-        }
-
-        const formatAccounts = accounts
-          .filter((account) => account.purpose === 'payment')
-          .map(
-            (account: BtcAccount) =>
-              AccountId.format({
-                address: account.address,
-                chainId: {
-                  namespace: CAIP_NAMESPACE,
-                  reference: CAIP_BITCOIN_CHAIN_ID,
-                },
-              }) as CaipAccount
-          );
-
-        setState('accounts', formatAccounts);
-      };
-      bitcoinInstance.on('accountsChanged', eventCallback);
-
-      if (err instanceof Error) {
-        throw err;
-      }
-    },
-    (_context, err) => {
-      const bitcoinInstance = instance();
-
-      if (eventCallback && bitcoinInstance) {
-        bitcoinInstance.off('accountsChanged', eventCallback);
-      }
-
-      return err;
-    },
-  ];
-}
-
 const [changeAccountSubscriber, changeAccountCleanup] =
-  getChangeAccountSubscriber(bitcoinPhantom);
+  new ChangeAccountSubscriberBuilder<BtcAccount[], ProviderAPI, UtxoActions>()
+    .getInstance(bitcoinPhantom)
+    /*
+     * In Phantom, when the user switches to an account which is not connected to the dApp yet, it returns an empty array on `accountsChanged`.
+     * So an empty array means we don't have access to the account and we need to disconnect and let the user connect the account.
+     */
+    .onSwitchAccount((event, context) => {
+      if (!event.payload.length) {
+        event.preventDefault();
+        context.action('disconnect');
+      }
+    })
+    .format(async (_, accounts) => {
+      return utils.formatAccountsToCAIP(
+        accounts
+          .filter((account) => account.purpose === 'payment')
+          .map((account) => account.address),
+        CAIP_BITCOIN_CHAIN_ID
+      );
+    })
+    .addEventListener((instance, callback) => {
+      return instance.on('accountsChanged', callback);
+    })
+    .removeEventListener((instance, callback) => {
+      return instance.off('accountsChanged', callback);
+    })
+    .build();
 
 const connect = builders
   .connect()
