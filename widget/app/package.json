@@ -11,7 +11,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel -p 3002 --cache-dir=.parcel-cache --no-cache",
-    "build": "parcel build --cache-dir=.parcel-cache",
+    "build": "parcel build --cache-dir=.parcel-cache && node ./copy-static.mjs",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

@@ -1,0 +1,12 @@
+{
+  "name": "Rango Exchange",
+  "description": "Cross-chain DEX aggregator and bridge to swap and bridge assets across 70+ blockchains.",
+  "iconPath": "logo.svg",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Safe (app.safe.global) fetches `/manifest.json` (and the icon it points to)
+# cross-origin before loading us as a Safe App, so these files must be served
+# with permissive CORS. `_headers` is the Cloudflare Pages / Netlify convention
+# for per-path response headers; if the widget is deployed elsewhere (Workers,
+# S3+CloudFront, nginx, ...) the same headers must be configured there instead.
+/manifest.json
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Access-Control-Allow-Headers: X-Requested-With, content-type, Authorization
+
+/logo.svg
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Access-Control-Allow-Headers: X-Requested-With, content-type, Authorization
