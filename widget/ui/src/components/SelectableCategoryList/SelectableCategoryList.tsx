@@ -23,12 +23,12 @@ export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
   return (
     <Container>
       {isLoading &&
-        Array.from(Array(5), (_, index) => (
+        Array.from(Array(4), (_, index) => (
           <Skeleton
             key={index}
             variant="rounded"
             height={70}
-            width={index === 0 ? 45 : 65}
+            width={index === 0 ? 45 : '100%'}
           />
         ))}
       {!isLoading &&
