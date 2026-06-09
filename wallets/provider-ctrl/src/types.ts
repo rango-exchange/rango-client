@@ -16,10 +16,3 @@ export type Provider = Map<
   keyof ProviderObject,
   ProviderObject[keyof ProviderObject]
 >;
-
-/** The UTXO chains grouped under the single UTXO namespace. */
-export type UtxoNetwork =
-  | LegacyNetworks.BTC
-  | LegacyNetworks.LTC
-  | LegacyNetworks.DOGE
-  | LegacyNetworks.BCH;

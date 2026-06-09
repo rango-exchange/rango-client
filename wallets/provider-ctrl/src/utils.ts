@@ -1,28 +1,13 @@
-import type { Provider, UtxoNetwork } from './types.js';
+import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { CaipAccount } from '@hub3js/std/types';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  CAIP_BITCOINCASH_CHAIN_ID,
-  CAIP_DOGECOIN_CHAIN_ID,
-  CAIP_LITECOIN_CHAIN_ID,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+import { utils } from '@rango-dev/wallets-core/namespaces/utxo';
 
-/**
- * The UTXO chains Ctrl exposes, grouped under the single UTXO namespace, each
- * paired with its CAIP-2 (bip122) reference so accounts can be self-describing.
- */
-export const UTXO_CHAINS: { network: UtxoNetwork; caip: string }[] = [
-  { network: LegacyNetworks.BTC, caip: CAIP_BITCOIN_CHAIN_ID },
-  { network: LegacyNetworks.LTC, caip: CAIP_LITECOIN_CHAIN_ID },
-  { network: LegacyNetworks.DOGE, caip: CAIP_DOGECOIN_CHAIN_ID },
-  { network: LegacyNetworks.BCH, caip: CAIP_BITCOINCASH_CHAIN_ID },
-];
+import { UTXO_CHAINS } from './constants.js';
 
 export function ctrl(): Provider | null {
   const { ctrl } = window;
@@ -108,7 +93,7 @@ export function evmEventSource(): EvmProviderApi {
 }
 
 /** Promisified `request_accounts` for a callback-style ctrl UTXO instance. */
-export async function requestUtxoAccounts(
+async function requestUtxoAccounts(
   instance: UtxoProviderApi
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {

@@ -5,12 +5,7 @@ import type { GenericSigner, Transfer } from 'rango-types';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-const SUPPORTED_UTXO_CHAINS: string[] = [
-  LegacyNetworks.BTC,
-  LegacyNetworks.LTC,
-  LegacyNetworks.DOGE,
-  LegacyNetworks.BCH,
-];
+import { SUPPORTED_UTXO_CHAINS } from '../constants.js';
 
 interface CtrlTransferParams {
   asset: { chain: string; symbol: string; ticker: string };
@@ -28,8 +23,7 @@ async function ctrlTransfer(
   amount: string,
   decimals: number,
   recipientAddress: string | null,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  provider: any,
+  provider: UtxoProviderApi,
   method: string,
   memo?: string
 ): Promise<string> {

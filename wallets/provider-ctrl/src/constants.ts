@@ -2,6 +2,12 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
+  CAIP_BITCOIN_CHAIN_ID,
+  CAIP_BITCOINCASH_CHAIN_ID,
+  CAIP_DOGECOIN_CHAIN_ID,
+  CAIP_LITECOIN_CHAIN_ID,
+} from '@rango-dev/wallets-core/namespaces/utxo';
+import {
   type BlockchainMeta,
   evmBlockchains,
   solanaBlockchain,
@@ -13,22 +19,20 @@ import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'ctrl';
 
-// exported because it is also consumed by /queue-manager/queue-manager-demo
-export const SUPPORTED_ETH_CHAINS = [
-  LegacyNetworks.POLYGON,
-  LegacyNetworks.ETHEREUM,
-  LegacyNetworks.BSC,
-  LegacyNetworks.AVAX_CCHAIN,
-  LegacyNetworks.FANTOM,
-  LegacyNetworks.ARBITRUM,
-];
+/**
+ * The UTXO chains Ctrl exposes, grouped under the single UTXO namespace, each paired
+ * with its CAIP-2 (bip122) reference so accounts can be self-describing.
+ */
+export const UTXO_CHAINS = [
+  { network: LegacyNetworks.BTC, caip: CAIP_BITCOIN_CHAIN_ID },
+  { network: LegacyNetworks.LTC, caip: CAIP_LITECOIN_CHAIN_ID },
+  { network: LegacyNetworks.DOGE, caip: CAIP_DOGECOIN_CHAIN_ID },
+  { network: LegacyNetworks.BCH, caip: CAIP_BITCOINCASH_CHAIN_ID },
+] as const;
 
-const SUPPORTED_UTXO_CHAINS = [
-  LegacyNetworks.BTC,
-  LegacyNetworks.LTC,
-  LegacyNetworks.DOGE,
-  LegacyNetworks.BCH,
-];
+export const SUPPORTED_UTXO_CHAINS: string[] = UTXO_CHAINS.map(
+  (chain) => chain.network
+);
 
 export const metadata: ProviderMetadata = {
   name: 'Ctrl',
@@ -59,7 +63,7 @@ export const metadata: ProviderMetadata = {
             id: 'BTC',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               allBlockchains.filter((chain): chain is TransferBlockchainMeta =>
-                SUPPORTED_UTXO_CHAINS.includes(chain.name as LegacyNetworks)
+                SUPPORTED_UTXO_CHAINS.includes(chain.name)
               ),
           },
           {
