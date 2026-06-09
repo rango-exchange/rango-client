@@ -77,6 +77,16 @@ export function mapWalletTypesToWalletInfo(
       const { installed, network } = getState(wallet);
       const filterContractWallets =
         isContractWallet && (!installed || (!!chain && network !== chain));
+      if (isContractWallet) {
+        console.log('DATAAAA');
+        console.log(
+          filterContractWallets,
+          isContractWallet,
+          installed,
+          chain,
+          network
+        );
+      }
       if (filterContractWallets) {
         return false;
       }
