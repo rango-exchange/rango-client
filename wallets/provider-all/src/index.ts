@@ -11,7 +11,7 @@ import { versions as braavos } from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
 import { versions as coin98 } from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
-import * as defaultInjected from '@rango-dev/provider-default';
+import { versions as defaultInjected } from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
 import { versions as freighter } from '@rango-dev/provider-freighter';
@@ -118,7 +118,5 @@ export const allProviders = (
     gemwallet,
   ]);
 
-  return [
-    lazyProvider(legacyProviderImportsToVersionsInterface(defaultInjected)),
-  ];
+  return [defaultInjected];
 };
