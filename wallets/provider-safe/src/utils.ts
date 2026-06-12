@@ -41,8 +41,7 @@ export async function initSafe(): Promise<boolean> {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  safeProvider = new SafeAppProvider(accountInfo, sdk as any);
+  safeProvider = new SafeAppProvider(accountInfo, sdk);
   return true;
 }
 
