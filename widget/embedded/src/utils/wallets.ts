@@ -5,6 +5,7 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { NamespaceData } from '@hub3js/core/store';
 import type {
   ExtendedWalletInfo,
   ProviderContext,
@@ -23,6 +24,7 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
+  getBlockChainNameFromId,
   isEvmAddress,
   Networks,
 } from '@rango-dev/wallets-shared';
@@ -74,9 +76,39 @@ export function mapWalletTypesToWalletInfo(
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
 
-      const { installed, network } = getState(wallet);
+      const { installed, namespaces } = getState(wallet);
+      const networks = [...(namespaces?.values() || [])]
+        .filter(
+          (namespace): namespace is NamespaceData & { network: string } =>
+            namespace.connected && !!namespace.network
+        )
+        .map((namespace) => namespace.network);
+
+      /*
+       * Hub EVM wallets report `network` as a chain id (e.g. `0x1`) whereas
+       * `chain` is a rango blockchain name (e.g. `ETH`). For contract wallets
+       * (e.g. Safe) we compare the two to check the wallet is connected to the
+       * required chain, so we normalize the chain id to a name first.
+       * `getBlockChainNameFromId` returns the value unchanged when it's already
+       * a name (legacy wallets), so this stays correct for both.
+       *
+       * We have to convert here because legacy and hub differ on where the
+       * conversion happens. In legacy the provider also returned a numeric
+       * chain id, but the `Wallet` class converted it via
+       * `getBlockChainNameFromId` inside `connect()` before writing it to
+       * `state.network`, so consumers always read a network name. Hub dropped
+       * that central step: the connect action's raw chain id flows straight
+       * into `state.network` (via `connectAndUpdateStateForMultiNetworks`),
+       * so the conversion has to be reintroduced wherever `network` is read.
+       */
+      const connectedChainsName = networks.map((network) =>
+        network
+          ? getBlockChainNameFromId(network, supportedChains) ?? network
+          : network
+      );
       const filterContractWallets =
-        isContractWallet && (!installed || (!!chain && network !== chain));
+        isContractWallet &&
+        (!installed || (!!chain && !connectedChainsName?.includes(chain)));
       if (filterContractWallets) {
         return false;
       }

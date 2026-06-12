@@ -1,3 +1,4 @@
+import type { ProviderAPI } from '@hub3js/evm';
 import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
 import type { TransactionResponse } from 'ethers';
 import type { GenericSigner } from 'rango-types';
@@ -6,7 +7,7 @@ import type { EvmTransaction } from 'rango-types/mainApi';
 import { DefaultEvmSigner, waitMs } from '@rango-dev/signer-evm';
 import { TransactionStatus } from '@safe-global/safe-apps-sdk';
 
-import { sdk } from '../helpers.js';
+import { sdk } from '../utils.js';
 
 export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
   let txHash;
@@ -36,7 +37,7 @@ export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
 export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   private signer;
 
-  constructor(provider: any) {
+  constructor(provider: ProviderAPI) {
     this.signer = new DefaultEvmSigner(provider);
   }
 
