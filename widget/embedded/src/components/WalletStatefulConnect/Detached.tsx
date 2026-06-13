@@ -161,7 +161,7 @@ export function Detached(props: PropTypes) {
       <MessageBox
         type="info"
         title={i18n.t(`Connect {wallet}`, {
-          wallet: targetWallet.type,
+          wallet: targetWallet.title,
         })}
         description={i18n.t(
           'This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect.'
