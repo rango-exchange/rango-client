@@ -106,12 +106,19 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
     const response = await provider
       .request({
         method: 'sign_psbt',
-        params: {
-          psbt: psbt.unsignedPsbtBase64,
-          signInputs,
-          allowedSignHash: 1,
-          broadcast: true,
-        },
+        /*
+         * Ctrl expects `params` as an array (same as its other RPCs); passing a bare
+         * object makes the extension read `psbt` off `undefined`. The docs showing a
+         * plain object are wrong.
+         */
+        params: [
+          {
+            psbt: psbt.unsignedPsbtBase64,
+            signInputs,
+            allowedSignHash: 1,
+            broadcast: true,
+          },
+        ],
       })
       .catch((error: unknown) => {
         throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
