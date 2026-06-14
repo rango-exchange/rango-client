@@ -7,13 +7,16 @@ import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@rango-dev/wallets-core/na
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import {
   CAIP_BITCOIN_CHAIN_ID,
+  CAIP_BITCOINCASH_CHAIN_ID,
+  CAIP_DOGECOIN_CHAIN_ID,
+  CAIP_LITECOIN_CHAIN_ID,
   CAIP_ZCASH_CHAIN_ID,
 } from '@rango-dev/wallets-core/namespaces/utxo';
 import { AccountId, type ChainIdParams } from 'caip';
 import { Err, Ok } from 'ts-results';
 
 export function mapCaipNamespaceToLegacyNetworkName(
-  chainId: ChainIdParams | string,
+  chainId: ChainIdParams | string
 ): string {
   if (typeof chainId === 'string') {
     return chainId;
@@ -30,6 +33,12 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'BTC';
   } else if (chainId.reference === CAIP_ZCASH_CHAIN_ID) {
     return 'ZCASH';
+  } else if (chainId.reference === CAIP_LITECOIN_CHAIN_ID) {
+    return 'LTC';
+  } else if (chainId.reference === CAIP_DOGECOIN_CHAIN_ID) {
+    return 'DOGE';
+  } else if (chainId.reference === CAIP_BITCOINCASH_CHAIN_ID) {
+    return 'BCH';
   }
 
   if (chainId.namespace.toLowerCase() === CAIP_TON_NAMESPACE) {
@@ -52,9 +61,7 @@ export function mapCaipNamespaceToLegacyNetworkName(
  *
  * @see https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md
  */
-export function fromAccountIdToLegacyAddressFormat(
-  account: string,
-): string {
+export function fromAccountIdToLegacyAddressFormat(account: string): string {
   const { chainId, address } = AccountId.parse(account);
   const network = mapCaipNamespaceToLegacyNetworkName(chainId);
   return formatAddressWithNetwork(address, network);
