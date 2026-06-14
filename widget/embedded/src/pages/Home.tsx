@@ -23,9 +23,15 @@ import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { UiEventTypes } from '../types';
+import { QuoteEventTypes, UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
-import { emitPreventableEvent } from '../utils/events';
+import { buildSwapEstimatePayload } from '../utils/eventPayloads';
+import {
+  emitPreventableEvent,
+  emitQuoteEvent,
+  emitUiEvent,
+  emitWalletConnectInitiated,
+} from '../utils/events';
 import { getSlippageValidation } from '../utils/settings';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
@@ -133,6 +139,18 @@ export function Home() {
   };
   const onClickOnQuote = (quote: SelectedQuote) => {
     if (selectedQuote?.requestId !== quote.requestId) {
+      if (selectedQuote) {
+        emitQuoteEvent({
+          type: QuoteEventTypes.ROUTE_CHANGED,
+          payload: {
+            sourceChain: quote.swaps[0]?.from.blockchain ?? '',
+            destinationChain:
+              quote.swaps[quote.swaps.length - 1]?.to.blockchain ?? '',
+            fromRouteId: selectedQuote.requestId,
+            toRouteId: quote.requestId,
+          },
+        });
+      }
       setShowQuoteWarningModal(false);
       setSelectedQuote(quote);
     }
@@ -190,11 +208,21 @@ export function Home() {
               if (swapButtonState.action === 'connect-wallet') {
                 emitPreventableEvent(
                   { type: UiEventTypes.CLICK_CONNECT_WALLET },
-                  () => onHandleNavigation(navigationRoutes.wallets)
+                  () => {
+                    emitWalletConnectInitiated('swap_button');
+                    onHandleNavigation(navigationRoutes.wallets);
+                  }
                 );
               } else if (swapButtonState.action === 'confirm-warning') {
                 setShowQuoteWarningModal(true);
-              } else {
+              } else if (selectedQuote) {
+                emitUiEvent({
+                  type: UiEventTypes.SWAP_INITIATED,
+                  payload: {
+                    ...buildSwapEstimatePayload(selectedQuote),
+                    walletConnected: connectedWallets.length > 0,
+                  },
+                });
                 onHandleNavigation(navigationRoutes.confirmSwap);
               }
             }}>
@@ -203,6 +231,7 @@ export function Home() {
         }
         header={{
           onWallet: () => {
+            emitWalletConnectInitiated('nav');
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,

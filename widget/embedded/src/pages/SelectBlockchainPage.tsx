@@ -16,7 +16,9 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
+import { UiEventTypes } from '../types';
 import { filterBlockchainsWithAtLeastOneToken } from '../utils/common';
+import { emitUiEvent } from '../utils/events';
 
 interface PropTypes {
   type: 'source' | 'destination' | 'custom-token';
@@ -51,6 +53,14 @@ export function SelectBlockchainPage(props: PropTypes) {
     if (type === 'custom-token') {
       navigate(`..?blockchain=${blockchain.name}`, { replace: true });
     } else {
+      emitUiEvent({
+        type: UiEventTypes.CHAIN_FILTER_APPLIED,
+        payload: {
+          side: type === 'source' ? 'from' : 'to',
+          chain: blockchain.name,
+          filterSource: 'expanded',
+        },
+      });
       if (type === 'source') {
         setFromBlockchain(blockchain);
       } else {

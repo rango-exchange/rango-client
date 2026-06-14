@@ -12,13 +12,21 @@ import {
   MessageBox,
   Typography,
 } from '@rango-dev/ui';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
+import { emitUiEvent } from '../../utils/events';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
 import { getQuoteChains } from '../../utils/wallets';
@@ -211,6 +219,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
     const lastSelectedWallets = selectableWallets.filter(
       (wallet) => wallet.selected
     );
+    emitUiEvent({
+      type: UiEventTypes.SWAP_WALLETS_CONFIRMED,
+      payload: { routeId: selectedQuote?.requestId ?? '' },
+    });
     setWalletsAsSelected(lastSelectedWallets);
     selectQuoteWallets(lastSelectedWallets);
     setQuoteWalletConfirmed(true);
@@ -301,6 +313,39 @@ export function ConfirmWalletsModal(props: PropTypes) {
     }
   }, [connectedWallets, nextSelectedWallets]);
 
+  const routeId = selectedQuote?.requestId ?? '';
+  const hasReportedModalShown = useRef(false);
+
+  useEffect(() => {
+    if (open && !hasReportedModalShown.current) {
+      hasReportedModalShown.current = true;
+      const pendingChains = requiredChains.filter(
+        (chain) =>
+          !connectedWallets.some(
+            (connectedWallet) => connectedWallet.chain === chain
+          )
+      );
+      emitUiEvent({
+        type: UiEventTypes.SWAP_WALLETS_MODAL_SHOWN,
+        payload: {
+          chainsRequired: requiredChains.length,
+          chainsPending: pendingChains.length,
+        },
+      });
+    } else if (!open) {
+      hasReportedModalShown.current = false;
+    }
+  }, [open, requiredChains, connectedWallets]);
+
+  useEffect(() => {
+    if (isInsufficientBalanceModalOpen) {
+      emitUiEvent({
+        type: UiEventTypes.GAS_WARNING_SHOWN,
+        payload: { routeId },
+      });
+    }
+  }, [isInsufficientBalanceModalOpen, routeId]);
+
   const modalContainer = document.getElementById(
     WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
@@ -383,7 +428,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
             size="large"
             type="primary"
             fullWidth
-            onClick={onConfirmBalance}>
+            onClick={() => {
+              emitUiEvent({
+                type: UiEventTypes.GAS_WARNING_BYPASSED,
+                payload: { routeId },
+              });
+              onConfirmBalance();
+            }}>
             {i18n.t('Proceed anyway')}
           </Button>
         </MessageBox>

@@ -12,7 +12,9 @@ import React from 'react';
 
 import { MAX_SLIPPAGE, SLIPPAGES } from '../../constants/swapSettings';
 import { useAppStore } from '../../store/AppStore';
+import { UiEventTypes } from '../../types';
 import { getContainer } from '../../utils/common';
+import { emitUiEvent } from '../../utils/events';
 import { getSlippageValidation } from '../../utils/settings';
 import { isValidCurrencyFormat } from '../../utils/validation';
 
@@ -31,6 +33,23 @@ export function Slippage() {
   const slippageValidation =
     customSlippage !== null ? getSlippageValidation(customSlippage) : null;
 
+  /** Effective slippage before a change, used as the previous value in events. */
+  const effectiveSlippage = customSlippage ?? slippage;
+
+  const emitSlippageChanged = (previousValue: number, newValue: number) => {
+    if (previousValue === newValue) {
+      return;
+    }
+    emitUiEvent({
+      type: UiEventTypes.SETTINGS_CHANGED,
+      payload: {
+        settingName: 'slippage',
+        previousValue: String(previousValue),
+        newValue: String(newValue),
+      },
+    });
+  };
+
   const onSlippageValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -43,10 +62,12 @@ export function Slippage() {
     if (parsedValue > MAX_SLIPPAGE) {
       slippage = MAX_SLIPPAGE;
     }
+    emitSlippageChanged(effectiveSlippage, slippage);
     setCustomSlippage(slippage);
   };
 
   const onClickSlippageChip = (slippageItem: number) => {
+    emitSlippageChanged(effectiveSlippage, slippageItem);
     if (customSlippage !== null) {
       setCustomSlippage(null);
     }

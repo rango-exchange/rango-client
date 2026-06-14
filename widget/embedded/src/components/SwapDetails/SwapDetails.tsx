@@ -34,7 +34,9 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
 import { getContainer } from '../../utils/common';
+import { emitUiEvent } from '../../utils/events';
 import {
   numberToString,
   roundedSecondsToString,
@@ -404,6 +406,10 @@ export function SwapDetails(props: SwapDetailsProps) {
             type="primary"
             size="large"
             onClick={() => {
+              emitUiEvent({
+                type: UiEventTypes.SWAP_RETRIED,
+                payload: { routeId: swap.requestId },
+              });
               const swapInput = createRetryQuote(swap, blockchains, findToken);
               retry(swapInput);
               setTimeout(() => {

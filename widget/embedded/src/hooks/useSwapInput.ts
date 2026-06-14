@@ -5,8 +5,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { QuoteErrorType } from '../types';
+import { QuoteErrorType, QuoteEventTypes } from '../types';
 import { debounce } from '../utils/common';
+import { buildSwapEstimatePayload } from '../utils/eventPayloads';
+import { emitQuoteEvent } from '../utils/events';
 import { isPositiveNumber } from '../utils/numbers';
 import {
   generateQuoteWarnings,
@@ -160,6 +162,27 @@ export function useSwapInput({
           updateQuotePartialState('quotes', res);
           setSelectedQuote(quote);
 
+          if (!res.results?.length || !quote) {
+            emitQuoteEvent({
+              type: QuoteEventTypes.ROUTE_NOT_FOUND,
+              payload: {
+                sourceChain: fromToken.blockchain,
+                destinationChain: toToken.blockchain,
+                sourceToken: fromToken.symbol,
+                destinationToken: toToken.symbol,
+                inputAmountUsd: inputUsdValue ? inputUsdValue.toNumber() : null,
+              },
+            });
+          } else {
+            emitQuoteEvent({
+              type: QuoteEventTypes.ROUTE_REQUESTED,
+              payload: {
+                ...buildSwapEstimatePayload(quote),
+                routeCount: res.results.length,
+              },
+            });
+          }
+
           throwErrorIfResponseIsNotValid({
             diagnosisMessages: res.diagnosisMessages,
             requestId: quote?.requestId || '',
@@ -176,6 +199,28 @@ export function useSwapInput({
         })
         .catch((error) => {
           const quoteError = handleQuoteErrors(error);
+          if (quoteError.type === QuoteErrorType.NO_RESULT) {
+            emitQuoteEvent({
+              type: QuoteEventTypes.ROUTE_NOT_FOUND,
+              payload: {
+                sourceChain: fromToken.blockchain,
+                destinationChain: toToken.blockchain,
+                sourceToken: fromToken.symbol,
+                destinationToken: toToken.symbol,
+                inputAmountUsd: inputUsdValue ? inputUsdValue.toNumber() : null,
+              },
+            });
+          } else if (quoteError.type === QuoteErrorType.REQUEST_FAILED) {
+            emitQuoteEvent({
+              type: QuoteEventTypes.ROUTE_FETCH_FAILED,
+              payload: {
+                sourceChain: fromToken.blockchain,
+                destinationChain: toToken.blockchain,
+
+                errorCode: String(error?.response?.status ?? ''),
+              },
+            });
+          }
           if (
             quoteError.type === QuoteErrorType.NO_RESULT ||
             quoteError.type === QuoteErrorType.REQUEST_FAILED

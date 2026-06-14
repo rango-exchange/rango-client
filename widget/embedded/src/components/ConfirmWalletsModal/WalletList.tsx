@@ -18,6 +18,7 @@ import { WIDGET_UI_ID } from '../../constants';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
+import { emitWalletConnectInitiated } from '../../utils/events';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
   getAddress,
@@ -176,6 +177,8 @@ export function WalletList(props: PropTypes) {
             (isConnectedButDifferentThanTargetNamespace &&
               !couldAddExperimentalChain)
           ) {
+            // The user is starting a connection from the confirm-wallets modal.
+            emitWalletConnectInitiated('confirm_modal');
             setSelectedWalletToConnect(wallet);
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({

@@ -32,7 +32,9 @@ import { navigationRoutes } from '../../constants/navigationRoutes';
 import { ThemeModeEnum } from '../../constants/settings';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
+import { UiEventTypes } from '../../types';
 import { getContainer } from '../../utils/common';
+import { emitUiEvent } from '../../utils/events';
 import { getUniqueSwappersGroups, isFeatureHidden } from '../../utils/settings';
 
 const ThemeSection = styled('div', {
@@ -257,7 +259,17 @@ export function SettingsLists() {
     ),
     start: <InfinityIcon color="gray" size={16} />,
     end: <Switch checked={infiniteApprove} />,
-    onClick: toggleInfiniteApprove,
+    onClick: () => {
+      emitUiEvent({
+        type: UiEventTypes.SETTINGS_CHANGED,
+        payload: {
+          settingName: 'infinite_approval',
+          previousValue: String(infiniteApprove),
+          newValue: String(!infiniteApprove),
+        },
+      });
+      toggleInfiniteApprove();
+    },
   };
 
   const themeItem = {

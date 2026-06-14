@@ -14,8 +14,11 @@ import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useSearchCustomTokens } from '../../hooks/useSearchCustomTokens';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
+import { emitUiEvent } from '../../utils/events';
 
 import {
+  getTokenSelectionMethod,
   prepareTokensList,
   shouldSearchForCustomTokens,
 } from './SelectSwapItemPage.helpers';
@@ -111,6 +114,14 @@ export function SelectSwapItemsPage(props: PropTypes) {
           blockchain={type === 'source' ? fromBlockchain : toBlockchain}
           onMoreClick={() => navigate(navigationRoutes.blockchains)}
           onChange={(blockchain) => {
+            emitUiEvent({
+              type: UiEventTypes.CHAIN_FILTER_APPLIED,
+              payload: {
+                side: type === 'source' ? 'from' : 'to',
+                chain: blockchain.name,
+                filterSource: 'featured',
+              },
+            });
             updateBlockchain(blockchain);
           }}
         />
@@ -142,6 +153,22 @@ export function SelectSwapItemsPage(props: PropTypes) {
           searchedFor={searchedFor}
           type={type}
           onChange={(token) => {
+            emitUiEvent({
+              type: UiEventTypes.TOKEN_SELECTED,
+              payload: {
+                side: type === 'source' ? 'from' : 'to',
+                tokenName: token.name,
+                tokenSymbol: token.symbol,
+                tokenAddress: token.address,
+                chain: token.blockchain,
+                selectionMethod: getTokenSelectionMethod(
+                  searchedFor,
+                  token.isPopular
+                ),
+                activeChainFilter: selectedBlockchainName || 'all',
+              },
+            });
+
             updateToken(token);
 
             const tokenBlockchain = blockchains.find(
