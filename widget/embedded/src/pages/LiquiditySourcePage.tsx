@@ -21,6 +21,8 @@ import {
   NotFoundContainer,
 } from '../components/SettingsContainer';
 import { useAppStore } from '../store/AppStore';
+import { UiEventTypes } from '../types';
+import { emitUiEvent } from '../utils/events';
 import { containsText } from '../utils/numbers';
 import { replaceSpacesWithDash } from '../utils/sanitizers';
 import { getUniqueSwappersGroups } from '../utils/settings';
@@ -57,6 +59,18 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     liquiditySources.filter((sourceItem) => sourceItem.selected).length;
 
   const toggleAllSources = () => {
+    emitUiEvent({
+      type: UiEventTypes.SETTINGS_CHANGED,
+      payload: {
+        settingName: 'bridge_exclusion',
+        previousValue: `${sourceType}:${
+          hasSelectAll ? 'all_enabled' : 'some_disabled'
+        }`,
+        newValue: `${sourceType}:${
+          hasSelectAll ? 'all_disabled' : 'all_enabled'
+        }`,
+      },
+    });
     liquiditySources.forEach((sourceItem) => {
       if (hasSelectAll) {
         toggleLiquiditySource(sourceItem.groupTitle);
@@ -79,6 +93,16 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
       start: <Image src={logo} size={22} type="circular" />,
       onClick: () => {
         if (!campaignMode) {
+          emitUiEvent({
+            type: UiEventTypes.SETTINGS_CHANGED,
+            payload: {
+              settingName: 'bridge_exclusion',
+              previousValue: `${groupTitle}:${
+                selected ? 'enabled' : 'disabled'
+              }`,
+              newValue: `${groupTitle}:${selected ? 'disabled' : 'enabled'}`,
+            },
+          });
           toggleLiquiditySource(groupTitle);
         }
       },

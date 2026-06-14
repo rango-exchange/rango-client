@@ -8,6 +8,7 @@ import { ZERO } from '../../constants/numbers';
 import { BALANCE_SEPARATOR } from '../../constants/wallets';
 import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
+import { consumeWalletConnectionSource } from '../../services/walletConnectionSource';
 import {
   type Balance,
   type Wallet,
@@ -114,7 +115,8 @@ export interface WalletsSlice {
   newWalletConnected: (
     accounts: Wallet[],
     namespace?: Namespace,
-    derivationPath?: string
+    derivationPath?: string,
+    meta?: { walletName?: string }
   ) => Promise<void>;
   disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
   /**
@@ -443,14 +445,20 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
-    newWalletConnected: async (accounts, namespace, derivationPath) => {
+    newWalletConnected: async (accounts, namespace, derivationPath, meta) => {
       const newAccount = accounts[0];
       if (!newAccount) {
         return;
       }
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
-        payload: { walletType: newAccount.walletType, accounts },
+        payload: {
+          walletType: newAccount.walletType,
+          accounts,
+          chain: newAccount.chain ?? null,
+          walletName: meta?.walletName ?? newAccount.walletType,
+          source: consumeWalletConnectionSource(),
+        },
       });
 
       get().addConnectedWallet(accounts, namespace, derivationPath);

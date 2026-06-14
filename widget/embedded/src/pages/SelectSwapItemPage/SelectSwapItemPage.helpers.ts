@@ -7,6 +7,19 @@ import {
   MIN_SEARCH_LENGTH,
 } from './SelectSwapItemPage.constants';
 
+export function getTokenSelectionMethod(
+  searchedFor: string,
+  isPopular: boolean | undefined
+): 'search' | 'popular' | 'recent' {
+  if (searchedFor.trim()) {
+    return 'search';
+  }
+  if (isPopular) {
+    return 'popular';
+  }
+  return 'recent';
+}
+
 export function shouldSearchForCustomTokens(
   metaSearchResultTokens: Token[],
   query: string,

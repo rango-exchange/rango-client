@@ -9,6 +9,8 @@ import { SwapDetails } from '../components/SwapDetails';
 import { SwapDetailsPlaceholder } from '../components/SwapDetails/SwapDetails.Placeholder';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
+import { UiEventTypes } from '../types';
+import { emitUiEvent } from '../utils/events';
 import { getPendingSwaps } from '../utils/queue';
 
 export function SwapDetailsPage() {
@@ -41,6 +43,10 @@ export function SwapDetailsPage() {
     if (selectedSwap?.id) {
       const swap = manager?.get(selectedSwap.id);
       if (swap) {
+        emitUiEvent({
+          type: UiEventTypes.SWAP_CANCELLED,
+          payload: { routeId: requestId },
+        });
         cancelSwap(swap);
       }
     }

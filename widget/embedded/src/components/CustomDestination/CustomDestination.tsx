@@ -16,6 +16,8 @@ import React, { useEffect, useRef } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
+import { emitUiEvent } from '../../utils/events';
 import {
   getBlockchainDisplayNameFor,
   isValidTokenAddress,
@@ -93,6 +95,22 @@ export function CustomDestination(props: PropTypes) {
       handleOpenChange(true);
     }
   }, [configDestination]);
+
+  const lastReportedDestination = useRef<string | null>(null);
+  useEffect(() => {
+    if (!customDestination) {
+      lastReportedDestination.current = null;
+      return;
+    }
+    const isValid = open && isValidTokenAddress(blockchain, customDestination);
+    if (isValid && lastReportedDestination.current !== customDestination) {
+      lastReportedDestination.current = customDestination;
+      emitUiEvent({
+        type: UiEventTypes.DESTINATION_ADDRESS_SET,
+        payload: { destinationChain: blockchain.name },
+      });
+    }
+  }, [customDestination, open, blockchain]);
 
   return (
     <Container>

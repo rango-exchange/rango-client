@@ -12,6 +12,7 @@ import {
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
+import { emitWalletDetected } from '../utils/events';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -21,6 +22,13 @@ import {
 } from '../utils/wallets';
 
 import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
+
+/**
+ * Wallet types we've already reported as detected this session. Module-scoped so
+ * the `walletDetected` event fires at most once per provider regardless of how
+ * often the wallet list re-renders or remounts.
+ */
+const detectedWalletsReported = new Set<string>();
 
 interface Params {
   chain?: string;
@@ -65,6 +73,32 @@ export function useWalletList(params?: Params): API {
     : wallets;
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
+
+  useEffect(() => {
+    wallets.forEach((wallet) => {
+      const isDetected = wallet.state !== WalletState.NOT_INSTALLED;
+      if (isDetected && !detectedWalletsReported.has(wallet.type)) {
+        detectedWalletsReported.add(wallet.type);
+        emitWalletDetected({
+          walletType: wallet.type,
+          walletName: wallet.title,
+        });
+      }
+    });
+  }, [hashWalletsState(wallets)]);
+
+  useEffect(() => {
+    wallets.forEach((wallet) => {
+      const isDetected = wallet.state !== WalletState.NOT_INSTALLED;
+      if (isDetected && !detectedWalletsReported.has(wallet.type)) {
+        detectedWalletsReported.add(wallet.type);
+        emitWalletDetected({
+          walletType: wallet.type,
+          walletName: wallet.title,
+        });
+      }
+    });
+  }, [hashWalletsState(wallets)]);
 
   const isExperimentalChainNotAdded = (walletType: string) =>
     !connectedWallets.find(
