@@ -137,6 +137,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌  | ✅   | ❌  | ❌       | ❌      |
 | [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
 | [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ctrl](provider-ctrl/readme.md)                 | ✅  | ✅   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
@@ -171,6 +172,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| Ctrl         | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
@@ -201,9 +203,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 | Wallet | Supported Chains | Not Implemented | Auto Connect Support | Source |
 | ------ | ---------------- | --------------- | -------------------- | ------ |
-
-rate ready to the hub)
 | Safe | EVM | - | &check; | https://safe.global/ |
 | Trezor | Ethereum,Solana | Solana | &cross; | https://trezor.io/ |
 | Wallet Connect | Evm,Solana | Solana | &cross; | - |
-| XDefi | EVM,Solana,Binance,BTC,LTC,Thorchain,Doge | | &check; | https://www.xdefi.io/ |

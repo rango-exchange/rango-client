@@ -6,8 +6,6 @@ import type {
 } from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
 
@@ -48,7 +46,7 @@ export enum WalletTypes {
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
-  XDEFI = 'xdefi',
+  CTRL = 'ctrl',
   READY = 'ready',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
@@ -147,15 +145,6 @@ export type DerivationPath = {
   label: string;
   generateDerivationPath: (index: string) => string;
 };
-
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
-  Networks.BTC,
-  Networks.LTC,
-  Networks.THORCHAIN,
-  Networks.BCH,
-  Networks.MAYA,
-  Networks.DOGE,
-];
 
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =

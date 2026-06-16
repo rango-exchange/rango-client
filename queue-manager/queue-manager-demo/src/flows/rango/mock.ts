@@ -4285,7 +4285,7 @@ export const meta = {
       'SOLANA',
     ],
     phantom: ['SOLANA'],
-    xdefi: [
+    ctrl: [
       'BSC',
       'POLYGON',
       'ETH',
