@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/only-throw-error */
+
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type {
@@ -32,13 +32,8 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import {
-  Networks,
-  WalletTypes,
-  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';
@@ -658,13 +653,7 @@ export const walletsAndSupportedChainsMetaSelector = (
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.PHANTOM]: solanaBlockchain,
-    [WalletTypes.XDEFI]: blockchainsArray.filter((blockchainMeta) =>
-      [
-        ...XDEFI_WALLET_SUPPORTED_EVM_CHAINS,
-        ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-        Networks.SOLANA,
-      ].includes(blockchainMeta.name as Networks)
-    ),
+    [WalletTypes.CTRL]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.TRUST_WALLET]: evmBlockchains,
     [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
@@ -686,7 +675,6 @@ export const walletsAndSupportedChainsMetaSelector = (
        * ),
        */
     ],
-    [WalletTypes.CLOVER]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.BRAVE]: [...evmBlockchains, ...solanaBlockchain],
   };
 };
