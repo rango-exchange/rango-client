@@ -8,6 +8,7 @@ import type { ConnectResult } from './legacy/mod.js';
 import type { LegacyState } from '@rango-dev/wallets-core/legacy';
 import type { SignerFactory } from 'rango-types';
 
+import { withErrorLoggingApi } from './helpers.js';
 import {
   findProviderByType,
   separateLegacyAndHubProviders,
@@ -114,7 +115,7 @@ function useProviders(props: ProviderProps) {
     },
   };
 
-  return api;
+  return withErrorLoggingApi(api);
 }
 
 export { useProviders };

@@ -40,6 +40,7 @@
     "@hub3js/namespaces": "^0.1.1",
     "@hub3js/solana": "^0.2.1",
     "@hub3js/std": "^0.1.1",
+    "@rango-dev/logging-core": "^0.12.1",
     "@rango-dev/wallets-core": "^0.59.1-next.1",
     "@rango-dev/wallets-shared": "^0.60.1-next.2",
     "caip": "^1.1.1",

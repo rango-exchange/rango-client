@@ -2,7 +2,7 @@ import type { Data, EventPayload, Message } from '@rango-dev/logging-types';
 
 import { EventType, Level } from '@rango-dev/logging-types';
 
-import { isValidInstance } from './helpers';
+import { isValidInstance } from './helpers.js';
 
 export function ev(level: Level, message: Message, data?: Data) {
   if (!isValidInstance(message)) {
