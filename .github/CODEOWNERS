@@ -2,48 +2,41 @@
 # https://help.github.com/en/articles/about-code-owners
 
 # Infra
-/crowdin.yml @nikaaru
-/lingui.config.ts @yeager-eren  @nikaaru
-/.github @yeager-eren @RanGojo @nikaaru
-/scripts @yeager-eren @nikaaru
+/lingui.config.ts @yeager-eren @nikaaru
+/.github @yeager-eren @nikaaru @arlert-armin
+/scripts @yeager-eren @nikaaru @arlert-armin
+
+# Docs
+/docs @nikaaru @Ikari-Shinji-re @arlert-armin
+
+# Examples
+/examples @nikaaru @Ikari-Shinji-re @arlert-armin
+
+# Patches
+/patches
+
+# Test utils
+/test-utils @nikaaru @yeager-eren
+
+# Translations
+/translations @nikaaru @Ikari-Shinji-re
 
 # Queue manager
-/queue-manager/* @yeager-eren @samobasquiat
+/queue-manager @yeager-eren @RyukTheCoder
 
 # Logging
-/logging/* @yeager-eren
+/logging @yeager-eren
+
+# Signers
+/signers @yeager-eren @RyukTheCoder @arlert-armin
 
 # Wallets
-/signers/* @RanGojo @mikasackermn
-/wallets/* @yeager-eren
-/wallets/core @yeager-eren
-/wallets/react @yeager-eren
-/wallets/provider-all @yeager-eren
-/wallets/provider-argentx @RanGojo @RanGojo
-/wallets/provider-bitget @samobasquiat
-/wallets/provider-braavos @RanGojo @samobasquiat
-/wallets/provider-brave @Ikari-Shinji-re
-/wallets/provider-coin98 @Ikari-Shinji-re
-/wallets/provider-coinbase @yeager-eren
-/wallets/provider-default @RanGojo
-/wallets/provider-enkrypt @Ikari-Shinji-re
-/wallets/provider-exodus @mikasackermn
-/wallets/provider-halo @samobasquiat
-/wallets/provider-math-wallet @Ikari-Shinji-re
-/wallets/provider-metamask @yeager-eren
-/wallets/provider-okx @mikasackermn
-/wallets/provider-phantom @RanGojo @mikasackermn
-/wallets/provider-safe @samobasquiat
-/wallets/provider-safepal @Ikari-Shinji-re
-/wallets/provider-taho @mikasackermn
-/wallets/provider-tokenpocket @mikasackermn
-/wallets/provider-tron-link @RanGojo
-/wallets/provider-trustwallet @mikasackermn
-/wallets/provider-walletconnect2 @RanGojo @yeager-eren @samobasquiat @mikasackermn
-/wallets/provider-xdefi @RanGojo
+/wallets @yeager-eren @RyukTheCoder @arlert-armin @llawliet-l-l
 
 # Widget
-/widget/embedded/store @yeager-eren @Ikari-Shinji-re
-/widget/iframe @yeager-eren @Ikari-Shinji-re
-/widget/playground @samobasquiat @mikasackermn
-/widget/ui @mikasackermn @Ikari-Shinji-re
+/widget/app @nikaaru @Ikari-Shinji-re
+/widget/charts @nikaaru @Ikari-Shinji-re
+/widget/embedded @nikaaru @Ikari-Shinji-re @RyukTheCoder
+/widget/iframe
+/widget/playground @arlert-armin @RyukTheCoder
+/widget/ui @nikaaru @Ikari-Shinji-re
