@@ -23,6 +23,7 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
+  HYPERLIQUID_SIGN_NETWORK,
   isEvmAddress,
   Networks,
 } from '@rango-dev/wallets-shared';
@@ -223,6 +224,14 @@ export function prepareAccountsForWalletStore(
            */
           addAccount(network, address.toLowerCase());
         });
+
+        const shouldAddHyperliquidAccount = evmChainsSupportedByWallet.includes(
+          HYPERLIQUID_SIGN_NETWORK
+        );
+
+        if (shouldAddHyperliquidAccount) {
+          addAccount(Networks.HYPERLIQUID, address.toLowerCase());
+        }
       }
     } else {
       addAccount(network, address);

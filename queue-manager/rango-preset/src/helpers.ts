@@ -178,6 +178,7 @@ export const getCurrentStepTx = (
     tonTransaction,
     suiTransaction,
     xrplTransaction,
+    hyperliquidTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -191,7 +192,8 @@ export const getCurrentStepTx = (
     tronTransaction ||
     tonTransaction ||
     suiTransaction ||
-    xrplTransaction
+    xrplTransaction ||
+    hyperliquidTransaction
   );
 };
 
@@ -217,6 +219,7 @@ export const setCurrentStepTx = (
   currentStep.suiTransaction = null;
   currentStep.xrplTransaction = null;
   currentStep.stellarTransaction = null;
+  currentStep.hyperliquidTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -787,6 +790,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     swap.wallets[step.stellarTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
+    swap.wallets[step.hyperliquidTransaction?.type || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
