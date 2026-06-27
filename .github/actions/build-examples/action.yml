@@ -25,6 +25,22 @@ runs:
         restore-keys: |
           ${{ runner.os }}-examples-
 
+    # Persist the bundlers' incremental build caches that live OUTSIDE
+    # node_modules so the examples don't rebuild cold every run (next's
+    # .next/cache and parcel's .parcel-cache). vite's node_modules/.vite and
+    # webpack's node_modules/.cache are already covered by the cache above.
+    # A rolling key (run id) with an examples-build- restore-keys fallback
+    # refreshes the cache every run and always restores the most recent one.
+    - name: ⚙️ Cache example build caches
+      uses: actions/cache@v4
+      with:
+        path: |
+          examples/*/.next/cache
+          examples/*/.parcel-cache
+        key: ${{ runner.os }}-examples-build-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-examples-build-
+
     - name: 📦 Install Example Dependencies
       if: steps.cache-examples.outputs.cache-hit != 'true'
       run: |
@@ -80,6 +96,10 @@ runs:
       shell: bash
 
     - name: 🚀 Build All Examples (Concurrent)
+      # Cap each build's V8 heap so several bundlers running at once can't
+      # overcommit the runner's RAM (the cause of the swap-thrash / OOM runs).
+      env:
+        NODE_OPTIONS: --max-old-space-size=4096
       run: |
         echo "::group::🚀 Building all examples concurrently"
 
@@ -88,7 +108,7 @@ runs:
         names=()
 
         for dir in ./examples/*; do
-          if [ -f "$dir/package.json" ]; then            
+          if [ -f "$dir/package.json" ]; then
             name=$(basename "$dir")
             cmds+=("yarn --cwd $dir build")
             names+=("$name")
@@ -103,7 +123,12 @@ runs:
         # Join arrays into comma-separated strings
         name_list=$(IFS=,; echo "${names[*]}")
 
+        # Limit how many examples build at once (--max-processes). Building all
+        # of them simultaneously exhausts the runner's memory and leads to
+        # 20+ minute runs or OOM failures; a bounded pool keeps memory in check
+        # while still building in parallel.
         yarn concurrently --kill-others-on-fail \
+          --max-processes 3 \
           --names "$name_list" \
           "${cmds[@]}"
 
