@@ -9,7 +9,9 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true,
+      "outputs": ["{projectRoot}/dist"]
     },
     "dev": {
       "dependsOn": ["^build"]
