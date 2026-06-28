@@ -2,7 +2,6 @@ import fs from 'node:fs/promises';
 import { $, execa } from 'execa';
 import { join } from 'node:path';
 import { compareSemVer } from 'semver-parser';
-import fetch, { Headers } from 'node-fetch';
 import {
   NpmGetPackageError,
   NpmPackageNotFoundError,
@@ -11,7 +10,6 @@ import {
 } from './errors.mjs';
 import { detectChannel } from './github.mjs';
 import { rootPath } from './path.mjs';
-
 
 /**
  * Publish a package using `yarn publish`
