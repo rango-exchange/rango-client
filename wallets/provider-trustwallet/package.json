@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.60.1-next.2",
+  "version": "0.60.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,9 +25,9 @@
     "@hub3js/evm": "^0.2.1",
     "@hub3js/solana": "^0.2.1",
     "@hub3js/std": "^0.1.1",
-    "@rango-dev/signer-evm": "^0.42.0",
-    "@rango-dev/wallets-core": "^0.59.1-next.1",
-    "@rango-dev/wallets-shared": "^0.60.1-next.2",
+    "@rango-dev/signer-evm": "^0.42.1-next.0",
+    "@rango-dev/wallets-core": "^0.59.1-next.2",
+    "@rango-dev/wallets-shared": "^0.60.1-next.3",
     "bs58": "^5.0.0",
     "rango-types": "^0.5.0"
   },
