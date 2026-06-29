@@ -4,6 +4,7 @@ import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
   type BlockchainMeta,
   evmBlockchains,
+  hyperliquidBlockchain,
   type TransferBlockchainMeta,
   tronBlockchain,
 } from 'rango-types';
@@ -33,8 +34,10 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              evmBlockchains(allBlockchains),
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) => [
+              ...evmBlockchains(allBlockchains),
+              ...hyperliquidBlockchain(allBlockchains),
+            ],
           },
           {
             label: 'Tron',

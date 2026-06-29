@@ -20,6 +20,7 @@ import {
 import {
   claimQueue,
   getCurrentStep,
+  getRequiredSignNetwork,
   getRequiredWallet,
   isNeedBlockQueueForParallel,
   isNetworkMatchedForTransaction,
@@ -143,7 +144,7 @@ async function ensureWalletIsOnCorrectNetwork(
   } else if (!networkMatched) {
     const fromNamespace = getCurrentNamespaceOf(swap, currentStep);
     const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(
-      fromNamespace.network
+      getRequiredSignNetwork(currentStep, fromNamespace.network)
     );
 
     const blockedFor = {
