@@ -44,6 +44,7 @@ export enum Networks {
   SUI = 'SUI',
   XRPL = 'XRPL',
   ZCASH = 'ZCASH',
+  HYPERLIQUID = 'HYPERLIQUID',
 
   // Using instead of null
   Unknown = 'Unkown',

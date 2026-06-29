@@ -92,6 +92,8 @@ export async function checkPrerequisites(
   } else {
     if (currentStep.fromBlockchain === Networks.XRPL) {
       result = new Ok(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
+    } else if (currentStep.fromBlockchain === Networks.HYPERLIQUID) {
+      result = new Ok(SwapActionTypes.EXECUTE_HYPERLIQUID_TRANSACTION);
     } else {
       result = new Ok(SwapActionTypes.EXECUTE_TRANSACTION);
     }

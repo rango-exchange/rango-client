@@ -1,10 +1,12 @@
 import type { Namespace } from '@hub3js/namespaces';
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletInfo as WalletInfo,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+
+import {
+  LegacyNetworks,
+  type LegacyNetwork as Network,
+  type LegacyWalletInfo as WalletInfo,
+  type LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
@@ -145,6 +147,8 @@ export type DerivationPath = {
   label: string;
   generateDerivationPath: (index: string) => string;
 };
+
+export const HYPERLIQUID_SIGN_NETWORK = LegacyNetworks.ARBITRUM;
 
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =

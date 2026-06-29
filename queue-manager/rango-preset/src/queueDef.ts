@@ -1,11 +1,13 @@
 import type { SwapQueueDef } from './types';
 
+import { checkHyperliquidTransactionStatus } from './actions/checkHyperliquidTransactionStatus';
 import { checkPrerequisites } from './actions/checkPrerequisites';
 import { checkStatus } from './actions/checkStatus';
 import { checkStellarTrustline } from './actions/checkStellarTrustline';
 import { checkXrplTrustline } from './actions/checkXrplTrustline';
 import { checkXrplTrustLineTransactionStatus } from './actions/checkXrplTrustlineTransactionStatus';
 import { createTransaction } from './actions/createTransaction';
+import { executeHyperliquidTransaction } from './actions/executeHyperliquidTransaction';
 import { executeStellarTransaction } from './actions/executeStellarTransaction';
 import { executeTransaction } from './actions/executeTransaction';
 import { executeXrplTransaction } from './actions/executeXrplTransaction';
@@ -39,6 +41,10 @@ export const swapQueueDef: SwapQueueDef = {
     [SwapActionTypes.EXECUTE_TRANSACTION]: executeTransaction,
     [SwapActionTypes.EXECUTE_XRPL_TRANSACTION]: executeXrplTransaction,
     [SwapActionTypes.EXECUTE_STELLAR_TRANSACTION]: executeStellarTransaction,
+    [SwapActionTypes.EXECUTE_HYPERLIQUID_TRANSACTION]:
+      executeHyperliquidTransaction,
+    [SwapActionTypes.CHECK_HYPERLIQUID_TRANSACTION_STATUS]:
+      checkHyperliquidTransactionStatus,
     [SwapActionTypes.CHECK_TRANSACTION_STATUS]: checkStatus,
   },
   run: [SwapActionTypes.START],

@@ -49,6 +49,7 @@ import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/walle
 import {
   getBlockChainNameFromId,
   getEvmProvider,
+  HYPERLIQUID_SIGN_NETWORK,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import {
@@ -178,6 +179,7 @@ export const getCurrentStepTx = (
     tonTransaction,
     suiTransaction,
     xrplTransaction,
+    hyperliquidTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -191,7 +193,8 @@ export const getCurrentStepTx = (
     tronTransaction ||
     tonTransaction ||
     suiTransaction ||
-    xrplTransaction
+    xrplTransaction ||
+    hyperliquidTransaction
   );
 };
 
@@ -217,6 +220,7 @@ export const setCurrentStepTx = (
   currentStep.suiTransaction = null;
   currentStep.xrplTransaction = null;
   currentStep.stellarTransaction = null;
+  currentStep.hyperliquidTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -713,6 +717,24 @@ export async function getProviderChainId(
  * For running a swap safely, we need to make sure about the state of wallet
  * which means the netowrk/chain of wallet should be exactly on what a transaction needs.
  */
+/**
+ * The EVM chain a wallet must be actively connected to in order to sign the current step.
+ *
+ * For Hyperliquid the wallet is stored under the "HYPERLIQUID" key, but the action is an
+ * EIP-712 message signed with the Arbitrum domain chainId. Many wallets reject
+ * `eth_signTypedData_v4` unless their active chain matches that chainId, so the wallet
+ * must actually be on Arbitrum (HYPERLIQUID_SIGN_NETWORK) before signing — even though
+ * the step's network/storage key is "HYPERLIQUID".
+ */
+export function getRequiredSignNetwork(
+  step: PendingSwapStep,
+  fallbackNetwork: string
+): string {
+  return step.hyperliquidTransaction
+    ? HYPERLIQUID_SIGN_NETWORK
+    : fallbackNetwork;
+}
+
 export async function isNetworkMatchedForTransaction(
   swap: PendingSwap,
   step: PendingSwapStep,
@@ -729,13 +751,17 @@ export async function isNetworkMatchedForTransaction(
     return false;
   }
 
+  // The EVM chain the wallet must actually be on to sign (Arbitrum for Hyperliquid).
+  const requiredNetwork = getRequiredSignNetwork(step, fromNamespace.network);
+
   if (
     meta.evmBasedChains.find(
-      (evmBlochain) => evmBlochain.name === fromNamespace.network
+      (evmBlochain) => evmBlochain.name === requiredNetwork
     )
   ) {
     try {
-      const sourceWallet = swap.wallets[fromNamespace.network];
+      // Resolve via the step-aware key so the Hyperliquid wallet (keyed "HYPERLIQUID") is found.
+      const sourceWallet = getRelatedWalletOrNull(swap, step);
       if (sourceWallet) {
         const chainId = await getProviderChainId(
           providers,
@@ -751,13 +777,13 @@ export async function isNetworkMatchedForTransaction(
           );
           if (
             blockChain &&
-            blockChain.toLowerCase() === fromNamespace.network.toLowerCase()
+            blockChain.toLowerCase() === requiredNetwork.toLowerCase()
           ) {
             return true;
           }
           if (
             blockChain &&
-            blockChain.toLowerCase() !== fromNamespace.network.toLowerCase()
+            blockChain.toLowerCase() !== requiredNetwork.toLowerCase()
           ) {
             return false;
           }
@@ -787,6 +813,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     swap.wallets[step.stellarTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
+    swap.wallets[step.hyperliquidTransaction?.type || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
@@ -913,10 +940,14 @@ export function onBlockForChangeNetwork(
     setStorage: queue.setStorage.bind(queue),
   });
 
-  const requiredNetwork = getCurrentNamespaceOfOrNull(
+  const namespaceNetwork = getCurrentNamespaceOfOrNull(
     swap,
     currentStep
   )?.network;
+  // For Hyperliquid the wallet must be switched to Arbitrum, not "HYPERLIQUID".
+  const requiredNetwork = currentStep.hyperliquidTransaction
+    ? HYPERLIQUID_SIGN_NETWORK
+    : namespaceNetwork;
 
   const requiredWallet = getRequiredWallet(swap).type;
 
@@ -939,9 +970,20 @@ export function onBlockForChangeNetwork(
 
   // Try to auto switch
   const { type, namespace } = getRequiredWallet(swap);
-  if (!!type && !!namespace?.network) {
-    if (context.canSwitchNetworkTo(type, namespace.network, namespace)) {
-      const result = context.switchNetwork(type, namespace);
+  /*
+   * For Hyperliquid we must switch the wallet to the signing chain (Arbitrum) rather than
+   * the step's "HYPERLIQUID" network, otherwise the wallet rejects signing the
+   * Arbitrum-domain EIP-712 message ("chainId should be same as current chainId").
+   */
+  const switchNamespace =
+    currentStep.hyperliquidTransaction && namespace
+      ? { ...namespace, network: HYPERLIQUID_SIGN_NETWORK }
+      : namespace;
+  if (!!type && !!switchNamespace?.network) {
+    if (
+      context.canSwitchNetworkTo(type, switchNamespace.network, switchNamespace)
+    ) {
+      const result = context.switchNetwork(type, switchNamespace);
       if (result) {
         result
           .then(() => {
