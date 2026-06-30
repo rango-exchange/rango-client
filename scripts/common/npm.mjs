@@ -41,37 +41,31 @@ export async function publishOnNpm(pkg) {
  */
 export async function getNpmPackage(pkg) {
   const packageName = pkg.name;
-  const headers = new Headers();
-  // This is to use less bandwidth unless we really need to get the full response.
-  // See https://github.com/npm/npm-registry-client#request
-  headers.append(
-    'Accept',
-    'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
-  );
   const response = await fetch(
-    `https://registry.npmjs.org/${escapeName(packageName)}`,
-    {
-      headers,
-    }
+    `https://registry.npmjs.org/-/package/${escapeName(packageName)}/dist-tags`
   ).catch((err) => {
     const msg =
       err.message || 'An error has occured when trying to get npm package.';
     throw new NpmGetPackageError(msg);
   });
 
-  const body = await response.json();
-
   // A new package which never has been published on npm.
   if (response.status === 404) {
     throw new NpmPackageNotFoundError(packageName);
-  } else if (response.status > 300) {
-    const msg = `Package: ${packageName}, Status: ${response.status}, Body: ${body}`;
+  }
+
+  const body = await response.json();
+
+  if (!response.ok) {
+    const msg = `Package: ${packageName}, Status: ${response.status}, Body: ${JSON.stringify(
+      body
+    )}`;
     throw new NpmGetPackageError(msg);
   }
 
   const versions = {
-    next: body['dist-tags'].next || null,
-    prod: body['dist-tags'].latest || null,
+    next: body.next || null,
+    prod: body.latest || null,
   };
 
   return versions;
