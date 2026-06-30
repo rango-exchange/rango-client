@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.27.1-next.3",
+  "version": "0.27.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
