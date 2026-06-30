@@ -1,7 +1,6 @@
 import type { Provider } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
-import type { Environments as TrezorEnvironments } from '@rango-dev/provider-trezor';
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
@@ -32,7 +31,7 @@ import { versions as taho } from '@rango-dev/provider-taho';
 import { versions as tokenPocket } from '@rango-dev/provider-tokenpocket';
 import { versions as tomo } from '@rango-dev/provider-tomo';
 import { versions as tonconnect } from '@rango-dev/provider-tonconnect';
-import * as trezor from '@rango-dev/provider-trezor';
+import { versions as trezor } from '@rango-dev/provider-trezor';
 import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
@@ -47,7 +46,6 @@ import { isWalletExcluded, lazyProvider } from './helpers.js';
 interface Options {
   walletconnect2: WalletConnectEnvironments;
   selectedProviders?: (WalletType | ProviderInterface | Provider)[];
-  trezor?: TrezorEnvironments;
   tonConnect?: TonConnectEnvironments;
 }
 
@@ -68,17 +66,6 @@ export const allProviders = (
       throw new Error(
         'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
       );
-    }
-  }
-
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.TREZOR,
-      name: 'Trezor',
-    })
-  ) {
-    if (!!options?.trezor?.manifest) {
-      trezor.init(options.trezor);
     }
   }
 
@@ -111,7 +98,7 @@ export const allProviders = (
     braavos,
     ledger,
     rabby,
-    lazyProvider(legacyProviderImportsToVersionsInterface(trezor)),
+    trezor,
     solflare,
     slush,
     unisat,

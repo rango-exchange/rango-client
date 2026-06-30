@@ -1,4 +1,5 @@
-import type { Environments } from './types.js';
+import type { Environments } from '../types.js';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type {
   Connect,
   ProviderConnectResult,
@@ -8,14 +9,15 @@ import type {
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
+import signer from '../signer.js';
+import { setDerivationPath } from '../state.js';
+
 import {
   getEthereumAccounts,
   getTrezorInstance,
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
 } from './helpers.js';
-import signer from './signer.js';
-import { setDerivationPath } from './state.js';
 
 let trezorManifest: Environments['manifest'] = {
   appUrl: '',
@@ -133,19 +135,17 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
           namespace: 'EVM',
           generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
         },
-        {
-          id: `(m/44'/501'/index')`,
-          label: `(m/44'/501'/index')`,
-          namespace: 'Solana',
-          generateDerivationPath: (index: string) => `44'/501'/${index}'`,
-        },
-        {
-          id: `(m/44'/501'/0'/index)`,
-          label: `(m/44'/501'/0'/index)`,
-          namespace: 'Solana',
-          generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
-        },
       ],
     },
   };
 };
+
+const buildLegacyProvider: () => LegacyProviderInterface = () => ({
+  config,
+  getInstance,
+  connect,
+  getSigners,
+  getWalletInfo,
+});
+
+export { buildLegacyProvider };
