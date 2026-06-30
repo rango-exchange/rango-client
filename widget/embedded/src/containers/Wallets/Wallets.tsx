@@ -109,6 +109,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
             [WalletTypes.TON_CONNECT]: {
               provider: { manifestUrl: config.tonConnect?.manifestUrl },
             },
+            [WalletTypes.TREZOR]: {
+              provider: { manifest: config.trezorManifest },
+            },
           },
         }}>
         {props.children}

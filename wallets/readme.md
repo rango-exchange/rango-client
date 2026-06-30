@@ -163,6 +163,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Vultisig](provider-vultisig/readme.md)         | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
 | [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
+| [Trezor](provider-trezor/readme.md)             | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 
@@ -198,6 +199,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Vultisig     | ❌             | ❌             | ✅           | Injected                  | ❌            |
 | TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
 | Freighter    | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| Trezor       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 
 # Supported Wallets (Legacy)
 

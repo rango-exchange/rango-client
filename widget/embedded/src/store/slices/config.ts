@@ -93,9 +93,6 @@ function generateProviders(config: WidgetConfig) {
         options?.walletConnectListedDesktopWalletLink,
     },
     selectedProviders: config.wallets,
-    trezor: options?.trezorManifest
-      ? { manifest: options.trezorManifest }
-      : undefined,
     tonConnect: options?.tonConnect?.manifestUrl
       ? { manifestUrl: options?.tonConnect.manifestUrl }
       : undefined,

@@ -7,7 +7,7 @@ import {
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';
 
-import { getDerivationPath } from './state.js';
+import { getDerivationPath } from '../state';
 
 export const trezorErrorMessages: { [statusCode: string]: string } = {
   Failure_ActionCancelled: 'User rejected the transaction.',
