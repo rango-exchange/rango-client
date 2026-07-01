@@ -23,9 +23,7 @@ import { useSwapMode } from '../hooks/useSwapMode';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { UiEventTypes } from '../types';
 import { isVariantExpandable } from '../utils/configs';
-import { emitPreventableEvent } from '../utils/events';
 import { getSlippageValidation } from '../utils/settings';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
@@ -187,16 +185,13 @@ export function Home() {
             }
             fullWidth
             onClick={() => {
-              if (swapButtonState.action === 'connect-wallet') {
-                emitPreventableEvent(
-                  { type: UiEventTypes.CLICK_CONNECT_WALLET },
-                  () => onHandleNavigation(navigationRoutes.wallets)
-                );
-              } else if (swapButtonState.action === 'confirm-warning') {
-                setShowQuoteWarningModal(true);
-              } else {
-                onHandleNavigation(navigationRoutes.confirmSwap);
-              }
+              /*
+               * TEMP[sourcemap-test]: throw a widget-internal error on "Connect Wallet"
+               * click to verify Sentry de-minification of widget-embedded frames.
+               */
+              throw new Error(
+                '[SOURCEMAP-TEST] Connect Wallet clicked (widget-embedded/src/pages/Home.tsx)'
+              );
             }}>
             {swapButtonState.title}
           </Button>
