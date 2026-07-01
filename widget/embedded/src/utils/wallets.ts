@@ -24,6 +24,7 @@ import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/walle
 import {
   detectInstallLink,
   HYPERLIQUID_SIGN_NETWORK,
+  getBlockChainNameFromId,
   isEvmAddress,
   Networks,
 } from '@rango-dev/wallets-shared';
@@ -44,6 +45,20 @@ import { formatThousandsWithCommas } from './sanitizers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
+
+function getConnectedEvmChainName(
+  namespaces: ReturnType<ProviderContext['state']>['namespaces'],
+  supportedChains: BlockchainMeta[]
+): string | null {
+  const evmNamespace = namespaces?.get('EVM');
+  if (!!evmNamespace?.network) {
+    return (
+      getBlockChainNameFromId(evmNamespace.network, supportedChains) ??
+      evmNamespace.network
+    );
+  }
+  return null;
+}
 
 export function getWalletConnectionStatus(
   wallet: ExtendedWalletInfo,
@@ -75,9 +90,12 @@ export function mapWalletTypesToWalletInfo(
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
 
-      const { installed, network } = getState(wallet);
+      const { installed, namespaces } = getState(wallet);
       const filterContractWallets =
-        isContractWallet && (!installed || (!!chain && network !== chain));
+        isContractWallet &&
+        (!installed ||
+          (!!chain &&
+            getConnectedEvmChainName(namespaces, supportedChains) !== chain));
       if (filterContractWallets) {
         return false;
       }
