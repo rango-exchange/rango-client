@@ -12,12 +12,17 @@ import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
-import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
+import {
+  LegacyEvents as Events,
+  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
+} from '@rango-dev/wallets-core/legacy';
 import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
+  getBlockChainNameFromId,
   type WalletType,
 } from '@rango-dev/wallets-shared';
+import { AccountId } from 'caip';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 import {
@@ -142,12 +147,16 @@ export function mapHubEventsToLegacy(
     derivationPath,
   };
 
+  const detailsProperty = provider
+    .info()
+    ?.metadata.properties?.find((property) => property.name === 'details');
+
   const eventInfo = {
     supportedBlockchains: getSupportedChainsFromProvider(
       provider,
       metadata.allBlockChains
     ),
-    isContractWallet: false,
+    isContractWallet: detailsProperty?.value?.isContractWallet ?? false,
     isHub: true,
     namespace: namespaceId,
   };
@@ -234,9 +243,28 @@ export function mapHubEventsToLegacy(
           );
         }
 
-        const formattedAddresses = event.accounts.map((accounts) =>
-          fromAccountIdToLegacyAddressFormat(accounts)
-        );
+        let formattedAddresses: string[] = [];
+        if (eventInfo.isContractWallet) {
+          formattedAddresses = event.accounts.map((account) => {
+            const { chainId, address } = AccountId.parse(account);
+            if (typeof chainId === 'string') {
+              throw new Error('Should be in CAIP format');
+            }
+            const blockchainName = getBlockChainNameFromId(
+              chainId.reference,
+              eventInfo.supportedBlockchains
+            );
+
+            return blockchainName
+              ? formatAddressWithNetwork(address, blockchainName)
+              : fromAccountIdToLegacyAddressFormat(account);
+          });
+        } else {
+          formattedAddresses = event.accounts.map((accounts) =>
+            fromAccountIdToLegacyAddressFormat(accounts)
+          );
+        }
+
         onUpdateState(
           event.provider,
           Events.ACCOUNTS,

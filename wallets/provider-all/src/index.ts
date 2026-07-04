@@ -23,7 +23,7 @@ import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
 import { versions as ready } from '@rango-dev/provider-ready';
-import * as safe from '@rango-dev/provider-safe';
+import { versions as safe } from '@rango-dev/provider-safe';
 import { versions as safepal } from '@rango-dev/provider-safepal';
 import { versions as slush } from '@rango-dev/provider-slush';
 import { versions as solflare } from '@rango-dev/provider-solflare';
@@ -70,7 +70,7 @@ export const allProviders = (
   }
 
   return [
-    lazyProvider(legacyProviderImportsToVersionsInterface(safe)),
+    safe,
     defaultInjected,
     metamask,
     lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
