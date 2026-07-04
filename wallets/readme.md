@@ -164,6 +164,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
 | [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)             | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Safe](provider-safe/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 
@@ -200,11 +201,12 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
 | Freighter    | ✅             | ❌             | ✅           | Injected                  | ✅            |
 | Trezor       | ❌             | ❌             | ❌           | Transport                 | ✅            |
+| Safe         | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
 
 # Supported Wallets (Legacy)
 
 | Wallet | Supported Chains | Not Implemented | Auto Connect Support | Source |
 | ------ | ---------------- | --------------- | -------------------- | ------ |
-| Safe | EVM | - | &check; | https://safe.global/ |
+
 | Trezor | Ethereum,Solana | Solana | &cross; | https://trezor.io/ |
 | Wallet Connect | Evm,Solana | Solana | &cross; | - |
