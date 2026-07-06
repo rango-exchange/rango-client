@@ -8,7 +8,7 @@ msgstr ""
 "Language: ms\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-27 10:33\n"
+"PO-Revision-Date: 2026-07-06 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Malay\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:382
+#: widget/embedded/src/components/TokenList/TokenList.tsx:385
 #: widget/embedded/src/pages/HistoryPage.tsx:237
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "Tiada hasil ditemui"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:383
+#: widget/embedded/src/components/TokenList/TokenList.tsx:386
 #: widget/embedded/src/pages/HistoryPage.tsx:244
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -78,7 +78,6 @@ msgstr "Pada masa ini, beberapa transaksi sedang berjalan dan dikendalikan oleh 
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "sahkan"
 
@@ -104,17 +103,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Anda perlu menyambung dompet {blockchainName} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
-msgid "Add {chain} chain"
-msgstr "Tambahkan rantai {chain}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:94
 msgid "Chain not connected"
 msgstr "Rantai tidak bersambung"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:156
 msgid "Show more wallets"
 msgstr "Tunjukkan lebih banyak dompet"
 
@@ -134,22 +128,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Alamat {destination} tidak sepadan dengan corak alamat blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:92
 msgid "via"
 msgstr "melalui"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:107
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Token ini bukan sebahagian daripada senarai token kami yang disahkan. sila sahkan sumbernya dan pastikan anda memahami semua risiko yang berkaitan sebelum meneruskan."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:122
 msgid "Import Anyway"
 msgstr "Import Bagaimanapun"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:132
 msgid "Learn More"
 msgstr "Ketahui Lebih Lanjut"
 
@@ -729,7 +723,7 @@ msgid "Slippage:"
 msgstr "gelinciran:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:357
+#: widget/embedded/src/components/TokenList/TokenList.tsx:360
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "Pilih Token"
@@ -803,42 +797,6 @@ msgstr "Putuskan sambungan dompet"
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Dompet ini menyokong berbilang rantai. Pilih rantaian yang anda ingin sambungkan atau putuskan sambungannya."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
-msgid "Add {blockchainDisplayName} Chain"
-msgstr "Tambah {blockchainDisplayName} Rantaian"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Adakah anda ingin menambahkan rantaian percubaan {blockchainDisplayName} pada dompet anda?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Sila luluskan tetingkap timbul rangkaian percubaan dalam dompet anda."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
-msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} Rantaian Ditambah"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "Rantaian {blockchainDisplayName} telah berjaya ditambahkan pada dompet anda."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
-msgid "Request Rejected"
-msgstr "Permintaan Ditolak"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "Anda telah menolak menambah rantai {blockchainDisplayName} pada dompet anda."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69

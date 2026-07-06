@@ -8,7 +8,7 @@ msgstr ""
 "Language: hu\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-27 10:33\n"
+"PO-Revision-Date: 2026-07-06 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:382
+#: widget/embedded/src/components/TokenList/TokenList.tsx:385
 #: widget/embedded/src/pages/HistoryPage.tsx:237
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "Nincs találat"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:383
+#: widget/embedded/src/components/TokenList/TokenList.tsx:386
 #: widget/embedded/src/pages/HistoryPage.tsx:244
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -78,7 +78,6 @@ msgstr "Jelenleg néhány tranzakció fut, és más böngészőlap kezeli őket.
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Erősítse meg"
 
@@ -104,17 +103,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Egy {blockchainName} pénztárcát kell csatlakoztatnia."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
-msgid "Add {chain} chain"
-msgstr "Add hozzá a {chain} láncot"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:94
 msgid "Chain not connected"
 msgstr "Lánc nincs csatlakoztatva"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:156
 msgid "Show more wallets"
 msgstr "További pénztárcák megjelenítése"
 
@@ -134,22 +128,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "A {destination} cím nem egyezik a blokklánc címmintájával."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:92
 msgid "via"
 msgstr "keresztül"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:107
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Ez a token nem része az ellenőrzött token listánknak. Kérjük, ellenőrizze a forrását, és győződjön meg arról, hogy megértette az összes kapcsolódó kockázatot, mielőtt folytatná."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:122
 msgid "Import Anyway"
 msgstr "Amúgy importálás"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:132
 msgid "Learn More"
 msgstr "További információ"
 
@@ -729,7 +723,7 @@ msgid "Slippage:"
 msgstr "Csúszás:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:357
+#: widget/embedded/src/components/TokenList/TokenList.tsx:360
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "Válassza a Token lehetőséget"
@@ -803,42 +797,6 @@ msgstr "Pénztárca leválasztása"
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Ez a pénztárca több láncot is támogat. Válassza ki, hogy mely láncokat szeretné csatlakoztatni vagy leválasztani."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
-msgid "Add {blockchainDisplayName} Chain"
-msgstr "Add hozzá a {blockchainDisplayName} láncot"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Szeretné hozzáadni a {blockchainDisplayName} kísérleti láncot a pénztárcájához?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Kérjük, hagyja jóvá a kísérleti lánc előugró ablakát a pénztárcájában."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
-msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} Lánc hozzáadva"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "A {blockchainDisplayName} láncot sikeresen hozzáadtuk pénztárcájához."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
-msgid "Request Rejected"
-msgstr "Kérelem elutasítva"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "Ön elutasította a {blockchainDisplayName} lánc hozzáadását pénztárcájához."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69

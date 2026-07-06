@@ -8,7 +8,7 @@ msgstr ""
 "Language: hi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-27 10:33\n"
+"PO-Revision-Date: 2026-07-06 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:382
+#: widget/embedded/src/components/TokenList/TokenList.tsx:385
 #: widget/embedded/src/pages/HistoryPage.tsx:237
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "कोई परिणाम नहीं मिला"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:383
+#: widget/embedded/src/components/TokenList/TokenList.tsx:386
 #: widget/embedded/src/pages/HistoryPage.tsx:244
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -78,7 +78,6 @@ msgstr "वर्तमान में, कुछ लेनदेन चल र
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "पुष्टि करना"
 
@@ -104,17 +103,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "आपको {blockchainName} वॉलेट कनेक्ट करना होगा।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
-msgid "Add {chain} chain"
-msgstr "{chain} श्रृंखला जोड़ें"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:94
 msgid "Chain not connected"
 msgstr "चेन कनेक्ट नहीं है"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:156
 msgid "Show more wallets"
 msgstr "अधिक वॉलेट दिखाएं"
 
@@ -134,22 +128,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "पता {destination} ब्लॉकचेन पता पैटर्न से मेल नहीं खाता।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:92
 msgid "via"
 msgstr "के जरिए"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:107
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "यह टोकन हमारी सत्यापित टोकन सूची का हिस्सा नहीं है। कृपया इसके स्रोत की पुष्टि करें और आगे बढ़ने से पहले सभी संबद्ध जोखिमों को समझना सुनिश्चित करें।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:122
 msgid "Import Anyway"
 msgstr "फिर भी आयात करें"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:132
 msgid "Learn More"
 msgstr "और अधिक जानें"
 
@@ -729,7 +723,7 @@ msgid "Slippage:"
 msgstr "फिसलन:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:357
+#: widget/embedded/src/components/TokenList/TokenList.tsx:360
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "टोकन चुनें"
@@ -803,42 +797,6 @@ msgstr "वॉलेट डिस्कनेक्ट करें"
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "यह वॉलेट कई चेन को सपोर्ट करता है। चुनें कि आप कौन सी चेन को कनेक्ट या डिस्कनेक्ट करना चाहते हैं।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
-msgid "Add {blockchainDisplayName} Chain"
-msgstr "{blockchainDisplayName} चेन जोड़ें"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "क्या आप अपने वॉलेट में {blockchainDisplayName} प्रायोगिक श्रृंखला जोड़ना चाहेंगे?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "कृपया अपने वॉलेट में प्रायोगिक श्रृंखला पॉप-अप को अनुमोदित करें।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
-msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} श्रृंखला जोड़ी गई"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "{blockchainDisplayName} श्रृंखला आपके वॉलेट में सफलतापूर्वक जोड़ दी गई है।"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
-msgid "Request Rejected"
-msgstr "अनुरोध अस्वीकृत"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "आपने अपने वॉलेट में {blockchainDisplayName} चेन जोड़ने को अस्वीकार कर दिया है।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
