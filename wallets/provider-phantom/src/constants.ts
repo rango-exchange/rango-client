@@ -1,7 +1,7 @@
 import type { ProviderMetadata } from '@hub3js/core';
+import type { Networks } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { Networks } from '@rango-dev/wallets-shared';
 import {
   type BlockchainMeta,
   type EvmBlockchainMeta,
@@ -9,7 +9,6 @@ import {
   solanaBlockchain,
   type SuiBlockchainMeta,
   TransactionType,
-  type TransferBlockchainMeta,
 } from 'rango-types';
 
 import getSigners from './signer.js';
@@ -55,16 +54,6 @@ export const metadata: ProviderMetadata = {
             id: 'SOLANA',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               solanaBlockchain(allBlockchains),
-          },
-          {
-            label: 'BTC',
-            value: 'UTXO',
-            id: 'BTC',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is TransferBlockchainMeta =>
-                  chain.name === Networks.BTC
-              ),
           },
           {
             label: 'Sui',

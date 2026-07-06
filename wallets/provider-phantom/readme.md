@@ -8,8 +8,8 @@ More about implementation status can be found [here](../readme.md).
 
 ### Group
 
-#### ⚠️ UTXO
-Only supports Bitcoin.
+#### ❌ UTXO
+Bitcoin support is temporarily disabled because Phantom no longer injects a Bitcoin instance, which caused errors for users. It will be re-enabled once Phantom restores Bitcoin injection.
 
 #### ⚠️ EVM
 Only supports Ethereum, Base, and Polygon.
