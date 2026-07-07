@@ -1,3 +1,29 @@
+## Widget [0.59.0] (2026-07-07)
+_includes `@rango-dev/widget-embedded@0.61.0`_
+
+### Bug Fixes
+
+* add wallet error logging ([a0a57bd](https://github.com/rango-exchange/rango-client/commit/a0a57bd733f5920f99c38fed92092143c7720a9a))
+* display target wallet title in detached modal ([171dccf](https://github.com/rango-exchange/rango-client/commit/171dccfa34eb06dbb5551de07f0600aa39a108ff))
+* display the response error message instead of the axios error ([cb08763](https://github.com/rango-exchange/rango-client/commit/cb08763edf5cffbcc654ace4df267624dde4fe80))
+* get active evm network name ([bad0131](https://github.com/rango-exchange/rango-client/commit/bad0131f0637d0be5c7673897b8e0a13bfc7d53c))
+* **phantom:** temporarily disable bitcoin (utxo) namespace ([4bc807d](https://github.com/rango-exchange/rango-client/commit/4bc807d92663414067ef1901c08f10e79aaade67))
+* **publish:** use native fetch to avoid node-fetch gzip premature-close on large registry docs ([d60e592](https://github.com/rango-exchange/rango-client/commit/d60e592a62aacb647e4180ff8c7e19de79ef8cb4))
+* reduce blockchain category chips to 4 ([01511cc](https://github.com/rango-exchange/rango-client/commit/01511cc374e1614fcd4620ec34b17a8b3062629d))
+* use tokenUrl from blockchain metadata for token explorer links with addressUrl fallback ([4fce029](https://github.com/rango-exchange/rango-client/commit/4fce029e6eb0e6288bce26f489cce94fa28c0878))
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+* migrate ctrl(formerly xdefi) wallet ([c621ee8](https://github.com/rango-exchange/rango-client/commit/c621ee85eb9c6ee4ca548e0fbf5bd8b3e285513c))
+* migrate trezor provider to hub ([1d87eac](https://github.com/rango-exchange/rango-client/commit/1d87eac97f8a5d9122b5805b45898db53bc30cad))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+* **wallets:** migrate provider-default to hub3 ([19c7a7c](https://github.com/rango-exchange/rango-client/commit/19c7a7cf7eca4b64e959b6bb6c76b2f1c7863676))
+* **wallets:** migrate provider-safe to hub3 ([2e409e7](https://github.com/rango-exchange/rango-client/commit/2e409e795d0bb8b975e359fa96acc6ecfe084cbb))
+
+
+
 ## Widget [0.58.0] (2026-06-02)
 _includes `@rango-dev/widget-embedded@0.60.1`_
 
