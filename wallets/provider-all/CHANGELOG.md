@@ -1,3 +1,16 @@
+# [0.63.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.62.1...provider-all@0.63.0) (2026-07-07)
+
+
+### Features
+
+* migrate ctrl(formerly xdefi) wallet ([c621ee8](https://github.com/rango-exchange/rango-client/commit/c621ee85eb9c6ee4ca548e0fbf5bd8b3e285513c))
+* migrate trezor provider to hub ([1d87eac](https://github.com/rango-exchange/rango-client/commit/1d87eac97f8a5d9122b5805b45898db53bc30cad))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+* **wallets:** migrate provider-default to hub3 ([19c7a7c](https://github.com/rango-exchange/rango-client/commit/19c7a7cf7eca4b64e959b6bb6c76b2f1c7863676))
+* **wallets:** migrate provider-safe to hub3 ([2e409e7](https://github.com/rango-exchange/rango-client/commit/2e409e795d0bb8b975e359fa96acc6ecfe084cbb))
+
+
+
 ## [0.62.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.62.0...provider-all@0.62.1) (2026-06-02)
 
 

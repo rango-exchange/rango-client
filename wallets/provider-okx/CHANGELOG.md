@@ -1,3 +1,12 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.61.0...provider-okx@0.62.0) (2026-07-07)
+
+
+### Features
+
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 # [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.60.1...provider-okx@0.61.0) (2026-05-31)
 
 

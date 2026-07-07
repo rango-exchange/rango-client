@@ -1,3 +1,7 @@
+# [0.4.0](https://github.com/rango-exchange/rango-client/compare/provider-gemwallet@0.3.0...provider-gemwallet@0.4.0) (2026-07-07)
+
+
+
 # [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-gemwallet@0.2.1...provider-gemwallet@0.3.0) (2026-05-31)
 
 

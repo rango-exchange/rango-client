@@ -1,3 +1,12 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.57.0...provider-bitget@0.58.0) (2026-07-07)
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.56.1...provider-bitget@0.57.0) (2026-05-31)
 
 

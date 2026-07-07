@@ -1,3 +1,12 @@
+# 0.63.0 (2026-07-07)
+
+
+### Features
+
+* migrate ctrl(formerly xdefi) wallet ([c621ee8](https://github.com/rango-exchange/rango-client/commit/c621ee85eb9c6ee4ca548e0fbf5bd8b3e285513c))
+
+
+
 # [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.61.1...provider-xdefi@0.62.0) (2026-05-31)
 
 

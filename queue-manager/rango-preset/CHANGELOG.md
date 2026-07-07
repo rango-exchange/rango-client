@@ -1,3 +1,18 @@
+# [0.63.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.62.0...queue-manager-rango-preset@0.63.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* display the response error message instead of the axios error ([cb08763](https://github.com/rango-exchange/rango-client/commit/cb08763edf5cffbcc654ace4df267624dde4fe80))
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 # [0.62.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.61.1...queue-manager-rango-preset@0.62.0) (2026-05-31)
 
 

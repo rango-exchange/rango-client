@@ -1,3 +1,12 @@
+# [0.13.0](https://github.com/rango-exchange/rango-client/compare/logging-core@0.12.1...logging-core@0.13.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* add wallet error logging ([a0a57bd](https://github.com/rango-exchange/rango-client/commit/a0a57bd733f5920f99c38fed92092143c7720a9a))
+
+
+
 ## [0.12.1](https://github.com/rango-exchange/rango-client/compare/logging-core@0.12.0...logging-core@0.12.1) (2025-11-22)
 
 

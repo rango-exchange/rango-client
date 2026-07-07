@@ -1,3 +1,14 @@
+# [0.60.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.59.0...wallets-core@0.60.0) (2026-07-07)
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+* migrate ctrl(formerly xdefi) wallet ([c621ee8](https://github.com/rango-exchange/rango-client/commit/c621ee85eb9c6ee4ca548e0fbf5bd8b3e285513c))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 # [0.59.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.58.1...wallets-core@0.59.0) (2026-05-31)
 
 

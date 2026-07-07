@@ -1,3 +1,17 @@
+# [0.64.0](https://github.com/rango-exchange/rango-client/compare/ui@0.63.0...ui@0.64.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* reduce blockchain category chips to 4 ([01511cc](https://github.com/rango-exchange/rango-client/commit/01511cc374e1614fcd4620ec34b17a8b3062629d))
+
+
+### Features
+
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 # [0.63.0](https://github.com/rango-exchange/rango-client/compare/ui@0.62.1...ui@0.63.0) (2026-05-31)
 
 

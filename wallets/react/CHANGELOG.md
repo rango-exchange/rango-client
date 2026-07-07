@@ -1,3 +1,19 @@
+# [0.47.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.46.0...wallets-react@0.47.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* add wallet error logging ([a0a57bd](https://github.com/rango-exchange/rango-client/commit/a0a57bd733f5920f99c38fed92092143c7720a9a))
+
+
+### Features
+
+* migrate ctrl(formerly xdefi) wallet ([c621ee8](https://github.com/rango-exchange/rango-client/commit/c621ee85eb9c6ee4ca548e0fbf5bd8b3e285513c))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+* **wallets:** migrate provider-safe to hub3 ([2e409e7](https://github.com/rango-exchange/rango-client/commit/2e409e795d0bb8b975e359fa96acc6ecfe084cbb))
+
+
+
 # [0.46.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.45.1...wallets-react@0.46.0) (2026-05-31)
 
 
