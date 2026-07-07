@@ -1,3 +1,12 @@
+# [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-safe@0.53.0...provider-safe@0.54.0) (2026-07-07)
+
+
+### Features
+
+* **wallets:** migrate provider-safe to hub3 ([2e409e7](https://github.com/rango-exchange/rango-client/commit/2e409e795d0bb8b975e359fa96acc6ecfe084cbb))
+
+
+
 # [0.53.0](https://github.com/rango-exchange/rango-client/compare/provider-safe@0.52.1...provider-safe@0.53.0) (2026-05-31)
 
 

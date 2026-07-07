@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.54.0...provider-walletconnect-2@0.55.0) (2026-07-07)
+
+
+### Features
+
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 # [0.54.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.53.1...provider-walletconnect-2@0.54.0) (2026-05-31)
 
 

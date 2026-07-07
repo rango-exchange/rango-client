@@ -1,3 +1,21 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.60.1...widget-embedded@0.61.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* display target wallet title in detached modal ([171dccf](https://github.com/rango-exchange/rango-client/commit/171dccfa34eb06dbb5551de07f0600aa39a108ff))
+* get active evm network name ([bad0131](https://github.com/rango-exchange/rango-client/commit/bad0131f0637d0be5c7673897b8e0a13bfc7d53c))
+* use tokenUrl from blockchain metadata for token explorer links with addressUrl fallback ([4fce029](https://github.com/rango-exchange/rango-client/commit/4fce029e6eb0e6288bce26f489cce94fa28c0878))
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+* migrate trezor provider to hub ([1d87eac](https://github.com/rango-exchange/rango-client/commit/1d87eac97f8a5d9122b5805b45898db53bc30cad))
+* remove Cosmos blockchain support ([2b51ea3](https://github.com/rango-exchange/rango-client/commit/2b51ea3aa202f3ea049492ed90d00d97c552a490))
+
+
+
 ## [0.60.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.60.0...widget-embedded@0.60.1) (2026-06-02)
 
 

@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.27.0...provider-rabby@0.28.0) (2026-07-07)
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.26.1...provider-rabby@0.27.0) (2026-05-31)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitget",
-  "version": "0.57.1-next.3",
+  "version": "0.58.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,10 +24,10 @@
     "@hub3js/core": "^0.60.1",
     "@hub3js/evm": "^0.2.1",
     "@hub3js/std": "^0.1.1",
-    "@rango-dev/signer-evm": "^0.42.1-next.0",
+    "@rango-dev/signer-evm": "^0.43.0",
     "@rango-dev/signer-tron": "^0.41.0",
-    "@rango-dev/wallets-core": "^0.59.1-next.2",
-    "@rango-dev/wallets-shared": "^0.60.1-next.3",
+    "@rango-dev/wallets-core": "^0.60.0",
+    "@rango-dev/wallets-shared": "^0.61.0",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {

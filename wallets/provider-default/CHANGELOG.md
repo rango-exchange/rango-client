@@ -1,3 +1,12 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-default@0.57.0...provider-default@0.58.0) (2026-07-07)
+
+
+### Features
+
+* **wallets:** migrate provider-default to hub3 ([19c7a7c](https://github.com/rango-exchange/rango-client/commit/19c7a7cf7eca4b64e959b6bb6c76b2f1c7863676))
+
+
+
 # [0.57.0](https://github.com/rango-exchange/rango-client/compare/provider-default@0.56.1...provider-default@0.57.0) (2026-05-31)
 
 

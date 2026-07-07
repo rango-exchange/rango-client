@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.27.0...provider-trezor@0.28.0) (2026-07-07)
+
+
+### Features
+
+* migrate trezor provider to hub ([1d87eac](https://github.com/rango-exchange/rango-client/commit/1d87eac97f8a5d9122b5805b45898db53bc30cad))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.26.1...provider-trezor@0.27.0) (2026-05-31)
 
 

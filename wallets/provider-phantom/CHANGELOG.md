@@ -1,3 +1,12 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.61.0...provider-phantom@0.62.0) (2026-07-07)
+
+
+### Bug Fixes
+
+* **phantom:** temporarily disable bitcoin (utxo) namespace ([4bc807d](https://github.com/rango-exchange/rango-client/commit/4bc807d92663414067ef1901c08f10e79aaade67))
+
+
+
 # [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.60.1...provider-phantom@0.61.0) (2026-05-31)
 
 

@@ -1,3 +1,12 @@
+# [0.63.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.62.0...provider-coin98@0.63.0) (2026-07-07)
+
+
+### Features
+
+* add support for hyperliquid transactions ([88630bc](https://github.com/rango-exchange/rango-client/commit/88630bcf6dfa67d57e6cd002da4106142785946f))
+
+
+
 # [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-coin98@0.61.1...provider-coin98@0.62.0) (2026-05-31)
 
 
