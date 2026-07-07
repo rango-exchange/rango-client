@@ -1,7 +1,5 @@
-import {
-  type Context,
-  type FunctionWithContext,
-} from '@rango-dev/wallets-core';
+import type { Context, FunctionWithContext } from '@hub3js/core';
+
 import {
   CAIP_BITCOIN_CHAIN_ID,
   type ProviderAPI,

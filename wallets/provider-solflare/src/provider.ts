@@ -1,4 +1,4 @@
-import { ProviderBuilder } from '@rango-dev/wallets-core';
+import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, SOLFLARE_INJECTION_DELAY, WALLET_ID } from './constants.js';
 import { solana } from './namespaces/solana.js';

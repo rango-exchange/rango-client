@@ -25,7 +25,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { createTintsAndShades } from '../../utils/colors';
 import { getContainer } from '../../utils/common';
-import { findBlockchain } from '../../utils/meta';
+import { createTokenExplorerUrl, findBlockchain } from '../../utils/meta';
 import { formatBalance } from '../../utils/wallets';
 import { ImportCustomToken } from '../ImportCustomToken';
 
@@ -262,6 +262,13 @@ export function TokenList(props: PropTypes) {
             }
           };
 
+          const url = address
+            ? createTokenExplorerUrl({
+                contractAddress: address,
+                blockchainMeta: blockchain,
+              })
+            : undefined;
+
           return (
             <ListItemContainer>
               <StyledListItemButton
@@ -292,9 +299,7 @@ export function TokenList(props: PropTypes) {
                   </ImageSection>
                 }
                 title={
-                  blockchain.type === 'COSMOS' ||
-                  !!token.name ||
-                  (!token.name && !address) ? (
+                  !!token.name || (!token.name && !address) ? (
                     <Title>
                       <Typography variant="title" size="xmedium">
                         {token.symbol}
@@ -321,16 +326,14 @@ export function TokenList(props: PropTypes) {
                   typeof token !== 'string' &&
                   !!blockchain.info &&
                   !!address &&
-                  blockchain.type !== 'COSMOS'
+                  !!url
                     ? renderDesc({
                         address,
                         token,
                         customCssForTag,
                         customCssForTagTitle,
                         name: token.name,
-                        url: blockchain.info.addressUrl
-                          .split('{wallet}')
-                          .join(address),
+                        url,
                       })
                     : token.name || undefined
                 }

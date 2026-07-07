@@ -1,12 +1,12 @@
 import type { WidgetConfig } from '../types';
 import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 
+import { Provider } from '@hub3js/core';
 import {
   defineVersions,
   pickVersion,
-  Provider,
   type VersionedProviders,
-} from '@rango-dev/wallets-core';
+} from '@hub3js/core/utils';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];

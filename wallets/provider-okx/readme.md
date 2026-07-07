@@ -38,9 +38,6 @@ Supported networks :
 
 The wallet only supports bitcoin.
 
-#### 🚧 Cosmos
-
-The wallet supports Cosmos, but it is **not implemented** in the current integration.
 
 #### 🚧 TON
 

@@ -9,11 +9,16 @@ import {
   getTrezorModule,
   trezorErrorMessages,
   valueToHex,
-} from '../helpers.js';
+} from '../legacy/helpers.js';
 import { getDerivationPath } from '../state.js';
 
-export function getTrezorErrorMessage(error: any) {
-  if (error?.shortMessage) {
+export function getTrezorErrorMessage(error: unknown) {
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'shortMessage' in error &&
+    typeof error.shortMessage === 'string'
+  ) {
     /*
      * Some error signs have lengthy, challenging-to-read messages.
      * shortMessage is used because it is shorter and easier to understand.

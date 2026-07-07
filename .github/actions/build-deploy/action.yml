@@ -40,6 +40,9 @@ runs:
   steps:              
     - name: Build Clients
       shell: bash
+      # Pure nx: build the deployable apps via `nx run-many`. Their library
+      # dependencies (^build) are restored from the nx cache produced by
+      # build-libs, so only the apps themselves are compiled.
       run: node ./scripts/build-clients/command.mjs
 
     - name: Deploy Clients

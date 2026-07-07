@@ -89,6 +89,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       return {
         hash,
       };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const modifiedError = cleanEvmError(error);
       const session = this.session;

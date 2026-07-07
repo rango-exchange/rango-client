@@ -1,12 +1,5 @@
-import type {
-  AnyFunction,
-  Subscriber,
-  SubscriberCleanUp,
-} from '@rango-dev/wallets-core';
-import type {
-  ProviderAPI,
-  SolanaActions,
-} from '@rango-dev/wallets-core/namespaces/solana';
+import type { AnyFunction, Subscriber, SubscriberCleanUp } from '@hub3js/core';
+import type { ProviderAPI, SolanaActions } from '@hub3js/solana';
 
 function getDisconnectSubscriber(
   instance: () => ProviderAPI

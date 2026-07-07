@@ -5,6 +5,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "./src",
+    "lib": ["dom", "esnext"],
 
     // `@trezor/connect-web` can not compile without this option, we should remove this option when they've fixed their issue
     "skipLibCheck": true

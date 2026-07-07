@@ -1,20 +1,16 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub } from '@rango-dev/wallets-core';
+import type { Hub } from '@hub3js/core';
+import type { DefaultNamespaces, Namespace } from '@hub3js/namespaces';
+import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
-import type {
-  Accounts,
-  AccountsWithActiveChain,
-  Namespace,
-} from '@rango-dev/wallets-core/namespaces/common';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@hub3js/core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
-import { cosmosBlockchains } from 'rango-types';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
@@ -23,7 +19,6 @@ import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
   convertNamespaceNetworkToEvmChainId,
-  isCosmosNamespace,
   isEvmNamespace,
 } from './utils.js';
 
@@ -86,20 +81,6 @@ async function eagerConnect(
         >;
         if (isEvmNamespace(namespace)) {
           connectNamespacePromise = async () => namespace.connect(chain);
-        } else if (isCosmosNamespace(namespace)) {
-          const cosmosBlockChains = cosmosBlockchains(
-            params.allBlockChains || []
-          ).filter((chain) => !!chain.chainId);
-          connectNamespacePromise = async () => {
-            return namespace.connect({
-              chainIds: cosmosBlockChains
-                .filter((chain) => chain.info && !chain.info.experimental)
-                ?.map((chain) => chain.chainId!),
-              customChainIds: cosmosBlockChains
-                .filter((chain) => chain.info?.experimental)
-                .map((chain) => chain.chainId!),
-            });
-          };
         } else {
           connectNamespacePromise = async () => namespace.connect();
         }
@@ -156,7 +137,7 @@ async function eagerConnect(
  */
 async function tryRunCanEagerConnect(
   namespaces: LegacyNamespaceInputForConnect[],
-  wallet: Provider
+  wallet: Provider<DefaultNamespaces>
 ): Promise<{
   successNamespaces: LegacyNamespaceInputForConnect[];
   failedNamespaces: LegacyNamespaceInputForConnect[];

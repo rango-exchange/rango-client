@@ -1,13 +1,10 @@
-import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
-import type { SolanaActions } from '@rango-dev/wallets-core/namespaces/solana';
+import type { SolanaActions } from '@hub3js/solana';
+import type { CaipAccount } from '@hub3js/std/types';
 
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
-import {
-  builders,
-  CAIP_NAMESPACE,
-} from '@rango-dev/wallets-core/namespaces/solana';
-import { CAIP } from '@rango-dev/wallets-core/utils';
+import { NamespaceBuilder } from '@hub3js/core';
+import { builders, CAIP_NAMESPACE } from '@hub3js/solana';
+import * as commonBuilders from '@hub3js/std/builders';
+import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
 import { setDerivationPath } from '../state.js';
@@ -26,7 +23,7 @@ const connect = builders
 
     const formatAccounts = result.accounts.map(
       (account) =>
-        CAIP.AccountId.format({
+        AccountId.format({
           address: account,
           chainId: {
             namespace: CAIP_NAMESPACE,

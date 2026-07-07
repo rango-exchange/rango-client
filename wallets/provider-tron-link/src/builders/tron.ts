@@ -1,6 +1,6 @@
 import type { TronChangeAccountEvent } from '../types.js';
 
-import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import {
   type ProviderAPI,
   type TronActions,

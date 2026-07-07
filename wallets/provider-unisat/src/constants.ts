@@ -1,6 +1,6 @@
+import type { ProviderMetadata } from '@hub3js/core';
 import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
 
-import { type ProviderMetadata } from '@rango-dev/wallets-core';
 import { Networks } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';

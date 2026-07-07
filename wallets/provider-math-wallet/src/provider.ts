@@ -1,4 +1,4 @@
-import { ProviderBuilder } from '@rango-dev/wallets-core';
+import { ProviderBuilder } from '@hub3js/core';
 
 import {
   MATH_WALLET_INJECTION_DELAY,

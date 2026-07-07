@@ -11,13 +11,18 @@ export function getCategoryNetworks(chains: BlockchainMeta[]) {
       case TransactionType.EVM:
         supportedNetworks.add(BlockchainCategories.EVM);
         break;
-      case TransactionType.COSMOS:
-        supportedNetworks.add(BlockchainCategories.COSMOS);
-        break;
       case TransactionType.TRANSFER:
         supportedNetworks.add(BlockchainCategories.UTXO);
         break;
-      default:
+      case TransactionType.COSMOS:
+      case TransactionType.SOLANA:
+      case TransactionType.TRON:
+      case TransactionType.STARKNET:
+      case TransactionType.TON:
+      case TransactionType.SUI:
+      case TransactionType.XRPL:
+      case TransactionType.STELLAR:
+      case TransactionType.HYPERLIQUID:
         supportedNetworks.add(BlockchainCategories.OTHER);
         break;
     }

@@ -1,4 +1,4 @@
-import { defineVersions } from '@rango-dev/wallets-core/utils';
+import { defineVersions } from '@hub3js/core/utils';
 
 import { buildProvider } from './provider.js';
 

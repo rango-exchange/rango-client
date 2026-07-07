@@ -160,7 +160,7 @@ export async function tryConnect(
   if (pairing) {
     try {
       session = await restoreSession(client, pairing.topic);
-    } catch (e) {
+    } catch {
       await disconnectSessions(client);
     }
   }
@@ -284,6 +284,7 @@ export function getAccountsFromEvent(
  * to contain both current chain and target chain accoutns.
  */
 export async function updateSessionAccounts(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   instance: any,
   requestedNetwork: string,
   currentNetwork: string,
@@ -342,6 +343,7 @@ export async function updateSessionAccounts(
  * For the time being, we should avoid their session namespace response.
  * see also: https://github.com/trustwallet/wallet-core/issues/3588
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ignoreNamespaceMethods(instance: any): boolean {
   const WALLETS_WITH_WRONG_NAMESPACE_METHODS = ['trust', '1inch'];
   const peerName = instance?.session?.peer?.metadata?.name;

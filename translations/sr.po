@@ -8,7 +8,7 @@ msgstr ""
 "Language: sr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-27 10:33\n"
+"PO-Revision-Date: 2026-07-06 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
-#: widget/embedded/src/components/TokenList/TokenList.tsx:382
+#: widget/embedded/src/components/TokenList/TokenList.tsx:385
 #: widget/embedded/src/pages/HistoryPage.tsx:237
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:147
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "Нема пронађених резултата"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:42
-#: widget/embedded/src/components/TokenList/TokenList.tsx:383
+#: widget/embedded/src/components/TokenList/TokenList.tsx:386
 #: widget/embedded/src/pages/HistoryPage.tsx:244
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:148
 msgid "Try using different keywords"
@@ -78,7 +78,6 @@ msgstr "Тренутно су неке трансакције покренуте
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:341
 #: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:35
 msgid "Confirm"
 msgstr "Потврди"
 
@@ -104,17 +103,12 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "Морате да повежете {blockchainName} новчаник."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
-msgid "Add {chain} chain"
-msgstr "Додајте {chain} ланац"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:205
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:94
 msgid "Chain not connected"
 msgstr "Ланац није повезан"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:306
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:156
 msgid "Show more wallets"
 msgstr "Прикажи још новчаника"
 
@@ -134,22 +128,22 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Адреса {destination} не одговара обрасцу адресе блок ланца."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:87
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:92
 msgid "via"
 msgstr "преко"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:102
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:107
 msgid "This token is not part of our verified token list. please verify its source and make sure to understand all associated risks before proceeding."
 msgstr "Овај токен није део наше верификоване листе токена. проверите његов извор и уверите се да разумете све повезане ризике пре него што наставите."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:117
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:122
 msgid "Import Anyway"
 msgstr "Увези свеједно"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:127
+#: widget/embedded/src/components/CustomTokenModal/CustomTokenModal.tsx:132
 msgid "Learn More"
 msgstr "Сазнајте више"
 
@@ -729,7 +723,7 @@ msgid "Slippage:"
 msgstr "Клизање:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:357
+#: widget/embedded/src/components/TokenList/TokenList.tsx:360
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:101
 msgid "Select Token"
 msgstr "Изаберите Токен"
@@ -803,42 +797,6 @@ msgstr "Искључи новчаник"
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:166
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect."
 msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете или искључите."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:17
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:18
-msgid "Add {blockchainDisplayName} Chain"
-msgstr "Додајте {blockchainDisplayName} ланац"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChain.tsx:22
-msgid "Would you like to add the {blockchainDisplayName} experimental chain to your wallet?"
-msgstr "Да ли желите да додате {blockchainDisplayName} експериментални ланац у свој новчаник?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:22
-msgid "Please approve the experimental chain pop-up in your wallet."
-msgstr "Одобрите искачући прозор експерименталног ланца у свом новчанику."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:30
-msgid "{blockchainDisplayName} Chain Added"
-msgstr "{blockchainDisplayName} Додан ланац"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:34
-msgid "The {blockchainDisplayName} chain has been successfully added to your wallet."
-msgstr "Ланац {blockchainDisplayName} је успешно додат у ваш новчаник."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:42
-msgid "Request Rejected"
-msgstr "Захтев одбијен"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/ExperimentalChainStatus.helpers.ts:43
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "Одбили сте додавање {blockchainDisplayName} ланца у ваш новчаник."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69

@@ -1,4 +1,4 @@
-import { ProviderBuilder } from '@rango-dev/wallets-core';
+import { ProviderBuilder } from '@hub3js/core';
 
 import { COIN98_INJECTION_DELAY, metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';

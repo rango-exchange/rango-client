@@ -1,21 +1,15 @@
 import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import {
-  detectMobileScreens,
-  KEPLR_COMPATIBLE_WALLETS,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
+import { detectMobileScreens, WalletTypes } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
-  isExperimentalChain,
   mapWalletTypesToWalletInfo,
   sortWalletsBasedOnConnectionState,
 } from '../utils/wallets';
@@ -40,9 +34,8 @@ interface API {
  */
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
-  const { connectedWallets, getAvailableProviders } = useAppStore();
+  const { getAvailableProviders } = useAppStore();
   const { state, getWalletInfo } = useWallets();
-  const blockchains = useAppStore().blockchains();
   const { handleDisconnect } = useStatefulConnect();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
@@ -65,13 +58,6 @@ export function useWalletList(params?: Params): API {
     : wallets;
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
-
-  const isExperimentalChainNotAdded = (walletType: string) =>
-    !connectedWallets.find(
-      (connectedWallet) =>
-        connectedWallet.walletType === walletType &&
-        connectedWallet.chain === chain
-    );
 
   const terminateConnectingWallets = useCallback(() => {
     const connectingWallets =
@@ -121,24 +107,15 @@ export function useWalletList(params?: Params): API {
     return isEvmWalletInstalledExceptDefault.length == 0;
   };
 
-  const shouldExcludeWallet = (
-    walletType: string,
-    chain: string,
-    blockchains: BlockchainMeta[]
-  ) => {
+  const shouldExcludeWallet = (walletType: string) => {
     return (
-      (isExperimentalChain(blockchains, chain) &&
-        isExperimentalChainNotAdded(walletType) &&
-        !KEPLR_COMPATIBLE_WALLETS.includes(walletType)) ||
-      (walletType == WalletTypes.DEFAULT &&
-        !shouldShowDefaultInjectedWallet(wallets))
+      walletType == WalletTypes.DEFAULT &&
+      !shouldShowDefaultInjectedWallet(wallets)
     );
   };
 
   return {
-    list: sortedWallets.filter(
-      (wallet) => !shouldExcludeWallet(wallet.type, chain ?? '', blockchains)
-    ),
+    list: sortedWallets.filter((wallet) => !shouldExcludeWallet(wallet.type)),
     terminateConnectingWallets,
   };
 }

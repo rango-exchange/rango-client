@@ -94,6 +94,7 @@ export const getInstance: GetInstance = async (options) => {
   return {
     client: provider,
     session: null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     request: async (params: any) =>
       simulateRequest(params, provider, meta, getState),
   };

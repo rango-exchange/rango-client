@@ -1,8 +1,0 @@
-{
-  "name": "@rango-dev/wallets-core/namespaces/cosmos",
-  "type": "module",
-  "main": "../../dist/namespaces/cosmos/mod.js",
-  "module": "../../dist/namespaces/cosmos/mod.js",
-  "types": "../../dist/namespaces/cosmos/mod.d.ts",
-  "sideEffects": false
-}

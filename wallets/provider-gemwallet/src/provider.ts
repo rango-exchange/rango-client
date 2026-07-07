@@ -1,4 +1,4 @@
-import { ProviderBuilder } from '@rango-dev/wallets-core';
+import { ProviderBuilder } from '@hub3js/core';
 
 import { info, WALLET_ID } from './constants.js';
 import { namespace as xrpl } from './namespaces/xrpl/mod.js';

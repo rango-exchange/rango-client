@@ -1,4 +1,3 @@
-import type { NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
   BlockchainMeta,
@@ -15,6 +14,7 @@ import type {
   WalletTypeAndAddress,
 } from 'rango-types';
 
+import { type NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
 import BigNumber from 'bignumber.js';
 
 import { numberToString } from './numbers';
@@ -114,12 +114,12 @@ export const getCurrentNamespaceOf = (
   const tronNetwork =
     step.tronTransaction?.blockChain ||
     step.tronApprovalTransaction?.blockChain;
-  const cosmosNetwork = step.cosmosTransaction?.blockChain;
   const solanaNetwork = step.solanaTransaction?.blockChain;
   const tonNetwork = step.tonTransaction?.blockChain;
   const suiNetwork = step.suiTransaction?.blockChain;
   const xrplNetwork = step.xrplTransaction?.blockChain;
   const stellarNetwork = step.stellarTransaction?.blockChain;
+  const hyperliquidNetwork = step.hyperliquidTransaction?.blockChain;
 
   if (evmNetwork) {
     return {
@@ -135,11 +135,6 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'Tron',
       network: tronNetwork,
-    };
-  } else if (cosmosNetwork) {
-    return {
-      namespace: 'Cosmos',
-      network: cosmosNetwork,
     };
   } else if (solanaNetwork) {
     return {
@@ -165,6 +160,11 @@ export const getCurrentNamespaceOf = (
     return {
       namespace: 'Stellar',
       network: stellarNetwork,
+    };
+  } else if (hyperliquidNetwork) {
+    return {
+      namespace: 'EVM',
+      network: hyperliquidNetwork,
     };
   } else if (!!step.transferTransaction) {
     const transferAddress = step.transferTransaction.fromWalletAddress;
@@ -240,12 +240,12 @@ export const getCurrentWalletTypeAndAddress = (
     swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetTransaction?.blockChain || ''] ||
     swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     swap.wallets[step.tonTransaction?.blockChain || ''] ||
     swap.wallets[step.suiTransaction?.blockChain || ''] ||
     swap.wallets[step.xrplTransaction?.blockChain || ''] ||
     swap.wallets[step.stellarTransaction?.blockChain || ''] ||
+    swap.wallets[step.hyperliquidTransaction?.type || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? {
           address: step.transferTransaction.fromWalletAddress,

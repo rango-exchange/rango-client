@@ -113,6 +113,6 @@ Then:
 
 - Doing a single and multistep swap
   - USDT (Polygon) -> USDC (Polygon): That would be great to check switch network by changing your network to not be on Polygon.
-  - Sol (Solana)-> Atom (Cosmos)
+  - Sol (Solana) -> ETH (Ethereum)
 - Check your history
 - Change settings (Language, Theme)

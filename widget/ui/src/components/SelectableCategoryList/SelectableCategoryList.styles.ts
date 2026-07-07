@@ -3,7 +3,7 @@ import { styled } from '../../theme.js';
 export const Container = styled('div', {
   display: 'grid',
   gap: '$10',
-  gridTemplateColumns: 'auto 1fr 1fr 1fr 1fr',
+  gridTemplateColumns: 'auto 1fr 1fr 1fr',
 });
 
 export const ImageContent = styled('div', {

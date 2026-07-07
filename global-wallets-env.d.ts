@@ -8,16 +8,14 @@ declare global {
     braveEthereum?: any;
     braveSolana?: any;
     BinanceChain?: any;
-    cosmostation?: any;
     binancew3w?: any;
     exodus?: any;
     solana?: any;
     phantom?: any;
-    xfi?: any;
+    ctrl?: any;
     coinbaseWalletExtension?: any;
     coinbaseSolana?: any;
     coin98?: any;
-    keplr?: any;
     isSafePal?: any;
     safePal?: any;
     safepalProvider?: any;

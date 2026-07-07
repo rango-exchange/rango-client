@@ -1,6 +1,6 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { ProposalTypes, SessionTypes } from '@walletconnect/types';
-import type { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 export interface Environments extends Record<string, string | undefined> {
   WC_PROJECT_ID: string;
@@ -10,6 +10,7 @@ export interface Environments extends Record<string, string | undefined> {
 export interface WCInstance {
   client: SignClient;
   session: SessionTypes.Struct | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   request: (params: any) => Promise<string>;
 }
 
@@ -22,9 +23,4 @@ export interface CreateSessionParams {
 export interface ConnectParams {
   meta: BlockchainMeta[];
   envs: Environments;
-}
-
-export interface CosmosMeta extends CosmosBlockchainMeta {
-  // forcing the chainId to be `string` only.
-  chainId: string;
 }

@@ -8,7 +8,7 @@ import type {
   BalanceState,
   ConnectedWallet,
 } from '../slices/wallets';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@hub3js/namespaces';
 import type { Asset, WalletDetail } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
@@ -17,7 +17,7 @@ import { ZERO } from '../../constants/numbers';
 import { BALANCE_SEPARATOR } from '../../constants/wallets';
 
 /**
- * Note: We need to use `symbol` as well since native coins and cosmos blockchains don't have `address`
+ * Note: We need to use `symbol` as well since native coins don't have `address`
  * output format: BlockchainId${BALANCE_SEPARATOR}TokenAddress${BALANCE_SEPARATOR}TokenSymbol
  */
 export function createAssetKey(asset: Asset): AssetKey {

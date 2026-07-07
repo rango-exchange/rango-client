@@ -1,7 +1,7 @@
 import type { OkxBtcAddress } from '../types.js';
 
-import { ActionBuilder } from '@rango-dev/wallets-core';
-import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
+import { ActionBuilder } from '@hub3js/core';
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import {
   CAIP_BITCOIN_CHAIN_ID,
   type ProviderAPI,

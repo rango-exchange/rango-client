@@ -1,6 +1,6 @@
 import type { PropTypes } from './Detached.types';
+import type { Namespace } from '@hub3js/namespaces';
 import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
 
 import { i18n } from '@lingui/core';
 import {
@@ -161,7 +161,7 @@ export function Detached(props: PropTypes) {
       <MessageBox
         type="info"
         title={i18n.t(`Connect {wallet}`, {
-          wallet: targetWallet.type,
+          wallet: targetWallet.title,
         })}
         description={i18n.t(
           'This wallet supports multiple chains. Choose which chains you’d like to connect or disconnect.'

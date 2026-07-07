@@ -23,13 +23,12 @@ import {
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   detectInstallLink,
-  getCosmosExperimentalChainInfo,
+  HYPERLIQUID_SIGN_NETWORK,
+  getBlockChainNameFromId,
   isEvmAddress,
-  KEPLR_COMPATIBLE_WALLETS,
   Networks,
 } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { isCosmosBlockchain } from 'rango-types';
 
 import { ZERO } from '../constants/numbers';
 import {
@@ -46,6 +45,20 @@ import { formatThousandsWithCommas } from './sanitizers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
   Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
+
+function getConnectedEvmChainName(
+  namespaces: ReturnType<ProviderContext['state']>['namespaces'],
+  supportedChains: BlockchainMeta[]
+): string | null {
+  const evmNamespace = namespaces?.get('EVM');
+  if (!!evmNamespace?.network) {
+    return (
+      getBlockChainNameFromId(evmNamespace.network, supportedChains) ??
+      evmNamespace.network
+    );
+  }
+  return null;
+}
 
 export function getWalletConnectionStatus(
   wallet: ExtendedWalletInfo,
@@ -77,9 +90,12 @@ export function mapWalletTypesToWalletInfo(
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
 
-      const { installed, network } = getState(wallet);
+      const { installed, namespaces } = getState(wallet);
       const filterContractWallets =
-        isContractWallet && (!installed || (!!chain && network !== chain));
+        isContractWallet &&
+        (!installed ||
+          (!!chain &&
+            getConnectedEvmChainName(namespaces, supportedChains) !== chain));
       if (filterContractWallets) {
         return false;
       }
@@ -226,6 +242,14 @@ export function prepareAccountsForWalletStore(
            */
           addAccount(network, address.toLowerCase());
         });
+
+        const shouldAddHyperliquidAccount = evmChainsSupportedByWallet.includes(
+          HYPERLIQUID_SIGN_NETWORK
+        );
+
+        if (shouldAddHyperliquidAccount) {
+          addAccount(Networks.HYPERLIQUID, address.toLowerCase());
+        }
       }
     } else {
       addAccount(network, address);
@@ -313,35 +337,6 @@ function numberWithThousandSeparator(number: string | number): string {
   }
   return parts.join('.');
 }
-
-export const isExperimentalChain = (
-  blockchains: BlockchainMeta[],
-  wallet: string
-): boolean => {
-  const cosmosExperimentalChainInfo = getCosmosExperimentalChainInfo(
-    Object.entries(blockchains)
-      .map(([, blockchainMeta]) => blockchainMeta)
-      .filter(isCosmosBlockchain)
-  );
-  return (
-    cosmosExperimentalChainInfo &&
-    !!cosmosExperimentalChainInfo[wallet]?.experimental
-  );
-};
-
-export const getKeplrCompatibleConnectedWallets = (
-  selectableWallets: Wallet[]
-): WalletType[] => {
-  const connectedWalletTypes = new Set(
-    selectableWallets.map((wallet) => {
-      return wallet.walletType;
-    })
-  );
-
-  return KEPLR_COMPATIBLE_WALLETS.filter((compatibleWallet) =>
-    connectedWalletTypes.has(compatibleWallet)
-  );
-};
 
 function representAmountInNumber(amount: string, decimals: number): string {
   return new BigNumber(amount).shiftedBy(-decimals).toFixed();

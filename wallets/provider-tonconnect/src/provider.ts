@@ -1,6 +1,6 @@
 import type { Environments } from './types.js';
 
-import { ProviderBuilder } from '@rango-dev/wallets-core';
+import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { ton } from './namespaces/ton.js';

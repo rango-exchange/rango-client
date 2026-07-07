@@ -1,4 +1,5 @@
-import { type ProviderMetadata } from '@rango-dev/wallets-core';
+import type { ProviderMetadata } from '@hub3js/core';
+
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { type BlockchainMeta } from 'rango-types';
 

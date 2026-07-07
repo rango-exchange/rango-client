@@ -1,11 +1,11 @@
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
   type Chain,
   type ChainId,
   type ProviderAPI as EvmProviderApi,
   type ProviderAPI,
   utils,
-} from '@rango-dev/wallets-core/namespaces/evm';
+} from '@hub3js/evm';
+import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;

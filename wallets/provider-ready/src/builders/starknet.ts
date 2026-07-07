@@ -3,7 +3,7 @@ import type {
   StarknetActions,
 } from '@rango-dev/wallets-core/namespaces/starknet';
 
-import { ChangeAccountSubscriberBuilder } from '@rango-dev/wallets-core/namespaces/common';
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { utils } from '@rango-dev/wallets-core/namespaces/starknet';
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>

@@ -19,7 +19,6 @@ export { default as CompleteIcon } from './Complete.js';
 export { default as ContactUsIcon } from './ContactUs.js';
 export { default as CookieIcon } from './Cookie.js';
 export { default as CopyIcon } from './Copy.js';
-export { default as CosmosCategoryIcon } from './CosmosCategory.js';
 export { default as CreditCardIcon } from './CreditCard.js';
 export { default as CustomColorsIcon } from './CustomColors.js';
 export { default as CustomerSupportIcon } from './CustomerSupport.js';

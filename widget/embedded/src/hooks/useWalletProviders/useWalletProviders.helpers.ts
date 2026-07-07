@@ -1,6 +1,6 @@
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@hub3js/core';
 
 export function hashProviders(
   providers: (string | ProviderInterface | Provider)[]

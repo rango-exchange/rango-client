@@ -1,3 +1,4 @@
+import type { CaipAccount } from '@hub3js/std/types';
 import type {
   ProviderAPI,
   UtxoActions,
@@ -8,26 +9,20 @@ import {
   NamespaceBuilder,
   type Subscriber,
   type SubscriberCleanUp,
-} from '@rango-dev/wallets-core';
-import {
-  type CaipAccount,
-  standardizeAndThrowError,
-} from '@rango-dev/wallets-core/namespaces/common';
-import { builders as commonBuilders } from '@rango-dev/wallets-core/namespaces/common';
-import {
-  actions as solanaActions,
-  type SolanaActions,
-} from '@rango-dev/wallets-core/namespaces/solana';
+} from '@hub3js/core';
+import { actions as solanaActions, type SolanaActions } from '@hub3js/solana';
+import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 import {
   builders,
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import { CAIP } from '@rango-dev/wallets-core/utils';
 import {
   Networks,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';
+import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
 import { bitcoinPhantom, solanaPhantom } from '../utils.js';
@@ -86,7 +81,7 @@ function getChangeAccountSubscriber(
           .filter((account) => account.purpose === 'payment')
           .map(
             (account: BtcAccount) =>
-              CAIP.AccountId.format({
+              AccountId.format({
                 address: account.address,
                 chainId: {
                   namespace: CAIP_NAMESPACE,
@@ -130,7 +125,7 @@ const connect = builders
 
     const formatAccounts = result.accounts.map(
       (account) =>
-        CAIP.AccountId.format({
+        AccountId.format({
           address: account,
           chainId: {
             namespace: CAIP_NAMESPACE,

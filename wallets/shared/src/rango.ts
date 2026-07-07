@@ -1,12 +1,12 @@
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletInfo as WalletInfo,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
-import type { Namespace } from '@rango-dev/wallets-core/namespaces/common';
+import type { Namespace } from '@hub3js/namespaces';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import {
+  LegacyNetworks,
+  type LegacyNetwork as Network,
+  type LegacyWalletInfo as WalletInfo,
+  type LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
@@ -43,15 +43,13 @@ export enum WalletTypes {
   META_MASK = 'metamask',
   WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
-  KEPLR = 'keplr',
   BINANCE = 'binance',
   PHANTOM = 'phantom',
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
-  XDEFI = 'xdefi',
+  CTRL = 'ctrl',
   READY = 'ready',
-  COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
   SAFE = 'safe',
@@ -61,9 +59,6 @@ export enum WalletTypes {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
-  LEAP = 'leap',
-  LEAP_COSMOS = 'leap-cosmos',
-  STATION = 'station',
   ENKRYPT = 'enkrypt',
   TAHO = 'taho',
   LEDGER = 'ledger',
@@ -117,10 +112,6 @@ export const namespaces: Record<
       },
     ],
   },
-  Cosmos: {
-    mainBlockchain: 'COSMOS',
-    title: 'Cosmos',
-  },
   UTXO: {
     title: 'UTXO',
     mainBlockchain: 'BTC',
@@ -157,23 +148,8 @@ export type DerivationPath = {
   generateDerivationPath: (index: string) => string;
 };
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
-  Networks.BTC,
-  Networks.LTC,
-  Networks.THORCHAIN,
-  Networks.BCH,
-  Networks.MAYA,
-  Networks.DOGE,
-];
+export const HYPERLIQUID_SIGN_NETWORK = LegacyNetworks.ARBITRUM;
 
-export const KEPLR_COMPATIBLE_WALLETS: string[] = [
-  WalletTypes.KEPLR,
-  WalletTypes.COSMOSTATION,
-  WalletTypes.LEAP_COSMOS,
-  WalletTypes.XDEFI,
-];
-
-export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =
   'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2';

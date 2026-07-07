@@ -1,26 +1,22 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type {
-  Accounts,
-  AccountsWithActiveChain,
-} from '@rango-dev/wallets-core/namespaces/common';
-import type { BlockchainMeta } from 'rango-types';
+import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type { Result } from 'ts-results';
 
 import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
-import { CAIP_NAMESPACE as CAIP_COSMOS_NAMESPACE } from '@rango-dev/wallets-core/namespaces/cosmos';
 import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@rango-dev/wallets-core/namespaces/ton';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import {
   CAIP_BITCOIN_CHAIN_ID,
+  CAIP_BITCOINCASH_CHAIN_ID,
+  CAIP_DOGECOIN_CHAIN_ID,
+  CAIP_LITECOIN_CHAIN_ID,
   CAIP_ZCASH_CHAIN_ID,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import { CAIP } from '@rango-dev/wallets-core/utils';
-import { getBlockChainNameFromId } from '@rango-dev/wallets-shared';
+import { AccountId, type ChainIdParams } from 'caip';
 import { Err, Ok } from 'ts-results';
 
 export function mapCaipNamespaceToLegacyNetworkName(
-  chainId: CAIP.ChainIdParams | string,
-  allBlockChains: BlockchainMeta[]
+  chainId: ChainIdParams | string
 ): string {
   if (typeof chainId === 'string') {
     return chainId;
@@ -37,19 +33,16 @@ export function mapCaipNamespaceToLegacyNetworkName(
     return 'BTC';
   } else if (chainId.reference === CAIP_ZCASH_CHAIN_ID) {
     return 'ZCASH';
+  } else if (chainId.reference === CAIP_LITECOIN_CHAIN_ID) {
+    return 'LTC';
+  } else if (chainId.reference === CAIP_DOGECOIN_CHAIN_ID) {
+    return 'DOGE';
+  } else if (chainId.reference === CAIP_BITCOINCASH_CHAIN_ID) {
+    return 'BCH';
   }
 
   if (chainId.namespace.toLowerCase() === CAIP_TON_NAMESPACE) {
     return 'TON';
-  }
-  if (chainId.namespace.toLowerCase() === CAIP_COSMOS_NAMESPACE) {
-    const network = getBlockChainNameFromId(chainId.reference, allBlockChains);
-    if (!network) {
-      throw new Error(
-        `Network didn't found for given chainId: ${chainId.reference}`
-      );
-    }
-    return network;
   }
   if (chainId.namespace === 'sui' || chainId.reference === CAIP_TRON_CHAIN_ID) {
     return chainId.reference.toUpperCase();
@@ -68,12 +61,9 @@ export function mapCaipNamespaceToLegacyNetworkName(
  *
  * @see https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md
  */
-export function fromAccountIdToLegacyAddressFormat(
-  account: string,
-  allBlockChains: BlockchainMeta[]
-): string {
-  const { chainId, address } = CAIP.AccountId.parse(account);
-  const network = mapCaipNamespaceToLegacyNetworkName(chainId, allBlockChains);
+export function fromAccountIdToLegacyAddressFormat(account: string): string {
+  const { chainId, address } = AccountId.parse(account);
+  const network = mapCaipNamespaceToLegacyNetworkName(chainId);
   return formatAddressWithNetwork(address, network);
 }
 

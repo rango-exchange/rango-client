@@ -1,13 +1,7 @@
-import { NamespaceBuilder } from '@rango-dev/wallets-core';
-import {
-  builders as commonBuilders,
-  standardizeAndThrowError,
-} from '@rango-dev/wallets-core/namespaces/common';
-import {
-  actions,
-  builders,
-  type SolanaActions,
-} from '@rango-dev/wallets-core/namespaces/solana';
+import { NamespaceBuilder } from '@hub3js/core';
+import { actions, builders, type SolanaActions } from '@hub3js/solana';
+import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { solanaMathWallet } from '../utils.js';

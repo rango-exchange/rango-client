@@ -1,3 +1,4 @@
+import type { ProviderAPI } from '@hub3js/evm';
 import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
 import type { TransactionResponse } from 'ethers';
 import type { GenericSigner } from 'rango-types';
@@ -6,7 +7,11 @@ import type { EvmTransaction } from 'rango-types/mainApi';
 import { DefaultEvmSigner, waitMs } from '@rango-dev/signer-evm';
 import { TransactionStatus } from '@safe-global/safe-apps-sdk';
 
-import { sdk } from '../helpers.js';
+import { sdk } from '../safe.ts';
+
+type SafeTransactionResponse = Partial<TransactionResponse> & {
+  hashRequiringUpdate: boolean;
+};
 
 export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
   let txHash;
@@ -36,7 +41,7 @@ export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
 export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   private signer;
 
-  constructor(provider: any) {
+  constructor(provider: ProviderAPI) {
     this.signer = new DefaultEvmSigner(provider);
   }
 
@@ -52,10 +57,7 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
     tx: EvmTransaction,
     address: string,
     chainId: string | null
-  ): Promise<{
-    hash: string;
-    response: Partial<TransactionResponse> & { hashRequiringUpdate: boolean };
-  }> {
+  ): Promise<{ hash: string; response: SafeTransactionResponse }> {
     const { hash, response } = await this.signer.signAndSendTx(
       tx,
       address,
@@ -70,16 +72,29 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   async wait(
     safeHash: string,
     chainId: string,
-    response: TransactionResponse
+    response: SafeTransactionResponse
   ): Promise<{
     hash: string;
-    response: TransactionResponse;
+    response: SafeTransactionResponse;
     chainId: string;
   }> {
+    /*
+     * `wait` is called on every status poll. On the first poll `safeHash` is the
+     * safeTxHash, which `getTxHash` maps to the on-chain hash; the queue then
+     * updates `executedTransactionId` to that on-chain hash. From the next poll
+     * onwards `wait` receives the on-chain hash, and querying the Safe gateway
+     * with it 404s (the gateway resolves by safeTxHash, not the on-chain hash),
+     * which makes Safe{Wallet} log a harmless `Code 901`. Once the hash no longer
+     * requires updating we already have the final hash, so skip the lookup.
+     */
+    if (response && !response.hashRequiringUpdate) {
+      return { hash: safeHash, response, chainId };
+    }
+
     const { txHash: hash } = await getTxHash(safeHash);
     return {
       hash,
-      response,
+      response: { ...response, hashRequiringUpdate: false },
       chainId,
     };
   }
