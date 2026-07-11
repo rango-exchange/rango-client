@@ -14,8 +14,11 @@ import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useSearchCustomTokens } from '../../hooks/useSearchCustomTokens';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
+import { emitUiEvent } from '../../utils/events';
 
 import {
+  getTokenSelectionMethod,
   prepareTokensList,
   shouldSearchForCustomTokens,
 } from './SelectSwapItemPage.helpers';
@@ -82,6 +85,31 @@ export function SelectSwapItemsPage(props: PropTypes) {
       setToToken({ token, meta: { blockchains } });
     }
   };
+
+  const side = type === 'source' ? 'from' : 'to';
+
+  const emitChainFilterApplied = (blockchain: BlockchainMeta) => {
+    emitUiEvent({
+      type: UiEventTypes.CHAIN_FILTER_APPLIED,
+      payload: { side, chain: blockchain.name, filterSource: 'featured' },
+    });
+  };
+
+  const emitTokenSelected = (token: Token) => {
+    emitUiEvent({
+      type: UiEventTypes.TOKEN_SELECTED,
+      payload: {
+        side,
+        tokenName: token.name,
+        tokenSymbol: token.symbol,
+        tokenAddress: token.address,
+        chain: token.blockchain,
+        selectionMethod: getTokenSelectionMethod(searchedFor),
+        activeChainFilter: selectedBlockchainName || 'all',
+      },
+    });
+  };
+
   const types = {
     source: i18n.t('Source'),
     destination: i18n.t('Destination'),
@@ -111,6 +139,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
           blockchain={type === 'source' ? fromBlockchain : toBlockchain}
           onMoreClick={() => navigate(navigationRoutes.blockchains)}
           onChange={(blockchain) => {
+            emitChainFilterApplied(blockchain);
             updateBlockchain(blockchain);
           }}
         />
@@ -142,6 +171,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
           searchedFor={searchedFor}
           type={type}
           onChange={(token) => {
+            emitTokenSelected(token);
             updateToken(token);
 
             const tokenBlockchain = blockchains.find(

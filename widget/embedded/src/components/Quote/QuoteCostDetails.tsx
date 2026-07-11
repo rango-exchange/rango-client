@@ -21,7 +21,9 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { UiEventTypes } from '../../types';
 import { getContainer, getExpanded } from '../../utils/common';
+import { emitUiEvent } from '../../utils/events';
 import { numberToString } from '../../utils/numbers';
 import { getFeesGroup, getTotalFeesInUsd, getUsdFee } from '../../utils/swap';
 import { WatermarkedModal } from '../common/WatermarkedModal';
@@ -84,6 +86,12 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
           showModalFee
             ? (e) => {
                 e.stopPropagation();
+                if (!open && quote) {
+                  emitUiEvent({
+                    type: UiEventTypes.ROUTE_FEE_VIEWED,
+                    payload: { routeId: quote.requestId },
+                  });
+                }
                 setOpen(!open);
               }
             : undefined
