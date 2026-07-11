@@ -77,7 +77,9 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     );
 
     if (data.length) {
-      void newWalletConnected(data, info.namespace, state.derivationPath);
+      void newWalletConnected(data, info.namespace, state.derivationPath, {
+        walletName: type,
+      });
     }
   };
 

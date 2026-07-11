@@ -114,7 +114,8 @@ export interface WalletsSlice {
   newWalletConnected: (
     accounts: Wallet[],
     namespace?: Namespace,
-    derivationPath?: string
+    derivationPath?: string,
+    meta?: { walletName?: string }
   ) => Promise<void>;
   disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
   /**
@@ -443,14 +444,19 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
-    newWalletConnected: async (accounts, namespace, derivationPath) => {
+    newWalletConnected: async (accounts, namespace, derivationPath, meta) => {
       const newAccount = accounts[0];
       if (!newAccount) {
         return;
       }
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.CONNECT,
-        payload: { walletType: newAccount.walletType, accounts },
+        payload: {
+          walletType: newAccount.walletType,
+          accounts,
+          chain: newAccount.chain ?? null,
+          walletName: meta?.walletName ?? newAccount.walletType,
+        },
       });
 
       get().addConnectedWallet(accounts, namespace, derivationPath);
@@ -526,7 +532,7 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
        */
       eventEmitter.emit(WidgetEvents.WalletEvent, {
         type: WalletEventTypes.DISCONNECT,
-        payload: { walletType },
+        payload: { walletType, walletName: walletType },
       });
       if (isTargetWalletExistsInConnectedWallets) {
         // This should be called before updating connectedWallets since we need the old state to remove balances.
