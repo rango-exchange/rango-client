@@ -2,12 +2,14 @@ import type { Subscriber, SubscriberCleanUp } from '@hub3js/core';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { SignClientTypes } from '@walletconnect/types';
 
+import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import {
   CAIP_BITCOIN_CHAIN_ID,
   utils,
 } from '@rango-dev/wallets-core/namespaces/utxo';
 import { AccountId } from 'caip';
 
+import { type WalletConnectAdapter } from '../../adapter/adapter.js';
 import { getAdapter } from '../../adapter/registry.js';
 import {
   type Bip122AddressEntry,
@@ -74,54 +76,56 @@ export function sessionEventSubscriber(): [
   Subscriber<UtxoActions>,
   SubscriberCleanUp<UtxoActions>
 ] {
-  let handler: (args: SignClientTypes.EventArguments['session_event']) => void;
+  type SessionEvent = SignClientTypes.EventArguments['session_event'];
 
-  return [
-    async (context) => {
+  return new ChangeAccountSubscriberBuilder<
+    SessionEvent,
+    WalletConnectAdapter,
+    UtxoActions
+  >()
+    .getInstance(getAdapter)
+    .onSwitchAccount((event, context) => {
+      const args = event.payload;
       const adapter = getAdapter();
-      const client = await adapter.getClient();
-      const [, setState] = context.state();
+      const session = adapter.getSession('utxo');
 
-      handler = (args) => {
-        const session = adapter.getSession('utxo');
-        if (!session || args.topic !== session.topic) {
-          return;
-        }
+      if (!session || args.topic !== session.topic) {
+        event.preventDefault();
+        return;
+      }
 
-        if (args.params.event.name !== BitcoinEvents.ADDRESSES_CHANGED) {
-          return;
-        }
+      if (args.params.event.name !== BitcoinEvents.ADDRESSES_CHANGED) {
+        event.preventDefault();
+        return;
+      }
 
-        const data = args.params.event.data as Bip122AddressEntry[];
-        if (!data?.length) {
-          void context.action('disconnect');
-          return;
-        }
+      const data = args.params.event.data as Bip122AddressEntry[];
+      if (!data?.length || !pickPaymentAddress(data)) {
+        void context.action('disconnect');
+        event.preventDefault();
+        return;
+      }
 
-        const paymentAddress = pickPaymentAddress(data);
-        if (!paymentAddress) {
-          void context.action('disconnect');
-          return;
-        }
-
-        setState(
-          'accounts',
-          utils.formatAccountsToCAIP([paymentAddress], CAIP_BITCOIN_CHAIN_ID)
-        );
-      };
-
-      client.on('session_event', handler);
-    },
-    (_, err) => {
-      const adapter = getAdapter();
+      // Let the default flow publish `accounts` via `format`.
+    })
+    .format(async (_adapter, args) => {
+      const data = args.params.event.data as Bip122AddressEntry[];
+      const paymentAddress = pickPaymentAddress(data);
+      return paymentAddress
+        ? utils.formatAccountsToCAIP([paymentAddress], CAIP_BITCOIN_CHAIN_ID)
+        : [];
+    })
+    .addEventListener((adapter, callback) => {
       void adapter.getClient().then((client) => {
-        if (handler) {
-          client.off('session_event', handler);
-        }
+        client.on('session_event', callback);
       });
-      return err;
-    },
-  ];
+    })
+    .removeEventListener((adapter, callback) => {
+      void adapter.getClient().then((client) => {
+        client.off('session_event', callback);
+      });
+    })
+    .build();
 }
 
 /**
