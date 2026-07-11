@@ -19,6 +19,8 @@ import { WIDGET_UI_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { UiEventTypes } from '../../types';
+import { emitUiEvent } from '../../utils/events';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
 import { getQuoteChains } from '../../utils/wallets';
@@ -211,6 +213,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
     const lastSelectedWallets = selectableWallets.filter(
       (wallet) => wallet.selected
     );
+    emitUiEvent({
+      type: UiEventTypes.SWAP_WALLETS_CONFIRMED,
+      payload: { routeId: selectedQuote?.requestId ?? '' },
+    });
     setWalletsAsSelected(lastSelectedWallets);
     selectQuoteWallets(lastSelectedWallets);
     setQuoteWalletConfirmed(true);
@@ -301,6 +307,36 @@ export function ConfirmWalletsModal(props: PropTypes) {
     }
   }, [connectedWallets, nextSelectedWallets]);
 
+  const routeId = selectedQuote?.requestId ?? '';
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    const pendingChains = requiredChains.filter(
+      (chain) =>
+        !connectedWallets.some(
+          (connectedWallet) => connectedWallet.chain === chain
+        )
+    );
+    emitUiEvent({
+      type: UiEventTypes.SWAP_WALLETS_MODAL_SHOWN,
+      payload: {
+        chainsRequired: requiredChains.length,
+        chainsPending: pendingChains.length,
+      },
+    });
+  }, [open]);
+
+  useEffect(() => {
+    if (isInsufficientBalanceModalOpen) {
+      emitUiEvent({
+        type: UiEventTypes.GAS_WARNING_SHOWN,
+        payload: { routeId },
+      });
+    }
+  }, [isInsufficientBalanceModalOpen, routeId]);
+
   const modalContainer = document.getElementById(
     WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
@@ -383,7 +419,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
             size="large"
             type="primary"
             fullWidth
-            onClick={onConfirmBalance}>
+            onClick={() => {
+              emitUiEvent({
+                type: UiEventTypes.GAS_WARNING_BYPASSED,
+                payload: { routeId },
+              });
+              onConfirmBalance();
+            }}>
             {i18n.t('Proceed anyway')}
           </Button>
         </MessageBox>

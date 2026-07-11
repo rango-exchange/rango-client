@@ -7,6 +7,15 @@ import {
   MIN_SEARCH_LENGTH,
 } from './SelectSwapItemPage.constants';
 
+export function getTokenSelectionMethod(
+  searchedFor: string
+): 'search' | 'default ' {
+  if (searchedFor.trim()) {
+    return 'search';
+  }
+  return 'default ';
+}
+
 export function shouldSearchForCustomTokens(
   metaSearchResultTokens: Token[],
   query: string,

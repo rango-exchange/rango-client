@@ -28,7 +28,9 @@ import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { QuoteErrorType, QuoteWarningType } from '../types';
+import { QuoteErrorType, QuoteWarningType, UiEventTypes } from '../types';
+import { buildSwapEstimatePayload } from '../utils/eventPayloads';
+import { emitUiEvent } from '../utils/events';
 import { isQuoteWarningConfirmationRequired } from '../utils/quote';
 import { joinList } from '../utils/ui';
 
@@ -142,6 +144,15 @@ export function ConfirmSwapPage() {
     if (shouldShowWarningModal) {
       setShowQuoteWarningModal(true);
     } else {
+      if (selectedQuote) {
+        emitUiEvent({
+          type: UiEventTypes.SWAP_STARTED,
+          payload: {
+            ...buildSwapEstimatePayload(selectedQuote),
+            stepCount: selectedQuote.swaps.length,
+          },
+        });
+      }
       await onConfirm();
     }
   };
