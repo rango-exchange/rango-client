@@ -1,3 +1,12 @@
+## Widget [0.60.0] (2026-07-11)
+_includes `@rango-dev/widget-embedded@0.62.0`_
+
+### Features
+
+* add new events to widget-embedded ([dc452fe](https://github.com/rango-exchange/rango-client/commit/dc452fe4534179898ac9f861c5f31c3907ebd9d0))
+
+
+
 ## Widget [0.59.0] (2026-07-07)
 _includes `@rango-dev/widget-embedded@0.61.0`_
 
