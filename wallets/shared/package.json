@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.61.0",
+  "version": "0.61.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -29,7 +29,7 @@
   "dependencies": {
     "@hub3js/namespaces": "^0.1.1",
     "@hub3js/std": "^0.1.1",
-    "@rango-dev/wallets-core": "^0.60.0",
+    "@rango-dev/wallets-core": "^0.60.1-next.0",
     "ethers": "^6.13.2",
     "rango-types": "^0.5.0"
   },

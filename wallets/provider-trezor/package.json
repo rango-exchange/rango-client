@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.28.0",
+  "version": "0.28.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -26,7 +26,7 @@
     "@hub3js/evm": "^0.2.1",
     "@hub3js/std": "^0.1.1",
     "@rango-dev/signer-evm": "^0.43.0",
-    "@rango-dev/wallets-shared": "^0.61.0",
+    "@rango-dev/wallets-shared": "^0.61.1-next.0",
     "@trezor/connect-web": "^9.5.0",
     "bitcoinjs-lib": "^6.1.7",
     "ethers": "^6.13.2",
