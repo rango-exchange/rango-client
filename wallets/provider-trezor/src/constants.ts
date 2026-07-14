@@ -1,9 +1,10 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta } from 'rango-types';
+import { type BlockchainMeta, type TransferBlockchainMeta } from 'rango-types';
 
 import getSigners from './signer.js';
+import { BITCOIN_ADDRESS_TYPES } from './utxo/config.js';
 
 export const WALLET_ID = WalletTypes.TREZOR;
 
@@ -26,6 +27,16 @@ export const metadata: ProviderMetadata = {
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               allBlockchains.filter(
                 (chain) => chain.name === Networks.ETHEREUM
+              ),
+          },
+          {
+            label: 'Bitcoin',
+            value: 'UTXO',
+            id: 'BTC',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is TransferBlockchainMeta =>
+                  chain.name === Networks.BTC
               ),
           },
         ],
@@ -53,6 +64,17 @@ export const metadata: ProviderMetadata = {
             namespace: 'EVM',
             generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
           },
+          /*
+           * Bitcoin derivation templates. The BIP-43 purpose (and thus the address
+           * type) is what the user picks here; `index` selects the account.
+           */
+          ...BITCOIN_ADDRESS_TYPES.map((addressType) => ({
+            id: `bitcoin-${addressType.id}`,
+            label: `${addressType.label} (m/${addressType.purpose}'/0'/index')`,
+            namespace: 'UTXO',
+            generateDerivationPath: (index: string) =>
+              `${addressType.purpose}'/0'/${index}'/0/0`,
+          })),
         ],
       },
     },

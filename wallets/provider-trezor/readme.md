@@ -11,6 +11,21 @@ Trezor integration for hub.
 
 We only support Ethereum for now.
 
+#### ⚠️ UTXO
+
+We support Bitcoin only. The connect flow lets the user pick the address type via
+derivation path (Native SegWit `84'`, Nested SegWit `49'`, Legacy `44'`, Taproot `86'`).
+
+Trezor Connect has no PSBT API — its `signTransaction` takes explicit `inputs`/`outputs` —
+so Rango's BTC PSBT is parsed with `bitcoinjs-lib` and translated into that shape, then
+signed and broadcast via Trezor's Blockbook backend (`push: true`). `version`, `locktime`
+and per-input `sequence` are preserved from the PSBT; only `SIGHASH_ALL` is supported.
+Rango's PSBT carries no `bip32Derivation`, so the connect-time path is kept (like the EVM
+signer) and applied to the inputs.
+
+Other UTXO chains (LTC/DOGE/BCH/ZEC) are not implemented — they arrive from Rango as plain
+transfers (no PSBT) and would use Trezor's `composeTransaction` instead.
+
 ### Feature
 
 #### ❌ Switch Account

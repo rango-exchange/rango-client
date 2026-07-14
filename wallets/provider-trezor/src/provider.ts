@@ -4,6 +4,7 @@ import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
+import { utxo } from './namespaces/utxo.js';
 
 let trezorManifest: Environments['manifest'];
 
@@ -24,6 +25,7 @@ const buildProvider = () =>
     })
     .config('metadata', metadata)
     .add('evm', evm)
+    .add('utxo', utxo)
     .build();
 
 export { buildProvider };
