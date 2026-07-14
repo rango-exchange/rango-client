@@ -25,6 +25,7 @@ import {
   getSupportedChainsFromProvider,
   isEvmNamespace,
   isSolanaNamespace,
+  isUtxoNamespace,
   mapHubEventsToLegacy,
   transformHubResultToLegacyResult,
   tryConvertNamespaceNetworkToChainInfo,
@@ -250,6 +251,11 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
           } else if (isEvmNamespace(namespace)) {
             connectNamespacePromise = async () =>
               namespace.connect(network, {
+                derivationPath: namespaceInput.derivationPath,
+              });
+          } else if (isUtxoNamespace(namespace)) {
+            connectNamespacePromise = async () =>
+              namespace.connect({
                 derivationPath: namespaceInput.derivationPath,
               });
           } else {

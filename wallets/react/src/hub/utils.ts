@@ -401,3 +401,8 @@ export function isEvmNamespace(
 ): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
   return ns.namespaceId === 'EVM';
 }
+export function isUtxoNamespace(
+  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
+): ns is ProxiedNamespace<UtxoActions> & { namespaceId: 'UTXO' } {
+  return ns.namespaceId === 'UTXO';
+}

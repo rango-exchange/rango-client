@@ -7,15 +7,12 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { ETHEREUM_CHAIN_ID } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants.js';
+import { initTrezor } from '../init.js';
 import {
   getEthereumAccounts,
-  getTrezorModule,
   getTrezorNormalizedDerivationPath,
 } from '../legacy/helpers.js';
-import { getTrezorManifest } from '../provider.js';
 import { setDerivationPath } from '../state.js';
-
-let isTrezorInitialized = false;
 
 const connect = builders
   .connect()
@@ -27,14 +24,7 @@ const connect = builders
       getTrezorNormalizedDerivationPath(options.derivationPath)
     );
 
-    if (!isTrezorInitialized) {
-      const TrezorConnect = await getTrezorModule();
-      await TrezorConnect.init({
-        lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
-        manifest: getTrezorManifest(),
-      });
-      isTrezorInitialized = true;
-    }
+    await initTrezor();
 
     const result = await getEthereumAccounts();
 

@@ -115,6 +115,28 @@ export const namespaces: Record<
   UTXO: {
     title: 'UTXO',
     mainBlockchain: 'BTC',
+    derivationPaths: [
+      {
+        id: 'bitcoin-native-segwit',
+        label: `Native SegWit (m/84'/0'/index')`,
+        generateDerivationPath: (index: string) => `84'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-nested-segwit',
+        label: `Nested SegWit (m/49'/0'/index')`,
+        generateDerivationPath: (index: string) => `49'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-legacy',
+        label: `Legacy (m/44'/0'/index')`,
+        generateDerivationPath: (index: string) => `44'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-taproot',
+        label: `Taproot (m/86'/0'/index')`,
+        generateDerivationPath: (index: string) => `86'/0'/${index}'/0/0`,
+      },
+    ],
   },
   Starknet: {
     title: 'Starknet',
