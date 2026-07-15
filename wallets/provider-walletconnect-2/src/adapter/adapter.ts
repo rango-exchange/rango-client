@@ -23,6 +23,7 @@ import { evmMetaToCaipChainIds } from '../utils.js';
 import { ModalCache } from './modal-cache.js';
 import { createUniversalProvider } from './provider-client.js';
 import { createSessionCache } from './session-cache.js';
+import { TaskQueue } from './task-queue.js';
 
 /**
  * Central coordinator for WalletConnect sessions used by hub EVM/UTXO namespaces.
@@ -49,6 +50,28 @@ export class WalletConnectAdapter {
 
   readonly #cache = createSessionCache();
   readonly #modalCache = new ModalCache();
+
+  /**
+   * Serializes everything that mutates WalletConnect session state.
+   *
+   * Connecting and disconnecting must never overlap: tearing a session down also
+   * deletes its pairing, and an overlapping connect has already minted a new one
+   * by then - the teardown unsubscribes it, so `wc_proposeSession` publishes to a
+   * topic we no longer listen on and the relay answers
+   * `Topic repository: AlreadyExists`.
+   *
+   * The hub can't order this for us: `useHubAdapter.disconnect` drops the
+   * promises `namespace.disconnect()` returns (it iterates with `forEach`), so it
+   * resolves while teardown is still in flight and never joins the queue that
+   * serializes `connect`.
+   *
+   * The cost is that a connect holds the queue for its whole lifetime, including
+   * the wait for the user to approve in their wallet, so a disconnect raised
+   * meanwhile waits its turn instead of interleaving. That is deliberate rather
+   * than an oversight: the pairing has to survive from `client.connect()` through
+   * settle, which is exactly the span being protected.
+   */
+  readonly #sessionQueue = new TaskQueue();
 
   constructor(config: WalletConnectAdapterConfig) {
     this.#projectId = config.projectId;
@@ -103,70 +126,32 @@ export class WalletConnectAdapter {
   async tryRestoreEagerSession(
     namespace: WalletConnectNamespace
   ): Promise<boolean> {
-    const client = await this.getClient();
-    return !!(await restoreAndCacheSession(
-      client,
-      namespace,
-      this.#cache,
-      { validateAccounts: true },
-      async (targetNamespace) => this.disconnectSession(targetNamespace)
-    ));
+    return this.#sessionQueue.run(async () => {
+      const client = await this.getClient();
+      return !!(await restoreAndCacheSession(
+        client,
+        namespace,
+        this.#cache,
+        { validateAccounts: true },
+        async (targetNamespace) =>
+          this.#disconnectSessionQueued(targetNamespace)
+      ));
+    });
   }
 
   async ensureSession(options: {
     namespace: WalletConnectNamespace;
     chainReference?: string;
   }): Promise<SessionTypes.Struct> {
-    const { namespace, chainReference } = options;
-    const client = await this.getClient();
-    const restored = await restoreAndCacheSession(
-      client,
-      namespace,
-      this.#cache,
-      undefined,
-      async (targetNamespace) => this.disconnectSession(targetNamespace)
+    return this.#sessionQueue.run(async () =>
+      this.#ensureSessionQueued(options)
     );
-    if (restored) {
-      return restored;
-    }
-
-    await prepareWalletConnectNamespace(client, namespace);
-
-    const universalProvider = await this.getUniversalProvider();
-    await universalProvider.cleanupPendingPairings().catch(() => undefined);
-
-    const session = await connectWalletConnectSession(
-      client,
-      this.#modalCache.getModal({
-        projectId: this.#projectId,
-        namespace,
-        universalProvider,
-        themeMode: this.#themeMode,
-        zIndex: this.#modalZIndex,
-      }),
-      {
-        chains: evmMetaToCaipChainIds(this.#meta),
-        envs: {
-          WC_PROJECT_ID: this.#projectId,
-          DISABLE_MODAL_AND_OPEN_LINK: this.#disableModalLink,
-        },
-        namespace,
-        chainReference,
-      }
-    );
-
-    this.#cache.set(session);
-    return session;
   }
 
   async disconnectSession(namespace: WalletConnectNamespace) {
-    const session = this.getSession(namespace);
-    if (this.#universalProvider?.client && session) {
-      await removeSessionRecord(this.#universalProvider.client, session).catch(
-        (error) => debug(error)
-      );
-    }
-    this.clearSession(namespace);
+    return this.#sessionQueue.run(async () =>
+      this.#disconnectSessionQueued(namespace)
+    );
   }
 
   async resolveActiveChainReference(): Promise<string | undefined> {
@@ -211,6 +196,69 @@ export class WalletConnectAdapter {
       requestedChainId,
       currentChainId,
     });
+  }
+
+  /*
+   * The `Queued` suffix means "already running inside `#sessionQueue`". These
+   * call each other directly and must never go back through the public methods
+   * above: re-entering the queue from inside a task would wait for a turn that
+   * cannot come until that same task finishes, which deadlocks.
+   */
+
+  async #ensureSessionQueued(options: {
+    namespace: WalletConnectNamespace;
+    chainReference?: string;
+  }): Promise<SessionTypes.Struct> {
+    const { namespace, chainReference } = options;
+    const client = await this.getClient();
+    const restored = await restoreAndCacheSession(
+      client,
+      namespace,
+      this.#cache,
+      undefined,
+      async (targetNamespace) => this.#disconnectSessionQueued(targetNamespace)
+    );
+    if (restored) {
+      return restored;
+    }
+
+    await prepareWalletConnectNamespace(client, namespace);
+
+    const universalProvider = await this.getUniversalProvider();
+    await universalProvider.cleanupPendingPairings().catch(() => undefined);
+
+    const session = await connectWalletConnectSession(
+      client,
+      this.#modalCache.getModal({
+        projectId: this.#projectId,
+        namespace,
+        universalProvider,
+        themeMode: this.#themeMode,
+        zIndex: this.#modalZIndex,
+      }),
+      {
+        chains: evmMetaToCaipChainIds(this.#meta),
+        envs: {
+          WC_PROJECT_ID: this.#projectId,
+          DISABLE_MODAL_AND_OPEN_LINK: this.#disableModalLink,
+        },
+        namespace,
+        chainReference,
+      }
+    );
+
+    this.#cache.set(session);
+    return session;
+  }
+
+  async #disconnectSessionQueued(namespace: WalletConnectNamespace) {
+    const session = this.getSession(namespace);
+    if (this.#universalProvider?.client && session) {
+      await removeSessionRecord(this.#universalProvider.client, session).catch(
+        (error) => debug(error)
+      );
+    }
+    this.clearSession(namespace);
   }
 
   #evmChainDeps() {
