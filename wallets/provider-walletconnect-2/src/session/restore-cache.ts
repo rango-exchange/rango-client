@@ -8,7 +8,6 @@ import {
   restoreWalletConnectSession,
   type RestoreWalletConnectSessionOptions,
 } from './lifecycle.js';
-import { disconnectWalletConnectSessions } from './teardown.js';
 
 export async function restoreAndCacheSession(
   client: SignClientInstance,
@@ -26,11 +25,6 @@ export async function restoreAndCacheSession(
     if (!session) {
       return null;
     }
-
-    await disconnectWalletConnectSessions(client, {
-      type: 'otherNamespaces',
-      namespace,
-    }).catch((error) => debug(error));
 
     cache.set(session);
     return session;

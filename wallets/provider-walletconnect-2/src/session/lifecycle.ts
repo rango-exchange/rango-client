@@ -25,7 +25,6 @@ import {
 } from './proposals.js';
 import {
   cleanupStaleSessionsForNamespace,
-  disconnectWalletConnectSessions,
   hasActivePairing,
   hasActiveSession,
   purgeOrphanedSessions,
@@ -119,16 +118,20 @@ export async function restoreNamespaceSession(
   return findSessionByNamespace(client, namespace) ?? session;
 }
 
+/**
+ * Clears unusable records ahead of a connect: orphaned sessions across every
+ * namespace, plus `namespace`'s own stale ones.
+ *
+ * A *live* session belonging to another namespace is deliberately left alone -
+ * EVM and UTXO each own an independent session, and only the namespace being
+ * disconnected drops its own.
+ */
 export async function prepareWalletConnectNamespace(
   client: UniversalProvider['client'],
   namespace: WalletConnectNamespace
 ): Promise<void> {
   await purgeOrphanedSessions(client);
   await cleanupStaleSessionsForNamespace(client, namespace);
-  await disconnectWalletConnectSessions(client, {
-    type: 'otherNamespaces',
-    namespace,
-  });
 }
 
 export async function connectWalletConnectSession(

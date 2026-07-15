@@ -12,8 +12,7 @@ import { getSessionNamespace } from './lookup.js';
 
 export type DisconnectWalletConnectScope =
   | { type: 'session'; session: SessionTypes.Struct }
-  | { type: 'all' }
-  | { type: 'otherNamespaces'; namespace: WalletConnectNamespace };
+  | { type: 'all' };
 
 function isNoMatchingKeyError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
@@ -157,11 +156,6 @@ export async function disconnectWalletConnectSessions(
       return await removeSessionRecord(client, scope.session);
     case 'all':
       return await disconnectAllWalletConnectSessions(client);
-    case 'otherNamespaces':
-      return await disconnectOtherWalletConnectNamespaces(
-        client,
-        scope.namespace
-      );
   }
 }
 
@@ -191,19 +185,4 @@ async function disconnectAllWalletConnectSessions(client: SignClientInstance) {
   void persistCurrentChainId(client, undefined);
 
   return await Promise.all(allPromises);
-}
-
-async function disconnectOtherWalletConnectNamespaces(
-  client: SignClientInstance,
-  targetNamespace: WalletConnectNamespace
-): Promise<void> {
-  for (const session of client.session.getAll()) {
-    const sessionNamespace = getSessionNamespace(session);
-    if (sessionNamespace && sessionNamespace !== targetNamespace) {
-      await disconnectWalletConnectSessions(client, {
-        type: 'session',
-        session,
-      }).catch((error) => debug(error));
-    }
-  }
 }
