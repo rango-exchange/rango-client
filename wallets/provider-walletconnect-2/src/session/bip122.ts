@@ -1,6 +1,7 @@
 import type { SignClientInstance } from '../types.js';
 import type { SessionTypes, SignClientTypes } from '@walletconnect/types';
 
+import { debug } from '@rango-dev/logging-core';
 import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import { AccountId } from 'caip';
 
@@ -105,7 +106,30 @@ export async function resolveBip122Session(
   const { address, session: resolvedSession } =
     await waitForBip122PaymentAddress(client, freshSession);
 
-  return patchBip122SessionAccount(resolvedSession, address);
+  const patched = patchBip122SessionAccount(resolvedSession, address);
+  await persistSessionNamespaces(client, patched);
+  return patched;
+}
+
+/**
+ * The address the wallet reports via `bip122_addressesChanged` lands only on our
+ * patched copy, so write it back to `client.session` - the record that restore,
+ * teardown and staleness checks all read. Left unpersisted, the stored session
+ * keeps `bip122.accounts === []`: `cleanupStaleSessionsForNamespace` reads a live
+ * session as stale and disconnects it, and a reload waits again for an event the
+ * wallet only emits right after approval.
+ */
+async function persistSessionNamespaces(
+  client: SignClientInstance,
+  session: SessionTypes.Struct
+): Promise<void> {
+  try {
+    await client.session.update(session.topic, {
+      namespaces: session.namespaces,
+    });
+  } catch (error) {
+    debug(error instanceof Error ? error : new Error(String(error)));
+  }
 }
 
 async function waitForBip122PaymentAddress(
