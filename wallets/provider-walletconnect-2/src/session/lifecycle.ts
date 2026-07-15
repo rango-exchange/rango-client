@@ -41,13 +41,19 @@ export async function restoreWalletConnectSession(
   namespace: WalletConnectNamespace,
   options: RestoreWalletConnectSessionOptions = {}
 ): Promise<SessionTypes.Struct | undefined> {
-  let session = await restoreNamespaceSession(client, namespace);
+  const session = await restoreNamespaceSession(client, namespace);
   if (!session) {
     return undefined;
   }
 
-  if (namespace === 'utxo') {
-    session = await resolveBip122Session(client, session);
+  /*
+   * Never wait for `bip122_addressesChanged` here. The wallet only emits it just
+   * after approval, so a stored session that still has no account will never be
+   * given one - waiting would stall for the full timeout and fail anyway. Report
+   * it as unrestorable instead and let the caller negotiate a fresh session.
+   */
+  if (namespace === 'utxo' && filterBip122Accounts(session).length === 0) {
+    return undefined;
   }
 
   if (options.validateAccounts) {
@@ -140,27 +146,34 @@ export async function connectWalletConnectSession(
     await cleanupStaleSessionsForNamespace(client, namespace);
   }
 
-  let session = await restoreWalletConnectSession(client, namespace);
-
-  if (!session) {
-    const proposal = generateOptionalNamespace(
-      chains,
-      [namespace],
-      chainReference
-    );
-    const connectNamespaces = buildConnectNamespacePayload(
-      proposal,
-      namespace,
-      chainReference
-    );
-
-    session = await createSession(client, web3Modal, connectNamespaces, {
-      envs: params.envs,
-    });
+  const restored = await restoreWalletConnectSession(client, namespace);
+  if (restored) {
+    return restored;
   }
 
+  const proposal = generateOptionalNamespace(
+    chains,
+    [namespace],
+    chainReference
+  );
+  const connectNamespaces = buildConnectNamespacePayload(
+    proposal,
+    namespace,
+    chainReference
+  );
+
+  const session = await createSession(client, web3Modal, connectNamespaces, {
+    envs: params.envs,
+  });
+
+  /*
+   * Only a just-approved session can be waited on: bitcoin wallets routinely
+   * approve bip122 with no account and send it moments later. A restored session
+   * never reaches here, so the wait can't be spent on one that will never
+   * receive the event.
+   */
   if (namespace === 'utxo') {
-    session = await resolveBip122Session(client, session);
+    return resolveBip122Session(client, session);
   }
 
   return session;
