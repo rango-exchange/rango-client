@@ -120,6 +120,46 @@ export async function purgeOrphanedSessions(
   }
 }
 
+/**
+ * Drops pairings that no session is using.
+ *
+ * The inverse of {@link purgeOrphanedSessions}, and the only thing that collects
+ * them: a cancelled connect leaves behind the pairing `client.connect()` minted,
+ * and `cleanupPendingPairings` only unsubscribes pairings - it never deletes the
+ * record. Without this they accumulate in `client.pairing` and in storage for the
+ * lifetime of the origin.
+ *
+ * Only safe to call while no connect is in flight (the adapter's `#sessionQueue`
+ * guarantees that): a pairing awaiting its first approval has no session yet, so
+ * dropping it would kill that handshake.
+ */
+export async function purgeOrphanedPairings(
+  client: SignClientInstance
+): Promise<void> {
+  const usedPairingTopics = new Set(
+    client.session
+      .getAll()
+      .map((session) => session.pairingTopic)
+      .filter((topic): topic is string => !!topic)
+  );
+
+  for (const pairing of [...client.pairing.getAll()]) {
+    if (usedPairingTopics.has(pairing.topic)) {
+      continue;
+    }
+
+    try {
+      await client.disconnect({
+        topic: pairing.topic,
+        reason: getSdkError('USER_DISCONNECTED'),
+      });
+    } catch (error) {
+      debug(error instanceof Error ? error : new Error(String(error)));
+      await expireWalletConnectTopic(client, pairing.topic);
+    }
+  }
+}
+
 export async function cleanupStaleSessionsForNamespace(
   client: UniversalProvider['client'],
   namespace: WalletConnectNamespace

@@ -27,6 +27,7 @@ import {
   cleanupStaleSessionsForNamespace,
   hasActivePairing,
   hasActiveSession,
+  purgeOrphanedPairings,
   purgeOrphanedSessions,
   removeSessionRecord,
 } from './teardown.js';
@@ -132,6 +133,7 @@ export async function prepareWalletConnectNamespace(
 ): Promise<void> {
   await purgeOrphanedSessions(client);
   await cleanupStaleSessionsForNamespace(client, namespace);
+  await purgeOrphanedPairings(client);
 }
 
 /**

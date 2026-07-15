@@ -24,6 +24,7 @@ export {
   expireWalletConnectTopic,
   hasActivePairing,
   hasActiveSession,
+  purgeOrphanedPairings,
   purgeOrphanedSessions,
   removeSessionRecord,
 } from './teardown.js';
