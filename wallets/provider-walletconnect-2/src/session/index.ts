@@ -21,7 +21,6 @@ export {
   persistCurrentChainId,
 } from './chain-state.js';
 export {
-  disconnectWalletConnectSessions,
   expireWalletConnectTopic,
   hasActivePairing,
   hasActiveSession,

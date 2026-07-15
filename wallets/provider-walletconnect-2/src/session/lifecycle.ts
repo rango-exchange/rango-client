@@ -134,20 +134,18 @@ export async function prepareWalletConnectNamespace(
   await cleanupStaleSessionsForNamespace(client, namespace);
 }
 
+/**
+ * Restores `namespace`'s session, or negotiates a new one.
+ *
+ * Callers are expected to have run {@link prepareWalletConnectNamespace} first -
+ * this does not clean up on its own.
+ */
 export async function connectWalletConnectSession(
   client: UniversalProvider['client'],
   web3Modal: AppKitModal,
-  params: ConnectParams,
-  options: {
-    skipCleanup?: boolean;
-  } = {}
+  params: ConnectParams
 ): Promise<SessionTypes.Struct> {
   const { chains, namespace, chainReference } = params;
-
-  if (!options.skipCleanup) {
-    await purgeOrphanedSessions(client);
-    await cleanupStaleSessionsForNamespace(client, namespace);
-  }
 
   const restored = await restoreWalletConnectSession(client, namespace);
   if (restored) {

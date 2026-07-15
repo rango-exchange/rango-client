@@ -17,7 +17,7 @@ import {
   prepareWalletConnectNamespace,
 } from '../session/lifecycle.js';
 import { restoreAndCacheSession } from '../session/restore-cache.js';
-import { disconnectWalletConnectSessions } from '../session/teardown.js';
+import { removeSessionRecord } from '../session/teardown.js';
 import { evmMetaToCaipChainIds } from '../utils.js';
 
 import { ModalCache } from './modal-cache.js';
@@ -152,8 +152,7 @@ export class WalletConnectAdapter {
         },
         namespace,
         chainReference,
-      },
-      { skipCleanup: true }
+      }
     );
 
     this.#cache.set(session);
@@ -163,21 +162,11 @@ export class WalletConnectAdapter {
   async disconnectSession(namespace: WalletConnectNamespace) {
     const session = this.getSession(namespace);
     if (this.#universalProvider?.client && session) {
-      await disconnectWalletConnectSessions(this.#universalProvider.client, {
-        type: 'session',
-        session,
-      }).catch((error) => debug(error));
+      await removeSessionRecord(this.#universalProvider.client, session).catch(
+        (error) => debug(error)
+      );
     }
     this.clearSession(namespace);
-  }
-
-  async disconnectClient() {
-    if (this.#universalProvider?.client) {
-      await disconnectWalletConnectSessions(this.#universalProvider.client, {
-        type: 'all',
-      }).catch((error) => debug(error));
-    }
-    this.clearAllSessions();
   }
 
   async resolveActiveChainReference(): Promise<string | undefined> {

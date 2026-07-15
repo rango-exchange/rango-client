@@ -10,10 +10,6 @@ import { NAMESPACES } from '../wcConstants.js';
 import { persistCurrentChainId } from './chain-state.js';
 import { getSessionNamespace } from './lookup.js';
 
-export type DisconnectWalletConnectScope =
-  | { type: 'session'; session: SessionTypes.Struct }
-  | { type: 'all' };
-
 function isNoMatchingKeyError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
   return message.includes('No matching key');
@@ -139,50 +135,7 @@ export async function cleanupStaleSessionsForNamespace(
       (btc.chains?.length ?? 0) > 0 &&
       (btc.accounts?.length ?? 0) === 0
     ) {
-      await disconnectWalletConnectSessions(client, {
-        type: 'session',
-        session: existing,
-      });
+      await removeSessionRecord(client, existing);
     }
   }
-}
-
-export async function disconnectWalletConnectSessions(
-  client: SignClientInstance,
-  scope: DisconnectWalletConnectScope
-) {
-  switch (scope.type) {
-    case 'session':
-      return await removeSessionRecord(client, scope.session);
-    case 'all':
-      return await disconnectAllWalletConnectSessions(client);
-  }
-}
-
-async function disconnectAllWalletConnectSessions(client: SignClientInstance) {
-  const allPromises = [];
-
-  const sessions = client.session.getAll();
-  for (const session of sessions) {
-    allPromises.push(
-      client.disconnect({
-        topic: session.topic,
-        reason: getSdkError('USER_DISCONNECTED'),
-      })
-    );
-  }
-
-  const pairings = client.pairing.getAll();
-  for (const pairing of pairings) {
-    allPromises.push(
-      client.disconnect({
-        topic: pairing.topic,
-        reason: getSdkError('USER_DISCONNECTED'),
-      })
-    );
-  }
-
-  void persistCurrentChainId(client, undefined);
-
-  return await Promise.all(allPromises);
 }
