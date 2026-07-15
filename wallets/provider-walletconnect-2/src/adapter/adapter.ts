@@ -21,7 +21,7 @@ import { disconnectWalletConnectSessions } from '../session/teardown.js';
 import { evmMetaToCaipChainIds } from '../utils.js';
 
 import { ModalCache } from './modal-cache.js';
-import { getOrCreateUniversalProvider } from './provider-client.js';
+import { createUniversalProvider } from './provider-client.js';
 import { createSessionCache } from './session-cache.js';
 
 /**
@@ -45,6 +45,7 @@ export class WalletConnectAdapter {
   readonly #modalZIndex?: number;
   readonly #meta: BlockchainMeta[];
   #universalProvider: UniversalProvider | null = null;
+  #universalProviderPromise: Promise<UniversalProvider> | null = null;
 
   readonly #cache = createSessionCache();
   readonly #modalCache = new ModalCache();
@@ -57,12 +58,30 @@ export class WalletConnectAdapter {
     this.#modalZIndex = config.modalZIndex;
   }
 
-  async getUniversalProvider() {
-    this.#universalProvider = await getOrCreateUniversalProvider(
-      this.#projectId,
-      this.#universalProvider
-    );
-    return this.#universalProvider;
+  async getUniversalProvider(): Promise<UniversalProvider> {
+    /*
+     * Memoize the in-flight promise, not the resolved value. A namespace's
+     * `before` subscribers are invoked with `forEach` (nothing awaits between
+     * them), so several reach this method in the same tick - awaiting first and
+     * assigning after would let each start its own `UniversalProvider`, leaving
+     * several SignClients sharing one storage. The extra clients answer relay
+     * traffic for a handshake they never made ("Pending session not found for
+     * topic X", then "No matching key. session topic doesn't exist: X").
+     */
+    if (!this.#universalProviderPromise) {
+      this.#universalProviderPromise = createUniversalProvider(this.#projectId)
+        .then((provider) => {
+          this.#universalProvider = provider;
+          return provider;
+        })
+        .catch((error: unknown) => {
+          // Don't cache a failed init - let the next caller retry.
+          this.#universalProviderPromise = null;
+          throw error;
+        });
+    }
+
+    return this.#universalProviderPromise;
   }
 
   async getClient() {
