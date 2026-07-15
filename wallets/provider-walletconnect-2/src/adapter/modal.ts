@@ -53,6 +53,18 @@ export function createAppKitModal({
     projectId,
     networks,
     universalProvider,
+    /*
+     * We own the session lifecycle (`client.connect()`), so `provider.session`
+     * is never set and AppKit must not reconnect on our behalf. The trade-off is
+     * that AppKit's init runs `unSyncExistingConnection()`, whose
+     * `provider.disconnect()` always throws "Please call connect() before
+     * enable()" and gets logged by AppKit as
+     * `UniversalAdapter:disconnect - error`. That log is expected and harmless -
+     * it just means there was no session for AppKit to clean up. Do not "fix" it
+     * by enabling reconnect (AppKit would then try to restore connections it
+     * doesn't own) or by assigning `provider.session` (its disconnect would then
+     * succeed and kill a live session on the next namespace switch).
+     */
     enableReconnect: false,
     defaultNetwork,
     defaultAccountTypes,
