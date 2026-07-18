@@ -5,12 +5,16 @@ import {
   evmBlockchains,
   hyperliquidBlockchain,
   solanaBlockchain,
+  tronBlockchain,
 } from 'rango-types';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'trust-wallet';
+
+export const TronOKRequestCode = 200;
+export const TronUserRejectedCode = 4001;
 
 export const metadata: ProviderMetadata = {
   name: 'Trust Wallet',
@@ -43,6 +47,13 @@ export const metadata: ProviderMetadata = {
             id: 'SOLANA',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               solanaBlockchain(allBlockchains),
+          },
+          {
+            label: 'Tron',
+            value: 'Tron',
+            id: 'TRON',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              tronBlockchain(allBlockchains),
           },
         ],
       },
