@@ -121,6 +121,8 @@ export function App() {
 
 For better user experience, wallet provider tries to connect to a wallet only when that wallet doesn’t need to open a confirmation pop-up. Please note that only some wallets support this feature for now.
 
+> **Provider authors:** auto-connect is driven by the persisted last-connected wallets and runs each namespace's `canEagerConnect` **independently of the provider's `installed` flag** — it is not gated by (nor does it wait for) install detection in `init`. For wallets whose instance is injected asynchronously (e.g. TronLink-style providers that appear a beat after page load), `canEagerConnect` may run before the instance exists, so it must tolerate a missing/not-yet-ready instance (return `false`) rather than throw. Deferring install detection in `init` only gates **manual** connect, not eager connect.
+
 # Example
 
 - Demo for wallets: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
@@ -154,7 +156,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌  | ❌   | 🚧  | ❌       | ❌      |
 | [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
+| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧  | ✅   | 🚧  | ❌       | ❌      |
 | [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |

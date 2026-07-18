@@ -13,6 +13,7 @@ export default async function getSigners(
 ): Promise<SignerFactory> {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);
+  const tronProvider = getNetworkInstance(provider, Networks.TRON);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
@@ -21,9 +22,13 @@ export default async function getSigners(
   const { CustomSolanaSigner } = await dynamicImportWithRefinedError(
     async () => await import('./signers/solanaSigner.js')
   );
+  const { CustomTronSigner } = await dynamicImportWithRefinedError(
+    async () => await import('./signers/tronSigner.js')
+  );
 
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new CustomSolanaSigner(solProvider));
+  signers.registerSigner(TxType.TRON, new CustomTronSigner(tronProvider));
 
   return signers;
 }

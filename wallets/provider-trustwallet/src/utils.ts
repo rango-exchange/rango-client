@@ -1,6 +1,7 @@
 import type { Context } from '@hub3js/core';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,9 +16,12 @@ export function trustWallet(): Provider | null {
   const instances = new Map();
 
   instances.set(LegacyNetworks.ETHEREUM, trustwallet);
-  const { solana } = trustwallet;
+  const { solana, tronLink } = trustwallet;
   if (solana && solana.isTrustWallet) {
     instances.set(LegacyNetworks.SOLANA, solana);
+  }
+  if (tronLink) {
+    instances.set(LegacyNetworks.TRON, tronLink);
   }
 
   return instances;
@@ -58,6 +62,19 @@ export function solanaTrustWallet(): SolanaProviderApi {
   }
 
   return solanaInstance as SolanaProviderApi;
+}
+
+export function tronTrustWallet(): TronProviderApi {
+  const instance = trustWallet();
+  const tronInstance = instance?.get(LegacyNetworks.TRON);
+
+  if (!tronInstance) {
+    throw new Error(
+      'TrustWallet not injected or Tron not enabled. Please check your wallet.'
+    );
+  }
+
+  return tronInstance as TronProviderApi;
 }
 
 // Considering that the errors thrown in Trust Wallet in-app browser do not follow EIP-1193, we detect such errors and standardize them.
