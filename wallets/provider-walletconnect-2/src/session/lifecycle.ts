@@ -12,7 +12,8 @@ import type UniversalProvider from '@walletconnect/universal-provider';
 import { debug } from '@rango-dev/logging-core';
 import { timeout } from '@rango-dev/wallets-shared';
 
-import { PING_TIMEOUT } from '../wcConstants.js';
+import { prepareModalForNamespace } from '../adapter/modal.js';
+import { PING_TIMEOUT, WC_NAMESPACE_TO_CAIP } from '../wcConstants.js';
 
 import { getAccountsFromSession } from './accounts.js';
 import { filterBip122Accounts, resolveBip122Session } from './bip122.js';
@@ -167,6 +168,7 @@ export async function connectWalletConnectSession(
 
   const session = await createSession(client, web3Modal, connectNamespaces, {
     envs: params.envs,
+    namespace,
   });
 
   /*
@@ -188,6 +190,7 @@ async function createSession(
   options: CreateSessionParams,
   configs: {
     envs: Environments;
+    namespace: WalletConnectNamespace;
   }
 ): Promise<SessionTypes.Struct> {
   const { requiredNamespaces, optionalNamespaces, pairingTopic } = options;
@@ -206,15 +209,19 @@ async function createSession(
         const url = `${redirectLink}/wc?uri=${encodeURIComponent(uri)}`;
         window.open(url, '_blank', 'noreferrer noopener');
       } else {
-        const caipNamespace = (Object.keys(requiredNamespaces ?? {})[0] ??
-          Object.keys(optionalNamespaces ?? {})[0]) as
-          | 'eip155'
-          | 'bip122'
-          | undefined;
-        await web3Modal.open({
+        await prepareModalForNamespace(web3Modal, configs.namespace);
+        /*
+         * `namespace` scopes the wallet list AppKit renders. It isn't in
+         * AppKit's `OpenOptions` type but is honored at runtime, so it goes
+         * through a pre-built object (an inline literal would trip the
+         * excess-property check). `WC_NAMESPACE_TO_CAIP` is the single source
+         * for the alias -> CAIP prefix instead of sniffing the payload keys.
+         */
+        const openOptions = {
           uri,
-          ...(caipNamespace ? { namespace: caipNamespace } : {}),
-        });
+          namespace: WC_NAMESPACE_TO_CAIP[configs.namespace],
+        };
+        await web3Modal.open(openOptions);
 
         onCloseModal = new Promise((_, reject) => {
           web3Modal.subscribeState((state) => {

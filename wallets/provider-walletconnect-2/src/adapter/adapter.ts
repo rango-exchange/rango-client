@@ -231,7 +231,6 @@ export class WalletConnectAdapter {
       client,
       this.#modalCache.getModal({
         projectId: this.#projectId,
-        namespace,
         universalProvider,
         themeMode: this.#themeMode,
         zIndex: this.#modalZIndex,
