@@ -1,7 +1,7 @@
-import type { StellarActions } from '@rango-dev/wallets-core/namespaces/stellar';
+import type { StellarActions } from '@hub3js/stellar';
 
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import { utils } from '@rango-dev/wallets-core/namespaces/stellar';
+import { utils } from '@hub3js/stellar';
 import { WatchWalletChanges } from '@stellar/freighter-api';
 
 const WATCH_WALLET_INTERVAL = 1000; // how often you want to check for changes in the wallet

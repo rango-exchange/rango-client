@@ -2657,47 +2657,100 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
-"@hub3js/core@^0.60.1":
-  version "0.60.1"
-  resolved "https://registry.yarnpkg.com/@hub3js/core/-/core-0.60.1.tgz#e4b4f190cbc383de34a255a474578d7177e59567"
-  integrity sha512-vHeJEW5e1SxmXpNckGreIZxWY90XMBr11CrD3RAfsGAVfqM4uJ0YFZxyuiQMxBdr88EGdj3pnU6ciEYPy9KBmg==
+"@hub3js/core@^0.61.0":
+  version "0.61.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/core/-/core-0.61.0.tgz#64de2a5c7e616f07c79d9625229e4342658647bc"
+  integrity sha512-m8fjrsjJx2rlrZLCBsRKuxltL6Bg4toSk6JVMKH3IuovdarDi0C0w139Pura7AV6rYxoLFTF86erH3cCZEj1uA==
   dependencies:
     immer "^10.0.4"
     rango-types "^0.5.0"
     zustand "^4.5.2"
 
-"@hub3js/evm@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.2.1.tgz#fcbec4a96b28cda87d750b7ab92bf89b84e4cf59"
-  integrity sha512-H/IWo43jRBGLcmsyBSdcAD7HsGxiWDH9l93scbC1/d1AnKOxmG0pVwCiFFR3l1NODx/NikXdMovfO0pXuBtERA==
+"@hub3js/evm@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.3.0.tgz#3d3e7a60dc1616951c5ca1e4200c15a827fe1e23"
+  integrity sha512-/Dq9hbj0EFi7r+RBMH0LQ26VT3sTdJchw9tsLrjSW2/XTDKPSevIJAP5fdBDnEmS2XxAX26eJjBsq1uMPAUlYA==
   dependencies:
-    "@hub3js/std" "^0.1.1"
+    "@hub3js/std" "^0.2.0"
     caip "^1.1.1"
     rango-types "^0.5.0"
 
-"@hub3js/namespaces@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.1.1.tgz#b9b93f25702de4bb655ae5270fb9fcda8953d0e1"
-  integrity sha512-1SnIPV0snvYO0ZhExK1D+ssikSp2vjMZR8PaLspRdg/qbcFEAI9oZ5U/67e5u7ikynRcEIWSv0wR/zaOd5FKYg==
+"@hub3js/namespaces@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.2.0.tgz#41c5f46c56c858ce16fb10befac8546330c229a3"
+  integrity sha512-8omV7KpfTsAxL5wCBUnR9PJvKl8gKT57VV0kVslSbGtPgHQmPp99WsL6HDqG9x64ZpDxR2SGfaQPKKQecFGmmQ==
   dependencies:
-    "@hub3js/evm" "^0.2.1"
-    "@hub3js/solana" "^0.2.1"
+    "@hub3js/evm" "^0.3.0"
+    "@hub3js/solana" "^0.3.0"
+    "@hub3js/starknet" "^0.2.0"
+    "@hub3js/stellar" "^0.2.0"
+    "@hub3js/sui" "^0.2.0"
+    "@hub3js/tvm" "^0.2.0"
+    "@hub3js/xrpl" "^0.2.0"
 
-"@hub3js/solana@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.2.1.tgz#c41855832a72a5bf8a66a58997d914e0c7699f82"
-  integrity sha512-ss279okYhrN/omPwc1p0O/NaXmXe3aAdZAZyusepkWWOFqFjIbVb6j2yO+9f8Nb1uilCOghNS+QninAAGWb42g==
+"@hub3js/solana@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.3.0.tgz#94a1bbc0d8205b1f1ce6bcb7e7e32cab4bdf35fb"
+  integrity sha512-PLAMHlQqW7dMq17boJARddWgdoe/5MQPYeamE3CeMtHqYe1fQeiROoNrmxay+vRBUUXbsvLZQ+fOlFrgJEBc2g==
   dependencies:
-    "@hub3js/std" "^0.1.1"
+    "@hub3js/std" "^0.2.0"
     caip "^1.1.1"
     rango-types "^0.5.0"
 
-"@hub3js/std@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.1.1.tgz#440df6fe7e8ebf2b11d88f6ce339aa4a090b493e"
-  integrity sha512-of8ioIcP/obup0lqMe2wUbF6DXV38EdpNb4sAtj5W0epNCq3dfvpeBgPK1/1XOgqUpTb89ANgtvXGYDaS8GuUg==
+"@hub3js/starknet@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/starknet/-/starknet-0.2.0.tgz#6bf5d0173a13ba97e1490cef907d3808b985019f"
+  integrity sha512-qF20oEnqUdUPIFOHiXv78fPFTe9nqKy7nmEKDcGJLWDCvxyb9hxk/mJrh9cEiywG86vAvW+IYu5RilqRijIucg==
+  dependencies:
+    "@hub3js/std" "^0.2.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/std@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.2.0.tgz#29e9ebe707b8ec92db2b411c51dd52ffe6a4f7d6"
+  integrity sha512-tHexwM8SvYMPniFi3ilq60z5pER4wOzc6qAB2p9crBIf2i2oAsuP1N4K6PGdfJw99LVT3Q4sDC6odL1I+0m15g==
   dependencies:
     caip "^1.1.1"
+
+"@hub3js/stellar@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/stellar/-/stellar-0.2.0.tgz#03666d46c34932505973042ec7ce2c3446c37392"
+  integrity sha512-WVTiCps0efxPRocetNlLba58sDVH8T0/IqdRZiFdqt9jfl5sbT1o22x9p5wRiRYntf0AGpNKA9b0lERecVuH/w==
+  dependencies:
+    "@hub3js/std" "^0.2.0"
+    "@stellar/stellar-sdk" "^15.0.1"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/sui@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/sui/-/sui-0.2.0.tgz#90518998e43a9a60177ddeb01e2dc5813137a793"
+  integrity sha512-FjQArf6/Y7HAmnHi/LGpLfDc6yp/0HMk9iPaNS/mO128GVlWzl9t/Fn/kLBz8u1dlDwZdEK8A4jci9w8fkJevg==
+  dependencies:
+    "@hub3js/std" "^0.2.0"
+    "@mysten/wallet-standard" "^0.13.26"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/tvm@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/tvm/-/tvm-0.2.0.tgz#95bac04db18f832ce0d81fdefd4542073b2b380d"
+  integrity sha512-Nfcvhi3BQDM4CwVqMGdDi9yLXVhOXfWl5sfCi+OpYzY4ShSOvDRnk9xkpxLsq2eLWNWNI45DAaKYER/LkGqkPg==
+  dependencies:
+    "@hub3js/std" "^0.2.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/xrpl@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/xrpl/-/xrpl-0.2.0.tgz#09452ae45b5b9ec6593b35b0daacdf09f39dc2d6"
+  integrity sha512-ckts/ZmOP7vddYZ5vPZ31/soNlJ/zczsWF4CZsXA54lsp0yDmDFLZ878l0QqkoauOaDrf2JyqHHZtyrzmxDyAQ==
+  dependencies:
+    "@hub3js/std" "^0.2.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+    xrpl "^4.2.0"
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"

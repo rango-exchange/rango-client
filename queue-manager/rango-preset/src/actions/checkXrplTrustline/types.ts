@@ -1,5 +1,5 @@
 import type { ProxiedNamespace } from '@hub3js/core';
-import type { XRPLActions } from '@rango-dev/wallets-core/namespaces/xrpl';
+import type { XRPLActions } from '@hub3js/xrpl';
 
 export type XrplNamespace = ProxiedNamespace<XRPLActions>;
 export type TargetToken = {

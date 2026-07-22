@@ -1,3 +1,4 @@
+import { getInstanceOrThrow } from '@hub3js/sui';
 import {
   type StandardConnectFeature,
   type StandardDisconnectFeature,
@@ -5,7 +6,6 @@ import {
   type SuiFeatures,
   type WalletWithFeatures,
 } from '@mysten/wallet-standard';
-import { getInstanceOrThrow } from '@rango-dev/wallets-core/namespaces/sui';
 
 import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
 
