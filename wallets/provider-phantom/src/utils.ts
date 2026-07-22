@@ -1,6 +1,6 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
-import type { ProviderAPI as SuiProviderApi } from '@rango-dev/wallets-core/namespaces/sui';
+import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 

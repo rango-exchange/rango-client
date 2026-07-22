@@ -1,8 +1,8 @@
-import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
+import type { SuiActions } from '@hub3js/sui';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/sui';
+import { actions, builders } from '@hub3js/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
 import { suiWalletInstance } from '../utils.js';

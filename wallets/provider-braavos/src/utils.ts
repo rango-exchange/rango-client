@@ -1,5 +1,5 @@
 import type { Provider } from './types.js';
-import type { ProviderAPI as StarknetProviderAPI } from '@rango-dev/wallets-core/namespaces/starknet';
+import type { ProviderAPI as StarknetProviderAPI } from '@hub3js/starknet';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 

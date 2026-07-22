@@ -5,7 +5,7 @@ import {
   type ProviderAPI,
   type StarknetActions,
   utils,
-} from '@rango-dev/wallets-core/namespaces/starknet';
+} from '@hub3js/starknet';
 
 export function connect(
   instance: () => ProviderAPI

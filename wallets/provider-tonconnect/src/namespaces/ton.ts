@@ -1,9 +1,9 @@
-import type { TonActions } from '@rango-dev/wallets-core/namespaces/ton';
+import type { TonActions } from '@hub3js/tvm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { builders } from '@rango-dev/wallets-core/namespaces/ton';
+import { builders } from '@hub3js/tvm';
 
 import { tonActions } from '../actions/ton.js';
 import { WALLET_ID } from '../constants.js';

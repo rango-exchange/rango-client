@@ -3,12 +3,12 @@ import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type { EvmActions } from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
+import type { SuiActions } from '@hub3js/sui';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';

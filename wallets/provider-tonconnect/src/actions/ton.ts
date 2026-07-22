@@ -1,7 +1,7 @@
 import type { Context, FunctionWithContext } from '@hub3js/core';
 import type { TonConnectUI } from '@tonconnect/ui';
 
-import { type TonActions, utils } from '@rango-dev/wallets-core/namespaces/ton';
+import { type TonActions, utils } from '@hub3js/tvm';
 
 import { tonConnect } from '../utils.js';
 

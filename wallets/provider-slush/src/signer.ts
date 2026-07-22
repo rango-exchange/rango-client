@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { getInstanceOrThrow } from '@rango-dev/wallets-core/namespaces/sui';
+import { getInstanceOrThrow } from '@hub3js/sui';
 import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 

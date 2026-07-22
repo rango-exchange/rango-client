@@ -1,8 +1,8 @@
 import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
+import { getInstance as getSuiInstance } from '@hub3js/sui';
 import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-import { getInstance as getSuiInstance } from '@rango-dev/wallets-core/namespaces/sui';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
