@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-default",
-  "version": "0.58.1-next.0",
+  "version": "0.58.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,8 +25,8 @@
     "@hub3js/evm": "^0.3.0",
     "@hub3js/std": "^0.2.0",
     "@rango-dev/signer-evm": "^0.43.0",
-    "@rango-dev/wallets-core": "^0.60.1-next.0",
-    "@rango-dev/wallets-shared": "^0.61.1-next.0",
+    "@rango-dev/wallets-core": "^0.60.1-next.1",
+    "@rango-dev/wallets-shared": "^0.61.1-next.1",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
