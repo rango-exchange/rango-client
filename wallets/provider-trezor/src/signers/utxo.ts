@@ -3,8 +3,8 @@ import type { GenericSigner, Transfer } from 'rango-types';
 import { Networks } from '@rango-dev/wallets-shared';
 import { SignerError } from 'rango-types';
 
-import { getTrezorModule } from '../legacy/helpers.js';
 import { getBitcoinDerivationPath } from '../state.js';
+import { getTrezorModule } from '../utils.js';
 import { BITCOIN_COIN_NAME } from '../utxo/config.js';
 import { buildTrezorBitcoinTransaction } from '../utxo/psbt.js';
 

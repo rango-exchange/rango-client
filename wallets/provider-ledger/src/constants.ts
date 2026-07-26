@@ -1,16 +1,9 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { Networks } from '@rango-dev/wallets-shared';
 import { type BlockchainMeta } from 'rango-types';
 
 import getSigners from './signer.js';
-
-export const EVM_SUPPORTED_CHAINS = [
-  LegacyNetworks.ETHEREUM,
-  LegacyNetworks.POLYGON,
-  LegacyNetworks.BASE,
-];
 
 export const HEXADECIMAL_BASE = 16;
 export const WALLET_ID = 'ledger';

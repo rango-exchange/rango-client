@@ -1,6 +1,5 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
-import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
@@ -61,15 +60,4 @@ export function getInstanceOrThrow(): Provider {
   }
 
   return instances;
-}
-export async function getSolanaAccounts(
-  instance: Provider
-): Promise<ProviderConnectResult> {
-  await instance.connect();
-  const account = instance.publicKey.toString();
-
-  return {
-    accounts: [account],
-    chainId: LegacyNetworks.SOLANA,
-  };
 }

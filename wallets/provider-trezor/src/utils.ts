@@ -3,11 +3,10 @@ import type { TrezorConnect } from '@trezor/connect-web';
 import {
   dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
-  Networks,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';
 
-import { getDerivationPath } from '../state';
+import { getDerivationPath } from './state.js';
 
 export const trezorErrorMessages: { [statusCode: string]: string } = {
   Failure_ActionCancelled: 'User rejected the transaction.',
@@ -27,18 +26,6 @@ export async function getTrezorModule() {
   }
 
   return mod.default;
-}
-
-export function getTrezorInstance() {
-  /*
-   * Instances have a required property which is `chainId` and is using in swap execution.
-   * Here we are setting it as Ethereum always since we are supporting only eth for now.
-   */
-  const instances = new Map();
-
-  instances.set(Networks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
-
-  return instances;
 }
 
 export async function getEthereumAccounts(): Promise<ProviderConnectResult> {

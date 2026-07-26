@@ -7,11 +7,11 @@ import {
 } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { initTrezor } from '../init.js';
+import { setBitcoinDerivationPath } from '../state.js';
 import {
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
-} from '../legacy/helpers.js';
-import { setBitcoinDerivationPath } from '../state.js';
+} from '../utils.js';
 import { BITCOIN_COIN_NAME, resolveBitcoinScriptType } from '../utxo/config.js';
 
 /**
