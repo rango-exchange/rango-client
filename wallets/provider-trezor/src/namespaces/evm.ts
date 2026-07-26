@@ -8,11 +8,11 @@ import { ETHEREUM_CHAIN_ID } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants.js';
 import { initTrezor } from '../init.js';
+import { setDerivationPath } from '../state.js';
 import {
   getEthereumAccounts,
   getTrezorNormalizedDerivationPath,
-} from '../legacy/helpers.js';
-import { setDerivationPath } from '../state.js';
+} from '../utils.js';
 
 const connect = builders
   .connect()

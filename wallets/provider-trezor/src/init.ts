@@ -1,5 +1,5 @@
-import { getTrezorModule } from './legacy/helpers.js';
 import { getTrezorManifest } from './provider.js';
+import { getTrezorModule } from './utils.js';
 
 let isTrezorInitialized = false;
 
