@@ -3,7 +3,11 @@ import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import {
+  EVM_NAMESPACE,
+  TRON_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
 
 export function bitget(): Provider | null {
   const instances: Provider = new Map();
@@ -14,14 +18,14 @@ export function bitget(): Provider | null {
   }
 
   if (bitkeep.ethereum) {
-    instances.set(LegacyNetworks.ETHEREUM, bitkeep.ethereum);
+    instances.set(EVM_NAMESPACE, bitkeep.ethereum);
   }
 
   if (bitkeep.tronLink) {
-    instances.set(LegacyNetworks.TRON, bitkeep.tronLink);
+    instances.set(TRON_NAMESPACE, bitkeep.tronLink);
   }
   if (bitkeep.unisat) {
-    instances.set(LegacyNetworks.BTC, bitkeep.unisat);
+    instances.set(UTXO_NAMESPACE, bitkeep.unisat);
   }
 
   if (instances.size === 0) {
@@ -44,7 +48,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmBitget(): EvmProviderApi {
   const instances = bitget();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -57,7 +61,7 @@ export function evmBitget(): EvmProviderApi {
 
 export function tronBitget(): TronProviderApi {
   const instance = bitget();
-  const tronInstance = instance?.get(LegacyNetworks.TRON);
+  const tronInstance = instance?.get(TRON_NAMESPACE);
 
   if (!tronInstance) {
     throw new Error(
@@ -69,7 +73,7 @@ export function tronBitget(): TronProviderApi {
 }
 export function utxoBitget(): UtxoProviderApi {
   const instance = bitget();
-  const utxoInstance = instance?.get(LegacyNetworks.BTC);
+  const utxoInstance = instance?.get(UTXO_NAMESPACE);
 
   if (!utxoInstance) {
     throw new Error(

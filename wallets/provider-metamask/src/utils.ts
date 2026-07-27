@@ -5,7 +5,7 @@ import type {
 } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { getWallets } from '@wallet-standard/app';
 
 import {
@@ -23,10 +23,10 @@ export function metamask(): Provider | null {
   const instances: Provider = new Map();
 
   if (ethereum) {
-    instances.set(LegacyNetworks.ETHEREUM, ethereum);
+    instances.set(EVM_NAMESPACE, ethereum);
   }
   if (solana) {
-    instances.set(LegacyNetworks.SOLANA, solana);
+    instances.set(SOLANA_NAMESPACE, solana);
   }
 
   return instances;
@@ -104,7 +104,7 @@ function isEthereumMetamaskProvider(ethereum: MetamaskEvmProviderApi): boolean {
 export function evmMetamask(): EvmProviderApi {
   const instances = metamask();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -116,7 +116,7 @@ export function evmMetamask(): EvmProviderApi {
 }
 export function solanaMetamask(): WalletStandardSolanaInstance {
   const instances = metamask();
-  const solanaInstance = instances?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instances?.get(SOLANA_NAMESPACE);
   if (!solanaInstance) {
     throw new Error(
       'Metamask Solana instance is not available. Ensure that Solana support is enabled in your wallet.'

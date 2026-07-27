@@ -2675,10 +2675,10 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
-"@hub3js/namespaces@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.2.0.tgz#41c5f46c56c858ce16fb10befac8546330c229a3"
-  integrity sha512-8omV7KpfTsAxL5wCBUnR9PJvKl8gKT57VV0kVslSbGtPgHQmPp99WsL6HDqG9x64ZpDxR2SGfaQPKKQecFGmmQ==
+"@hub3js/namespaces@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.2.2.tgz#bb55a7cb54ce00695a5113d82cbd3933cb4dc68b"
+  integrity sha512-lOIlEKy8GIY0drxQwRJCIpcH8qnRQ1DvYlpMelmNbyKw+vuzg2thBCYW9M16rfT9oUA3xYQNcIqzqN19fJdjYg==
   dependencies:
     "@hub3js/evm" "^0.3.0"
     "@hub3js/solana" "^0.3.0"

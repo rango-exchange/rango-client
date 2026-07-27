@@ -2,7 +2,7 @@ import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
 export function exodus(): Provider | null {
   const { exodus } = window;
@@ -11,10 +11,10 @@ export function exodus(): Provider | null {
   }
   const instances: Provider = new Map();
   if (exodus.ethereum) {
-    instances.set(LegacyNetworks.ETHEREUM, exodus.ethereum);
+    instances.set(EVM_NAMESPACE, exodus.ethereum);
   }
   if (exodus.solana) {
-    instances.set(LegacyNetworks.SOLANA, exodus.solana);
+    instances.set(SOLANA_NAMESPACE, exodus.solana);
   }
 
   return instances;
@@ -33,7 +33,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmExodus(): EvmProviderApi {
   const instances = exodus();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -46,7 +46,7 @@ export function evmExodus(): EvmProviderApi {
 
 export function solanaExodus(): SolanaProviderApi {
   const instance = exodus();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(

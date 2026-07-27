@@ -2,16 +2,16 @@ import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
 export function mathWallet(): Provider | null {
   const { solana, ethereum } = window;
   const instances: Provider = new Map();
   if (ethereum && ethereum.isMathWallet) {
-    instances.set(LegacyNetworks.ETHEREUM, ethereum);
+    instances.set(EVM_NAMESPACE, ethereum);
   }
   if (solana && solana.isMathWallet) {
-    instances.set(LegacyNetworks.SOLANA, solana);
+    instances.set(SOLANA_NAMESPACE, solana);
   }
   if (instances.size === 0) {
     return null;
@@ -32,7 +32,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmMathWallet(): EvmProviderApi {
   const instances = mathWallet();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -45,7 +45,7 @@ export function evmMathWallet(): EvmProviderApi {
 
 export function solanaMathWallet(): SolanaProviderApi {
   const instance = mathWallet();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(

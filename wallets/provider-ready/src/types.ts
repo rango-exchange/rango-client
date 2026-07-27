@@ -1,8 +1,8 @@
+import type { STARKNET_NAMESPACE } from '@hub3js/namespaces';
 import type { ProviderAPI as StarknetProviderAPI } from '@hub3js/starknet';
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 
 export type ProviderObject = {
-  [LegacyNetworks.STARKNET]: StarknetProviderAPI;
+  [STARKNET_NAMESPACE]: StarknetProviderAPI;
 };
 export type Provider = Map<
   keyof ProviderObject,

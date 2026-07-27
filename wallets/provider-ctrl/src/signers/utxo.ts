@@ -1,7 +1,8 @@
-import type { Provider, ProviderObject } from '../types.js';
+import type { Provider, UtxoProvider } from '../types.js';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { GenericSigner, Transfer } from 'rango-types';
 
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -53,6 +54,26 @@ async function ctrlTransfer(
   });
 }
 
+function getUtxoProvider(
+  provider: Provider,
+  blockchain: string
+): UtxoProviderApi {
+  const utxoInstances = provider.get(UTXO_NAMESPACE) as
+    | UtxoProvider
+    | undefined;
+  const instance = utxoInstances?.get(
+    blockchain as Parameters<UtxoProvider['get']>[0]
+  );
+
+  if (!instance) {
+    throw new Error(
+      `Ctrl UTXO provider for ${blockchain} is not available. Please check your wallet.`
+    );
+  }
+
+  return instance;
+}
+
 /**
  * One signer for all of Ctrl's UTXO chains. BTC is signed via PSBT (`sign_psbt`);
  * LTC/DOGE/BCH use the generic `transfer` request. It receives the whole provider
@@ -94,9 +115,7 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
       );
     }
 
-    const provider = this.provider.get(
-      asset.blockchain as keyof ProviderObject
-    ) as UtxoProviderApi;
+    const provider = getUtxoProvider(this.provider, asset.blockchain);
 
     const signInputs: { [key: string]: number[] } = {};
     psbt.inputsToSign.forEach((input) => {
@@ -137,9 +156,7 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
   async #signTransferObject(tx: Transfer): Promise<{ hash: string }> {
     const { blockchain } = tx.asset;
 
-    const transferProvider = this.provider.get(
-      blockchain as keyof ProviderObject
-    ) as UtxoProviderApi;
+    const transferProvider = getUtxoProvider(this.provider, blockchain);
 
     const {
       method,

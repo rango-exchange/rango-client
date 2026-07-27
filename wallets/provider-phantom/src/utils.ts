@@ -2,7 +2,12 @@ import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import {
+  EVM_NAMESPACE,
+  SOLANA_NAMESPACE,
+  SUI_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
 
 export type Provider = Map<string, unknown>;
 
@@ -18,18 +23,18 @@ export function phantom(): Provider | null {
   const instances: Provider = new Map();
 
   if (ethereum && ethereum.isPhantom) {
-    instances.set(LegacyNetworks.ETHEREUM, ethereum);
+    instances.set(EVM_NAMESPACE, ethereum);
   }
 
   if (solana && solana.isPhantom) {
-    instances.set(LegacyNetworks.SOLANA, solana);
+    instances.set(SOLANA_NAMESPACE, solana);
   }
 
   if (bitcoin && bitcoin.isPhantom) {
-    instances.set(LegacyNetworks.BTC, bitcoin);
+    instances.set(UTXO_NAMESPACE, bitcoin);
   }
   if (sui && sui.isPhantom) {
-    instances.set(LegacyNetworks.SUI, sui);
+    instances.set(SUI_NAMESPACE, sui);
   }
 
   return instances;
@@ -48,7 +53,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmPhantom(): EvmProviderApi {
   const instances = phantom();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -61,7 +66,7 @@ export function evmPhantom(): EvmProviderApi {
 
 export function solanaPhantom(): SolanaProviderApi {
   const instance = phantom();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(
@@ -74,7 +79,7 @@ export function solanaPhantom(): SolanaProviderApi {
 
 export function bitcoinPhantom(): SolanaProviderApi {
   const instance = phantom();
-  const bitcoinInstance = instance?.get(LegacyNetworks.BTC);
+  const bitcoinInstance = instance?.get(UTXO_NAMESPACE);
 
   if (!bitcoinInstance) {
     throw new Error(
@@ -86,7 +91,7 @@ export function bitcoinPhantom(): SolanaProviderApi {
 }
 export function suiPhantom(): SuiProviderApi {
   const instance = phantom();
-  const suiInstance = instance?.get(LegacyNetworks.SUI);
+  const suiInstance = instance?.get(SUI_NAMESPACE);
 
   if (!suiInstance) {
     throw new Error(

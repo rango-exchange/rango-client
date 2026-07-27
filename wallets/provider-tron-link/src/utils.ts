@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { TRON_NAMESPACE } from '@hub3js/namespaces';
 
 export function tronlink(): Provider | null {
   const instances: Provider = new Map();
@@ -11,7 +11,7 @@ export function tronlink(): Provider | null {
     return null;
   }
 
-  instances.set(LegacyNetworks.TRON, tronLink);
+  instances.set(TRON_NAMESPACE, tronLink);
 
   return instances;
 }
@@ -28,7 +28,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function tronTronlink(): TronProviderApi {
   const instance = tronlink();
-  const tronInstance = instance?.get(LegacyNetworks.TRON);
+  const tronInstance = instance?.get(TRON_NAMESPACE);
 
   if (!tronInstance) {
     throw new Error(

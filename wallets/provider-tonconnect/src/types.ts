@@ -1,4 +1,4 @@
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { TON_NAMESPACE } from '@hub3js/namespaces';
 import type {
   TonConnectUI,
   TonConnectUiOptionsWithManifest,
@@ -7,7 +7,7 @@ import type {
 export type Environments = TonConnectUiOptionsWithManifest;
 
 type ProviderObject = {
-  [LegacyNetworks.TON]: TonConnectUI;
+  [TON_NAMESPACE]: TonConnectUI;
 };
 
 export type Provider = Map<

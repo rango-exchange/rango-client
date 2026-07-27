@@ -1,11 +1,11 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export type EnkryptEvmProvider = EvmProviderApi & {
   selectedAddress: string;
 };
 export type ProviderObject = {
-  [LegacyNetworks.ETHEREUM]: EnkryptEvmProvider;
+  [EVM_NAMESPACE]: EnkryptEvmProvider;
 };
 export type Provider = Map<
   keyof ProviderObject,

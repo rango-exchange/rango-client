@@ -1,4 +1,4 @@
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 
 type XVerseAddress = {
@@ -29,7 +29,7 @@ export type XVerseEvent = {
 };
 
 export type ProviderObject = {
-  [LegacyNetworks.BTC]: ProviderAPI;
+  [UTXO_NAMESPACE]: ProviderAPI;
 };
 export type Provider = Map<
   keyof ProviderObject,

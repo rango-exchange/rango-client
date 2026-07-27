@@ -1,8 +1,8 @@
 import type { ProviderAPI } from '@hub3js/evm';
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export type ProviderObject = {
-  [LegacyNetworks.ETHEREUM]: ProviderAPI;
+  [EVM_NAMESPACE]: ProviderAPI;
 };
 export type Provider = Map<
   keyof ProviderObject,
