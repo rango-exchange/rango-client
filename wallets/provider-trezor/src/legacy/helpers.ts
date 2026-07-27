@@ -59,18 +59,6 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   };
 }
 
-/*
- * Using BigInt in the valueToHex function ensures that the function
- * can handle very large integer values that exceed the range of standard JavaScript number types.
- */
-export const valueToHex = (value: string) => {
-  const ZERO_BIGINT = BigInt(0);
-  const HEX_BASE = 16;
-  return BigInt(value) > ZERO_BIGINT
-    ? `0x${BigInt(value).toString(HEX_BASE)}`
-    : '0x0';
-};
-
 export const getTrezorNormalizedDerivationPath = (
   path: string // TrezorConnect needs master node to be added to derivation path
 ) => (path && !path.startsWith('m/') ? 'm/' + path : path);
