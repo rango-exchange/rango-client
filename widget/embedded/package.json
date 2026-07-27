@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.0",
-    "@hub3js/namespaces": "^0.2.0",
+    "@hub3js/namespaces": "^0.2.2",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
     "@rango-dev/logging-core": "^0.13.0",

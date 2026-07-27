@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export function taho(): Provider | null {
   const { tally } = window;
@@ -9,7 +9,7 @@ export function taho(): Provider | null {
     return null;
   }
   const instances: Provider = new Map();
-  instances.set(LegacyNetworks.ETHEREUM, tally);
+  instances.set(EVM_NAMESPACE, tally);
 
   return instances;
 }
@@ -27,7 +27,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmTaho(): EvmProviderApi {
   const instances = taho();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

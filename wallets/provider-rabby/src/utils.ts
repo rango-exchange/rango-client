@@ -5,7 +5,7 @@ import {
   type ProviderAPI,
   utils,
 } from '@hub3js/evm';
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
@@ -18,7 +18,7 @@ export function rabby(): Provider | null {
 
   const instances = new Map();
 
-  instances.set(LegacyNetworks.ETHEREUM, ethereum);
+  instances.set(EVM_NAMESPACE, ethereum);
 
   return instances;
 }
@@ -26,7 +26,7 @@ export function rabby(): Provider | null {
 export function evmRabby(): EvmProviderApi {
   const instances = rabby();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

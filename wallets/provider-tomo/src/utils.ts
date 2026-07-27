@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export function tomo() {
   const { tomo_evm } = window;
@@ -12,7 +12,7 @@ export function tomo() {
 
   const instances = new Map();
 
-  instances.set(Networks.ETHEREUM, tomo_evm);
+  instances.set(EVM_NAMESPACE, tomo_evm);
 
   return instances;
 }
@@ -29,7 +29,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function evmTomo(): EvmProviderApi {
   const instances = tomo();
-  const evmInstance = instances?.get(Networks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
   if (!evmInstance) {
     throw new Error(
       'Tomo not injected or EVM not enabled. Please check your wallet.'

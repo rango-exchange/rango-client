@@ -2,7 +2,7 @@ import type { Context } from '@hub3js/core';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Provider = Record<string, any>;
 export function trustWallet(): Provider | null {
@@ -14,10 +14,10 @@ export function trustWallet(): Provider | null {
 
   const instances = new Map();
 
-  instances.set(LegacyNetworks.ETHEREUM, trustwallet);
+  instances.set(EVM_NAMESPACE, trustwallet);
   const { solana } = trustwallet;
   if (solana && solana.isTrustWallet) {
-    instances.set(LegacyNetworks.SOLANA, solana);
+    instances.set(SOLANA_NAMESPACE, solana);
   }
 
   return instances;
@@ -36,7 +36,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmTrustWallet(): EvmProviderApi {
   const instances = trustWallet();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -49,7 +49,7 @@ export function evmTrustWallet(): EvmProviderApi {
 
 export function solanaTrustWallet(): SolanaProviderApi {
   const instance = trustWallet();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(

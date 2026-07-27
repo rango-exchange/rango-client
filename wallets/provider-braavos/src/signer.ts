@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { STARKNET_NAMESPACE } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -13,10 +13,7 @@ export default async function getSigners(
 ): Promise<SignerFactory> {
   const signers = new DefaultSignerFactory();
 
-  const starknetProvider = getNetworkInstance(
-    provider,
-    LegacyNetworks.STARKNET
-  );
+  const starknetProvider = getNetworkInstance(provider, STARKNET_NAMESPACE);
 
   const { DefaultStarknetSigner } = await dynamicImportWithRefinedError(
     async () => await import('@rango-dev/signer-starknet')

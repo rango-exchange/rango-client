@@ -3,7 +3,7 @@ import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { CustomSolanaSigner } from './signers/solana.js';
@@ -12,10 +12,8 @@ import { CustomTransferSigner } from './signers/utxo.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const ethProvider = provider.get(LegacyNetworks.ETHEREUM) as EvmProviderApi;
-  const solProvider = provider.get(
-    LegacyNetworks.SOLANA
-  ) as SolanaExternalProvider;
+  const ethProvider = provider.get(EVM_NAMESPACE) as EvmProviderApi;
+  const solProvider = provider.get(SOLANA_NAMESPACE) as SolanaExternalProvider;
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');

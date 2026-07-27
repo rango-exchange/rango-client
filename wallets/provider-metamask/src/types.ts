@@ -1,5 +1,5 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import type { WalletWithFeatures as StandardWalletWithFeatures } from '@wallet-standard/base';
 
 import {
@@ -45,8 +45,8 @@ export type MetamaskEvmProviderApi = EvmProviderApi & {
   isSafePal?: boolean;
 };
 export type ProviderObject = {
-  [LegacyNetworks.ETHEREUM]: MetamaskEvmProviderApi;
-  [LegacyNetworks.SOLANA]: WalletStandardSolanaInstance;
+  [EVM_NAMESPACE]: MetamaskEvmProviderApi;
+  [SOLANA_NAMESPACE]: WalletStandardSolanaInstance;
 };
 export type Provider = Map<
   keyof ProviderObject,

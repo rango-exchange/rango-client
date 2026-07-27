@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
@@ -11,7 +11,7 @@ export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
   const signers = new DefaultSignerFactory();
-  const solProvider = getNetworkInstance(provider, LegacyNetworks.SOLANA);
+  const solProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
 
   signers.registerSigner(TxType.SOLANA, new SolflareSolanaSiger(solProvider));
   return signers;

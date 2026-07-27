@@ -1,6 +1,6 @@
 import type { Provider, VultisigZcashProviderApi } from './types.js';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 
 export function vultisig(): Provider | null {
   const { vultisig } = window;
@@ -11,7 +11,7 @@ export function vultisig(): Provider | null {
   const instances: Provider = new Map();
 
   if (vultisig.zcash) {
-    instances.set(LegacyNetworks.ZCASH, vultisig.zcash);
+    instances.set(UTXO_NAMESPACE, vultisig.zcash);
   }
 
   return instances;
@@ -19,7 +19,7 @@ export function vultisig(): Provider | null {
 
 export function vultisigZcash(): VultisigZcashProviderApi {
   const instances = vultisig();
-  const zcashInstance = instances?.get(LegacyNetworks.ZCASH);
+  const zcashInstance = instances?.get(UTXO_NAMESPACE);
 
   if (!zcashInstance) {
     throw new Error('Vultisig not injected. Please check your wallet.');

@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -13,8 +13,8 @@ import { MetamaskSolanaSigner } from './signers/solana.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
-  const solanaProvider = getNetworkInstance(provider, Networks.SOLANA);
+  const ethProvider = getNetworkInstance(provider, EVM_NAMESPACE);
+  const solanaProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(

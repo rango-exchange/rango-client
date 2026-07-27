@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
 export function solflare(): Provider | null {
   const instances: Provider = new Map();
@@ -10,7 +10,7 @@ export function solflare(): Provider | null {
     return null;
   }
 
-  instances.set(LegacyNetworks.SOLANA, solflare);
+  instances.set(SOLANA_NAMESPACE, solflare);
 
   return instances;
 }
@@ -29,7 +29,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function solanaSolflare(): SolanaProviderApi {
   const instance = solflare();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(

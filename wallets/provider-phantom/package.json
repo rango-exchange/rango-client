@@ -24,6 +24,7 @@
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@hub3js/core": "^0.61.0",
     "@hub3js/evm": "^0.3.0",
+    "@hub3js/namespaces": "^0.2.2",
     "@hub3js/solana": "^0.3.0",
     "@hub3js/std": "^0.2.0",
     "@hub3js/sui": "^0.2.0",

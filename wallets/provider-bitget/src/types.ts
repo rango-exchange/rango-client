@@ -1,12 +1,16 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type {
+  EVM_NAMESPACE,
+  TRON_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 export type ProviderObject = {
-  [LegacyNetworks.ETHEREUM]: EvmProviderApi;
-  [LegacyNetworks.TRON]: TronProviderApi;
-  [LegacyNetworks.BTC]: UtxoProviderApi;
+  [EVM_NAMESPACE]: EvmProviderApi;
+  [TRON_NAMESPACE]: TronProviderApi;
+  [UTXO_NAMESPACE]: UtxoProviderApi;
 };
 export type Provider = Map<
   keyof ProviderObject,
