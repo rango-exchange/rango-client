@@ -1,15 +1,11 @@
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { cleanEvmError } from '@rango-dev/signer-evm';
+import { cleanEvmError, toHexQuantity } from '@rango-dev/signer-evm';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
 
-import {
-  getTrezorModule,
-  trezorErrorMessages,
-  valueToHex,
-} from '../legacy/helpers.js';
+import { getTrezorModule, trezorErrorMessages } from '../legacy/helpers.js';
 import { getDerivationPath } from '../state.js';
 
 export function getTrezorErrorMessage(error: unknown) {
@@ -65,20 +61,20 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
       const additionalFields = isEIP1559
         ? {
-            maxFeePerGas: valueToHex(maxFeePerGas || '0'),
-            maxPriorityFeePerGas: valueToHex(maxPriorityFeePerGas || '0'),
+            maxFeePerGas: toHexQuantity(maxFeePerGas || '0'),
+            maxPriorityFeePerGas: toHexQuantity(maxPriorityFeePerGas || '0'),
           }
         : {
-            gasPrice: valueToHex(gasPrice || '0'),
+            gasPrice: toHexQuantity(gasPrice || '0'),
           };
 
       const transaction = {
         to: tx.to,
         data: tx.data || '0x',
-        value: valueToHex(tx.value?.toString() || '0'),
-        gasLimit: valueToHex(tx.gasLimit?.toString() || '0'),
+        value: toHexQuantity(tx.value?.toString() || '0'),
+        gasLimit: toHexQuantity(tx.gasLimit?.toString() || '0'),
         chainId: Number.parseInt(chainId),
-        nonce: valueToHex(transactionCount.toString()),
+        nonce: toHexQuantity(transactionCount.toString()),
         ...additionalFields,
       };
 

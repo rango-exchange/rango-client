@@ -2,7 +2,7 @@ import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { cleanEvmError, DefaultEvmSigner } from '@rango-dev/signer-evm';
+import { cleanEvmError, toHexQuantity } from '@rango-dev/signer-evm';
 import * as encoding from '@walletconnect/encoding';
 import { AccountId, ChainId } from 'caip';
 import { type GenericSigner } from 'rango-types';
@@ -11,6 +11,18 @@ import { EthereumRPCMethods, NAMESPACES } from '../constants.js';
 
 const NAMESPACE_NAME = NAMESPACES.ETHEREUM;
 
+type WalletConnectEvmTx = {
+  from?: string;
+  to?: string;
+  data: string;
+  value: string;
+  gas?: string;
+  gasPrice?: string;
+  maxFeePerGas?: string;
+  maxPriorityFeePerGas?: string;
+  nonce?: string;
+};
+
 class EVMSigner implements GenericSigner<EvmTransaction> {
   private client: SignClient;
   private session: SessionTypes.Struct;
@@ -18,6 +30,49 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
   constructor(client: SignClient, session: SessionTypes.Struct) {
     this.client = client;
     this.session = session;
+  }
+
+  /**
+   * Map Rango's EvmTransaction to WalletConnect eth_sendTransaction params.
+   *
+   * Unlike DefaultEvmSigner.buildTx (ethers TransactionRequest with gasLimit +
+   * decimal fee strings), WC sends params raw over the relay. Wallets like
+   * Ledger Live parse QUANTITY as hex, so decimal fees get inflated (~40x+).
+   *
+   * This builder:
+   *  - uses `gas` (JSON-RPC), not ethers' `gasLimit`
+   *  - hex-encodes gas, fees, value, and nonce
+   */
+  static buildTx(evmTx: EvmTransaction): WalletConnectEvmTx {
+    const tx: WalletConnectEvmTx = {
+      data: evmTx.data || '0x',
+      /*
+       * Approvals and many contract calls have value=null from the API.
+       * Some WC wallets reject missing value; send 0x0 explicitly.
+       */
+      value: evmTx.value ? toHexQuantity(evmTx.value) : '0x0',
+    };
+
+    if (evmTx.from) {
+      tx.from = evmTx.from;
+    }
+    if (evmTx.to) {
+      tx.to = evmTx.to;
+    }
+    if (evmTx.nonce) {
+      tx.nonce = toHexQuantity(evmTx.nonce);
+    }
+    if (evmTx.gasLimit) {
+      tx.gas = toHexQuantity(evmTx.gasLimit);
+    }
+    if (evmTx.maxFeePerGas && evmTx.maxPriorityFeePerGas) {
+      tx.maxFeePerGas = toHexQuantity(evmTx.maxFeePerGas);
+      tx.maxPriorityFeePerGas = toHexQuantity(evmTx.maxPriorityFeePerGas);
+    } else if (evmTx.gasPrice) {
+      tx.gasPrice = toHexQuantity(evmTx.gasPrice);
+    }
+
+    return tx;
   }
 
   public async signMessage(
@@ -71,7 +126,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
         address,
         chainId,
       });
-      const transaction = DefaultEvmSigner.buildTx(tx);
+      const transaction = EVMSigner.buildTx(tx);
       const hash: string = await this.client.request({
         topic: this.session.topic,
         chainId: requestedFor.caipChainId,
