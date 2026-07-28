@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-binance",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,7 +24,7 @@
     "@hub3js/core": "^0.60.1",
     "@hub3js/evm": "^0.2.1",
     "@hub3js/std": "^0.1.1",
-    "@rango-dev/signer-evm": "^0.43.0",
+    "@rango-dev/signer-evm": "^0.44.0",
     "@rango-dev/wallets-core": "^0.60.0",
     "@rango-dev/wallets-shared": "^0.61.0",
     "rango-types": "^0.5.0"

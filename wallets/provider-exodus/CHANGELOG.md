@@ -1,3 +1,7 @@
+# [0.63.0](https://github.com/rango-exchange/rango-client/compare/provider-exodus@0.62.0...provider-exodus@0.63.0) (2026-07-28)
+
+
+
 # [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-exodus@0.61.0...provider-exodus@0.62.0) (2026-07-07)
 
 
