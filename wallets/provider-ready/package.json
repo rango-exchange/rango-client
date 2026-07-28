@@ -10,7 +10,7 @@
   },
   "typings": "dist/mod.d.ts",
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-ready --inputs src/mod.ts",
+    "build": "yarn run rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
