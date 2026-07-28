@@ -1,12 +1,13 @@
 import type { SignerError as SignerErrorType } from 'rango-types';
 
-import { isError } from 'ethers';
+import { isError, toQuantity } from 'ethers';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const cleanEvmError = (error: any): SignerErrorType => {
   if (!error) {
     return new SignerError(SignerErrorCode.SEND_TX_ERROR);
@@ -79,10 +80,22 @@ export async function getTenderlyError(
     }
     const data: TenderlyResponse = await response.json();
     return data?.error_message;
-  } catch (error) {
+  } catch {
     return;
   }
 }
+
+/**
+ * Convert a decimal or hex numeric string to an EIP-1474 hex QUANTITY.
+ *
+ * Needed wherever transaction params reach a wallet without passing through
+ * ethers first (WalletConnect's relay, TrezorConnect), since a wallet parsing
+ * a decimal string as the QUANTITY it's declared to be reads a wildly larger
+ * number. `toQuantity` accepts both "611580889" and "0x28984", handles values
+ * beyond Number.MAX_SAFE_INTEGER, and throws on inputs that aren't a valid
+ * QUANTITY (negatives, empty strings) instead of emitting a malformed one.
+ */
+export const toHexQuantity = (value: string): string => toQuantity(value);
 
 export const waitMs = async (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));

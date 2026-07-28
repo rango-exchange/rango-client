@@ -1,3 +1,12 @@
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.28.0...provider-trezor@0.29.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **walletconnect:** send eth_sendTransaction params as hex ([57141a8](https://github.com/rango-exchange/rango-client/commit/57141a85ce9548038f4fe527407cbf5cfcfb7383))
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.27.0...provider-trezor@0.28.0) (2026-07-07)
 
 
