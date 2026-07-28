@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-gemwallet",
-  "version": "0.4.1-next.3",
+  "version": "0.4.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,7 +25,7 @@
     "@hub3js/core": "^0.61.0",
     "@hub3js/std": "^0.2.0",
     "@hub3js/xrpl": "^0.2.0",
-    "@rango-dev/wallets-shared": "^0.61.1-next.3",
+    "@rango-dev/wallets-shared": "^0.61.1-next.4",
     "rango-types": "^0.5.0",
     "xrpl": "^4.2.0"
   },
