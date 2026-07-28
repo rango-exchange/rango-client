@@ -1,3 +1,12 @@
+# [0.44.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.43.0...signer-evm@0.44.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **walletconnect:** send eth_sendTransaction params as hex ([57141a8](https://github.com/rango-exchange/rango-client/commit/57141a85ce9548038f4fe527407cbf5cfcfb7383))
+
+
+
 # [0.43.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.42.0...signer-evm@0.43.0) (2026-07-07)
 
 

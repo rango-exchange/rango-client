@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-okx",
-  "version": "0.62.1-next.3",
+  "version": "0.63.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -26,7 +26,7 @@
     "@hub3js/namespaces": "^0.2.2",
     "@hub3js/solana": "^0.3.0",
     "@hub3js/std": "^0.2.0",
-    "@rango-dev/signer-evm": "^0.43.0",
+    "@rango-dev/signer-evm": "^0.44.0",
     "@rango-dev/signer-solana": "^0.48.0",
     "@rango-dev/wallets-core": "^0.60.1-next.1",
     "@rango-dev/wallets-shared": "^0.61.1-next.2",

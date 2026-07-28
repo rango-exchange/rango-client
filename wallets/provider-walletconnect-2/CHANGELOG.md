@@ -1,3 +1,12 @@
+# [0.56.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.55.0...provider-walletconnect-2@0.56.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **walletconnect:** send eth_sendTransaction params as hex ([57141a8](https://github.com/rango-exchange/rango-client/commit/57141a85ce9548038f4fe527407cbf5cfcfb7383))
+
+
+
 # [0.55.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.54.0...provider-walletconnect-2@0.55.0) (2026-07-07)
 
 

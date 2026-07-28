@@ -1,3 +1,7 @@
+# [0.64.0](https://github.com/rango-exchange/rango-client/compare/provider-ctrl@0.63.0...provider-ctrl@0.64.0) (2026-07-28)
+
+
+
 # 0.63.0 (2026-07-07)
 
 
