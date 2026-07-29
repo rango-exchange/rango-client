@@ -77,7 +77,7 @@ A publish to **Preview** is triggered automatically when a Pull Request is merge
 **Note:** Ensure that all modifications to the `Production Release` workflow are implemented as a hotfix to the `main` branch to guarantee that we have the most recent updates while executing the workflow.
 
 
-Run the **`Production Release`** workflow.
+Run the **`Production Release`** workflow from the `main` branch (the workflow fails fast if dispatched from any other branch).
 
 
 It will:
@@ -116,6 +116,21 @@ It will:
   ```
 
   Open a PR to ensure all examples are on the latest version.
+
+---
+
+### **Hotfix (Production)**
+
+Use this flow when a fix must reach production without releasing what is currently on `next` (staging):
+
+1. Merge the fix directly into `main`.
+2. Run the **`Production Release`** workflow from `main` with the **hotfix** checkbox checked.
+
+With the hotfix option enabled:
+
+* The **Sync `main` with `next`** step is skipped, so `main` is released as-is — no staging commits are pulled in.
+* Publish and Deploy run exactly as in a normal production release.
+* **Sync `next` with `main`** is also skipped — `next` contains unreleased work, so this merge is likely to conflict. After the hotfix release, merge `main` back into `next` manually (e.g. via a PR) to carry the hotfix and version-bump commits to staging and resolve any conflicts deliberately.
 
 ---
 
