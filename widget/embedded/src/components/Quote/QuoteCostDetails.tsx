@@ -1,6 +1,5 @@
 import type { QuoteCostDetailsProps } from './Quote.types';
 import type { NameOfFees } from '../../constants/quote';
-import type BigNumber from 'bignumber.js';
 
 import { i18n } from '@lingui/core';
 import {
@@ -12,6 +11,7 @@ import {
   QuoteCost,
   Typography,
 } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
 
 import { getFeeLabel } from '../../constants/quote';
@@ -62,7 +62,6 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const {
     steps,
     quote,
-    fee,
     time,
     feeWarning,
     timeWarning,
@@ -73,8 +72,20 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const container = fullExpandedMode ? getExpanded() : getContainer();
 
   const feesGroup = getFeesGroup(swaps);
+
+  /*
+   * The "Total Payable Fee" must reflect only the fees the user actually pays
+   * (feesGroup.payable). We sum the USD value of every payable fee group and use
+   * it for both the collapsed summary and the itemized rows in the modal, so the
+   * two never disagree.
+   */
+  const totalPayableFee = Object.values(feesGroup.payable).reduce(
+    (acc: BigNumber, fees) => acc.plus(getTotalFeesInUsd(fees)),
+    new BigNumber(0)
+  );
+
   const roundedFee = numberToString(
-    fee,
+    totalPayableFee,
     GAS_FEE_MIN_DECIMALS,
     GAS_FEE_MAX_DECIMALS
   );
@@ -181,7 +192,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             <Typography variant="label" size="medium">
               $
               {numberToString(
-                fee,
+                totalPayableFee,
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               )}

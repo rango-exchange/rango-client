@@ -362,7 +362,6 @@ export function Quote(props: QuoteProps) {
           quote={quote}
           fullExpandedMode
           time={totalTime}
-          fee={totalFee}
           feeWarning={feeWarning}
           timeWarning={timeWarning}
           showModalFee={showModalFee}
@@ -415,7 +414,6 @@ export function Quote(props: QuoteProps) {
           <QuoteCostDetails
             quote={quote}
             time={totalTime}
-            fee={totalFee}
             feeWarning={feeWarning}
             timeWarning={timeWarning}
             showModalFee={showModalFee}
