@@ -1,5 +1,4 @@
 import type { WalletConnectNamespace } from '../types.js';
-import type { ProposalTypes } from '@walletconnect/types';
 import type { ChainIdParams } from 'caip';
 
 import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
@@ -23,11 +22,6 @@ export type FinalNamespaces = Record<
   string,
   { chains: string[]; methods: string[]; events: string[] }
 >;
-
-export type ConnectNamespacePayload = {
-  requiredNamespaces: ProposalTypes.RequiredNamespaces;
-  optionalNamespaces: ProposalTypes.OptionalNamespaces;
-};
 
 type NamespaceProposal = {
   methods: string[];
@@ -70,8 +64,11 @@ const NAMESPACE_PROPOSALS: Record<WalletConnectNamespace, NamespaceProposal> = {
 /**
  * Builds a WalletConnect namespace proposal (chains, methods, events).
  *
- * Despite the name, the result can be placed in either `requiredNamespaces` or
- * `optionalNamespaces` depending on {@link shouldRequireNamespacesOnConnect}.
+ * The result always goes to `optionalNamespaces`: sign-client merges
+ * `requiredNamespaces` into `optionalNamespaces` and clears it before sending
+ * the proposal, so passing anything as required only earns a deprecation
+ * warning. Narrowing the proposal (see `targetChainReference`) is what actually
+ * constrains what the wallet can approve.
  *
  * @param targetChainReference - When set for EVM, limits the proposal to this
  *   single chain id (decimal string, e.g. `"137"`). Omit to include all EVM
@@ -96,44 +93,4 @@ export function generateOptionalNamespace(
   }
 
   return Object.keys(proposal).length > 0 ? proposal : undefined;
-}
-
-/**
- * WalletConnect treats required vs optional namespaces differently:
- * - Required: wallet must approve or the session is rejected.
- * - Optional: wallet may approve a subset (typical for multi-chain EVM dApps).
- */
-export function shouldRequireNamespacesOnConnect(
-  namespace: WalletConnectNamespace,
-  chainReference?: string
-): boolean {
-  if (namespace === 'utxo') {
-    return true;
-  }
-
-  // Target chain from connect/switchNetwork must be mandatory for the wallet.
-  return namespace === 'evm' && !!chainReference;
-}
-
-export function buildConnectNamespacePayload(
-  proposal: FinalNamespaces | undefined,
-  namespace: WalletConnectNamespace,
-  chainReference?: string
-): ConnectNamespacePayload {
-  const useRequired = shouldRequireNamespacesOnConnect(
-    namespace,
-    chainReference
-  );
-
-  if (useRequired) {
-    return {
-      requiredNamespaces: proposal ?? {},
-      optionalNamespaces: {},
-    };
-  }
-
-  return {
-    requiredNamespaces: {},
-    optionalNamespaces: proposal ?? {},
-  };
 }

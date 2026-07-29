@@ -20,10 +20,7 @@ import { filterBip122Accounts, resolveBip122Session } from './bip122.js';
 import { getPersistedChainId } from './chain-state.js';
 import { filterEvmAccounts } from './evm.js';
 import { findSessionByNamespace } from './lookup.js';
-import {
-  buildConnectNamespacePayload,
-  generateOptionalNamespace,
-} from './proposals.js';
+import { generateOptionalNamespace } from './proposals.js';
 import {
   cleanupStaleSessionsForNamespace,
   hasActivePairing,
@@ -160,16 +157,15 @@ export async function connectWalletConnectSession(
     [namespace],
     chainReference
   );
-  const connectNamespaces = buildConnectNamespacePayload(
-    proposal,
-    namespace,
-    chainReference
+  const session = await createSession(
+    client,
+    web3Modal,
+    { optionalNamespaces: proposal ?? {} },
+    {
+      envs: params.envs,
+      namespace,
+    }
   );
-
-  const session = await createSession(client, web3Modal, connectNamespaces, {
-    envs: params.envs,
-    namespace,
-  });
 
   /*
    * Only a just-approved session can be waited on: bitcoin wallets routinely
@@ -193,11 +189,10 @@ async function createSession(
     namespace: WalletConnectNamespace;
   }
 ): Promise<SessionTypes.Struct> {
-  const { requiredNamespaces, optionalNamespaces, pairingTopic } = options;
+  const { optionalNamespaces, pairingTopic } = options;
 
   try {
     const { uri, approval } = await client.connect({
-      requiredNamespaces,
       optionalNamespaces,
       pairingTopic,
     });

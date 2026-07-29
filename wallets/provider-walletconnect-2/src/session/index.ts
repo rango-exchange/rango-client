@@ -39,12 +39,7 @@ export {
   getCaipNamespace,
   getSessionNamespace,
 } from './lookup.js';
-export {
-  type ConnectNamespacePayload,
-  buildConnectNamespacePayload,
-  generateOptionalNamespace,
-  shouldRequireNamespacesOnConnect,
-} from './proposals.js';
+export { generateOptionalNamespace } from './proposals.js';
 export {
   type EvmChainDeps,
   ensureConnectedToChain,

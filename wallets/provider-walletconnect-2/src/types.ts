@@ -20,8 +20,11 @@ export interface Environments {
 export type WalletConnectNamespace = 'evm' | 'utxo';
 
 export interface CreateSessionParams {
-  requiredNamespaces: ProposalTypes.RequiredNamespaces;
-  optionalNamespaces?: ProposalTypes.OptionalNamespaces;
+  /**
+   * The whole proposal goes here - sign-client folds `requiredNamespaces` into
+   * this and clears it, so proposing anything as required is deprecated.
+   */
+  optionalNamespaces: ProposalTypes.OptionalNamespaces;
   pairingTopic?: string;
 }
 
@@ -36,7 +39,7 @@ export interface ConnectParams {
   namespace: WalletConnectNamespace;
   /**
    * Decimal EVM chain reference (e.g. `"137"`).
-   * When set, the chain is proposed as required during session creation.
+   * When set, it is the only EVM chain proposed during session creation.
    */
   chainReference?: string;
 }
