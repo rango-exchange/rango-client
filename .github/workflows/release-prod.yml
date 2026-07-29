@@ -46,6 +46,7 @@ jobs:
 
   deploy:
     needs: publish
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
     environment: production
     runs-on: ubuntu-latest
     env:          
