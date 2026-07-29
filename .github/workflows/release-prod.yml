@@ -1,9 +1,30 @@
 name: Production Release
+run-name: ${{ inputs.hotfix && 'Production Hotfix Release' || 'Production Release' }}
 on:
   workflow_dispatch:
+    inputs:
+      hotfix:
+        description: 'Hotfix: skip the next -> main sync and release main as-is'
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: production-release
 
 jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure workflow is dispatched from 'main'
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Production Release must be dispatched from 'main' (got '${{ github.ref }}'). Aborting."
+          exit 1
+
   sync-prod:
+    needs: guard
+    if: ${{ !inputs.hotfix }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,12 +39,14 @@ jobs:
           prod: true
 
   publish:
-    needs: sync-prod
+    needs: [guard, sync-prod]
+    if: ${{ !cancelled() && needs.guard.result == 'success' && (needs.sync-prod.result == 'success' || needs.sync-prod.result == 'skipped') }}
     uses: ./.github/workflows/publish.yml
     secrets: inherit
 
   deploy:
     needs: publish
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
     environment: production
     runs-on: ubuntu-latest
     env:          
@@ -54,6 +77,7 @@ jobs:
 
   sync-next:
     needs: deploy
+    if: ${{ !inputs.hotfix }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
