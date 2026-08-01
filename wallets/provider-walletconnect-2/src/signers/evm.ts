@@ -3,7 +3,7 @@ import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { cleanEvmError, toHexQuantity } from '@rango-dev/signer-evm';
 import { AccountId, ChainId } from 'caip';
-import { type GenericSigner } from 'rango-types';
+import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 
 import { utf8ToHex } from '../utils.js';
 import { EthereumRPCMethods, NAMESPACES } from '../wcConstants.js';
@@ -150,6 +150,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
           `Received an invalid hash on signing the transaction. (hash=${hash})`
         );
       }
+
       return {
         hash,
       };

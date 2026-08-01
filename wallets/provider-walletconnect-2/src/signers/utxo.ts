@@ -6,7 +6,7 @@ import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import { Networks } from '@rango-dev/wallets-shared';
 import * as bitcoin from 'bitcoinjs-lib';
 import { AccountId, ChainId } from 'caip';
-import { SignerError } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { BitcoinRPCMethods, NAMESPACES } from '../wcConstants.js';
 
@@ -71,25 +71,36 @@ class UtxoSigner implements GenericSigner<Transfer> {
       reference: CAIP_BITCOIN_CHAIN_ID,
     }).toString();
 
-    const response: SignPsbtResponse = await this.client.request({
-      topic: this.session.topic,
-      chainId: caipChainId,
-      request: {
-        method: BitcoinRPCMethods.SIGN_PSBT,
-        params: {
-          account: address,
-          psbt: psbt.unsignedPsbtBase64,
-          signInputs,
+    try {
+      const response: SignPsbtResponse = await this.client.request({
+        topic: this.session.topic,
+        chainId: caipChainId,
+        request: {
+          method: BitcoinRPCMethods.SIGN_PSBT,
+          params: {
+            account: address,
+            psbt: psbt.unsignedPsbtBase64,
+            signInputs,
+          },
         },
-      },
-    });
+      });
 
-    if (response.txid) {
-      // signer wallet already broadcasted the transaction
-      return { hash: response.txid };
+      if (response.txid) {
+        // signer wallet already broadcasted the transaction
+        return { hash: response.txid };
+      }
+
+      return await this.broadcastSignedPsbt(response.psbt);
+    } catch (error) {
+      if (typeof error === 'string') {
+        throw new SignerError(
+          SignerErrorCode.UNEXPECTED_BEHAVIOUR,
+          error,
+          undefined
+        );
+      }
+      throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }
-
-    return await this.broadcastSignedPsbt(response.psbt);
   }
 
   private assertAccountInSession(address: string) {
