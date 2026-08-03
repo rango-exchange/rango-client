@@ -81,6 +81,7 @@ class UtxoSigner implements GenericSigner<Transfer> {
             account: address,
             psbt: psbt.unsignedPsbtBase64,
             signInputs,
+            broadcast: true,
           },
         },
       });
