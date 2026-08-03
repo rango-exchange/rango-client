@@ -96,7 +96,7 @@
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
-    "rangutopia": "^0.3.0",
+    "rangutopia": "^0.3.1",
     "rimraf": "^5.0.1",
     "semver-parser": "^4.1.4",
     "typescript-eslint": "^8.21.0",
