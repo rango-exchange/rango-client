@@ -44,6 +44,10 @@ const connect = builders
   .or(sessionUpdateCleanup)
   .or(sessionEventCleanup)
   .or(sessionDeleteCleanup)
+  .or((_, err) => {
+    void getAdapter().disconnectSession('utxo');
+    return err;
+  })
   .or(standardizeAndThrowError)
   .build();
 

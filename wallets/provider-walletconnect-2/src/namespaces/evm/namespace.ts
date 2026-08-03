@@ -59,6 +59,10 @@ const connect = builders
   .or(sessionUpdateCleanup)
   .or(sessionEventCleanup)
   .or(sessionDeleteCleanup)
+  .or((_, err) => {
+    void getAdapter().disconnectSession('evm');
+    return err;
+  })
   .or(standardizeAndThrowError)
   .build();
 
