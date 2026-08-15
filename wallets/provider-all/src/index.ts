@@ -19,6 +19,7 @@ import { versions as gemwallet } from '@rango-dev/provider-gemwallet';
 import { versions as ledger } from '@rango-dev/provider-ledger';
 import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
+import { versions as noirWallet } from '@rango-dev/provider-noir-wallet';
 import { versions as okx } from '@rango-dev/provider-okx';
 import { versions as phantom } from '@rango-dev/provider-phantom';
 import { versions as rabby } from '@rango-dev/provider-rabby';
@@ -104,5 +105,6 @@ export const allProviders = (
     unisat,
     vultisig,
     gemwallet,
+    noirWallet,
   ];
 };
