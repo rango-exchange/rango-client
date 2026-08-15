@@ -39,10 +39,6 @@ Supported networks :
 The wallet only supports bitcoin.
 
 
-#### 🚧 TON
-
-The wallet supports TON, but it is **not implemented** in the current integration.
-
 #### 🚧 Sui
 
 The wallet supports Sui, but it is **not implemented** in the current integration.

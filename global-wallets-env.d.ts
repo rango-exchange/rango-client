@@ -21,6 +21,7 @@ declare global {
     safepalProvider?: any;
     trustwallet?: any;
     okxwallet?: any;
+    okxTonWallet?: any;
     starknet_argentX?: any;
     starknet_braavos?: any;
     tronLink?: any;

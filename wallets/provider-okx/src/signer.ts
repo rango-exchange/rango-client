@@ -5,6 +5,7 @@ import {
   EVM_NAMESPACE,
   SOLANA_NAMESPACE,
   UTXO_NAMESPACE,
+  TON_NAMESPACE,
 } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
@@ -13,6 +14,7 @@ import {
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { OKXSolanaSigner } from './signers/solana.js';
+import { OKXTonSigner } from './signers/ton.js';
 import { OKXUTXOSigner } from './signers/utxo.js';
 
 export default async function getSigners(
@@ -21,6 +23,7 @@ export default async function getSigners(
   const ethProvider = getNetworkInstance(provider, EVM_NAMESPACE);
   const solProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
   const utxoProvider = getNetworkInstance(provider, UTXO_NAMESPACE);
+  const tonProvider = getNetworkInstance(provider, TON_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
@@ -29,6 +32,7 @@ export default async function getSigners(
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new OKXSolanaSigner(solProvider));
   signers.registerSigner(TxType.TRANSFER, new OKXUTXOSigner(utxoProvider));
+  signers.registerSigner(TxType.TON, new OKXTonSigner(tonProvider));
 
   return signers;
 }
