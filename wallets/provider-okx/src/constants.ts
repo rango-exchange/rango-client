@@ -5,6 +5,7 @@ import { Networks } from '@rango-dev/wallets-shared';
 import {
   type BlockchainMeta,
   solanaBlockchain,
+  tonBlockchain,
   type TransferBlockchainMeta,
 } from 'rango-types';
 
@@ -12,6 +13,9 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'okx';
+export const TON_CONNECT_PROTOCOL_VERSION = 2;
+export const TON_CONNECT_USER_REJECTED_CODE = 300;
+
 export const OKX_WALLET_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
   LegacyNetworks.BSC,
@@ -72,6 +76,13 @@ export const metadata: ProviderMetadata = {
                 (chain): chain is TransferBlockchainMeta =>
                   chain.name === Networks.BTC
               ),
+          },
+          {
+            label: 'Ton',
+            value: 'Ton',
+            id: 'TON',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              tonBlockchain(allBlockchains),
           },
         ],
       },

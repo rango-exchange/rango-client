@@ -1,3 +1,4 @@
+import type { TonProviderApi } from './namespaces/ton/types.js';
 import type { OkxBtcAddress, Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
@@ -7,11 +8,12 @@ import {
   EVM_NAMESPACE,
   SOLANA_NAMESPACE,
   UTXO_NAMESPACE,
+  TON_NAMESPACE,
 } from '@hub3js/namespaces';
 
 export function okx(): Provider | null {
-  const { okxwallet } = window;
-  if (!okxwallet) {
+  const { okxwallet, okxTonWallet } = window;
+  if (!okxwallet && !okxTonWallet) {
     return null;
   }
   const instances: Provider = new Map();
@@ -23,6 +25,9 @@ export function okx(): Provider | null {
   }
   if (okxwallet.bitcoin) {
     instances.set(UTXO_NAMESPACE, okxwallet.bitcoin);
+  }
+  if (okxTonWallet?.tonconnect) {
+    instances.set(TON_NAMESPACE, okxTonWallet.tonconnect);
   }
   return instances;
 }
@@ -75,6 +80,20 @@ export function bitcoinOKX(): UtxoProviderApi {
 
   return bitcoinInstance;
 }
+
+export function tonOKX(): TonProviderApi {
+  const instance = okx();
+  const tonInstance = instance?.get(TON_NAMESPACE);
+
+  if (!tonInstance) {
+    throw new Error(
+      'OKX Wallet not injected or TON not enabled. Please check your wallet.'
+    );
+  }
+
+  return tonInstance as TonProviderApi;
+}
+
 export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
   const instance = bitcoinOKX();
   const requestResult = await instance.connect();
