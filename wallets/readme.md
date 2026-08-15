@@ -165,6 +165,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)             | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Safe](provider-safe/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Noir Wallet](provider-noir-wallet/readme.md)   | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 
@@ -202,6 +203,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Freighter    | ✅             | ❌             | ✅           | Injected                  | ✅            |
 | Trezor       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | Safe         | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
+| Noir Wallet  | ✅             | ❌             | ✅           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 

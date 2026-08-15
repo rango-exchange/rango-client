@@ -37,6 +37,7 @@
     "@rango-dev/provider-ledger": "^0.32.1-next.5",
     "@rango-dev/provider-math-wallet": "^0.63.1-next.1",
     "@rango-dev/provider-metamask": "^0.62.1-next.1",
+    "@rango-dev/provider-noir-wallet": "^0.1.0",
     "@rango-dev/provider-okx": "^0.63.1-next.1",
     "@rango-dev/provider-phantom": "^0.62.1-next.5",
     "@rango-dev/provider-rabby": "^0.29.1-next.1",
