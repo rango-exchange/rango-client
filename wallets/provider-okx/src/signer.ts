@@ -17,6 +17,7 @@ import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 import { OKXSolanaSigner } from './signers/solana.js';
 import { OKXTonSigner } from './signers/ton.js';
 import { OKXUTXOSigner } from './signers/utxo.js';
+import { suiWalletInstance } from './utils.js';
 
 export default async function getSigners(
   provider: Provider
@@ -39,6 +40,14 @@ export default async function getSigners(
   signers.registerSigner(TxType.TRANSFER, new OKXUTXOSigner(utxoProvider));
   signers.registerSigner(TxType.TON, new OKXTonSigner(tonProvider));
   signers.registerSigner(TxType.TRON, new DefaultTronSigner(tronProvider));
+
+  const suiProvider = suiWalletInstance();
+  if (suiProvider) {
+    const { DefaultSuiSigner } = await dynamicImportWithRefinedError(
+      async () => await import('@rango-dev/signer-sui')
+    );
+    signers.registerSigner(TxType.SUI, new DefaultSuiSigner(suiProvider));
+  }
 
   return signers;
 }
