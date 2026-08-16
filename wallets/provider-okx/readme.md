@@ -47,6 +47,16 @@ The wallet supports Sui, but it is **not implemented** in the current integratio
 
 ### Feature
 
+#### ⚠️ Connect and AutoConnect
+
+For Tron, connecting on page load — or disconnecting and reconnecting within the app —
+returns the **first account you connected**, not the account you last switched to. The OKX
+extension resets the Tron address in these cases and gives no way to recover the active
+one; it corrects itself only once you switch accounts in the wallet.
+
+If you sign a transaction while that wrong account is selected, the OKX wallet rejects it
+with a **"Transaction Unavailable"** error.
+
 #### ⚠️ Disconnect
 
 The disconnect function will not work for this wallet, as it attempts to invoke disconnect on the connect method for private key imported wallets.

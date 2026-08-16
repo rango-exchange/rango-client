@@ -1,7 +1,8 @@
 import type { TonProviderApi } from './namespaces/ton/types.js';
-import type { OkxBtcAddress, Provider } from './types.js';
+import type { OkxBtcAddress, OkxTronMessageEvent, Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
@@ -9,6 +10,7 @@ import {
   SOLANA_NAMESPACE,
   UTXO_NAMESPACE,
   TON_NAMESPACE,
+  TRON_NAMESPACE,
 } from '@hub3js/namespaces';
 
 export function okx(): Provider | null {
@@ -28,6 +30,9 @@ export function okx(): Provider | null {
   }
   if (okxTonWallet?.tonconnect) {
     instances.set(TON_NAMESPACE, okxTonWallet.tonconnect);
+  }
+  if (okxwallet.tronLink) {
+    instances.set(TRON_NAMESPACE, okxwallet.tronLink);
   }
   return instances;
 }
@@ -94,6 +99,18 @@ export function tonOKX(): TonProviderApi {
   return tonInstance as TonProviderApi;
 }
 
+export function tronOKX(): TronProviderApi {
+  const instance = okx();
+  const tronInstance = instance?.get(TRON_NAMESPACE);
+
+  if (!tronInstance) {
+    throw new Error(
+      'OKX Wallet not injected or Tron not enabled. Please check your wallet.'
+    );
+  }
+
+  return tronInstance;
+}
 export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
   const instance = bitcoinOKX();
   const requestResult = await instance.connect();
@@ -103,4 +120,18 @@ export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
   }
 
   return requestResult;
+}
+
+export function isOkxTronMessageEvent(
+  value: unknown
+): value is OkxTronMessageEvent {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+  const event = value as { message?: { action?: unknown } };
+  return (
+    typeof event.message === 'object' &&
+    event.message !== null &&
+    typeof event.message.action === 'string'
+  );
 }

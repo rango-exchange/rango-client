@@ -30,6 +30,7 @@
     "@rango-dev/signer-solana": "^0.48.1-next.0",
     "@rango-dev/wallets-core": "^0.60.1-next.3",
     "@rango-dev/wallets-shared": "^0.61.1-next.4",
+    "@rango-dev/signer-tron": "^0.41.1-next.0",
     "@ton/core": "^0.59.0",
     "rango-types": "^0.5.0"
   },
