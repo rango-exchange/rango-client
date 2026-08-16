@@ -7,6 +7,7 @@ import {
   solanaBlockchain,
   tonBlockchain,
   type TransferBlockchainMeta,
+  tronBlockchain,
 } from 'rango-types';
 
 import getSigners from './signer.js';
@@ -15,6 +16,9 @@ import { getInstanceOrThrow } from './utils.js';
 export const WALLET_ID = 'okx';
 export const TON_CONNECT_PROTOCOL_VERSION = 2;
 export const TON_CONNECT_USER_REJECTED_CODE = 300;
+export const TRON_OK_REQUEST_CODE = 200;
+// EIP-1193 user-rejected-request code returned by `tron_requestAccounts`.
+export const TRON_USER_REJECTION_CODE = 4001;
 
 export const OKX_WALLET_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
@@ -83,6 +87,13 @@ export const metadata: ProviderMetadata = {
             id: 'TON',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               tonBlockchain(allBlockchains),
+          },
+          {
+            label: 'Tron',
+            value: 'Tron',
+            id: 'TRON',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              tronBlockchain(allBlockchains),
           },
         ],
       },

@@ -6,6 +6,7 @@ import {
   SOLANA_NAMESPACE,
   UTXO_NAMESPACE,
   TON_NAMESPACE,
+  TRON_NAMESPACE,
 } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
@@ -24,15 +25,20 @@ export default async function getSigners(
   const solProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
   const utxoProvider = getNetworkInstance(provider, UTXO_NAMESPACE);
   const tonProvider = getNetworkInstance(provider, TON_NAMESPACE);
+  const tronProvider = getNetworkInstance(provider, TRON_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
     async () => await import('@rango-dev/signer-evm')
   );
+  const { DefaultTronSigner } = await dynamicImportWithRefinedError(
+    async () => await import('@rango-dev/signer-tron')
+  );
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new OKXSolanaSigner(solProvider));
   signers.registerSigner(TxType.TRANSFER, new OKXUTXOSigner(utxoProvider));
   signers.registerSigner(TxType.TON, new OKXTonSigner(tonProvider));
+  signers.registerSigner(TxType.TRON, new DefaultTronSigner(tronProvider));
 
   return signers;
 }
