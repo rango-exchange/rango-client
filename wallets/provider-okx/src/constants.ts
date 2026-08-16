@@ -6,6 +6,8 @@ import {
   type BlockchainMeta,
   solanaBlockchain,
   tonBlockchain,
+  type SuiBlockchainMeta,
+  TransactionType,
   type TransferBlockchainMeta,
   tronBlockchain,
 } from 'rango-types';
@@ -19,6 +21,7 @@ export const TON_CONNECT_USER_REJECTED_CODE = 300;
 export const TRON_OK_REQUEST_CODE = 200;
 // EIP-1193 user-rejected-request code returned by `tron_requestAccounts`.
 export const TRON_USER_REJECTION_CODE = 4001;
+export const WALLET_NAME_IN_WALLET_STANDARD = 'OKX Wallet';
 
 export const OKX_WALLET_SUPPORTED_CHAINS = [
   LegacyNetworks.ETHEREUM,
@@ -94,6 +97,16 @@ export const metadata: ProviderMetadata = {
             id: 'TRON',
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               tronBlockchain(allBlockchains),
+          },
+          {
+            label: 'Sui',
+            value: 'Sui',
+            id: 'SUI',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is SuiBlockchainMeta =>
+                  chain.type === TransactionType.SUI
+              ),
           },
         ],
       },

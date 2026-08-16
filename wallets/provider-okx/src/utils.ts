@@ -2,16 +2,20 @@ import type { TonProviderApi } from './namespaces/ton/types.js';
 import type { OkxBtcAddress, OkxTronMessageEvent, Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
   EVM_NAMESPACE,
   SOLANA_NAMESPACE,
-  UTXO_NAMESPACE,
   TON_NAMESPACE,
   TRON_NAMESPACE,
+  UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
+import { getInstanceOrThrow as getSuiInstanceOrThrow } from '@hub3js/sui';
+
+import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
 
 export function okx(): Provider | null {
   const { okxwallet, okxTonWallet } = window;
@@ -110,6 +114,18 @@ export function tronOKX(): TronProviderApi {
   }
 
   return tronInstance;
+}
+
+export function suiWalletInstance(): SuiProviderApi | null {
+  try {
+    return getSuiInstanceOrThrow(WALLET_NAME_IN_WALLET_STANDARD);
+  } catch {
+    return null;
+  }
+}
+
+export function suiWalletInstanceOrThrow(): SuiProviderApi {
+  return getSuiInstanceOrThrow(WALLET_NAME_IN_WALLET_STANDARD);
 }
 export async function getBitcoinAccounts(): Promise<OkxBtcAddress> {
   const instance = bitcoinOKX();

@@ -4,7 +4,7 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
-import { type TonActions } from '@rango-dev/wallets-core/namespaces/ton';
+import { type TonActions } from '@hub3js/tvm';
 
 import {
   TON_CONNECT_PROTOCOL_VERSION,

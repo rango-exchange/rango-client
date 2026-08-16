@@ -1,7 +1,7 @@
 import type { TonProviderApi } from '../namespaces/ton/types.js';
 
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import { type TonActions, utils } from '@rango-dev/wallets-core/namespaces/ton';
+import { type TonActions, utils } from '@hub3js/tvm';
 
 import { connectEventToCAIP } from '../namespaces/ton/utils.js';
 

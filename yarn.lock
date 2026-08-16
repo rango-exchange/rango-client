@@ -2750,6 +2750,13 @@
   dependencies:
     caip "^1.1.1"
 
+"@hub3js/std@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.2.3.tgz#403425b8983577b652380182c6f49c442bdfbbad"
+  integrity sha512-sKCK1ua42Fj+bsULFqAdV6lOUdMgtavMEqxbv/Ch5cSODMJ4cS4cpp1yK2fyR11J447ciZMOvtm+LGW7yQUfMA==
+  dependencies:
+    caip "^1.1.1"
+
 "@hub3js/stellar@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@hub3js/stellar/-/stellar-0.2.0.tgz#03666d46c34932505973042ec7ce2c3446c37392"
@@ -2770,12 +2777,31 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
+"@hub3js/sui@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@hub3js/sui/-/sui-0.2.3.tgz#f766ce9ea79e31ece0c8cfe789c04a35c1e92a3b"
+  integrity sha512-/wvZtZIU54GjcCcYiwVCqbJqYprVUu6DcABkOByHAOLY9HJft7ru1NYp6TsMa7I0/UlMtFyeMyovpTxPeEP6Lw==
+  dependencies:
+    "@hub3js/std" "^0.2.3"
+    "@mysten/wallet-standard" "^0.13.26"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
 "@hub3js/tvm@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@hub3js/tvm/-/tvm-0.2.0.tgz#95bac04db18f832ce0d81fdefd4542073b2b380d"
   integrity sha512-Nfcvhi3BQDM4CwVqMGdDi9yLXVhOXfWl5sfCi+OpYzY4ShSOvDRnk9xkpxLsq2eLWNWNI45DAaKYER/LkGqkPg==
   dependencies:
     "@hub3js/std" "^0.2.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/tvm@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@hub3js/tvm/-/tvm-0.2.3.tgz#c83820cea24a4f041e5ffc8d2a38413ea28b2f51"
+  integrity sha512-jFTKBuVrGZ7PxDxdR1nYXQD5JRkXJMNA/HL2MB4SnWtoS66Kf7PcQtRzzojG0NxNc+kR7TSnRbtRMLr8hAmo3w==
+  dependencies:
+    "@hub3js/std" "^0.2.3"
     caip "^1.1.1"
     rango-types "^0.5.0"
 

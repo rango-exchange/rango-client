@@ -8,6 +8,7 @@ import { solana } from './namespaces/solana.js';
 import { ton } from './namespaces/ton/ton.js';
 import { setEnvironments } from './namespaces/ton/utils.js';
 import { tron } from './namespaces/tron.js';
+import { sui } from './namespaces/sui.js';
 import { utxo } from './namespaces/utxo.js';
 import { okx as okxInstance } from './utils.js';
 
@@ -28,6 +29,7 @@ const buildProvider = () =>
     .add('utxo', utxo)
     .add('ton', ton)
     .add('tron', tron)
+    .add('sui', sui)
 
     .build();
 

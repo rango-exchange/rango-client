@@ -4,9 +4,9 @@ import type {
   TonConnectEvent,
   TonConnectEventSuccess,
 } from './types.js';
-import type { CaipAccount } from '@rango-dev/wallets-core/namespaces/common';
+import type { CaipAccount } from '@hub3js/std/types';
 
-import { utils as tonCoreUtils } from '@rango-dev/wallets-core/namespaces/ton';
+import { utils as tonCoreUtils } from '@hub3js/tvm';
 import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 
 export function isTonConnectEventSuccess(

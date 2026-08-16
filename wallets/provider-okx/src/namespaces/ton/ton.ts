@@ -1,10 +1,7 @@
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import {
-  builders,
-  type TonActions,
-} from '@rango-dev/wallets-core/namespaces/ton';
+import { builders, type TonActions } from '@hub3js/tvm';
 
 import { tonActions } from '../../actions/ton.js';
 import { tonBuilders } from '../../builders/ton.js';
