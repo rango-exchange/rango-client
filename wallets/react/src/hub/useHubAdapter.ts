@@ -6,7 +6,12 @@ import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
 
 import { utils } from '@hub3js/evm';
-import { type WalletInfo, type WalletType } from '@rango-dev/wallets-shared';
+import {
+  getSupportedChainsFromNamespace,
+  getSupportedChainsFromProvider,
+  type WalletInfo,
+  type WalletType,
+} from '@rango-dev/wallets-shared';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
@@ -22,7 +27,6 @@ import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
-  getSupportedChainsFromProvider,
   isEvmNamespace,
   isSolanaNamespace,
   isUtxoNamespace,
@@ -182,21 +186,25 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       if (!dataRef.current.allBlockChains) {
         throw new Error(`Blockchains are not available`);
       }
-      const providerSupportedChainsOfNamespace = namespacesProperty?.value.data
-        .find(
-          (providerNamespace) => providerNamespace.value === namespace.namespace
-        )
-        ?.getSupportedChains(dataRef.current.allBlockChains);
 
-      if (!providerSupportedChainsOfNamespace) {
+      const namespaceMeta = namespacesProperty?.value.data.find(
+        (providerNamespace) => providerNamespace.value === namespace.namespace
+      );
+
+      if (!namespaceMeta) {
         throw new Error(
           `NamespaceMeta is not defined for requested namespace: ${namespace.namespace}`
         );
       }
 
+      const supportedChains = getSupportedChainsFromNamespace(
+        namespaceMeta,
+        dataRef.current.allBlockChains
+      );
+
       return proxiedNamespace.canSwitchNetwork({
         network,
-        supportedChains: providerSupportedChainsOfNamespace,
+        supportedChains,
       });
     },
     async connect(type, namespaces) {

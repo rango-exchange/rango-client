@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.0",
-    "@hub3js/evm": "^0.3.0",
-    "@hub3js/namespaces": "^0.2.2",
-    "@hub3js/std": "^0.2.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/evm": "^0.3.3",
+    "@hub3js/namespaces": "^0.2.5",
+    "@hub3js/std": "^0.2.3",
     "@rango-dev/signer-evm": "^0.44.1-next.0",
     "@rango-dev/signer-solana": "^0.48.1-next.0",
     "@rango-dev/wallets-core": "^0.60.1-next.3",

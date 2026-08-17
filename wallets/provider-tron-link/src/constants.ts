@@ -1,6 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { type BlockchainMeta, tronBlockchain } from 'rango-types';
+import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -28,8 +28,7 @@ export const metadata: ProviderMetadata = {
             label: 'Tron',
             value: 'Tron',
             id: 'TRON',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              tronBlockchain(allBlockchains),
+            isChainSupported: isTronNamespace,
           },
         ],
       },

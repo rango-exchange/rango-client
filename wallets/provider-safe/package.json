@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.0",
-    "@hub3js/evm": "^0.3.0",
-    "@hub3js/std": "^0.2.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/evm": "^0.3.3",
+    "@hub3js/std": "^0.2.3",
     "@rango-dev/signer-evm": "^0.44.1-next.0",
     "@rango-dev/wallets-shared": "^0.61.1-next.4",
     "@safe-global/safe-apps-provider": "^0.18.6",

@@ -1,5 +1,10 @@
 import type { ProviderMetadata } from '@hub3js/core';
-import type { BlockchainMeta } from 'rango-types';
+
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
+import {
+  CAIP_ZCASH_CHAIN_ID,
+  isUtxoNamespace,
+} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import getSigners from './signer.js';
 
@@ -23,10 +28,9 @@ export const info: ProviderMetadata = {
             label: 'Zcash',
             value: 'UTXO',
             id: 'ZCASH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (blockchain) => blockchain.name === 'ZCASH'
-              ),
+            isChainSupported: (chainId: string) =>
+              isUtxoNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_ZCASH_CHAIN_ID,
           },
         ],
       },

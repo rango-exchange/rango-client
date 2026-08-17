@@ -1,7 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
-import type { BlockchainMeta } from 'rango-types';
 
-import { xrplBlockchain } from 'rango-types';
+import { isXrplNamespace } from '@hub3js/xrpl';
 
 import getSigners from './signer.js';
 
@@ -26,8 +25,7 @@ export const info: ProviderMetadata = {
             label: 'XRPL',
             value: 'XRPL',
             id: 'XRPL',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              xrplBlockchain(allBlockchains),
+            isChainSupported: isXrplNamespace,
           },
         ],
       },

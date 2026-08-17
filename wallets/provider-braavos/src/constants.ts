@@ -1,6 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { type BlockchainMeta, starknetBlockchain } from 'rango-types';
+import { isStarknetNamespace } from '@hub3js/starknet';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -28,8 +28,7 @@ export const metadata: ProviderMetadata = {
             label: 'Braavos',
             value: 'Starknet',
             id: 'STARKNET',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              starknetBlockchain(allBlockchains),
+            isChainSupported: isStarknetNamespace,
           },
         ],
       },

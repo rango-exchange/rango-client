@@ -1,18 +1,26 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { type BlockchainMeta } from 'rango-types';
+import {
+  CAIP_ARBITRUM_CHAIN_ID,
+  CAIP_AVAX_CHAIN_ID,
+  CAIP_BSC_CHAIN_ID,
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_OPTIMISM_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  isEvmNamespace,
+} from '@hub3js/evm';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const TAHO_WALLET_SUPPORTED_EVM_CHAINS = [
-  LegacyNetworks.ETHEREUM,
-  LegacyNetworks.POLYGON,
-  LegacyNetworks.OPTIMISM,
-  LegacyNetworks.ARBITRUM,
-  LegacyNetworks.AVAX_CCHAIN,
-  LegacyNetworks.BSC,
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  CAIP_OPTIMISM_CHAIN_ID,
+  CAIP_ARBITRUM_CHAIN_ID,
+  CAIP_AVAX_CHAIN_ID,
+  CAIP_BSC_CHAIN_ID,
 ];
 
 export const WALLET_ID = 'taho';
@@ -36,11 +44,10 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter((blockchainMeta) =>
-                TAHO_WALLET_SUPPORTED_EVM_CHAINS.includes(
-                  blockchainMeta.name as LegacyNetworks
-                )
+            isChainSupported: (chainId: string) =>
+              isEvmNamespace(chainId) &&
+              TAHO_WALLET_SUPPORTED_EVM_CHAINS.includes(
+                getChainIdFromCaip2ChainId(chainId)
               ),
           },
         ],

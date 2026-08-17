@@ -1,18 +1,8 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  CAIP_BITCOINCASH_CHAIN_ID,
-  CAIP_DOGECOIN_CHAIN_ID,
-  CAIP_LITECOIN_CHAIN_ID,
-} from '@rango-dev/wallets-core/namespaces/utxo';
-import {
-  type BlockchainMeta,
-  evmBlockchains,
-  solanaBlockchain,
-  type TransferBlockchainMeta,
-} from 'rango-types';
+import { isEvmNamespace } from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
+import { CAIP_CHAINS } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -20,19 +10,29 @@ import { getInstanceOrThrow } from './utils.js';
 export const WALLET_ID = 'ctrl';
 
 /**
- * The UTXO chains Ctrl exposes, grouped under the single UTXO namespace, each paired
- * with its CAIP-2 (bip122) reference so accounts can be self-describing.
+ * The UTXO chains Ctrl exposes, all grouped under the single UTXO namespace, as
+ * fully-qualified CAIP-2 ids (`bip122:0000…e93`). These key the per-chain provider
+ * instances and are what `isChainSupported` receives. Where a bare bip122 reference is
+ * needed instead, derive it with `getChainIdFromCaip2ChainId` rather than listing it
+ * alongside — the two would be free to drift.
  */
 export const UTXO_CHAINS = [
-  { network: LegacyNetworks.BTC, caip: CAIP_BITCOIN_CHAIN_ID },
-  { network: LegacyNetworks.LTC, caip: CAIP_LITECOIN_CHAIN_ID },
-  { network: LegacyNetworks.DOGE, caip: CAIP_DOGECOIN_CHAIN_ID },
-  { network: LegacyNetworks.BCH, caip: CAIP_BITCOINCASH_CHAIN_ID },
+  CAIP_CHAINS.BITCOIN,
+  CAIP_CHAINS.LITECOIN,
+  CAIP_CHAINS.DOGECOIN,
+  CAIP_CHAINS.BITCOINCASH,
 ] as const;
 
-export const SUPPORTED_UTXO_CHAINS: string[] = UTXO_CHAINS.map(
-  (chain) => chain.network
-);
+/** The CAIP-2 id of a UTXO chain Ctrl supports. */
+export type UtxoCaipChainId = (typeof UTXO_CHAINS)[number];
+
+/**
+ * Narrow an arbitrary CAIP-2 id to one of Ctrl's UTXO chains, so callers can index the
+ * instance map without casting.
+ */
+export function isUtxoCaipChainId(chainId: string): chainId is UtxoCaipChainId {
+  return UTXO_CHAINS.some((supported) => supported === chainId);
+}
 
 export const metadata: ProviderMetadata = {
   name: 'Ctrl',
@@ -54,24 +54,19 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              evmBlockchains(allBlockchains),
+            isChainSupported: isEvmNamespace,
           },
           {
             label: 'UTXO',
             value: 'UTXO',
             id: 'BTC',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter((chain): chain is TransferBlockchainMeta =>
-                SUPPORTED_UTXO_CHAINS.includes(chain.name)
-              ),
+            isChainSupported: isUtxoCaipChainId,
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },

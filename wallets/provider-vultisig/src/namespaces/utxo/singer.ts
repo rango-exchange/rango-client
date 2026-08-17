@@ -1,7 +1,7 @@
 import type { SendTransactionArgs } from '../../types.js';
 import type { Transfer } from 'rango-types/mainApi';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { isZcashBlockchain } from '@rango-dev/wallets-shared';
 import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 
 import { vultisigZcash } from '../../utils.js';
@@ -17,7 +17,7 @@ export class Signer implements GenericSigner<Transfer> {
     const { memo, fromWalletAddress, recipientAddress, amount, asset } = tx;
 
     // TODO: check should be performed on the blockchain field of transaction instead of asset, but currently it is not available in the transaction object
-    if (asset.blockchain !== LegacyNetworks.ZCASH) {
+    if (!isZcashBlockchain(asset.blockchain)) {
       throw new Error(`You can not sign ${tx.blockChain} using ZCash signer.`);
     }
 

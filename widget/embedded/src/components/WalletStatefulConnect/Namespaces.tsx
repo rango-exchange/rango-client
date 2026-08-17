@@ -11,6 +11,7 @@ import {
   RadioRoot,
   WalletImageContainer,
 } from '@rango-dev/ui';
+import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
@@ -83,11 +84,9 @@ export function Namespaces(props: PropTypes) {
       if (!!props.value.defaultSelectedChains?.length) {
         const namespacesContainingDefaultSelectedChains =
           supportedNamespaces.filter((namespace) =>
-            namespace
-              .getSupportedChains(blockchains)
-              .some((chain) =>
-                props.value.defaultSelectedChains?.includes(chain.name)
-              )
+            getSupportedChainsFromNamespace(namespace, blockchains).some(
+              (chain) => props.value.defaultSelectedChains?.includes(chain.name)
+            )
           );
         setSelectedNamespaces(
           namespacesContainingDefaultSelectedChains.map(

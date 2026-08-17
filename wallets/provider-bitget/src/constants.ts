@@ -1,13 +1,12 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { isEvmNamespace } from '@hub3js/evm';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
+import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
 import {
-  type BlockchainMeta,
-  evmBlockchains,
-  hyperliquidBlockchain,
-  type TransferBlockchainMeta,
-  tronBlockchain,
-} from 'rango-types';
+  CAIP_BITCOIN_CHAIN_ID,
+  isUtxoNamespace,
+} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -34,27 +33,21 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) => [
-              ...evmBlockchains(allBlockchains),
-              ...hyperliquidBlockchain(allBlockchains),
-            ],
+            isChainSupported: isEvmNamespace,
           },
           {
             label: 'Tron',
             value: 'Tron',
             id: 'TRON',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              tronBlockchain(allBlockchains),
+            isChainSupported: isTronNamespace,
           },
           {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is TransferBlockchainMeta =>
-                  chain.name === LegacyNetworks.BTC
-              ),
+            isChainSupported: (chainId: string) =>
+              isUtxoNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
           },
         ],
       },

@@ -18,10 +18,7 @@ import {
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import {
-  Networks,
-  type ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
+import { type ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
@@ -45,7 +42,7 @@ const getBitcoinAccounts: () => Promise<ProviderConnectResult> = async () => {
     accounts: accounts
       .filter((account: BtcAccount) => account.purpose === 'payment')
       .map((account: BtcAccount) => account.address),
-    chainId: Networks.BTC,
+    chainId: CAIP_BITCOIN_CHAIN_ID,
   };
 };
 

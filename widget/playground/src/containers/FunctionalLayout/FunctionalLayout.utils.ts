@@ -1,10 +1,13 @@
 import type { MapSupportedList } from '../../components/MultiSelect/MultiSelect.types';
+import type { Provider } from '@hub3js/core';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletTypes } from '@rango-dev/wallets-shared';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import { getSupportedChainsFromProvider } from '@rango-dev/wallets-shared';
 
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
@@ -32,9 +35,12 @@ export function getWalletsList(
   const allBuiltProviders = allProviders.map((build) => build());
   const walletsList: MapSupportedList[] = [];
   allBuiltProviders.forEach((versionedProvider: VersionedProviders) => {
-    let provider;
     try {
-      provider = pickVersion(versionedProvider, '1.0.0')[1];
+      /*
+       * `pickVersion` can't narrow the value type here, because `VersionedProviders`
+       * doesn't carry the version literals of a specific provider.
+       */
+      const provider = pickVersion(versionedProvider, '1.0.0')[1] as Provider;
       if (excludedWallets.includes(provider.id as WalletTypes)) {
         return;
       }
@@ -42,14 +48,11 @@ export function getWalletsList(
       if (!info) {
         throw new Error('Provider info is not available.');
       }
-      const namespacesProperty = info.metadata.properties?.find(
-        (property) => property.name === 'namespaces'
-      );
 
-      const supportedChains =
-        namespacesProperty?.value.data.flatMap((namespace) =>
-          namespace.getSupportedChains(blockchains || [])
-        ) || [];
+      const supportedChains = getSupportedChainsFromProvider(
+        provider,
+        blockchains
+      );
       walletsList.push({
         title: info.metadata.name,
         logo: info.metadata.icon,
@@ -58,7 +61,10 @@ export function getWalletsList(
       });
     } catch {
       // Fallback to legacy version, if target version doesn't exists.
-      provider = pickVersion(versionedProvider, '0.0.0')[1];
+      const provider = pickVersion(
+        versionedProvider,
+        '0.0.0'
+      )[1] as ProviderInterface;
       if (excludedWallets.includes(provider.config.type as WalletTypes)) {
         return;
       }

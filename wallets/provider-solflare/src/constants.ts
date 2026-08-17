@@ -1,6 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { type BlockchainMeta, solanaBlockchain } from 'rango-types';
+import { isSolanaNamespace } from '@hub3js/solana';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -29,8 +29,7 @@ export const metadata: ProviderMetadata = {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },

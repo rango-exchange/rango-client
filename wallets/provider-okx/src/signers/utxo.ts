@@ -1,7 +1,7 @@
 import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { isBitcoinBlockchain } from '@rango-dev/wallets-shared';
 import { SignerError } from 'rango-types';
 
 export class OKXUTXOSigner implements GenericSigner<Transfer> {
@@ -22,7 +22,7 @@ export class OKXUTXOSigner implements GenericSigner<Transfer> {
       );
     }
 
-    if (asset.blockchain !== Networks.BTC) {
+    if (!isBitcoinBlockchain(asset.blockchain)) {
       throw new Error(
         `Signing ${asset.blockchain} transaction is not implemented by the signer.`
       );

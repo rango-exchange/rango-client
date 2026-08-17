@@ -13,3 +13,4 @@ export {
   CAIP_DOGECOIN_CHAIN_ID,
   CAIP_BITCOINCASH_CHAIN_ID,
 } from './constants.js';
+export { isUtxoNamespace } from './utils.js';

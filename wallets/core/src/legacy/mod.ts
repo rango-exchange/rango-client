@@ -18,7 +18,6 @@ export type {
   CanSwitchNetwork as LegacyCanSwitchNetwork,
   NamespaceData as LegacyNamespaceData,
   ProviderInterface as LegacyProviderInterface,
-  NetworkProviderMap as LegacyNetworkProviderMap,
   Network as LegacyNetwork,
   WalletType as LegacyWalletType,
   InstallObjects as LegacyInstallObjects,
@@ -28,7 +27,7 @@ export type {
   NamespaceMeta as LegacyNamespaceMeta,
 } from './types.js';
 
-export { Events as LegacyEvents, Networks as LegacyNetworks } from './types.js';
+export { Events as LegacyEvents } from './types.js';
 
 export { Persistor } from './persistor.js';
 export {

@@ -20,6 +20,7 @@ import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
   getBlockChainNameFromId,
+  getSupportedChainsFromProvider,
   type WalletType,
 } from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
@@ -76,22 +77,6 @@ export function findProviderByType(
 const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
   HUB_LAST_CONNECTED_WALLETS
 );
-
-export function getSupportedChainsFromProvider(
-  provider: Provider,
-  allBlockChains: ProviderProps['allBlockChains']
-) {
-  const namespacesProperty = provider
-    .info()
-    ?.metadata.properties?.find((property) => property.name === 'namespaces');
-
-  const supportedChains =
-    namespacesProperty?.value.data.flatMap((namespace) =>
-      namespace.getSupportedChains(allBlockChains || [])
-    ) || [];
-
-  return supportedChains;
-}
 
 export function mapHubEventsToLegacy(
   hub: Hub,
