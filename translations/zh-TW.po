@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 07:02\n"
+"PO-Revision-Date: 2026-08-17 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -225,18 +225,18 @@ msgid "Swaps steps"
 msgstr "交換步驟"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:63
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "已連接"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:68
 msgid "Connection failed"
 msgstr "連線失敗"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:97
 msgid "See why"
 msgstr "了解原因"
 
@@ -607,7 +607,7 @@ msgstr "查看交易"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "連接"
@@ -663,7 +663,7 @@ msgstr "不，繼續"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "連接 {wallet}"
@@ -805,23 +805,23 @@ msgid "Disconnect"
 msgstr "斷開"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "該錢包支援多條鏈。選擇您想要連接的鏈。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "此錢包一次只能連接一條鏈。 "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "取消全選"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "選擇全部"

@@ -220,18 +220,18 @@ msgid "Swaps steps"
 msgstr "Swaps steps"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:63
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Connected"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:68
 msgid "Connection failed"
 msgstr "Connection failed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:97
 msgid "See why"
 msgstr "See why"
 
@@ -604,7 +604,7 @@ msgstr "View transaction"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Connect"
@@ -660,7 +660,7 @@ msgstr "No, Continue"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Connect {wallet}"
@@ -802,23 +802,23 @@ msgid "Disconnect"
 msgstr "Disconnect"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "This wallet supports multiple chains. Choose which chains you’d like to connect."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "This wallet can only connect to one chain at a time. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "Deselect all"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "Select all"
