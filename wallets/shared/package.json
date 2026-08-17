@@ -27,7 +27,15 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hub3js/namespaces": "^0.2.2",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/evm": "^0.3.3",
+    "@hub3js/namespaces": "^0.2.5",
+    "@hub3js/solana": "^0.3.3",
+    "@hub3js/starknet": "^0.2.3",
+    "@hub3js/stellar": "^0.2.3",
+    "@hub3js/sui": "^0.2.3",
+    "@hub3js/tvm": "^0.2.3",
+    "@hub3js/xrpl": "^0.2.3",
     "@rango-dev/wallets-core": "^0.60.1-next.3",
     "ethers": "^6.13.2",
     "rango-types": "^0.5.0"

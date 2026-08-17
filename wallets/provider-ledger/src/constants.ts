@@ -1,7 +1,8 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { Networks } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta } from 'rango-types';
+import { CAIP_ETHEREUM_CHAIN_ID, isEvmNamespace } from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
 import getSigners from './signer.js';
 
@@ -25,17 +26,15 @@ export const metadata: ProviderMetadata = {
             label: 'Ethereum',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain) => chain.name === Networks.ETHEREUM
-              ),
+            isChainSupported: (chainId: string) =>
+              isEvmNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_ETHEREUM_CHAIN_ID,
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter((chain) => chain.name === Networks.SOLANA),
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },

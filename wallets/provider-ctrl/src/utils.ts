@@ -9,8 +9,9 @@ import {
   SOLANA_NAMESPACE,
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import { utils } from '@rango-dev/wallets-core/namespaces/utxo';
+import { CAIP_CHAINS } from '@rango-dev/wallets-shared';
 
 import { UTXO_CHAINS } from './constants.js';
 
@@ -28,16 +29,16 @@ export function ctrl(): Provider | null {
     instances.set(EVM_NAMESPACE, ctrl.ethereum);
   }
   if (ctrl.bitcoin) {
-    utxoInstances.set(LegacyNetworks.BTC, ctrl.bitcoin);
+    utxoInstances.set(CAIP_CHAINS.BITCOIN, ctrl.bitcoin);
   }
   if (ctrl.litecoin) {
-    utxoInstances.set(LegacyNetworks.LTC, ctrl.litecoin);
+    utxoInstances.set(CAIP_CHAINS.LITECOIN, ctrl.litecoin);
   }
   if (ctrl.dogecoin) {
-    utxoInstances.set(LegacyNetworks.DOGE, ctrl.dogecoin);
+    utxoInstances.set(CAIP_CHAINS.DOGECOIN, ctrl.dogecoin);
   }
   if (ctrl.bitcoincash) {
-    utxoInstances.set(LegacyNetworks.BCH, ctrl.bitcoincash);
+    utxoInstances.set(CAIP_CHAINS.BITCOINCASH, ctrl.bitcoincash);
   }
   if (utxoInstances.size > 0) {
     instances.set(UTXO_NAMESPACE, utxoInstances);
@@ -144,11 +145,14 @@ export async function getAllUtxoAccounts(): Promise<CaipAccount[]> {
   }
 
   const perChain = await Promise.all(
-    UTXO_CHAINS.filter(({ network }) => utxoInstances.get(network)).map(
-      async ({ network, caip }) => {
-        const instance = utxoInstances.get(network) as UtxoProviderApi;
+    UTXO_CHAINS.filter((chainId) => utxoInstances.get(chainId)).map(
+      async (chainId) => {
+        const instance = utxoInstances.get(chainId) as UtxoProviderApi;
         const accounts = await requestUtxoAccounts(instance);
-        return utils.formatAccountsToCAIP(accounts, caip);
+        return utils.formatAccountsToCAIP(
+          accounts,
+          getChainIdFromCaip2ChainId(chainId)
+        );
       }
     )
   );

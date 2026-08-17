@@ -78,7 +78,7 @@ export type NamespaceMeta = {
   id: string;
   value: Namespace;
   unsupported?: boolean;
-  getSupportedChains: (chains: BlockchainMeta[]) => BlockchainMeta[];
+  isChainSupported: (chainId: string) => boolean;
 };
 
 interface NeedsNamespace {
@@ -123,7 +123,6 @@ export type ConnectResult = {
 };
 
 export type Providers = { [type in WalletType]?: InstanceType };
-export type NetworkProviderMap = Map<Networks, unknown>;
 
 export enum Events {
   CONNECTED = 'connected',

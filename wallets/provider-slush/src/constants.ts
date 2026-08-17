@@ -1,10 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import {
-  type BlockchainMeta,
-  type SuiBlockchainMeta,
-  TransactionType,
-} from 'rango-types';
+import { isSuiNamespace } from '@hub3js/sui';
 
 import getSigners from './signer.js';
 
@@ -31,11 +27,7 @@ export const metadata: ProviderMetadata = {
             label: 'Sui',
             value: 'Sui',
             id: 'SUI',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is SuiBlockchainMeta =>
-                  chain.type === TransactionType.SUI
-              ),
+            isChainSupported: isSuiNamespace,
           },
         ],
         selection: 'multiple',

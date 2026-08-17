@@ -1,6 +1,6 @@
 import type { Namespace } from '../../namespaces/common/types.js';
 import type { State as InternalProviderState } from '../provider/mod.js';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 import type { StateCreator } from 'zustand';
 
 import { produce } from 'immer';
@@ -20,7 +20,7 @@ type NamespacesProperty = Property<
       id: string;
       value: Namespace;
       unsupported?: boolean;
-      getSupportedChains: (chains: BlockchainMeta[]) => BlockchainMeta[];
+      isChainSupported: (chain: string) => boolean;
     }[];
   }
 >;

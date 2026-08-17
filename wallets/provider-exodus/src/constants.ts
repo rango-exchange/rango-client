@@ -1,17 +1,24 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { type BlockchainMeta, solanaBlockchain } from 'rango-types';
+import {
+  CAIP_AVAX_CHAIN_ID,
+  CAIP_BSC_CHAIN_ID,
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  isEvmNamespace,
+} from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'exodus';
-export const EXODUS_WALLET_SUPPORTED_CHAINS = [
-  LegacyNetworks.ETHEREUM,
-  LegacyNetworks.BSC,
-  LegacyNetworks.POLYGON,
-  LegacyNetworks.AVAX_CCHAIN,
+export const EVM_SUPPORTED_CHAINS = [
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_BSC_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  CAIP_AVAX_CHAIN_ID,
 ];
 
 export const metadata: ProviderMetadata = {
@@ -34,19 +41,17 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter((blockchainMeta) =>
-                EXODUS_WALLET_SUPPORTED_CHAINS.includes(
-                  blockchainMeta.name as LegacyNetworks
-                )
+            isChainSupported: (chainId: string) =>
+              isEvmNamespace(chainId) &&
+              EVM_SUPPORTED_CHAINS.includes(
+                getChainIdFromCaip2ChainId(chainId)
               ),
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },

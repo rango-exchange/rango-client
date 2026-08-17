@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.0",
-    "@hub3js/std": "^0.2.0",
-    "@hub3js/sui": "^0.2.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/std": "^0.2.3",
+    "@hub3js/sui": "^0.2.3",
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-sui": "^0.10.1-next.1",

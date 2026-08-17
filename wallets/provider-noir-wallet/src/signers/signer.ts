@@ -1,6 +1,6 @@
 import type { Transfer } from 'rango-types/mainApi';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { isZcashBlockchain } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 
@@ -18,7 +18,7 @@ export class CustomUtxoSigner implements GenericSigner<Transfer> {
   async signAndSendTx(tx: Transfer): Promise<{ hash: string }> {
     const { memo, recipientAddress, amount, decimals, blockChain } = tx;
 
-    if (blockChain !== LegacyNetworks.ZCASH) {
+    if (!isZcashBlockchain(blockChain)) {
       throw new Error(`You can not sign ${tx.blockChain} using ZCash signer.`);
     }
 

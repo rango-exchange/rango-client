@@ -34,10 +34,10 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.0",
-    "@hub3js/namespaces": "^0.2.2",
-    "@hub3js/stellar": "^0.2.0",
-    "@hub3js/xrpl": "^0.2.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/namespaces": "^0.2.5",
+    "@hub3js/stellar": "^0.2.3",
+    "@hub3js/xrpl": "^0.2.3",
     "@rango-dev/logging-core": "^0.13.1-next.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0",

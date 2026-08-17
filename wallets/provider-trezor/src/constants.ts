@@ -1,7 +1,12 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta, type TransferBlockchainMeta } from 'rango-types';
+import { CAIP_ETHEREUM_CHAIN_ID, isEvmNamespace } from '@hub3js/evm';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
+import {
+  CAIP_BITCOIN_CHAIN_ID,
+  isUtxoNamespace,
+} from '@rango-dev/wallets-core/namespaces/utxo';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { BITCOIN_ADDRESS_TYPES } from './utxo/config.js';
@@ -24,20 +29,17 @@ export const metadata: ProviderMetadata = {
             label: 'Ethereum',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain) => chain.name === Networks.ETHEREUM
-              ),
+            isChainSupported: (chainId: string) =>
+              isEvmNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_ETHEREUM_CHAIN_ID,
           },
           {
             label: 'Bitcoin',
             value: 'UTXO',
             id: 'BTC',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is TransferBlockchainMeta =>
-                  chain.name === Networks.BTC
-              ),
+            isChainSupported: (chainId: string) =>
+              isUtxoNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
           },
         ],
       },

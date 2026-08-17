@@ -1,6 +1,6 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { isBitcoinBlockchain } from '@rango-dev/wallets-shared';
 import { SignerError } from 'rango-types';
 
 import { getBitcoinDerivationPath } from '../state.js';
@@ -21,7 +21,7 @@ export class BTCSigner implements GenericSigner<Transfer> {
 
   async signAndSendTx(tx: Transfer): Promise<{ hash: string }> {
     const { blockchain } = tx.asset;
-    if (blockchain !== Networks.BTC) {
+    if (!isBitcoinBlockchain(blockchain)) {
       throw new Error(
         `Signing ${blockchain} transactions is not supported by Trezor.`
       );
