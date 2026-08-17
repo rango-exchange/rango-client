@@ -8,7 +8,7 @@ msgstr ""
 "Language: ur\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-11 14:09\n"
+"PO-Revision-Date: 2026-08-17 07:02\n"
 "Last-Translator: \n"
 "Language-Team: Urdu (Pakistan)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -276,48 +276,48 @@ msgid "Yours: {userSlippage}"
 msgstr "آپ کا: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:446
+#: widget/embedded/src/components/Quote/Quote.tsx:444
 msgid "See All Routes"
 msgstr "تمام راستے دیکھیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:104
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:115
 msgid "View more info"
 msgstr "مزید معلومات دیکھیں"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:124
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:135
 msgid "Gas & Fee Explanation"
 msgstr "گیس اور فیس کی وضاحت"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:140
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:151
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "تفصیلات"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:179
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:190
 msgid "Total Payable Fee"
 msgstr "کل قابل ادائیگی فیس"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:199
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
 msgid "Hide non-payable fees"
 msgstr "غیر قابل ادائیگی فیس چھپائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:211
 msgid "Show non-payable fees"
 msgstr "غیر قابل ادائیگی فیس دکھائیں۔"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:221
 msgid "Description"
 msgstr "تفصیل"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:214
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:225
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "لین دین کے آؤٹ پٹ میں درج ذیل فیسوں پر غور کیا جاتا ہے اور\n"

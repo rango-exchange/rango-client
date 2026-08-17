@@ -8,7 +8,7 @@ msgstr ""
 "Language: fil\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-11 14:09\n"
+"PO-Revision-Date: 2026-08-17 07:02\n"
 "Last-Translator: \n"
 "Language-Team: Filipino\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -276,48 +276,48 @@ msgid "Yours: {userSlippage}"
 msgstr "Sa iyo: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:446
+#: widget/embedded/src/components/Quote/Quote.tsx:444
 msgid "See All Routes"
 msgstr "Tingnan ang Lahat ng Ruta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:104
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:115
 msgid "View more info"
 msgstr "Tingnan ang higit pang impormasyon"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:124
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:135
 msgid "Gas & Fee Explanation"
 msgstr "Paliwanag ng Gas at Bayad"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:140
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:151
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Mga Detalye"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:179
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:190
 msgid "Total Payable Fee"
 msgstr "Kabuuang Bayad na Bayad"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:199
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
 msgid "Hide non-payable fees"
 msgstr "Itago ang mga hindi mababayarang bayarin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:211
 msgid "Show non-payable fees"
 msgstr "Ipakita ang mga hindi nababayarang bayarin"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:221
 msgid "Description"
 msgstr "Paglalarawan"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:214
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:225
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "Ang mga sumusunod na bayarin ay isinasaalang-alang sa output ng transaksyon at\n"

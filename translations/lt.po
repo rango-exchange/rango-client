@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-11 14:09\n"
+"PO-Revision-Date: 2026-08-17 07:02\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -276,48 +276,48 @@ msgid "Yours: {userSlippage}"
 msgstr "Jūsų: {userSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:446
+#: widget/embedded/src/components/Quote/Quote.tsx:444
 msgid "See All Routes"
 msgstr "Žiūrėti visus maršrutus"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:104
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:115
 msgid "View more info"
 msgstr "Žiūrėti daugiau informacijos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:124
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:135
 msgid "Gas & Fee Explanation"
 msgstr "Dujų ir mokesčių paaiškinimas"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:140
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:151
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:94
 msgid "Details"
 msgstr "Detalės"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:179
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:190
 msgid "Total Payable Fee"
 msgstr "Visas mokėtinas mokestis"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:199
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
 msgid "Hide non-payable fees"
 msgstr "Slėpti nemokamus mokesčius"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:200
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:211
 msgid "Show non-payable fees"
 msgstr "Rodyti nemokamus mokesčius"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:210
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:221
 msgid "Description"
 msgstr "Aprašymas"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:214
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:225
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
 msgstr "Toliau nurodyti mokesčiai atsižvelgiama į operacijos išvestį ir\n"
