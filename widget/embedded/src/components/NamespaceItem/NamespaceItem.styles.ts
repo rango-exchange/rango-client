@@ -80,6 +80,7 @@ export const NamespaceItemErrorDropdownToggle = styled('div', {
 
 export const NamespaceAccountAddress = styled(Typography, {
   maxWidth: '100px',
+  whiteSpace: 'nowrap',
 });
 
 export const NamespaceLogo = styled(Image, {
