@@ -8,7 +8,7 @@ msgstr ""
 "Language: sk\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 07:02\n"
+"PO-Revision-Date: 2026-08-17 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -225,18 +225,18 @@ msgid "Swaps steps"
 msgstr "Vymieňa kroky"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:59
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:63
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
 msgstr "Pripojené"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:64
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:68
 msgid "Connection failed"
 msgstr "Pripojenie zlyhalo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:93
+#: widget/embedded/src/components/NamespaceItem/NamespaceItem.tsx:97
 msgid "See why"
 msgstr "Pozrite sa prečo"
 
@@ -607,7 +607,7 @@ msgstr "Zobraziť transakciu"
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
 #: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:190
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Pripojte sa"
@@ -663,7 +663,7 @@ msgstr "Nie, pokračovať"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:109
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
 #: widget/embedded/src/utils/swap.ts:714
 msgid "Connect {wallet}"
 msgstr "Pripojiť {wallet}"
@@ -805,23 +805,23 @@ msgid "Disconnect"
 msgstr "Odpojiť"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:112
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Táto peňaženka podporuje viacero reťazcov. Vyberte si, ktoré reťazce chcete prepojiť."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:131
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Táto peňaženka sa môže pripojiť iba k jednému reťazcu naraz. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "Zrušte výber všetkých"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:155
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "Vybrať všetko"
