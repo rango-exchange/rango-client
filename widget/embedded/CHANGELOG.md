@@ -1,3 +1,18 @@
+# [0.63.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.62.1...widget-embedded@0.63.0) (2026-08-18)
+
+
+### Bug Fixes
+
+* **QuoteCostDetails:** update total payable fee calculation to reflect user-paid fees ([bd6b0d7](https://github.com/rango-exchange/rango-client/commit/bd6b0d76a8ce2dfe7ec1f23e26c52881636e2217))
+* **widget:** prevent namespace account address from wrapping ([cef21d8](https://github.com/rango-exchange/rango-client/commit/cef21d880a71864668b9b147377ef2beb6bad5bb))
+
+
+### Features
+
+* **provider-okx:** add ton namespace support ([2f0a4e6](https://github.com/rango-exchange/rango-client/commit/2f0a4e6c60a52b0c9e83ec60dcb744cc0159bfe8))
+
+
+
 ## [0.62.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.62.0...widget-embedded@0.62.1) (2026-07-28)
 
 

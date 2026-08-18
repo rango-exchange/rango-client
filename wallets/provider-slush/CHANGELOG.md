@@ -1,3 +1,7 @@
+# [0.18.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.17.0...provider-slush@0.18.0) (2026-08-18)
+
+
+
 # [0.17.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.16.0...provider-slush@0.17.0) (2026-07-07)
 
 

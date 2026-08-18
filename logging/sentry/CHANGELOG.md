@@ -1,3 +1,7 @@
+# [0.15.0](https://github.com/rango-exchange/rango-client/compare/logging-sentry@0.14.1...logging-sentry@0.15.0) (2026-08-18)
+
+
+
 ## [0.14.1](https://github.com/rango-exchange/rango-client/compare/logging-sentry@0.14.0...logging-sentry@0.14.1) (2025-11-22)
 
 

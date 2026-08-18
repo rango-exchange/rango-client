@@ -1,3 +1,12 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.29.0...provider-trezor@0.30.0) (2026-08-18)
+
+
+### Features
+
+* support UTXO namespace derivation paths in hub connect ([13be2ed](https://github.com/rango-exchange/rango-client/commit/13be2edddf582913b6dd7f986be8654b55df9bfc))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/provider-trezor@0.28.0...provider-trezor@0.29.0) (2026-07-28)
 
 

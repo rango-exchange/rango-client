@@ -1,3 +1,7 @@
+# [0.4.0](https://github.com/rango-exchange/rango-client/compare/provider-freighter@0.3.0...provider-freighter@0.4.0) (2026-08-18)
+
+
+
 # [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-freighter@0.2.0...provider-freighter@0.3.0) (2026-07-07)
 
 
