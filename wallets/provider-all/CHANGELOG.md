@@ -1,3 +1,12 @@
+# [0.65.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.64.0...provider-all@0.65.0) (2026-08-18)
+
+
+### Features
+
+* integrate noir wallet ([5e6a7da](https://github.com/rango-exchange/rango-client/commit/5e6a7da674c84df5f4fb82c4f6b5dc66bac39100))
+
+
+
 # [0.64.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.63.0...provider-all@0.64.0) (2026-07-28)
 
 

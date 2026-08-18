@@ -1,3 +1,7 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.33.0...queue-manager-react@0.34.0) (2026-08-18)
+
+
+
 # [0.33.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.32.0...queue-manager-react@0.33.0) (2025-10-29)
 
 

@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.10.0...signer-sui@0.11.0) (2026-08-18)
+
+
+### Bug Fixes
+
+* **signer-sui:** throw SignerError on sign rejection ([46561bd](https://github.com/rango-exchange/rango-client/commit/46561bda59cba4ad50388b5e22a1b44dc25b1d95))
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.9.1...signer-sui@0.10.0) (2026-05-31)
 
 

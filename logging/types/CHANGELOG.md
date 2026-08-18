@@ -1,3 +1,7 @@
+# [0.12.0](https://github.com/rango-exchange/rango-client/compare/logging-types@0.11.0...logging-types@0.12.0) (2026-08-18)
+
+
+
 # [0.11.0](https://github.com/rango-exchange/rango-client/compare/logging-types@0.10.0...logging-types@0.11.0) (2025-08-05)
 
 

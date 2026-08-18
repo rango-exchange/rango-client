@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-freighter",
-  "version": "0.3.1-next.5",
+  "version": "0.4.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,7 +24,7 @@
     "@hub3js/core": "^0.61.1",
     "@hub3js/std": "^0.2.3",
     "@hub3js/stellar": "^0.2.3",
-    "@rango-dev/wallets-shared": "^0.61.1-next.5",
+    "@rango-dev/wallets-shared": "^0.62.0",
     "@stellar/freighter-api": "^6.0.1",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0"
