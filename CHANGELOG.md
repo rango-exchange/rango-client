@@ -1,3 +1,23 @@
+## Widget [0.62.0] (2026-08-18)
+_includes `@rango-dev/widget-embedded@0.63.0`_
+
+### Bug Fixes
+
+* **QuoteCostDetails:** update total payable fee calculation to reflect user-paid fees ([bd6b0d7](https://github.com/rango-exchange/rango-client/commit/bd6b0d76a8ce2dfe7ec1f23e26c52881636e2217))
+* **signer-sui:** throw SignerError on sign rejection ([46561bd](https://github.com/rango-exchange/rango-client/commit/46561bda59cba4ad50388b5e22a1b44dc25b1d95))
+* **widget:** prevent namespace account address from wrapping ([cef21d8](https://github.com/rango-exchange/rango-client/commit/cef21d880a71864668b9b147377ef2beb6bad5bb))
+
+
+### Features
+
+* integrate noir wallet ([5e6a7da](https://github.com/rango-exchange/rango-client/commit/5e6a7da674c84df5f4fb82c4f6b5dc66bac39100))
+* **provider-okx:** add sui namespace ([128a93c](https://github.com/rango-exchange/rango-client/commit/128a93c1afa014acd294fd141db961ce0ae7056d))
+* **provider-okx:** add ton namespace support ([2f0a4e6](https://github.com/rango-exchange/rango-client/commit/2f0a4e6c60a52b0c9e83ec60dcb744cc0159bfe8))
+* **provider-okx:** add Tron namespace support ([bc3055f](https://github.com/rango-exchange/rango-client/commit/bc3055fd127441888ab791560cec983fb553795d))
+* support UTXO namespace derivation paths in hub connect ([13be2ed](https://github.com/rango-exchange/rango-client/commit/13be2edddf582913b6dd7f986be8654b55df9bfc))
+
+
+
 ## Widget [0.61.0] (2026-07-28)
 _includes `@rango-dev/widget-embedded@0.62.1`_
 

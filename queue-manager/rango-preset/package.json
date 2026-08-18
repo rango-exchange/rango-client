@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.63.1-next.5",
+  "version": "0.64.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -38,7 +38,7 @@
     "@hub3js/namespaces": "^0.2.5",
     "@hub3js/stellar": "^0.2.3",
     "@hub3js/xrpl": "^0.2.3",
-    "@rango-dev/logging-core": "^0.13.1-next.0",
+    "@rango-dev/logging-core": "^0.14.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0",
     "ts-results": "^3.3.0",

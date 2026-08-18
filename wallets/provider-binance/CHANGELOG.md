@@ -1,3 +1,7 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-binance@0.5.0...provider-binance@0.6.0) (2026-08-18)
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-binance@0.4.0...provider-binance@0.5.0) (2026-07-28)
 
 

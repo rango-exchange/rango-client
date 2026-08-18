@@ -1,3 +1,14 @@
+# [0.64.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.63.0...provider-okx@0.64.0) (2026-08-18)
+
+
+### Features
+
+* **provider-okx:** add sui namespace ([128a93c](https://github.com/rango-exchange/rango-client/commit/128a93c1afa014acd294fd141db961ce0ae7056d))
+* **provider-okx:** add ton namespace support ([2f0a4e6](https://github.com/rango-exchange/rango-client/commit/2f0a4e6c60a52b0c9e83ec60dcb744cc0159bfe8))
+* **provider-okx:** add Tron namespace support ([bc3055f](https://github.com/rango-exchange/rango-client/commit/bc3055fd127441888ab791560cec983fb553795d))
+
+
+
 # [0.63.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.62.0...provider-okx@0.63.0) (2026-07-28)
 
 
