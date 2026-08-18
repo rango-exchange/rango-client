@@ -7,6 +7,7 @@ import {
   Divider,
   Typography,
 } from '@rango-dev/ui';
+import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
 import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
@@ -32,7 +33,10 @@ export function NamespaceItem(props: PropTypes) {
 
   useEffect(() => setErrorIsExpanded(false), [error]);
 
-  const supportedChains = namespace.getSupportedChains(blockchains);
+  const supportedChains = getSupportedChainsFromNamespace(
+    namespace,
+    blockchains
+  );
   const isSupportedChainsDisplayed =
     !error && !connected && supportedChains.length > 1;
 

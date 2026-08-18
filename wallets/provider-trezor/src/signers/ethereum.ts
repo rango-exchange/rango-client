@@ -5,8 +5,8 @@ import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { type GenericSigner } from 'rango-types';
 
-import { getTrezorModule, trezorErrorMessages } from '../legacy/helpers.js';
 import { getDerivationPath } from '../state.js';
+import { getTrezorModule, trezorErrorMessages } from '../utils.js';
 
 export function getTrezorErrorMessage(error: unknown) {
   if (

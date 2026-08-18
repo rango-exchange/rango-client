@@ -1,7 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { type BlockchainMeta } from 'rango-types';
+import { isStellarNamespace } from '@hub3js/stellar';
 
 import getSigners from './signer.js';
 
@@ -32,11 +31,7 @@ export const metadata: ProviderMetadata = {
             label: 'Stellar',
             value: 'Stellar',
             id: 'STELLAR',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (blockchainMeta) =>
-                  blockchainMeta.name === LegacyNetworks.STELLAR
-              ),
+            isChainSupported: isStellarNamespace,
           },
         ],
       },

@@ -1,7 +1,7 @@
 import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -11,7 +11,7 @@ import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const bitcoinInstance = getNetworkInstance(provider, Networks.BTC);
+  const bitcoinInstance = getNetworkInstance(provider, UTXO_NAMESPACE);
   const { BTCSigner } = await dynamicImportWithRefinedError(
     async () => await import('./signers/utxoSigner.js')
   );

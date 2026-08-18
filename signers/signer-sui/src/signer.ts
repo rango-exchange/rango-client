@@ -7,7 +7,7 @@ import {
   type SuiFeatures,
   type WalletWithFeatures,
 } from '@mysten/wallet-standard';
-import { SignerError } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 export type SuiWalletStandard = WalletWithFeatures<SuiFeatures>;
 
@@ -45,16 +45,20 @@ export class DefaultSuiSigner implements GenericSigner<SuiTransaction> {
       );
     }
 
-    const signed = await this.provider.features[
-      'sui:signAndExecuteTransaction'
-    ].signAndExecuteTransaction({
-      account,
-      transaction,
-      chain: SUI_MAINNET_CHAIN,
-    });
+    try {
+      const signed = await this.provider.features[
+        'sui:signAndExecuteTransaction'
+      ].signAndExecuteTransaction({
+        account,
+        transaction,
+        chain: SUI_MAINNET_CHAIN,
+      });
 
-    return {
-      hash: signed.digest,
-    };
+      return {
+        hash: signed.digest,
+      };
+    } catch (error) {
+      throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
+    }
   }
 }

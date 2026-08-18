@@ -1,5 +1,5 @@
 import type { ProxiedNamespace } from '@hub3js/core';
-import type { StellarActions } from '@rango-dev/wallets-core/namespaces/stellar';
+import type { StellarActions } from '@hub3js/stellar';
 
 export type StellarNamespace = ProxiedNamespace<StellarActions>;
 export type TargetToken = {

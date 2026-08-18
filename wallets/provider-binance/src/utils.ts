@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 
 import { type ProviderAPI as EvmProviderApi } from '@hub3js/evm';
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export function binance(): Provider | null {
   const { binancew3w } = window;
@@ -12,7 +12,7 @@ export function binance(): Provider | null {
 
   const instances = new Map();
   if (binancew3w.ethereum) {
-    instances.set(LegacyNetworks.ETHEREUM, binancew3w.ethereum);
+    instances.set(EVM_NAMESPACE, binancew3w.ethereum);
   }
 
   if (instances.size === 0) {
@@ -37,7 +37,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmBinance(): EvmProviderApi {
   const instances = binance();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

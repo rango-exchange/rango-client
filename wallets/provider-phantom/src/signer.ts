@@ -1,8 +1,12 @@
 import type { Provider } from './utils.js';
 import type { SignerFactory } from 'rango-types';
 
-import { LegacyNetworks as Networks } from '@rango-dev/wallets-core/legacy';
-import { getInstance as getSuiInstance } from '@rango-dev/wallets-core/namespaces/sui';
+import {
+  EVM_NAMESPACE,
+  SOLANA_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
+import { getInstance as getSuiInstance } from '@hub3js/sui';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -14,9 +18,9 @@ import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const solProvider = getNetworkInstance(provider, Networks.SOLANA);
-  const evmProvider = getNetworkInstance(provider, Networks.ETHEREUM);
-  const bitcoinInstance = getNetworkInstance(provider, Networks.BTC);
+  const solProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
+  const evmProvider = getNetworkInstance(provider, EVM_NAMESPACE);
+  const bitcoinInstance = getNetworkInstance(provider, UTXO_NAMESPACE);
 
   const suiProvider = getSuiInstance(WALLET_NAME_IN_WALLET_STANDARD);
 

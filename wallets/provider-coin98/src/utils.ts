@@ -2,7 +2,7 @@ import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
 export function coin98() {
   const { coin98 } = window;
@@ -14,10 +14,10 @@ export function coin98() {
   const instances = new Map();
 
   if (coin98.provider) {
-    instances.set(Networks.ETHEREUM, coin98.provider);
+    instances.set(EVM_NAMESPACE, coin98.provider);
   }
   if (coin98.sol) {
-    instances.set(Networks.SOLANA, coin98.sol);
+    instances.set(SOLANA_NAMESPACE, coin98.sol);
   }
 
   return instances;
@@ -35,7 +35,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function evmCoin98(): EvmProviderApi {
   const instances = coin98();
-  const evmInstance = instances?.get(Networks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
   if (!evmInstance) {
     throw new Error(
       'Coin98 not injected or EVM not enabled. Please check your wallet.'
@@ -46,7 +46,7 @@ export function evmCoin98(): EvmProviderApi {
 
 export function solanaCoin98(): SolanaProviderApi {
   const instances = coin98();
-  const solanaInstance = instances?.get(Networks.SOLANA);
+  const solanaInstance = instances?.get(SOLANA_NAMESPACE);
   if (!solanaInstance) {
     throw new Error(
       'Coin98 Solana instance is not available. Ensure that Solana support is enabled in your wallet.'

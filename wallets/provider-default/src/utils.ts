@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 /*
  * `provider-default` is the catch-all fallback for any injected EVM provider
@@ -16,7 +16,7 @@ export function defaultInjected(): Provider | null {
   }
 
   const instances = new Map();
-  instances.set(LegacyNetworks.ETHEREUM, ethereum);
+  instances.set(EVM_NAMESPACE, ethereum);
 
   return instances;
 }
@@ -34,7 +34,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmDefault(): EvmProviderApi {
   const instances = defaultInjected();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

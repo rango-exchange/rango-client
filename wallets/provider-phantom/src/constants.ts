@@ -1,23 +1,22 @@
 import type { ProviderMetadata } from '@hub3js/core';
-import type { Networks } from '@rango-dev/wallets-shared';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
-  type BlockchainMeta,
-  type EvmBlockchainMeta,
-  isEvmBlockchain,
-  solanaBlockchain,
-  type SuiBlockchainMeta,
-  TransactionType,
-} from 'rango-types';
+  CAIP_BASE_CHAIN_ID,
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  isEvmNamespace,
+} from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
+import { isSuiNamespace } from '@hub3js/sui';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const EVM_SUPPORTED_CHAINS = [
-  LegacyNetworks.ETHEREUM,
-  LegacyNetworks.POLYGON,
-  LegacyNetworks.BASE,
+  CAIP_ETHEREUM_CHAIN_ID,
+  CAIP_POLYGON_CHAIN_ID,
+  CAIP_BASE_CHAIN_ID,
 ];
 
 export const WALLET_ID = 'phantom';
@@ -41,29 +40,23 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is EvmBlockchainMeta =>
-                  isEvmBlockchain(chain) &&
-                  EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+            isChainSupported: (chainId: string) =>
+              isEvmNamespace(chainId) &&
+              EVM_SUPPORTED_CHAINS.includes(
+                getChainIdFromCaip2ChainId(chainId)
               ),
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
+            isChainSupported: isSolanaNamespace,
           },
           {
             label: 'Sui',
             value: 'Sui',
             id: 'SUI',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is SuiBlockchainMeta =>
-                  chain.type === TransactionType.SUI
-              ),
+            isChainSupported: isSuiNamespace,
           },
         ],
       },

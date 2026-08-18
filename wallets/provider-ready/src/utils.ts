@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
-import type { ProviderAPI as StarknetProviderAPI } from '@rango-dev/wallets-core/namespaces/starknet';
+import type { ProviderAPI as StarknetProviderAPI } from '@hub3js/starknet';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { STARKNET_NAMESPACE } from '@hub3js/namespaces';
 
 export function ready(): Provider | null {
   const instances: Provider = new Map();
@@ -11,7 +11,7 @@ export function ready(): Provider | null {
     return null;
   }
 
-  instances.set(LegacyNetworks.STARKNET, starknet_argentX);
+  instances.set(STARKNET_NAMESPACE, starknet_argentX);
 
   return instances;
 }
@@ -29,7 +29,7 @@ export function getInstanceOrThrow(): Provider {
 export function starknetReady(): StarknetProviderAPI {
   const instances = ready();
 
-  const evmInstance = instances?.get(LegacyNetworks.STARKNET);
+  const evmInstance = instances?.get(STARKNET_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

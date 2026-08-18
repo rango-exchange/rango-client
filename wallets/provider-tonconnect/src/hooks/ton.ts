@@ -4,7 +4,7 @@ import type {
   Subscriber,
   SubscriberCleanUp,
 } from '@hub3js/core';
-import type { TonActions } from '@rango-dev/wallets-core/namespaces/ton';
+import type { TonActions } from '@hub3js/tvm';
 import type {
   ConnectedWallet,
   ITonConnect,

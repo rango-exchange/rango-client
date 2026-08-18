@@ -1,6 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { type BlockchainMeta, evmBlockchains } from 'rango-types';
+import { isEvmNamespace } from '@hub3js/evm';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -28,8 +28,7 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              evmBlockchains(allBlockchains),
+            isChainSupported: isEvmNamespace,
           },
         ],
       },

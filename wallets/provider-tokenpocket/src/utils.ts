@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI } from '@hub3js/evm';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
 export function tokenPocket(): Provider | null {
   const { tokenpocket } = window;
@@ -10,7 +10,7 @@ export function tokenPocket(): Provider | null {
     return null;
   }
   const instances: Provider = new Map();
-  instances.set(LegacyNetworks.ETHEREUM, ethereum);
+  instances.set(EVM_NAMESPACE, ethereum);
 
   return instances;
 }
@@ -30,7 +30,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmTokenPocket(): ProviderAPI {
   const instances = tokenPocket();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(

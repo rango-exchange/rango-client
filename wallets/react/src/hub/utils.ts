@@ -3,12 +3,12 @@ import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type { EvmActions } from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
+import type { SuiActions } from '@hub3js/sui';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core/legacy';
-import type { SuiActions } from '@rango-dev/wallets-core/namespaces/sui';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
@@ -20,6 +20,7 @@ import {
   type AddEthereumChainParameter,
   convertEvmBlockchainMetaToEvmChainInfo,
   getBlockChainNameFromId,
+  getSupportedChainsFromProvider,
   type WalletType,
 } from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
@@ -76,22 +77,6 @@ export function findProviderByType(
 const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
   HUB_LAST_CONNECTED_WALLETS
 );
-
-export function getSupportedChainsFromProvider(
-  provider: Provider,
-  allBlockChains: ProviderProps['allBlockChains']
-) {
-  const namespacesProperty = provider
-    .info()
-    ?.metadata.properties?.find((property) => property.name === 'namespaces');
-
-  const supportedChains =
-    namespacesProperty?.value.data.flatMap((namespace) =>
-      namespace.getSupportedChains(allBlockChains || [])
-    ) || [];
-
-  return supportedChains;
-}
 
 export function mapHubEventsToLegacy(
   hub: Hub,
@@ -400,4 +385,9 @@ export function isEvmNamespace(
   ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
 ): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
   return ns.namespaceId === 'EVM';
+}
+export function isUtxoNamespace(
+  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
+): ns is ProxiedNamespace<UtxoActions> & { namespaceId: 'UTXO' } {
+  return ns.namespaceId === 'UTXO';
 }

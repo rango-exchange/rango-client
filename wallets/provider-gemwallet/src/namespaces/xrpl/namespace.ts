@@ -1,10 +1,10 @@
-import type { XRPLActions } from '@rango-dev/wallets-core/namespaces/xrpl';
+import type { XRPLActions } from '@hub3js/xrpl';
 
 import { getAddress } from '@gemwallet/api';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { builders, utils } from '@rango-dev/wallets-core/namespaces/xrpl';
+import { builders, utils } from '@hub3js/xrpl';
 import { Client } from 'xrpl';
 
 import { WALLET_ID, XRPL_PUBLIC_SERVER } from '../../constants.js';

@@ -1,10 +1,7 @@
-import type {
-  ProviderAPI,
-  StarknetActions,
-} from '@rango-dev/wallets-core/namespaces/starknet';
+import type { ProviderAPI, StarknetActions } from '@hub3js/starknet';
 
+import { utils } from '@hub3js/starknet';
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import { utils } from '@rango-dev/wallets-core/namespaces/starknet';
 // Hooks
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
   new ChangeAccountSubscriberBuilder<string, ProviderAPI, StarknetActions>()

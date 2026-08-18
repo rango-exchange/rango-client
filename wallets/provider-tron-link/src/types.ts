@@ -1,8 +1,8 @@
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { TRON_NAMESPACE } from '@hub3js/namespaces';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 
 export type ProviderObject = {
-  [LegacyNetworks.TRON]: TronProviderApi;
+  [TRON_NAMESPACE]: TronProviderApi;
 };
 export type Provider = Map<
   keyof ProviderObject,

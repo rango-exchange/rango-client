@@ -1,4 +1,4 @@
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;
@@ -14,7 +14,7 @@ export function unisat(): Provider | null {
   const instances: Provider = new Map();
 
   if (unisat) {
-    instances.set(LegacyNetworks.BTC, unisat);
+    instances.set(UTXO_NAMESPACE, unisat);
   }
 
   return instances;
@@ -32,7 +32,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function bitcoinUnisat(): ProviderAPI {
   const instances = unisat();
-  const bitcoinInstance = instances?.get(LegacyNetworks.BTC);
+  const bitcoinInstance = instances?.get(UTXO_NAMESPACE);
 
   if (!bitcoinInstance) {
     throw new Error('UniSat not injected. Please check your wallet.');

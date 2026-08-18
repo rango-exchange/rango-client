@@ -145,7 +145,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Phantom](provider-phantom/readme.md)           | ⚠️  | ❌   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
+| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | ✅  | ✅   | ✅  | ❌       | ❌      |
 | [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Ready](provider-ready/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
 | [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
@@ -165,6 +165,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)             | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Safe](provider-safe/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Noir Wallet](provider-noir-wallet/readme.md)   | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 
@@ -181,7 +182,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Ledger       | ✅             | ❌             | ❌           | Transport                 | ✅            |
 | MathWallet   | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
 | MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
-| OKX          | ⚠️             | ✅             | ✅           | Injected                  | ✅            |
+| OKX          | ⚠️             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
 | Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Ready        | ✅             | ❌             | ✅           | Injected                  | ✅            |
@@ -202,6 +203,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Freighter    | ✅             | ❌             | ✅           | Injected                  | ✅            |
 | Trezor       | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | Safe         | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
+| Noir Wallet  | ✅             | ❌             | ✅           | Injected                  | ❌            |
 
 # Supported Wallets (Legacy)
 

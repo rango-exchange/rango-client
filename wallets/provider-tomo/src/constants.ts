@@ -1,11 +1,7 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
+import { isEvmNamespace } from '@hub3js/evm';
 import { WalletTypes } from '@rango-dev/wallets-shared';
-import {
-  type BlockchainMeta,
-  evmBlockchains,
-  hyperliquidBlockchain,
-} from 'rango-types';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -32,10 +28,7 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) => [
-              ...evmBlockchains(allBlockchains),
-              ...hyperliquidBlockchain(allBlockchains),
-            ],
+            isChainSupported: isEvmNamespace,
           },
         ],
       },

@@ -1,9 +1,11 @@
+import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import {
-  type LegacyNetworkProviderMap,
-  LegacyNetworks,
-} from '@rango-dev/wallets-core/legacy';
+  EVM_NAMESPACE,
+  TRON_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -13,11 +15,11 @@ import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 import { BitgetUTXOSigner } from './signers/utxo.js';
 
 export default async function getSigners(
-  provider: LegacyNetworkProviderMap
+  provider: Provider
 ): Promise<SignerFactory> {
-  const ethProvider = getNetworkInstance(provider, LegacyNetworks.ETHEREUM);
-  const tronProvider = getNetworkInstance(provider, LegacyNetworks.TRON);
-  const utxoProvider = getNetworkInstance(provider, LegacyNetworks.BTC);
+  const ethProvider = getNetworkInstance(provider, EVM_NAMESPACE);
+  const tronProvider = getNetworkInstance(provider, TRON_NAMESPACE);
+  const utxoProvider = getNetworkInstance(provider, UTXO_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-math-wallet",
-  "version": "0.63.0",
+  "version": "0.63.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -14,21 +14,22 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-math-wallet --splitting --inputs src/mod.ts",
+    "build": "yarn run rangutopia library build --splitting",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.60.1",
-    "@hub3js/evm": "^0.2.1",
-    "@hub3js/solana": "^0.2.1",
-    "@hub3js/std": "^0.1.1",
-    "@rango-dev/signer-evm": "^0.44.0",
-    "@rango-dev/signer-solana": "^0.48.0",
-    "@rango-dev/wallets-core": "^0.60.0",
-    "@rango-dev/wallets-shared": "^0.61.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/evm": "^0.3.3",
+    "@hub3js/namespaces": "^0.2.5",
+    "@hub3js/solana": "^0.3.3",
+    "@hub3js/std": "^0.2.3",
+    "@rango-dev/signer-evm": "^0.44.1-next.0",
+    "@rango-dev/signer-solana": "^0.48.1-next.0",
+    "@rango-dev/wallets-core": "^0.60.1-next.4",
+    "@rango-dev/wallets-shared": "^0.61.1-next.5",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/logging-core",
-  "version": "0.13.0",
+  "version": "0.13.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,10 +14,10 @@
     "src"
   ],
   "dependencies": {
-    "@rango-dev/logging-types": "^0.11.0"
+    "@rango-dev/logging-types": "^0.11.1-next.0"
   },
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path logging/core",
+    "build": "yarn run rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

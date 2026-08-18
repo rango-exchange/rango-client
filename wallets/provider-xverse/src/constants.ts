@@ -1,7 +1,10 @@
 import type { ProviderMetadata } from '@hub3js/core';
-import type { BlockchainMeta, TransferBlockchainMeta } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
+import {
+  CAIP_BITCOIN_CHAIN_ID,
+  isUtxoNamespace,
+} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -28,11 +31,9 @@ export const metadata: ProviderMetadata = {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              allBlockchains.filter(
-                (chain): chain is TransferBlockchainMeta =>
-                  chain.name === Networks.BTC
-              ),
+            isChainSupported: (chainId: string) =>
+              isUtxoNamespace(chainId) &&
+              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
           },
         ],
       },

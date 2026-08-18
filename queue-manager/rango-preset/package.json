@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.63.0",
+  "version": "0.63.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset",
+    "build": "yarn run rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -34,9 +34,11 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
-    "@hub3js/core": "^0.60.1",
-    "@hub3js/namespaces": "^0.1.1",
-    "@rango-dev/logging-core": "^0.13.0",
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/namespaces": "^0.2.5",
+    "@hub3js/stellar": "^0.2.3",
+    "@hub3js/xrpl": "^0.2.3",
+    "@rango-dev/logging-core": "^0.13.1-next.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0",
     "ts-results": "^3.3.0",

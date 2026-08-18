@@ -1,7 +1,7 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
+import { isTvmNamespace } from '@hub3js/tvm';
 import { WalletTypes } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta, tonBlockchain } from 'rango-types';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -24,8 +24,7 @@ export const metadata: ProviderMetadata = {
             label: 'Ton',
             value: 'Ton',
             id: 'TON',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              tonBlockchain(allBlockchains),
+            isChainSupported: isTvmNamespace,
           },
         ],
       },

@@ -1,9 +1,9 @@
-import type { StarknetActions } from '@rango-dev/wallets-core/namespaces/starknet';
+import type { StarknetActions } from '@hub3js/starknet';
 
 import { NamespaceBuilder } from '@hub3js/core';
+import { actions, builders } from '@hub3js/starknet';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/starknet';
 
 import { starknetActions } from '../actions/starknet.js';
 import { starknetBuilders } from '../builders/starknet.js';

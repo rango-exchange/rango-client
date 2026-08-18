@@ -1,9 +1,7 @@
+import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
-import {
-  type LegacyNetworkProviderMap,
-  LegacyNetworks,
-} from '@rango-dev/wallets-core/legacy';
+import { TRON_NAMESPACE } from '@hub3js/namespaces';
 import {
   dynamicImportWithRefinedError,
   getNetworkInstance,
@@ -11,9 +9,9 @@ import {
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
-  provider: LegacyNetworkProviderMap
+  provider: Provider
 ): Promise<SignerFactory> {
-  const tronProvider = getNetworkInstance(provider, LegacyNetworks.TRON);
+  const tronProvider = getNetworkInstance(provider, TRON_NAMESPACE);
   const signers = new DefaultSignerFactory();
   const { DefaultTronSigner } = await dynamicImportWithRefinedError(
     async () => await import('@rango-dev/signer-tron')

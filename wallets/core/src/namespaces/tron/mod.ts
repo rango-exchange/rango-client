@@ -6,3 +6,4 @@ export * as builders from './builders.js';
 export * as utils from './utils.js';
 export type { ProviderAPI, TronActions } from './types.js';
 export { CAIP_NAMESPACE, CAIP_TRON_CHAIN_ID } from './constants.js';
+export { isTronNamespace } from './utils.js';

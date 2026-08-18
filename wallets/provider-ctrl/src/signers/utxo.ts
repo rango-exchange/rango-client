@@ -1,11 +1,16 @@
-import type { Provider, ProviderObject } from '../types.js';
-import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { UtxoCaipChainId } from '../constants.js';
+import type { Provider, UtxoProvider } from '../types.js';
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
-import { SignerError, SignerErrorCode } from 'rango-types';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
+import { type ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
+import {
+  CAIP_CHAINS,
+  convertBlockchainMetaToCaip,
+} from '@rango-dev/wallets-shared';
+import { SignerError, SignerErrorCode, TransactionType } from 'rango-types';
 
-import { SUPPORTED_UTXO_CHAINS } from '../constants.js';
+import { isUtxoCaipChainId } from '../constants.js';
 
 interface CtrlTransferParams {
   asset: { chain: string; symbol: string; ticker: string };
@@ -54,6 +59,30 @@ async function ctrlTransfer(
 }
 
 /**
+ * Resolve the per-chain Ctrl instance for an already-narrowed CAIP-2 chain id.
+ * `blockchain` is only used for the error message, since a Rango name is what a user
+ * recognises.
+ */
+function getUtxoProvider(
+  provider: Provider,
+  blockchain: string,
+  caipChainId: UtxoCaipChainId
+): UtxoProviderApi {
+  const utxoInstances = provider.get(UTXO_NAMESPACE) as
+    | UtxoProvider
+    | undefined;
+  const instance = utxoInstances?.get(caipChainId);
+
+  if (!instance) {
+    throw new Error(
+      `Ctrl UTXO provider for ${blockchain} is not available. Please check your wallet.`
+    );
+  }
+
+  return instance;
+}
+
+/**
  * One signer for all of Ctrl's UTXO chains. BTC is signed via PSBT (`sign_psbt`);
  * LTC/DOGE/BCH use the generic `transfer` request. It receives the whole provider
  * map and resolves the right per-chain instance per transaction.
@@ -71,22 +100,37 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
   async signAndSendTx(tx: Transfer): Promise<{ hash: string }> {
     const { blockchain } = tx.asset;
 
-    if (!SUPPORTED_UTXO_CHAINS.includes(blockchain)) {
+    const caipChainId = convertBlockchainMetaToCaip({
+      type: TransactionType.TRANSFER,
+      chainId: null,
+      name: blockchain,
+    });
+
+    if (!caipChainId) {
+      throw new Error(
+        `Invalid blockchain: ${blockchain}. Please check your wallet.`
+      );
+    }
+
+    if (!isUtxoCaipChainId(caipChainId)) {
       throw new Error(
         `blockchain: ${blockchain} transfer not implemented yet.`
       );
     }
 
-    if (blockchain === LegacyNetworks.BTC) {
-      return this.#signPsbt(tx);
+    if (caipChainId === CAIP_CHAINS.BITCOIN) {
+      return this.#signPsbt(tx, caipChainId);
     }
 
-    return this.#signTransferObject(tx);
+    return this.#signTransferObject(tx, caipChainId);
   }
 
   // https://developers.ctrl.xyz/developers/extension-bitcoin#sign-psbt-partially-signed-bitcoin-transaction
-  async #signPsbt(tx: Transfer): Promise<{ hash: string }> {
-    const { asset, psbt } = tx;
+  async #signPsbt(
+    tx: Transfer,
+    caipChainId: UtxoCaipChainId
+  ): Promise<{ hash: string }> {
+    const { psbt, asset } = tx;
 
     if (!psbt) {
       throw new Error(
@@ -94,9 +138,11 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
       );
     }
 
-    const provider = this.provider.get(
-      asset.blockchain as keyof ProviderObject
-    ) as UtxoProviderApi;
+    const provider = getUtxoProvider(
+      this.provider,
+      asset.blockchain,
+      caipChainId
+    );
 
     const signInputs: { [key: string]: number[] } = {};
     psbt.inputsToSign.forEach((input) => {
@@ -134,12 +180,17 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
     );
   }
 
-  async #signTransferObject(tx: Transfer): Promise<{ hash: string }> {
+  async #signTransferObject(
+    tx: Transfer,
+    caipChainId: UtxoCaipChainId
+  ): Promise<{ hash: string }> {
     const { blockchain } = tx.asset;
 
-    const transferProvider = this.provider.get(
-      blockchain as keyof ProviderObject
-    ) as UtxoProviderApi;
+    const transferProvider = getUtxoProvider(
+      this.provider,
+      blockchain,
+      caipChainId
+    );
 
     const {
       method,

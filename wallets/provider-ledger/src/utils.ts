@@ -1,8 +1,8 @@
 import type Transport from '@ledgerhq/hw-transport';
 
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
 import {
   dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
@@ -22,8 +22,8 @@ export function ledger(): Provider | null {
    */
   const instances = new Map();
 
-  instances.set(LegacyNetworks.ETHEREUM, { chainId: ETHEREUM_CHAIN_ID });
-  instances.set(LegacyNetworks.SOLANA, { chainId: LegacyNetworks.SOLANA });
+  instances.set(EVM_NAMESPACE, { chainId: ETHEREUM_CHAIN_ID });
+  instances.set(SOLANA_NAMESPACE, { chainId: CAIP_SOLANA_CHAIN_ID });
 
   return instances;
 }

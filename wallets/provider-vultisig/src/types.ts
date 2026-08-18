@@ -1,4 +1,4 @@
-import type { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import type { UTXO_NAMESPACE } from '@hub3js/namespaces';
 
 export type SendTransactionArgs = {
   method: 'send_transaction';
@@ -19,7 +19,7 @@ export type VultisigZcashProviderApi = {
 };
 
 export type ProviderObject = {
-  [LegacyNetworks.ZCASH]: VultisigZcashProviderApi;
+  [UTXO_NAMESPACE]: VultisigZcashProviderApi;
 };
 
 export type Provider = Map<

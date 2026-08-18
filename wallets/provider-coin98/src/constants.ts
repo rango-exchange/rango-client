@@ -1,12 +1,8 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
+import { isEvmNamespace } from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
 import { WalletTypes } from '@rango-dev/wallets-shared';
-import {
-  type BlockchainMeta,
-  evmBlockchains,
-  hyperliquidBlockchain,
-  solanaBlockchain,
-} from 'rango-types';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -33,17 +29,13 @@ export const metadata: ProviderMetadata = {
             label: 'EVM',
             value: 'EVM',
             id: 'ETH',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) => [
-              ...evmBlockchains(allBlockchains),
-              ...hyperliquidBlockchain(allBlockchains),
-            ],
+            isChainSupported: isEvmNamespace,
           },
           {
             label: 'Solana',
             value: 'Solana',
             id: 'SOLANA',
-            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
-              solanaBlockchain(allBlockchains),
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },

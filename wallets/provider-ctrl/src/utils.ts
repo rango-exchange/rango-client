@@ -1,11 +1,17 @@
-import type { Provider } from './types.js';
+import type { Provider, UtxoProvider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { CaipAccount } from '@hub3js/std/types';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import {
+  EVM_NAMESPACE,
+  SOLANA_NAMESPACE,
+  UTXO_NAMESPACE,
+} from '@hub3js/namespaces';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import { utils } from '@rango-dev/wallets-core/namespaces/utxo';
+import { CAIP_CHAINS } from '@rango-dev/wallets-shared';
 
 import { UTXO_CHAINS } from './constants.js';
 
@@ -17,24 +23,28 @@ export function ctrl(): Provider | null {
   }
 
   const instances: Provider = new Map();
+  const utxoInstances: UtxoProvider = new Map();
 
   if (ctrl.ethereum) {
-    instances.set(LegacyNetworks.ETHEREUM, ctrl.ethereum);
+    instances.set(EVM_NAMESPACE, ctrl.ethereum);
   }
   if (ctrl.bitcoin) {
-    instances.set(LegacyNetworks.BTC, ctrl.bitcoin);
+    utxoInstances.set(CAIP_CHAINS.BITCOIN, ctrl.bitcoin);
   }
   if (ctrl.litecoin) {
-    instances.set(LegacyNetworks.LTC, ctrl.litecoin);
+    utxoInstances.set(CAIP_CHAINS.LITECOIN, ctrl.litecoin);
   }
   if (ctrl.dogecoin) {
-    instances.set(LegacyNetworks.DOGE, ctrl.dogecoin);
+    utxoInstances.set(CAIP_CHAINS.DOGECOIN, ctrl.dogecoin);
   }
   if (ctrl.bitcoincash) {
-    instances.set(LegacyNetworks.BCH, ctrl.bitcoincash);
+    utxoInstances.set(CAIP_CHAINS.BITCOINCASH, ctrl.bitcoincash);
+  }
+  if (utxoInstances.size > 0) {
+    instances.set(UTXO_NAMESPACE, utxoInstances);
   }
   if (ctrl.solana) {
-    instances.set(LegacyNetworks.SOLANA, ctrl.solana);
+    instances.set(SOLANA_NAMESPACE, ctrl.solana);
   }
 
   if (instances.size === 0) {
@@ -56,7 +66,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function evmCtrl(): EvmProviderApi {
   const instances = ctrl();
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -69,7 +79,7 @@ export function evmCtrl(): EvmProviderApi {
 
 export function solanaCtrl(): SolanaProviderApi {
   const instances = ctrl();
-  const solanaInstance = instances?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instances?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(
@@ -89,7 +99,7 @@ export function solanaCtrl(): SolanaProviderApi {
  * Returns an empty object when EVM isn't injected so the subscriber attaches safely.
  */
 export function evmEventSource(): EvmProviderApi {
-  return (ctrl()?.get(LegacyNetworks.ETHEREUM) ?? {}) as EvmProviderApi;
+  return (ctrl()?.get(EVM_NAMESPACE) ?? {}) as EvmProviderApi;
 }
 
 /** Promisified `request_accounts` for a callback-style ctrl UTXO instance. */
@@ -127,12 +137,22 @@ export async function getAllUtxoAccounts(): Promise<CaipAccount[]> {
    * the rest and propagating that error — we don't want to silently return a partial
    * account set if one chain errors.
    */
+  const utxoInstances = instances.get(UTXO_NAMESPACE) as
+    | UtxoProvider
+    | undefined;
+  if (!utxoInstances) {
+    return [];
+  }
+
   const perChain = await Promise.all(
-    UTXO_CHAINS.filter(({ network }) => instances.get(network)).map(
-      async ({ network, caip }) => {
-        const instance = instances.get(network) as UtxoProviderApi;
+    UTXO_CHAINS.filter((chainId) => utxoInstances.get(chainId)).map(
+      async (chainId) => {
+        const instance = utxoInstances.get(chainId) as UtxoProviderApi;
         const accounts = await requestUtxoAccounts(instance);
-        return utils.formatAccountsToCAIP(accounts, caip);
+        return utils.formatAccountsToCAIP(
+          accounts,
+          getChainIdFromCaip2ChainId(chainId)
+        );
       }
     )
   );

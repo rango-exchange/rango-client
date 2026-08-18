@@ -39,20 +39,23 @@ Supported networks :
 The wallet only supports bitcoin.
 
 
-#### 🚧 TON
-
-The wallet supports TON, but it is **not implemented** in the current integration.
-
-#### 🚧 Sui
-
-The wallet supports Sui, but it is **not implemented** in the current integration.
-
-
 
 ### Feature
 
+#### ⚠️ Connect and AutoConnect
+
+For Tron, connecting on page load — or disconnecting and reconnecting within the app —
+returns the **first account you connected**, not the account you last switched to. The OKX
+extension resets the Tron address in these cases and gives no way to recover the active
+one; it corrects itself only once you switch accounts in the wallet.
+
+If you sign a transaction while that wrong account is selected, the OKX wallet rejects it
+with a **"Transaction Unavailable"** error.
+
 #### ⚠️ Disconnect
 
+Disconnecting from `evm` also disconnects `solana`, `tron`, `utxo` and `sui`. However, only `tron` and `sui` receive the disconnect event message.
+`solana` and `utxo` will still appear as connected namespaces because they do not receive the disconnect event; they only disconnect after a page refresh.
 The disconnect function will not work for this wallet, as it attempts to invoke disconnect on the connect method for private key imported wallets.
 If the user disconnects the dApp from the wallet itself, we won't disconnect ourself. But we will get disconnected after refreshing the page.
 If the user connects the wallet to one account, switches to another account, and then disconnects one of the two from the wallet, the dApp automatically switches to the remaining account that wasn’t disconnected.
@@ -68,6 +71,13 @@ Here’s the updated **Switch Account** section with a concise mention that conn
 **Connection order also affects this behavior** depending on which namespace was connected first, some account updates may not propagate correctly across other namespaces. As a result, previously connected namespaces will not update automatically and require a manual disconnect and reconnect to sync the correct account.
 
 Additionally, calling `connect` on a namespace that was already connected does not return the address of the newly selected account. To avoid leaving the user in an inconsistent state, we invoke a full wallet `disconnect` when the user disconnects the wallet from the provider.
+An `evm` account switch might not be detected.
+
+---
+
+#### ⚠️ Auto Connect
+
+On auto connect in `sui` (e.g. page reload), the wallet reconnects to the account that was **first** connected, not the account the user last switched to. If the user connects one account, switches to another in the wallet, and the dApp later reconnects, the silent reconnect resolves the originally connected account rather than the currently active one. There is no client-side workaround, as the wallet exposes no way to read the active account at reconnect time.
 
 
 ---

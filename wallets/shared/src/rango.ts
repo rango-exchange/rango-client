@@ -2,8 +2,6 @@ import type { Namespace } from '@hub3js/namespaces';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import {
-  LegacyNetworks,
-  type LegacyNetwork as Network,
   type LegacyWalletInfo as WalletInfo,
   type LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
@@ -12,7 +10,6 @@ import {
 type InstanceType = any;
 
 export type {
-  LegacyNetwork as Network,
   LegacyConnect as Connect,
   LegacyDisconnect as Disconnect,
   LegacySubscribe as Subscribe,
@@ -26,10 +23,7 @@ export type {
   LegacyNamespaceData as NamespaceData,
 } from '@rango-dev/wallets-core/legacy';
 
-export {
-  LegacyNetworks as Networks,
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-} from '@rango-dev/wallets-core/legacy';
+export { legacyGetBlockChainNameFromId as getBlockChainNameFromId } from '@rango-dev/wallets-core/legacy';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -37,6 +31,56 @@ export const IS_DEV =
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
 };
+
+export type Network = string;
+
+export enum Networks {
+  BTC = 'BTC',
+  BSC = 'BSC',
+  LTC = 'LTC',
+  THORCHAIN = 'THOR',
+  BCH = 'BCH',
+  BINANCE = 'BNB',
+  BLAST = 'BLAST',
+  CELO = 'CELO',
+  LINEA = 'LINEA',
+  METIS = 'METIS',
+  SONIC = 'SONIC',
+  BERACHAIN = 'BERACHAIN',
+  ZETA_CHAIN = 'ZETA_CHAIN',
+  SCROLL = 'SCROLL',
+  ZKSYNC = 'ZKSYNC',
+  MONAD = 'MONAD',
+  ETHEREUM = 'ETH',
+  POLYGON = 'POLYGON',
+  POLKADOT = '',
+  TRON = 'TRON',
+  DOGE = 'DOGE',
+  HARMONY = 'HARMONY',
+  AVAX_CCHAIN = 'AVAX_CCHAIN',
+  FANTOM = 'FANTOM',
+  MOONBEAM = 'MOONBEAM',
+  ARBITRUM = 'ARBITRUM',
+  BOBA = 'BOBA',
+  OPTIMISM = 'OPTIMISM',
+  FUSE = 'FUSE',
+  CRONOS = 'CRONOS',
+  SOLANA = 'SOLANA',
+  MOONRIVER = 'MOONRIVER',
+  GNOSIS = 'GNOSIS',
+  MAYA = 'MAYA',
+  STARKNET = 'STARKNET',
+  STELLAR = 'STELLAR',
+  TON = 'TON',
+  BASE = 'BASE',
+  SUI = 'SUI',
+  XRPL = 'XRPL',
+  ZCASH = 'ZCASH',
+  HYPERLIQUID = 'HYPERLIQUID',
+
+  // Using instead of null
+  Unknown = 'Unkown',
+}
 
 export enum WalletTypes {
   DEFAULT = 'default',
@@ -115,6 +159,28 @@ export const namespaces: Record<
   UTXO: {
     title: 'UTXO',
     mainBlockchain: 'BTC',
+    derivationPaths: [
+      {
+        id: 'bitcoin-native-segwit',
+        label: `Native SegWit (m/84'/0'/index')`,
+        generateDerivationPath: (index: string) => `84'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-nested-segwit',
+        label: `Nested SegWit (m/49'/0'/index')`,
+        generateDerivationPath: (index: string) => `49'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-legacy',
+        label: `Legacy (m/44'/0'/index')`,
+        generateDerivationPath: (index: string) => `44'/0'/${index}'/0/0`,
+      },
+      {
+        id: 'bitcoin-taproot',
+        label: `Taproot (m/86'/0'/index')`,
+        generateDerivationPath: (index: string) => `86'/0'/${index}'/0/0`,
+      },
+    ],
   },
   Starknet: {
     title: 'Starknet',
@@ -148,7 +214,7 @@ export type DerivationPath = {
   generateDerivationPath: (index: string) => string;
 };
 
-export const HYPERLIQUID_SIGN_NETWORK = LegacyNetworks.ARBITRUM;
+export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
 
 export const ETHEREUM_CHAIN_ID = '0x1';
 export const DEFAULT_ETHEREUM_RPC_URL =

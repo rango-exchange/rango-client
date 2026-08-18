@@ -1,6 +1,6 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import { isEvmAddress } from '@rango-dev/wallets-shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,7 +12,7 @@ export function safepal(): Provider | null {
   }
   const instances = new Map();
   if (safePalEvm) {
-    instances.set(LegacyNetworks.ETHEREUM, safePalEvm);
+    instances.set(EVM_NAMESPACE, safePalEvm);
   }
 
   return instances;
@@ -20,7 +20,7 @@ export function safepal(): Provider | null {
 
 export function evmSafepal(): EvmProviderApi {
   const instances = safepal();
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
   if (!evmInstance) {
     throw new Error(
       'Safepal not injected or EVM not enabled. Please check your wallet.'

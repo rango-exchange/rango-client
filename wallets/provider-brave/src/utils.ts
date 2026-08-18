@@ -2,7 +2,7 @@ import type { Provider } from './types.js';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
 export function brave(): Provider | null {
   const { braveEthereum, braveSolana } = window;
@@ -11,10 +11,10 @@ export function brave(): Provider | null {
   }
   const instances: Provider = new Map();
   if (braveEthereum) {
-    instances.set(LegacyNetworks.ETHEREUM, braveEthereum);
+    instances.set(EVM_NAMESPACE, braveEthereum);
   }
   if (braveSolana) {
-    instances.set(LegacyNetworks.SOLANA, braveSolana);
+    instances.set(SOLANA_NAMESPACE, braveSolana);
   }
 
   return instances;
@@ -33,7 +33,7 @@ export function getInstanceOrThrow(): Provider {
 export function evmBrave(): EvmProviderApi {
   const instances = brave();
 
-  const evmInstance = instances?.get(LegacyNetworks.ETHEREUM);
+  const evmInstance = instances?.get(EVM_NAMESPACE);
 
   if (!evmInstance) {
     throw new Error(
@@ -46,7 +46,7 @@ export function evmBrave(): EvmProviderApi {
 
 export function solanaBrave(): SolanaProviderApi {
   const instance = brave();
-  const solanaInstance = instance?.get(LegacyNetworks.SOLANA);
+  const solanaInstance = instance?.get(SOLANA_NAMESPACE);
 
   if (!solanaInstance) {
     throw new Error(

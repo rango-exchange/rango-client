@@ -1,7 +1,7 @@
 import type { Provider, XVerseResponse } from './types.js';
 import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 
-import { LegacyNetworks } from '@rango-dev/wallets-core/legacy';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 
 export function xverse(): Provider | null {
   const { XverseProviders } = window;
@@ -13,7 +13,7 @@ export function xverse(): Provider | null {
   const instances: Provider = new Map();
 
   if (XverseProviders.BitcoinProvider) {
-    instances.set(LegacyNetworks.BTC, XverseProviders.BitcoinProvider);
+    instances.set(UTXO_NAMESPACE, XverseProviders.BitcoinProvider);
   }
 
   return instances;
@@ -31,7 +31,7 @@ export function getInstanceOrThrow(): Provider {
 
 export function bitcoinXverse(): ProviderAPI {
   const instances = xverse();
-  const bitcoinInstance = instances?.get(LegacyNetworks.BTC);
+  const bitcoinInstance = instances?.get(UTXO_NAMESPACE);
 
   if (!bitcoinInstance) {
     throw new Error('Xverse not injected. Please check your wallet.');

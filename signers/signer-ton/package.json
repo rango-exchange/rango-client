@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-ton",
-  "version": "0.28.1",
+  "version": "0.28.2-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-ton",
+    "build": "yarn run rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
