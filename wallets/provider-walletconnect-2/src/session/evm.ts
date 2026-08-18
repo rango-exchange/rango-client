@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
 
 import { debug } from '@rango-dev/logging-core';
@@ -13,24 +13,28 @@ import { EthereumRPCMethods, NAMESPACES } from '../wcConstants.js';
 
 import { getChainIdByNetworkName } from './chain-state.js';
 
-export function getCurrentEvmAccountAddress(instance: any) {
-  return instance.session.namespaces.eip155.accounts
-    ?.map((account: string) => {
-      return new AccountId(account).address;
-    })
-    ?.filter((address: string) => isEvmAddress(address))?.[0];
+export function getCurrentEvmAccountAddress(
+  session: SessionTypes.Struct
+): string | undefined {
+  return session.namespaces[NAMESPACES.ETHEREUM]?.accounts
+    ?.map((account) => new AccountId(account).address)
+    ?.filter((address) => isEvmAddress(address))?.[0];
 }
 
 export function getEvmAccount(
   network: string,
   address: string,
   meta: BlockchainMeta[]
-) {
+): string | undefined {
   const currentChainId = getChainIdByNetworkName(network, meta);
+  if (!currentChainId) {
+    return undefined;
+  }
+
   return AccountId.format({
     chainId: {
       namespace: NAMESPACES.ETHEREUM,
-      reference: String(currentChainId),
+      reference: currentChainId,
     },
     address,
   });
@@ -69,10 +73,11 @@ export function filterEvmAccounts(
 }
 
 export async function switchOrAddEvmChain(
+  client: ISignClient,
+  session: SessionTypes.Struct,
   meta: BlockchainMeta[],
   requestedNetwork: string,
-  currentNetwork: string,
-  instance: any
+  currentNetwork: string
 ) {
   const evmBlockchains = meta.filter(isEvmBlockchain);
   const evmNetworksChainInfo =
@@ -89,10 +94,8 @@ export async function switchOrAddEvmChain(
     reference: String(currentChainId),
   });
 
-  const session = instance.session;
-
   try {
-    await instance.client.request({
+    await client.request({
       topic: session.topic,
       request: {
         method: EthereumRPCMethods.SWITCH_CHAIN,
@@ -105,14 +108,15 @@ export async function switchOrAddEvmChain(
       // It's required to pass current chain, otherwise it won't work
       chainId: currentChainEip,
     });
-  } catch (err: any) {
+  } catch (err) {
     // EIP-1193 "Unrecognized chain ID" - the wallet doesn't have this chain yet.
     const addChainError = 4902;
-    if (
-      err?.code === addChainError ||
-      err?.message?.includes(String(addChainError))
-    ) {
-      await instance.client.request({
+    const { code, message } = (err ?? {}) as {
+      code?: number;
+      message?: string;
+    };
+    if (code === addChainError || message?.includes(String(addChainError))) {
+      await client.request({
         topic: session.topic,
         request: {
           method: EthereumRPCMethods.ADD_CHAIN,
@@ -127,61 +131,67 @@ export async function switchOrAddEvmChain(
   }
 }
 
+/**
+ * Adds the requested and current chains' accounts to the session so sign-client
+ * accepts a request carrying their CAIP chain id, and returns the session to use
+ * from here on.
+ *
+ * The record is rebuilt rather than pushed into: the struct is shared with the
+ * store and the adapter cache, and the write below can fail (it is logged, not
+ * thrown), which would otherwise leave both holding accounts the store never
+ * accepted.
+ */
 export async function updateSessionAccounts(
-  instance: any,
+  client: ISignClient,
+  session: SessionTypes.Struct,
   requestedNetwork: string,
   currentNetwork: string,
   meta: BlockchainMeta[]
-) {
-  const session = instance.session;
-
-  const namespaces = session.namespaces;
-  let needUpdateNamespace = false;
-  const accounts = namespaces.eip155.accounts;
-
-  const currentAccountAddress = getCurrentEvmAccountAddress(instance);
-  const requestedAccount = getEvmAccount(
-    requestedNetwork,
-    currentAccountAddress,
-    meta
-  );
-  if (!accounts.includes(requestedAccount)) {
-    accounts.push(requestedAccount);
-    needUpdateNamespace = true;
+): Promise<SessionTypes.Struct> {
+  const evmNamespace = session.namespaces[NAMESPACES.ETHEREUM];
+  const currentAccountAddress = getCurrentEvmAccountAddress(session);
+  if (!evmNamespace || !currentAccountAddress) {
+    return session;
   }
 
-  const currentAccount = getEvmAccount(
-    currentNetwork,
-    currentAccountAddress,
-    meta
+  const existing = evmNamespace.accounts ?? [];
+  const wanted = [
+    getEvmAccount(requestedNetwork, currentAccountAddress, meta),
+    getEvmAccount(currentNetwork, currentAccountAddress, meta),
+  ].filter(
+    (account): account is string => !!account && !existing.includes(account)
   );
-  if (!accounts.includes(currentAccount)) {
-    accounts.push(currentAccount);
-    needUpdateNamespace = true;
+
+  if (!wanted.length) {
+    return session;
   }
 
-  if (needUpdateNamespace) {
-    const updatedNamespaces = {
-      ...namespaces,
-      eip155: {
-        ...namespaces.eip155,
-        accounts,
+  const updated: SessionTypes.Struct = {
+    ...session,
+    namespaces: {
+      ...session.namespaces,
+      [NAMESPACES.ETHEREUM]: {
+        ...evmNamespace,
+        accounts: [...existing, ...new Set(wanted)],
       },
-    };
-    await instance.client.session
-      .update({
-        topic: session.topic,
-        namespaces: updatedNamespaces,
-      })
-      .catch((err: unknown) => {
-        debug(err instanceof Error ? err : new Error(String(err)));
-      });
+    },
+  };
+
+  try {
+    await client.session.update(session.topic, {
+      namespaces: updated.namespaces,
+    });
+  } catch (err) {
+    debug(err instanceof Error ? err : new Error(String(err)));
+    return session;
   }
+
+  return updated;
 }
 
-export function ignoreNamespaceMethods(instance: any): boolean {
+export function ignoreNamespaceMethods(session: SessionTypes.Struct): boolean {
   const WALLETS_WITH_WRONG_NAMESPACE_METHODS = ['trust', '1inch'];
-  const peerName = instance?.session?.peer?.metadata?.name;
+  const peerName = session.peer?.metadata?.name;
   return WALLETS_WITH_WRONG_NAMESPACE_METHODS.some((name) =>
     peerName?.toLowerCase()?.includes(name)
   );

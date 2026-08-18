@@ -24,6 +24,7 @@ import {
 export type EvmChainDeps = {
   meta: BlockchainMeta[];
   getSession: (namespace: 'evm') => SessionTypes.Struct | null;
+  cacheSession: (namespace: 'evm', session: SessionTypes.Struct) => void;
   getClient: () => Promise<ISignClient>;
   ensureSession: (options: {
     namespace: 'evm';
@@ -59,13 +60,17 @@ export async function getCurrentChainId(
   return chainReferenceToHex(reference);
 }
 
+/**
+ * Returns the session to keep using: `updateSessionAccounts` may rebuild it, and
+ * the caller's copy is stale from that point on.
+ */
 export async function switchEvmNetwork(options: {
   client: ISignClient;
   session: SessionTypes.Struct;
   meta: BlockchainMeta[];
   requestedChainId: string;
   currentChainId: string;
-}): Promise<void> {
+}): Promise<SessionTypes.Struct> {
   const { client, session, meta, requestedChainId, currentChainId } = options;
 
   const requestedReference = parseChainReference(requestedChainId);
@@ -86,11 +91,11 @@ export async function switchEvmNetwork(options: {
   const evmNamespace = session.namespaces[NAMESPACES.ETHEREUM];
   const authorizedChains = evmNamespace?.chains || [];
   const authorizedMethods = evmNamespace?.methods || [];
-  const instance = { client, session };
+  let activeSession = session;
 
   if (
     authorizedMethods.includes(EthereumRPCMethods.SWITCH_CHAIN) &&
-    !ignoreNamespaceMethods(instance)
+    !ignoreNamespaceMethods(session)
   ) {
     if (!requestedNetwork || !currentNetwork) {
       const error = new Error(`Chain ${requestedReference} is not configured.`);
@@ -98,13 +103,20 @@ export async function switchEvmNetwork(options: {
       throw error;
     }
 
-    await updateSessionAccounts(
-      instance,
+    activeSession = await updateSessionAccounts(
+      client,
+      session,
       requestedNetwork,
       currentNetwork,
       meta
     );
-    await switchOrAddEvmChain(meta, requestedNetwork, currentNetwork, instance);
+    await switchOrAddEvmChain(
+      client,
+      activeSession,
+      meta,
+      requestedNetwork,
+      currentNetwork
+    );
   } else if (!authorizedChains.includes(chainIdStr)) {
     const error = new Error(`Chain ${requestedReference} is not configured.`);
     logError(error);
@@ -112,6 +124,7 @@ export async function switchEvmNetwork(options: {
   }
 
   await persistCurrentChainId(client, requestedReference);
+  return activeSession;
 }
 
 export async function switchToChainIfNeeded(
@@ -134,13 +147,16 @@ export async function switchToChainIfNeeded(
     ? chainReferenceToHex(currentReference)
     : chainReferenceToHex(requestedReference);
 
-  await switchEvmNetwork({
-    client,
-    session,
-    meta: deps.meta,
-    requestedChainId: requestedReference,
-    currentChainId,
-  });
+  deps.cacheSession(
+    'evm',
+    await switchEvmNetwork({
+      client,
+      session,
+      meta: deps.meta,
+      requestedChainId: requestedReference,
+      currentChainId,
+    })
+  );
 }
 
 export async function ensureConnectedToChain(

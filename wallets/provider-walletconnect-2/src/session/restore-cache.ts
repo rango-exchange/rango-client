@@ -26,7 +26,7 @@ export async function restoreAndCacheSession(
       return null;
     }
 
-    cache.set(session);
+    cache.set(namespace, session);
     return session;
   } catch (error) {
     debug(error instanceof Error ? error : new Error(String(error)));

@@ -115,6 +115,13 @@ export class WalletConnectAdapter {
     return this.#cache.get(namespace);
   }
 
+  cacheSession(
+    namespace: WalletConnectNamespace,
+    session: SessionTypes.Struct
+  ) {
+    this.#cache.set(namespace, session);
+  }
+
   clearSession(namespace: WalletConnectNamespace) {
     this.#cache.clear(namespace);
   }
@@ -189,13 +196,16 @@ export class WalletConnectAdapter {
       throw new Error('WalletConnect session is not available.');
     }
 
-    await switchEvmNetworkHelper({
-      client: await this.getClient(),
-      session,
-      meta: this.#meta,
-      requestedChainId,
-      currentChainId,
-    });
+    this.cacheSession(
+      'evm',
+      await switchEvmNetworkHelper({
+        client: await this.getClient(),
+        session,
+        meta: this.#meta,
+        requestedChainId,
+        currentChainId,
+      })
+    );
   }
 
   /*
@@ -246,7 +256,7 @@ export class WalletConnectAdapter {
       }
     );
 
-    this.#cache.set(session);
+    this.#cache.set(namespace, session);
     return session;
   }
 
@@ -258,12 +268,17 @@ export class WalletConnectAdapter {
       );
     }
     this.clearSession(namespace);
+    if (session) {
+      this.#cache.clearTopic(session.topic);
+    }
   }
 
   #evmChainDeps() {
     return {
       meta: this.#meta,
       getSession: (namespace: 'evm') => this.getSession(namespace),
+      cacheSession: (namespace: 'evm', session: SessionTypes.Struct) =>
+        this.cacheSession(namespace, session),
       getClient: async () => this.getClient(),
       ensureSession: async (options: {
         namespace: 'evm';

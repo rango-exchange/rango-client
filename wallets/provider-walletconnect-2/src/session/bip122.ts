@@ -24,6 +24,22 @@ export type Bip122AddressEntry = {
   intention?: 'payment' | 'ordinal';
 };
 
+/**
+ * Every address a `bip122_addressesChanged` payload carries, in wallet order.
+ * Unlike {@link pickPaymentAddress} it makes no guess about which one is active.
+ */
+export function getAnnouncedAddresses(
+  data: Bip122AddressEntry[] | string[] | undefined
+): string[] {
+  if (!data?.length) {
+    return [];
+  }
+
+  return data
+    .map((entry) => (typeof entry === 'string' ? entry : entry?.address))
+    .filter((address): address is string => !!address);
+}
+
 export function pickPaymentAddress(
   data: Bip122AddressEntry[] | string[] | undefined
 ): string | undefined {
