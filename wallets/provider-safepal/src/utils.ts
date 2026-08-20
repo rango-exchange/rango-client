@@ -1,10 +1,13 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
+import type { InstanceMap } from '@hub3js/std/types';
 
 import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import { isEvmAddress } from '@rango-dev/wallets-shared';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
+export type ProviderObject = {
+  [EVM_NAMESPACE]: EvmProviderApi;
+};
+export type Provider = InstanceMap<ProviderObject>;
 export function safepal(): Provider | null {
   const { safepalProvider: safePalEvm } = window;
   if (!safePalEvm) {
@@ -26,7 +29,7 @@ export function evmSafepal(): EvmProviderApi {
       'Safepal not injected or EVM not enabled. Please check your wallet.'
     );
   }
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 export function getInstanceOrThrow(): Provider {
   const instances = safepal();

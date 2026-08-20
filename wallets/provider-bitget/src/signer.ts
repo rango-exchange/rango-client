@@ -7,7 +7,6 @@ import {
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
-import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { BitgetUTXOSigner } from './signers/utxo.js';
@@ -15,9 +14,9 @@ import { BitgetUTXOSigner } from './signers/utxo.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const ethProvider = getNetworkInstance(provider, EVM_NAMESPACE);
-  const tronProvider = getNetworkInstance(provider, TRON_NAMESPACE);
-  const utxoProvider = getNetworkInstance(provider, UTXO_NAMESPACE);
+  const ethProvider = provider.get(EVM_NAMESPACE);
+  const tronProvider = provider.get(TRON_NAMESPACE);
+  const utxoProvider = provider.get(UTXO_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultEvmSigner } = await dynamicImportWithRefinedError(

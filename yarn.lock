@@ -2795,6 +2795,13 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
+"@hub3js/std@0.0.0-experimental-53df86ae-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.0.0-experimental-53df86ae-20260819.tgz#8f83bcf778391f7aceecea21c4f5a2bc8bca029b"
+  integrity sha512-f8X6zXioDuP0JcFqt+IxlDYt2IGSr1N+suua5tCQ8G7xa1hrpW3nQ2N3X3skBWsqxfXsc9AcFLOvxx/jpc9yUQ==
+  dependencies:
+    caip "^1.1.1"
+
 "@hub3js/std@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.2.3.tgz#403425b8983577b652380182c6f49c442bdfbbad"
@@ -4797,6 +4804,18 @@
   integrity sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
+
+"@rango-dev/wallets-core@^0.60.1-next.3":
+  version "0.60.1-next.4"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-core/-/wallets-core-0.60.1-next.4.tgz#41054228f9481ffe8805b2dcfe12e5746cce7515"
+  integrity sha512-6vHAmM0+mG2fXBmNWHROFu8O9i20OP92BKcK5VgMwLOk+bUAdvMSUZW0EORyjimY2HEJrhyBb0GqXTB5VSwUCA==
+  dependencies:
+    "@hub3js/std" "^0.2.3"
+    "@stellar/stellar-sdk" "^15.0.1"
+    caip "^1.1.1"
+    immer "^10.0.4"
+    rango-types "^0.5.0"
+    zustand "^4.5.2"
 
 "@remix-run/router@1.13.0":
   version "1.13.0"

@@ -62,7 +62,7 @@ export function evmOKX(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaOKX(): SolanaProviderApi {
@@ -100,7 +100,7 @@ export function tonOKX(): TonProviderApi {
     );
   }
 
-  return tonInstance as TonProviderApi;
+  return tonInstance;
 }
 
 export function tronOKX(): TronProviderApi {

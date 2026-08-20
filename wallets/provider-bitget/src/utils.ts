@@ -56,7 +56,7 @@ export function evmBitget(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function tronBitget(): TronProviderApi {

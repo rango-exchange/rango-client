@@ -41,7 +41,7 @@ export function evmBrave(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaBrave(): SolanaProviderApi {

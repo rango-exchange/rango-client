@@ -4,19 +4,15 @@ import type {
   Network,
   Providers,
   Subscribe,
-  SwitchNetwork,
   WalletType,
 } from './rango.js';
 import type { BlockchainMeta } from 'rango-types';
 
 import { isEvmBlockchain } from 'rango-types';
 
-import {
-  convertEvmBlockchainMetaToEvmChainInfo,
-  switchOrAddNetworkForMetamaskCompatibleWallets,
-} from './helpers.js';
 import { Networks } from './rango.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([
     instance.request({ method: 'eth_requestAccounts' }) as Promise<string[]>,
@@ -73,23 +69,9 @@ export const canEagerlyConnectToEvm: CanEagerConnect = async ({ instance }) => {
       return true;
     }
     return false;
-  } catch (error) {
+  } catch {
     return false;
   }
-};
-
-export const switchNetworkForEvm: SwitchNetwork = async ({
-  instance,
-  network,
-  meta,
-}) => {
-  const evmBlockchains = meta.filter(isEvmBlockchain);
-  const evmInstance = getNetworkInstance(instance, Networks.ETHEREUM);
-  await switchOrAddNetworkForMetamaskCompatibleWallets(
-    evmInstance,
-    network,
-    convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
-  );
 };
 
 export const canSwitchNetworkToEvm: CanSwitchNetwork = ({ network, meta }) => {
@@ -119,6 +101,7 @@ function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
 }
 
 export function chooseInstance(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   instances: null | Map<any, any>,
   meta: BlockchainMeta[],
   network?: Network | null
@@ -136,16 +119,13 @@ export function chooseInstance(
   return instance;
 }
 
-export function getNetworkInstance(provider: any, network: Network) {
-  return provider.size ? provider.get(network) : provider;
-}
-
 /**
  * On our implementation for `wallets` package, We keep the instance in 2 ways
  * If it's a single chain wallet, it returns the instance directly,
  * If it's a multichain wallet, it returns a `Map` of instances.
  * This function will get the `ETHEREUM` instance in both types.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getEvmProvider(providers: Providers, type: WalletType): any {
   if (type && providers[type]) {
     // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.

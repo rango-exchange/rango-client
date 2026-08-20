@@ -8,7 +8,6 @@ import {
 } from '@hub3js/namespaces';
 import { getInstance as getSuiInstance } from '@hub3js/sui';
 import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
-import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
@@ -16,9 +15,9 @@ import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const solProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
-  const evmProvider = getNetworkInstance(provider, EVM_NAMESPACE);
-  const bitcoinInstance = getNetworkInstance(provider, UTXO_NAMESPACE);
+  const solProvider = provider.get(SOLANA_NAMESPACE);
+  const evmProvider = provider.get(EVM_NAMESPACE);
+  const bitcoinInstance = provider.get(UTXO_NAMESPACE);
 
   const suiProvider = getSuiInstance(WALLET_NAME_IN_WALLET_STANDARD);
 
