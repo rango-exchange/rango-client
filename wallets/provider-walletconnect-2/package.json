@@ -3,12 +3,12 @@
   "version": "0.57.0",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/mod.js"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "dist/mod.d.ts",
   "files": [
     "dist",
     "src"
@@ -21,21 +21,26 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@solana/web3.js": "^1.91.4",
+    "@walletconnect/encoding": "^1.0.2",
+    "@hub3js/core": "^0.61.0",
+    "@hub3js/evm": "^0.3.0",
+    "@hub3js/std": "^0.2.0",
+    "@reown/appkit": "1.8.20",
     "@rango-dev/logging-core": "^0.14.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/signer-solana": "^0.49.0",
+    "@rango-dev/wallets-core": "^0.60.1-next.3",
     "@rango-dev/wallets-shared": "^0.62.0",
-    "@solana/web3.js": "^1.91.4",
-    "@walletconnect/encoding": "^1.0.2",
-    "@walletconnect/sign-client": "^2.11.2",
-    "@walletconnect/utils": "^2.11.2",
+    "@walletconnect/sign-client": "2.23.7",
+    "@walletconnect/universal-provider": "2.23.7",
+    "@walletconnect/utils": "2.23.7",
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "rango-types": "^0.5.0"
   },
   "devDependencies": {
-    "@walletconnect/modal": "^2.6.2",
-    "@walletconnect/types": "^2.11.2"
+    "@walletconnect/types": "2.23.7"
   },
   "publishConfig": {
     "access": "public"

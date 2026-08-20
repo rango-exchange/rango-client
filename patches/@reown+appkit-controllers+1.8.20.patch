@@ -1,0 +1,20 @@
+diff --git a/node_modules/@reown/appkit-controllers/dist/types/src/utils/ViemUtil.d.ts b/node_modules/@reown/appkit-controllers/dist/types/src/utils/ViemUtil.d.ts
+index 7fd38b994b976acf71b6e782cd888305d78fbf65..27a040e6aeecfbb8d2a7a9e9f4d53a963f5a6f9f 100644
+--- a/node_modules/@reown/appkit-controllers/dist/types/src/utils/ViemUtil.d.ts
++++ b/node_modules/@reown/appkit-controllers/dist/types/src/utils/ViemUtil.d.ts
+@@ -4479,6 +4479,7 @@ export declare const ViemUtil: {
+             authorizationList: import("viem").TransactionSerializableEIP7702["authorizationList"];
+         } ? "eip7702" : never) | (request["type"] extends string | undefined ? Extract<request["type"], string> : never)>) ? T_25 extends "eip7702" ? import("viem").TransactionRequestEIP7702 : never : never : never)>> & {
+             chainId?: number | undefined;
++// @ts-ignore -- generated against an older viem; generics mismatch viem@2.52.x (TS2344/TS2536). Only these 2 sites; rest of file stays checked.
+         }, (request["parameters"] extends readonly import("viem").PrepareTransactionRequestParameterType[] ? request["parameters"][number] : "fees" | "chainId" | "type" | "gas" | "nonce" | "blobVersionedHashes") extends infer T_26 ? T_26 extends (request["parameters"] extends readonly import("viem").PrepareTransactionRequestParameterType[] ? request["parameters"][number] : "fees" | "chainId" | "type" | "gas" | "nonce" | "blobVersionedHashes") ? T_26 extends "fees" ? "gasPrice" | "maxFeePerGas" | "maxPriorityFeePerGas" : T_26 : never : never> & (unknown extends request["kzg"] ? {} : Pick<request, "kzg">) extends infer T ? { [K in keyof T]: (import("viem").UnionRequiredBy<Extract<import("viem").UnionOmit<import("viem").ExtractChainFormatterParameters<import("viem").DeriveChain<{
+             blockExplorers?: {
+                 [key: string]: {
+@@ -7920,6 +7921,7 @@ export declare const ViemUtil: {
+             authorizationList: import("viem").TransactionSerializableEIP7702["authorizationList"];
+         } ? "eip7702" : never) | (request["type"] extends string | undefined ? Extract<request["type"], string> : never)>) ? T_12 extends "eip7702" ? import("viem").TransactionRequestEIP7702 : never : never : never)>> & {
+             chainId?: number | undefined;
++// @ts-ignore -- generated against an older viem; generics mismatch viem@2.52.x (TS2344/TS2536). Only these 2 sites; rest of file stays checked.
+         }, (request["parameters"] extends readonly import("viem").PrepareTransactionRequestParameterType[] ? request["parameters"][number] : "fees" | "chainId" | "type" | "gas" | "nonce" | "blobVersionedHashes") extends infer T_13 ? T_13 extends (request["parameters"] extends readonly import("viem").PrepareTransactionRequestParameterType[] ? request["parameters"][number] : "fees" | "chainId" | "type" | "gas" | "nonce" | "blobVersionedHashes") ? T_13 extends "fees" ? "gasPrice" | "maxFeePerGas" | "maxPriorityFeePerGas" : T_13 : never : never> & (unknown extends request["kzg"] ? {} : Pick<request, "kzg">))[K]; } : never>;
+         readContract: <const abi extends import("viem").Abi | readonly unknown[], functionName extends import("viem").ContractFunctionName<abi, "pure" | "view">, const args extends import("viem").ContractFunctionArgs<abi, "pure" | "view", functionName>>(args: import("viem").ReadContractParameters<abi, functionName, args>) => Promise<import("viem").ReadContractReturnType<abi, functionName, args>>;
+         sendRawTransaction: (args: import("viem").SendRawTransactionParameters) => Promise<import("viem").SendRawTransactionReturnType>;

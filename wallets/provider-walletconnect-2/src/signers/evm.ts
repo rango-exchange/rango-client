@@ -1,15 +1,16 @@
-import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import type { SessionTypes } from '@walletconnect/types';
+import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { cleanEvmError, toHexQuantity } from '@rango-dev/signer-evm';
-import * as encoding from '@walletconnect/encoding';
 import { AccountId, ChainId } from 'caip';
 import { type GenericSigner } from 'rango-types';
 
-import { EthereumRPCMethods, NAMESPACES } from '../constants.js';
+import { utf8ToHex } from '../utils.js';
+import { EthereumRPCMethods, NAMESPACES } from '../wcConstants.js';
 
 const NAMESPACE_NAME = NAMESPACES.ETHEREUM;
+
+type SessionGetter = () => SessionTypes.Struct | null;
 
 type WalletConnectEvmTx = {
   from?: string;
@@ -24,12 +25,20 @@ type WalletConnectEvmTx = {
 };
 
 class EVMSigner implements GenericSigner<EvmTransaction> {
-  private client: SignClient;
-  private session: SessionTypes.Struct;
+  private client: ISignClient;
+  private getSession: SessionGetter;
 
-  constructor(client: SignClient, session: SessionTypes.Struct) {
+  constructor(client: ISignClient, getSession: SessionGetter) {
     this.client = client;
-    this.session = session;
+    this.getSession = getSession;
+  }
+
+  private get session(): SessionTypes.Struct {
+    const session = this.getSession();
+    if (!session) {
+      throw new Error('EVM WalletConnect session is not available.');
+    }
+    return session;
   }
 
   /**
@@ -89,7 +98,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       namespace: NAMESPACE_NAME,
       reference: requestedFor.chainId,
     });
-    const hexMsg = encoding.utf8ToHex(msg, true);
+    const hexMsg = utf8ToHex(msg, true);
 
     const params = [hexMsg, address];
 
@@ -191,13 +200,6 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
     );
 
     if (!addresses || !addresses.includes(caipAddress.toString())) {
-      console.warn(
-        'Available adresses and requested address:',
-        addresses,
-        caipAddress.toString(),
-        chainId,
-        address
-      );
       throw new Error(
         `Your requested address doesn't exist on your wallect connect session. Please reconnect your wallet.`
       );

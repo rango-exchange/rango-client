@@ -84,20 +84,8 @@ export interface ConfigSlice {
   getAvailableProviders: () => VersionedProviders[];
 }
 
-function generateProviders(config: WidgetConfig) {
-  const options = makeProvidersOptionsFromConfig(config);
-  const envs = {
-    walletconnect2: {
-      WC_PROJECT_ID: options?.walletConnectProjectId || '',
-      DISABLE_MODAL_AND_OPEN_LINK:
-        options?.walletConnectListedDesktopWalletLink,
-    },
-    selectedProviders: config.wallets,
-    tonConnect: options?.tonConnect?.manifestUrl
-      ? { manifestUrl: options?.tonConnect.manifestUrl }
-      : undefined,
-  };
-  const allProviders = getAllProviders(envs);
+function generateProviders() {
+  const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
   return allBuiltProviders;
@@ -108,10 +96,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
-  const allBuiltProviders = generateProviders({
-    ...DEFAULT_CONFIG,
-    ...initialData,
-  });
+  const allBuiltProviders = generateProviders();
   return {
     config: { ...DEFAULT_CONFIG, ...initialData },
     iframe: DEFAULT_IFRAME_CONFIGS,
@@ -209,8 +194,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
     },
 
     buildAndSetProviders: () => {
-      const { config } = get();
-      const allBuiltProviders = generateProviders(config);
+      const allBuiltProviders = generateProviders();
 
       set({
         allProviders: allBuiltProviders,
