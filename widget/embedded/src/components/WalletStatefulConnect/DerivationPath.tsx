@@ -1,5 +1,4 @@
 import type { PropTypes } from './DerivationPath.types';
-import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { Divider, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
@@ -99,7 +98,8 @@ export function DerivationPath(props: PropTypes) {
           variant="body"
           size="xsmall"
           color="$neutral600"
-          className="_derivation_path_input_label">
+          className="_derivation_path_input_label"
+        >
           {i18n.t('Choose Derivation Path Template')}
         </InputLabel>
         <Select
@@ -118,7 +118,8 @@ export function DerivationPath(props: PropTypes) {
           variant="body"
           size="xsmall"
           color="$neutral600"
-          className="_derivation_path_input_label">
+          className="_derivation_path_input_label"
+        >
           {isCustomOptionSelected
             ? i18n.t('Enter Path')
             : i18n.t('Enter Index')}
@@ -139,7 +140,8 @@ export function DerivationPath(props: PropTypes) {
         onClick={handleConfirm}
         disabled={
           !derivationPaths || !selectedDerivationPathId || !derivationPathIndex
-        }>
+        }
+      >
         {i18n.t('Confirm')}
       </StyledButton>
     </>

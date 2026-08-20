@@ -1,9 +1,15 @@
 import type { InstallWalletContentProps } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, Image, MessageBox, WarningIcon } from '@rango-dev/ui';
+import {
+  Button,
+  detectInstallLink,
+  Divider,
+  Image,
+  MessageBox,
+  WarningIcon,
+} from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import {
@@ -44,7 +50,8 @@ export const InstallWalletContent = (props: InstallWalletContentProps) => {
       <Button
         type="primary"
         id="widget-install-wallet-btn"
-        onClick={handleButtonClick}>
+        onClick={handleButtonClick}
+      >
         {i18n.t('Install')}
       </Button>
     </>

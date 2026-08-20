@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@hub3js/caip": "0.0.0-experimental-123b0f23-20260819",
+    "@hub3js/namespaces": "^0.2.5",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {

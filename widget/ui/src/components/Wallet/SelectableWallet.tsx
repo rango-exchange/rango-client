@@ -1,6 +1,6 @@
-import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
+import { detectInstallLink } from '../../utils/wallet.js';
 import { Image } from '../common/index.js';
 import { Typography } from '../Typography/index.js';
 
@@ -36,7 +36,8 @@ export function SelectableWallet(props: SelectablePropTypes) {
         } else {
           onClick(type);
         }
-      }}>
+      }}
+    >
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -50,7 +51,8 @@ export function SelectableWallet(props: SelectablePropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={descriptionColor}>
+          color={descriptionColor}
+        >
           {description}
         </Typography>
       </Text>
