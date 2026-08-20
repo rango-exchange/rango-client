@@ -1,18 +1,9 @@
 import type { SolanaActions } from '@hub3js/solana';
-import type { CaipAccount } from '@hub3js/std/types';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
-import {
-  actions,
-  builders,
-  CAIP_NAMESPACE,
-  CAIP_SOLANA_CHAIN_ID,
-  hooks,
-} from '@hub3js/solana';
+import { actions, builders, hooks } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { getSolanaAccounts } from '@rango-dev/wallets-shared';
-import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
 import { solanaPhantom } from '../utils.js';
@@ -28,31 +19,7 @@ const [changeAccountSubscriber, changeAccountCleanup] =
  */
 const connect = builders
   .connect()
-  .action(async function () {
-    const solanaInstance = solanaPhantom();
-    const result = await getSolanaAccounts({
-      instance: solanaInstance,
-      meta: [],
-    });
-    if (Array.isArray(result)) {
-      throw new Error(
-        'Expecting solana response to be a single value, not an array.'
-      );
-    }
-
-    const formatAccounts = result.accounts.map(
-      (account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: CAIP_SOLANA_CHAIN_ID,
-          },
-        }) as CaipAccount
-    );
-
-    return formatAccounts;
-  })
+  .action(actions.connect(solanaPhantom))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)

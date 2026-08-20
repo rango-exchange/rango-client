@@ -1,14 +1,11 @@
 import type {
   AddEthereumChainParameter,
-  Connect,
   EvmNetworksChainInfo,
   InstallObjects,
   Network,
   Wallet,
 } from './rango.js';
 import type { EvmBlockchainMeta } from 'rango-types';
-
-import { Networks } from './rango.js';
 
 export { isAddress as isEvmAddress } from 'ethers';
 
@@ -148,22 +145,6 @@ export const evmChainsToRpcMap = (
       })
     )
   );
-};
-
-export const getSolanaAccounts: Connect = async ({ instance }) => {
-  let account = '';
-  if (instance.isConnected && instance.publicKey) {
-    account = instance.publicKey.toString();
-  } else {
-    // Asking for account from wallet if not connected or no public key available.
-    const solanaResponse = await instance.connect();
-    account = solanaResponse.publicKey.toString();
-  }
-
-  return {
-    accounts: [account],
-    chainId: Networks.SOLANA,
-  };
 };
 
 export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
