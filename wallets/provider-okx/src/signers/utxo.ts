@@ -1,7 +1,7 @@
 import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { isBitcoinBlockchain } from '@rango-dev/wallets-shared';
+import { isBitcoinBlockchain } from '@rango-dev/wallets-blockchains';
 import { SignerError } from 'rango-types';
 
 export class OKXUTXOSigner implements GenericSigner<Transfer> {

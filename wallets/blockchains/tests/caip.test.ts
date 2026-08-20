@@ -1,10 +1,9 @@
+import { CAIP_CHAINS, CAIP_NAMESPACES } from '@hub3js/caip';
 import {
-  CAIP_CHAINS,
-  CAIP_NAMESPACES,
   convertBlockchainMetaToCaip,
   isBitcoinBlockchain,
   isZcashBlockchain,
-} from '@rango-dev/wallets-shared';
+} from '@rango-dev/wallets-blockchains';
 import { TransactionType } from 'rango-types';
 import { describe, expect, it } from 'vitest';
 

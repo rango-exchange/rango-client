@@ -2746,6 +2746,19 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
+"@hub3js/caip@0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-123b0f23-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/caip/-/caip-0.0.0-experimental-123b0f23-20260819.tgz#2cd5a29be0282ad7b7c575df560e27caa8d655d4"
+  integrity sha512-ud7c4YWLUGPUdCYpQjcvq4/UskVIqKKro249CIMsgARqYRgxrSx4gzSr0W2xVroY3NCh2PKtdrPKWmYjbRjgcg==
+  dependencies:
+    "@hub3js/evm" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/solana" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/starknet" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/stellar" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/sui" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/tvm" "^0.0.0-experimental-123b0f23-20260819"
+    "@hub3js/xrpl" "^0.0.0-experimental-123b0f23-20260819"
+
 "@hub3js/core@^0.61.1":
   version "0.61.1"
   resolved "https://registry.yarnpkg.com/@hub3js/core/-/core-0.61.1.tgz#e3d9ea9ed63f5183c0f8e257706422f8df4d54c0"
@@ -2754,6 +2767,15 @@
     immer "^10.0.4"
     rango-types "^0.5.0"
     zustand "^4.5.2"
+
+"@hub3js/evm@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-d9001050-20260602"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-d9001050-20260602.tgz#0f8e0de8a875091575be21e8ec594e0f0b4fab06"
+  integrity sha512-pG+XYBQtFzUDl6uZBHphdRcgmydDvfkJ+m9uXe/9b2OWe2eCd+P71F2F5iQaOuzZeqxp5RMyfqi06t3bVn7HVw==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-d9001050-20260602"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
 
 "@hub3js/evm@^0.3.3":
   version "0.3.3"
@@ -2777,12 +2799,30 @@
     "@hub3js/tvm" "^0.2.3"
     "@hub3js/xrpl" "^0.2.3"
 
+"@hub3js/solana@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-d9001050-20260602"
+  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.0.0-experimental-d9001050-20260602.tgz#6e561d1864070848e9d954fdeb69798bae792a23"
+  integrity sha512-H/MidscJwSckgKmxZEceHyN4Hq9mUUGSZrA34e0XkjaAeLsbrteOX0f4daKc/2LCahL8AHmtftSSLqVEP8Fokw==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-d9001050-20260602"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
 "@hub3js/solana@^0.3.3":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.3.3.tgz#042913fe82caef718bee0acb1be71d7bc7debdc4"
   integrity sha512-14G18tEF0XOIKB4eQhHE1vaZERkBf4xpkuu3qO4acd9Z9+7iMKyJx3cQRTvNqAmEZOozh5QIBCAjHmRLo1ZOxg==
   dependencies:
     "@hub3js/std" "^0.2.3"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/starknet@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/starknet/-/starknet-0.0.0-experimental-53df86ae-20260819.tgz#c572fb6ec504a81ffa579bcf6b88c6e345a45925"
+  integrity sha512-Cw5klfwLiTy8PAZ/D5qSmkwXBZYRMpIOZr1Oq5N7wHC8QXV1BKZeLvcXkDJPQRo7tuvEw0198KX707IDvd36Nw==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-53df86ae-20260819"
     caip "^1.1.1"
     rango-types "^0.5.0"
 
@@ -2795,19 +2835,22 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
-"@hub3js/std@0.0.0-experimental-53df86ae-20260819":
-  version "0.0.0-experimental-53df86ae-20260819"
-  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.0.0-experimental-53df86ae-20260819.tgz#8f83bcf778391f7aceecea21c4f5a2bc8bca029b"
-  integrity sha512-f8X6zXioDuP0JcFqt+IxlDYt2IGSr1N+suua5tCQ8G7xa1hrpW3nQ2N3X3skBWsqxfXsc9AcFLOvxx/jpc9yUQ==
+"@hub3js/std@0.0.0-experimental-123b0f23-20260819", "@hub3js/std@0.0.0-experimental-53df86ae-20260819", "@hub3js/std@^0.0.0-experimental-53df86ae-20260819", "@hub3js/std@^0.0.0-experimental-d9001050-20260602", "@hub3js/std@^0.2.3":
+  version "0.0.0-experimental-123b0f23-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.0.0-experimental-123b0f23-20260819.tgz#aa4125feeee1d9a5bedc11bf03d9f4ccf4f5af28"
+  integrity sha512-2r4/xFflf/s29G1/dk8iRhObJrwEJIBtvS4A9Z5fsOeIYehd42rRKVai3CdWseBCocwHiigiLTkZ5IvG5Ltc4A==
   dependencies:
     caip "^1.1.1"
 
-"@hub3js/std@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@hub3js/std/-/std-0.2.3.tgz#403425b8983577b652380182c6f49c442bdfbbad"
-  integrity sha512-sKCK1ua42Fj+bsULFqAdV6lOUdMgtavMEqxbv/Ch5cSODMJ4cS4cpp1yK2fyR11J447ciZMOvtm+LGW7yQUfMA==
+"@hub3js/stellar@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/stellar/-/stellar-0.0.0-experimental-53df86ae-20260819.tgz#f0a629ad1a1640ce6d793d3a3bd7bf49b413afd2"
+  integrity sha512-E9IoRFHKtMI4RjB0YLlmQsg7toFEXK+j3ESqXMk/8DNxNiueM/Ld67f9d7Ly40FnEyxcFU/RgZDsiBHU1Tr1oQ==
   dependencies:
+    "@hub3js/std" "^0.0.0-experimental-53df86ae-20260819"
+    "@stellar/stellar-sdk" "^15.0.1"
     caip "^1.1.1"
+    rango-types "^0.5.0"
 
 "@hub3js/stellar@^0.2.3":
   version "0.2.3"
@@ -2816,6 +2859,16 @@
   dependencies:
     "@hub3js/std" "^0.2.3"
     "@stellar/stellar-sdk" "^15.0.1"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/sui@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/sui/-/sui-0.0.0-experimental-53df86ae-20260819.tgz#7adbbd2550bda817ed7be5e4bce0cca20c4eb5ab"
+  integrity sha512-oP5L+kOU1aQlfYoetFHcilHYLNycBeJ9g9hUGJlmmfFMCLOYwZW7NWDuh47FKoMi6xQfvfkGm6dffN6Umqg08A==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-53df86ae-20260819"
+    "@mysten/wallet-standard" "^0.13.26"
     caip "^1.1.1"
     rango-types "^0.5.0"
 
@@ -2829,6 +2882,15 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
+"@hub3js/tvm@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/tvm/-/tvm-0.0.0-experimental-53df86ae-20260819.tgz#61cb22e3a6efb0e609812b6908b42a2eeb238563"
+  integrity sha512-OmtYfgHi05J2Zo5zpB6VCQZrQo9NYk3YE8IkBOkAuEs0QDQEkOQJUIkiPP1LdAevkUeMcs7ThjHGOrtXcTvahw==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-53df86ae-20260819"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
 "@hub3js/tvm@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@hub3js/tvm/-/tvm-0.2.3.tgz#c83820cea24a4f041e5ffc8d2a38413ea28b2f51"
@@ -2837,6 +2899,16 @@
     "@hub3js/std" "^0.2.3"
     caip "^1.1.1"
     rango-types "^0.5.0"
+
+"@hub3js/xrpl@^0.0.0-experimental-123b0f23-20260819":
+  version "0.0.0-experimental-53df86ae-20260819"
+  resolved "https://registry.yarnpkg.com/@hub3js/xrpl/-/xrpl-0.0.0-experimental-53df86ae-20260819.tgz#68fff11426d839e877dba17a18dbc207bfada50c"
+  integrity sha512-khKcSG9yye4fGB1Rq85xWt2hE2dTfYxM1GUEbs7Ot1tKFnmx+VPKI8EV+SzruNIkp1/R8ueHeDLaIusNrqcTkw==
+  dependencies:
+    "@hub3js/std" "^0.0.0-experimental-53df86ae-20260819"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+    xrpl "^4.2.0"
 
 "@hub3js/xrpl@^0.2.3":
   version "0.2.3"

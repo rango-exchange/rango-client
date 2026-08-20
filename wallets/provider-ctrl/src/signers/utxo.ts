@@ -2,12 +2,10 @@ import type { UtxoCaipChainId } from '../constants.js';
 import type { Provider, UtxoProvider } from '../types.js';
 import type { GenericSigner, Transfer } from 'rango-types';
 
+import { CAIP_CHAINS } from '@hub3js/caip';
 import { UTXO_NAMESPACE } from '@hub3js/namespaces';
+import { convertBlockchainMetaToCaip } from '@rango-dev/wallets-blockchains';
 import { type ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
-import {
-  CAIP_CHAINS,
-  convertBlockchainMetaToCaip,
-} from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode, TransactionType } from 'rango-types';
 
 import { isUtxoCaipChainId } from '../constants.js';

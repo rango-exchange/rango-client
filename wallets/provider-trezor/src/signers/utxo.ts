@@ -1,6 +1,6 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { isBitcoinBlockchain } from '@rango-dev/wallets-shared';
+import { isBitcoinBlockchain } from '@rango-dev/wallets-blockchains';
 import { SignerError } from 'rango-types';
 
 import { getBitcoinDerivationPath } from '../state.js';

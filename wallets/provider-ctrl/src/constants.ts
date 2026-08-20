@@ -1,8 +1,8 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
+import { CAIP_CHAINS } from '@hub3js/caip';
 import { isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
-import { CAIP_CHAINS } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';

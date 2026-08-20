@@ -27,6 +27,7 @@
     "@hub3js/std": "0.0.0-experimental-53df86ae-20260819",
     "@rango-dev/common-core": "^0.1.0",
     "@rango-dev/signer-evm": "^0.45.0",
+    "@rango-dev/wallets-blockchains": "^0.1.0",
     "@rango-dev/wallets-core": "^0.61.0",
     "@rango-dev/wallets-shared": "^0.62.0",
     "@trezor/connect-web": "^9.5.0",

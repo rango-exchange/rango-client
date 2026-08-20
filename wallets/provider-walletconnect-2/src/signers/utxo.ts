@@ -2,8 +2,8 @@ import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type { GenericSigner, Transfer } from 'rango-types';
 
 import * as secp256k1 from '@bitcoinerlab/secp256k1';
+import { isBitcoinBlockchain } from '@rango-dev/wallets-blockchains';
 import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
-import { Networks } from '@rango-dev/wallets-shared';
 import * as bitcoin from 'bitcoinjs-lib';
 import { AccountId, ChainId } from 'caip';
 import { SignerError, SignerErrorCode } from 'rango-types';
@@ -53,7 +53,7 @@ class UtxoSigner implements GenericSigner<Transfer> {
       );
     }
 
-    if (asset.blockchain !== Networks.BTC) {
+    if (!isBitcoinBlockchain(asset.blockchain)) {
       throw new Error(
         `Signing ${asset.blockchain} transaction is not implemented by the signer.`
       );
