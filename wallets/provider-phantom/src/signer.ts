@@ -7,10 +7,8 @@ import {
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 import { getInstance as getSuiInstance } from '@hub3js/sui';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';

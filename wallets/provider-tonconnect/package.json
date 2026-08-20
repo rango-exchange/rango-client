@@ -25,6 +25,7 @@
     "@hub3js/namespaces": "^0.2.5",
     "@hub3js/std": "^0.2.3",
     "@hub3js/tvm": "^0.2.3",
+    "@rango-dev/common-core": "^0.1.0",
     "@rango-dev/wallets-shared": "^0.62.0",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",

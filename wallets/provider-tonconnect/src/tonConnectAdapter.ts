@@ -1,7 +1,7 @@
 import type { Environments } from './types.js';
 import type * as TonConnectUIModule from '@tonconnect/ui';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
 
 export class TonConnectAdapter {
   #tonModule?: typeof TonConnectUIModule;

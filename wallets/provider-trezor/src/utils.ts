@@ -1,7 +1,7 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
 import {
-  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';

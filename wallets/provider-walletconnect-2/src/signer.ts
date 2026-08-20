@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { getAdapter } from './adapter/registry.js';

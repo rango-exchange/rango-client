@@ -28,6 +28,7 @@
     "@hub3js/std": "^0.2.3",
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@reown/appkit": "1.8.20",
+    "@rango-dev/common-core": "^0.1.0",
     "@rango-dev/logging-core": "^0.14.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/signer-solana": "^0.49.0",

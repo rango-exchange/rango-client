@@ -6,10 +6,8 @@ import {
   TRON_NAMESPACE,
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { BitgetUTXOSigner } from './signers/utxo.js';

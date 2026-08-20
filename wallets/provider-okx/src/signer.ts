@@ -8,10 +8,8 @@ import {
   TON_NAMESPACE,
   TRON_NAMESPACE,
 } from '@hub3js/namespaces';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { OKXSolanaSigner } from './signers/solana.js';

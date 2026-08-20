@@ -28,6 +28,7 @@
     "@hub3js/std": "^0.2.3",
     "@hub3js/sui": "^0.2.3",
     "@hub3js/tvm": "^0.2.3",
+    "@rango-dev/common-core": "^0.1.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/signer-solana": "^0.49.0",
     "@rango-dev/signer-sui": "^0.11.0",

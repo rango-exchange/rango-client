@@ -3,8 +3,8 @@ import type Transport from '@ledgerhq/hw-transport';
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
 import {
-  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';

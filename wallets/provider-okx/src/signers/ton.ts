@@ -4,7 +4,7 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
+import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
 import { SignerError, SignerErrorCode, TonChainID } from 'rango-types';
 
 import { TON_CONNECT_USER_REJECTED_CODE } from '../constants.js';
