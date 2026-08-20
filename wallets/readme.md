@@ -165,8 +165,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Freighter](provider-freighter/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Safe](provider-safe/readme.md)                     | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Noir Wallet](provider-noir-wallet/readme.md)       | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [WalletConnect](provider-walletconnect-2/readme.md) | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [WalletConnect](provider-walletconnect-2/readme.md) | ✅  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 

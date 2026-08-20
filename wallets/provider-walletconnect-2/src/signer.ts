@@ -19,9 +19,18 @@ export default async function getSigners(): Promise<SignerFactory> {
       async () => await import('./signers/evm.js')
     )
   ).default;
+  const UtxoSigner = (
+    await dynamicImportWithRefinedError(
+      async () => await import('./signers/utxo.js')
+    )
+  ).default;
   signers.registerSigner(
     TxType.EVM,
     new EVMSigner(client, () => adapter.getSession('evm'))
+  );
+  signers.registerSigner(
+    TxType.TRANSFER,
+    new UtxoSigner(client, () => adapter.getSession('utxo'))
   );
 
   return signers;

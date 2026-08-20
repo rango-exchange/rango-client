@@ -1,9 +1,11 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
+import { Networks } from '@rango-dev/wallets-shared';
 import {
   type BlockchainMeta,
   type EvmBlockchainMeta,
   isEvmBlockchain,
+  type TransferBlockchainMeta,
 } from 'rango-types';
 
 import getSigners from './signer.js';
@@ -29,6 +31,16 @@ export const metadata: ProviderMetadata = {
             getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
               allBlockchains.filter((chain): chain is EvmBlockchainMeta =>
                 isEvmBlockchain(chain)
+              ),
+          },
+          {
+            label: 'BTC',
+            value: 'UTXO',
+            id: 'BTC',
+            getSupportedChains: (allBlockchains: BlockchainMeta[]) =>
+              allBlockchains.filter(
+                (chain): chain is TransferBlockchainMeta =>
+                  chain.name === Networks.BTC
               ),
           },
         ],
