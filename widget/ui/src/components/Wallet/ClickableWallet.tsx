@@ -1,8 +1,8 @@
 import type { WalletPropTypes } from './Wallet.types.js';
 
-import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
+import { detectInstallLink } from '../../utils/wallet.js';
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
 import { Skeleton } from '../Skeleton/index.js';
@@ -43,7 +43,8 @@ function Wallet(props: WalletPropTypes) {
       <Tooltip
         container={props.container}
         content={info.tooltipText}
-        side="top">
+        side="top"
+      >
         {children}
       </Tooltip>
     );
@@ -59,7 +60,8 @@ function Wallet(props: WalletPropTypes) {
         } else {
           onClick(type);
         }
-      }}>
+      }}
+    >
       <WalletImageContainer>
         <Image src={image} size={35} />
       </WalletImageContainer>
@@ -73,7 +75,8 @@ function Wallet(props: WalletPropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={info.color}>
+          color={info.color}
+        >
           {info.description}
         </Typography>
       </Text>

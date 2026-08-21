@@ -1,7 +1,7 @@
 import type { Namespace } from '@hub3js/namespaces';
-import type { DerivationPath } from '@rango-dev/wallets-shared';
+import type { DerivationPath } from '@rango-dev/wallets-blockchains';
 
-import { namespaces } from '@rango-dev/wallets-shared';
+import { DERIVATION_PATHS_BY_NAMESPACE } from '@rango-dev/wallets-blockchains';
 
 export const CUSTOM_DERIVATION_PATH: DerivationPath = {
   id: 'custom',
@@ -13,7 +13,7 @@ export function getDerivationPaths(
   selectedNamespace?: Namespace
 ): DerivationPath[] {
   const selectedNamespaceDerivationPaths = selectedNamespace
-    ? namespaces[selectedNamespace]?.derivationPaths
+    ? DERIVATION_PATHS_BY_NAMESPACE[selectedNamespace]
     : null;
 
   const derivationPaths: DerivationPath[] = !!selectedNamespaceDerivationPaths

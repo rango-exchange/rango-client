@@ -1,4 +1,3 @@
-import type { Namespace } from '@hub3js/namespaces';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { Networks } from '@rango-dev/wallets-blockchains';
@@ -18,10 +17,8 @@ export type {
   LegacySwitchNetwork as SwitchNetwork,
   LegacySuggest as Suggest,
   LegacyCanSwitchNetwork as CanSwitchNetwork,
-  LegacyInstallObjects as InstallObjects,
   LegacyWalletInfo as WalletInfo,
   LegacyWalletType as WalletType,
-  LegacyNamespaceData as NamespaceData,
 } from '@rango-dev/wallets-core/legacy';
 
 export { legacyGetBlockChainNameFromId as getBlockChainNameFromId } from '@rango-dev/wallets-core/legacy';
@@ -69,105 +66,6 @@ export enum WalletTypes {
   TON_CONNECT = 'tonconnect',
   XVERSE = 'xverse',
 }
-
-export const namespaces: Record<
-  Namespace,
-  { mainBlockchain: string; title: string; derivationPaths?: DerivationPath[] }
-> = {
-  EVM: {
-    mainBlockchain: 'ETH',
-    title: 'Ethereum',
-    derivationPaths: [
-      {
-        id: 'metamask',
-        label: `Metamask (m/44'/60'/0'/0/index)`,
-        generateDerivationPath: (index: string) => `44'/60'/0'/0/${index}`,
-      },
-      {
-        id: 'ledgerLive',
-        label: `LedgerLive (m/44'/60'/index'/0/0)`,
-        generateDerivationPath: (index: string) => `44'/60'/${index}'/0/0`,
-      },
-      {
-        id: 'legacy',
-        label: `Legacy (m/44'/60'/0'/index)`,
-        generateDerivationPath: (index: string) => `44'/60'/0'/${index}`,
-      },
-    ],
-  },
-  Solana: {
-    mainBlockchain: 'SOLANA',
-    title: 'Solana',
-    derivationPaths: [
-      {
-        id: `(m/44'/501'/index')`,
-        label: `(m/44'/501'/index')`,
-        generateDerivationPath: (index: string) => `44'/501'/${index}'`,
-      },
-      {
-        id: `(m/44'/501'/0'/index)`,
-        label: `(m/44'/501'/0'/index)`,
-        generateDerivationPath: (index: string) => `44'/501'/0'/${index}`,
-      },
-    ],
-  },
-  UTXO: {
-    title: 'UTXO',
-    mainBlockchain: 'BTC',
-    derivationPaths: [
-      {
-        id: 'bitcoin-native-segwit',
-        label: `Native SegWit (m/84'/0'/index')`,
-        generateDerivationPath: (index: string) => `84'/0'/${index}'/0/0`,
-      },
-      {
-        id: 'bitcoin-nested-segwit',
-        label: `Nested SegWit (m/49'/0'/index')`,
-        generateDerivationPath: (index: string) => `49'/0'/${index}'/0/0`,
-      },
-      {
-        id: 'bitcoin-legacy',
-        label: `Legacy (m/44'/0'/index')`,
-        generateDerivationPath: (index: string) => `44'/0'/${index}'/0/0`,
-      },
-      {
-        id: 'bitcoin-taproot',
-        label: `Taproot (m/86'/0'/index')`,
-        generateDerivationPath: (index: string) => `86'/0'/${index}'/0/0`,
-      },
-    ],
-  },
-  Starknet: {
-    title: 'Starknet',
-    mainBlockchain: 'STARKNET',
-  },
-  Tron: {
-    title: 'Tron',
-    mainBlockchain: 'TRON',
-  },
-  Ton: {
-    title: 'Ton',
-    mainBlockchain: 'TON',
-  },
-  Sui: {
-    mainBlockchain: 'SUI',
-    title: 'Sui',
-  },
-  XRPL: {
-    mainBlockchain: 'XRPL',
-    title: 'XRPL',
-  },
-  Stellar: {
-    mainBlockchain: 'Stellar',
-    title: 'Stellar',
-  },
-};
-
-export type DerivationPath = {
-  id: string;
-  label: string;
-  generateDerivationPath: (index: string) => string;
-};
 
 export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
 
