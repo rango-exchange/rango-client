@@ -6,6 +6,7 @@ import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
   ArrayElement,
   LastConnectedWallet,
+  Meta,
   Step,
   SwapQueueContext,
   SwapQueueDef,
@@ -22,13 +23,12 @@ import type {
   QueueType,
   SetStorage,
 } from '@rango-dev/queue-manager-core';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
-  Meta,
-  Network,
-  Providers,
-  WalletState,
-} from '@rango-dev/wallets-shared';
+  LegacyNetwork as Network,
+  LegacyProviders as Providers,
+  LegacyState as WalletState,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type {
   CreateTransactionResponse,
   EvmBlockchainMeta,
@@ -45,14 +45,11 @@ import type {
 
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
+import { HYPERLIQUID_SIGN_NETWORK } from '@rango-dev/wallets-blockchains';
 import {
   legacyGetBlockChainNameFromId as getBlockChainNameFromId,
   legacyReadAccountAddress as readAccountAddress,
 } from '@rango-dev/wallets-core/legacy';
-import {
-  getEvmProvider,
-  HYPERLIQUID_SIGN_NETWORK,
-} from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import {
   PendingSwapNetworkStatus,
@@ -679,33 +676,12 @@ export function getRequiredWallet(swap: PendingSwap): {
   };
 }
 
-/**
- * On EVM compatible wallets, There is one instance with different chains (like Polygon)
- * To get the chain from instance we will use this function.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getChainId(provider: any): Promise<string | number | null> {
-  try {
-    const chainId: number | string | null =
-      (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
-    return chainId;
-  } catch {
-    return provider?.chainId;
-  }
-}
-
 export async function getProviderChainId(
-  providers: Providers,
+  // TODO: unused since the legacy provider lookup was dropped — remove this parameter.
+  _: Providers,
   hubProvider: (type: WalletType) => Provider<DefaultNamespaces>,
   walletType: string
 ) {
-  const legacyProvider = getEvmProvider(providers, walletType);
-  if (legacyProvider) {
-    const chainId = await getChainId(legacyProvider);
-    return chainId;
-  }
-
-  // Legacy provider was not found, try to get the chain id from hub provider.
   const provider = hubProvider(walletType);
   const evmNamespace = provider.get('evm');
   if (!evmNamespace) {

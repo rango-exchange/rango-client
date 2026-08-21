@@ -6,6 +6,7 @@ import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset'
 import type {
   LegacyEventHandler as EventHandler,
   LegacyEventHandler,
+  LegacyNetwork as Network,
 } from '@rango-dev/wallets-core/legacy';
 
 import {
@@ -13,7 +14,6 @@ import {
   legacyReadAccountAddress as readAccountAddress,
 } from '@rango-dev/wallets-core/legacy';
 import { Events } from '@rango-dev/wallets-react';
-import { type Network } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 
 import { useAppStore } from '../../store/AppStore';

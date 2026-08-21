@@ -18,8 +18,11 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
-import type { AllBlockchains, Network } from '@rango-dev/wallets-shared';
+import type { AllBlockchains } from '@rango-dev/queue-manager-rango-preset';
+import type {
+  LegacyNetwork as Network,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -41,8 +44,8 @@ import { WALLET_ID as PHANTOM_ID } from '@rango-dev/provider-phantom';
 import { WALLET_ID as SAFEPAL_ID } from '@rango-dev/provider-safepal';
 import { WALLET_ID as TOKEN_POCKET_ID } from '@rango-dev/provider-tokenpocket';
 import { WALLET_ID as TRUST_WALLET_ID } from '@rango-dev/provider-trustwallet';
+import { Networks } from '@rango-dev/wallets-blockchains';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import { Networks } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';

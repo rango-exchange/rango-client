@@ -1,7 +1,9 @@
 import type { Wallet } from './flows/rango/types';
 import type { SwapQueueContext } from '@rango-dev/queue-manager-rango-preset';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
-import type { Network } from '@rango-dev/wallets-shared';
+import type {
+  LegacyNetwork as Network,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 
 import { makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';

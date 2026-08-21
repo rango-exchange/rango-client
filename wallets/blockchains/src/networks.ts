@@ -45,3 +45,5 @@ export enum Networks {
   // Using instead of null
   Unknown = 'Unkown',
 }
+
+export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;

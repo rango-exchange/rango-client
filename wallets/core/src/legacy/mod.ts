@@ -26,6 +26,7 @@ export type {
   ConnectResult as LegacyConnectResult,
   NamespaceInputForConnect as LegacyNamespaceInputForConnect,
   NamespaceMeta as LegacyNamespaceMeta,
+  Providers as LegacyProviders,
 } from './types.js';
 
 export { Events as LegacyEvents } from './types.js';

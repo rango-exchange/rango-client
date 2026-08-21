@@ -1,5 +1,6 @@
-import type { Network, Wallet } from './rango.js';
+import type { Wallet } from './rango.js';
 import type { EvmNetworksChainInfo } from '@rango-dev/wallets-blockchains';
+import type { LegacyNetwork as Network } from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {

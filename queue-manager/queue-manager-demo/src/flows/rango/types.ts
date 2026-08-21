@@ -1,15 +1,17 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
-  Asset,
+  LegacyNetwork as Network,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
+import type BigNumber from 'bignumber.js';
+import type { Asset } from 'rango-types';
+import type {
   EvmTransaction,
-  Network,
   SolanaTransaction,
   Transaction,
-  TransferTransaction,
-} from '@rango-dev/wallets-shared';
-import type BigNumber from 'bignumber.js';
+  Transfer as TransferTransaction,
+} from 'rango-types/mainApi';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-blockchains';
 
 export type WalletTypeAndAddress = {
   walletType: WalletType;
