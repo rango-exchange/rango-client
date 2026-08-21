@@ -1,6 +1,8 @@
 import type { InstallObjects } from '../../types/wallet.js';
-import type { LegacyWalletInfo } from '@rango-dev/wallets-core/legacy';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type {
+  LegacyWalletInfo,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type { TransactionType } from 'rango-types';
 
 export enum WalletState {

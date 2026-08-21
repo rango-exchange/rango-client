@@ -1,5 +1,6 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 
+import { WALLET_ID as PHANTOM_ID } from '@rango-dev/provider-phantom';
 import {
   Button,
   Checkbox,
@@ -8,7 +9,6 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
 
@@ -36,8 +36,8 @@ export function WalletSection() {
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
-      if (state(WalletTypes.PHANTOM).connected) {
-        void disconnect(WalletTypes.PHANTOM);
+      if (state(PHANTOM_ID).connected) {
+        void disconnect(PHANTOM_ID);
       }
     }
     onChangeBooleansConfig('externalWallets', checked);
@@ -107,15 +107,15 @@ export function WalletSection() {
             disabled={!externalWallets}
             className={connectButtonStyles()}
             onClick={() => {
-              if (state(WalletTypes.PHANTOM).connected) {
-                void disconnect(WalletTypes.PHANTOM);
+              if (state(PHANTOM_ID).connected) {
+                void disconnect(PHANTOM_ID);
               } else {
-                void connect(WalletTypes.PHANTOM, [
+                void connect(PHANTOM_ID, [
                   { namespace: 'Solana', network: undefined },
                 ]);
               }
             }}>
-            {externalWallets && state(WalletTypes.PHANTOM).connected
+            {externalWallets && state(PHANTOM_ID).connected
               ? 'Disconnect Phantom'
               : 'Connect Phantom'}
           </Button>

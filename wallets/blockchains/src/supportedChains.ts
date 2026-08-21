@@ -1,16 +1,19 @@
 import type { Provider } from '@hub3js/core';
-import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta } from 'rango-types';
 
-import { convertBlockchainMetaToCaip } from '@rango-dev/wallets-blockchains';
+import { convertBlockchainMetaToCaip } from './caip.js';
+
+type ChainSupport = {
+  isChainSupported: (chainId: string) => boolean;
+};
 
 /**
  * The chains of `allBlockChains` a single namespace can address. Chains that don't
- * convert to CAIP are dropped rather than guessed at — see
+ * convert to CAIP are dropped rather than guessed at - see
  * {@link convertBlockchainMetaToCaip}.
  */
 export function getSupportedChainsFromNamespace(
-  namespace: LegacyNamespaceMeta,
+  namespace: ChainSupport,
   allBlockChains: BlockchainMeta[] | undefined
 ): BlockchainMeta[] {
   return (

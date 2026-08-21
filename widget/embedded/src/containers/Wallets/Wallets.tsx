@@ -8,8 +8,11 @@ import type { ProvidersOptions } from '../../utils/providers';
 import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
+import { WALLET_ID as OKX_ID } from '@rango-dev/provider-okx';
+import { WALLET_ID as TON_CONNECT_ID } from '@rango-dev/provider-tonconnect';
+import { WALLET_ID as TREZOR_ID } from '@rango-dev/provider-trezor';
+import { WALLET_ID as WALLET_CONNECT_2_ID } from '@rango-dev/provider-walletconnect-2';
 import { Provider } from '@rango-dev/wallets-react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
@@ -106,18 +109,18 @@ function Main(props: PropsWithChildren<PropTypes>) {
         configs={{
           wallets: config.wallets,
           walletOptions: {
-            [WalletTypes.TON_CONNECT]: {
+            [TON_CONNECT_ID]: {
               provider: { manifestUrl: config.tonConnect?.manifestUrl },
             },
-            [WalletTypes.OKX]: {
+            [OKX_ID]: {
               provider: {
                 tonConnectManifestUrl: config.tonConnect?.manifestUrl,
               },
             },
-            [WalletTypes.TREZOR]: {
+            [TREZOR_ID]: {
               provider: { manifest: config.trezorManifest },
             },
-            [WalletTypes.WALLET_CONNECT_2]: {
+            [WALLET_CONNECT_2_ID]: {
               provider: {
                 WC_PROJECT_ID: config.walletConnectProjectId || '',
                 DISABLE_MODAL_AND_OPEN_LINK:

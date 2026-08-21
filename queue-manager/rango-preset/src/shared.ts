@@ -1,4 +1,5 @@
-import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { Network } from '@rango-dev/wallets-shared';
 import type {
   BlockchainMeta,
   ConfirmRouteResponse,

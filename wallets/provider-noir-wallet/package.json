@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/std": "0.0.0-experimental-53df86ae-20260819",
+    "@hub3js/std": "0.0.0-experimental-50f6f95a-20260819",
     "@noir-wallet/sdk": "^0.1.9",
     "@rango-dev/wallets-blockchains": "^0.1.0",
     "@rango-dev/wallets-core": "^0.61.0",

@@ -22,12 +22,12 @@ import type {
   QueueType,
   SetStorage,
 } from '@rango-dev/queue-manager-core';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   Meta,
   Network,
   Providers,
   WalletState,
-  WalletType,
 } from '@rango-dev/wallets-shared';
 import type {
   CreateTransactionResponse,
@@ -45,9 +45,11 @@ import type {
 
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
-  getBlockChainNameFromId,
+  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
+  legacyReadAccountAddress as readAccountAddress,
+} from '@rango-dev/wallets-core/legacy';
+import {
   getEvmProvider,
   HYPERLIQUID_SIGN_NETWORK,
 } from '@rango-dev/wallets-shared';

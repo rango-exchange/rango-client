@@ -1,7 +1,7 @@
 import type { RawAccounts, Wallet } from './types';
 import type { Meta } from '@rango-dev/wallets-shared';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WALLET_ID as META_MASK_ID } from '@rango-dev/provider-metamask';
 
 const evmAddress = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
 
@@ -30,7 +30,7 @@ export const sampleRawAccounts: RawAccounts = (() => {
       accounts: [
         {
           address: evmAddress,
-          walletType: WalletTypes.META_MASK,
+          walletType: META_MASK_ID,
         },
       ],
     };

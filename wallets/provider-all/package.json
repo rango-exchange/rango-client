@@ -58,8 +58,7 @@
     "@rango-dev/provider-walletconnect-2": "^0.57.0",
     "@rango-dev/provider-xverse": "^0.8.0",
     "@rango-dev/wallets-core": "^0.61.0",
-    "@rango-dev/wallets-react": "^0.48.0",
-    "@rango-dev/wallets-shared": "^0.62.0"
+    "@rango-dev/wallets-react": "^0.48.0"
   },
   "publishConfig": {
     "access": "public"

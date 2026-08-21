@@ -1,19 +1,22 @@
 import type Transport from '@ledgerhq/hw-transport';
 
+import { ETHEREUM_CHAIN_ID } from '@hub3js/evm';
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import { dynamicImportWithRefinedError } from '@rango-dev/common-core';
-import {
-  ETHEREUM_CHAIN_ID,
-  type ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
 import bs58 from 'bs58';
 
 import { HEXADECIMAL_BASE } from './constants.js';
 import { getDerivationPath } from './state.js';
 
 export type Provider = Map<string, unknown>;
+
+type DeviceAccounts = {
+  accounts: string[];
+  chainId: string;
+  derivationPath: string;
+};
 
 export function ledger(): Provider | null {
   /*
@@ -62,7 +65,7 @@ export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
   throw getLedgerError(error);
 }
 
-export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
+export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   try {
     const transport = await transportConnect();
     const LedgerAppEth = (
@@ -90,7 +93,7 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   }
 }
 
-export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
+export async function getSolanaAccounts(): Promise<DeviceAccounts> {
   try {
     const transport = await transportConnect();
     const LedgerAppSolana = (

@@ -1,12 +1,5 @@
-import type {
-  AddEthereumChainParameter,
-  EvmNetworksChainInfo,
-  Network,
-  Wallet,
-} from './rango.js';
-import type { EvmBlockchainMeta } from 'rango-types';
-
-export { isAddress as isEvmAddress } from 'ethers';
+import type { Network, Wallet } from './rango.js';
+import type { EvmNetworksChainInfo } from '@rango-dev/wallets-blockchains';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {
@@ -88,41 +81,6 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
     throw switchError;
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function timeout<T = any>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  forPromise: Promise<any>,
-  time: number
-): Promise<T> {
-  const timeoutPromise = new Promise((_, reject) => {
-    setTimeout(() => {
-      reject('Timeout!');
-    }, time);
-  });
-
-  return Promise.race([forPromise, timeoutPromise]);
-}
-
-export const convertEvmBlockchainMetaToEvmChainInfo = (
-  evmBlockchains: EvmBlockchainMeta[]
-) =>
-  evmBlockchains.reduce(
-    (
-      evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter },
-      blockchainMeta
-    ) => (
-      (evmNetWorksChainInfo[blockchainMeta.name] = {
-        chainName: blockchainMeta.info.chainName,
-        chainId: blockchainMeta.chainId,
-        nativeCurrency: blockchainMeta.info.nativeCurrency,
-        rpcUrls: blockchainMeta.info.rpcUrls,
-        blockExplorerUrls: blockchainMeta.info.blockExplorerUrls,
-      }),
-      evmNetWorksChainInfo
-    ),
-    {}
-  );
 
 export const evmChainsToRpcMap = (
   evmNetworkChainInfo: EvmNetworksChainInfo

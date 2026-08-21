@@ -16,7 +16,6 @@ import {
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import { type ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
@@ -25,7 +24,10 @@ import { bitcoinUnisat } from '../utils.js';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyFunction = (...args: any[]) => any;
 
-const getBitcoinAccounts: () => Promise<ProviderConnectResult> = async () => {
+const getBitcoinAccounts: () => Promise<{
+  accounts: string[];
+  chainId: string;
+}> = async () => {
   const instance = bitcoinUnisat();
   const accounts = await instance.requestAccounts();
 

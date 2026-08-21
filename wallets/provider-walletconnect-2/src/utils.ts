@@ -8,6 +8,21 @@ import { NAMESPACES } from './wcConstants.js';
 
 const HEX_RADIX = 16;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function timeout<T = any>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  forPromise: Promise<any>,
+  time: number
+): Promise<T> {
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => {
+      reject('Timeout!');
+    }, time);
+  });
+
+  return Promise.race([forPromise, timeoutPromise]);
+}
+
 export function utf8ToHex(value: string, prefixed = false): string {
   const hex = Array.from(new TextEncoder().encode(value))
     .map((byte) => byte.toString(HEX_RADIX).padStart(2, '0'))

@@ -20,14 +20,27 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.65.0",
+    "@rango-dev/provider-brave": "^0.65.0",
+    "@rango-dev/provider-coin98": "^0.65.0",
+    "@rango-dev/provider-coinbase": "^0.64.0",
+    "@rango-dev/provider-ctrl": "^0.65.0",
+    "@rango-dev/provider-exodus": "^0.64.0",
+    "@rango-dev/provider-math-wallet": "^0.64.0",
+    "@rango-dev/provider-metamask": "^0.63.0",
+    "@rango-dev/provider-okx": "^0.64.0",
+    "@rango-dev/provider-phantom": "^0.63.0",
+    "@rango-dev/provider-safepal": "^0.64.0",
+    "@rango-dev/provider-tokenpocket": "^0.63.0",
+    "@rango-dev/provider-trustwallet": "^0.63.0",
     "@rango-dev/queue-manager-rango-preset": "^0.64.0",
     "@rango-dev/queue-manager-react": "^0.34.0",
+    "@rango-dev/wallets-core": "^0.61.0",
     "@rango-dev/wallets-react": "^0.48.0",
     "@rango-dev/wallets-shared": "^0.62.0",
     "bignumber.js": "^9.1.1",
+    "crypto-browserify": "^3.12.1",
     "ethers": "^6.13.2",
     "rango-sdk-basic": "^0.5.0",
-    "rango-types": "^0.5.0",
-    "crypto-browserify": "^3.12.1"
+    "rango-types": "^0.5.0"
   }
 }

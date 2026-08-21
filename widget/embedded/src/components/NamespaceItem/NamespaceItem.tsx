@@ -7,7 +7,7 @@ import {
   Divider,
   Typography,
 } from '@rango-dev/ui';
-import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
+import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-blockchains';
 import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

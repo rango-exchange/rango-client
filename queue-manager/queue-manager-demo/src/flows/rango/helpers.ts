@@ -18,11 +18,8 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import type {
-  AllBlockchains,
-  Network,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { AllBlockchains, Network } from '@rango-dev/wallets-shared';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -32,8 +29,20 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
+import { WALLET_ID as BRAVE_ID } from '@rango-dev/provider-brave';
+import { WALLET_ID as COIN98_ID } from '@rango-dev/provider-coin98';
+import { WALLET_ID as COINBASE_ID } from '@rango-dev/provider-coinbase';
+import { WALLET_ID as CTRL_ID } from '@rango-dev/provider-ctrl';
+import { WALLET_ID as EXODUS_ID } from '@rango-dev/provider-exodus';
+import { WALLET_ID as MATH_ID } from '@rango-dev/provider-math-wallet';
+import { WALLET_ID as META_MASK_ID } from '@rango-dev/provider-metamask';
+import { WALLET_ID as OKX_ID } from '@rango-dev/provider-okx';
+import { WALLET_ID as PHANTOM_ID } from '@rango-dev/provider-phantom';
+import { WALLET_ID as SAFEPAL_ID } from '@rango-dev/provider-safepal';
+import { WALLET_ID as TOKEN_POCKET_ID } from '@rango-dev/provider-tokenpocket';
+import { WALLET_ID as TRUST_WALLET_ID } from '@rango-dev/provider-trustwallet';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';
@@ -650,23 +659,23 @@ export const walletsAndSupportedChainsMetaSelector = (
   const evmBlockchains = blockchainsArray.filter(isEvmBlockchain);
   const solanaBlockchain = blockchainsArray.filter(isSolanaBlockchain);
   return {
-    [WalletTypes.META_MASK]: evmBlockchains,
-    [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.PHANTOM]: solanaBlockchain,
-    [WalletTypes.CTRL]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.TRUST_WALLET]: evmBlockchains,
-    [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
+    [META_MASK_ID]: evmBlockchains,
+    [COINBASE_ID]: [...evmBlockchains, ...solanaBlockchain],
+    [PHANTOM_ID]: solanaBlockchain,
+    [CTRL_ID]: [...evmBlockchains, ...solanaBlockchain],
+    [TRUST_WALLET_ID]: evmBlockchains,
+    [COIN98_ID]: [...evmBlockchains, ...solanaBlockchain],
+    [OKX_ID]: blockchainsArray.filter((blockchainMeta) =>
       OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
 
-    [WalletTypes.EXODUS]: blockchainsArray.filter((blockchainMeta) =>
+    [EXODUS_ID]: blockchainsArray.filter((blockchainMeta) =>
       EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
 
-    [WalletTypes.TOKEN_POCKET]: evmBlockchains,
-    [WalletTypes.MATH]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.SAFEPAL]: [
+    [TOKEN_POCKET_ID]: evmBlockchains,
+    [MATH_ID]: [...evmBlockchains, ...solanaBlockchain],
+    [SAFEPAL_ID]: [
       ...evmBlockchains,
       ...solanaBlockchain,
       /*
@@ -675,7 +684,7 @@ export const walletsAndSupportedChainsMetaSelector = (
        * ),
        */
     ],
-    [WalletTypes.BRAVE]: [...evmBlockchains, ...solanaBlockchain],
+    [BRAVE_ID]: [...evmBlockchains, ...solanaBlockchain],
   };
 };
 

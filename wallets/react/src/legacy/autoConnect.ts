@@ -1,6 +1,9 @@
 import type { WalletActions, WalletProviders } from './types.js';
-import type { LegacyWallet as Wallet } from '@rango-dev/wallets-core/legacy';
-import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
+import type {
+  LegacyWallet as Wallet,
+  LegacyWalletConfig as WalletConfig,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 
 import { LastConnectedWalletsFromStorage } from '../hub/lastConnectedWallets.js';
 
@@ -15,7 +18,7 @@ export async function autoConnect(
   getWalletInstance: (wallet: {
     actions: WalletActions;
     config: WalletConfig;
-  }) => Wallet<any>
+  }) => Wallet
 ) {
   const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
     LEGACY_LAST_CONNECTED_WALLETS
@@ -27,7 +30,7 @@ export async function autoConnect(
   if (walletIds.length) {
     const eagerConnectQueue: {
       walletType: WalletType;
-      eagerConnect: () => Promise<any>;
+      eagerConnect: () => Promise<unknown>;
     }[] = [];
 
     walletIds.forEach((walletType) => {

@@ -1,6 +1,7 @@
 import type { Asset } from 'rango-sdk';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WALLET_ID as DEFAULT_ID } from '@rango-dev/provider-default';
+import { WALLET_ID as SAFE_ID } from '@rango-dev/provider-safe';
 
 export function shallowEqual<T>(
   object1: { [x: string]: T | undefined },
@@ -48,4 +49,4 @@ export function areTokensEqual(tokenA?: Asset, tokenB?: Asset) {
   );
 }
 
-export const excludedWallets = [WalletTypes.DEFAULT, WalletTypes.SAFE];
+export const excludedWallets = [DEFAULT_ID, SAFE_ID];

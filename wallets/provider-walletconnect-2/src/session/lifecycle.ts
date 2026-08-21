@@ -10,9 +10,9 @@ import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type UniversalProvider from '@walletconnect/universal-provider';
 
 import { debug } from '@rango-dev/logging-core';
-import { timeout } from '@rango-dev/wallets-shared';
 
 import { prepareModalForNamespace } from '../adapter/modal.js';
+import { timeout } from '../utils.js';
 import { PING_TIMEOUT, WC_NAMESPACE_TO_CAIP } from '../wcConstants.js';
 
 import { getAccountsFromSession } from './accounts.js';

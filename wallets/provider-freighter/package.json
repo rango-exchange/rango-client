@@ -22,9 +22,8 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/std": "0.0.0-experimental-53df86ae-20260819",
-    "@hub3js/stellar": "^0.2.3",
-    "@rango-dev/wallets-shared": "^0.62.0",
+    "@hub3js/std": "0.0.0-experimental-50f6f95a-20260819",
+    "@hub3js/stellar": "0.0.0-experimental-50f6f95a-20260819",
     "@stellar/freighter-api": "^6.0.1",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0"

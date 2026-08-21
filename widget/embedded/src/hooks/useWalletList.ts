@@ -2,9 +2,13 @@ import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
 
 import { detectMobileScreens } from '@rango-dev/common-core';
+import { WALLET_ID as DEFAULT_ID } from '@rango-dev/provider-default';
+import { WALLET_ID as LEDGER_ID } from '@rango-dev/provider-ledger';
+import { WALLET_ID as TON_CONNECT_ID } from '@rango-dev/provider-tonconnect';
+import { WALLET_ID as TREZOR_ID } from '@rango-dev/provider-trezor';
+import { WALLET_ID as WALLET_CONNECT_2_ID } from '@rango-dev/provider-walletconnect-2';
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
@@ -31,11 +35,11 @@ const detectedWalletsReported = new Set<string>();
  * wallet, so they're excluded from the `walletDetected` signal.
  */
 const NON_INJECTED_WALLET_TYPES = new Set<string>([
-  WalletTypes.LEDGER,
-  WalletTypes.TREZOR,
-  WalletTypes.WALLET_CONNECT_2,
-  WalletTypes.TON_CONNECT,
-  WalletTypes.DEFAULT,
+  LEDGER_ID,
+  TREZOR_ID,
+  WALLET_CONNECT_2_ID,
+  TON_CONNECT_ID,
+  DEFAULT_ID,
 ]);
 
 interface Params {
@@ -118,9 +122,7 @@ export function useWalletList(params?: Params): API {
    */
   const shouldShowDefaultInjectedWallet = (wallets: WalletInfo[]) => {
     // don't show default injected wallet when it's not installed
-    const defaultWallet = wallets.find(
-      (wallet) => wallet.type === WalletTypes.DEFAULT
-    );
+    const defaultWallet = wallets.find((wallet) => wallet.type === DEFAULT_ID);
     if (!defaultWallet || defaultWallet.state === WalletState.NOT_INSTALLED) {
       return false;
     }
@@ -132,11 +134,7 @@ export function useWalletList(params?: Params): API {
     const isEvmWalletInstalledExceptDefault = wallets.filter(
       (wallet) =>
         wallet.state != WalletState.NOT_INSTALLED &&
-        ![
-          WalletTypes.DEFAULT,
-          WalletTypes.WALLET_CONNECT_2,
-          WalletTypes.LEDGER,
-        ].includes(wallet.type as WalletTypes) &&
+        ![DEFAULT_ID, WALLET_CONNECT_2_ID, LEDGER_ID].includes(wallet.type) &&
         getWalletInfo(wallet.type).supportedChains.filter(
           (blockchain) => blockchain.type == 'EVM'
         ).length > 0
@@ -146,8 +144,7 @@ export function useWalletList(params?: Params): API {
 
   const shouldExcludeWallet = (walletType: string) => {
     return (
-      walletType == WalletTypes.DEFAULT &&
-      !shouldShowDefaultInjectedWallet(wallets)
+      walletType == DEFAULT_ID && !shouldShowDefaultInjectedWallet(wallets)
     );
   };
 

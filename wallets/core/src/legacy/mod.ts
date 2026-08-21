@@ -20,6 +20,7 @@ export type {
   ProviderInterface as LegacyProviderInterface,
   Network as LegacyNetwork,
   WalletType as LegacyWalletType,
+  WalletConfig as LegacyWalletConfig,
   InstallObjects as LegacyInstallObjects,
   WalletInfo as LegacyWalletInfo,
   ConnectResult as LegacyConnectResult,

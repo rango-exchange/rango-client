@@ -2,7 +2,7 @@ import type {
   SwapQueueContext,
   TargetNamespace,
 } from '@rango-dev/queue-manager-rango-preset';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
 import {
@@ -10,8 +10,8 @@ import {
   makeQueueDefinition,
 } from '@rango-dev/queue-manager-rango-preset';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
+import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/wallets-blockchains';
 import { useWallets } from '@rango-dev/wallets-react';
-import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-types';
 import React, { useMemo } from 'react';
 

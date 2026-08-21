@@ -1,6 +1,9 @@
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-blockchains';
+import {
+  type EvmNetworksChainInfo,
+  Networks,
+} from '@rango-dev/wallets-blockchains';
 import {
   type LegacyWalletInfo as WalletInfo,
   type LegacyWalletType as WalletType,
@@ -17,11 +20,7 @@ export type {
   LegacySwitchNetwork as SwitchNetwork,
   LegacySuggest as Suggest,
   LegacyCanSwitchNetwork as CanSwitchNetwork,
-  LegacyWalletInfo as WalletInfo,
-  LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-
-export { legacyGetBlockChainNameFromId as getBlockChainNameFromId } from '@rango-dev/wallets-core/legacy';
 
 export { Networks } from '@rango-dev/wallets-blockchains';
 
@@ -34,44 +33,7 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
 
 export type Network = string;
 
-export enum WalletTypes {
-  DEFAULT = 'default',
-  META_MASK = 'metamask',
-  WALLET_CONNECT_2 = 'wallet-connect-2',
-  TRUST_WALLET = 'trust-wallet',
-  BINANCE = 'binance',
-  PHANTOM = 'phantom',
-  BITGET = 'bitget',
-  TRON_LINK = 'tron-link',
-  COINBASE = 'coinbase',
-  CTRL = 'ctrl',
-  READY = 'ready',
-  COIN98 = 'coin98',
-  SAFEPAL = 'safepal',
-  SAFE = 'safe',
-  TOKEN_POCKET = 'token-pocket',
-  BRAVE = 'brave',
-  BRAAVOS = 'braavos',
-  MATH = 'math',
-  EXODUS = 'exodus',
-  OKX = 'okx',
-  ENKRYPT = 'enkrypt',
-  TAHO = 'taho',
-  LEDGER = 'ledger',
-  Rabby = 'rabby',
-  TOMO = 'tomo',
-  TREZOR = 'trezor',
-  SOLFLARE = 'solflare',
-  SLUSH = 'slush',
-  TON_CONNECT = 'tonconnect',
-  XVERSE = 'xverse',
-}
-
 export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
-
-export const ETHEREUM_CHAIN_ID = '0x1';
-export const DEFAULT_ETHEREUM_RPC_URL =
-  'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2';
 
 export type Asset = {
   blockchain: Network;
@@ -80,21 +42,6 @@ export type Asset = {
 };
 
 export type AllBlockchains = { [key: string]: BlockchainMeta };
-
-export type AddEthereumChainParameter = {
-  chainId: string; // A 0x-prefixed hexadecimal string
-  chainName: string;
-  nativeCurrency: {
-    name: string;
-    symbol: string; // 2-6 characters long
-    decimals: number;
-  };
-  rpcUrls: string[];
-  blockExplorerUrls?: string[];
-  iconUrls?: string[]; // Currently ignored.
-};
-
-export type EvmNetworksChainInfo = { [key: string]: AddEthereumChainParameter };
 
 export interface Meta {
   blockchains: AllBlockchains;
@@ -115,14 +62,6 @@ export interface WalletState {
   network: Network | null;
 }
 
-export interface WalletConfig {
-  type: WalletType;
-  defaultNetwork?: Network;
-  checkInstallation?: boolean;
-  isAsyncInstance?: boolean;
-  isAsyncSwitchNetwork?: boolean;
-}
-
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: InstanceType;
@@ -141,12 +80,6 @@ export type TryGetInstance =
 export type GetInstance =
   | (() => InstanceType)
   | ((options: GetInstanceOptions) => Promise<InstanceType>);
-
-export type ProviderConnectResult = {
-  accounts: string[];
-  chainId: string;
-  derivationPath?: string;
-};
 
 export interface Wallet {
   type: WalletType;

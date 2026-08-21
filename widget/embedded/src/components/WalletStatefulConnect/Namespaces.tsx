@@ -11,7 +11,7 @@ import {
   RadioRoot,
   WalletImageContainer,
 } from '@rango-dev/ui';
-import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
+import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-blockchains';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
