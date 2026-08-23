@@ -17,7 +17,7 @@ runs:
       
     - name: ⚙️ Cache example node_modules
       id: cache-examples
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: |
           examples/*/node_modules
@@ -32,7 +32,7 @@ runs:
     # A rolling key (run id) with an examples-build- restore-keys fallback
     # refreshes the cache every run and always restores the most recent one.
     - name: ⚙️ Cache example build caches
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: |
           examples/*/.next/cache

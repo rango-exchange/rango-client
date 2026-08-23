@@ -5,7 +5,6 @@ const scope = `@rango-dev`;
 export const VERCEL_ORG_ID = process.env.VERCEL_ORG_ID;
 export const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 export const ENABLE_PREVIEW_DEPLOY = process.env.ENABLE_PREVIEW_DEPLOY;
-export const ROOT_PACKAGE_NAME = 'rango-client';
 export const WIDGET_APP_PACKAGE_NAME = `${scope}/widget-app`;
 export const PLAYGROUND_PACKAGE_NAME = `${scope}/widget-playground`;
 const QUEUE_MANAGER_PACKAGE_NAME = `${scope}/queue-manager-demo`;
