@@ -1,0 +1,13 @@
+diff --git a/node_modules/@walletconnect/core/dist/types/controllers/relayer.d.ts b/node_modules/@walletconnect/core/dist/types/controllers/relayer.d.ts
+index 9e3e05a0ae3d02416bf6f60414017e45e474d7dc..4d08fcc247546d86ca225524b48694e4612e5296 100644
+--- a/node_modules/@walletconnect/core/dist/types/controllers/relayer.d.ts
++++ b/node_modules/@walletconnect/core/dist/types/controllers/relayer.d.ts
+@@ -9,7 +9,7 @@ export declare class Relayer extends IRelayer {
+     core: ICore;
+     logger: Logger;
+     events: EventEmitter<[never]>;
+-    provider: IJsonRpcProvider;
++    provider: any;
+     messages: IMessageTracker;
+     subscriber: ISubscriber;
+     publisher: IPublisher;

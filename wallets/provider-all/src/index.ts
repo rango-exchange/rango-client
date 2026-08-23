@@ -1,8 +1,4 @@
-import type { Provider } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
-import type { Environments as TonConnectEnvironments } from '@rango-dev/provider-tonconnect';
-import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
 
 import { versions as binance } from '@rango-dev/provider-binance';
 import { versions as bitget } from '@rango-dev/provider-bitget';
@@ -37,44 +33,15 @@ import { versions as tronLink } from '@rango-dev/provider-tron-link';
 import { versions as trustwallet } from '@rango-dev/provider-trustwallet';
 import { versions as unisat } from '@rango-dev/provider-unisat';
 import { versions as vultisig } from '@rango-dev/provider-vultisig';
-import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
+import { versions as walletconnect2 } from '@rango-dev/provider-walletconnect-2';
 import { versions as xverse } from '@rango-dev/provider-xverse';
-import { legacyProviderImportsToVersionsInterface } from '@rango-dev/wallets-core/utils';
-import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 
-import { isWalletExcluded, lazyProvider } from './helpers.js';
-
-interface Options {
-  walletconnect2: WalletConnectEnvironments;
-  selectedProviders?: (WalletType | ProviderInterface | Provider)[];
-  tonConnect?: TonConnectEnvironments;
-}
-
-export const allProviders = (
-  options?: Options
-): (() => VersionedProviders)[] => {
-  const providers = options?.selectedProviders || [];
-
-  if (
-    !isWalletExcluded(providers, {
-      type: WalletTypes.WALLET_CONNECT_2,
-      name: 'WalletConnect',
-    })
-  ) {
-    if (!!options?.walletconnect2?.WC_PROJECT_ID) {
-      walletconnect2.init(options.walletconnect2);
-    } else {
-      throw new Error(
-        'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
-      );
-    }
-  }
-
+export const allProviders = (): (() => VersionedProviders)[] => {
   return [
     safe,
     defaultInjected,
     metamask,
-    lazyProvider(legacyProviderImportsToVersionsInterface(walletconnect2)),
+    walletconnect2,
     tonconnect,
     phantom,
     ready,
