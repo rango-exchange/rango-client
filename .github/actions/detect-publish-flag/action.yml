@@ -1,0 +1,21 @@
+name: Detect Publish Flag
+description: 'Maps the current branch to the release channel flag rangutopia expects.'
+
+outputs:
+  flag:
+    description: "One of '--prod', '--next' or '--experimental'."
+    value: ${{ steps.detect.outputs.flag }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: detect
+      run: |
+        case "${{ github.ref }}" in
+          refs/heads/main) FLAG='--prod' ;;
+          refs/heads/next) FLAG='--next' ;;
+          *)               FLAG='--experimental' ;;
+        esac
+        echo "Releasing on ${FLAG#--} (ref: ${{ github.ref }})"
+        echo "flag=$FLAG" >> "$GITHUB_OUTPUT"
+      shell: 'bash'

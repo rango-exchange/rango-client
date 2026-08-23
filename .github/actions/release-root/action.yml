@@ -1,0 +1,46 @@
+name: Release Root
+description: >-
+  Versions the repository root and the private client packages, writes the
+  root CHANGELOG.md and commits the result. This is what rangutopia's own
+  release flow (`library version` / `library publish`) leaves out. It only
+  does something on '--prod', like the script it replaces.
+
+  It runs between `library version` and `library publish`, and leaves its
+  commit unpushed: `library publish` pushes it along with the release commit,
+  so a failed publish leaves nothing behind on the remote.
+
+inputs:
+  flag:
+    description: "The release channel: one of '--prod', '--next' or '--experimental' (see detect-publish-flag)."
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Skip on other channels
+      if: inputs.flag != '--prod'
+      run: echo "Skipping root changelog and versioning on the ${FLAG#--} channel."
+      shell: 'bash'
+      env:
+        FLAG: ${{ inputs.flag }}
+
+    - name: Version the repository and its clients
+      if: inputs.flag == '--prod'
+      run: yarn rangutopia client version --prod --root --clients "$CLIENTS"
+      shell: 'bash'
+      env:
+        CLIENTS: '@rango-dev/widget-app,@rango-dev/widget-playground'
+
+    - name: Generate the root changelog
+      if: inputs.flag == '--prod'
+      run: yarn rangutopia changelog generate --root --mention "$MENTION" --save
+      shell: 'bash'
+      env:
+        MENTION: '@rango-dev/widget-embedded'
+
+    - name: Commit
+      if: inputs.flag == '--prod'
+      run: |
+        git add package.json CHANGELOG.md widget/app/package.json widget/playground/package.json
+        git commit -m 'chore(release): bump the repo and client versions' -m '[skip ci]'
+      shell: 'bash'
