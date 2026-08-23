@@ -50,6 +50,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
+  const hubInitiated = useRef(false);
 
   /*
    * Params of each connection attempt for each wallet type are stored here.
@@ -82,38 +83,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     };
   }, [params]);
 
-  // Initialize instances
   useEffect(() => {
-    const runOnInit = () => {
-      getHub().init(params.configs?.walletOptions);
-
-      rerender((currentRender) => currentRender + 1);
-    };
-
-    // Then will call init whenever page is ready.
-    const initHubWhenPageIsReady = (event: Event) => {
-      // Then will call init whenever page is ready.
-      if (
-        event.target &&
-        (event.target as Document).readyState === 'complete'
-      ) {
-        runOnInit();
-        document.removeEventListener(
-          'readystatechange',
-          initHubWhenPageIsReady
-        );
-      }
-    };
-
-    // Try to run, maybe it's ready.
-    runOnInit();
-
-    /*
-     * Try again when the page has been completely loaded.
-     * Some of wallets, take some time to be fully injected and loaded.
-     */
-    document.addEventListener('readystatechange', initHubWhenPageIsReady);
-
     getStore()
       .subscribe((event) => {
         if (dataRef.current.onUpdateState) {
@@ -135,6 +105,17 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       })
       .flushEvents();
   }, []);
+
+  // Initialize hub only after blockchain meta is available (e.g. WalletConnect needs it at init).
+  useEffect(() => {
+    if (hubInitiated.current || !params.allBlockChains?.length) {
+      return;
+    }
+
+    getHub().init(params.configs?.walletOptions);
+    rerender((currentRender) => currentRender + 1);
+    hubInitiated.current = true;
+  }, [params.allBlockChains, params.configs?.walletOptions]);
 
   useAutoConnect({
     autoConnect: params.autoConnect,
