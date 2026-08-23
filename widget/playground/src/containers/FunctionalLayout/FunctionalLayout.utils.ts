@@ -18,11 +18,6 @@ export function getWalletsList(
   blockchains: BlockchainMeta[]
 ): MapSupportedList[] {
   const envs = {
-    walletconnect2: {
-      WC_PROJECT_ID: config?.walletConnectProjectId || '',
-      DISABLE_MODAL_AND_OPEN_LINK:
-        config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-    },
     selectedProviders: config.wallets,
     trezor: config?.trezorManifest
       ? { manifest: config.trezorManifest }

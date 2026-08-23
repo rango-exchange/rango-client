@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.bundler.json",
-  "include": ["src"],
-  "files": ["../../global-wallets-env.d.ts"],
+  // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
+  "extends": "../../tsconfig.libnext.json",
+  "include": ["src", "types"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "./src",
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "dom.iterable", "esnext"]
   }
 }

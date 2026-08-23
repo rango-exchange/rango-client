@@ -117,6 +117,15 @@ function Main(props: PropsWithChildren<PropTypes>) {
             [WalletTypes.TREZOR]: {
               provider: { manifest: config.trezorManifest },
             },
+            [WalletTypes.WALLET_CONNECT_2]: {
+              provider: {
+                WC_PROJECT_ID: config.walletConnectProjectId || '',
+                DISABLE_MODAL_AND_OPEN_LINK:
+                  config.__UNSTABLE_OR_INTERNAL__
+                    ?.walletConnectListedDesktopWalletLink,
+                meta: blockchains,
+              },
+            },
           },
         }}>
         {props.children}
