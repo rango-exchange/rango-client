@@ -4,7 +4,6 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode, TonChainID } from 'rango-types';
 
 import { TON_CONNECT_USER_REJECTED_CODE } from '../constants.js';
@@ -32,9 +31,7 @@ export class OKXTonSigner implements GenericSigner<TonTransaction> {
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
     const { validUntil, network, from, messages } = tx;
 
-    const { Address, Cell } = await dynamicImportWithRefinedError(
-      async () => await import('@ton/core')
-    );
+    const { Address, Cell } = await import('@ton/core');
 
     const transactionPayload = {
       valid_until: validUntil,

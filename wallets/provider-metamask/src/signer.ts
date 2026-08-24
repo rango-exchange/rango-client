@@ -2,10 +2,7 @@ import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { MetamaskSolanaSigner } from './signers/solana.js';
@@ -17,9 +14,7 @@ export default async function getSigners(
   const solanaProvider = getNetworkInstance(provider, SOLANA_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
-  const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
-    async () => await import('@rango-dev/signer-evm')
-  );
+  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(
     TxType.SOLANA,

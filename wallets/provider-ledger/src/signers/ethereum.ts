@@ -2,10 +2,7 @@ import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import {
-  DEFAULT_ETHEREUM_RPC_URL,
-  dynamicImportWithRefinedError,
-} from '@rango-dev/wallets-shared';
+import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/wallets-shared';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -20,11 +17,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
     try {
       const transport = await transportConnect();
-      const LedgerAppEth = (
-        await dynamicImportWithRefinedError(
-          async () => await import('@ledgerhq/hw-app-eth')
-        )
-      ).default;
+      const LedgerAppEth = (await import('@ledgerhq/hw-app-eth')).default;
       const eth = new LedgerAppEth(transport);
 
       const result = await eth.signPersonalMessage(
@@ -68,9 +61,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
         Transaction.from(transaction).unsignedSerialized.substring(2); // Create unsigned transaction
 
       const transport = await transportConnect();
-      const LedgerHqAppEth = await dynamicImportWithRefinedError(
-        async () => await import('@ledgerhq/hw-app-eth')
-      );
+      const LedgerHqAppEth = await import('@ledgerhq/hw-app-eth');
 
       const LedgerAppEth = LedgerHqAppEth.default;
       const eth = new LedgerAppEth(transport);

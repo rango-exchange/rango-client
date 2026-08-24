@@ -2,10 +2,7 @@ import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import { TRON_NAMESPACE } from '@hub3js/namespaces';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default async function getSigners(
@@ -13,9 +10,7 @@ export default async function getSigners(
 ): Promise<SignerFactory> {
   const tronProvider = getNetworkInstance(provider, TRON_NAMESPACE);
   const signers = new DefaultSignerFactory();
-  const { DefaultTronSigner } = await dynamicImportWithRefinedError(
-    async () => await import('@rango-dev/signer-tron')
-  );
+  const { DefaultTronSigner } = await import('@rango-dev/signer-tron');
   signers.registerSigner(TxType.TRON, new DefaultTronSigner(tronProvider));
   return signers;
 }

@@ -8,6 +8,7 @@ import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
 import { isOnDetached } from '../../components/StatefulConnectModal';
+import { tryRefineErrorMessage } from '../../utils/errors';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import {
@@ -75,9 +76,12 @@ export function useStatefulConnect(): UseStatefulConnect {
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      const message = e?.message
-        ? `Error: ${e.message}`
-        : 'An unknown error happened during connecting wallet.';
+      const message = tryRefineErrorMessage(
+        e,
+        e?.message
+          ? `Error: ${e.message}`
+          : 'An unknown error happened during connecting wallet.'
+      );
 
       if (options?.disconnectOnError) {
         try {
