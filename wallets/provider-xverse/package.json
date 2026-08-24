@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-xverse",
-  "version": "0.8.1-next.0",
+  "version": "0.8.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,7 +25,7 @@
     "@hub3js/namespaces": "^0.2.5",
     "@hub3js/std": "^0.2.3",
     "@rango-dev/wallets-core": "^0.61.0",
-    "@rango-dev/wallets-shared": "^0.62.1-next.0",
+    "@rango-dev/wallets-shared": "^0.62.1-next.1",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
