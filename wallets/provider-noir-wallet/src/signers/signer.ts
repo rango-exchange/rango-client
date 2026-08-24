@@ -1,6 +1,6 @@
 import type { Transfer } from 'rango-types/mainApi';
 
-import { isZcashBlockchain } from '@rango-dev/wallets-shared';
+import { isZcashBlockchain } from '@rango-dev/internal-blockchains';
 import { BigNumber } from 'bignumber.js';
 import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 

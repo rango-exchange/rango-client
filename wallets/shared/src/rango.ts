@@ -1,6 +1,7 @@
 import type { Namespace } from '@hub3js/namespaces';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
+import { Networks } from '@rango-dev/internal-blockchains';
 import {
   type LegacyWalletInfo as WalletInfo,
   type LegacyWalletType as WalletType,
@@ -25,6 +26,8 @@ export type {
 
 export { legacyGetBlockChainNameFromId as getBlockChainNameFromId } from '@rango-dev/wallets-core/legacy';
 
+export { Networks } from '@rango-dev/internal-blockchains';
+
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
@@ -33,54 +36,6 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
 };
 
 export type Network = string;
-
-export enum Networks {
-  BTC = 'BTC',
-  BSC = 'BSC',
-  LTC = 'LTC',
-  THORCHAIN = 'THOR',
-  BCH = 'BCH',
-  BINANCE = 'BNB',
-  BLAST = 'BLAST',
-  CELO = 'CELO',
-  LINEA = 'LINEA',
-  METIS = 'METIS',
-  SONIC = 'SONIC',
-  BERACHAIN = 'BERACHAIN',
-  ZETA_CHAIN = 'ZETA_CHAIN',
-  SCROLL = 'SCROLL',
-  ZKSYNC = 'ZKSYNC',
-  MONAD = 'MONAD',
-  ETHEREUM = 'ETH',
-  POLYGON = 'POLYGON',
-  POLKADOT = '',
-  TRON = 'TRON',
-  DOGE = 'DOGE',
-  HARMONY = 'HARMONY',
-  AVAX_CCHAIN = 'AVAX_CCHAIN',
-  FANTOM = 'FANTOM',
-  MOONBEAM = 'MOONBEAM',
-  ARBITRUM = 'ARBITRUM',
-  BOBA = 'BOBA',
-  OPTIMISM = 'OPTIMISM',
-  FUSE = 'FUSE',
-  CRONOS = 'CRONOS',
-  SOLANA = 'SOLANA',
-  MOONRIVER = 'MOONRIVER',
-  GNOSIS = 'GNOSIS',
-  MAYA = 'MAYA',
-  STARKNET = 'STARKNET',
-  STELLAR = 'STELLAR',
-  TON = 'TON',
-  BASE = 'BASE',
-  SUI = 'SUI',
-  XRPL = 'XRPL',
-  ZCASH = 'ZCASH',
-  HYPERLIQUID = 'HYPERLIQUID',
-
-  // Using instead of null
-  Unknown = 'Unkown',
-}
 
 export enum WalletTypes {
   DEFAULT = 'default',
