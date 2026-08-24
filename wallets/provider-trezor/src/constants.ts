@@ -6,12 +6,16 @@ import {
   CAIP_BITCOIN_CHAIN_ID,
   isUtxoNamespace,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { BITCOIN_ADDRESS_TYPES } from './utxo/config.js';
 
-export const WALLET_ID = WalletTypes.TREZOR;
+export const WALLET_ID = 'trezor';
+
+const HEXADECIMAL_BASE = 16;
+export const ETHEREUM_CHAIN_ID = `0x${Number(CAIP_ETHEREUM_CHAIN_ID).toString(
+  HEXADECIMAL_BASE
+)}`;
 
 export const metadata: ProviderMetadata = {
   name: 'Trezor',

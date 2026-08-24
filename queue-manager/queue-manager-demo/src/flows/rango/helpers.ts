@@ -18,11 +18,8 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import type {
-  AllBlockchains,
-  Network,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { AllBlockchains, Network } from '@rango-dev/wallets-shared';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -32,8 +29,9 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
+import { WalletTypes } from '@rango-dev/provider-all';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';

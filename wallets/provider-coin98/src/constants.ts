@@ -2,12 +2,11 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
-export const WALLET_ID = WalletTypes.COIN98;
+export const WALLET_ID = 'coin98';
 export const COIN98_INJECTION_DELAY = 1000;
 export const metadata: ProviderMetadata = {
   name: 'Coin98',

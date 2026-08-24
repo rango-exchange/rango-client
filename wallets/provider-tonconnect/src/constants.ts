@@ -1,12 +1,11 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
 import { isTvmNamespace } from '@hub3js/tvm';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
-export const WALLET_ID = WalletTypes.TON_CONNECT;
+export const WALLET_ID = 'tonconnect';
 
 export const metadata: ProviderMetadata = {
   name: 'TON Connect',

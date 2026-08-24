@@ -8,17 +8,28 @@ import type {
   LegacyOptions as Options,
   LegacyEventHandler as WalletEventHandler,
   LegacyState as WalletState,
+  LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { Dispatch } from 'react';
 
 import { Persistor } from '@rango-dev/wallets-core/legacy';
 
 import { LEGACY_LAST_CONNECTED_WALLETS } from '../hub/constants.js';
 import { LastConnectedWalletsFromStorage } from '../hub/lastConnectedWallets.js';
 
-export function choose(wallets: any[], type: WalletType): any | null {
+export function choose<T extends { type: WalletType }>(
+  wallets: T[],
+  type: WalletType
+): T | null {
   return wallets.find((wallet) => wallet.type === type) || null;
 }
+
+export type StateAction = {
+  type: string;
+  wallet: WalletType;
+  name: string;
+  value: unknown;
+};
 
 export const defaultWalletState: WalletState = {
   connected: false,
@@ -29,7 +40,7 @@ export const defaultWalletState: WalletState = {
   network: null,
 };
 
-export function stateReducer(state: State, action: any) {
+export function stateReducer(state: State, action: StateAction) {
   if (action.type === 'new_state') {
     // TODO fix problem and remove ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -89,8 +100,7 @@ export function checkWalletProviders(
   return wallets;
 }
 
-/* eslint-disable @typescript-eslint/ban-types */
-export function isAsync(fn: Function) {
+export function isAsync(fn: (...args: never[]) => unknown) {
   return fn?.constructor?.name === 'AsyncFunction';
 }
 
@@ -159,7 +169,7 @@ export function clearPersistance() {
  *we are using this function.
  */
 export function makeEventHandler(
-  dispatcher: any,
+  dispatcher: Dispatch<StateAction>,
   onUpdateState?: WalletEventHandler
 ) {
   const handler: WalletEventHandler = (

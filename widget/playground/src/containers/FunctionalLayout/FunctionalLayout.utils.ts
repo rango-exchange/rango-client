@@ -1,13 +1,12 @@
 import type { MapSupportedList } from '../../components/MultiSelect/MultiSelect.types';
 import type { Provider } from '@hub3js/core';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletTypes } from '@rango-dev/wallets-shared';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
+import { getSupportedChainsFromProvider } from '@rango-dev/internal-blockchains';
 import { allProviders as getAllProviders } from '@rango-dev/provider-all';
-import { getSupportedChainsFromProvider } from '@rango-dev/wallets-shared';
 
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
@@ -36,7 +35,7 @@ export function getWalletsList(
        * doesn't carry the version literals of a specific provider.
        */
       const provider = pickVersion(versionedProvider, '1.0.0')[1] as Provider;
-      if (excludedWallets.includes(provider.id as WalletTypes)) {
+      if (excludedWallets.includes(provider.id)) {
         return;
       }
       const info = provider.info();
@@ -60,7 +59,7 @@ export function getWalletsList(
         versionedProvider,
         '0.0.0'
       )[1] as ProviderInterface;
-      if (excludedWallets.includes(provider.config.type as WalletTypes)) {
+      if (excludedWallets.includes(provider.config.type)) {
         return;
       }
       const walletInfo = provider.getWalletInfo(blockchains);

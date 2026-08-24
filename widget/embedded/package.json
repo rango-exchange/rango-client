@@ -26,6 +26,7 @@
     "@hub3js/namespaces": "^0.3.0",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
+    "@rango-dev/internal-blockchains": "^0.1.0",
     "@rango-dev/logging-core": "^0.14.0",
     "@rango-dev/provider-all": "^0.65.1-next.2",
     "@rango-dev/queue-manager-core": "^0.34.0",

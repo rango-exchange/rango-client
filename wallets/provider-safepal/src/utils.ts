@@ -2,7 +2,7 @@ import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { InstanceMap } from '@hub3js/std/types';
 
 import { EVM_NAMESPACE } from '@hub3js/namespaces';
-import { isEvmAddress } from '@rango-dev/wallets-shared';
+import { isAddress as isEvmAddress } from 'ethers';
 
 export type ProviderObject = {
   [EVM_NAMESPACE]: EvmProviderApi;

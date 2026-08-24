@@ -1,4 +1,5 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { BlockchainMeta } from 'rango-types';
 
 import { allProviders } from '@rango-dev/provider-all';
 import { Events, Provider } from '@rango-dev/wallets-react';
@@ -25,8 +26,7 @@ function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);
   const client = new RangoClient(process.env.REACT_APP_RANGO_API_KEY as string);
 
-  // Because allBlockChains didn't use the BlockchainMeta type from rango-sdk, we have to use any type
-  const [blockchains, setBlockChains] = useState<any>([]);
+  const [blockchains, setBlockChains] = useState<BlockchainMeta[]>([]);
   const [, setError] = useState<string>('');
   const [, setLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -34,8 +34,8 @@ function AppContainer() {
       try {
         const res = await client.getAllMetadata();
         setBlockChains(res.blockchains);
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : String(e));
       }
       setLoading(false);
     };

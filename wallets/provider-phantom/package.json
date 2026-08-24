@@ -30,11 +30,10 @@
     "@hub3js/sui": "^0.3.0",
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
+    "@rango-dev/internal-blockchains": "^0.1.0",
     "@rango-dev/signer-solana": "^0.49.0",
     "@rango-dev/signer-sui": "^0.11.0",
-    "@rango-dev/internal-blockchains": "^0.1.0",
     "@rango-dev/wallets-core": "^0.61.0",
-    "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "bitcoinjs-lib": "^6.1.7",
     "caip": "^1.1.1",
     "rango-types": "^0.5.0"

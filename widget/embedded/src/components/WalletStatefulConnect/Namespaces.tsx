@@ -2,6 +2,7 @@ import type { PropTypes } from './Namespaces.types';
 import type { Namespace } from '@hub3js/namespaces';
 
 import { i18n } from '@lingui/core';
+import { getSupportedChainsFromNamespace } from '@rango-dev/internal-blockchains';
 import {
   Alert,
   Button,
@@ -11,7 +12,6 @@ import {
   RadioRoot,
   WalletImageContainer,
 } from '@rango-dev/ui';
-import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
