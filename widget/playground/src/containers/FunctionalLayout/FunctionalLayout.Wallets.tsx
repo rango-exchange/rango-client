@@ -1,5 +1,6 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 
+import { WalletTypes } from '@rango-dev/provider-all';
 import {
   Button,
   Checkbox,
@@ -8,7 +9,6 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
 

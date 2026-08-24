@@ -5,15 +5,12 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   ExtendedWalletInfo,
   ProviderContext,
 } from '@rango-dev/wallets-react';
-import type {
-  Network,
-  WalletType,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
+import type { Network } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
@@ -21,14 +18,13 @@ import {
   detectInstallLink,
   WalletState as WalletStatus,
 } from '@rango-dev/ui';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
-  getBlockChainNameFromId,
-  HYPERLIQUID_SIGN_NETWORK,
-  isEvmAddress,
-  Networks,
-} from '@rango-dev/wallets-shared';
+  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
+  legacyReadAccountAddress as readAccountAddress,
+} from '@rango-dev/wallets-core/legacy';
+import { HYPERLIQUID_SIGN_NETWORK, Networks } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
+import { isAddress as isEvmAddress } from 'ethers';
 
 import { ZERO } from '../constants/numbers';
 import {
@@ -86,7 +82,7 @@ export function mapWalletTypesToWalletInfo(
   chain?: string
 ): ExtendedModalWalletInfo[] {
   return list
-    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
+    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet))
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
 

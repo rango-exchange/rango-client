@@ -2,11 +2,9 @@ import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
 
 import { debug } from '@rango-dev/logging-core';
-import {
-  convertEvmBlockchainMetaToEvmChainInfo,
-  isEvmAddress,
-} from '@rango-dev/wallets-shared';
+import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/internal-blockchains';
 import { AccountId, ChainId } from 'caip';
+import { isAddress as isEvmAddress } from 'ethers';
 import { isEvmBlockchain } from 'rango-types';
 
 import { EthereumRPCMethods, NAMESPACES } from '../wcConstants.js';

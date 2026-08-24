@@ -1,5 +1,5 @@
 import type { ColorsType, Type } from '../types';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   ProviderInterface,
   Tokens,

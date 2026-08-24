@@ -1,3 +1,4 @@
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   Asset,
   EvmTransaction,
@@ -5,7 +6,6 @@ import type {
   SolanaTransaction,
   Transaction,
   TransferTransaction,
-  WalletType,
 } from '@rango-dev/wallets-shared';
 import type BigNumber from 'bignumber.js';
 

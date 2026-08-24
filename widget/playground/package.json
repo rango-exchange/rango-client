@@ -27,10 +27,11 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
+    "@rango-dev/internal-blockchains": "^0.1.0",
     "@rango-dev/provider-all": "^0.65.1-next.2",
     "@rango-dev/ui": "^0.65.1-next.2",
+    "@rango-dev/wallets-core": "^0.61.0",
     "@rango-dev/wallets-react": "^0.48.1-next.2",
-    "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "@rango-dev/widget-embedded": "^0.63.1-next.3",
     "rango-sdk": "^0.5.0",
     "react": "^18.2.0",

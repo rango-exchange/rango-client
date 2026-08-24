@@ -25,10 +25,10 @@
     "@hub3js/core": "^0.61.1",
     "@hub3js/evm": "^0.4.0",
     "@hub3js/std": "^0.3.0",
+    "@rango-dev/internal-blockchains": "^0.1.0",
     "@rango-dev/logging-core": "^0.14.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/wallets-core": "^0.61.0",
-    "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "2.23.7",
@@ -37,6 +37,7 @@
     "bitcoinjs-lib": "^6.1.7",
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
+    "ethers": "^6.13.2",
     "rango-types": "^0.5.0"
   },
   "devDependencies": {

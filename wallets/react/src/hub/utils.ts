@@ -1,28 +1,29 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
-import type { EvmActions } from '@hub3js/evm';
+import type {
+  Chain as AddEthereumChainParameter,
+  EvmActions,
+} from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
-import type { SuiActions } from '@hub3js/sui';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
+  LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  getSupportedChainsFromProvider,
+} from '@rango-dev/internal-blockchains';
+import {
   LegacyEvents as Events,
   legacyFormatAddressWithNetwork as formatAddressWithNetwork,
+  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
 } from '@rango-dev/wallets-core/legacy';
-import {
-  type AddEthereumChainParameter,
-  convertEvmBlockchainMetaToEvmChainInfo,
-  getBlockChainNameFromId,
-  getSupportedChainsFromProvider,
-  type WalletType,
-} from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
@@ -293,7 +294,7 @@ export function getAllLegacyProviders(
 export function convertNamespaceNetworkToEvmChainId(
   namespace: LegacyNamespaceInputForConnect,
   meta: BlockchainMeta[]
-) {
+): AddEthereumChainParameter | undefined {
   if (!namespace.network) {
     return undefined;
   }
@@ -377,17 +378,20 @@ export function synchronizeHubWithConfigProviders(
 }
 
 export function isSolanaNamespace(
-  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
-): ns is ProxiedNamespace<SolanaActions> & { namespaceId: 'Solana' } {
+  ns: AllProxiedNamespaces
+): ns is AllProxiedNamespaces &
+  ProxiedNamespace<SolanaActions> & { namespaceId: 'Solana' } {
   return ns.namespaceId === 'Solana';
 }
 export function isEvmNamespace(
-  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
-): ns is ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
+  ns: AllProxiedNamespaces
+): ns is AllProxiedNamespaces &
+  ProxiedNamespace<EvmActions> & { namespaceId: 'EVM' } {
   return ns.namespaceId === 'EVM';
 }
 export function isUtxoNamespace(
-  ns: ProxiedNamespace<EvmActions | SolanaActions | SuiActions | UtxoActions>
-): ns is ProxiedNamespace<UtxoActions> & { namespaceId: 'UTXO' } {
+  ns: AllProxiedNamespaces
+): ns is AllProxiedNamespaces &
+  ProxiedNamespace<UtxoActions> & { namespaceId: 'UTXO' } {
   return ns.namespaceId === 'UTXO';
 }

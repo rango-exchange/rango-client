@@ -3,15 +3,17 @@ import type { ProviderContext } from '../index.js';
 import type { Provider } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
-import type { LegacyNamespaceInputForConnect } from '@rango-dev/wallets-core/legacy';
+import type {
+  LegacyNamespaceInputForConnect,
+  LegacyWalletInfo as WalletInfo,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 
 import { utils } from '@hub3js/evm';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
-  type WalletInfo,
-  type WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@rango-dev/internal-blockchains';
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 

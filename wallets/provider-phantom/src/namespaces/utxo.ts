@@ -18,7 +18,6 @@ import {
   CAIP_BITCOIN_CHAIN_ID,
   CAIP_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/utxo';
-import { type ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
@@ -34,7 +33,10 @@ type BtcAccount = {
   purpose: 'payment' | 'ordinals';
 };
 
-const getBitcoinAccounts: () => Promise<ProviderConnectResult> = async () => {
+const getBitcoinAccounts: () => Promise<{
+  accounts: string[];
+  chainId: string;
+}> = async () => {
   const instance = bitcoinPhantom();
   const accounts = await instance.requestAccounts();
 

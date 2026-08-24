@@ -4,8 +4,8 @@ import type {
   Network,
   Providers,
   Subscribe,
-  WalletType,
 } from './rango.js';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta } from 'rango-types';
 
 import { isEvmBlockchain } from 'rango-types';

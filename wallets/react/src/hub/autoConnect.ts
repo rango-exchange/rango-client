@@ -6,8 +6,8 @@ import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type {
   LegacyNamespaceInputForConnect,
   LegacyProviderInterface,
+  LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { Provider } from '@hub3js/core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';

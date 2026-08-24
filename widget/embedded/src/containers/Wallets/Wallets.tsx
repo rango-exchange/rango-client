@@ -8,8 +8,8 @@ import type { ProvidersOptions } from '../../utils/providers';
 import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
+import { WalletTypes } from '@rango-dev/provider-all';
 import { Provider } from '@rango-dev/wallets-react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';

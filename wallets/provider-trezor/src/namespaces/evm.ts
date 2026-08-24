@@ -4,9 +4,8 @@ import { NamespaceBuilder } from '@hub3js/core';
 import { builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { ETHEREUM_CHAIN_ID } from '@rango-dev/wallets-shared';
 
-import { WALLET_ID } from '../constants.js';
+import { ETHEREUM_CHAIN_ID, WALLET_ID } from '../constants.js';
 import { initTrezor } from '../init.js';
 import { setDerivationPath } from '../state.js';
 import {

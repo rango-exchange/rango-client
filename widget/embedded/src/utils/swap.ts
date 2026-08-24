@@ -9,8 +9,8 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
   BlockchainMeta,
