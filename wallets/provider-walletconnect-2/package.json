@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.57.1-next.1",
+  "version": "0.57.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -28,7 +28,7 @@
     "@rango-dev/logging-core": "^0.14.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/wallets-core": "^0.61.0",
-    "@rango-dev/wallets-shared": "^0.62.1-next.1",
+    "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "2.23.7",
