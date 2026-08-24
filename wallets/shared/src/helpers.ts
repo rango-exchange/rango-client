@@ -1,7 +1,6 @@
 import type {
   AddEthereumChainParameter,
   EvmNetworksChainInfo,
-  InstallObjects,
   Network,
   Wallet,
 } from './rango.js';
@@ -152,43 +151,5 @@ export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
     (a, b) =>
       Number(b.connected) - Number(a.connected) ||
       Number(b.extensionAvailable) - Number(a.extensionAvailable)
-  );
-}
-
-function isBrave() {
-  let isBrave = false;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const nav: any = navigator;
-  if (nav.brave && nav.brave.isBrave) {
-    nav.brave.isBrave().then((res: boolean) => {
-      if (res) {
-        isBrave = true;
-      }
-    });
-  }
-
-  return isBrave;
-}
-
-export function detectInstallLink(install: InstallObjects | string): string {
-  if (typeof install !== 'object') {
-    return install;
-  }
-  let link;
-  if (isBrave()) {
-    link = install.BRAVE;
-  } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
-    link = install.CHROME;
-  } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
-    link = install.FIREFOX;
-  } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
-    link = install.EDGE;
-  }
-  return link || install.DEFAULT;
-}
-
-export function detectMobileScreens(): boolean {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
   );
 }

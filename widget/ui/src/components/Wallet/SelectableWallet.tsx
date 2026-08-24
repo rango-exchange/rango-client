@@ -1,6 +1,6 @@
-import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
+import { detectInstallLink } from '../../utils/wallet.js';
 import { Image } from '../common/index.js';
 import { Typography } from '../Typography/index.js';
 

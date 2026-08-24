@@ -1,6 +1,11 @@
 import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { Namespace } from '@hub3js/namespaces';
 
+export interface NamespaceData {
+  namespace: Namespace;
+  derivationPath?: string;
+}
+
 export interface HandleConnectOptions {
   // To have a switch between connect and disconnect when user is clicking on a button, this option can be helpful.
   forceConnectToNamespaces?: Namespace[];
@@ -15,9 +20,7 @@ export interface NeedsNamespacesState {
 
 export interface DetachedPayload {
   targetWallet: ExtendedModalWalletInfo;
-  selectedNamespaces:
-    | { namespace: Namespace; derivationPath?: string }[]
-    | null;
+  selectedNamespaces: NamespaceData[] | null;
   derivationPath?: string;
 }
 

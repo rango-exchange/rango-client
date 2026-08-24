@@ -1,24 +1,28 @@
+import type { ProviderProperty } from '@hub3js/core/store';
 import type { Namespace } from '@hub3js/namespaces';
-import type { DerivationPath } from '@rango-dev/wallets-shared';
 
-import { namespaces } from '@rango-dev/wallets-shared';
+export type DerivationPathTemplate = Extract<
+  ProviderProperty,
+  { name: 'derivationPath' }
+>['value']['data'][number];
 
-export const CUSTOM_DERIVATION_PATH: DerivationPath = {
+export type DerivationPathOption = Omit<DerivationPathTemplate, 'namespace'>;
+
+export const CUSTOM_DERIVATION_PATH: DerivationPathOption = {
   id: 'custom',
   label: 'Custom',
   generateDerivationPath: (index: string) => index,
 };
 
 export function getDerivationPaths(
+  derivationPaths: DerivationPathTemplate[],
   selectedNamespace?: Namespace
-): DerivationPath[] {
-  const selectedNamespaceDerivationPaths = selectedNamespace
-    ? namespaces[selectedNamespace]?.derivationPaths
-    : null;
+): DerivationPathOption[] {
+  const selectedNamespaceDerivationPaths = derivationPaths.filter(
+    (derivationPath) => derivationPath.namespace === selectedNamespace
+  );
 
-  const derivationPaths: DerivationPath[] = !!selectedNamespaceDerivationPaths
+  return selectedNamespaceDerivationPaths.length
     ? [...selectedNamespaceDerivationPaths, CUSTOM_DERIVATION_PATH]
     : [];
-
-  return derivationPaths;
 }
