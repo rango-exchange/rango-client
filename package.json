@@ -8,6 +8,7 @@
   },
   "workspaces": {
     "packages": [
+      "blockchains/*",
       "widget/*",
       "queue-manager/*",
       "wallets/*",

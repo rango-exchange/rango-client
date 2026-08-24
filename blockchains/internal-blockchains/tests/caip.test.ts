@@ -1,10 +1,13 @@
+import { CAIP_NAMESPACE as CAIP_EVM_NAMESPACE } from '@hub3js/evm';
+import { CAIP_NAMESPACE as CAIP_SOLANA_NAMESPACE } from '@hub3js/solana';
+import { CAIP_NAMESPACE as CAIP_STARKNET_NAMESPACE } from '@hub3js/starknet';
 import {
   CAIP_CHAINS,
-  CAIP_NAMESPACES,
   convertBlockchainMetaToCaip,
   isBitcoinBlockchain,
   isZcashBlockchain,
-} from '@rango-dev/wallets-shared';
+} from '@rango-dev/internal-blockchains';
+import { CAIP_NAMESPACE as CAIP_TRON_NAMESPACE } from '@rango-dev/wallets-core/namespaces/tron';
 import { TransactionType } from 'rango-types';
 import { describe, expect, it } from 'vitest';
 
@@ -79,11 +82,11 @@ describe('convertBlockchainMetaToCaip', () => {
       const namespaceOf = (type: TransactionType) =>
         convertBlockchainMetaToCaip(meta(type, null))?.split(':')[0];
 
-      expect(namespaceOf(TransactionType.TRON)).toBe(CAIP_NAMESPACES.TRON);
+      expect(namespaceOf(TransactionType.TRON)).toBe(CAIP_TRON_NAMESPACE);
       expect(namespaceOf(TransactionType.STARKNET)).toBe(
-        CAIP_NAMESPACES.STARKNET
+        CAIP_STARKNET_NAMESPACE
       );
-      expect(namespaceOf(TransactionType.SOLANA)).toBe(CAIP_NAMESPACES.SOLANA);
+      expect(namespaceOf(TransactionType.SOLANA)).toBe(CAIP_SOLANA_NAMESPACE);
     });
   });
 
@@ -120,7 +123,7 @@ describe('convertBlockchainMetaToCaip', () => {
       );
 
       expect(caip).toBe('eip155:1337');
-      expect(caip?.startsWith(`${CAIP_NAMESPACES.EVM}:`)).toBe(true);
+      expect(caip?.startsWith(`${CAIP_EVM_NAMESPACE}:`)).toBe(true);
     });
 
     it('returns null without a chainId, rather than a bare namespace', () => {

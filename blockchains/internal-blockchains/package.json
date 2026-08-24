@@ -1,15 +1,15 @@
 {
-  "name": "@rango-dev/wallets-shared",
-  "version": "0.62.1-next.2",
+  "name": "@rango-dev/internal-blockchains",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "source": "./src/index.ts",
-  "main": "./dist/index.js",
-  "typings": "dist/index.d.ts",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "typings": "dist/mod.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
     }
   },
   "files": [
@@ -27,11 +27,14 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
-    "@hub3js/namespaces": "^0.3.0",
-    "@rango-dev/internal-blockchains": "^0.1.0",
+    "@hub3js/evm": "^0.4.0",
+    "@hub3js/solana": "^0.4.0",
+    "@hub3js/starknet": "^0.3.0",
+    "@hub3js/stellar": "^0.3.0",
+    "@hub3js/sui": "^0.3.0",
+    "@hub3js/tvm": "^0.3.0",
+    "@hub3js/xrpl": "^0.3.0",
     "@rango-dev/wallets-core": "^0.61.0",
-    "ethers": "^6.13.2",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
