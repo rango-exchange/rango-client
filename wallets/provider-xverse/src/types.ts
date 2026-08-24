@@ -1,4 +1,5 @@
 import type { UTXO_NAMESPACE } from '@hub3js/namespaces';
+import type { InstanceMap } from '@hub3js/std/types';
 import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 
 type XVerseAddress = {
@@ -31,7 +32,4 @@ export type XVerseEvent = {
 export type ProviderObject = {
   [UTXO_NAMESPACE]: ProviderAPI;
 };
-export type Provider = Map<
-  keyof ProviderObject,
-  ProviderObject[keyof ProviderObject]
->;
+export type Provider = InstanceMap<ProviderObject>;

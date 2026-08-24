@@ -7,7 +7,8 @@ import type {
   TRON_NAMESPACE,
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
-import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { InstanceMap } from '@hub3js/std/types';
+import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
 import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
@@ -19,15 +20,12 @@ export type OkxBtcAddress = {
 
 export type ProviderObject = {
   [EVM_NAMESPACE]: EvmProviderApi;
-  [SOLANA_NAMESPACE]: SolanaProviderApi;
+  [SOLANA_NAMESPACE]: SolanaExternalProvider;
   [UTXO_NAMESPACE]: UtxoProviderApi;
   [TON_NAMESPACE]: TonProviderApi;
   [TRON_NAMESPACE]: TronProviderApi;
 };
-export type Provider = Map<
-  keyof ProviderObject,
-  ProviderObject[keyof ProviderObject]
->;
+export type Provider = InstanceMap<ProviderObject>;
 
 /*
  * On `accountsChanged`, `data.address` is the new base58 address, or `false`

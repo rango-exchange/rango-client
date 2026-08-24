@@ -1,8 +1,14 @@
+import type { InstanceMap } from '@hub3js/std/types';
+import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
+
 import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ProviderAPI = Record<string, any>;
-export type Provider = Map<string, unknown>;
+export type ProviderObject = {
+  [UTXO_NAMESPACE]: UtxoProviderApi;
+};
+export type Provider = InstanceMap<ProviderObject>;
 
 export function unisat(): Provider | null {
   const { unisat } = window;

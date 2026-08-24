@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/evm": "^0.3.3",
-    "@hub3js/namespaces": "^0.2.5",
-    "@hub3js/std": "^0.2.3",
+    "@hub3js/evm": "^0.4.0",
+    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/std": "^0.3.0",
     "@rango-dev/signer-evm": "^0.45.0",
     "@rango-dev/signer-solana": "^0.49.0",
     "@rango-dev/wallets-core": "^0.61.0",

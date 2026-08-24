@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/namespaces": "^0.2.5",
-    "@hub3js/stellar": "^0.2.3",
-    "@hub3js/xrpl": "^0.2.3",
+    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/stellar": "^0.3.0",
+    "@hub3js/xrpl": "^0.3.0",
     "@rango-dev/logging-core": "^0.14.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0",
