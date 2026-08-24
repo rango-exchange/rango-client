@@ -89,7 +89,7 @@ export function useWalletList(params?: Params): API {
       if (isDetected && !detectedWalletsReported.has(wallet.type)) {
         detectedWalletsReported.add(wallet.type);
         emitWalletDetected({
-          walletName: wallet.title,
+          walletName: wallet.type,
         });
       }
     });
