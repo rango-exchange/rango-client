@@ -4,7 +4,6 @@ import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import {
-  dynamicImportWithRefinedError,
   ETHEREUM_CHAIN_ID,
   type ProviderConnectResult,
 } from '@rango-dev/wallets-shared';
@@ -65,11 +64,7 @@ export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
 export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
-    const LedgerAppEth = (
-      await dynamicImportWithRefinedError(
-        async () => await import('@ledgerhq/hw-app-eth')
-      )
-    ).default;
+    const LedgerAppEth = (await import('@ledgerhq/hw-app-eth')).default;
     const eth = new LedgerAppEth(transport);
     const derivationPath = getDerivationPath();
 
@@ -93,11 +88,7 @@ export async function getEthereumAccounts(): Promise<ProviderConnectResult> {
 export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
   try {
     const transport = await transportConnect();
-    const LedgerAppSolana = (
-      await dynamicImportWithRefinedError(
-        async () => await import('@ledgerhq/hw-app-solana')
-      )
-    ).default;
+    const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana')).default;
     const solana = new LedgerAppSolana(transport);
     const derivationPath = getDerivationPath();
 
@@ -121,11 +112,8 @@ export async function getSolanaAccounts(): Promise<ProviderConnectResult> {
 let transportConnection: Transport | null = null;
 
 export async function transportConnect() {
-  const TransportWebHID = (
-    await dynamicImportWithRefinedError(
-      async () => await import('@ledgerhq/hw-transport-webhid')
-    )
-  ).default;
+  const TransportWebHID = (await import('@ledgerhq/hw-transport-webhid'))
+    .default;
 
   transportConnection = await TransportWebHID.create();
 

@@ -36,6 +36,7 @@ import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
 import { UiEventTypes } from '../../types';
 import { getContainer } from '../../utils/common';
+import { tryRefineError } from '../../utils/errors';
 import { emitUiEvent } from '../../utils/events';
 import {
   numberToString,
@@ -185,7 +186,9 @@ export function SwapDetails(props: SwapDetailsProps) {
           handleShowSwitchNetworkSucceeded();
         })
         .catch((error: unknown) => {
-          handleShowSwitchNetworkFailed(error as Error);
+          handleShowSwitchNetworkFailed(
+            tryRefineError(error) ?? (error as Error)
+          );
         });
     }
   };

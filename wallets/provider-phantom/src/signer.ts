@@ -7,10 +7,7 @@ import {
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 import { getInstance as getSuiInstance } from '@hub3js/sui';
-import {
-  dynamicImportWithRefinedError,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { WALLET_NAME_IN_WALLET_STANDARD } from './constants.js';
@@ -24,18 +21,10 @@ export default async function getSigners(
 
   const suiProvider = getSuiInstance(WALLET_NAME_IN_WALLET_STANDARD);
 
-  const { DefaultEvmSigner } = await dynamicImportWithRefinedError(
-    async () => await import('@rango-dev/signer-evm')
-  );
-  const { DefaultSolanaSigner } = await dynamicImportWithRefinedError(
-    async () => await import('@rango-dev/signer-solana')
-  );
-  const { BTCSigner } = await dynamicImportWithRefinedError(
-    async () => await import('./signers/utxoSigner.js')
-  );
-  const { DefaultSuiSigner } = await dynamicImportWithRefinedError(
-    async () => await import('@rango-dev/signer-sui')
-  );
+  const { DefaultEvmSigner } = await import('@rango-dev/signer-evm');
+  const { DefaultSolanaSigner } = await import('@rango-dev/signer-solana');
+  const { BTCSigner } = await import('./signers/utxoSigner.js');
+  const { DefaultSuiSigner } = await import('@rango-dev/signer-sui');
   const signers = new DefaultSignerFactory();
   signers.registerSigner(TxType.SOLANA, new DefaultSolanaSigner(solProvider));
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(evmProvider));
