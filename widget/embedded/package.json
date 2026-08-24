@@ -36,7 +36,6 @@
     "@rango-dev/ui": "^0.65.1-next.2",
     "@rango-dev/wallets-core": "^0.61.0",
     "@rango-dev/wallets-react": "^0.48.1-next.2",
-    "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "crypto-browserify": "^3.12.1",
