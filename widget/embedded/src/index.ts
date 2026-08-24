@@ -37,6 +37,7 @@ import type {
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
   LegacyEventHandler as HandleWalletsUpdate,
+  LegacyNetworks as Networks,
   LegacyProviderInterface as ProviderInterface,
 } from '@rango-dev/wallets-core/legacy';
 import type {
@@ -55,7 +56,7 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {
