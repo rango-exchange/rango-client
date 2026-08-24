@@ -311,7 +311,7 @@ export const ERROR_CREATE_TRANSACTION =
 export const ERROR_INPUT_WALLET_NOT_FOUND = 'Input wallet not found';
 
 export const DEFAULT_WALLET_INJECTION_ERROR =
-  'Failed to connect to wallet, if you have turned injection off (disable default wallet for xDefi), turn it on and refresh the page';
+  'Failed to connect to wallet, if you have turned injection off (disabled the default wallet in your extension), turn it on and refresh the page';
 
 export class PrettyError extends Error {
   private readonly detail?: string;
@@ -653,7 +653,6 @@ export const walletsAndSupportedChainsMetaSelector = (
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.PHANTOM]: solanaBlockchain,
-    [WalletTypes.CTRL]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.TRUST_WALLET]: evmBlockchains,
     [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>

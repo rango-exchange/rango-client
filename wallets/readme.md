@@ -137,7 +137,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Bitget](provider-bitget/readme.md)                 | ✅  | 🚧   | 🚧     | ❌  | ✅   | ❌  | ❌       | ❌      |
 | [Braavos](provider-braavos/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
 | [Brave](provider-brave/readme.md)                   | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Ctrl](provider-ctrl/readme.md)                     | ✅  | ✅   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [CoinBase](provider-coinbase/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Enkrypt](provider-enkrypt/readme.md)               | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Exodus](provider-exodus/readme.md)                 | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
@@ -176,7 +175,6 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Bitget        | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Brave         | ✅             | ✅             | ✅           | Injected                  | ❌            |
 | Braavos       | ✅             | ❌             | ✅           | Injected                  | ✅            |
-| Ctrl          | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | CoinBase      | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
 | Enkrypt       | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus        | ❌             | ✅             | ⚠️           | Injected                  | ❌            |

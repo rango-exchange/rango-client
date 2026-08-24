@@ -92,7 +92,6 @@ export enum WalletTypes {
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
-  CTRL = 'ctrl',
   READY = 'ready',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
