@@ -1,6 +1,9 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { InstanceMap } from '@hub3js/std/types';
 import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
+import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
+import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
   EVM_NAMESPACE,
@@ -9,7 +12,13 @@ import {
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 
-export type Provider = Map<string, unknown>;
+export type ProviderObject = {
+  [EVM_NAMESPACE]: EvmProviderApi;
+  [SOLANA_NAMESPACE]: SolanaExternalProvider;
+  [UTXO_NAMESPACE]: UtxoProviderApi;
+  [SUI_NAMESPACE]: SuiProviderApi;
+};
+export type Provider = InstanceMap<ProviderObject>;
 
 export function phantom(): Provider | null {
   const { phantom } = window;
@@ -61,7 +70,7 @@ export function evmPhantom(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaPhantom(): SolanaProviderApi {
@@ -99,5 +108,5 @@ export function suiPhantom(): SuiProviderApi {
     );
   }
 
-  return suiInstance as SuiProviderApi;
+  return suiInstance;
 }

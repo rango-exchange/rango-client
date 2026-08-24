@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/namespaces": "^0.2.5",
-    "@hub3js/std": "^0.2.3",
-    "@hub3js/tvm": "^0.2.3",
+    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/std": "^0.3.0",
+    "@hub3js/tvm": "^0.3.0",
     "@rango-dev/wallets-shared": "^0.62.1-next.2",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",

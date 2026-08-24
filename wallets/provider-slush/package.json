@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/std": "^0.2.3",
-    "@hub3js/sui": "^0.2.3",
+    "@hub3js/std": "^0.3.0",
+    "@hub3js/sui": "^0.3.0",
     "@mysten/sui": "^1.21.2",
     "@mysten/wallet-standard": "^0.13.26",
     "@rango-dev/signer-sui": "^0.11.0",
