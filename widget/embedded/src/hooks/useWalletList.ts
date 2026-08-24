@@ -3,10 +3,11 @@ import type { WalletInfo } from '@rango-dev/ui';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { detectMobileScreens, WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
+import { detectMobileScreens } from '../utils/common';
 import { emitWalletDetected } from '../utils/events';
 import { configWalletsToWalletName } from '../utils/providers';
 import {

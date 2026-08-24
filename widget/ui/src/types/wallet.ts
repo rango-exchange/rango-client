@@ -1,5 +1,13 @@
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
+};
+
 interface Wallet {
   chain: string;
   address: string;

@@ -18,11 +18,11 @@ import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
   BlockchainCategories,
+  detectInstallLink,
   WalletState as WalletStatus,
 } from '@rango-dev/ui';
 import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
-  detectInstallLink,
   getBlockChainNameFromId,
   HYPERLIQUID_SIGN_NETWORK,
   isEvmAddress,

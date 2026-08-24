@@ -1,9 +1,9 @@
 import type { PropTypes } from './DerivationPath.types';
-import type { DerivationPath } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { Divider, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import { useWallets } from '@rango-dev/wallets-react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import {
   CUSTOM_DERIVATION_PATH,
@@ -26,6 +26,8 @@ export function DerivationPath(props: PropTypes) {
     providerType: type,
   } = props.value;
 
+  const { getWalletInfo } = useWallets();
+
   const [selectedDerivationPathId, setSelectedDerivationPathId] = useState<
     string | null
   >(null);
@@ -36,7 +38,14 @@ export function DerivationPath(props: PropTypes) {
   const isCustomOptionSelected =
     selectedDerivationPathId === CUSTOM_DERIVATION_PATH.id;
 
-  const derivationPaths = getDerivationPaths(selectedNamespace);
+  const derivationPaths = useMemo(
+    () =>
+      getDerivationPaths(
+        getWalletInfo(type).needsDerivationPath?.data ?? [],
+        selectedNamespace
+      ),
+    [type, selectedNamespace]
+  );
 
   const handleDerivationPathItemClick = ({ value }: { value: string }) => {
     const selectedDerivationPath = derivationPaths?.find(
@@ -75,10 +84,8 @@ export function DerivationPath(props: PropTypes) {
   };
 
   useEffect(() => {
-    setSelectedDerivationPathId(
-      getDerivationPaths(selectedNamespace)[0]?.id || null
-    );
-  }, [selectedNamespace]);
+    setSelectedDerivationPathId(derivationPaths[0]?.id || null);
+  }, [derivationPaths]);
 
   return (
     <>

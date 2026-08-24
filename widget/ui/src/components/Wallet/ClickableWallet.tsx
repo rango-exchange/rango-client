@@ -1,8 +1,8 @@
 import type { WalletPropTypes } from './Wallet.types.js';
 
-import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
+import { detectInstallLink } from '../../utils/wallet.js';
 import { Image } from '../common/index.js';
 import { Divider } from '../Divider/index.js';
 import { Skeleton } from '../Skeleton/index.js';
