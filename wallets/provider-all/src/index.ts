@@ -6,7 +6,6 @@ import { versions as braavos } from '@rango-dev/provider-braavos';
 import { versions as brave } from '@rango-dev/provider-brave';
 import { versions as coin98 } from '@rango-dev/provider-coin98';
 import { versions as coinbase } from '@rango-dev/provider-coinbase';
-import { versions as ctrl } from '@rango-dev/provider-ctrl';
 import { versions as defaultInjected } from '@rango-dev/provider-default';
 import { versions as enkrypt } from '@rango-dev/provider-enkrypt';
 import { versions as exodus } from '@rango-dev/provider-exodus';
@@ -50,7 +49,6 @@ export const allProviders = (): (() => VersionedProviders)[] => {
     enkrypt,
     bitget,
     binance,
-    ctrl,
     xverse,
     safepal,
     brave,
