@@ -46,7 +46,7 @@
     "react-is": "^18.2.0"
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-popover": "^1.0.6",
