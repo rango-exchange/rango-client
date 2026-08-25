@@ -27,6 +27,8 @@ export type {
   StepApprovalTxSucceededEvent,
   StepOutputRevealedEvent,
   LastConnectedWallet,
+  Meta,
+  AllBlockchains,
 } from './types';
 export {
   WidgetEvents,

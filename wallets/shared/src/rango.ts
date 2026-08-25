@@ -1,10 +1,8 @@
-import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import {
-  type EvmNetworksChainInfo,
-  Networks,
-} from '@rango-dev/internal-blockchains';
-import {
+  type LegacyState,
+  type LegacyNetwork as Network,
   type LegacyWalletInfo as WalletInfo,
   type LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
@@ -22,8 +20,6 @@ export type {
   LegacyCanSwitchNetwork as CanSwitchNetwork,
 } from '@rango-dev/wallets-core/legacy';
 
-export { Networks } from '@rango-dev/internal-blockchains';
-
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
@@ -31,36 +27,7 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
 };
 
-export type Network = string;
-
-export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
-
-export type Asset = {
-  blockchain: Network;
-  symbol: string;
-  address: string | null;
-};
-
-export type AllBlockchains = { [key: string]: BlockchainMeta };
-
-export interface Meta {
-  blockchains: AllBlockchains;
-  evmNetworkChainInfo: EvmNetworksChainInfo;
-  getSupportedChainNames: (type: WalletType) => Network[] | null;
-  evmBasedChains: EvmBlockchainMeta[];
-}
-
 // core
-
-// wallets/core/src/wallet.ts -> State
-export interface WalletState {
-  connected: boolean;
-  connecting: boolean;
-  reachable: boolean;
-  installed: boolean;
-  accounts: string[] | null;
-  network: Network | null;
-}
 
 export type GetInstanceOptions = {
   network?: Network;
@@ -68,7 +35,7 @@ export type GetInstanceOptions = {
   meta: BlockchainMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
-  getState: () => WalletState;
+  getState: () => LegacyState;
 };
 
 export type TryGetInstance =
@@ -87,5 +54,3 @@ export interface Wallet {
   connected: boolean;
   info: Omit<WalletInfo, 'color'>;
 }
-
-export type Providers = { [type in WalletType]?: InstanceType };

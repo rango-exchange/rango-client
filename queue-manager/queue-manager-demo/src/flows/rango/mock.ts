@@ -1,5 +1,5 @@
 import type { RawAccounts, Wallet } from './types';
-import type { Meta } from '@rango-dev/wallets-shared';
+import type { Meta } from '@rango-dev/queue-manager-rango-preset';
 
 import { WalletTypes } from '@rango-dev/provider-all';
 

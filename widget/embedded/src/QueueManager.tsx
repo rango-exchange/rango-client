@@ -24,7 +24,6 @@ import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const {
-    providers,
     getSigners,
     state,
     connect,
@@ -83,8 +82,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     const { supportedChains } = getWalletInfo(type);
     return walletAndSupportedChainsNames(supportedChains);
   };
-  const allProviders = providers();
-
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
@@ -101,7 +98,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
       }
     },
     wallets,
-    providers: allProviders,
     switchNetwork,
     canSwitchNetworkTo,
     state,
