@@ -1,16 +1,13 @@
 import type { Provider } from '../hub/mod.js';
-import type { LegacyProviderInterface } from '../legacy/mod.js';
 
-type LegacyVersioned = ['0.0.0', LegacyProviderInterface];
-type HubVersioned = ['1.0.0', Provider];
-type AvailableVersionedProviders = LegacyVersioned | HubVersioned;
+type AvailableVersionedProviders = ['1.0.0', Provider];
 export type VersionedProviders = AvailableVersionedProviders[];
-export type VersionInterface<T extends AvailableVersionedProviders[]> = T[1];
+export type VersionInterface<T extends AvailableVersionedProviders> = T[1];
 
-type SemVer<T extends [string, any]> = T extends [infer U, any] ? U : never;
+type SemVer<T extends AvailableVersionedProviders> = T[0];
 type MatchVersion<T extends VersionedProviders, Version> = Extract<
   T[number],
-  [Version, any]
+  [Version, AvailableVersionedProviders[1]]
 >;
 
 export function pickVersion<
@@ -53,10 +50,4 @@ export function defineVersions(): DefineVersionsApi {
     },
   };
   return api;
-}
-
-export function legacyProviderImportsToVersionsInterface(
-  provider: LegacyProviderInterface
-): VersionedProviders {
-  return defineVersions().version('0.0.0', provider).build();
 }
