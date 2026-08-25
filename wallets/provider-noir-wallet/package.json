@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-noir-wallet",
-  "version": "0.2.0",
+  "version": "0.2.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -24,8 +24,8 @@
     "@hub3js/core": "^0.61.1",
     "@hub3js/std": "^0.3.0",
     "@noir-wallet/sdk": "^0.1.9",
-    "@rango-dev/internal-blockchains": "^0.1.0",
-    "@rango-dev/wallets-core": "^0.61.0",
+    "@rango-dev/internal-blockchains": "^0.1.1-next.0",
+    "@rango-dev/wallets-core": "^0.61.1-next.0",
     "bignumber.js": "^9.1.1",
     "rango-types": "^0.5.0"
   },
