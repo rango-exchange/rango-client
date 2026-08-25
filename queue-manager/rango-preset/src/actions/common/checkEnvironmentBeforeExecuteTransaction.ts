@@ -116,7 +116,7 @@ async function ensureWalletIsOnCorrectNetwork(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<Result<true, BlockedReason>> {
   const { getStorage, context } = actions;
-  const { meta, wallets, providers, hubProvider } = context;
+  const { meta, wallets, hubProvider } = context;
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap)!;
 
@@ -125,7 +125,6 @@ async function ensureWalletIsOnCorrectNetwork(
     currentStep,
     wallets,
     meta,
-    providers,
     hubProvider
   );
 

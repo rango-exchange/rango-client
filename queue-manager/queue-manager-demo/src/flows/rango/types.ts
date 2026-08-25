@@ -1,15 +1,11 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
-  Asset,
-  EvmTransaction,
-  Network,
-  SolanaTransaction,
-  Transaction,
-  TransferTransaction,
-} from '@rango-dev/wallets-shared';
+  LegacyNetwork as Network,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type BigNumber from 'bignumber.js';
+import type { Asset, mainAPI } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/internal-blockchains';
 
 export type WalletTypeAndAddress = {
   walletType: WalletType;
@@ -98,10 +94,10 @@ export type PendingSwapStep = {
   networkStatus: PendingSwapNetworkStatus | null;
   executedTransactionId: string | null;
   explorerUrl: SwapExplorerUrl[] | null;
-  evmApprovalTransaction: EvmTransaction | null;
-  evmTransaction: EvmTransaction | null;
-  transferTransaction: TransferTransaction | null;
-  solanaTransaction: SolanaTransaction | null;
+  evmApprovalTransaction: mainAPI.EvmTransaction | null;
+  evmTransaction: mainAPI.EvmTransaction | null;
+  transferTransaction: mainAPI.Transfer | null;
+  solanaTransaction: mainAPI.SolanaTransaction | null;
   diagnosisUrl: string | null;
   internalSteps: SwapperStatusStep[] | null;
 };
@@ -345,7 +341,7 @@ export type SwapperStatusResponse = {
   outputAmount: BigNumber | null;
   explorerUrl: SwapExplorerUrl[] | null;
   trackingCode: string;
-  newTx: Transaction | null;
+  newTx: mainAPI.Transaction | null;
   diagnosisUrl: string | null;
   steps: SwapperStatusStep[] | null;
 };
@@ -406,7 +402,7 @@ export type CreateTransactionRequest = {
 export type CreateTransactionResponse = {
   ok: boolean;
   error: string | null;
-  transaction: Transaction;
+  transaction: mainAPI.Transaction;
 };
 
 export const OKX_WALLET_SUPPORTED_CHAINS = [

@@ -1,7 +1,9 @@
 import type { Wallet } from './flows/rango/types';
-import type { SwapQueueContext } from '@rango-dev/queue-manager-rango-preset';
+import type {
+  SwapQueueContext,
+  TargetNamespace,
+} from '@rango-dev/queue-manager-rango-preset';
 import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
-import type { Network } from '@rango-dev/wallets-shared';
 
 import { makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
@@ -22,35 +24,36 @@ interface PropTypes {
 
 export function App(props: PropTypes) {
   const {
-    providers,
     getSigners,
     state,
     canSwitchNetworkTo,
     connect,
     getWalletInfo,
+    hubProvider,
   } = useWallets();
 
-  const switchNetwork = async (wallet: WalletType, network: Network) => {
-    if (!canSwitchNetworkTo(wallet, network)) {
+  const switchNetwork = async (
+    wallet: WalletType,
+    namespace: TargetNamespace
+  ) => {
+    if (!canSwitchNetworkTo(wallet, namespace.network, namespace)) {
       return undefined;
     }
-    return connect(wallet, network);
+    return connect(wallet, [namespace]);
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>
     !!getWalletInfo(walletType).mobileWallet;
 
-  const allProviders = providers();
   const queueContext: SwapQueueContext = {
     meta,
     getSigners,
     wallets: wallet,
-    providers: allProviders,
     switchNetwork,
-    connect,
     state,
     isMobileWallet,
     canSwitchNetworkTo,
+    hubProvider,
   };
 
   const swapQueueDef = useMemo(() => {

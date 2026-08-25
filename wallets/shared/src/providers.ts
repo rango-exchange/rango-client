@@ -1,16 +1,9 @@
-import type {
-  CanEagerConnect,
-  CanSwitchNetwork,
-  Network,
-  Providers,
-  Subscribe,
-} from './rango.js';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { CanEagerConnect, CanSwitchNetwork, Subscribe } from './rango.js';
+import type { LegacyNetwork as Network } from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta } from 'rango-types';
 
+import { Networks } from '@rango-dev/internal-blockchains';
 import { isEvmBlockchain } from 'rango-types';
-
-import { Networks } from './rango.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getEvmAccounts(instance: any) {
@@ -117,23 +110,4 @@ export function chooseInstance(
       : null;
 
   return instance;
-}
-
-/**
- * On our implementation for `wallets` package, We keep the instance in 2 ways
- * If it's a single chain wallet, it returns the instance directly,
- * If it's a multichain wallet, it returns a `Map` of instances.
- * This function will get the `ETHEREUM` instance in both types.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getEvmProvider(providers: Providers, type: WalletType): any {
-  if (type && providers[type]) {
-    // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
-    if (providers[type].size) {
-      return providers[type].get(Networks.ETHEREUM);
-    }
-
-    return providers[type];
-  }
-  return null;
 }

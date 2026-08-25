@@ -5,14 +5,20 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type {
+  LegacyNetwork as Network,
+  LegacyWalletType as WalletType,
+} from '@rango-dev/wallets-core/legacy';
 import type {
   ExtendedWalletInfo,
   ProviderContext,
 } from '@rango-dev/wallets-react';
-import type { Network } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
+import {
+  HYPERLIQUID_SIGN_NETWORK,
+  Networks,
+} from '@rango-dev/internal-blockchains';
 import {
   BlockchainCategories,
   detectInstallLink,
@@ -22,7 +28,6 @@ import {
   legacyGetBlockChainNameFromId as getBlockChainNameFromId,
   legacyReadAccountAddress as readAccountAddress,
 } from '@rango-dev/wallets-core/legacy';
-import { HYPERLIQUID_SIGN_NETWORK, Networks } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { isAddress as isEvmAddress } from 'ethers';
 

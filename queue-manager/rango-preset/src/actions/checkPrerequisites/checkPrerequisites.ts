@@ -3,7 +3,7 @@ import type { NextTransactionStateError } from '../common/produceNextStateForTra
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 import type { Result } from 'ts-results';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/internal-blockchains';
 import {
   STELLAR_CHANGE_TRUSTLINE_TYPE,
   XRPL_CHANGE_TRUSTLINE_TYPE,
