@@ -21,11 +21,11 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
-    "@hub3js/evm": "^0.4.0",
-    "@hub3js/namespaces": "^0.3.0",
-    "@hub3js/solana": "^0.4.0",
-    "@hub3js/std": "^0.3.0",
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/evm": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/namespaces": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/solana": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/std": "0.0.0-experimental-508611c9-20260825",
     "@ledgerhq/errors": "^6.16.4",
     "@ledgerhq/hw-app-eth": "^6.36.0",
     "@ledgerhq/hw-app-solana": "^7.1.6",

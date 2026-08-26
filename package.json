@@ -104,6 +104,16 @@
     "vitest": "^4.1.5"
   },
   "resolutions": {
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/evm": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/namespaces": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/solana": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/starknet": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/std": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/stellar": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/sui": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/tvm": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/xrpl": "0.0.0-experimental-508611c9-20260825",
     "valibot": "^0.38.0",
     "react-refresh": "0.9.0",
     "@types/node": "^20.17.19"

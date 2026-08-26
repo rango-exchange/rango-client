@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
-    "@hub3js/std": "^0.3.0",
-    "@hub3js/stellar": "^0.3.0",
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/std": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/stellar": "0.0.0-experimental-508611c9-20260825",
     "@stellar/freighter-api": "^6.0.1",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0"

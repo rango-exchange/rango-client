@@ -1,10 +1,8 @@
 import type { ExtendedModalWalletInfo } from '../../utils/wallets';
 import type { Namespace } from '@hub3js/namespaces';
+import type { NamespaceData } from '@rango-dev/wallets-react';
 
-export interface NamespaceData {
-  namespace: Namespace;
-  derivationPath?: string;
-}
+export type { NamespaceData };
 
 export interface HandleConnectOptions {
   // To have a switch between connect and disconnect when user is clicking on a button, this option can be helpful.

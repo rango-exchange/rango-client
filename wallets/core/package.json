@@ -86,7 +86,7 @@
     "xrpl": "^4.2.0"
   },
   "dependencies": {
-    "@hub3js/std": "^0.3.0",
+    "@hub3js/std": "0.0.0-experimental-508611c9-20260825",
     "@stellar/stellar-sdk": "^15.0.1",
     "caip": "^1.1.1",
     "immer": "^10.0.4",
