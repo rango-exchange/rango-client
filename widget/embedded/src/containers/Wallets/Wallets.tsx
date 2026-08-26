@@ -5,7 +5,7 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
+import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
 import { WalletTypes } from '@rango-dev/provider-all';
@@ -89,7 +89,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={(type, event, value, state, info) => {
-          const eventParams: Parameters<LegacyEventHandler> = [
+          const eventParams: Parameters<EventHandler> = [
             type,
             event,
             value,

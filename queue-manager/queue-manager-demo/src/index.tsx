@@ -1,4 +1,4 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@rango-dev/queue-manager-rango-preset';
 import type { BlockchainMeta } from 'rango-types';
 
 import { allProviders } from '@rango-dev/provider-all';

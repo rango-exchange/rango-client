@@ -4,11 +4,9 @@ import type {
   SelectedQuote,
   Wallet,
   WalletInfoWithExtra,
+  WalletType,
 } from '../types';
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExtendedWalletInfo,
   ProviderContext,

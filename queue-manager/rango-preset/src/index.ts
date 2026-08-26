@@ -42,6 +42,7 @@ export type {
   PendingSwapWithQueueID,
   EventType,
   TargetNamespace,
+  WalletType,
 } from './shared';
 export {
   getCurrentNamespaceOfOrNull,

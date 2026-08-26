@@ -1,6 +1,6 @@
 import type { PropTypes } from './Detached.types';
 import type { Namespace } from '@hub3js/namespaces';
-import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
+import type { NamespaceMeta } from '@rango-dev/ui';
 
 import { i18n } from '@lingui/core';
 import {
@@ -119,7 +119,7 @@ export function Detached(props: PropTypes) {
     );
   };
 
-  const renderNamespaceItem = (namespace: LegacyNamespaceMeta) => {
+  const renderNamespaceItem = (namespace: NamespaceMeta) => {
     if (namespace.unsupported) {
       return <NamespaceUnsupportedItem namespace={namespace} />;
     }

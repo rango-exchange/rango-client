@@ -1,7 +1,7 @@
-import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
+import type { NamespaceMeta } from '@rango-dev/ui';
 
 export type PropTypes = {
-  namespace: LegacyNamespaceMeta;
+  namespace: NamespaceMeta;
   error?: string;
   suffix?: React.ReactNode;
   connected?: boolean;
@@ -10,5 +10,5 @@ export type PropTypes = {
 };
 
 export type NamespaceUnsupportedItemPropTypes = {
-  namespace: LegacyNamespaceMeta;
+  namespace: NamespaceMeta;
 };

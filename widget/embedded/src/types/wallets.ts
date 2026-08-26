@@ -1,5 +1,7 @@
+import type { WalletType } from '@rango-dev/provider-all';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+
+export type { WalletType };
 
 export interface Wallet {
   chain: string;
