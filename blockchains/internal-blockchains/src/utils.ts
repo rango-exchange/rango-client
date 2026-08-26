@@ -1,8 +1,10 @@
+import type { Network } from './networks.js';
 import type { Provider } from '@hub3js/core';
 import type { Chain } from '@hub3js/evm';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 import { convertBlockchainMetaToCaip } from './caip.js';
+import { Networks } from './networks.js';
 
 type ChainSupport = {
   isChainSupported: (chainId: string) => boolean;
@@ -80,5 +82,61 @@ export function convertEvmBlockchainMetaToEvmChainInfo(
       return evmNetworksChainInfo;
     },
     {}
+  );
+}
+
+/**
+ * Rango addresses carry the chain they belong to, as `ETH:0xabc...`. It predates
+ * CAIP-10 and is still the format the widget and the queue manager exchange.
+ */
+export function formatAddressWithNetwork(
+  address: string,
+  network?: Network | null
+): string {
+  return `${network || ''}:${address}`;
+}
+
+export function readAccountAddress(addressWithNetwork: string): {
+  address: string;
+  network: Network;
+} {
+  const [network, address] = addressWithNetwork.split(':');
+
+  return {
+    network,
+    address,
+  };
+}
+
+export function getBlockChainNameFromId(
+  chainId: string | number,
+  blockchains: BlockchainMeta[]
+): Network | null {
+  chainId =
+    typeof chainId === 'string' && chainId.startsWith('0x')
+      ? parseInt(chainId)
+      : chainId;
+
+  /*
+   * Sometimes providers are passing `Network` as chainId.
+   * If chainId is a `Network`, we return itself.
+   */
+  const allNetworks = Object.values(Networks);
+  if (allNetworks.includes(String(chainId) as Networks)) {
+    return chainId as Networks;
+  }
+
+  if (chainId === 'Binance-Chain-Tigris') {
+    return Networks.BINANCE;
+  }
+  return (
+    blockchains
+      .filter((blockchainMeta) => !!blockchainMeta.chainId)
+      .find((blockchainMeta) => {
+        const blockchainChainId = blockchainMeta.chainId?.startsWith('0x')
+          ? parseInt(blockchainMeta.chainId)
+          : blockchainMeta.chainId;
+        return blockchainChainId == chainId;
+      })?.name || null
   );
 }

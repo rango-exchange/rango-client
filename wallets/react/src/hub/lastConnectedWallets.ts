@@ -1,6 +1,6 @@
 import type { Namespace } from '@hub3js/namespaces';
 
-import { Persistor } from '@rango-dev/wallets-core/legacy';
+import { Persistor } from '../persistor.js';
 
 import {
   HUB_LAST_CONNECTED_WALLETS,
