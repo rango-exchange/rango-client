@@ -36,7 +36,7 @@ import {
 
 export type UseAdapterParams = Omit<ProviderProps, 'providers'> & {
   providers: Provider[];
-  /** This is only will be used to access some parts of the legacy provider that doesn't exists in Hub. */
+  // TODO: remove this
   allVersionedProviders: VersionedProviders[];
 };
 

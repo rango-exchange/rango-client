@@ -117,16 +117,13 @@ export function useStatefulConnect(): UseStatefulConnect {
        * 3. Target wallet contains only one namespace, in this situation we should check if that namespace needs derivation path and based on that, try to connect to the related provider or display derivation path modal.
        */
 
-      // Legacy and hub have different structure to handle each situation.
-      const isHub = !!wallet.isHub;
-      const needsNamespace = isHub
-        ? wallet.properties?.find((item) => item.name === 'namespaces')?.value
-        : wallet.needsNamespace;
+      const needsNamespace = wallet.properties?.find(
+        (item) => item.name === 'namespaces'
+      )?.value;
 
-      const needsDerivationPath = isHub
-        ? wallet.properties?.find((item) => item.name === 'derivationPath')
-            ?.value
-        : wallet.needsDerivationPath;
+      const needsDerivationPath = wallet.properties?.find(
+        (item) => item.name === 'derivationPath'
+      )?.value;
 
       // Forced namespaces are used to bypass namespace selection flow.
       if (forceConnectToNamespaces) {
@@ -216,7 +213,7 @@ export function useStatefulConnect(): UseStatefulConnect {
      * and forced namespaces are not enabled,
      * we should display detached modal
      */
-    if (!!wallet.isHub && !options?.forceConnectToNamespaces) {
+    if (!options?.forceConnectToNamespaces) {
       const needsNamespace = wallet.properties?.find(
         (item) => item.name === 'namespaces'
       )?.value;
@@ -244,14 +241,13 @@ export function useStatefulConnect(): UseStatefulConnect {
     wallet: ExtendedModalWalletInfo,
     selectedNamespaces: Namespace[]
   ): Promise<Result> => {
-    const isHub = !!wallet.isHub;
-    const needsNamespace = isHub
-      ? wallet.properties?.find((item) => item.name === 'namespaces')?.value
-      : wallet.needsNamespace;
+    const needsNamespace = wallet.properties?.find(
+      (item) => item.name === 'namespaces'
+    )?.value;
 
-    const needsDerivationPath = isHub
-      ? wallet.properties?.find((item) => item.name === 'derivationPath')?.value
-      : wallet.needsDerivationPath;
+    const needsDerivationPath = wallet.properties?.find(
+      (item) => item.name === 'derivationPath'
+    )?.value;
 
     const isSingleNamespace = needsNamespace?.selection === 'single';
     const firstSelectedNamespace = selectedNamespaces[0];
@@ -327,10 +323,9 @@ export function useStatefulConnect(): UseStatefulConnect {
     const selectedNamespace = connectState.derivationPath.namespace;
     const namespaces = [{ namespace: selectedNamespace, derivationPath }];
 
-    const isHub = !!wallet.isHub;
-    const needsNamespace = isHub
-      ? wallet.properties?.find((item) => item.name === 'namespaces')?.value
-      : wallet.needsNamespace;
+    const needsNamespace = wallet.properties?.find(
+      (item) => item.name === 'namespaces'
+    )?.value;
 
     const namespaceIsAvailable =
       !!needsNamespace?.data && needsNamespace.data.length > 1;
