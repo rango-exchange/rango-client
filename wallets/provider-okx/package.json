@@ -32,6 +32,7 @@
     "@rango-dev/signer-evm": "^0.45.1-next.0",
     "@rango-dev/signer-solana": "^0.49.0",
     "@rango-dev/signer-sui": "^0.11.0",
+    "@rango-dev/signer-ton": "^0.29.0",
     "@rango-dev/signer-tron": "^0.42.0",
     "@rango-dev/wallets-core": "^0.61.1-next.0",
     "@ton/core": "^0.59.0",

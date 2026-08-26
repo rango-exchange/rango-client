@@ -25,6 +25,7 @@
     "@hub3js/namespaces": "^0.3.0",
     "@hub3js/std": "^0.3.0",
     "@hub3js/tvm": "^0.3.0",
+    "@rango-dev/signer-ton": "^0.29.0",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",
