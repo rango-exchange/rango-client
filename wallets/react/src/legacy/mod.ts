@@ -10,4 +10,3 @@ export {
 } from '../hub/constants.js';
 
 export { WalletContext } from './context.js';
-export { useLegacyProviders } from './useLegacyProviders.js';

@@ -54,11 +54,8 @@ export type ProviderContext = {
     namespace?: LegacyNamespaceInputForConnect
   ): boolean;
   /**
-   * `Provider` in legacy terms means injected instances by wallets into window (e.g. window.ethereum)
-   * that can be retrieved by `getInstance`.
-   *
-   * Note 1: Providers are lazy evaluated, which means you need to call `connect` (or `state`) first, then the value will be shown in object.
-   *         before doing that, it's a key (wallet name or we call it `type` to be more specific) with null value. (e.g. {metamask: null})
+   * @deprecated hub providers keep their instances inside their namespaces, so
+   * this always returns an empty object. It will be removed.
    */
   providers(): Providers;
   getSigners(type: WalletType): Promise<SignerFactory>;

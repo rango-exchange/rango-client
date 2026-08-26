@@ -9,19 +9,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./helpers": {
-      "types": "./dist/helpers/index.d.ts",
-      "default": "./dist/helpers/index.js"
     }
   },
   "files": [
     "dist",
-    "src",
-    "helpers"
+    "src"
   ],
   "scripts": {
-    "build": "yarn run rangutopia library build --inputs src/index.ts,src/helpers/index.ts",
+    "build": "yarn run rangutopia library build --inputs src/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -40,7 +35,6 @@
     "@hub3js/namespaces": "^0.3.0",
     "@hub3js/solana": "^0.4.0",
     "@hub3js/std": "^0.3.0",
-    "@hub3js/sui": "^0.3.0",
     "@hub3js/tvm": "^0.3.0",
     "@rango-dev/internal-blockchains": "^0.1.1-next.0",
     "@rango-dev/logging-core": "^0.14.0",
