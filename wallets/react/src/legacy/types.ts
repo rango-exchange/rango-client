@@ -1,32 +1,132 @@
 import type { Provider, ProviderMetadata } from '@hub3js/core';
-import type { NamespaceData } from '@hub3js/core/store';
+import type { NamespaceData as HubNamespaceData } from '@hub3js/core/store';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Namespace } from '@hub3js/namespaces';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyProviderInterface,
-  LegacyNetwork as Network,
-  LegacyEventHandler as WalletEventHandler,
-  LegacyWalletInfo as WalletInfo,
-  LegacyState as WalletState,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
-
-import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InstanceType = any;
 
-export type State = {
-  [key: string]: WalletState | undefined;
+/** The id a provider registers itself under, e.g. `metamask`. */
+export type WalletType = string;
+
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
 };
+
+export type NamespaceMeta = {
+  label: string;
+  /**
+   * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
+   * e.g. ETH
+   */
+  id: string;
+  value: Namespace;
+  unsupported?: boolean;
+  isChainSupported: (chainId: string) => boolean;
+};
+
+interface NeedsNamespace {
+  selection: 'single' | 'multiple';
+  data: NamespaceMeta[];
+}
+
+interface NeedsDerivationPath {
+  data: {
+    id: string;
+    label: string;
+    namespace: Namespace;
+    generateDerivationPath: (index: string) => string;
+  }[];
+}
+
+export type WalletInfo = {
+  name: string;
+  img: string;
+  installLink: InstallObjects | string;
+  /**
+   * @deprecated we don't use this value anymore.
+   */
+  color: string;
+  supportedChains: BlockchainMeta[];
+  showOnMobile?: boolean;
+  isContractWallet?: boolean;
+  mobileWallet?: boolean;
+
+  needsDerivationPath?: NeedsDerivationPath;
+  needsNamespace?: NeedsNamespace;
+};
+
+export type WalletState = {
+  connected: boolean;
+  connecting: boolean;
+  /**
+   * @deprecated it always returns `false`. don't use it.
+   */
+  reachable: boolean;
+  installed: boolean;
+  accounts: string[] | null;
+  network: Network | null;
+  derivationPath?: string;
+};
+
+export type NamespaceData = {
+  namespace: Namespace;
+  derivationPath?: string;
+};
+
+export type NamespaceInputForConnect<T extends Namespace = Namespace> = {
+  /**
+   * By default, you should specify namespace (e.g. evm).
+   */
+  namespace: T;
+  /**
+   * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+   */
+  network: Network | undefined;
+  derivationPath?: string;
+};
+
+export enum Events {
+  CONNECTED = 'connected',
+  CONNECTING = 'connecting',
+  REACHABLE = 'reachable',
+  INSTALLED = 'installed',
+  ACCOUNTS = 'accounts',
+  NETWORK = 'network',
+  // Hub only events
+  NAMESPACE_DISCONNECTED = 'namespace_disconnected',
+
+  PROVIDER_DISCONNECTED = 'provider_disconnected',
+}
+
+export type EventInfo = {
+  supportedBlockchains: BlockchainMeta[];
+  isContractWallet: boolean;
+  isHub: boolean;
+  // will be set alongside ACCOUNT event
+  namespace?: Namespace;
+  derivationPath?: string;
+};
+
+export type EventHandler = (
+  type: WalletType,
+  event: Events,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any,
+  coreState: WalletState,
+  info: EventInfo
+) => void;
 
 export type ConnectResult = {
   accounts: string[] | null;
   network: Network | null;
-  provider: InstanceType;
 };
 
 export type Providers = { [type in WalletType]?: InstanceType };
@@ -39,7 +139,7 @@ export type ExtendedWalletInfo = WalletInfo & {
 export type ProviderContext = {
   connect(
     type: WalletType,
-    namespaces?: LegacyNamespaceInputForConnect[]
+    namespaces?: NamespaceInputForConnect[]
   ): Promise<ConnectResult[]>;
   disconnect(type: WalletType, namespaces?: Namespace[]): Promise<void>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,11 +147,11 @@ export type ProviderContext = {
 
   state(
     type: WalletType
-  ): WalletState & { namespaces?: Map<Namespace, NamespaceData> };
+  ): WalletState & { namespaces?: Map<Namespace, HubNamespaceData> };
   canSwitchNetworkTo(
     type: WalletType,
     network: Network,
-    namespace?: LegacyNamespaceInputForConnect
+    namespace?: NamespaceInputForConnect
   ): boolean;
   /**
    * @deprecated hub providers keep their instances inside their namespaces, so
@@ -62,18 +162,18 @@ export type ProviderContext = {
   getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(
     type: WalletType,
-    namespace: LegacyNamespaceInputForConnect
+    namespace: NamespaceInputForConnect
   ): Promise<ConnectResult>;
   hubProvider(type: WalletType): Provider;
 };
 
 export type ProviderProps = PropsWithChildren<{
-  onUpdateState?: WalletEventHandler;
+  onUpdateState?: EventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
   providers: VersionedProviders[];
   configs?: {
-    wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+    wallets?: (WalletType | Provider)[];
     walletOptions?: {
       [key: WalletType]: {
         provider?: unknown;
@@ -84,117 +184,3 @@ export type ProviderProps = PropsWithChildren<{
     };
   };
 }>;
-
-export { Events };
-
-export type ProviderConnectResult = {
-  accounts: string[];
-  chainId: string;
-  derivationPath?: string;
-};
-
-export type GetInstanceOptions = {
-  network?: Network;
-  currentProvider: InstanceType;
-  meta: BlockchainMeta[];
-  getState: () => WalletState;
-  /**
-   * We always get the instance once and reuse it whenever we needs. By using this option
-   * We can force the library to get a new instance and replace it with the old one.
-   *
-   * Originally, we used this option for wallet connect 1 and its switching network challenge.
-   */
-  force?: boolean;
-  updateChainId: (chainId: number | string) => void;
-};
-
-export type GetInstance =
-  | (() => InstanceType)
-  | ((options: GetInstanceOptions) => Promise<InstanceType>);
-export type TryGetInstance =
-  | (() => InstanceType)
-  | ((
-      options: Pick<GetInstanceOptions, 'force' | 'network'>
-    ) => Promise<InstanceType>);
-export type Connect = (options: {
-  instance: InstanceType;
-  network?: Network;
-  meta: BlockchainMeta[];
-}) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
-
-export type Disconnect = (options: {
-  instance: InstanceType;
-  destroyInstance: () => void;
-}) => Promise<void>;
-
-type CleanupSubscribe = () => void;
-
-export type Subscribe = (options: {
-  instance: InstanceType;
-  state: WalletState;
-  meta: BlockchainMeta[];
-  updateChainId: (chainId: string) => void;
-  updateAccounts: (accounts: string[], chainId?: string) => void;
-  connect: (network?: Network) => void;
-  disconnect: () => void;
-}) => CleanupSubscribe | void;
-
-export type SwitchNetwork = (options: {
-  instance: InstanceType;
-  network: Network;
-  meta: BlockchainMeta[];
-  newInstance?: TryGetInstance;
-  getState?: () => WalletState;
-  updateChainId: (chainId: string) => void;
-}) => Promise<void>;
-
-export type Suggest = (options: {
-  instance: InstanceType;
-  network: Network;
-  meta: BlockchainMeta[];
-}) => Promise<void>;
-
-export type CanSwitchNetwork = (options: {
-  network: Network;
-  meta: BlockchainMeta[];
-  provider: InstanceType;
-}) => boolean;
-
-export type CanEagerConnect = (options: {
-  instance: InstanceType;
-  meta: BlockchainMeta[];
-}) => Promise<boolean>;
-
-export interface WalletActions {
-  connect: Connect;
-  getInstance: InstanceType;
-  disconnect?: Disconnect;
-  subscribe?: Subscribe;
-  // unsubscribe, // coupled to subscribe.
-
-  // Optional, but should be provided at the same time.
-  suggest?: Suggest;
-  switchNetwork?: SwitchNetwork;
-  getSigners: (provider: InstanceType) => Promise<SignerFactory>;
-  canSwitchNetworkTo?: CanSwitchNetwork;
-  canEagerConnect?: CanEagerConnect;
-  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
-}
-
-export interface WalletConfig {
-  type: WalletType;
-  defaultNetwork?: Network;
-  checkInstallation?: boolean;
-  isAsyncInstance?: boolean;
-  isAsyncSwitchNetwork?: boolean;
-}
-
-export type WalletProviders = Map<
-  WalletType,
-  {
-    actions: WalletActions;
-    config: WalletConfig;
-  }
->;
-
-export type ProviderInterface = { config: WalletConfig } & WalletActions;

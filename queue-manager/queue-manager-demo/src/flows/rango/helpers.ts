@@ -18,11 +18,11 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import type { AllBlockchains } from '@rango-dev/queue-manager-rango-preset';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type {
-  LegacyNetwork as Network,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+  AllBlockchains,
+  WalletType,
+} from '@rango-dev/queue-manager-rango-preset';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {

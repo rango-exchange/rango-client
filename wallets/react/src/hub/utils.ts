@@ -1,4 +1,9 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type {
+  NamespaceInputForConnect,
+  EventHandler as WalletEventHandler,
+  WalletType,
+} from '../legacy/types.js';
 import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type {
@@ -6,11 +11,6 @@ import type {
   EvmActions,
 } from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyEventHandler as WalletEventHandler,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
@@ -20,12 +20,12 @@ import {
   getBlockChainNameFromId,
   getSupportedChainsFromProvider,
 } from '@rango-dev/internal-blockchains';
-import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
 import { AccountId } from 'caip';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 import {
   type ConnectResult,
+  Events,
   HUB_LAST_CONNECTED_WALLETS,
   type ProviderProps,
 } from '../legacy/mod.js';
@@ -80,7 +80,7 @@ export function mapHubEventsToLegacy(
   metadata: {
     allBlockChains: ProviderProps['allBlockChains'];
     lastConnectAttemptParams: {
-      [type: WalletType]: LegacyNamespaceInputForConnect[];
+      [type: WalletType]: NamespaceInputForConnect[];
     };
   }
 ): void {
@@ -271,7 +271,7 @@ export function mapHubEventsToLegacy(
  * this enum only has meaning for us, and when we are going to connect an instance (e.g. window.ethereum) we should pass chain id.
  */
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: LegacyNamespaceInputForConnect,
+  namespace: NamespaceInputForConnect,
   meta: BlockchainMeta[]
 ): AddEthereumChainParameter | undefined {
   if (!namespace.network) {
@@ -289,7 +289,7 @@ export function convertNamespaceNetworkToEvmChainId(
  * This function will help us to map these strings to proper hex ids.
  */
 export function tryConvertNamespaceNetworkToChainInfo(
-  namespace: LegacyNamespaceInputForConnect,
+  namespace: NamespaceInputForConnect,
   meta: BlockchainMeta[]
 ): string | AddEthereumChainParameter | undefined {
   // `undefined` means it's not evm or we couldn't find it in meta.
@@ -306,20 +306,17 @@ export function transformHubResultToLegacyResult(
     return {
       accounts: res.accounts,
       network: res.network,
-      provider: undefined,
     };
   } else if (isConnectResultSolana(res)) {
     return {
       accounts: res,
       network: null,
-      provider: undefined,
     };
   }
 
   return {
     accounts: [res],
     network: null,
-    provider: undefined,
   };
 }
 

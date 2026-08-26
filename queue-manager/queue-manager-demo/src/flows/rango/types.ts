@@ -1,7 +1,5 @@
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { Network } from '@rango-dev/internal-blockchains';
+import type { WalletType } from '@rango-dev/queue-manager-rango-preset';
 import type BigNumber from 'bignumber.js';
 import type { Asset, mainAPI } from 'rango-types';
 

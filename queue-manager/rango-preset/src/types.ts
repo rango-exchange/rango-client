@@ -1,18 +1,21 @@
-import type { TargetNamespace, Wallet } from './shared';
+import type {
+  ConnectResult,
+  TargetNamespace,
+  Wallet,
+  WalletState,
+  WalletType,
+} from './shared';
 import type { Provider } from '@hub3js/core';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
-import type { EvmNetworksChainInfo } from '@rango-dev/internal-blockchains';
+import type {
+  EvmNetworksChainInfo,
+  Network,
+} from '@rango-dev/internal-blockchains';
 import type {
   QueueContext,
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
-import type {
-  LegacyConnectResult as ConnectResult,
-  LegacyNetwork as Network,
-  LegacyState as WalletState,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 import type { Transaction } from 'rango-sdk';
 import type {
   APIErrorCode,

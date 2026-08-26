@@ -1,6 +1,5 @@
 import type { Namespace } from '@hub3js/namespaces';
 import type { Network } from '@rango-dev/internal-blockchains';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   BlockchainMeta,
   ConfirmRouteResponse,
@@ -20,6 +19,31 @@ import BigNumber from 'bignumber.js';
 
 import { numberToString } from './numbers';
 import { PrettyError } from './shared-errors';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InstanceType = any;
+
+/** The id a provider registers itself under, e.g. `metamask`. */
+export type WalletType = string;
+
+export type WalletState = {
+  connected: boolean;
+  connecting: boolean;
+  /**
+   * @deprecated it always returns `false`. don't use it.
+   */
+  reachable: boolean;
+  installed: boolean;
+  accounts: string[] | null;
+  network: Network | null;
+  derivationPath?: string;
+};
+
+export type ConnectResult = {
+  accounts: string[] | null;
+  network: Network | null;
+  provider: InstanceType;
+};
 
 export interface PendingSwapWithQueueID {
   id: string;

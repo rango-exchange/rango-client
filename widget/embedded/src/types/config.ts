@@ -1,9 +1,6 @@
+import type { WalletType } from './wallets';
 import type { Provider } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type {
-  LegacyProviderInterface,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
@@ -262,7 +259,7 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+  wallets?: (WalletType | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };

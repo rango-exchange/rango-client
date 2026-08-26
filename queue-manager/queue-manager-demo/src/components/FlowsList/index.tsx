@@ -1,4 +1,4 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@rango-dev/queue-manager-rango-preset';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { useEffect, useState } from 'react';

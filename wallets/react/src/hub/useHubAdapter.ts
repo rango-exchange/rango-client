@@ -1,13 +1,13 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { ProviderContext } from '../index.js';
+import type {
+  NamespaceInputForConnect,
+  WalletInfo,
+  WalletType,
+} from '../legacy/types.js';
 import type { Provider } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyWalletInfo as WalletInfo,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 
 import { utils } from '@hub3js/evm';
 import {
@@ -60,12 +60,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
    * Derivation path from params is used in `mapHubEventsToLegacy` to be added to the payload of connect events.
    */
   const lastConnectAttemptParamsRef = useRef<{
-    [type: WalletType]: LegacyNamespaceInputForConnect[];
+    [type: WalletType]: NamespaceInputForConnect[];
   }>({});
 
   const updateLastConnectAttemptParams = (
     type: WalletType,
-    namespaces: LegacyNamespaceInputForConnect[] | undefined
+    namespaces: NamespaceInputForConnect[] | undefined
   ) => {
     lastConnectAttemptParamsRef.current[type] = namespaces || [];
   };
@@ -207,7 +207,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
       const targetNamespaces: [
-        LegacyNamespaceInputForConnect,
+        NamespaceInputForConnect,
         AllProxiedNamespaces
       ][] = [];
       namespaces.forEach((namespace) => {

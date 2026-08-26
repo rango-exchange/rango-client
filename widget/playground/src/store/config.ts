@@ -1,8 +1,8 @@
 import type { ColorsType, Type } from '../types';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { Provider } from '@hub3js/core';
 import type {
-  ProviderInterface,
   Tokens,
+  WalletType,
   WidgetColorsKeys,
   WidgetConfig,
   WidgetVariant,
@@ -27,7 +27,7 @@ export type Mode = 'dark' | 'light' | 'auto';
 interface ConfigState {
   config: WidgetConfig;
   onChangeApiKey: (apiKey: string) => void;
-  onChangeWallets: (wallets?: (WalletType | ProviderInterface)[]) => void;
+  onChangeWallets: (wallets?: (WalletType | Provider)[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangePinnedTokens: (tokens?: Asset[], type?: Type) => void;
@@ -271,7 +271,7 @@ export const useConfigStore = createSelectors(
                 config: {
                   ...storage.state.config,
                   wallets: storage.state.config.wallets?.filter(
-                    (wallet: WalletType | ProviderInterface) =>
+                    (wallet: WalletType | Provider) =>
                       typeof wallet === 'string'
                   ),
                 },

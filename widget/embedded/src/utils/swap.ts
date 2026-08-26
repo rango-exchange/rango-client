@@ -8,8 +8,8 @@ import type {
   SelectedQuote,
   SwapButtonState,
   Wallet,
+  WalletType,
 } from '../types';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   BestRouteRequest,

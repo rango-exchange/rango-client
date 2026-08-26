@@ -69,3 +69,12 @@ export const WalletTypes = {
   UNISAT,
   VULTISIG,
 } as const;
+
+type KnownWalletType = (typeof WalletTypes)[keyof typeof WalletTypes];
+
+/*
+ * The id a provider registers itself under. Every provider this package ships is
+ * in `WalletTypes`, but a custom provider can register any id, so the union stays
+ * open while keeping the known ids suggestible.
+ */
+export type WalletType = KnownWalletType | (string & {});

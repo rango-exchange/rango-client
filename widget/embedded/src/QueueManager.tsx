@@ -1,8 +1,8 @@
+import type { WalletType } from './types';
 import type {
   SwapQueueContext,
   TargetNamespace,
 } from '@rango-dev/queue-manager-rango-preset';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { PropsWithChildren } from 'react';
 
 import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/internal-blockchains';

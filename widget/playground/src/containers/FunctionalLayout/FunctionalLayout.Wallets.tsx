@@ -1,4 +1,4 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@rango-dev/widget-embedded';
 
 import { WalletTypes } from '@rango-dev/provider-all';
 import {
