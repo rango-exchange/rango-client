@@ -1,9 +1,15 @@
 import type { TonConnectUI } from '@tonconnect/ui';
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { Address, Cell } from '@ton/core';
+import { DefaultTonSigner } from '@rango-dev/signer-ton';
+import { Cell } from '@ton/core';
 import { CHAIN } from '@tonconnect/ui';
-import { SignerError } from 'rango-types';
+import { SignerError, TonChainID } from 'rango-types';
+
+const NETWORKS: Record<TonChainID, CHAIN> = {
+  [TonChainID.MAINNET]: CHAIN.MAINNET,
+  [TonChainID.TESTNET]: CHAIN.TESTNET,
+};
 
 export class CustomTonSigner implements GenericSigner<TonTransaction> {
   private provider: TonConnectUI;
@@ -17,16 +23,13 @@ export class CustomTonSigner implements GenericSigner<TonTransaction> {
   }
 
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
-    const { blockChain, type, from, messages, ...rest } = tx;
+    const transaction = DefaultTonSigner.buildTx(tx);
+
     const result = await this.provider.sendTransaction({
-      ...rest,
-      ...(from && { from: Address.parse(from).toRawString() }),
-      messages: messages.map(({ stateInit, payload, ...msg }) => ({
-        ...msg,
-        ...(stateInit != null && { stateInit }),
-        ...(payload != null && { payload }),
-      })),
-      network: CHAIN.MAINNET,
+      validUntil: transaction.valid_until,
+      network: NETWORKS[transaction.network],
+      ...(transaction.from && { from: transaction.from }),
+      messages: transaction.messages,
     });
 
     const hash = Cell.fromBase64(result.boc).hash().toString('hex');
