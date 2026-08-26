@@ -11,10 +11,6 @@
       "types": "./dist/mod.d.ts",
       "default": "./dist/mod.js"
     },
-    "./legacy": {
-      "types": "./dist/legacy/mod.d.ts",
-      "default": "./dist/legacy/mod.js"
-    },
     "./utils": {
       "types": "./dist/utils/mod.d.ts",
       "default": "./dist/utils/mod.js"
@@ -66,11 +62,10 @@
   },
   "files": [
     "dist",
-    "src",
-    "legacy"
+    "src"
   ],
   "scripts": {
-    "build": "yarn run rangutopia library build --inputs src/mod.ts,src/utils/mod.ts,src/legacy/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/stellar/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts,src/namespaces/ton/mod.ts",
+    "build": "yarn run rangutopia library build --inputs src/mod.ts,src/utils/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/stellar/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts,src/namespaces/ton/mod.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
