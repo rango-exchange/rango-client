@@ -1,6 +1,6 @@
 import type { PropTypes } from './Detached.types';
 import type { Namespace } from '@hub3js/namespaces';
-import type { NamespaceMeta } from '@rango-dev/ui';
+import type { NamespaceMeta } from '@rango-dev/wallets-react';
 
 import { i18n } from '@lingui/core';
 import {

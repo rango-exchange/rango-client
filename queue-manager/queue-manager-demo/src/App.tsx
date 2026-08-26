@@ -1,8 +1,8 @@
 import type { Wallet } from './flows/rango/types';
+import type { WalletType } from '@hub3js/core';
 import type {
   SwapQueueContext,
   TargetNamespace,
-  WalletType,
 } from '@rango-dev/queue-manager-rango-preset';
 
 import { makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';

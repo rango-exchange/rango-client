@@ -13,6 +13,8 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
 export type NamespaceMeta = NamespacesProperty['value']['data'][number];
+export type NeedsNamespace = NamespacesProperty['value'];
+export type NeedsDerivationPath = DerivationPathProperty['value'];
 
 export type InstallObjects = {
   CHROME?: string;
@@ -35,8 +37,8 @@ export type WalletInfo = {
   isContractWallet?: boolean;
   mobileWallet?: boolean;
 
-  needsDerivationPath?: DerivationPathProperty['value'];
-  needsNamespace?: NamespacesProperty['value'];
+  needsDerivationPath?: NeedsDerivationPath;
+  needsNamespace?: NeedsNamespace;
 };
 
 export type WalletState = {

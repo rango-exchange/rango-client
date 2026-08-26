@@ -18,11 +18,9 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
+import type { WalletType } from '@hub3js/core';
 import type { Network } from '@rango-dev/internal-blockchains';
-import type {
-  AllBlockchains,
-  WalletType,
-} from '@rango-dev/queue-manager-rango-preset';
+import type { AllBlockchains } from '@rango-dev/queue-manager-rango-preset';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {

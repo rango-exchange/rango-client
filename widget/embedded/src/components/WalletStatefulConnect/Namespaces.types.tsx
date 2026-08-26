@@ -1,7 +1,7 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
 import type { NamespaceData } from '@hub3js/core/store';
 import type { Namespace } from '@hub3js/namespaces';
-import type { NamespaceMeta } from '@rango-dev/ui';
+import type { NamespaceMeta } from '@rango-dev/wallets-react';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;

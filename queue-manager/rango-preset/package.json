@@ -30,6 +30,7 @@
     "uuid": "*"
   },
   "devDependencies": {
+    "@rango-dev/wallets-react": "^0.48.1-next.3",
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
