@@ -1,10 +1,7 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type {
-  NamespaceInputForConnect,
-  WalletType,
-} from '../legacy/types.js';
-import type { Hub, Provider } from '@hub3js/core';
+import type { NamespaceInputForConnect } from '../legacy/types.js';
+import type { Hub, Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces, Namespace } from '@hub3js/namespaces';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 

@@ -7,7 +7,7 @@ export type {
   ExtendedWalletInfo,
   NamespaceInputForConnect,
   WalletInfo,
-  WalletType,
+  WalletState,
 } from './types.js';
 export { Events } from './types.js';
 export {

@@ -4,7 +4,6 @@ export type {
   NamespaceMeta,
   NeedsDerivationPath,
   NeedsNamespace,
-  WalletType,
 } from './wallet.js';
 export type {
   SimulationAssetAndAmount,

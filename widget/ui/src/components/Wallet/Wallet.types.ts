@@ -2,8 +2,8 @@ import type {
   InstallObjects,
   NeedsDerivationPath,
   NeedsNamespace,
-  WalletType,
 } from '../../types/wallet.js';
+import type { WalletType } from '@hub3js/core';
 import type { TransactionType } from 'rango-types';
 
 export enum WalletState {

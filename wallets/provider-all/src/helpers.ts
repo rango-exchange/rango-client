@@ -1,5 +1,4 @@
-import type { WalletType } from './walletTypes.js';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
 
 export const isWalletExcluded = (

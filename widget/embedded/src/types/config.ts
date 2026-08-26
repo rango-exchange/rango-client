@@ -1,5 +1,4 @@
-import type { WalletType } from './wallets';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';

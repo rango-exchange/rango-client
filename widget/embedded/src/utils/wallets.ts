@@ -4,8 +4,8 @@ import type {
   SelectedQuote,
   Wallet,
   WalletInfoWithExtra,
-  WalletType,
 } from '../types';
+import type { WalletType } from '@hub3js/core';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExtendedWalletInfo,

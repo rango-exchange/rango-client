@@ -23,6 +23,7 @@
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/queue-manager-react": "*",
+    "@rango-dev/wallets-react": "*",
     "bignumber.js": "*",
     "rango-sdk": "*",
     "rango-types": "*",

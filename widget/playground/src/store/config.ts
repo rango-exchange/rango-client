@@ -1,8 +1,7 @@
 import type { ColorsType, Type } from '../types';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type {
   Tokens,
-  WalletType,
   WidgetColorsKeys,
   WidgetConfig,
   WidgetVariant,

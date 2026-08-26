@@ -1,33 +1,12 @@
-import type { Namespace } from '@hub3js/namespaces';
+import type {
+  DerivationPathProperty,
+  NamespacesProperty,
+  WalletType,
+} from '@hub3js/core';
 
-/** The id a provider registers itself under, e.g. `metamask`. */
-export type WalletType = string;
-
-export type NamespaceMeta = {
-  label: string;
-  /**
-   * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
-   * e.g. ETH
-   */
-  id: string;
-  value: Namespace;
-  unsupported?: boolean;
-  isChainSupported: (chainId: string) => boolean;
-};
-
-export type NeedsNamespace = {
-  selection: 'single' | 'multiple';
-  data: NamespaceMeta[];
-};
-
-export type NeedsDerivationPath = {
-  data: {
-    id: string;
-    label: string;
-    namespace: Namespace;
-    generateDerivationPath: (index: string) => string;
-  }[];
-};
+export type NamespaceMeta = NamespacesProperty['value']['data'][number];
+export type NeedsNamespace = NamespacesProperty['value'];
+export type NeedsDerivationPath = DerivationPathProperty['value'];
 
 export type InstallObjects = {
   CHROME?: string;

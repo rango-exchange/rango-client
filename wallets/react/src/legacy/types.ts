@@ -1,4 +1,10 @@
-import type { Provider, ProviderMetadata } from '@hub3js/core';
+import type {
+  DerivationPathProperty,
+  NamespacesProperty,
+  Provider,
+  ProviderMetadata,
+  WalletType,
+} from '@hub3js/core';
 import type { NamespaceData as HubNamespaceData } from '@hub3js/core/store';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Namespace } from '@hub3js/namespaces';
@@ -6,11 +12,7 @@ import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type InstanceType = any;
-
-/** The id a provider registers itself under, e.g. `metamask`. */
-export type WalletType = string;
+export type NamespaceMeta = NamespacesProperty['value']['data'][number];
 
 export type InstallObjects = {
   CHROME?: string;
@@ -19,32 +21,6 @@ export type InstallObjects = {
   BRAVE?: string;
   DEFAULT: string;
 };
-
-export type NamespaceMeta = {
-  label: string;
-  /**
-   * By using a matched `blockchain.name` (in meta) and `id`, we show logo in Namespace modal
-   * e.g. ETH
-   */
-  id: string;
-  value: Namespace;
-  unsupported?: boolean;
-  isChainSupported: (chainId: string) => boolean;
-};
-
-interface NeedsNamespace {
-  selection: 'single' | 'multiple';
-  data: NamespaceMeta[];
-}
-
-interface NeedsDerivationPath {
-  data: {
-    id: string;
-    label: string;
-    namespace: Namespace;
-    generateDerivationPath: (index: string) => string;
-  }[];
-}
 
 export type WalletInfo = {
   name: string;
@@ -59,8 +35,8 @@ export type WalletInfo = {
   isContractWallet?: boolean;
   mobileWallet?: boolean;
 
-  needsDerivationPath?: NeedsDerivationPath;
-  needsNamespace?: NeedsNamespace;
+  needsDerivationPath?: DerivationPathProperty['value'];
+  needsNamespace?: NamespacesProperty['value'];
 };
 
 export type WalletState = {
@@ -129,7 +105,7 @@ export type ConnectResult = {
   network: Network | null;
 };
 
-export type Providers = { [type in WalletType]?: InstanceType };
+export type Providers = { [type in WalletType]?: unknown };
 
 export type ExtendedWalletInfo = WalletInfo & {
   properties?: ProviderMetadata['properties'];

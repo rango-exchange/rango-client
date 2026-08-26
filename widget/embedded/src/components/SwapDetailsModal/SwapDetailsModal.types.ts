@@ -1,4 +1,4 @@
-import type { WalletType } from '../../types';
+import type { WalletType } from '@hub3js/core';
 import type { TargetNamespace } from '@rango-dev/queue-manager-rango-preset';
 import type { PendingSwap } from 'rango-types';
 

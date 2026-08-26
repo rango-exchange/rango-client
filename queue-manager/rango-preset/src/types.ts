@@ -1,11 +1,5 @@
-import type {
-  ConnectResult,
-  TargetNamespace,
-  Wallet,
-  WalletState,
-  WalletType,
-} from './shared';
-import type { Provider } from '@hub3js/core';
+import type { TargetNamespace, Wallet } from './shared';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
 import type {
   EvmNetworksChainInfo,
@@ -16,6 +10,7 @@ import type {
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
+import type { ConnectResult, WalletState } from '@rango-dev/wallets-react';
 import type { Transaction } from 'rango-sdk';
 import type {
   APIErrorCode,
