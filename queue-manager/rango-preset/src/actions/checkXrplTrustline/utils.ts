@@ -1,6 +1,7 @@
 import type { TargetToken, XrplNamespace } from './types';
-import type { TargetNamespace, WalletType } from '../../shared';
+import type { TargetNamespace } from '../../shared';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
+import type { WalletType } from '@hub3js/core';
 import type {
   BlockedReason,
   ExecuterActions,

@@ -1,7 +1,5 @@
-import type { WalletType } from '@rango-dev/provider-all';
+import type { WalletType } from '@hub3js/core';
 import type { WalletInfo } from '@rango-dev/ui';
-
-export type { WalletType };
 
 export interface Wallet {
   chain: string;

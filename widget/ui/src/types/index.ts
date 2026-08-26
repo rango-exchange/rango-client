@@ -1,11 +1,4 @@
-export type {
-  ConnectedWallet,
-  InstallObjects,
-  NamespaceMeta,
-  NeedsDerivationPath,
-  NeedsNamespace,
-  WalletType,
-} from './wallet.js';
+export type { ConnectedWallet } from './wallet.js';
 export type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,

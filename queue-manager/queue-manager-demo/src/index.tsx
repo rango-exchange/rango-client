@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/queue-manager-rango-preset';
+import type { WalletType } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-types';
 
 import { allProviders } from '@rango-dev/provider-all';
@@ -8,19 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
-import {
-  TON_CONNECT_MANIFEST_URL,
-  TREZOR_MANIFEST,
-  WC_PROJECT_ID,
-} from './configs';
 
-const providers = allProviders({
-  walletconnect2: {
-    WC_PROJECT_ID: WC_PROJECT_ID,
-  },
-  trezorManifest: TREZOR_MANIFEST,
-  tonconnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
-});
+const providers = allProviders();
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);

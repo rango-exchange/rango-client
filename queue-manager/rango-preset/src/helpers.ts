@@ -2,13 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import type { NotifierParams } from './services/eventEmitter';
-import type {
-  SwapStatus,
-  TargetNamespace,
-  Wallet,
-  WalletState,
-  WalletType,
-} from './shared';
+import type { SwapStatus, TargetNamespace, Wallet } from './shared';
 import type {
   ArrayElement,
   LastConnectedWallet,
@@ -19,7 +13,7 @@ import type {
   SwapStorage,
   UseQueueManagerParams,
 } from './types';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type {
@@ -30,6 +24,7 @@ import type {
   QueueType,
   SetStorage,
 } from '@rango-dev/queue-manager-core';
+import type { WalletState } from '@rango-dev/wallets-react';
 import type {
   CreateTransactionResponse,
   EvmBlockchainMeta,

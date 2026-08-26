@@ -1,5 +1,5 @@
+import type { WalletType } from '@hub3js/core';
 import type { Network } from '@rango-dev/internal-blockchains';
-import type { WalletType } from '@rango-dev/queue-manager-rango-preset';
 import type BigNumber from 'bignumber.js';
 import type { Asset, mainAPI } from 'rango-types';
 

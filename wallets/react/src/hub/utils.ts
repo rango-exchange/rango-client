@@ -2,9 +2,8 @@ import type { AllProxiedNamespaces } from './types.js';
 import type {
   NamespaceInputForConnect,
   EventHandler as WalletEventHandler,
-  WalletType,
 } from '../legacy/types.js';
-import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
+import type { Hub, Provider, ProxiedNamespace, WalletType } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type {
   Chain as AddEthereumChainParameter,
@@ -39,12 +38,6 @@ import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 
 export const HUB_VERSION = '1.0.0';
 
-/**
- * Picks the hub implementation out of each versioned provider.
- *
- * Legacy providers (version `0.0.0`) aren't supported anymore, so a provider
- * without a hub version is rejected instead of being routed to the legacy runtime.
- */
 export function getHubProviders(providers: VersionedProviders[]): Provider[] {
   return providers.map((provider) => {
     try {

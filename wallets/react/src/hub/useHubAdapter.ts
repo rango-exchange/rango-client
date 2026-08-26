@@ -1,11 +1,7 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type { ProviderContext } from '../index.js';
-import type {
-  NamespaceInputForConnect,
-  WalletInfo,
-  WalletType,
-} from '../legacy/types.js';
-import type { Provider } from '@hub3js/core';
+import type { NamespaceInputForConnect, WalletInfo } from '../legacy/types.js';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 

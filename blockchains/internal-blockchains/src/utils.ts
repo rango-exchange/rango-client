@@ -85,10 +85,6 @@ export function convertEvmBlockchainMetaToEvmChainInfo(
   );
 }
 
-/**
- * Rango addresses carry the chain they belong to, as `ETH:0xabc...`. It predates
- * CAIP-10 and is still the format the widget and the queue manager exchange.
- */
 export function formatAddressWithNetwork(
   address: string,
   network?: Network | null

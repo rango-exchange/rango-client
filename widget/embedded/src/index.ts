@@ -8,13 +8,13 @@ import type {
   UiEventData,
   WalletEventData,
   WalletInfoWithExtra,
-  WalletType,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
   WidgetTheme,
   WidgetVariant,
 } from './types';
+import type { WalletType } from '@hub3js/core';
 import type {
   PendingSwapWithQueueID,
   Route,

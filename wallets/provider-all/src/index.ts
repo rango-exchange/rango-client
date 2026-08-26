@@ -36,7 +36,6 @@ import { versions as walletconnect2 } from '@rango-dev/provider-walletconnect-2'
 import { versions as xverse } from '@rango-dev/provider-xverse';
 
 export { WalletTypes } from './walletTypes.js';
-export type { WalletType } from './walletTypes.js';
 
 export const allProviders = (): (() => VersionedProviders)[] => {
   return [

@@ -1,4 +1,4 @@
-import type { WalletType } from './types';
+import type { WalletType } from '@hub3js/core';
 import type {
   SwapQueueContext,
   TargetNamespace,

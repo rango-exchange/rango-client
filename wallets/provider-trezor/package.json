@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
-    "@hub3js/core": "^0.61.1",
-    "@hub3js/evm": "^0.4.0",
-    "@hub3js/std": "^0.3.0",
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/evm": "0.0.0-experimental-508611c9-20260825",
+    "@hub3js/std": "0.0.0-experimental-508611c9-20260825",
     "@rango-dev/internal-blockchains": "^0.1.1-next.0",
     "@rango-dev/signer-evm": "^0.45.1-next.0",
     "@rango-dev/wallets-core": "^0.61.1-next.0",

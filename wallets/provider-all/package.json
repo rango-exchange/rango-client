@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
+    "@hub3js/core": "0.0.0-experimental-508611c9-20260825",
     "@rango-dev/provider-binance": "^0.6.1-next.3",
     "@rango-dev/provider-bitget": "^0.60.1-next.3",
     "@rango-dev/provider-braavos": "^0.56.1-next.3",
@@ -56,7 +56,6 @@
     "@rango-dev/provider-vultisig": "^0.4.1-next.3",
     "@rango-dev/provider-walletconnect-2": "^0.57.1-next.3",
     "@rango-dev/provider-xverse": "^0.8.1-next.3",
-    "@rango-dev/wallets-core": "^0.61.1-next.0",
     "@rango-dev/wallets-react": "^0.48.1-next.3"
   },
   "publishConfig": {

@@ -6,8 +6,7 @@ import {
   pickVersion,
   type VersionedProviders,
 } from '@hub3js/core/utils';
-
-const HUB_VERSION = '1.0.0';
+import { HUB_VERSION } from '@rango-dev/wallets-react';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
