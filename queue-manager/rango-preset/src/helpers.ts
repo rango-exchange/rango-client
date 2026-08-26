@@ -42,13 +42,13 @@ import type {
   SwapStepStatus,
 } from 'rango-types';
 
-import { HYPERLIQUID_SIGN_NETWORK } from '@rango-dev/internal-blockchains';
+import {
+  getBlockChainNameFromId,
+  HYPERLIQUID_SIGN_NETWORK,
+  readAccountAddress,
+} from '@rango-dev/internal-blockchains';
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
-import {
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-  legacyReadAccountAddress as readAccountAddress,
-} from '@rango-dev/wallets-core/legacy';
 import BigNumber from 'bignumber.js';
 import {
   PendingSwapNetworkStatus,

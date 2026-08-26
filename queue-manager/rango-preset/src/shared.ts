@@ -1,7 +1,6 @@
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { Namespace } from '@hub3js/namespaces';
+import type { Network } from '@rango-dev/internal-blockchains';
+import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   BlockchainMeta,
   ConfirmRouteResponse,
@@ -17,7 +16,6 @@ import type {
   WalletTypeAndAddress,
 } from 'rango-types';
 
-import { type NamespaceInputForConnect } from '@rango-dev/wallets-core/dist/legacy/types';
 import BigNumber from 'bignumber.js';
 
 import { numberToString } from './numbers';
@@ -91,7 +89,7 @@ export enum MessageSeverity {
 export type SwapStatus = 'running' | 'failed' | 'success';
 
 export interface TargetNamespace {
-  namespace: NamespaceInputForConnect['namespace'];
+  namespace: Namespace;
   network: string;
 }
 export const getCurrentNamespaceOfOrNull = (

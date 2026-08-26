@@ -1,11 +1,10 @@
 import type { Namespace } from '@hub3js/namespaces';
 
-import { Persistor } from '@rango-dev/wallets-core/legacy';
-
 import {
   HUB_LAST_CONNECTED_WALLETS,
   LEGACY_LAST_CONNECTED_WALLETS,
 } from './constants.js';
+import { Persistor } from './persistor.js';
 
 export interface NamespaceInput {
   namespace: Namespace;
