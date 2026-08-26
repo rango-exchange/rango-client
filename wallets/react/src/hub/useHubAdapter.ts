@@ -29,6 +29,7 @@ import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
+  findProviderByType,
   isEvmNamespace,
   isSolanaNamespace,
   isUtxoNamespace,
@@ -39,7 +40,7 @@ import {
 
 export type UseAdapterParams = Omit<ProviderProps, 'providers'> & {
   providers: Provider[];
-  /** This is only will be used to access some parts of the legacy provider that doesn't exists in Hub. */
+  // TODO: remove this
   allVersionedProviders: VersionedProviders[];
 };
 
@@ -437,7 +438,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       };
     },
     providers() {
-      throw new Error('This method is not available on hub providers.');
+      return {};
     },
     state(type) {
       const hubState = getHub().state();
@@ -445,9 +446,15 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const walletState = hubState[type];
 
       if (!walletState || !wallet) {
-        throw new Error(
-          `It seems your requested provider doesn't exist in hub. Provider Id: ${type}`
-        );
+        return {
+          connected: false,
+          connecting: false,
+          installed: false,
+          reachable: false,
+          accounts: null,
+          network: null,
+          namespaces: new Map(),
+        };
       }
 
       const accounts = walletState.namespaces
@@ -501,10 +508,16 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         `Suggest has not been implemented for given chain: ${namespace.network}`
       );
     },
-    hubProvider() {
-      throw new Error(
-        'Unreachable code. the method has been implemented in main adapter instance.'
-      );
+    hubProvider(type) {
+      const provider = findProviderByType(params.providers, type);
+
+      if (!provider) {
+        throw new Error(
+          `You're trying to access ${type} provider which is not found in hub providers. it may not be registered yet.`
+        );
+      }
+
+      return provider;
     },
   };
 

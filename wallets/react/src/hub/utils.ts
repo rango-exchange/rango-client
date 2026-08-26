@@ -8,7 +8,6 @@ import type {
 import type { SolanaActions } from '@hub3js/solana';
 import type {
   LegacyNamespaceInputForConnect,
-  LegacyProviderInterface,
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
@@ -40,27 +39,18 @@ import {
 } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 
-/* Gets a list of hub and legacy providers and returns a tuple which separates them. */
-export function separateLegacyAndHubProviders(
-  providers: VersionedProviders[]
-): [LegacyProviderInterface[], Provider[]] {
-  const LEGACY_VERSION = '0.0.0';
-  const HUB_VERSION = '1.0.0';
+export const HUB_VERSION = '1.0.0';
 
-  const legacyProviders: LegacyProviderInterface[] = [];
-  const hubProviders: Provider[] = [];
-
-  providers.forEach((provider) => {
+export function getHubProviders(providers: VersionedProviders[]): Provider[] {
+  return providers.map((provider) => {
     try {
-      const target = pickVersion(provider, HUB_VERSION);
-      hubProviders.push(target[1]);
+      return pickVersion(provider, HUB_VERSION)[1] as Provider;
     } catch {
-      const target = pickVersion(provider, LEGACY_VERSION);
-      legacyProviders.push(target[1]);
+      throw new Error(
+        `Legacy providers aren't supported anymore. Expected a provider with version ${HUB_VERSION}.`
+      );
     }
   });
-
-  return [legacyProviders, hubProviders];
 }
 
 export function findProviderByType(
@@ -270,21 +260,6 @@ export function mapHubEventsToLegacy(
       });
       break;
   }
-}
-
-export function getAllLegacyProviders(
-  allProviders: VersionedProviders[]
-): LegacyProviderInterface[] {
-  const LEGACY_VERSION = '0.0.0';
-
-  const legacyProviders: LegacyProviderInterface[] = [];
-
-  allProviders.forEach((provider) => {
-    const target = pickVersion(provider, LEGACY_VERSION);
-    legacyProviders.push(target[1]);
-  });
-
-  return legacyProviders;
 }
 
 /**
