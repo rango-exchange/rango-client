@@ -44,7 +44,7 @@ import type {
 } from '@rango-dev/wallets-core/legacy';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
-import { Networks } from '@rango-dev/internal-blockchains';
+import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
 import {
   EventSeverity,
   RouteEventType,
@@ -52,7 +52,6 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
 import { PendingSwapNetworkStatus } from 'rango-types';
 

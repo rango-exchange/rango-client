@@ -10,9 +10,9 @@ import type {
 } from '@rango-dev/wallets-core/legacy';
 
 import {
-  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
-  legacyReadAccountAddress as readAccountAddress,
-} from '@rango-dev/wallets-core/legacy';
+  formatAddressWithNetwork,
+  readAccountAddress,
+} from '@rango-dev/internal-blockchains';
 import { Events } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 

@@ -16,13 +16,11 @@ import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
+  formatAddressWithNetwork,
+  getBlockChainNameFromId,
   getSupportedChainsFromProvider,
 } from '@rango-dev/internal-blockchains';
-import {
-  LegacyEvents as Events,
-  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-} from '@rango-dev/wallets-core/legacy';
+import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
 import { AccountId } from 'caip';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 

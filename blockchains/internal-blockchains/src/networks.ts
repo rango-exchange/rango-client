@@ -47,3 +47,9 @@ export enum Networks {
 }
 
 export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
+
+/*
+ * A Rango chain name. `Networks` covers the chains we know by name, but the API
+ * can serve a chain before the enum learns about it, so any string is accepted.
+ */
+export type Network = Networks | (string & {});
