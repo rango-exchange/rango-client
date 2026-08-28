@@ -22,7 +22,7 @@ export function getConfig(name: keyof Configs) {
   return configs[name];
 }
 
-export function setConfig(name: keyof Configs, value: any) {
+export function setConfig<K extends keyof Configs>(name: K, value: Configs[K]) {
   configs[name] = value;
 
   return value;
