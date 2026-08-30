@@ -74,6 +74,7 @@ export async function executeSolanaTransaction(
         solanaWeb3Transaction
       );
       return signedTransaction.serialize();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       const REJECTION_CODE = 4001;
       if (e && Object.hasOwn(e, 'code') && e.code === REJECTION_CODE) {
