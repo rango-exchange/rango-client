@@ -1,0 +1,26 @@
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/esm/index.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/esm/index.d.ts
+index 8183aa9..19523f9 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/esm/index.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/esm/index.d.ts
+@@ -470,7 +470,7 @@ interface CacheBindingInvalidation {
+     operations: PlanParamsOperations;
+ }
+
+-declare const isLazyPlanServiceNodeSymbol: symbol;
++declare const isLazyPlanServiceNodeSymbol: unique symbol;
+ declare abstract class LazyPlanServiceNode implements PlanServiceNode {
+     [isLazyPlanServiceNodeSymbol]: true;
+     protected readonly _serviceIdentifier: ServiceIdentifier;
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/cjs/planning/models/LazyPlanServiceNode.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/cjs/planning/models/LazyPlanServiceNode.d.ts
+index 50ec690..a653c5e 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/cjs/planning/models/LazyPlanServiceNode.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/@inversifyjs/core/lib/cjs/planning/models/LazyPlanServiceNode.d.ts
+@@ -1,7 +1,7 @@
+ import { ServiceIdentifier } from '@inversifyjs/common';
+ import { PlanBindingNode } from './PlanBindingNode';
+ import { PlanServiceNode } from './PlanServiceNode';
+-declare const isLazyPlanServiceNodeSymbol: symbol;
++declare const isLazyPlanServiceNodeSymbol: unique symbol;
+ export declare abstract class LazyPlanServiceNode implements PlanServiceNode {
+     [isLazyPlanServiceNodeSymbol]: true;
+     protected readonly _serviceIdentifier: ServiceIdentifier;

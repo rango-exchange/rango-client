@@ -126,6 +126,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
                 meta: blockchains,
               },
             },
+            [WalletTypes.LEDGER_WALLET]: {
+              provider: config.ledgerWallet,
+            },
           },
         }}>
         {props.children}

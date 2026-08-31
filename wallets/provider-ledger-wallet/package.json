@@ -1,0 +1,34 @@
+{
+  "name": "@rango-dev/provider-ledger-wallet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": "./dist/mod.js"
+  },
+  "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "yarn run rangutopia library build",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@hub3js/core": "^0.61.1",
+    "@hub3js/evm": "^0.4.0",
+    "@hub3js/std": "^0.3.0",
+    "@ledgerhq/ledger-wallet-provider": "^1.4.2",
+    "@rango-dev/signer-evm": "^0.45.1-next.0",
+    "rango-types": "^0.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

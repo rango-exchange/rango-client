@@ -189,6 +189,21 @@ export type TonConnectConfig = {
 };
 
 /**
+ * Configuration for the Ledger wallet integration.
+ *
+ * @property {string} dAppIdentifier - Unique identifier of your dApp, registered with Ledger to authorize the integration.
+ * @property {string} apiKey - API key issued by Ledger, used to authenticate requests from your dApp.
+ * @property {'fatal' | 'error' | 'warn' | 'info' | 'debug'} [loggerLevel] - Verbosity of the Ledger logger.
+ * @property {boolean} [hideButton] - When `true`, hides the built-in Ledger floating button.
+ */
+export type LedgerWalletConfig = {
+  dAppIdentifier: string;
+  apiKey: string;
+  loggerLevel?: 'fatal' | 'error' | 'warn' | 'info' | 'debug';
+  hideButton?: boolean;
+};
+
+/**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
  * and theme.
@@ -256,6 +271,7 @@ export type WidgetConfig = {
   title?: string;
   walletConnectProjectId?: string;
   trezorManifest?: TrezorManifest;
+  ledgerWallet?: LedgerWalletConfig;
   tonConnect?: TonConnectConfig;
   affiliate?: WidgetAffiliate;
   amount?: number;

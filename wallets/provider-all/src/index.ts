@@ -12,6 +12,7 @@ import { versions as exodus } from '@rango-dev/provider-exodus';
 import { versions as freighter } from '@rango-dev/provider-freighter';
 import { versions as gemwallet } from '@rango-dev/provider-gemwallet';
 import { versions as ledger } from '@rango-dev/provider-ledger';
+import { versions as ledgerWallet } from '@rango-dev/provider-ledger-wallet';
 import { versions as mathwallet } from '@rango-dev/provider-math-wallet';
 import { versions as metamask } from '@rango-dev/provider-metamask';
 import { versions as noirWallet } from '@rango-dev/provider-noir-wallet';
@@ -65,6 +66,7 @@ export const allProviders = (): (() => VersionedProviders)[] => {
     taho,
     braavos,
     ledger,
+    ledgerWallet,
     rabby,
     trezor,
     solflare,
