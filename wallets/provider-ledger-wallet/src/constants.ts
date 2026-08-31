@@ -67,5 +67,11 @@ export const metadata: ProviderMetadata = {
       name: 'signers',
       value: { getSigners: async () => getSigners() },
     },
+    {
+      name: 'details',
+      value: {
+        showOnMobile: false,
+      },
+    },
   ],
 };
