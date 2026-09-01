@@ -262,6 +262,10 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
+  /**
+   * Passing a `LegacyProviderInterface` is deprecated. Pass a hub `Provider` instead.
+   * Legacy providers will be removed in future versions.
+   */
   wallets?: (WalletType | LegacyProviderInterface | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;

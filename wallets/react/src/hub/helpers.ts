@@ -1,4 +1,5 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type { ProviderProps } from '../types.js';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type { Result } from 'ts-results';
 
@@ -178,4 +179,10 @@ export function createQueue(options?: {
     });
 
   return queueTask;
+}
+
+export function shouldTryAutoConnect(
+  props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'>
+): boolean {
+  return !!props.allBlockChains?.length && !!props.autoConnect;
 }

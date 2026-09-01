@@ -37,7 +37,7 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
-const providers = allProviders();
+const providers = allProviders().map((build) => build());
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -54,11 +54,10 @@ or some specific wallets:
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import * as metamask from '@rango-dev/provider-metamask';
-import * as phantom from '@rango-dev/provider-phantom';
+import { versions as metamask } from '@rango-dev/provider-metamask';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 
-
-const providers = [metamask, phantom];
+const providers = [metamask(), phantom()];
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -106,7 +105,7 @@ With the use of auto-connect, after reloading the app, wallet provider will auto
 import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
-const providers = allProviders();
+const providers = allProviders().map((build) => build());
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -204,11 +203,3 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Safe          | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
 | Noir Wallet   | ✅             | ❌             | ✅           | Injected                  | ❌            |
 | WalletConnect | ✅             | ✅             | ✅           | Injected                  | ✅            |
-
-# Supported Wallets (Legacy)
-
-| Wallet | Supported Chains | Not Implemented | Auto Connect Support | Source |
-| ------ | ---------------- | --------------- | -------------------- | ------ |
-
-| Trezor | Ethereum,Solana | Solana | &cross; | https://trezor.io/ |
-| Wallet Connect | Evm,Solana | Solana | &cross; | - |
