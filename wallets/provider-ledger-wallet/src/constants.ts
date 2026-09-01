@@ -10,6 +10,7 @@ import {
   CAIP_OPTIMISM_CHAIN_ID,
   CAIP_POLYGON_CHAIN_ID,
   CAIP_SONIC_CHAIN_ID,
+  CAIP_ZKSYNC_CHAIN_ID,
   isEvmNamespace,
 } from '@hub3js/evm';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
@@ -35,7 +36,7 @@ export const EVM_SUPPORTED_CHAINS = [
   CAIP_ARBITRUM_CHAIN_ID,
   CAIP_AVAX_CHAIN_ID,
   CAIP_LINEA_CHAIN_ID,
-  // CAIP_ZKSYNC_CHAIN_ID,
+  CAIP_ZKSYNC_CHAIN_ID,
 ];
 
 export const metadata: ProviderMetadata = {
