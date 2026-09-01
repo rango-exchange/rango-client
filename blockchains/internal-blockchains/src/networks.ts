@@ -47,3 +47,5 @@ export enum Networks {
 }
 
 export const HYPERLIQUID_SIGN_NETWORK = Networks.ARBITRUM;
+
+export type Network = Networks | (string & {});
