@@ -1,0 +1,77 @@
+import type { NextTransactionStateError } from '../../common/produceNextStateForTransaction';
+import type {
+  ApproveAdapter,
+  ApprovePrerequisite,
+  ApproveTransactionStatus,
+} from '../types';
+import type { TrxRawData } from 'rango-sdk';
+import type { TronTransaction } from 'rango-types';
+import type { Result } from 'ts-results';
+
+import {
+  isTronApprovePrerequisite,
+  isTronApprovePrerequisiteResult,
+  TransactionType,
+  TRON_APPROVE_TYPE,
+} from 'rango-types';
+import { Err, Ok } from 'ts-results';
+
+export const tronApproveAdapter: ApproveAdapter<'tron', TronTransaction> = {
+  prerequisiteType: TRON_APPROVE_TYPE,
+  namespaceKey: 'tron',
+  signerTxType: TransactionType.TRON,
+
+  isApprovePrerequisite: isTronApprovePrerequisite,
+
+  isApprovePrerequisiteResult: isTronApprovePrerequisiteResult,
+
+  /*
+   * The Tron approve tx must be built via the node (through the namespace),
+   * then normalized into a `TronTransaction` for the signer.
+   */
+  buildApproveTransaction: async (
+    prerequisite: ApprovePrerequisite,
+    namespace
+  ): Promise<Result<TronTransaction, NextTransactionStateError>> => {
+    try {
+      const builtTransaction = await namespace.buildApproveTransaction({
+        token: prerequisite.token,
+        owner: prerequisite.wallet,
+        spender: prerequisite.spender,
+        amount: prerequisite.amount,
+      });
+
+      return Ok<TronTransaction>({
+        type: TransactionType.TRON,
+        blockChain: prerequisite.blockChain,
+        prerequisites: [],
+        isApprovalTx: true,
+        raw_data: (builtTransaction.raw_data as TrxRawData) ?? null,
+        raw_data_hex: builtTransaction.raw_data_hex ?? null,
+        txID: builtTransaction.txID,
+        visible: builtTransaction.visible ?? false,
+        __payload__: {},
+      });
+    } catch {
+      return new Err({
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message: 'Could not build the Tron approve transaction.',
+        details: undefined,
+        errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      });
+    }
+  },
+
+  getTransactionStatus: async (
+    namespace,
+    executedTransactionHash
+  ): Promise<ApproveTransactionStatus> => {
+    const info = await namespace.getTransactionInfo(executedTransactionHash);
+    // An empty info object means the transaction is not confirmed yet.
+    if (!info?.receipt?.result) {
+      return 'pending';
+    }
+    return info.receipt.result === 'SUCCESS' ? 'success' : 'failed';
+  },
+};

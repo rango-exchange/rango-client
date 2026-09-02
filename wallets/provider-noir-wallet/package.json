@@ -27,7 +27,7 @@
     "@rango-dev/internal-blockchains": "^0.1.1-next.0",
     "@rango-dev/wallets-core": "^0.61.1-next.0",
     "bignumber.js": "^9.1.1",
-    "rango-types": "^0.5.0"
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   },
   "publishConfig": {
     "access": "public"

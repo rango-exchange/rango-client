@@ -86,6 +86,44 @@ export function handleUnmetXrplChangeTrustLinePrerequisite(
   }
 }
 
+/**
+ * Routes an unmet approve prerequisite (EVM or Tron) to the right queue action:
+ * with no result yet → the check action; with a `pending` result → the status
+ * poller. Any other status is unexpected here.
+ */
+export function handleUnmetApprovePrerequisite(
+  prerequisiteInfo: {
+    prerequisiteType: TransactionPrerequisiteType;
+    checkAction: SwapActionTypes;
+    checkStatusAction: SwapActionTypes;
+  },
+  prerequisiteIndex: number,
+  currentStep: PendingSwapStep
+): Result<SwapActionTypes, string> {
+  const prerequisiteResult = getPrerequisiteResult(currentStep, {
+    prerequisiteType: prerequisiteInfo.prerequisiteType,
+    prerequisiteIndex,
+  });
+
+  if (!prerequisiteResult) {
+    return new Ok(prerequisiteInfo.checkAction);
+  }
+
+  switch (prerequisiteResult.status) {
+    case 'pending':
+      return new Ok(prerequisiteInfo.checkStatusAction);
+    case 'success': // Unreachable code
+    case 'skipped': // Unreachable code
+      return new Err('Unexpected Error: approve prerequisite is already met!');
+    case 'failed':
+      return new Err('Unexpected Error: approve prerequisite failed!');
+    default:
+      return new Err(
+        'Unexpected Error: approve prerequisite has an invalid status!'
+      );
+  }
+}
+
 export function handleUnmetStellarChangeTrustLinePrerequisite(
   prerequisiteIndex: number,
   currentStep: PendingSwapStep

@@ -25,8 +25,8 @@
     "@rango-dev/queue-manager-react": "*",
     "@rango-dev/wallets-core": "*",
     "bignumber.js": "*",
-    "rango-sdk": "*",
-    "rango-types": "*",
+    "rango-sdk": "0.0.0-experimental-4602126c-20260902",
+    "rango-types": "0.0.0-experimental-4602126c-20260902",
     "uuid": "*"
   },
   "devDependencies": {
@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/namespaces": "0.0.0-experimental-86ac55e4-20260902",
     "@hub3js/stellar": "^0.3.0",
     "@hub3js/xrpl": "^0.3.0",
     "@rango-dev/internal-blockchains": "^0.1.1-next.0",
     "@rango-dev/logging-core": "^0.14.0",
     "@stellar/stellar-sdk": "^15.0.1",
-    "rango-types": "^0.5.0",
+    "rango-types": "0.0.0-experimental-4602126c-20260902",
     "ts-results": "^3.3.0",
     "uuid": "^9.0.0"
   },
