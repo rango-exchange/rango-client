@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-gemwallet",
-  "version": "0.5.1-next.3",
+  "version": "0.5.1-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
