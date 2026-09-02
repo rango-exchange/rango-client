@@ -10,6 +10,7 @@ import { WALLET_ID as EXODUS } from '@rango-dev/provider-exodus';
 import { WALLET_ID as FREIGHTER } from '@rango-dev/provider-freighter';
 import { WALLET_ID as GEMWALLET } from '@rango-dev/provider-gemwallet';
 import { WALLET_ID as LEDGER } from '@rango-dev/provider-ledger';
+import { WALLET_ID as LEDGER_WALLET } from '@rango-dev/provider-ledger-wallet';
 import { WALLET_ID as MATH } from '@rango-dev/provider-math-wallet';
 import { WALLET_ID as META_MASK } from '@rango-dev/provider-metamask';
 import { WALLET_ID as NOIR_WALLET } from '@rango-dev/provider-noir-wallet';
@@ -56,6 +57,7 @@ export const WalletTypes = {
   ENKRYPT,
   TAHO,
   LEDGER,
+  LEDGER_WALLET,
   RABBY,
   TOMO,
   TREZOR,

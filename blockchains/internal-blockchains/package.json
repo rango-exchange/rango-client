@@ -27,14 +27,14 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hub3js/core": "^0.61.1",
-    "@hub3js/evm": "^0.4.0",
-    "@hub3js/solana": "^0.4.0",
-    "@hub3js/starknet": "^0.3.0",
-    "@hub3js/stellar": "^0.3.0",
-    "@hub3js/sui": "^0.3.0",
-    "@hub3js/tvm": "^0.3.0",
-    "@hub3js/xrpl": "^0.3.0",
+    "@hub3js/core": "^0.62.0",
+    "@hub3js/evm": "^0.5.0",
+    "@hub3js/solana": "^0.5.0",
+    "@hub3js/starknet": "^0.4.0",
+    "@hub3js/stellar": "^0.4.0",
+    "@hub3js/sui": "^0.4.0",
+    "@hub3js/tvm": "^0.4.0",
+    "@hub3js/xrpl": "^0.4.0",
     "@rango-dev/wallets-core": "^0.61.1-next.0",
     "rango-types": "^0.5.0"
   },

@@ -4,10 +4,14 @@ import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 import type { VersionedProviders } from '@hub3js/core/utils';
 
-import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import {
+  allProviders as getAllProviders,
+  WalletTypes,
+} from '@rango-dev/provider-all';
 
 import { cacheService } from '../../services/cacheService';
 import {
+  configWalletsToWalletName,
   matchAndGenerateProviders,
   type ProvidersOptions,
 } from '../../utils/providers';
@@ -84,11 +88,24 @@ export interface ConfigSlice {
   getAvailableProviders: () => VersionedProviders[];
 }
 
-function generateProviders() {
+function generateProviders(config: WidgetConfig): VersionedProviders[] {
   const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
-  return allBuiltProviders;
+  const providerNames = configWalletsToWalletName(allBuiltProviders);
+
+  const filteredProviders = allBuiltProviders.filter((_, index) => {
+    if (
+      providerNames[index] === WalletTypes.LEDGER_WALLET &&
+      (!config.ledgerWallet?.apiKey || !config.ledgerWallet?.dAppIdentifier)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+
+  return filteredProviders;
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
@@ -96,9 +113,10 @@ export const createConfigSlice: StateCreatorWithInitialData<
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
-  const allBuiltProviders = generateProviders();
+  const config: WidgetConfig = { ...DEFAULT_CONFIG, ...initialData };
+  const allBuiltProviders = generateProviders(config);
   return {
-    config: { ...DEFAULT_CONFIG, ...initialData },
+    config,
     iframe: DEFAULT_IFRAME_CONFIGS,
     campaignMode: DEFAULT_CAMPAIGN_MODE,
     allProviders: allBuiltProviders,
@@ -194,7 +212,8 @@ export const createConfigSlice: StateCreatorWithInitialData<
     },
 
     buildAndSetProviders: () => {
-      const allBuiltProviders = generateProviders();
+      const { config } = get();
+      const allBuiltProviders = generateProviders(config);
 
       set({
         allProviders: allBuiltProviders,
