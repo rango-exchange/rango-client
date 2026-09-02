@@ -141,6 +141,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Enkrypt](provider-enkrypt/readme.md)               | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Exodus](provider-exodus/readme.md)                 | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Ledger](provider-ledger/readme.md)                 | ⚠️  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ledger Wallet](provider-ledger-wallet/readme.md)   | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [MathWallet](provider-math-wallet/readme.md)        | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [MetaMask](provider-metamask/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Phantom](provider-phantom/readme.md)               | ⚠️  | ❌   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
@@ -179,6 +180,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Enkrypt       | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | Exodus        | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
 | Ledger        | ✅             | ❌             | ❌           | Transport                 | ✅            |
+| Ledger Wallet | ✅             | ✅             | ✅           | Ledger Wallet             | ✅            |
 | MathWallet    | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
 | MetaMask      | ✅             | ✅             | ✅           | Injected                  | ✅            |
 | OKX           | ⚠️             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
