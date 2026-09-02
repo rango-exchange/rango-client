@@ -5,7 +5,7 @@ import {
   type TronActions,
   utils,
 } from '@rango-dev/wallets-core/namespaces/tron';
-import { builders } from '@rango-dev/wallets-core/namespaces/tron';
+import { actions, builders } from '@rango-dev/wallets-core/namespaces/tron';
 
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
@@ -51,10 +51,28 @@ const canEagerConnect = builders
   .action(tronActions.canEagerConnectAction)
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(actions.getAllowance(tronBitget))
+  .build();
+
+const buildApproveTransaction = builders
+  .buildApproveTransaction()
+  .action(actions.buildApproveTransaction(tronBitget))
+  .build();
+
+const getTransactionInfo = builders
+  .getTransactionInfo()
+  .action(actions.getTransactionInfo(tronBitget))
+  .build();
+
 const tron = new NamespaceBuilder<TronActions>('Tron', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
+  .action(getAllowance)
+  .action(buildApproveTransaction)
+  .action(getTransactionInfo)
   .build();
 
 export { tron };

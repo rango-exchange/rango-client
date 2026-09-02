@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "process": "^0.11.10",
-    "rango-sdk": "^0.5.0"
+    "rango-sdk": "0.0.0-experimental-4602126c-20260902"
   },
   "dependencies": {
     "@rango-dev/internal-blockchains": "^0.1.1-next.0",
@@ -28,7 +28,7 @@
     "bignumber.js": "^9.1.1",
     "crypto-browserify": "^3.12.1",
     "ethers": "^6.13.2",
-    "rango-sdk-basic": "^0.5.0",
-    "rango-types": "^0.5.0"
+    "rango-sdk-basic": "0.0.0-experimental-4602126c-20260902",
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   }
 }

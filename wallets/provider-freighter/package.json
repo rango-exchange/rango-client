@@ -26,7 +26,7 @@
     "@hub3js/stellar": "^0.3.0",
     "@stellar/freighter-api": "^6.0.1",
     "@stellar/stellar-sdk": "^15.0.1",
-    "rango-types": "^0.5.0"
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   },
   "publishConfig": {
     "access": "public"

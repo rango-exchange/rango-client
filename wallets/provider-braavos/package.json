@@ -22,12 +22,12 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/namespaces": "0.0.0-experimental-86ac55e4-20260902",
     "@hub3js/starknet": "^0.3.0",
     "@hub3js/std": "^0.3.0",
     "@rango-dev/signer-starknet": "^0.43.0",
     "@rango-dev/wallets-core": "^0.61.1-next.0",
-    "rango-types": "^0.5.0"
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   },
   "publishConfig": {
     "access": "public"

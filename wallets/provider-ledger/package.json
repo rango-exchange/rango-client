@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.61.1",
-    "@hub3js/evm": "^0.4.0",
-    "@hub3js/namespaces": "^0.3.0",
+    "@hub3js/evm": "0.0.0-experimental-86ac55e4-20260902",
+    "@hub3js/namespaces": "0.0.0-experimental-86ac55e4-20260902",
     "@hub3js/solana": "^0.4.0",
     "@hub3js/std": "^0.3.0",
     "@ledgerhq/errors": "^6.16.4",
@@ -40,7 +40,7 @@
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "ethers": "^6.13.2",
-    "rango-types": "^0.5.0"
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   },
   "publishConfig": {
     "access": "public"

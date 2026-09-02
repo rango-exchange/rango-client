@@ -13,3 +13,14 @@ export const connect = () =>
 
 export const canEagerConnect = () =>
   new ActionBuilder<TronActions, 'canEagerConnect'>('canEagerConnect');
+
+export const getAllowance = () =>
+  new ActionBuilder<TronActions, 'getAllowance'>('getAllowance');
+
+export const buildApproveTransaction = () =>
+  new ActionBuilder<TronActions, 'buildApproveTransaction'>(
+    'buildApproveTransaction'
+  );
+
+export const getTransactionInfo = () =>
+  new ActionBuilder<TronActions, 'getTransactionInfo'>('getTransactionInfo');
