@@ -1,9 +1,14 @@
 import type { WalletConnectNamespace } from '../types.js';
-import type { Chain } from '@hub3js/evm';
+import type {
+  AllowanceParams,
+  Chain,
+  EvmTransactionReceipt,
+} from '@hub3js/evm';
 import type { SessionTypes } from '@walletconnect/types';
 import type UniversalProvider from '@walletconnect/universal-provider';
 import type { BlockchainMeta } from 'rango-types';
 
+import { utils } from '@hub3js/evm';
 import { debug } from '@rango-dev/logging-core';
 
 import {
@@ -109,6 +114,38 @@ export class WalletConnectAdapter {
 
   async getClient() {
     return (await this.getUniversalProvider()).client;
+  }
+
+  /**
+   * Reads the current ERC-20 allowance via an `eth_call` routed through the
+   * WalletConnect provider (the read is served by the active chain's RPC, not
+   * the wallet). Returned as a decimal string.
+   */
+  async getAllowance(params: AllowanceParams): Promise<string> {
+    const provider = await this.getUniversalProvider();
+    const result = await provider.request<string>({
+      method: 'eth_call',
+      params: [
+        {
+          to: params.token,
+          data: utils.encodeAllowanceCallData(params.owner, params.spender),
+        },
+        'latest',
+      ],
+    });
+    // An empty result ('0x') means the call returned no data; treat as zero allowance.
+    return BigInt(result === '0x' ? 0 : result).toString();
+  }
+
+  /** Reads a transaction receipt through the WalletConnect provider. */
+  async getTransactionReceipt(
+    txHash: `0x${string}`
+  ): Promise<EvmTransactionReceipt | null> {
+    const provider = await this.getUniversalProvider();
+    return provider.request<EvmTransactionReceipt | null>({
+      method: 'eth_getTransactionReceipt',
+      params: [txHash],
+    });
   }
 
   getSession(namespace: WalletConnectNamespace): SessionTypes.Struct | null {
