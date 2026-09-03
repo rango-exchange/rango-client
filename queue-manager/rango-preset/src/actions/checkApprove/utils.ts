@@ -5,10 +5,16 @@ import type {
 } from './types';
 import type { SwapQueueContext } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { Result } from 'ts-results';
 
 import { Err, Ok } from 'ts-results';
+
+/**
+ * Whatever `hubProvider` accepts. Taken from the context rather than imported
+ * from the wallet package directly, so this file does not depend on the legacy
+ * module and keeps compiling when the wallet type moves.
+ */
+type WalletType = Parameters<SwapQueueContext['hubProvider']>[0];
 
 /**
  * Resolves the wallet's hub namespace when it can execute approve prerequisites
