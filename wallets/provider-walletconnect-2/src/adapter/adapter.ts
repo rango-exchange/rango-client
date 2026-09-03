@@ -10,6 +10,7 @@ import type { BlockchainMeta } from 'rango-types';
 
 import { utils } from '@hub3js/evm';
 import { debug } from '@rango-dev/logging-core';
+import { JsonRpcProvider, toBeHex } from 'ethers';
 
 import {
   ensureConnectedToChain as ensureConnectedToChainHelper,
@@ -24,11 +25,24 @@ import {
 import { restoreAndCacheSession } from '../session/restore-cache.js';
 import { removeSessionRecord } from '../session/teardown.js';
 import { evmMetaToCaipChainIds } from '../utils.js';
+import { NAMESPACES } from '../wcConstants.js';
 
 import { ModalCache } from './modal-cache.js';
 import { createUniversalProvider } from './provider-client.js';
 import { createSessionCache } from './session-cache.js';
 import { TaskQueue } from './task-queue.js';
+
+/**
+ * WalletConnect's JSON-RPC gateway, which serves every chain a session can
+ * hold - the chain is selected by the query string, so no per-chain endpoint
+ * configuration is needed and the project id we already have authorizes it.
+ *
+ * Inlined because it is not importable: `@walletconnect/universal-provider`
+ * declares it as `RPC_URL` and builds this same url in `getRpcUrl()`, but its
+ * export map exposes only `"."`, whose entry re-exports neither. Keep in sync
+ * with that constant.
+ */
+const WALLET_CONNECT_RPC_URL = 'https://rpc.walletconnect.org/v1/';
 
 /**
  * Central coordinator for WalletConnect sessions used by hub EVM/UTXO namespaces.
@@ -55,6 +69,8 @@ export class WalletConnectAdapter {
 
   readonly #cache = createSessionCache();
   readonly #modalCache = new ModalCache();
+  /** Read-only JSON-RPC providers, keyed by EVM chain reference. */
+  readonly #rpcProviders = new Map<string, JsonRpcProvider>();
 
   /**
    * Serializes everything that mutates WalletConnect session state.
@@ -117,35 +133,35 @@ export class WalletConnectAdapter {
   }
 
   /**
-   * Reads the current ERC-20 allowance via an `eth_call` routed through the
-   * WalletConnect provider (the read is served by the active chain's RPC, not
-   * the wallet). Returned as a decimal string.
+   * Reads the current ERC-20 allowance from the active chain's node, as a
+   * decimal string.
    */
   async getAllowance(params: AllowanceParams): Promise<string> {
-    const provider = await this.getUniversalProvider();
-    const result = await provider.request<string>({
-      method: 'eth_call',
-      params: [
-        {
-          to: params.token,
-          data: utils.encodeAllowanceCallData(params.owner, params.spender),
-        },
-        'latest',
-      ],
+    const provider = await this.#getRpcProvider();
+    const result = await provider.call({
+      to: params.token,
+      data: utils.encodeAllowanceCallData(params.owner, params.spender),
     });
+
     // An empty result ('0x') means the call returned no data; treat as zero allowance.
     return BigInt(result === '0x' ? 0 : result).toString();
   }
 
-  /** Reads a transaction receipt through the WalletConnect provider. */
+  /** Reads a transaction receipt from the active chain's node. */
   async getTransactionReceipt(
     txHash: `0x${string}`
   ): Promise<EvmTransactionReceipt | null> {
-    const provider = await this.getUniversalProvider();
-    return provider.request<EvmTransactionReceipt | null>({
-      method: 'eth_getTransactionReceipt',
-      params: [txHash],
-    });
+    const provider = await this.#getRpcProvider();
+    const receipt = await provider.getTransactionReceipt(txHash);
+    if (!receipt) {
+      return null;
+    }
+
+    return {
+      status: receipt.status === 1 ? '0x1' : '0x0',
+      transactionHash: receipt.hash,
+      blockNumber: toBeHex(receipt.blockNumber),
+    };
   }
 
   getSession(namespace: WalletConnectNamespace): SessionTypes.Struct | null {
@@ -243,6 +259,50 @@ export class WalletConnectAdapter {
         currentChainId,
       })
     );
+  }
+
+  /**
+   * A read-only JSON-RPC provider for the session's active chain, memoized per
+   * chain.
+   *
+   * Reads cannot be served by the connected wallet: a session only authorizes
+   * the methods it negotiated, and those are signing-only (see
+   * `DEFAULT_ETHEREUM_METHODS`) - `eth_call` is not part of the eip155 RPC
+   * reference at all. WalletConnect's own provider makes the same split,
+   * sending session methods over the relay and everything else to a node.
+   *
+   * `UniversalProvider.request` is not an option either: it throws unless
+   * `universalProvider.connect()` established the session, and this adapter
+   * drives the SignClient directly instead.
+   *
+   * The endpoint has to follow the session's chain rather than being a fixed
+   * one: a token address is meaningless on the wrong chain, and an `eth_call`
+   * against it answers `0x`, which reads back as a zero allowance.
+   */
+  async #getRpcProvider(): Promise<JsonRpcProvider> {
+    const reference = await this.resolveActiveChainReference();
+    if (!reference) {
+      throw new Error(
+        'Unable to determine EVM chain id from WalletConnect session.'
+      );
+    }
+
+    const cached = this.#rpcProviders.get(reference);
+    if (cached) {
+      return cached;
+    }
+
+    const provider = new JsonRpcProvider(
+      `${WALLET_CONNECT_RPC_URL}?chainId=${
+        NAMESPACES.ETHEREUM
+      }:${reference}&projectId=${this.#projectId}`,
+      Number(reference),
+      // The url pins the chain, so there is nothing to detect.
+      { staticNetwork: true }
+    );
+    this.#rpcProviders.set(reference, provider);
+
+    return provider;
   }
 
   /*
