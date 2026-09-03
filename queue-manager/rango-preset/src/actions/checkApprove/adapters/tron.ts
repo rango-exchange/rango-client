@@ -68,10 +68,18 @@ export const tronApproveAdapter: ApproveAdapter<'tron', TronTransaction> = {
     executedTransactionHash
   ): Promise<ApproveTransactionStatus> => {
     const info = await namespace.getTransactionInfo(executedTransactionHash);
-    // An empty info object means the transaction is not confirmed yet.
-    if (!info?.receipt?.result) {
+    /*
+     * TronWeb returns an empty object until the transaction is confirmed in a
+     * (solidified) block, so a missing `blockNumber` means it is still pending.
+     * Once confirmed, Tron only sets `receipt.result` to a non-`SUCCESS` code on
+     * failure and may omit it entirely on success — so a confirmed transaction
+     * with no failure code is treated as success. (Requiring `result ===
+     * 'SUCCESS'` left successful approves stuck on "waiting for approval".)
+     */
+    if (!info?.blockNumber) {
       return 'pending';
     }
-    return info.receipt.result === 'SUCCESS' ? 'success' : 'failed';
+    const result = info.receipt?.result;
+    return !result || result === 'SUCCESS' ? 'success' : 'failed';
   },
 };

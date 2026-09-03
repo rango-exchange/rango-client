@@ -89,6 +89,7 @@ export function getTransactionInfo(
 ): FunctionWithContext<TronActions['getTransactionInfo'], Context> {
   return async (_context, txID) => {
     const tronWeb = getTronWeb(instance);
-    return tronWeb.trx.getTransactionInfo(txID);
+    // Full node (not solidity), so the info is available right after inclusion.
+    return tronWeb.trx.getUnconfirmedTransactionInfo(txID);
   };
 }

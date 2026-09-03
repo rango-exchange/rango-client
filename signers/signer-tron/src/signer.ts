@@ -2,11 +2,34 @@ import type { GenericSigner, TronTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-/*
- * TODO - replace with real type
- * tslint:disable-next-line: no-any
+/** A transaction as signed by TronWeb, carrying the id it was signed under. */
+type SignedTronTransaction = { txID?: string };
+
+/**
+ * The broadcast response. Wallet-injected TronWeb instances differ in where
+ * they expose the transaction id, so both known shapes are optional here.
  */
-type TronExternalProvider = any;
+type BroadcastReceipt = {
+  txid?: string;
+  transaction?: { txID?: string };
+};
+
+/**
+ * The TronWeb surface this signer calls. `tronweb` is not a dependency of this
+ * package (the wallet injects its own instance), so only the methods used here
+ * are typed rather than pulling in the package's declarations.
+ */
+type TronExternalProvider = {
+  tronWeb: {
+    trx: {
+      signMessageV2: (message: string) => Promise<string>;
+      sign: (transaction: object) => Promise<SignedTronTransaction>;
+      sendRawTransaction: (
+        signedTransaction: SignedTronTransaction
+      ) => Promise<BroadcastReceipt>;
+    };
+  };
+};
 
 export class DefaultTronSigner implements GenericSigner<TronTransaction> {
   private provider: TronExternalProvider;
@@ -43,16 +66,34 @@ export class DefaultTronSigner implements GenericSigner<TronTransaction> {
   }
 
   async signAndSendTx(tx: TronTransaction): Promise<{ hash: string }> {
+    let hash: string | undefined;
+
     try {
       const transaction = DefaultTronSigner.buildTx(tx);
       const signedTxn = await this.provider.tronWeb.trx.sign(transaction);
       const receipt = await this.provider.tronWeb.trx.sendRawTransaction(
         signedTxn
       );
-      const hash = receipt?.transaction?.txID;
-      return { hash };
+      /*
+       * Wallet-injected TronWeb instances are inconsistent about the broadcast
+       * response: some return `{ result, txid }`, others nest the signed tx
+       * under `transaction`. Falling back to the signed transaction's own
+       * `txID` keeps the hash we poll for status in sync with what was actually
+       * broadcast - an undefined hash leaves the transaction stuck on "waiting
+       * for approval" forever, since no status lookup can ever resolve it.
+       */
+      hash = receipt?.txid ?? receipt?.transaction?.txID ?? signedTxn?.txID;
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }
+
+    if (!hash) {
+      throw new SignerError(
+        SignerErrorCode.SEND_TX_ERROR,
+        'Tron transaction was broadcast without a transaction hash.'
+      );
+    }
+
+    return { hash };
   }
 }

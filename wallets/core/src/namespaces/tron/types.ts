@@ -37,13 +37,15 @@ export type TronApproveParams = {
 };
 
 /**
- * The focused TronWeb surface these actions call. `tronweb` is not a repo
- * dependency (wallets use the wallet-injected instance), so we type only the
- * methods we use rather than pulling the package's declarations.
+ * The focused TronWeb surface the repo calls — both these namespace actions and
+ * the Tron signer, which is handed this same injected instance. `tronweb` is not
+ * a repo dependency (wallets use the wallet-injected instance), so we type only
+ * the methods we use rather than pulling the package's declarations.
  *
  * @see https://tronweb.network/docu/docs/intro TronWeb API reference — used
  * here: `transactionBuilder.triggerConstantContract` / `triggerSmartContract`,
- * `trx.getTransactionInfo`, and `address.fromHex`.
+ * `trx.getUnconfirmedTransactionInfo` / `sign` / `signMessageV2` /
+ * `sendRawTransaction`, and `address.fromHex`.
  */
 export interface TronWebApi {
   defaultAddress: { base58: string };
@@ -64,7 +66,20 @@ export interface TronWebApi {
     ) => Promise<TriggerSmartContractResult>;
   };
   trx: {
-    getTransactionInfo: (txID: string) => Promise<TronTransactionInfo>;
+    /**
+     * Full-node lookup that returns the info as soon as the tx is in a block
+     * (~3s). `getTransactionInfo` queries the solidity node instead and returns
+     * an empty object until the tx solidifies (~60s), so it is unsuitable for
+     * promptly resolving approve-transaction status.
+     */
+    getUnconfirmedTransactionInfo: (
+      txID: string
+    ) => Promise<TronTransactionInfo>;
+    signMessageV2: (message: string) => Promise<string>;
+    sign: (transaction: object) => Promise<TronSignedTransaction>;
+    sendRawTransaction: (
+      signedTransaction: TronSignedTransaction
+    ) => Promise<TronBroadcastReceipt>;
   };
   address: {
     fromHex: (hexAddress: string) => string;
@@ -84,6 +99,20 @@ export interface TronBuiltTransaction {
   raw_data: unknown;
   raw_data_hex: string;
   visible?: boolean;
+}
+
+/** A transaction after signing, carrying the id it was signed under. */
+export interface TronSignedTransaction {
+  txID?: string;
+}
+
+/**
+ * The response to a broadcast. Wallet-injected TronWeb instances disagree on
+ * where the transaction id lives, so both known shapes are optional here.
+ */
+export interface TronBroadcastReceipt {
+  txid?: string;
+  transaction?: { txID?: string };
 }
 
 export interface TriggerConstantContractResult {
