@@ -29,6 +29,13 @@ import {
 export type NotifierParams = {
   swap: PendingSwap;
   step: PendingSwapStep | null;
+  /**
+   * Whether this event belongs to an approve transaction. Only needed by the
+   * approve prerequisites flow, which signs its approve transaction without
+   * storing it on the step and so cannot be detected by
+   * `isApprovalCurrentStepTx`. Defaults to that check when omitted.
+   */
+  isApproval?: boolean;
 } & {
   event: RemoveNameField<StepEvent, 'message' | 'messageSeverity'>;
 };
@@ -199,6 +206,9 @@ export function notifier(params: NotifierParams) {
   const currentFromNamespace = !!params.step
     ? getCurrentNamespaceOfOrNull(params.swap, params.step)
     : null;
+  const isApproval =
+    params.isApproval ??
+    (!!params.step && isApprovalCurrentStepTx(params.step));
   let message = '';
   let messageSeverity: StepEvent['messageSeverity'] = EventSeverity.INFO;
 
@@ -222,19 +232,21 @@ export function notifier(params: NotifierParams) {
         message = 'Please wait while the transaction is created ...';
         messageSeverity = EventSeverity.INFO;
       } else if (event.status === StepExecutionEventStatus.SEND_TX) {
-        if (params.step && isApprovalCurrentStepTx(params.step)) {
+        if (isApproval) {
           message = `Please confirm '${step.swapperName}' smart contract access to ${fromAsset}`;
         } else {
           message = 'Please confirm transaction request in your wallet';
         }
         messageSeverity = EventSeverity.WARNING;
       } else if (event.status === StepExecutionEventStatus.TX_SENT) {
-        message = 'Transaction sent successfully';
+        message = isApproval
+          ? 'Approve transaction sent successfully'
+          : 'Transaction sent successfully';
         messageSeverity = EventSeverity.INFO;
       }
       break;
     case StepEventType.CHECK_STATUS:
-      if (params.step && isApprovalCurrentStepTx(params.step)) {
+      if (isApproval) {
         message = 'Checking approve transaction status ...';
       } else {
         message = 'Checking transaction status ...';

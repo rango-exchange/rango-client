@@ -208,22 +208,30 @@ export async function checkApprove<
     const signer: GenericSigner<TTransaction> =
       walletSigners.getSigner<TTransaction>(approveAdapter.signerTxType);
 
-    // UI parity with the legacy approval flow.
-    const updateResult = updateSwapStatus({
+    /*
+     * Approving takes two waits, and telling them apart matters to the user: a
+     * prompt is sitting in their wallet during the first, and nothing is asked
+     * of them during the second. `StepStatus` has no separate signing state, so
+     * both stay on `waitingForApproval` and the phases are distinguished by the
+     * message and the emitted event.
+     *
+     * Phase 1 - waiting for the user to sign in their wallet.
+     */
+    const signingResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: undefined,
       nextStepStatus: 'waitingForApproval',
       message: `Waiting for approval of ${currentStep.fromSymbol} coin`,
-      details:
-        'Waiting for approve transaction to be mined and confirmed successfully',
+      details: 'Please confirm the approve transaction in your wallet',
     });
     notifier({
       event: {
         type: StepEventType.TX_EXECUTION,
         status: StepExecutionEventStatus.SEND_TX,
       },
-      ...updateResult,
+      ...signingResult,
+      isApproval: true,
     });
 
     const transactionResult = await signer.signAndSendTx(
@@ -240,6 +248,36 @@ export async function checkApprove<
         executedTransactionHash: transactionResult.hash,
       },
     });
+
+    /*
+     * Phase 2 - signed and broadcast, now waiting on the chain. Announced here
+     * rather than in the status poller because the poller re-runs on every
+     * interval, which would re-emit these events on each tick. This mirrors what
+     * `setStepTransactionIds` does for the legacy approval flow.
+     */
+    const sentResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: undefined,
+      nextStepStatus: 'waitingForApproval',
+      message: `Waiting for approval of ${currentStep.fromSymbol} coin`,
+      details:
+        'Waiting for approve transaction to be mined and confirmed successfully',
+    });
+    notifier({
+      event: {
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.TX_SENT,
+      },
+      ...sentResult,
+      isApproval: true,
+    });
+    notifier({
+      event: { type: StepEventType.CHECK_STATUS },
+      ...sentResult,
+      isApproval: true,
+    });
+
     scheduleCheckPrerequisites();
   } catch (e) {
     handleRejectedSign(actions)(e);
