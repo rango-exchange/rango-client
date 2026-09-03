@@ -213,7 +213,9 @@ export async function checkApprove<
      * prompt is sitting in their wallet during the first, and nothing is asked
      * of them during the second. `StepStatus` has no separate signing state, so
      * both stay on `waitingForApproval` and the phases are distinguished by the
-     * message and the emitted event.
+     * message and the emitted event. The message has to carry the difference:
+     * the swap-details alert renders `extraMessage` only, and shows
+     * `extraMessageDetail` just for a failed step.
      *
      * Phase 1 - waiting for the user to sign in their wallet.
      */
@@ -222,7 +224,7 @@ export async function checkApprove<
       setStorage,
       nextStatus: undefined,
       nextStepStatus: 'waitingForApproval',
-      message: `Waiting for approval of ${currentStep.fromSymbol} coin`,
+      message: `Confirm approval of ${currentStep.fromSymbol} in your wallet`,
       details: 'Please confirm the approve transaction in your wallet',
     });
     notifier({
