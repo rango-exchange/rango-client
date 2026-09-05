@@ -2910,6 +2910,14 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
+"@hub3js/bip122@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/bip122/-/bip122-0.2.1.tgz#5224c59930bb695b53a1f6fa5195377eea1db400"
+  integrity sha512-wib1jtDOMTEtzlAFu5aiQe7Ryvv4fc9DPew//PV9Qo2yQhLOzPrVqLk4blygXSvlxicXGVT4IUdR+tRxOAnwdg==
+  dependencies:
+    "@hub3js/std" "^0.4.0"
+    caip "^1.1.1"
+
 "@hub3js/core@^0.62.0":
   version "0.62.0"
   resolved "https://registry.yarnpkg.com/@hub3js/core/-/core-0.62.0.tgz#14294fef29bf5d4a687c9209a041c37e83cba3b4"
@@ -2928,11 +2936,12 @@
     caip "^1.1.1"
     rango-types "^0.5.0"
 
-"@hub3js/namespaces@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.4.0.tgz#9fd9628af372355bbb2336fa971530f2772a4764"
-  integrity sha512-EnQiyKj/joS/lJrUia5WSmEgpaZuYLIzS+QNmJiULF/0MM1rWTheZ/QqEoDlNa5AzCwomP6ewL8UQWCppwCHFg==
+"@hub3js/namespaces@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.5.1.tgz#35f1574dd4a4f09dac54d98bcfa64ba429d94959"
+  integrity sha512-lj9oCNWr3mzV3aHwYbzBwzdG9pleR5pSN4yiwvT2W+OT0jbaa39GX7MtRwLTWBfNV6MCp7cJq0iIgk6kSi7Q3w==
   dependencies:
+    "@hub3js/bip122" "^0.2.1"
     "@hub3js/evm" "^0.5.0"
     "@hub3js/solana" "^0.5.0"
     "@hub3js/starknet" "^0.4.0"

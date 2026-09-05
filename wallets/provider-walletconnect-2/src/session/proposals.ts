@@ -1,7 +1,7 @@
 import type { WalletConnectNamespace } from '../types.js';
 import type { ChainIdParams } from 'caip';
 
-import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
+import { CAIP_BITCOIN_CHAIN_ID } from '@hub3js/bip122';
 import { ChainId } from 'caip';
 
 import {

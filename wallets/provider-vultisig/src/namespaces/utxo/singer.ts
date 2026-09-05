@@ -4,9 +4,7 @@ import type { Transfer } from 'rango-types/mainApi';
 import { isZcashBlockchain } from '@rango-dev/internal-blockchains';
 import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 
-import { vultisigZcash } from '../../utils.js';
-
-import { getZcashAccounts } from './helpers.js';
+import { getZcashAccounts, vultisigZcash } from '../../utils.js';
 
 export class Signer implements GenericSigner<Transfer> {
   async signMessage(): Promise<string> {

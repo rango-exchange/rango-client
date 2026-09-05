@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.62.0",
-    "@hub3js/namespaces": "^0.4.0",
+    "@hub3js/namespaces": "^0.5.1",
     "@hub3js/starknet": "^0.4.0",
     "@hub3js/std": "^0.4.0",
     "@rango-dev/signer-starknet": "^0.43.0",

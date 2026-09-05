@@ -1,15 +1,12 @@
-import { ActionBuilder } from '@hub3js/core';
-import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  type ProviderAPI,
-  utils,
-  type UtxoActions,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+import type { ProviderAPI } from '@hub3js/bip122';
+
+import { builders, CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
 
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<string, ProviderAPI, UtxoActions>()
-    .getInstance(getInstance)
+  builders
+    .changeAccountSubscriber<string>(getInstance, {
+      network: CAIP_BITCOIN_CHAIN_ID,
+    })
     .onSwitchAccount((event, context) => {
       if (!event.payload) {
         event.preventDefault();
@@ -30,14 +27,4 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
       return instance.removeListener('accountChanged', callback);
     });
 
-function canEagerConnect(getInstance: () => ProviderAPI) {
-  return new ActionBuilder<UtxoActions, 'canEagerConnect'>(
-    'canEagerConnect'
-  ).action(async () => {
-    const instance = getInstance();
-    const accounts = await instance.getAccounts();
-    return !!accounts.length;
-  });
-}
-
-export const utxoBuilders = { changeAccountSubscriber, canEagerConnect };
+export const utxoBuilders = { changeAccountSubscriber };

@@ -1,6 +1,10 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
 import {
+  CAIP_BITCOIN_CHAIN_ID,
+  isChainSupported as isBip122ChainSupported,
+} from '@hub3js/bip122';
+import {
   CAIP_ARBITRUM_CHAIN_ID,
   CAIP_AVAX_CHAIN_ID,
   CAIP_BOBA_CHAIN_ID,
@@ -21,10 +25,6 @@ import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import { isSuiNamespace } from '@hub3js/sui';
 import { isTvmNamespace } from '@hub3js/tvm';
 import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  isUtxoNamespace,
-} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -93,9 +93,7 @@ export const metadata: ProviderMetadata = {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            isChainSupported: (chainId: string) =>
-              isUtxoNamespace(chainId) &&
-              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
+            isChainSupported: isBip122ChainSupported([CAIP_BITCOIN_CHAIN_ID]),
           },
           {
             label: 'Ton',

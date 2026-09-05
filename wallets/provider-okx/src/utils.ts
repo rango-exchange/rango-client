@@ -1,10 +1,10 @@
 import type { TonProviderApi } from './namespaces/ton/types.js';
 import type { OkxBtcAddress, OkxTronMessageEvent, Provider } from './types.js';
+import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
-import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
   EVM_NAMESPACE,
