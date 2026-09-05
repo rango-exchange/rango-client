@@ -1,12 +1,4 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
-
-export type InstallObjects = {
-  CHROME?: string;
-  FIREFOX?: string;
-  EDGE?: string;
-  BRAVE?: string;
-  DEFAULT: string;
-};
+import type { WalletType } from '@hub3js/core';
 
 interface Wallet {
   chain: string;

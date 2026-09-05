@@ -2,12 +2,9 @@ import type {
   OnWalletConnectHandler,
   OnWalletDisconnectHandler,
 } from './Wallets.types';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
-import type {
-  LegacyEventHandler as EventHandler,
-  LegacyEventHandler,
-  LegacyNetwork as Network,
-} from '@rango-dev/wallets-core/legacy';
+import type { EventHandler } from '@rango-dev/wallets-react';
 
 import { Events } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
@@ -44,7 +41,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     .map((chain) => chain.name);
 
   const onAccountsEvent = (
-    event: Parameters<LegacyEventHandler>,
+    event: Parameters<EventHandler>,
     params: {
       supportedChainNames: Network[] | null;
     }

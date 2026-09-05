@@ -9,7 +9,7 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@hub3js/core';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   BestRouteRequest,

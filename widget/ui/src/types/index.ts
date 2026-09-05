@@ -1,4 +1,4 @@
-export type { ConnectedWallet, InstallObjects } from './wallet.js';
+export type { ConnectedWallet } from './wallet.js';
 export type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,

@@ -1,15 +1,10 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { Hub } from '@hub3js/core';
+import type { NamespaceInputForConnect } from '../legacy/types.js';
+import type { Hub, Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces, Namespace } from '@hub3js/namespaces';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyProviderInterface,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 
-import { Provider } from '@hub3js/core';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
@@ -21,8 +16,8 @@ import {
 } from './utils.js';
 
 function isEvmNamespaceInput(
-  namespace: LegacyNamespaceInputForConnect
-): namespace is LegacyNamespaceInputForConnect<'EVM'> {
+  namespace: NamespaceInputForConnect
+): namespace is NamespaceInputForConnect<'EVM'> {
   return namespace.namespace === 'EVM';
 }
 
@@ -36,7 +31,7 @@ const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
  */
 async function eagerConnect(
   type: string,
-  namespacesInput: LegacyNamespaceInputForConnect[] | undefined,
+  namespacesInput: NamespaceInputForConnect[] | undefined,
   params: {
     getHub: () => Hub;
     allBlockChains: UseAdapterParams['allBlockChains'];
@@ -54,10 +49,8 @@ async function eagerConnect(
     throw new Error('Passing namespace to `connect` is required. ');
   }
 
-  const targetNamespaces: [
-    LegacyNamespaceInputForConnect,
-    AllProxiedNamespaces
-  ][] = [];
+  const targetNamespaces: [NamespaceInputForConnect, AllProxiedNamespaces][] =
+    [];
   namespacesInput.forEach((namespaceInput) => {
     const targetNamespace: Namespace = namespaceInput.namespace;
 
@@ -114,7 +107,7 @@ async function eagerConnect(
     connectNamespacesPromises
   );
 
-  const failedNamespaces: LegacyNamespaceInputForConnect[] = targetNamespaces
+  const failedNamespaces: NamespaceInputForConnect[] = targetNamespaces
     .filter((_, index) => connectNamespacesResult[index].err)
     .map((targetNamespace) => targetNamespace[0]);
 
@@ -140,15 +133,15 @@ async function eagerConnect(
  * Run `.canEagerConnect` action on some selected namespaces of a wallet.
  */
 async function tryRunCanEagerConnect(
-  namespaces: LegacyNamespaceInputForConnect[],
+  namespaces: NamespaceInputForConnect[],
   wallet: Provider<DefaultNamespaces>
 ): Promise<{
-  successNamespaces: LegacyNamespaceInputForConnect[];
-  failedNamespaces: LegacyNamespaceInputForConnect[];
+  successNamespaces: NamespaceInputForConnect[];
+  failedNamespaces: NamespaceInputForConnect[];
 }> {
-  const foundNamespaces: LegacyNamespaceInputForConnect[] = [];
-  const successNamespaces: LegacyNamespaceInputForConnect[] = [];
-  const failedNamespaces: LegacyNamespaceInputForConnect[] = [];
+  const foundNamespaces: NamespaceInputForConnect[] = [];
+  const successNamespaces: NamespaceInputForConnect[] = [];
+  const failedNamespaces: NamespaceInputForConnect[] = [];
   const canEagerConnectPromises: (() => Promise<boolean>)[] = [];
 
   // 1. Try find namespace instances and create canEagerConnect promises
@@ -188,7 +181,7 @@ async function tryRunCanEagerConnect(
 export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
-  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+  wallets?: (WalletType | Provider)[];
 }): Promise<void> {
   const { getHub, allBlockChains, wallets } = deps;
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
@@ -199,15 +192,9 @@ export async function autoConnect(deps: {
   if (walletIds.length) {
     const eagerConnectQueue: Promise<unknown>[] = [];
 
-    const configWalletNames = wallets?.map((wallet) => {
-      if (typeof wallet === 'string') {
-        return wallet;
-      }
-      if (wallet instanceof Provider) {
-        return wallet.id;
-      }
-      return wallet.config.type;
-    });
+    const configWalletNames = wallets?.map((wallet) =>
+      typeof wallet === 'string' ? wallet : wallet.id
+    );
     // Run `.connect` if `.canEagerConnect` returns `true`.
     walletIds.forEach(async (providerName) => {
       if (configWalletNames && !configWalletNames.includes(providerName)) {
@@ -221,7 +208,7 @@ export async function autoConnect(deps: {
 
       const wallet = getHub().get(providerName);
 
-      const lastConnectedNamespaces: LegacyNamespaceInputForConnect[] =
+      const lastConnectedNamespaces: NamespaceInputForConnect[] =
         lastConnectedWallets[providerName].map((namespace) => ({
           namespace: namespace.namespace,
           network: namespace.network,

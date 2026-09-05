@@ -1,6 +1,6 @@
+import type { WalletType } from '@hub3js/core';
 import type { Namespace } from '@hub3js/namespaces';
 import type { Network } from '@rango-dev/internal-blockchains';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type {
   BlockchainMeta,
   ConfirmRouteResponse,
