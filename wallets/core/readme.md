@@ -24,7 +24,7 @@ Core package for handling web3 wallets supported by Rango
 | `.../namespaces/ton` | `@hub3js/tvm` |
 | `.../namespaces/xrpl` | `@hub3js/xrpl` |
 | `.../namespaces/utxo` | `@hub3js/bip122` |
-| `.../namespaces/tron`, `.../legacy` | Not migrated yet — still served from this package |
+| `.../namespaces/tron` | Not migrated yet — still served from this package |
 
 A couple of things worth noting:
 

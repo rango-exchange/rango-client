@@ -1,6 +1,5 @@
 import type { FindProxiedNamespace } from '../../builders/mod.js';
 import type { Store } from '../../hub/mod.js';
-import type { LegacyState } from '../../legacy/mod.js';
 import type { EvmActions } from '../../namespaces/evm/mod.js';
 import type { SolanaActions } from '../../namespaces/solana/mod.js';
 import type { StarknetActions } from '../../namespaces/starknet/types.js';
@@ -17,10 +16,11 @@ export type Context = {
   state: () => [GetState, SetState];
 };
 
-export type State = Omit<
-  LegacyState,
-  'reachable' | 'accounts' | 'network' | 'derivationPath'
->;
+export type State = {
+  connected: boolean;
+  connecting: boolean;
+  installed: boolean;
+};
 export type SetState = <K extends keyof Pick<State, 'installed'>>(
   name: K,
   value: State[K]

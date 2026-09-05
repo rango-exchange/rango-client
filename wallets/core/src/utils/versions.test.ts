@@ -1,3 +1,5 @@
+import type { Provider } from '../hub/mod.js';
+
 import { describe, expect, test } from 'vitest';
 
 import { defineVersions, pickVersion } from './versions.js';
@@ -11,8 +13,7 @@ describe('Picking versions should work correctly', () => {
 
   test('Pick the correct version if it exist', () => {
     const versions = defineVersions()
-      .version('0.0.0', {} as any)
-      .version('1.0.0', {} as any)
+      .version('1.0.0', {} as Provider)
       .build();
 
     const target = pickVersion(versions, '1.0.0');
