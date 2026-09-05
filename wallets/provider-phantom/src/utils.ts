@@ -1,9 +1,9 @@
+import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { InstanceMap } from '@hub3js/std/types';
 import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
-import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import {
   EVM_NAMESPACE,
@@ -110,3 +110,10 @@ export function suiPhantom(): SuiProviderApi {
 
   return suiInstance;
 }
+
+export type BtcAccount = {
+  address: string;
+  publicKey: string;
+  addressType: 'p2tr' | 'p2wpkh' | 'p2sh' | 'p2pkh';
+  purpose: 'payment' | 'ordinals';
+};

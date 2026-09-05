@@ -1,13 +1,9 @@
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { UtxoActions } from '@hub3js/bip122';
 
+import { builders, CAIP_ZCASH_CHAIN_ID, utils } from '@hub3js/bip122';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import {
-  builders,
-  CAIP_ZCASH_CHAIN_ID,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { changeAccountSubscriberBuilder } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';

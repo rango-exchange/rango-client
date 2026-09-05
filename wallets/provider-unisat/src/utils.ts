@@ -1,5 +1,5 @@
+import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { InstanceMap } from '@hub3js/std/types';
-import type { ProviderAPI as UtxoProviderApi } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 

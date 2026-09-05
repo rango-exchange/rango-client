@@ -35,9 +35,10 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
+    "@hub3js/bip122": "^0.2.1",
     "@hub3js/core": "^0.62.0",
     "@hub3js/evm": "^0.5.0",
-    "@hub3js/namespaces": "^0.4.0",
+    "@hub3js/namespaces": "^0.5.1",
     "@hub3js/solana": "^0.5.0",
     "@hub3js/std": "^0.4.0",
     "@hub3js/sui": "^0.4.0",

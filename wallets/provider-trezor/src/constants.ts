@@ -1,11 +1,11 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { CAIP_ETHEREUM_CHAIN_ID, isEvmNamespace } from '@hub3js/evm';
-import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import {
   CAIP_BITCOIN_CHAIN_ID,
-  isUtxoNamespace,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+  isChainSupported as isBip122ChainSupported,
+} from '@hub3js/bip122';
+import { CAIP_ETHEREUM_CHAIN_ID, isEvmNamespace } from '@hub3js/evm';
+import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
 import getSigners from './signer.js';
 import { BITCOIN_ADDRESS_TYPES } from './utxo/config.js';
@@ -41,9 +41,7 @@ export const metadata: ProviderMetadata = {
             label: 'Bitcoin',
             value: 'UTXO',
             id: 'BTC',
-            isChainSupported: (chainId: string) =>
-              isUtxoNamespace(chainId) &&
-              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
+            isChainSupported: isBip122ChainSupported([CAIP_BITCOIN_CHAIN_ID]),
           },
         ],
       },

@@ -1,8 +1,8 @@
 import type { SignClientInstance } from '../types.js';
 import type { SessionTypes, SignClientTypes } from '@walletconnect/types';
 
+import { CAIP_BITCOIN_CHAIN_ID } from '@hub3js/bip122';
 import { debug } from '@rango-dev/logging-core';
-import { CAIP_BITCOIN_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/utxo';
 import { AccountId } from 'caip';
 
 import { BitcoinEvents, NAMESPACES } from '../wcConstants.js';

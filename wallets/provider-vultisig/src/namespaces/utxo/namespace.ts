@@ -1,35 +1,22 @@
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { UtxoActions } from '@hub3js/bip122';
 
-import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { builders } from '@hub3js/bip122';
+import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import {
-  builders,
-  CAIP_ZCASH_CHAIN_ID,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/utxo';
 
+import { utxoActions } from '../../actions/utxo.js';
 import { WALLET_ID } from '../../constants.js';
-
-import { getZcashAccounts, requestZcashAccounts } from './helpers.js';
 
 const connect = builders
   .connect()
-  .action(async function () {
-    const accounts = await requestZcashAccounts();
-
-    return utils.formatAccountsToCAIP(accounts, CAIP_ZCASH_CHAIN_ID);
-  })
+  .action(utxoActions.connect())
   .or(standardizeAndThrowError)
   .build();
 
-const canEagerConnect = new ActionBuilder<UtxoActions, 'canEagerConnect'>(
-  'canEagerConnect'
-)
-  .action(async () => {
-    const accounts = await getZcashAccounts().catch(() => []);
-    return accounts.length > 0;
-  })
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(utxoActions.canEagerConnect())
   .build();
 
 const disconnect = commonBuilders.disconnect<UtxoActions>().build();

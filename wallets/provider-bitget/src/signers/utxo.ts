@@ -1,4 +1,4 @@
-import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { ProviderAPI } from '@hub3js/bip122';
 import type { GenericSigner, Transfer } from 'rango-types';
 
 import { isBitcoinBlockchain } from '@rango-dev/internal-blockchains';

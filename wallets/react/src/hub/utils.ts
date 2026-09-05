@@ -1,4 +1,5 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type { UtxoActions } from '@hub3js/bip122';
 import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type {
@@ -12,7 +13,6 @@ import type {
   LegacyEventHandler as WalletEventHandler,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import {

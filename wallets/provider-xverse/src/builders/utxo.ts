@@ -1,19 +1,13 @@
 import type { XVerseEvent } from '../types.js';
+import type { ProviderAPI } from '@hub3js/bip122';
 
-import { ActionBuilder } from '@hub3js/core';
-import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  type ProviderAPI,
-  utils,
-  type UtxoActions,
-} from '@rango-dev/wallets-core/namespaces/utxo';
-
-import { XVERSE_ACCESS_DENIED_ERROR_CODE } from '../constants.js';
+import { builders, CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
 
 export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
-  new ChangeAccountSubscriberBuilder<XVerseEvent, ProviderAPI, UtxoActions>()
-    .getInstance(getInstance)
+  builders
+    .changeAccountSubscriber<XVerseEvent>(getInstance, {
+      network: CAIP_BITCOIN_CHAIN_ID,
+    })
     /*
      * Xverse wallet may call the `changeAccount` event with `empty` value
      * but we shouldn't disconnect in this case.
@@ -38,23 +32,4 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
       // it will be removed by the main class
     });
 
-function canEagerConnect(getInstance: () => ProviderAPI) {
-  return new ActionBuilder<UtxoActions, 'canEagerConnect'>(
-    'canEagerConnect'
-  ).action(async () => {
-    const instance = getInstance();
-    try {
-      const addressesResponse = await instance.request('getAddresses', {
-        purposes: ['payment'],
-      });
-      if (addressesResponse.error?.code === XVERSE_ACCESS_DENIED_ERROR_CODE) {
-        return false;
-      }
-      return !!addressesResponse.result?.addresses?.length;
-    } catch {
-      return false;
-    }
-  });
-}
-
-export const utxoBuilders = { changeAccountSubscriber, canEagerConnect };
+export const utxoBuilders = { changeAccountSubscriber };

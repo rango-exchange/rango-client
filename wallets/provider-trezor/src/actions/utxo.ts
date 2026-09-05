@@ -1,10 +1,7 @@
+import type { Bip122ChainId, UtxoActions } from '@hub3js/bip122';
 import type { Context, FunctionWithContext } from '@hub3js/core';
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
 
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+import { utils } from '@hub3js/bip122';
 
 import { initTrezor } from '../init.js';
 import { setBitcoinDerivationPath } from '../state.js';
@@ -20,10 +17,9 @@ import { BITCOIN_COIN_NAME, resolveBitcoinScriptType } from '../utxo/config.js';
  * (like the EVM namespace does) because Rango's PSBT has no derivation data, so the
  * signer needs it at signing time.
  */
-export function connect(): FunctionWithContext<
-  UtxoActions['connect'],
-  Context
-> {
+export function connect(
+  network: Bip122ChainId
+): FunctionWithContext<UtxoActions['connect'], Context> {
   return async (_context, options) => {
     if (!options?.derivationPath) {
       throw new Error('Derivation Path can not be empty.');
@@ -49,7 +45,7 @@ export function connect(): FunctionWithContext<
 
     const { address } = result.payload;
 
-    return utils.formatAccountsToCAIP([address], CAIP_BITCOIN_CHAIN_ID);
+    return utils.formatAccountsToCAIP([address], network);
   };
 }
 

@@ -1,6 +1,14 @@
 import type { BlockchainMeta } from 'rango-types';
 
 import {
+  CAIP_BITCOIN_CHAIN_ID,
+  CAIP_BITCOINCASH_CHAIN_ID,
+  CAIP_DOGECOIN_CHAIN_ID,
+  CAIP_LITECOIN_CHAIN_ID,
+  CAIP_NAMESPACE as CAIP_UTXO_NAMESPACE,
+  CAIP_ZCASH_CHAIN_ID,
+} from '@hub3js/bip122';
+import {
   CAIP_ETHEREUM_CHAIN_ID,
   CAIP_NAMESPACE as CAIP_EVM_NAMESPACE,
 } from '@hub3js/evm';
@@ -32,14 +40,6 @@ import {
   CAIP_TRON_CHAIN_ID,
   CAIP_NAMESPACE as CAIP_TRON_NAMESPACE,
 } from '@rango-dev/wallets-core/namespaces/tron';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  CAIP_BITCOINCASH_CHAIN_ID,
-  CAIP_DOGECOIN_CHAIN_ID,
-  CAIP_LITECOIN_CHAIN_ID,
-  CAIP_NAMESPACE as CAIP_UTXO_NAMESPACE,
-  CAIP_ZCASH_CHAIN_ID,
-} from '@rango-dev/wallets-core/namespaces/utxo';
 import { TransactionType } from 'rango-types';
 
 import { Networks } from './networks.js';

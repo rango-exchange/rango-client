@@ -1,6 +1,6 @@
+import type { ProviderAPI } from '@hub3js/bip122';
 import type { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import type { InstanceMap } from '@hub3js/std/types';
-import type { ProviderAPI } from '@rango-dev/wallets-core/namespaces/utxo';
 
 type XVerseAddress = {
   address: string;

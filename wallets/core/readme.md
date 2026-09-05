@@ -23,11 +23,14 @@ Core package for handling web3 wallets supported by Rango
 | `.../namespaces/sui` | `@hub3js/sui` |
 | `.../namespaces/ton` | `@hub3js/tvm` |
 | `.../namespaces/xrpl` | `@hub3js/xrpl` |
-| `.../namespaces/tron`, `.../namespaces/utxo`, `.../legacy` | Not migrated yet — still served from this package |
+| `.../namespaces/utxo` | `@hub3js/bip122` |
+| `.../namespaces/tron`, `.../legacy` | Not migrated yet — still served from this package |
 
 A couple of things worth noting:
 
 - The `ton` namespace is published as **`@hub3js/tvm`**, not `@hub3js/ton`.
+- The `utxo` namespace is published as **`@hub3js/bip122`**, after its CAIP-2 namespace.
+  It covers every UTXO chain (BTC, LTC, DOGE, BCH, Zcash) rather than assuming Bitcoin.
 - `.../namespaces/common` was split in two: the shared operators, builders, hooks and types
   became `@hub3js/std` (imported via subpaths such as `@hub3js/std/operators` and
   `@hub3js/std/types`), while the namespace registry types moved to `@hub3js/namespaces`.
