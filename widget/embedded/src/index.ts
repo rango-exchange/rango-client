@@ -85,7 +85,7 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from './types';
-import { pickProviderVersionWithFallbackToLegacy } from './utils/providers';
+import { pickProviderVersion } from './utils/providers';
 import { customizedThemeTokens } from './utils/ui';
 
 export const StatefulConnect = {
@@ -103,6 +103,9 @@ export type {
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
+  /**
+   * @deprecated Pass a hub `Provider` instead. This type will be removed in future versions.
+   */
   ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
@@ -181,7 +184,7 @@ export type {
 // Internal function and enum exports for Rango
 export {
   readAccountAddress,
-  pickProviderVersionWithFallbackToLegacy,
+  pickProviderVersion,
   Networks,
   WalletEvents,
   PendingSwapNetworkStatus,

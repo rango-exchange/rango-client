@@ -529,7 +529,7 @@ export function checkIsWalletPartiallyConnected(
   wallet: ExtendedWalletInfo,
   walletState: ReturnType<ProviderContext['state']>
 ) {
-  if (!wallet.isHub || !wallet.needsNamespace || !walletState.connected) {
+  if (!wallet.needsNamespace || !walletState.connected) {
     return false;
   }
   const namespaces = wallet.needsNamespace.data;
