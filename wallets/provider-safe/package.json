@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.56.1-next.4",
+  "version": "0.56.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
