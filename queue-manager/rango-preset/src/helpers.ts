@@ -13,8 +13,9 @@ import type {
   SwapStorage,
   UseQueueManagerParams,
 } from './types';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExecuterActions,
   Manager,
@@ -23,11 +24,7 @@ import type {
   QueueType,
   SetStorage,
 } from '@rango-dev/queue-manager-core';
-import type {
-  LegacyNetwork as Network,
-  LegacyState as WalletState,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { WalletState } from '@rango-dev/wallets-react';
 import type {
   CreateTransactionResponse,
   EvmBlockchainMeta,
@@ -42,13 +39,13 @@ import type {
   SwapStepStatus,
 } from 'rango-types';
 
-import { HYPERLIQUID_SIGN_NETWORK } from '@rango-dev/internal-blockchains';
+import {
+  getBlockChainNameFromId,
+  HYPERLIQUID_SIGN_NETWORK,
+  readAccountAddress,
+} from '@rango-dev/internal-blockchains';
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
-import {
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-  legacyReadAccountAddress as readAccountAddress,
-} from '@rango-dev/wallets-core/legacy';
 import BigNumber from 'bignumber.js';
 import {
   PendingSwapNetworkStatus,

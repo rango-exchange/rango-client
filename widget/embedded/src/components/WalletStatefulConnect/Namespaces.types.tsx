@@ -1,7 +1,7 @@
 import type { NeedsNamespacesState } from '../../hooks/useStatefulConnect';
 import type { NamespaceData } from '@hub3js/core/store';
 import type { Namespace } from '@hub3js/namespaces';
-import type { LegacyNamespaceMeta } from '@rango-dev/wallets-core/legacy';
+import type { NamespaceMeta } from '@rango-dev/wallets-react';
 
 export interface PropTypes {
   onConfirm: (namespaces: Namespace[]) => void;
@@ -11,7 +11,7 @@ export interface PropTypes {
 interface NamespaceItemSharedPropTypes {
   onClick: () => void;
   type: 'radio' | 'checkbox';
-  namespace: LegacyNamespaceMeta;
+  namespace: NamespaceMeta;
 }
 
 interface RadioNamespaceItemPropTypes extends NamespaceItemSharedPropTypes {
@@ -28,7 +28,7 @@ export type NamespaceItemPropTypes =
   | CheckboxNamespaceItemPropTypes;
 
 export type NamespaceDetachedItemPropTypes = {
-  namespace: LegacyNamespaceMeta;
+  namespace: NamespaceMeta;
   state: NamespaceData;
   initialConnect?: boolean;
   disabled?: boolean;

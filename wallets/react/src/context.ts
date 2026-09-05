@@ -22,9 +22,6 @@ const defaultContext: ProviderContext = {
   canSwitchNetworkTo() {
     throw new Error(defaultErrorMessage);
   },
-  providers() {
-    throw new Error(defaultErrorMessage);
-  },
   getWalletInfo() {
     throw new Error(defaultErrorMessage);
   },

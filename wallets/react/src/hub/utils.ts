@@ -1,38 +1,32 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type {
+  ConnectResult,
+  NamespaceInputForConnect,
+  EventHandler as WalletEventHandler,
+} from '../legacy/mod.js';
+import type { ProviderProps } from '../types.js';
 import type { UtxoActions } from '@hub3js/bip122';
-import type { Hub, Provider, ProxiedNamespace } from '@hub3js/core';
+import type { Hub, Provider, ProxiedNamespace, WalletType } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type {
   Chain as AddEthereumChainParameter,
   EvmActions,
 } from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
-import type {
-  LegacyNamespaceInputForConnect,
-  LegacyProviderInterface,
-  LegacyEventHandler as WalletEventHandler,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
 
 import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
+  formatAddressWithNetwork,
+  getBlockChainNameFromId,
   getSupportedChainsFromProvider,
 } from '@rango-dev/internal-blockchains';
-import {
-  LegacyEvents as Events,
-  legacyFormatAddressWithNetwork as formatAddressWithNetwork,
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-} from '@rango-dev/wallets-core/legacy';
 import { AccountId } from 'caip';
 import { type BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
-import {
-  type ConnectResult,
-  HUB_LAST_CONNECTED_WALLETS,
-  type ProviderProps,
-} from '../legacy/mod.js';
+import { Events } from '../legacy/mod.js';
 
+import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
 import {
   fromAccountIdToLegacyAddressFormat,
   isConnectResultEvm,
@@ -40,27 +34,16 @@ import {
 } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 
-/* Gets a list of hub and legacy providers and returns a tuple which separates them. */
-export function separateLegacyAndHubProviders(
-  providers: VersionedProviders[]
-): [LegacyProviderInterface[], Provider[]] {
-  const LEGACY_VERSION = '0.0.0';
-  const HUB_VERSION = '1.0.0';
-
-  const legacyProviders: LegacyProviderInterface[] = [];
-  const hubProviders: Provider[] = [];
-
-  providers.forEach((provider) => {
+export function getHubProviders(providers: VersionedProviders[]): Provider[] {
+  return providers.map((provider) => {
     try {
-      const target = pickVersion(provider, HUB_VERSION);
-      hubProviders.push(target[1]);
+      return pickVersion(provider, '1.0.0')[1] as Provider;
     } catch {
-      const target = pickVersion(provider, LEGACY_VERSION);
-      legacyProviders.push(target[1]);
+      throw new Error(
+        "Legacy providers aren't supported anymore. Expected a provider with version '1.0.0'."
+      );
     }
   });
-
-  return [legacyProviders, hubProviders];
 }
 
 export function findProviderByType(
@@ -86,7 +69,7 @@ export function mapHubEventsToLegacy(
   metadata: {
     allBlockChains: ProviderProps['allBlockChains'];
     lastConnectAttemptParams: {
-      [type: WalletType]: LegacyNamespaceInputForConnect[];
+      [type: WalletType]: NamespaceInputForConnect[];
     };
   }
 ): void {
@@ -272,27 +255,12 @@ export function mapHubEventsToLegacy(
   }
 }
 
-export function getAllLegacyProviders(
-  allProviders: VersionedProviders[]
-): LegacyProviderInterface[] {
-  const LEGACY_VERSION = '0.0.0';
-
-  const legacyProviders: LegacyProviderInterface[] = [];
-
-  allProviders.forEach((provider) => {
-    const target = pickVersion(provider, LEGACY_VERSION);
-    legacyProviders.push(target[1]);
-  });
-
-  return legacyProviders;
-}
-
 /**
  * In legacy mode, for those who have switch network functionality (like evm), we are using an enum for network names
  * this enum only has meaning for us, and when we are going to connect an instance (e.g. window.ethereum) we should pass chain id.
  */
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: LegacyNamespaceInputForConnect,
+  namespace: NamespaceInputForConnect,
   meta: BlockchainMeta[]
 ): AddEthereumChainParameter | undefined {
   if (!namespace.network) {
@@ -310,7 +278,7 @@ export function convertNamespaceNetworkToEvmChainId(
  * This function will help us to map these strings to proper hex ids.
  */
 export function tryConvertNamespaceNetworkToChainInfo(
-  namespace: LegacyNamespaceInputForConnect,
+  namespace: NamespaceInputForConnect,
   meta: BlockchainMeta[]
 ): string | AddEthereumChainParameter | undefined {
   // `undefined` means it's not evm or we couldn't find it in meta.
@@ -327,20 +295,17 @@ export function transformHubResultToLegacyResult(
     return {
       accounts: res.accounts,
       network: res.network,
-      provider: undefined,
     };
   } else if (isConnectResultSolana(res)) {
     return {
       accounts: res,
       network: null,
-      provider: undefined,
     };
   }
 
   return {
     accounts: [res],
     network: null,
-    provider: undefined,
   };
 }
 

@@ -1,4 +1,5 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type { ProviderProps } from '../types.js';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type { Result } from 'ts-results';
 
@@ -10,7 +11,7 @@ import {
   CAIP_ZCASH_CHAIN_ID,
 } from '@hub3js/bip122';
 import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@hub3js/tvm';
-import { legacyFormatAddressWithNetwork as formatAddressWithNetwork } from '@rango-dev/wallets-core/legacy';
+import { formatAddressWithNetwork } from '@rango-dev/internal-blockchains';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import { AccountId, type ChainIdParams } from 'caip';
 import { Err, Ok } from 'ts-results';
@@ -178,4 +179,10 @@ export function createQueue(options?: {
     });
 
   return queueTask;
+}
+
+export function shouldTryAutoConnect(
+  props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'>
+): boolean {
+  return !!props.allBlockChains?.length && !!props.autoConnect;
 }

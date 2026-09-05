@@ -14,6 +14,7 @@ import type {
   WidgetTheme,
   WidgetVariant,
 } from './types';
+import type { WalletType } from '@hub3js/core';
 import type {
   PendingSwapWithQueueID,
   Route,
@@ -36,15 +37,14 @@ import type {
   StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
-  LegacyEventHandler as HandleWalletsUpdate,
-  LegacyProviderInterface as ProviderInterface,
-  LegacyWalletInfo as WalletInfo,
-  LegacyState as WalletState,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+  EventHandler as HandleWalletsUpdate,
+  ProviderInterface,
+  WalletInfo,
+  WalletState,
+} from '@rango-dev/wallets-react';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
-import { Networks } from '@rango-dev/internal-blockchains';
+import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
 import {
   EventSeverity,
   RouteEventType,
@@ -52,7 +52,6 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
@@ -85,7 +84,7 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from './types';
-import { pickProviderVersionWithFallbackToLegacy } from './utils/providers';
+import { pickProviderVersion } from './utils/providers';
 import { customizedThemeTokens } from './utils/ui';
 
 export const StatefulConnect = {
@@ -103,6 +102,9 @@ export type {
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
+  /**
+   * @deprecated Pass a hub `Provider` instead. This type will be removed in future versions.
+   */
   ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
@@ -181,7 +183,7 @@ export type {
 // Internal function and enum exports for Rango
 export {
   readAccountAddress,
-  pickProviderVersionWithFallbackToLegacy,
+  pickProviderVersion,
   Networks,
   WalletEvents,
   PendingSwapNetworkStatus,

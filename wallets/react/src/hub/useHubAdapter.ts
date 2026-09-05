@@ -1,13 +1,12 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
-import type { ProviderContext } from '../index.js';
-import type { Provider } from '@hub3js/core';
-import type { VersionedProviders } from '@hub3js/core/utils';
-import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import type {
-  LegacyNamespaceInputForConnect,
-  LegacyWalletInfo as WalletInfo,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+  ConnectResult,
+  NamespaceInputForConnect,
+  WalletInfo,
+} from '../legacy/mod.js';
+import type { ProviderContext, ProviderProps } from '../types.js';
+import type { Provider, WalletType } from '@hub3js/core';
+import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
 import { utils } from '@hub3js/evm';
 import {
@@ -17,18 +16,16 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
-import {
-  type ConnectResult,
-  HUB_LAST_CONNECTED_WALLETS,
-  type ProviderProps,
-} from '../legacy/mod.js';
-import { useAutoConnect } from '../legacy/useAutoConnect.js';
+import { withErrorLoggingApi } from '../helpers.js';
 
 import { autoConnect } from './autoConnect.js';
+import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
 import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
+import { useAutoConnect } from './useAutoConnect.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
+  findProviderByType,
   isEvmNamespace,
   isSolanaNamespace,
   isUtxoNamespace,
@@ -39,8 +36,6 @@ import {
 
 export type UseAdapterParams = Omit<ProviderProps, 'providers'> & {
   providers: Provider[];
-  /** This is only will be used to access some parts of the legacy provider that doesn't exists in Hub. */
-  allVersionedProviders: VersionedProviders[];
 };
 
 export function useHubAdapter(params: UseAdapterParams): ProviderContext {
@@ -49,7 +44,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   // useEffect will run `subscribe` once, so we need a reference and mutate the value if it's changes.
   const dataRef = useRef({
     onUpdateState: params.onUpdateState,
-    allVersionedProviders: params.allVersionedProviders,
     allBlockChains: params.allBlockChains,
   });
   const hubInitiated = useRef(false);
@@ -59,12 +53,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
    * Derivation path from params is used in `mapHubEventsToLegacy` to be added to the payload of connect events.
    */
   const lastConnectAttemptParamsRef = useRef<{
-    [type: WalletType]: LegacyNamespaceInputForConnect[];
+    [type: WalletType]: NamespaceInputForConnect[];
   }>({});
 
   const updateLastConnectAttemptParams = (
     type: WalletType,
-    namespaces: LegacyNamespaceInputForConnect[] | undefined
+    namespaces: NamespaceInputForConnect[] | undefined
   ) => {
     lastConnectAttemptParamsRef.current[type] = namespaces || [];
   };
@@ -80,7 +74,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   useEffect(() => {
     dataRef.current = {
       onUpdateState: params.onUpdateState,
-      allVersionedProviders: params.allVersionedProviders,
       allBlockChains: params.allBlockChains,
     };
   }, [params]);
@@ -140,9 +133,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       const provider = getHub().get(type);
 
       if (!provider) {
-        throw new Error(
-          `You should add ${type} to provider first then call 'canSwitchNetworkTo'.`
-        );
+        // TODO: should throw an error
+        return false;
       }
 
       if (!namespace) {
@@ -206,7 +198,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
       // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
       const targetNamespaces: [
-        LegacyNamespaceInputForConnect,
+        NamespaceInputForConnect,
         AllProxiedNamespaces
       ][] = [];
       namespaces.forEach((namespace) => {
@@ -436,18 +428,22 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         properties: metadata.properties,
       };
     },
-    providers() {
-      throw new Error('This method is not available on hub providers.');
-    },
     state(type) {
       const hubState = getHub().state();
       const wallet = getHub().get(type);
       const walletState = hubState[type];
 
       if (!walletState || !wallet) {
-        throw new Error(
-          `It seems your requested provider doesn't exist in hub. Provider Id: ${type}`
-        );
+        // TODO: should throw an error
+        return {
+          connected: false,
+          connecting: false,
+          installed: false,
+          reachable: false,
+          accounts: null,
+          network: null,
+          namespaces: new Map(),
+        };
       }
 
       const accounts = walletState.namespaces
@@ -501,12 +497,18 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         `Suggest has not been implemented for given chain: ${namespace.network}`
       );
     },
-    hubProvider() {
-      throw new Error(
-        'Unreachable code. the method has been implemented in main adapter instance.'
-      );
+    hubProvider(type) {
+      const provider = findProviderByType(params.providers, type);
+
+      if (!provider) {
+        throw new Error(
+          `You're trying to access ${type} provider which is not found in hub providers. it may not be registered yet.`
+        );
+      }
+
+      return provider;
     },
   };
 
-  return api;
+  return withErrorLoggingApi(api);
 }

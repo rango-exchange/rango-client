@@ -1,9 +1,6 @@
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type {
-  LegacyProviderInterface,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
@@ -278,7 +275,11 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+  /**
+   * Passing a `ProviderInterface` is deprecated. Pass a hub `Provider` instead.
+   * Legacy providers will be removed in future versions.
+   */
+  wallets?: (WalletType | ProviderInterface | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
@@ -306,4 +307,12 @@ export type WidgetConfig = {
     };
   };
   routing?: Routing;
+};
+
+// TODO: remove this when ProviderInterface gets removed
+export type WidgetConfigWithoutLegacyProviders = WidgetConfig & {
+  wallets?: Exclude<
+    NonNullable<WidgetConfig['wallets']>[number],
+    ProviderInterface
+  >[];
 };

@@ -5,10 +5,8 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
-import type {
-  LegacyNetwork as Network,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@hub3js/core';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExtendedWalletInfo,
   ProviderContext,
@@ -16,18 +14,16 @@ import type {
 import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
+  getBlockChainNameFromId,
   HYPERLIQUID_SIGN_NETWORK,
   Networks,
+  readAccountAddress,
 } from '@rango-dev/internal-blockchains';
 import {
   BlockchainCategories,
   detectInstallLink,
   WalletState as WalletStatus,
 } from '@rango-dev/ui';
-import {
-  legacyGetBlockChainNameFromId as getBlockChainNameFromId,
-  legacyReadAccountAddress as readAccountAddress,
-} from '@rango-dev/wallets-core/legacy';
 import BigNumber from 'bignumber.js';
 import { isAddress as isEvmAddress } from 'ethers';
 
@@ -529,7 +525,7 @@ export function checkIsWalletPartiallyConnected(
   wallet: ExtendedWalletInfo,
   walletState: ReturnType<ProviderContext['state']>
 ) {
-  if (!wallet.isHub || !wallet.needsNamespace || !walletState.connected) {
+  if (!wallet.needsNamespace || !walletState.connected) {
     return false;
   }
   const namespaces = wallet.needsNamespace.data;

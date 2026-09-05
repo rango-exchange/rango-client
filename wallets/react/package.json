@@ -9,19 +9,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./helpers": {
-      "types": "./dist/helpers/index.d.ts",
-      "default": "./dist/helpers/index.js"
     }
   },
   "files": [
     "dist",
-    "src",
-    "helpers"
+    "src"
   ],
   "scripts": {
-    "build": "yarn run rangutopia library build --inputs src/index.ts,src/helpers/index.ts",
+    "build": "yarn run rangutopia library build --inputs src/index.ts",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

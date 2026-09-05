@@ -1,11 +1,7 @@
 import type { Namespace } from '@hub3js/namespaces';
 
-import { Persistor } from '@rango-dev/wallets-core/legacy';
-
-import {
-  HUB_LAST_CONNECTED_WALLETS,
-  LEGACY_LAST_CONNECTED_WALLETS,
-} from './constants.js';
+import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
+import { Persistor } from './persistor.js';
 
 export interface NamespaceInput {
   namespace: Namespace;
@@ -16,11 +12,9 @@ export interface LastConnectedWalletsStorage {
   [providerId: string]: NamespaceInput[];
 }
 
-export type LegacyLastConnectedWalletsStorage = string[];
-
 /**
  * We are doing some certain actions on storage for `last-connected-wallets` key.
- * This class helps us to define them in one place and also it has support for both legacy and hub.
+ * This class helps us to define them in one place.
  */
 export class LastConnectedWalletsFromStorage {
   #storageKey: string;
@@ -32,24 +26,18 @@ export class LastConnectedWalletsFromStorage {
   addWallet(providerId: string, namespaces: NamespaceInput[]): void {
     if (this.#storageKey === HUB_LAST_CONNECTED_WALLETS) {
       return this.#addWalletToHub(providerId, namespaces);
-    } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
-      return this.#addWalletToLegacy(providerId);
     }
     throw new Error('Not implemented');
   }
   removeWallets(providerIds?: string[]): void {
     if (this.#storageKey === HUB_LAST_CONNECTED_WALLETS) {
       return this.#removeWalletsFromHub(providerIds);
-    } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
-      return this.#removeWalletsFromLegacy(providerIds);
     }
     throw new Error('Not implemented');
   }
   list(): LastConnectedWalletsStorage {
     if (this.#storageKey === HUB_LAST_CONNECTED_WALLETS) {
       return this.#listFromHub();
-    } else if (this.#storageKey === LEGACY_LAST_CONNECTED_WALLETS) {
-      return this.#listFromLegacy();
     }
     throw new Error('Not implemented');
   }
@@ -60,17 +48,6 @@ export class LastConnectedWalletsFromStorage {
     throw new Error('Not implemented');
   }
 
-  #listFromLegacy(): LastConnectedWalletsStorage {
-    const persistor = new Persistor<LegacyLastConnectedWalletsStorage>();
-    const lastConnectedWallets =
-      persistor.getItem(LEGACY_LAST_CONNECTED_WALLETS) || [];
-    const output: LastConnectedWalletsStorage = {};
-    lastConnectedWallets.forEach((provider) => {
-      // Setting empty namespaces
-      output[provider] = [];
-    });
-    return output;
-  }
   #listFromHub(): LastConnectedWalletsStorage {
     const persistor = new Persistor<LastConnectedWalletsStorage>();
     const lastConnectedWallets =
@@ -101,15 +78,6 @@ export class LastConnectedWalletsFromStorage {
       ...storageState,
       [providerId]: toBeAddedNamespaces,
     });
-  }
-  #addWalletToLegacy(providerId: string): void {
-    const storage = new Persistor<LegacyLastConnectedWalletsStorage>();
-    const storageState = storage.getItem(this.#storageKey) || [];
-
-    storage.setItem(
-      LEGACY_LAST_CONNECTED_WALLETS,
-      storageState.concat(providerId)
-    );
   }
   #removeWalletsFromHub(providerIds?: string[]): void {
     const persistor = new Persistor<LastConnectedWalletsStorage>();
@@ -146,21 +114,5 @@ export class LastConnectedWalletsFromStorage {
     if (newProviderNamespaces?.length > 0) {
       this.#addWalletToHub(providerId, newProviderNamespaces);
     }
-  }
-  #removeWalletsFromLegacy(providerIds?: string[]): void {
-    const persistor = new Persistor<LegacyLastConnectedWalletsStorage>();
-    const storageState = persistor.getItem(this.#storageKey) || [];
-
-    // Remove all wallets
-    if (!providerIds) {
-      persistor.setItem(this.#storageKey, []);
-      return;
-    }
-
-    // Remove some of the wallets
-    persistor.setItem(
-      LEGACY_LAST_CONNECTED_WALLETS,
-      storageState.filter((wallet) => !providerIds.includes(wallet))
-    );
   }
 }
