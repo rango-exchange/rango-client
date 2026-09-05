@@ -1,6 +1,7 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import { Widget } from '@rango-dev/widget-embedded';
+import eruda from 'eruda';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 
@@ -9,6 +10,8 @@ import {
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './constants';
+
+eruda.init();
 
 export function App() {
   const [searchParams] = useSearchParams();
