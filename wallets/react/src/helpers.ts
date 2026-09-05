@@ -1,4 +1,4 @@
-import type { ProviderContext } from './index.js';
+import type { ProviderContext } from './types.js';
 
 import { debug } from '@rango-dev/logging-core';
 

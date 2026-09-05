@@ -1,12 +1,16 @@
-import type { ProviderProps } from './legacy/types.js';
+import type { ProviderProps } from './types.js';
 
 import React from 'react';
 
-import { WalletContext } from './legacy/context.js';
-import { useProviders } from './useProviders.js';
+import { WalletContext } from './context.js';
+import { useHubAdapter } from './hub/mod.js';
+import { getHubProviders } from './hub/utils.js';
 
 function Provider(props: ProviderProps) {
-  const api = useProviders(props);
+  const api = useHubAdapter({
+    ...props,
+    providers: getHubProviders(props.providers),
+  });
 
   return (
     <WalletContext.Provider value={api}>

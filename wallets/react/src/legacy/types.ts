@@ -1,18 +1,11 @@
-import type { Provider, ProviderMetadata } from '@hub3js/core';
-import type { NamespaceData } from '@hub3js/core/store';
-import type { VersionedProviders } from '@hub3js/core/utils';
-import type { Namespace } from '@hub3js/namespaces';
+import type { ProviderMetadata } from '@hub3js/core';
 import type {
-  LegacyNamespaceInputForConnect,
-  LegacyProviderInterface,
   LegacyNetwork as Network,
-  LegacyEventHandler as WalletEventHandler,
   LegacyWalletInfo as WalletInfo,
   LegacyState as WalletState,
   LegacyWalletType as WalletType,
 } from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
-import type { PropsWithChildren } from 'react';
 
 import { LegacyEvents as Events } from '@rango-dev/wallets-core/legacy';
 
@@ -29,64 +22,10 @@ export type ConnectResult = {
   provider: InstanceType;
 };
 
-export type Providers = { [type in WalletType]?: InstanceType };
-
 export type ExtendedWalletInfo = WalletInfo & {
   properties?: ProviderMetadata['properties'];
   isHub?: boolean;
 };
-
-export type ProviderContext = {
-  connect(
-    type: WalletType,
-    namespaces?: LegacyNamespaceInputForConnect[]
-  ): Promise<ConnectResult[]>;
-  disconnect(type: WalletType, namespaces?: Namespace[]): Promise<void>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  disconnectAll(): Promise<PromiseSettledResult<any>[]>;
-
-  state(
-    type: WalletType
-  ): WalletState & { namespaces?: Map<Namespace, NamespaceData> };
-  canSwitchNetworkTo(
-    type: WalletType,
-    network: Network,
-    namespace?: LegacyNamespaceInputForConnect
-  ): boolean;
-  /**
-   * `Provider` in legacy terms means injected instances by wallets into window (e.g. window.ethereum)
-   * that can be retrieved by `getInstance`.
-   *
-   * Note 1: Providers are lazy evaluated, which means you need to call `connect` (or `state`) first, then the value will be shown in object.
-   *         before doing that, it's a key (wallet name or we call it `type` to be more specific) with null value. (e.g. {metamask: null})
-   */
-  providers(): Providers;
-  getSigners(type: WalletType): Promise<SignerFactory>;
-  getWalletInfo(type: WalletType): ExtendedWalletInfo;
-  suggestAndConnect(
-    type: WalletType,
-    namespace: LegacyNamespaceInputForConnect
-  ): Promise<ConnectResult>;
-  hubProvider(type: WalletType): Provider;
-};
-
-export type ProviderProps = PropsWithChildren<{
-  onUpdateState?: WalletEventHandler;
-  allBlockChains?: BlockchainMeta[];
-  autoConnect?: boolean;
-  providers: VersionedProviders[];
-  configs?: {
-    wallets?: (WalletType | LegacyProviderInterface | Provider)[];
-    walletOptions?: {
-      [key: WalletType]: {
-        provider?: unknown;
-        namespaces?: {
-          [namespaceId: string]: unknown;
-        };
-      };
-    };
-  };
-}>;
 
 export { Events };
 

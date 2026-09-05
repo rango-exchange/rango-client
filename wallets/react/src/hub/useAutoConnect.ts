@@ -1,8 +1,8 @@
-import type { ProviderProps } from './types.js';
+import type { ProviderProps } from '../types.js';
 
 import { useEffect, useRef } from 'react';
 
-import { shouldTryAutoConnect } from './utils.js';
+import { shouldTryAutoConnect } from './helpers.js';
 
 export function useAutoConnect(
   props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'> & {

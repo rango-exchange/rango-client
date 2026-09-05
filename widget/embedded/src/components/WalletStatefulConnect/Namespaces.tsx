@@ -25,13 +25,8 @@ export function Namespaces(props: PropTypes) {
   const namespacesProperty = targetWallet.properties?.find(
     (property) => property.name === 'namespaces'
   );
-  const isHub = targetWallet.isHub;
-  const singleNamespace = targetWallet.isHub
-    ? namespacesProperty?.value.selection === 'single'
-    : targetWallet.needsNamespace?.selection === 'single';
-  const needsNamespace = isHub
-    ? namespacesProperty?.value
-    : targetWallet.needsNamespace;
+  const singleNamespace = namespacesProperty?.value.selection === 'single';
+  const needsNamespace = namespacesProperty?.value;
   const providerImage = targetWallet.image;
 
   const blockchains = useAppStore().blockchains();
