@@ -23,13 +23,14 @@
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/queue-manager-react": "*",
-    "@rango-dev/wallets-core": "*",
+    "@rango-dev/wallets-react": "*",
     "bignumber.js": "*",
     "rango-sdk": "*",
     "rango-types": "*",
     "uuid": "*"
   },
   "devDependencies": {
+    "@rango-dev/wallets-react": "^0.48.1-next.3",
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {

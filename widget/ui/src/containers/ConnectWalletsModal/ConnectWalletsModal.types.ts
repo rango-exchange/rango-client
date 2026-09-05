@@ -1,5 +1,5 @@
 import type { WalletInfo } from '../../components/index.js';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@hub3js/core';
 
 export interface ConnectWalletsModalPropTypes {
   open: boolean;

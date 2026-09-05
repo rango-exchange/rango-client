@@ -14,6 +14,7 @@ import type {
   WidgetTheme,
   WidgetVariant,
 } from './types';
+import type { WalletType } from '@hub3js/core';
 import type {
   PendingSwapWithQueueID,
   Route,
@@ -36,12 +37,11 @@ import type {
   StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
-  LegacyEventHandler as HandleWalletsUpdate,
-  LegacyProviderInterface as ProviderInterface,
-  LegacyWalletInfo as WalletInfo,
-  LegacyState as WalletState,
-  LegacyWalletType as WalletType,
-} from '@rango-dev/wallets-core/legacy';
+  EventHandler as HandleWalletsUpdate,
+  ProviderInterface,
+  WalletInfo,
+  WalletState,
+} from '@rango-dev/wallets-react';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
