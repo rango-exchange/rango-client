@@ -46,6 +46,8 @@
     "react-is": "^18.2.0"
   },
   "dependencies": {
+    "@rango-dev/wallets-react": "^0.48.1-next.3",
+    "@hub3js/core": "^0.62.0",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-popover": "^1.0.6",
@@ -53,7 +55,6 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@rango-dev/wallets-core": "^0.61.1-next.2",
     "@stitches/react": "^1.2.8",
     "copy-to-clipboard": "^3.3.3",
     "rango-types": "^0.5.0",

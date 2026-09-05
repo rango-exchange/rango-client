@@ -1,11 +1,11 @@
 import type { StellarNamespace, TargetToken } from './types';
 import type { TargetNamespace } from '../../shared';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
+import type { WalletType } from '@hub3js/core';
 import type {
   BlockedReason,
   ExecuterActions,
 } from '@rango-dev/queue-manager-core';
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
 import type { PendingSwap, StellarTransaction } from 'rango-types';
 import type { Result } from 'ts-results';
 

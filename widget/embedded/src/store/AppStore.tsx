@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '../types';
+import type { WidgetConfigWithoutLegacyProviders } from '../types';
 import type { PropsWithChildren } from 'react';
 
 import React, { createContext, useContext, useEffect, useRef } from 'react';
@@ -6,7 +6,9 @@ import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { createAppStore } from './app';
 
 type AppStore = ReturnType<typeof createAppStore>;
-type AppStoreProviderProps = PropsWithChildren<{ config?: WidgetConfig }>;
+type AppStoreProviderProps = PropsWithChildren<{
+  config?: WidgetConfigWithoutLegacyProviders;
+}>;
 
 export const AppStoreContext = createContext<AppStore | null>(null);
 

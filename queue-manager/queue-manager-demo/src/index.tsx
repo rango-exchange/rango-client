@@ -1,4 +1,4 @@
-import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/legacy';
+import type { WalletType } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-types';
 
 import { allProviders } from '@rango-dev/provider-all';
