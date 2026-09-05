@@ -32,9 +32,8 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { Networks } from '@rango-dev/internal-blockchains';
+import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
 import { WalletTypes } from '@rango-dev/provider-all';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';

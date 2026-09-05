@@ -10,7 +10,6 @@ import type {
 } from '@rango-dev/wallets-core/legacy';
 
 import { Provider } from '@hub3js/core';
-import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
@@ -20,6 +19,12 @@ import {
   convertNamespaceNetworkToEvmChainId,
   isEvmNamespace,
 } from './utils.js';
+
+function isEvmNamespaceInput(
+  namespace: LegacyNamespaceInputForConnect
+): namespace is LegacyNamespaceInputForConnect<'EVM'> {
+  return namespace.namespace === 'EVM';
+}
 
 // Getting connected wallets from storage
 const lastConnectedWalletsFromStorage = new LastConnectedWalletsFromStorage(
@@ -69,7 +74,7 @@ async function eagerConnect(
 
   const connectNamespacesPromises = targetNamespaces.map(
     ([info, namespace]) => {
-      const evmChain = legacyIsEvmNamespace(info)
+      const evmChain = isEvmNamespaceInput(info)
         ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
         : undefined;
       const chain = evmChain || info.network;

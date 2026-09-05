@@ -9,7 +9,7 @@ import type { LegacyWalletType as WalletType } from '@rango-dev/wallets-core/leg
 import type { PendingSwap, XrplTransaction } from 'rango-types';
 import type { Result } from 'ts-results';
 
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
+import { readAccountAddress } from '@rango-dev/internal-blockchains';
 import BigNumber from 'bignumber.js';
 import { TransactionType } from 'rango-types';
 import { Err, Ok } from 'ts-results';
