@@ -13,8 +13,7 @@ import { Provider } from '@hub3js/core';
 import { legacyIsEvmNamespace } from '@rango-dev/wallets-core/legacy';
 import { Result } from 'ts-results';
 
-import { HUB_LAST_CONNECTED_WALLETS } from '../legacy/mod.js';
-
+import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
 import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {

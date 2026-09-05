@@ -45,15 +45,12 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
   }
 
   const walletState = state(currentStepWallet.walletType);
-  const namespaceState =
-    wallet.isHub && namespace?.namespace
-      ? walletState.namespaces?.get(namespace.namespace)
-      : null;
+  const namespaceState = namespace?.namespace
+    ? walletState.namespaces?.get(namespace.namespace)
+    : null;
 
   const connecting = walletState.connecting || namespaceState?.connecting;
-  const connected = wallet.isHub
-    ? namespaceState?.connected
-    : walletState.connected;
+  const connected = namespaceState?.connected;
 
   const getButtonTitle = () => {
     if (connected) {
@@ -107,9 +104,7 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
     if (!connected) {
       return null;
     }
-    const firstAccountArray = wallet?.isHub
-      ? namespaceState?.accounts?.[0]?.split(':')
-      : walletState?.accounts?.[0]?.split(':');
+    const firstAccountArray = namespaceState?.accounts?.[0]?.split(':');
     const address = firstAccountArray?.[firstAccountArray?.length - 1];
 
     if (!address) {
