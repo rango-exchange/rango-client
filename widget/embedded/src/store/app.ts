@@ -1,4 +1,7 @@
-import type { WidgetConfig } from '../types';
+import type {
+  WidgetConfig,
+  WidgetConfigWithoutLegacyProviders,
+} from '../types';
 import type { AppStoreState } from './slices/types';
 import type { StateCreator } from 'zustand';
 
@@ -21,7 +24,9 @@ export type StateCreatorWithInitialData<
 
 export type { AppStoreState };
 
-export function createAppStore(initialData?: WidgetConfig) {
+export function createAppStore(
+  initialData?: WidgetConfigWithoutLegacyProviders
+) {
   return create<AppStoreState>()(
     persist(
       (...a) => ({

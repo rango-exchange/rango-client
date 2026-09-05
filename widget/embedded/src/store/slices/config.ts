@@ -1,6 +1,9 @@
 import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
-import type { WidgetConfig } from '../../types';
+import type {
+  WidgetConfig,
+  WidgetConfigWithoutLegacyProviders,
+} from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 import type { VersionedProviders } from '@hub3js/core/utils';
 
@@ -27,7 +30,7 @@ function makeProvidersOptionsFromConfig(
   return options;
 }
 
-export const DEFAULT_CONFIG: WidgetConfig = {
+export const DEFAULT_CONFIG: WidgetConfigWithoutLegacyProviders = {
   apiKey: '',
   title: undefined,
   multiWallets: true,
@@ -62,13 +65,13 @@ const DEFAULT_CAMPAIGN_MODE: CampaignMode = {
 
 export interface ConfigSlice {
   // What user can set directly.
-  config: WidgetConfig;
+  config: WidgetConfigWithoutLegacyProviders;
   campaignMode: CampaignMode;
   isInCampaignMode: () => boolean;
   getLiquiditySources: () => string[];
   getDisabledLiquiditySources: () => string[];
   excludeLiquiditySources: () => boolean;
-  updateConfig: (config: WidgetConfig) => void;
+  updateConfig: (config: WidgetConfigWithoutLegacyProviders) => void;
   updateCampaignMode: <K extends keyof CampaignMode>(
     name: K,
     value: CampaignMode[K]
@@ -92,7 +95,7 @@ function generateProviders() {
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
-  WidgetConfig,
+  WidgetConfigWithoutLegacyProviders,
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
@@ -126,7 +129,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
     },
 
     // Actions
-    updateConfig: (nextConfig: WidgetConfig) => {
+    updateConfig: (nextConfig: WidgetConfigWithoutLegacyProviders) => {
       const currentConfig = get().config;
       const {
         _tokensMapByTokenHash: tokensMapByTokenHash,

@@ -1,5 +1,5 @@
 import type { WidgetConfig } from '../../types';
-import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core/legacy';
+import type { EventHandler } from '@rango-dev/wallets-react';
 
 export type PropTypes = {
   onUpdateState?: EventHandler;
