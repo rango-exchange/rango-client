@@ -6,6 +6,7 @@ import { SignerError, SignerErrorCode } from 'rango-types';
  * TODO - replace with real type
  * tslint:disable-next-line: no-any
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TronExternalProvider = any;
 
 export class DefaultTronSigner implements GenericSigner<TronTransaction> {
@@ -44,11 +45,20 @@ export class DefaultTronSigner implements GenericSigner<TronTransaction> {
 
   async signAndSendTx(tx: TronTransaction): Promise<{ hash: string }> {
     try {
+      console.log('RAW TRANSACTION');
+      console.log(tx);
       const transaction = DefaultTronSigner.buildTx(tx);
+
+      console.log('BUILT TRANSACTION');
+      console.log(transaction);
       const signedTxn = await this.provider.tronWeb.trx.sign(transaction);
+      console.log('SIGNED TRANSACTION');
+      console.log(signedTxn);
       const receipt = await this.provider.tronWeb.trx.sendRawTransaction(
         signedTxn
       );
+      console.log('RECEIPT');
+      console.log(receipt);
       const hash = receipt?.transaction?.txID;
       return { hash };
     } catch (error) {
