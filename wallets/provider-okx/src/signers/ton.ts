@@ -4,7 +4,8 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { GenericSigner, TonTransaction } from 'rango-types';
 
-import { SignerError, SignerErrorCode, TonChainID } from 'rango-types';
+import { DefaultTonSigner } from '@rango-dev/signer-ton';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { TON_CONNECT_USER_REJECTED_CODE } from '../constants.js';
 import { nextTonRequestId } from '../namespaces/ton/utils.js';
@@ -29,20 +30,9 @@ export class OKXTonSigner implements GenericSigner<TonTransaction> {
   }
 
   async signAndSendTx(tx: TonTransaction): Promise<{ hash: string }> {
-    const { validUntil, network, from, messages } = tx;
+    const { Cell } = await import('@ton/core');
 
-    const { Address, Cell } = await import('@ton/core');
-
-    const transactionPayload = {
-      valid_until: validUntil,
-      network: network ?? TonChainID.MAINNET,
-      ...(from && { from: Address.parse(from).toRawString() }),
-      messages: messages.map(({ stateInit, payload, ...message }) => ({
-        ...message,
-        ...(stateInit != null && { stateInit }),
-        ...(payload != null && { payload }),
-      })),
-    };
+    const transactionPayload = DefaultTonSigner.buildTx(tx);
 
     try {
       const response = await this.provider.send({
