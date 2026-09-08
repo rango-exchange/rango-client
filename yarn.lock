@@ -2910,7 +2910,7 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
-"@hub3js/bip122@^0.2.1":
+"@hub3js/bip122@^0.2.0", "@hub3js/bip122@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@hub3js/bip122/-/bip122-0.2.1.tgz#5224c59930bb695b53a1f6fa5195377eea1db400"
   integrity sha512-wib1jtDOMTEtzlAFu5aiQe7Ryvv4fc9DPew//PV9Qo2yQhLOzPrVqLk4blygXSvlxicXGVT4IUdR+tRxOAnwdg==
@@ -2926,6 +2926,24 @@
     immer "^10.0.4"
     rango-types "^0.5.0"
     zustand "^4.5.2"
+
+"@hub3js/evm@0.0.0-experimental-86ac55e4-20260902", "@hub3js/evm@^0.0.0-experimental-86ac55e4-20260902":
+  version "0.0.0-experimental-86ac55e4-20260902"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-86ac55e4-20260902.tgz#d1657092eb39cf269072c1b77acf4a05e134eedf"
+  integrity sha512-60+TTXJmd9gsC089g0o4nBiERwp5LzmZAkcWM4XeO6IOXQVhbSKGNi7yYZYH1zoyIAPjD/jK5nKZK4JG3UjzFQ==
+  dependencies:
+    "@hub3js/std" "^0.4.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
+
+"@hub3js/evm@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.5.0.tgz#2ba2464d5f9d7f2e6fee040b35a064c705d39082"
+  integrity sha512-Qy4D5CLlfIMauxa4J3LOTQEpYM99ml3QQNPQvMoxM9y4Cg6xFgkwC9Ohk1amV5gGMKXd362Xjls13v2+otTxow==
+  dependencies:
+    "@hub3js/std" "^0.4.0"
+    caip "^1.1.1"
+    rango-types "^0.5.0"
 
 "@hub3js/namespaces@0.0.0-experimental-86ac55e4-20260902":
   version "0.0.0-experimental-86ac55e4-20260902"
@@ -2954,12 +2972,6 @@
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@hub3js/starknet/-/starknet-0.4.0.tgz#a419f741279cf207408e29d12c5ed77eebc101d8"
   integrity sha512-WYXCslZqhP9jL+a1tdoGJ4RuG/DU2fWm6d4laNR9iwXdeBuay7Cxa15HvsmCWsGjwzSR3bxvUn6q+v+MnO7Lkg==
-
-
-"@hub3js/evm@0.0.0-experimental-86ac55e4-20260902", "@hub3js/evm@^0.0.0-experimental-86ac55e4-20260902":
-  version "0.0.0-experimental-86ac55e4-20260902"
-  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-86ac55e4-20260902.tgz#d1657092eb39cf269072c1b77acf4a05e134eedf"
-  integrity sha512-60+TTXJmd9gsC089g0o4nBiERwp5LzmZAkcWM4XeO6IOXQVhbSKGNi7yYZYH1zoyIAPjD/jK5nKZK4JG3UjzFQ==
   dependencies:
     "@hub3js/std" "^0.4.0"
     caip "^1.1.1"
@@ -3000,16 +3012,6 @@
     "@hub3js/std" "^0.4.0"
     caip "^1.1.1"
     rango-types "^0.5.0"
-
-"@hub3js/xrpl@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hub3js/xrpl/-/xrpl-0.4.0.tgz#1dc599a31f47d35e3a44bb1da641a4a87aafa038"
-  integrity sha512-yGZeONHBGOd4aItpkHyWttmQ6lGEUjujInt0lURyoCDtfzs5fI+GHXrbR/PwjrUeptQ8Bi7TCwNUCLG8m3y1gw==
-  dependencies:
-    "@hub3js/std" "^0.4.0"
-    caip "^1.1.1"
-    rango-types "^0.5.0"
-    xrpl "^4.2.0"
 
 "@hub3js/xrpl@^0.4.0":
   version "0.4.0"
