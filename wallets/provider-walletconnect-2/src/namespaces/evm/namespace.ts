@@ -1,5 +1,9 @@
 import type { Context } from '@hub3js/core';
-import type { EvmActions } from '@hub3js/evm';
+import type {
+  AllowanceParams,
+  EvmActions,
+  EvmTransactionReceipt,
+} from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
@@ -91,12 +95,35 @@ const getChainId = builders
   .action(async () => getAdapter().getCurrentChainId())
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(
+    async (
+      _context: Context<EvmActions>,
+      params: AllowanceParams
+    ): Promise<string> => getAdapter().getAllowance(params)
+  )
+  .build();
+
+const getTransactionReceipt = builders
+  .getTransactionReceipt()
+  .action(
+    async (
+      _context: Context<EvmActions>,
+      txHash: `0x${string}`
+    ): Promise<EvmTransactionReceipt | null> =>
+      getAdapter().getTransactionReceipt(txHash)
+  )
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(canEagerConnect)
   .action(canSwitchNetwork)
   .action(disconnect)
   .action(getChainId)
+  .action(getAllowance)
+  .action(getTransactionReceipt)
   .build();
 
 export { evm };
