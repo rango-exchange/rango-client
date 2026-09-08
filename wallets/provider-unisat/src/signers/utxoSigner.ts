@@ -71,6 +71,7 @@ export class BTCSigner implements GenericSigner<Transfer> {
     // 5. Broadcast PSBT to rpc node
     const response = await fetch(BTC_RPC_URL, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         method: 'sendrawtransaction',
         params: [finalPsbtBaseHex],
