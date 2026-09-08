@@ -8,9 +8,9 @@ import { End, List } from './TokenList.styles';
 export function LoadingTokenList(props: LoadingTokenListProps) {
   return (
     <List>
-      {Array.from(Array(props.size), (e) => (
+      {Array.from(Array(props.size), (_, index) => (
         <ListItem
-          key={e}
+          key={index}
           hasDivider
           start={<Skeleton variant="circular" width={35} height={35} />}
           end={
