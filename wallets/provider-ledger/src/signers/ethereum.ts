@@ -1,4 +1,4 @@
-import type { TransactionLike } from 'ethers';
+import type { FeeData, TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
@@ -12,6 +12,32 @@ import {
   transportConnect,
   transportDisconnect,
 } from '../utils.js';
+
+/** Whether a transaction already prices itself under either scheme. */
+function hasGasPricing(tx: EvmTransaction): boolean {
+  return !!tx.gasPrice || (!!tx.maxFeePerGas && !!tx.maxPriorityFeePerGas);
+}
+
+/**
+ * Picks one pricing scheme from what the node quotes. The two are mutually
+ * exclusive in a signed transaction, so EIP-1559 is used wherever the chain
+ * quotes it and a legacy price is the fallback.
+ */
+function pricingFromFeeData(fees: FeeData) {
+  if (fees.maxFeePerGas && fees.maxPriorityFeePerGas) {
+    return {
+      gasPrice: null,
+      maxFeePerGas: fees.maxFeePerGas.toString(),
+      maxPriorityFeePerGas: fees.maxPriorityFeePerGas.toString(),
+    };
+  }
+
+  return {
+    gasPrice: fees.gasPrice?.toString() ?? null,
+    maxFeePerGas: null,
+    maxPriorityFeePerGas: null,
+  };
+}
 
 export class EthereumSigner implements GenericSigner<EvmTransaction> {
   async signMessage(msg: string): Promise<string> {
@@ -41,32 +67,51 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     try {
-      /*
-       * Ledger signs a raw transaction on-device and does not estimate gas, so
-       * a gas limit must already be present. Client-built transactions that
-       * leave it null (e.g. approve prerequisites) are not supported yet.
-       */
-      if (!tx.gasLimit) {
-        throw new SignerError(
-          SignerErrorCode.SIGN_TX_ERROR,
-          'Gas limit is required for Ledger transactions.'
-        );
-      }
-
       const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
 
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
 
+      /*
+       * Ledger signs a raw transaction on-device and does not estimate gas, so
+       * a limit has to be present. Server-built transactions arrive with one;
+       * client-built ones - approve prerequisites among them - do not, so it is
+       * estimated here. Everything else is taken as the transaction sends it.
+       */
+      const gasLimit =
+        tx.gasLimit ??
+        (
+          await provider.estimateGas({
+            from: fromAddress,
+            to: tx.to,
+            data: tx.data ?? undefined,
+            value: tx.value ?? undefined,
+          })
+        ).toString();
+
+      /*
+       * Whatever pricing the transaction came with wins - a server-built one
+       * always carries it, and it is signed with exactly what it was created
+       * with. Only a client-built transaction, which leaves both schemes null,
+       * is priced from the node.
+       */
+      const pricing = hasGasPricing(tx)
+        ? {
+            gasPrice: tx.gasPrice,
+            maxFeePerGas: tx.maxFeePerGas,
+            maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+          }
+        : pricingFromFeeData(await provider.getFeeData());
+
       const transaction: TransactionLike<string> = {
         to: tx.to,
-        gasPrice: tx.gasPrice,
-        gasLimit: tx.gasLimit,
+        gasPrice: pricing.gasPrice,
+        gasLimit,
         nonce: transactionCount,
         chainId: chainId,
         data: tx.data,
         value: tx.value,
-        maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
-        maxFeePerGas: tx.maxFeePerGas,
+        maxPriorityFeePerGas: pricing.maxPriorityFeePerGas,
+        maxFeePerGas: pricing.maxFeePerGas,
       };
 
       const unsignedTx =
