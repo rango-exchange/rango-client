@@ -14,6 +14,9 @@ import {
 } from 'rango-types';
 import { Ok } from 'ts-results';
 
+/** A receipt reporting a transaction that did not revert. */
+const RECEIPT_STATUS_SUCCESS = 1;
+
 export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
   prerequisiteType: EVM_APPROVE_TYPE,
   namespaceKey: 'evm',
@@ -56,6 +59,13 @@ export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
     if (!receipt) {
       return 'pending';
     }
-    return receipt.status === '0x1' ? 'success' : 'failed';
+    /*
+     * The receipt status is a quantity, and wallets are not consistent about
+     * how they hand it over - `0x1`, `0x01` and `1` all occur - so it is
+     * compared as a number rather than as the exact string the spec suggests.
+     */
+    return Number(receipt.status) === RECEIPT_STATUS_SUCCESS
+      ? 'success'
+      : 'failed';
   },
 };
