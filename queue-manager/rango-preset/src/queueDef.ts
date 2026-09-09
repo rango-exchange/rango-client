@@ -1,5 +1,11 @@
 import type { SwapQueueDef } from './types';
 
+import {
+  checkApprove,
+  checkApproveTransactionStatus,
+  evmApproveAdapter,
+  tronApproveAdapter,
+} from './actions/checkApprove';
 import { checkHyperliquidTransactionStatus } from './actions/checkHyperliquidTransactionStatus';
 import { checkPrerequisites } from './actions/checkPrerequisites';
 import { checkStatus } from './actions/checkStatus';
@@ -38,6 +44,14 @@ export const swapQueueDef: SwapQueueDef = {
     [SwapActionTypes.CHECK_XRPL_TRUSTLINE_TRANSACTION_STATUS]:
       checkXrplTrustLineTransactionStatus,
     [SwapActionTypes.CHECK_STELLAR_TRUSTLINE]: checkStellarTrustline,
+    [SwapActionTypes.CHECK_EVM_APPROVE]: async (actions) =>
+      checkApprove(actions, evmApproveAdapter),
+    [SwapActionTypes.CHECK_EVM_APPROVE_TRANSACTION_STATUS]: async (actions) =>
+      checkApproveTransactionStatus(actions, evmApproveAdapter),
+    [SwapActionTypes.CHECK_TRON_APPROVE]: async (actions) =>
+      checkApprove(actions, tronApproveAdapter),
+    [SwapActionTypes.CHECK_TRON_APPROVE_TRANSACTION_STATUS]: async (actions) =>
+      checkApproveTransactionStatus(actions, tronApproveAdapter),
     [SwapActionTypes.EXECUTE_TRANSACTION]: executeTransaction,
     [SwapActionTypes.EXECUTE_XRPL_TRANSACTION]: executeXrplTransaction,
     [SwapActionTypes.EXECUTE_STELLAR_TRANSACTION]: executeStellarTransaction,

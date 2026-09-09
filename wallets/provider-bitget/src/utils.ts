@@ -69,7 +69,7 @@ export function tronBitget(): TronProviderApi {
     );
   }
 
-  return tronInstance;
+  return tronInstance as TronProviderApi;
 }
 export function utxoBitget(): UtxoProviderApi {
   const instance = bitget();

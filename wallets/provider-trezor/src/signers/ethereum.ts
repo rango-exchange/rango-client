@@ -6,7 +6,7 @@ import {
   toHexQuantity,
 } from '@rango-dev/signer-evm';
 import { JsonRpcProvider, Transaction } from 'ethers';
-import { type GenericSigner } from 'rango-types';
+import { type GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 
 import { getDerivationPath } from '../state.js';
 import { getTrezorModule, trezorErrorMessages } from '../utils.js';
@@ -60,6 +60,18 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
       if (!isEIP1559 && !gasPrice) {
         throw new Error('Missing gasPrice');
       }
+      /*
+       * Trezor signs a raw transaction on-device and does not estimate gas, so
+       * a gas limit must already be present. Client-built transactions that
+       * leave it null (e.g. approve prerequisites) are not supported yet.
+       */
+      if (!tx.gasLimit) {
+        throw new SignerError(
+          SignerErrorCode.SIGN_TX_ERROR,
+          'Gas limit is required for Trezor transactions.'
+        );
+      }
+
       const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
       const additionalFields = isEIP1559
