@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.65.1-next.8",
+  "version": "0.65.1-next.9",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@hub3js/core": "^0.62.0",
     "@rango-dev/provider-binance": "^0.6.1-next.6",
-    "@rango-dev/provider-bitget": "^0.60.1-next.6",
+    "@rango-dev/provider-bitget": "^0.60.1-next.7",
     "@rango-dev/provider-braavos": "^0.56.1-next.6",
     "@rango-dev/provider-brave": "^0.65.1-next.6",
     "@rango-dev/provider-coin98": "^0.65.1-next.6",
