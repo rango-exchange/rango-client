@@ -23,7 +23,7 @@ import { StepEventType, SwapActionTypes } from '../../types';
 import { onNextStateError } from '../common/produceNextStateForTransaction';
 
 import { INTERVAL_FOR_CHECK_APPROVE_TRANSACTION_STATUS } from './constants';
-import { isAllowanceSufficient, resolveApproveNamespace } from './utils';
+import { confirmAllowanceOnChain, resolveApproveNamespace } from './utils';
 
 /**
  * Generic status poller for a submitted approve prerequisite. Waits for the
@@ -166,10 +166,13 @@ export async function checkApproveTransactionStatus<
     }
 
     /*
-     * The transaction is confirmed, but some wallets allow editing the approve
-     * amount, so we should also make sure the new allowance is sufficient.
+     * The receipt says the approve transaction is mined, which is not the same
+     * as the swap being able to spend: some wallets let the user edit the
+     * amount, and the node answering the next request is not necessarily the
+     * one that produced this receipt. The allowance itself is what the swap
+     * depends on, so it - not the receipt - decides when to move on.
      */
-    const allowanceResult = await isAllowanceSufficient(
+    const allowanceResult = await confirmAllowanceOnChain(
       prerequisite,
       namespace.val
     );
