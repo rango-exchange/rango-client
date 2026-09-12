@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 import process from 'node:process';
-import { logAsSection } from '../publish/utils.mjs';
+import { logAsSection } from '../common/log.mjs';
 import { getDeployableClients } from './utils.mjs';
 import { build } from '../build-libs/build.mjs';
 import commandLineArgs from 'command-line-args';

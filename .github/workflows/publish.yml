@@ -12,10 +12,12 @@ concurrency:
 
 jobs:
   publish:
-    timeout-minutes: 30
+    timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
@@ -24,10 +26,30 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
 
-      - name: Build, Version & Publish packages
+      - name: Detect publish flag
+        id: flag
+        uses: ./.github/actions/detect-publish-flag
+
+      - name: Determine versions
+        id: version
+        run: yarn run publish:version "$PUBLISH_FLAG"
+        env:
+          PUBLISH_FLAG: ${{ steps.flag.outputs.flag }}
+
+      - name: Check versions
+        run: yarn run publish:version:check
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Version the repository and its clients
+        if: steps.version.outputs.count != '0'
+        uses: ./.github/actions/release-root
+        with:
+          flag: ${{ steps.flag.outputs.flag }}
+
+      - name: Publish packages
         run: yarn run publish
         env:
-          REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
           # Github will create .npmrc based on this env variable.
           # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
