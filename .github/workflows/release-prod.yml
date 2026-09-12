@@ -27,7 +27,7 @@ jobs:
     if: ${{ !inputs.hotfix }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
@@ -43,6 +43,8 @@ jobs:
     if: ${{ !cancelled() && needs.guard.result == 'success' && (needs.sync-prod.result == 'success' || needs.sync-prod.result == 'skipped') }}
     uses: ./.github/workflows/publish.yml
     secrets: inherit
+    permissions:
+      contents: write
 
   deploy:
     needs: publish
@@ -53,7 +55,7 @@ jobs:
       REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
       REACT_APP_RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}  
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0    
           token: ${{ secrets.PAT }}
@@ -80,7 +82,7 @@ jobs:
     if: ${{ !inputs.hotfix }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
