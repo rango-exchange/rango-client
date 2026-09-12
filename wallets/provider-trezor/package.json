@@ -24,7 +24,7 @@
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@hub3js/bip122": "^0.2.1",
     "@hub3js/core": "^0.62.0",
-    "@hub3js/evm": "^0.5.0",
+    "@hub3js/evm": "0.0.0-experimental-86ac55e4-20260902",
     "@hub3js/std": "^0.4.0",
     "@rango-dev/internal-blockchains": "^0.1.1-next.3",
     "@rango-dev/signer-evm": "^0.45.1-next.1",
@@ -32,7 +32,7 @@
     "@trezor/connect-web": "^9.5.0",
     "bitcoinjs-lib": "^6.1.7",
     "ethers": "^6.13.2",
-    "rango-types": "^0.5.0"
+    "rango-types": "0.0.0-experimental-4602126c-20260902"
   },
   "publishConfig": {
     "access": "public"

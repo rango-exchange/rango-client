@@ -5,7 +5,9 @@ import type { Result } from 'ts-results';
 
 import { Networks } from '@rango-dev/internal-blockchains';
 import {
+  EVM_APPROVE_TYPE,
   STELLAR_CHANGE_TRUSTLINE_TYPE,
+  TRON_APPROVE_TYPE,
   XRPL_CHANGE_TRUSTLINE_TYPE,
 } from 'rango-types';
 import { Err, Ok } from 'ts-results';
@@ -16,6 +18,7 @@ import { onNextStateError } from '../common/produceNextStateForTransaction';
 
 import {
   checkIsPrerequisiteAlreadyMet,
+  handleUnmetApprovePrerequisite,
   handleUnmetStellarChangeTrustLinePrerequisite,
   handleUnmetXrplChangeTrustLinePrerequisite,
 } from './utils';
@@ -73,6 +76,30 @@ export async function checkPrerequisites(
   let result: Result<SwapActionTypes, string> | null = null;
   if (unmetPrerequisiteIndex !== -1) {
     switch (prerequisites[unmetPrerequisiteIndex].type) {
+      case EVM_APPROVE_TYPE:
+        result = handleUnmetApprovePrerequisite(
+          {
+            prerequisiteType: EVM_APPROVE_TYPE,
+            checkAction: SwapActionTypes.CHECK_EVM_APPROVE,
+            checkStatusAction:
+              SwapActionTypes.CHECK_EVM_APPROVE_TRANSACTION_STATUS,
+          },
+          unmetPrerequisiteIndex,
+          currentStep
+        );
+        break;
+      case TRON_APPROVE_TYPE:
+        result = handleUnmetApprovePrerequisite(
+          {
+            prerequisiteType: TRON_APPROVE_TYPE,
+            checkAction: SwapActionTypes.CHECK_TRON_APPROVE,
+            checkStatusAction:
+              SwapActionTypes.CHECK_TRON_APPROVE_TRANSACTION_STATUS,
+          },
+          unmetPrerequisiteIndex,
+          currentStep
+        );
+        break;
       case XRPL_CHANGE_TRUSTLINE_TYPE:
         result = handleUnmetXrplChangeTrustLinePrerequisite(
           unmetPrerequisiteIndex,

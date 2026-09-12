@@ -1,3 +1,4 @@
+import type { FeeData } from 'ethers';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
 import {
@@ -10,6 +11,32 @@ import { type GenericSigner } from 'rango-types';
 
 import { getDerivationPath } from '../state.js';
 import { getTrezorModule, trezorErrorMessages } from '../utils.js';
+
+/** Whether a transaction already prices itself under either scheme. */
+function hasGasPricing(tx: EvmTransaction): boolean {
+  return !!tx.gasPrice || (!!tx.maxFeePerGas && !!tx.maxPriorityFeePerGas);
+}
+
+/**
+ * Picks one pricing scheme from what the node quotes. The two are mutually
+ * exclusive in a signed transaction, so EIP-1559 is used wherever the chain
+ * quotes it and a legacy price is the fallback.
+ */
+function pricingFromFeeData(fees: FeeData) {
+  if (fees.maxFeePerGas && fees.maxPriorityFeePerGas) {
+    return {
+      gasPrice: null,
+      maxFeePerGas: fees.maxFeePerGas.toString(),
+      maxPriorityFeePerGas: fees.maxPriorityFeePerGas.toString(),
+    };
+  }
+
+  return {
+    gasPrice: fees.gasPrice?.toString() ?? null,
+    maxFeePerGas: null,
+    maxPriorityFeePerGas: null,
+  };
+}
 
 export function getTrezorErrorMessage(error: unknown) {
   if (
@@ -48,34 +75,62 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
   ): Promise<{ hash: string }> {
     try {
       const TrezorConnect = await getTrezorModule();
-      const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = tx;
-      const isEIP1559 = maxFeePerGas && maxPriorityFeePerGas;
-
-      if (isEIP1559 && !maxFeePerGas) {
-        throw new Error('Missing maxFeePerGas');
-      }
-      if (isEIP1559 && !maxPriorityFeePerGas) {
-        throw new Error('Missing maxPriorityFeePerGas');
-      }
-      if (!isEIP1559 && !gasPrice) {
-        throw new Error('Missing gasPrice');
-      }
       const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
+
+      /*
+       * Trezor signs a raw transaction on-device and does not estimate gas, so
+       * a limit has to be present. Server-built transactions arrive with one;
+       * client-built ones - approve prerequisites among them - do not, so it is
+       * estimated here. Everything else is taken as the transaction sends it.
+       */
+      const gasLimit =
+        tx.gasLimit ??
+        (
+          await provider.estimateGas({
+            from: fromAddress,
+            to: tx.to,
+            data: tx.data ?? undefined,
+            value: tx.value ?? undefined,
+          })
+        ).toString();
+      /*
+       * Whatever pricing the transaction came with wins - a server-built one
+       * always carries it, and it is signed with exactly what it was created
+       * with. Only a client-built transaction, which leaves both schemes null,
+       * is priced from the node.
+       */
+      const pricing = hasGasPricing(tx)
+        ? {
+            gasPrice: tx.gasPrice,
+            maxFeePerGas: tx.maxFeePerGas,
+            maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
+          }
+        : pricingFromFeeData(await provider.getFeeData());
+
+      const isEIP1559 =
+        !!pricing.maxFeePerGas && !!pricing.maxPriorityFeePerGas;
+
+      if (!isEIP1559 && !pricing.gasPrice) {
+        throw new Error('Missing gasPrice');
+      }
+
       const additionalFields = isEIP1559
         ? {
-            maxFeePerGas: toHexQuantity(maxFeePerGas || '0'),
-            maxPriorityFeePerGas: toHexQuantity(maxPriorityFeePerGas || '0'),
+            maxFeePerGas: toHexQuantity(pricing.maxFeePerGas || '0'),
+            maxPriorityFeePerGas: toHexQuantity(
+              pricing.maxPriorityFeePerGas || '0'
+            ),
           }
         : {
-            gasPrice: toHexQuantity(gasPrice || '0'),
+            gasPrice: toHexQuantity(pricing.gasPrice || '0'),
           };
 
       const transaction = {
         to: tx.to,
         data: tx.data || '0x',
         value: toHexQuantity(tx.value?.toString() || '0'),
-        gasLimit: toHexQuantity(tx.gasLimit?.toString() || '0'),
+        gasLimit: toHexQuantity(gasLimit),
         chainId: Number.parseInt(chainId),
         nonce: toHexQuantity(transactionCount.toString()),
         ...additionalFields,

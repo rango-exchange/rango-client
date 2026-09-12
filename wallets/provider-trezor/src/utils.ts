@@ -1,5 +1,8 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
+import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
+import { JsonRpcProvider } from 'ethers';
+
 import { ETHEREUM_CHAIN_ID } from './constants.js';
 import { getDerivationPath } from './state.js';
 
@@ -8,6 +11,22 @@ type DeviceAccounts = {
   chainId: string;
   derivationPath: string;
 };
+
+/**
+ * Trezor EVM is Ethereum-only today and has no injected provider, so a single
+ * JSON-RPC provider over the Ethereum endpoint serves both the signer (nonce +
+ * broadcast) and the read-only namespace actions (allowance, receipt).
+ *
+ * NOTE: If Trezor EVM support ever expands beyond Ethereum, this must select
+ * the RPC per chain instead of the single Ethereum endpoint.
+ */
+let evmRpcProvider: JsonRpcProvider | undefined;
+export function getEvmRpcProvider(): JsonRpcProvider {
+  if (!evmRpcProvider) {
+    evmRpcProvider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL);
+  }
+  return evmRpcProvider;
+}
 
 export const trezorErrorMessages: { [statusCode: string]: string } = {
   Failure_ActionCancelled: 'User rejected the transaction.',
