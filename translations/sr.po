@@ -8,7 +8,7 @@ msgstr ""
 "Language: sr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 12:47\n"
+"PO-Revision-Date: 2026-09-14 07:09\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: sr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "Дошло је до мрежне грешке приликом обраде вашег захтева. Проверите интернет везу или освежите страницу и покушајте поново."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "Тренутно су неке трансакције покренуте
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:150
 msgid "Confirm"
 msgstr "Потврди"
 
@@ -220,7 +225,7 @@ msgstr "Додајте још један прилагођени токен"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:491
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:494
 msgid "Swaps steps"
 msgstr "Замењује кораке"
 
@@ -542,7 +547,7 @@ msgstr "Цреатед ат"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:379
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:382
 msgid "Swap Details"
 msgstr "Свап Детаилс"
 
@@ -557,44 +562,44 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Замена са ИД-ом захтева = {requestId} није пронађено."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:117
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:118
 msgid "Change Network"
 msgstr "Промените мрежу"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:124
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:125
 msgid "Network Changed"
 msgstr "Мрежа је промењена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:131
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:132
 msgid "Network Switch Failed"
 msgstr "Мрежни прекидач није успео"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Добили сте {amount} {token} у {conciseAddress} новчанику на {chain} ланцу."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Transaction was not sent."
 msgstr "Трансакција није послата."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} на {blockchain} остаје у вашем новчанику."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:393
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:396
 msgid "Delete"
 msgstr "Избриши"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:420
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:423
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:60
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 msgid "Try again"
 msgstr "Покушајте поново"
 
@@ -605,9 +610,9 @@ msgstr "Погледајте трансакцију"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:75
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:184
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Повежите се"
@@ -624,7 +629,7 @@ msgstr "Трансакција није успела"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:57
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "Готово"
@@ -661,20 +666,20 @@ msgid "No, Continue"
 msgstr "Не, настави"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:121
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:103
+#: widget/embedded/src/utils/swap.ts:715
 msgid "Connect {wallet}"
 msgstr "Повежи се {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:122
 msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
 msgstr "Веза са вашим новчаником или неким мрежама је прекинута. Повежите се да бисте наставили размену."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:140
 msgid "Wallet connected successfully."
 msgstr "Новчаник је успешно повезан."
 
@@ -701,12 +706,12 @@ msgid "No, Cancel"
 msgstr "Не, откажи"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:38
 msgid "Install {wallet}"
 msgstr "Инсталирај {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:54
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
@@ -759,27 +764,27 @@ msgid "Click connect in your wallet popup."
 msgstr "Кликните на Повежи се у искачућем прозору новчаника."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:94
 msgid "Select Derivation Path"
 msgstr "Изаберите Путања деривације"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:95
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Да бисте се повезали на {type}, прво морате да изаберете путању извођења"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:110
 msgid "Choose Derivation Path Template"
 msgstr "Изаберите шаблон путање извођења"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
 msgid "Enter Path"
 msgstr "Унесите путању"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
 msgid "Enter Index"
 msgstr "Унесите индекс"
 
@@ -799,29 +804,29 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете или искључите."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:70
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Прекини везу"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:106
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Овај новчаник подржава више ланаца. Изаберите које ланце желите да повежете."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:125
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Овај новчаник може бити повезан само са једним ланцем истовремено. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:148
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "Опозови све"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:149
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "Изаберите све"
@@ -832,77 +837,77 @@ msgid "Failed Network, Please retry your swap."
 msgstr "Неуспела мрежа, покушајте поново да извршите замену."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:11
+#: widget/embedded/src/constants/errors.ts:14
 msgid "Please reset your liquidity sources."
 msgstr "Ресетујте своје изворе ликвидности."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:12
+#: widget/embedded/src/constants/errors.ts:15
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
 msgstr "Ограничили сте изворе ликвидности и то може довести до тога да Ранго не пронађе никакве руте. Размислите о ресетовању извора ликвидности."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:17
+#: widget/embedded/src/constants/errors.ts:20
 msgid "No Routes Found."
 msgstr "Руте нису пронађене."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:18
+#: widget/embedded/src/constants/errors.ts:21
 msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
 msgstr "Разлози због којих Ранго није могао да пронађе руту: ниска ликвидност на токену, веома мали износ уноса или нема доступних рута за изабрану комбинацију улазно/излазних токена."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:23
+#: widget/embedded/src/constants/errors.ts:26
 msgid "Bridge Limit Error: Please increase your amount."
 msgstr "Грешка у ограничењу премошћавања: Повећајте износ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
+#: widget/embedded/src/constants/errors.ts:29
 msgid "Bridge Limit Error: Please decrease your amount."
 msgstr "Грешка у ограничењу премошћавања: Смањите износ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:31
+#: widget/embedded/src/constants/errors.ts:34
 msgid "High Price Impact"
 msgstr "Висок утицај на цену"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:32
+#: widget/embedded/src/constants/errors.ts:35
 msgid "Price impact is too high!"
 msgstr "Утицај на цену је превелик!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
+#: widget/embedded/src/constants/errors.ts:36
 msgid "The price impact is significantly higher than the allowed amount."
 msgstr "Утицај на цену је знатно већи од дозвољеног износа."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:36
+#: widget/embedded/src/constants/errors.ts:39
 msgid "Confirm high price impact"
 msgstr "Потврдите утицај високе цене"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:39
+#: widget/embedded/src/constants/errors.ts:42
 msgid "Route updated and price impact is too high, try again later!"
 msgstr "Рута је ажурирана и утицај на цену је превелик, покушајте поново касније!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:44
+#: widget/embedded/src/constants/errors.ts:47
 msgid "USD Price Unknown"
 msgstr "УСД Цена непозната"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:45
+#: widget/embedded/src/constants/errors.ts:48
 msgid "USD Price Unknown, Cannot calculate Price Impact."
 msgstr "Цена у УСД непозната, не може се израчунати утицај на цену."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:46
+#: widget/embedded/src/constants/errors.ts:49
 msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 msgstr "Цена у УСД непозната, не може се израчунати утицај на цену. Утицај на цену може бити већи него иначе. Да ли сте сигурни да настављате Замену?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:49
+#: widget/embedded/src/constants/errors.ts:52
 msgid "Confirm USD Price Unknown"
 msgstr "Потврдите цену у УСД непознато"
 
@@ -1240,57 +1245,57 @@ msgid "Your transaction is at risk of being frontrun due to high slippage tolera
 msgstr "Ваша трансакција је у опасности да буде претечна због високе толеранције на проклизавање."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:148
+#: widget/embedded/src/utils/swap.ts:149
 msgid "Required: >= {min} {symbol}"
 msgstr "Обавезно: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:161
+#: widget/embedded/src/utils/swap.ts:162
 msgid "Required: > {min} {symbol}"
 msgstr "Обавезно: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:176
+#: widget/embedded/src/utils/swap.ts:177
 msgid "Required: <= {max} {symbol}"
 msgstr "Обавезно: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:189
+#: widget/embedded/src/utils/swap.ts:190
 msgid "Required: < {max} {symbol}"
 msgstr "Обавезно: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:647
+#: widget/embedded/src/utils/swap.ts:648
 msgid " for network fee"
 msgstr " за мрежну накнаду"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:650
+#: widget/embedded/src/utils/swap.ts:651
 msgid " for swap"
 msgstr " за замену"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:653
+#: widget/embedded/src/utils/swap.ts:654
 msgid " for input and network fee"
 msgstr " за улазну и мрежну накнаду"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:655
+#: widget/embedded/src/utils/swap.ts:656
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Потребно је ≈ {requiredAmount} {symbol}{reason}, али имате {currentAmount} {symbol} у свом {blockchain} новчанику."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:721
+#: widget/embedded/src/utils/swap.ts:722
 msgid "Waiting for other running tasks to be finished"
 msgstr "Чека се да се заврше други задаци"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:724
+#: widget/embedded/src/utils/swap.ts:725
 msgid "Waiting for changing wallet network"
 msgstr "Чека се промена мреже новчаника"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:729
+#: widget/embedded/src/utils/swap.ts:730
 msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
 msgstr "Промена мреже није могла бити завршена. Молимо покушајте поново или ручно промените мрежу у свом новчанику."
 
