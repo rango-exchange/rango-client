@@ -84,7 +84,6 @@ import {
   WalletEventTypes,
   WidgetEvents,
 } from './types';
-import { pickProviderVersion } from './utils/providers';
 import { customizedThemeTokens } from './utils/ui';
 
 export const StatefulConnect = {
@@ -183,7 +182,6 @@ export type {
 // Internal function and enum exports for Rango
 export {
   readAccountAddress,
-  pickProviderVersion,
   Networks,
   WalletEvents,
   PendingSwapNetworkStatus,
