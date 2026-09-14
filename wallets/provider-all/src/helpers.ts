@@ -1,5 +1,4 @@
 import type { Provider, WalletType } from '@hub3js/core';
-import type { VersionedProviders } from '@hub3js/core/utils';
 
 export const isWalletExcluded = (
   providers: (WalletType | Provider)[],
@@ -16,4 +15,4 @@ export const isWalletExcluded = (
   );
 };
 
-export const lazyProvider = (provider: VersionedProviders) => () => provider;
+export const lazyProvider = (provider: Provider) => () => provider;

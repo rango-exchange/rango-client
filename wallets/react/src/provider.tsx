@@ -4,13 +4,9 @@ import React from 'react';
 
 import { WalletContext } from './context.js';
 import { useHubAdapter } from './hub/mod.js';
-import { getHubProviders } from './hub/utils.js';
 
 function Provider(props: ProviderProps) {
-  const api = useHubAdapter({
-    ...props,
-    providers: getHubProviders(props.providers),
-  });
+  const api = useHubAdapter(props);
 
   return (
     <WalletContext.Provider value={api}>

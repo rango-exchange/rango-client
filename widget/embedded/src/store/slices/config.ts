@@ -5,7 +5,7 @@ import type {
   WidgetConfigWithoutLegacyProviders,
 } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
-import type { VersionedProviders } from '@hub3js/core/utils';
+import type { Provider } from '@hub3js/core';
 
 import {
   allProviders as getAllProviders,
@@ -86,14 +86,14 @@ export interface ConfigSlice {
     name: K,
     value: IframeConfigs[K]
   ) => void;
-  allProviders: VersionedProviders[];
+  allProviders: Provider[];
   buildAndSetProviders: () => void;
-  getAvailableProviders: () => VersionedProviders[];
+  getAvailableProviders: () => Provider[];
 }
 
 function generateProviders(
   config: WidgetConfigWithoutLegacyProviders
-): VersionedProviders[] {
+): Provider[] {
   const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
