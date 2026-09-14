@@ -1,15 +1,10 @@
-import type { Provider } from '@hub3js/core';
-
-import { pickVersion } from '@hub3js/core/utils';
 import { allProviders } from '@rango-dev/provider-all';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
 export const providers = allProviders().map((build) => build());
 
-export const wallets = providers.map(
-  (provider) => (pickVersion(provider, '1.0.0')[1] as Provider).id
-);
+export const wallets = providers.map((provider) => provider.id);
 
 function Wallets() {
   const { connect, state, disconnect } = useWallets();

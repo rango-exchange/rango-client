@@ -7,7 +7,6 @@ import type {
 } from './legacy/types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { NamespaceData as HubNamespaceData } from '@hub3js/core/store';
-import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Namespace } from '@hub3js/namespaces';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
@@ -43,7 +42,7 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: EventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: VersionedProviders[];
+  providers: Provider[];
   configs?: {
     wallets?: (WalletType | Provider)[];
     walletOptions?: {

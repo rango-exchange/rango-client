@@ -54,8 +54,8 @@ or some specific wallets:
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { versions as metamask } from '@rango-dev/provider-metamask';
-import { versions as phantom } from '@rango-dev/provider-phantom';
+import { buildProvider as metamask } from '@rango-dev/provider-metamask';
+import { buildProvider as phantom } from '@rango-dev/provider-phantom';
 
 const providers = [metamask(), phantom()];
 

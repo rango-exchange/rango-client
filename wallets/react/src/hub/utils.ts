@@ -14,7 +14,6 @@ import type {
 } from '@hub3js/evm';
 import type { SolanaActions } from '@hub3js/solana';
 
-import { pickVersion, type VersionedProviders } from '@hub3js/core/utils';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
   formatAddressWithNetwork,
@@ -33,18 +32,6 @@ import {
   isConnectResultSolana,
 } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
-
-export function getHubProviders(providers: VersionedProviders[]): Provider[] {
-  return providers.map((provider) => {
-    try {
-      return pickVersion(provider, '1.0.0')[1] as Provider;
-    } catch {
-      throw new Error(
-        "Legacy providers aren't supported anymore. Expected a provider with version '1.0.0'."
-      );
-    }
-  });
-}
 
 export function findProviderByType(
   providers: Provider[],
