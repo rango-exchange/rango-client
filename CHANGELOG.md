@@ -1,3 +1,22 @@
+# 0.63.0 (2026-09-15)
+_includes `@rango-dev/widget-embedded@0.64.0`_
+
+
+
+### Bug Fixes
+
+* **bitget:** broadcast UTXO transactions directly to an RPC node ([94ee27d](https://github.com/rango-exchange/rango-client/commit/94ee27dfb5c8392cd13047fcd838dee8af3996b3))
+* pass the envs during the build not the deploy ([cfa74a1](https://github.com/rango-exchange/rango-client/commit/cfa74a104a298cd156c919c7a0441c930c1451b9))
+* **signers:** remove extra ton transaction fields ([5748292](https://github.com/rango-exchange/rango-client/commit/5748292491a9d5bcf1717cbd463ca99f782b884a))
+* **unisat:** send JSON content type when broadcasting BTC transactions ([9fd3579](https://github.com/rango-exchange/rango-client/commit/9fd3579a2a775db2533de9f60ec0b3db058b3850))
+* use wallet type instead of wallet name for the wallet detected event ([144dc65](https://github.com/rango-exchange/rango-client/commit/144dc65841e3cf960052f3db101f9c65cb7c23e8))
+* **widget:** use unique keys for token list skeleton items ([9198b6f](https://github.com/rango-exchange/rango-client/commit/9198b6f15744a3b3f62c92dea7ceecf53bdeacbe))
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
+* migrate wallet connect provider to hub ([efa6aef](https://github.com/rango-exchange/rango-client/commit/efa6aeff2c9dc406707024417c2307f3c345b71d))
 ## Widget [0.62.0] (2026-08-18)
 _includes `@rango-dev/widget-embedded@0.63.0`_
 
