@@ -1,3 +1,10 @@
+# [0.49.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.48.0...wallets-react@0.49.0) (2026-09-15)
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
+* migrate wallet connect provider to hub ([efa6aef](https://github.com/rango-exchange/rango-client/commit/efa6aeff2c9dc406707024417c2307f3c345b71d))
 # [0.48.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.47.0...wallets-react@0.48.0) (2026-08-18)
 
 

@@ -1,3 +1,9 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.29.0...signer-ton@0.30.0) (2026-09-15)
+
+
+### Bug Fixes
+
+* **signers:** remove extra ton transaction fields ([5748292](https://github.com/rango-exchange/rango-client/commit/5748292491a9d5bcf1717cbd463ca99f782b884a))
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/signer-ton@0.28.1...signer-ton@0.29.0) (2026-08-18)
 
 

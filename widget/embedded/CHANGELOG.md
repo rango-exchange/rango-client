@@ -1,3 +1,16 @@
+# [0.64.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.63.0...widget-embedded@0.64.0) (2026-09-15)
+
+
+### Bug Fixes
+
+* use wallet type instead of wallet name for the wallet detected event ([144dc65](https://github.com/rango-exchange/rango-client/commit/144dc65841e3cf960052f3db101f9c65cb7c23e8))
+* **widget:** use unique keys for token list skeleton items ([9198b6f](https://github.com/rango-exchange/rango-client/commit/9198b6f15744a3b3f62c92dea7ceecf53bdeacbe))
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
+* migrate wallet connect provider to hub ([efa6aef](https://github.com/rango-exchange/rango-client/commit/efa6aeff2c9dc406707024417c2307f3c345b71d))
 # [0.63.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.62.1...widget-embedded@0.63.0) (2026-08-18)
 
 

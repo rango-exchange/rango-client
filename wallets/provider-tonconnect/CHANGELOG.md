@@ -1,3 +1,15 @@
+# [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.24.0...provider-tonconnect@0.25.0) (2026-09-15)
+
+
+### Bug Fixes
+
+* **signers:** remove extra ton transaction fields ([5748292](https://github.com/rango-exchange/rango-client/commit/5748292491a9d5bcf1717cbd463ca99f782b884a))
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
+* migrate wallet connect provider to hub ([efa6aef](https://github.com/rango-exchange/rango-client/commit/efa6aeff2c9dc406707024417c2307f3c345b71d))
 # [0.24.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.23.0...provider-tonconnect@0.24.0) (2026-08-18)
 
 
