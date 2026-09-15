@@ -1,3 +1,9 @@
+# [0.46.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.45.0...signer-evm@0.46.0) (2026-09-15)
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
 # [0.45.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.44.0...signer-evm@0.45.0) (2026-08-18)
 
 

@@ -1,3 +1,15 @@
+# [0.61.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.60.0...provider-bitget@0.61.0) (2026-09-15)
+
+
+### Bug Fixes
+
+* **bitget:** broadcast UTXO transactions directly to an RPC node ([94ee27d](https://github.com/rango-exchange/rango-client/commit/94ee27dfb5c8392cd13047fcd838dee8af3996b3))
+
+
+### Features
+
+* add support for ledger wallet ([eacfd0b](https://github.com/rango-exchange/rango-client/commit/eacfd0bd32f87629e6cc9f6170368e1e208a6bd0))
+* migrate wallet connect provider to hub ([efa6aef](https://github.com/rango-exchange/rango-client/commit/efa6aeff2c9dc406707024417c2307f3c345b71d))
 # [0.60.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.59.0...provider-bitget@0.60.0) (2026-08-18)
 
 
