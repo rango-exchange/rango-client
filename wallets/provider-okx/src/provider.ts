@@ -5,10 +5,10 @@ import { ProviderBuilder } from '@hub3js/core';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
+import { sui } from './namespaces/sui.js';
 import { ton } from './namespaces/ton/ton.js';
 import { setEnvironments } from './namespaces/ton/utils.js';
 import { tron } from './namespaces/tron.js';
-import { sui } from './namespaces/sui.js';
 import { utxo } from './namespaces/utxo.js';
 import { okx as okxInstance } from './utils.js';
 

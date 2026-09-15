@@ -1,5 +1,5 @@
+import type { WalletType } from '@hub3js/core';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { WalletType } from '@rango-dev/wallets-shared';
 
 export interface Wallet {
   chain: string;

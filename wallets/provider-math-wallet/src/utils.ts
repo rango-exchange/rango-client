@@ -40,7 +40,7 @@ export function evmMathWallet(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaMathWallet(): SolanaProviderApi {

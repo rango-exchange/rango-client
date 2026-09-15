@@ -1,22 +1,20 @@
 import type { TargetNamespace, Wallet } from './shared';
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
+import type {
+  EvmNetworksChainInfo,
+  Network,
+} from '@rango-dev/internal-blockchains';
 import type {
   QueueContext,
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
-import type { LegacyConnectResult as ConnectResult } from '@rango-dev/wallets-core/legacy';
-import type {
-  Meta,
-  Network,
-  Providers,
-  WalletState,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { ConnectResult, WalletState } from '@rango-dev/wallets-react';
 import type { Transaction } from 'rango-sdk';
 import type {
   APIErrorCode,
+  BlockchainMeta,
   EvmBlockchainMeta,
   PendingSwap,
   PendingSwapStep,
@@ -26,6 +24,15 @@ import type {
 export type RemoveNameField<T, U extends string> = {
   [Property in keyof T as Exclude<Property, U>]: T[Property];
 };
+
+export type AllBlockchains = { [key: string]: BlockchainMeta };
+
+export interface Meta {
+  blockchains: AllBlockchains;
+  evmNetworkChainInfo: EvmNetworksChainInfo;
+  getSupportedChainNames: (type: WalletType) => Network[] | null;
+  evmBasedChains: EvmBlockchainMeta[];
+}
 
 export type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
 
@@ -79,7 +86,6 @@ export interface Block<T = any> {
 export interface SwapQueueContext extends QueueContext {
   meta: Meta;
   wallets: Wallet | null;
-  providers: Providers;
   hubProvider: (type: WalletType) => Provider<DefaultNamespaces>;
   getSigners: (type: WalletType) => Promise<SignerFactory>;
   switchNetwork: (

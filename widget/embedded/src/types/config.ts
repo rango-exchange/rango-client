@@ -1,7 +1,6 @@
-import type { Provider } from '@hub3js/core';
+import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
@@ -187,6 +186,21 @@ export type TonConnectConfig = {
 };
 
 /**
+ * Configuration for the Ledger wallet integration.
+ *
+ * @property {string} dAppIdentifier - Unique identifier of your dApp, registered with Ledger to authorize the integration.
+ * @property {string} apiKey - API key issued by Ledger, used to authenticate requests from your dApp.
+ * @property {'fatal' | 'error' | 'warn' | 'info' | 'debug'} [loggerLevel] - Verbosity of the Ledger logger.
+ * @property {boolean} [hideButton] - When `true`, hides the built-in Ledger floating button.
+ */
+export type LedgerWalletConfig = {
+  dAppIdentifier: string;
+  apiKey: string;
+  loggerLevel?: 'fatal' | 'error' | 'warn' | 'info' | 'debug';
+  hideButton?: boolean;
+};
+
+/**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
  * and theme.
@@ -254,13 +268,18 @@ export type WidgetConfig = {
   title?: string;
   walletConnectProjectId?: string;
   trezorManifest?: TrezorManifest;
+  ledgerWallet?: LedgerWalletConfig;
   tonConnect?: TonConnectConfig;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | LegacyProviderInterface | Provider)[];
+  /**
+   * Passing a `ProviderInterface` is deprecated. Pass a hub `Provider` instead.
+   * Legacy providers will be removed in future versions.
+   */
+  wallets?: (WalletType | ProviderInterface | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
@@ -288,4 +307,12 @@ export type WidgetConfig = {
     };
   };
   routing?: Routing;
+};
+
+// TODO: remove this when ProviderInterface gets removed
+export type WidgetConfigWithoutLegacyProviders = WidgetConfig & {
+  wallets?: Exclude<
+    NonNullable<WidgetConfig['wallets']>[number],
+    ProviderInterface
+  >[];
 };

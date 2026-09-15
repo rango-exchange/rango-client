@@ -1,0 +1,16 @@
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-core/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-core/package.json
+index 2ef212e..0a55b46 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-core/package.json
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-core/package.json
+@@ -30,9 +30,9 @@
+   "exports": {
+     ".": {
+       "@ledgerhq/ledger-button-workspace": "./src/index.ts",
+-      "default": "./dist/index.js",
++      "types": "./dist/index.d.ts",
+       "import": "./dist/index.js",
+-      "types": "./dist/index.d.ts"
++      "default": "./dist/index.js"
+     },
+     "./package.json": "./package.json"
+   },

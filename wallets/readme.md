@@ -37,7 +37,7 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
-const providers = allProviders();
+const providers = allProviders().map((build) => build());
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -54,11 +54,10 @@ or some specific wallets:
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import * as metamask from '@rango-dev/provider-metamask';
-import * as phantom from '@rango-dev/provider-phantom';
+import { versions as metamask } from '@rango-dev/provider-metamask';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 
-
-const providers = [metamask, phantom];
+const providers = [metamask(), phantom()];
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -106,7 +105,7 @@ With the use of auto-connect, after reloading the app, wallet provider will auto
 import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
-const providers = allProviders();
+const providers = allProviders().map((build) => build());
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -131,84 +130,78 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 
 ## By Group
 
-| Wallet                                          | EVM | UTXO | Solana | TON | Tron | SUI | StarkNet | Stellar |
-| ----------------------------------------------- | --- | ---- | ------ | --- | ---- | --- | -------- | ------- |
-| [Binance](provider-binance/readme.md)           | ✅  | 🚧   | 🚧     | 🚧  | 🚧   | 🚧  | ❌       | ❌      |
-| [Bitget](provider-bitget/readme.md)             | ✅  | 🚧   | 🚧     | ❌  | ✅   | ❌  | ❌       | ❌      |
-| [Braavos](provider-braavos/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
-| [Brave](provider-brave/readme.md)               | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Ctrl](provider-ctrl/readme.md)                 | ✅  | ✅   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [CoinBase](provider-coinbase/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Enkrypt](provider-enkrypt/readme.md)           | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Exodus](provider-exodus/readme.md)             | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Ledger](provider-ledger/readme.md)             | ⚠️  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [MathWallet](provider-math-wallet/readme.md)    | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [MetaMask](provider-metamask/readme.md)         | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Phantom](provider-phantom/readme.md)           | ⚠️  | ❌   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [OKX](provider-okx/readme.md)                   | ⚠️  | ⚠️   | ✅     | ✅  | ✅   | ✅  | ❌       | ❌      |
-| [Rabby](provider-rabby/readme.md)               | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Ready](provider-ready/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
-| [Slush](provider-slush/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [SafePal](provider-safepal/readme.md)           | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Solflare](provider-solflare/readme.md)         | ❌  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Taho](provider-taho/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Token Pocket](provider-tokenpocket/readme.md)  | ✅  | ❌   | 🚧     | ❌  | ❌   | 🚧  | ❌       | ❌      |
-| [Tron Link](provider-tron-link/readme.md)       | 🚧  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [Trust Wallet](provider-trust-wallet/readme.md) | ✅  | ❌   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
-| [UniSat](provider-unisat/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Xverse](provider-xverse/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Tomo](provider-tomo/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Coin98](provider-coin98/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [GemWallet](provider-gemwallet/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
-| [Vultisig](provider-vultisig/readme.md)         | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [TonConnect](provider-tonconnect/readme.md)     | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
-| [Freighter](provider-freighter/readme.md)       | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
-| [Trezor](provider-trezor/readme.md)             | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Safe](provider-safe/readme.md)                 | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Noir Wallet](provider-noir-wallet/readme.md)   | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| Wallet                                              | EVM | UTXO | Solana | TON | Tron | SUI | StarkNet | Stellar |
+| --------------------------------------------------- | --- | ---- | ------ | --- | ---- | --- | -------- | ------- |
+| [Binance](provider-binance/readme.md)               | ✅  | 🚧   | 🚧     | 🚧  | 🚧   | 🚧  | ❌       | ❌      |
+| [Bitget](provider-bitget/readme.md)                 | ✅  | 🚧   | 🚧     | ❌  | ✅   | ❌  | ❌       | ❌      |
+| [Braavos](provider-braavos/readme.md)               | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
+| [Brave](provider-brave/readme.md)                   | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [CoinBase](provider-coinbase/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Enkrypt](provider-enkrypt/readme.md)               | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Exodus](provider-exodus/readme.md)                 | ⚠️  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ledger](provider-ledger/readme.md)                 | ⚠️  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ledger Wallet](provider-ledger-wallet/readme.md)   | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [MathWallet](provider-math-wallet/readme.md)        | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [MetaMask](provider-metamask/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Phantom](provider-phantom/readme.md)               | ⚠️  | ❌   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [OKX](provider-okx/readme.md)                       | ⚠️  | ⚠️   | ✅     | ✅  | ✅   | ✅  | ❌       | ❌      |
+| [Rabby](provider-rabby/readme.md)                   | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Ready](provider-ready/readme.md)                   | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |
+| [Slush](provider-slush/readme.md)                   | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [SafePal](provider-safepal/readme.md)               | ✅  | 🚧   | 🚧     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Solflare](provider-solflare/readme.md)             | ❌  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Taho](provider-taho/readme.md)                     | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Token Pocket](provider-tokenpocket/readme.md)      | ✅  | ❌   | 🚧     | ❌  | ❌   | 🚧  | ❌       | ❌      |
+| [Tron Link](provider-tron-link/readme.md)           | 🚧  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [Trust Wallet](provider-trust-wallet/readme.md)     | ✅  | ❌   | ✅     | 🚧  | ❌   | 🚧  | ❌       | ❌      |
+| [UniSat](provider-unisat/readme.md)                 | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Xverse](provider-xverse/readme.md)                 | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Tomo](provider-tomo/readme.md)                     | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Coin98](provider-coin98/readme.md)                 | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [GemWallet](provider-gemwallet/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [Vultisig](provider-vultisig/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [TonConnect](provider-tonconnect/readme.md)         | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
+| [Freighter](provider-freighter/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
+| [Trezor](provider-trezor/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Safe](provider-safe/readme.md)                     | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [Noir Wallet](provider-noir-wallet/readme.md)       | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
+| [WalletConnect](provider-walletconnect-2/readme.md) | ✅  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 
 ## By Feature
 
-| Wallet       | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
-| ------------ | -------------- | -------------- | ------------ | ------------------------- | ------------- |
-| Binance      | ✅             | ✅             | ❌           | Injected                  | ❌            |
-| Bitget       | ✅             | ✅             | ✅           | Injected                  | ❌            |
-| Brave        | ✅             | ✅             | ✅           | Injected                  | ❌            |
-| Braavos      | ✅             | ❌             | ✅           | Injected                  | ✅            |
-| Ctrl         | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
-| CoinBase     | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
-| Enkrypt      | ✅             | ✅             | ✅           | Injected                  | ✅            |
-| Exodus       | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
-| Ledger       | ✅             | ❌             | ❌           | Transport                 | ✅            |
-| MathWallet   | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
-| MetaMask     | ✅             | ✅             | ✅           | Injected                  | ✅            |
-| OKX          | ⚠️             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
-| Phantom      | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
-| Rabby        | ✅             | ✅             | ✅           | Injected                  | ✅            |
-| Ready        | ✅             | ❌             | ✅           | Injected                  | ✅            |
-| Slush        | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
-| SafePal      | ✅             | ✅             | ❌           | Injected                  | ✅            |
-| Solflare     | ⚠️             | ❌             | ✅           | Injected                  | ✅            |
-| Taho         | ✅             | ✅             | ✅           | Injected                  | ✅            |
-| Token Pocket | ✅             | ✅             | ✅           | Injected                  | ❌            |
-| Trust Wallet | 🚧             | ✅             | ❌           | Injected                  | ✅            |
-| TronLink     | ✅             | ❌             | ✅           | Injected                  | ❌            |
-| Unisat       | ✅             | 🚧             | ❌           | Injected                  | ❌            |
-| Xverse       | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
-| Tomo         | ✅             | ✅             | ✅           | Injected                  | ❌            |
-| Coin98       | ✅             | ✅             | ❌           | Injected                  | ❌            |
-| GemWallet    | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
-| Vultisig     | ❌             | ❌             | ✅           | Injected                  | ❌            |
-| TonConnect   | ❌             | ❌             | ✅           | TonConnect                | ❌            |
-| Freighter    | ✅             | ❌             | ✅           | Injected                  | ✅            |
-| Trezor       | ❌             | ❌             | ❌           | Transport                 | ✅            |
-| Safe         | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
-| Noir Wallet  | ✅             | ❌             | ✅           | Injected                  | ❌            |
-
-# Supported Wallets (Legacy)
-
-| Wallet | Supported Chains | Not Implemented | Auto Connect Support | Source |
-| ------ | ---------------- | --------------- | -------------------- | ------ |
-
-| Trezor | Ethereum,Solana | Solana | &cross; | https://trezor.io/ |
-| Wallet Connect | Evm,Solana | Solana | &cross; | - |
+| Wallet        | Switch Account | Switch Network | Auto Connect | Interface                 | Cross Browser |
+| ------------- | -------------- | -------------- | ------------ | ------------------------- | ------------- |
+| Binance       | ✅             | ✅             | ❌           | Injected                  | ❌            |
+| Bitget        | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Brave         | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Braavos       | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| CoinBase      | ⚠️             | ✅             | ✅           | Injected                  | ❌            |
+| Enkrypt       | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| Exodus        | ❌             | ✅             | ⚠️           | Injected                  | ❌            |
+| Ledger        | ✅             | ❌             | ❌           | Transport                 | ✅            |
+| Ledger Wallet | ✅             | ✅             | ✅           | Ledger Wallet             | ✅            |
+| MathWallet    | ❌             | ❌             | ⚠️           | Injected                  | ❌            |
+| MetaMask      | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| OKX           | ⚠️             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
+| Phantom       | ✅             | ✅             | ⚠️           | Wallet Standard, Injected | ✅            |
+| Rabby         | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| Ready         | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| Slush         | ❌             | ❌             | ✅           | Wallet Standard           | ❌            |
+| SafePal       | ✅             | ✅             | ❌           | Injected                  | ✅            |
+| Solflare      | ⚠️             | ❌             | ✅           | Injected                  | ✅            |
+| Taho          | ✅             | ✅             | ✅           | Injected                  | ✅            |
+| Token Pocket  | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Trust Wallet  | 🚧             | ✅             | ❌           | Injected                  | ✅            |
+| TronLink      | ✅             | ❌             | ✅           | Injected                  | ❌            |
+| Unisat        | ✅             | 🚧             | ❌           | Injected                  | ❌            |
+| Xverse        | ⚠️             | 🚧             | ✅           | Injected                  | ❌            |
+| Tomo          | ✅             | ✅             | ✅           | Injected                  | ❌            |
+| Coin98        | ✅             | ✅             | ❌           | Injected                  | ❌            |
+| GemWallet     | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
+| Vultisig      | ❌             | ❌             | ✅           | Injected                  | ❌            |
+| TonConnect    | ❌             | ❌             | ✅           | TonConnect                | ❌            |
+| Freighter     | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| Trezor        | ❌             | ❌             | ❌           | Transport                 | ✅            |
+| Safe          | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
+| Noir Wallet   | ✅             | ❌             | ✅           | Injected                  | ❌            |
+| WalletConnect | ✅             | ✅             | ✅           | Injected                  | ✅            |

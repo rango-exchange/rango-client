@@ -7,6 +7,9 @@ import { QuoteErrorType } from '../types';
 export const errorMessages = () => {
   return {
     genericServerError: i18n.t('Failed Network, Please retry your swap.'),
+    moduleLoadError: i18n.t(
+      'A network error occurred while processing your request. Please check your internet connection or refresh the page and try again.'
+    ),
     liquiditySourcesError: {
       title: i18n.t('Please reset your liquidity sources.'),
       description: i18n.t(

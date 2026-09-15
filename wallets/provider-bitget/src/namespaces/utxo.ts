@@ -1,9 +1,9 @@
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { UtxoActions } from '@hub3js/bip122';
 
+import { builders } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { builders } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
@@ -32,7 +32,10 @@ const disconnect = commonBuilders
   .after(disconnectSubscriberCleanup)
   .build();
 
-const canEagerConnect = utxoBuilders.canEagerConnect(utxoBitget).build();
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(utxoActions.canEagerConnect(utxoBitget))
+  .build();
 
 const utxo = new NamespaceBuilder<UtxoActions>('UTXO', WALLET_ID)
   .action(connect)

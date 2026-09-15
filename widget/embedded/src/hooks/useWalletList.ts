@@ -1,12 +1,13 @@
 import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
 
+import { WalletTypes } from '@rango-dev/provider-all';
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { detectMobileScreens, WalletTypes } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
+import { detectMobileScreens } from '../utils/common';
 import { emitWalletDetected } from '../utils/events';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
@@ -35,6 +36,12 @@ const NON_INJECTED_WALLET_TYPES = new Set<string>([
   WalletTypes.WALLET_CONNECT_2,
   WalletTypes.TON_CONNECT,
   WalletTypes.DEFAULT,
+]);
+
+const DEFAULT_EVM_WALLETS = new Set<string>([
+  WalletTypes.DEFAULT,
+  WalletTypes.WALLET_CONNECT_2,
+  WalletTypes.LEDGER,
 ]);
 
 interface Params {
@@ -89,7 +96,7 @@ export function useWalletList(params?: Params): API {
       if (isDetected && !detectedWalletsReported.has(wallet.type)) {
         detectedWalletsReported.add(wallet.type);
         emitWalletDetected({
-          walletName: wallet.title,
+          walletName: wallet.type,
         });
       }
     });
@@ -131,11 +138,7 @@ export function useWalletList(params?: Params): API {
     const isEvmWalletInstalledExceptDefault = wallets.filter(
       (wallet) =>
         wallet.state != WalletState.NOT_INSTALLED &&
-        ![
-          WalletTypes.DEFAULT,
-          WalletTypes.WALLET_CONNECT_2,
-          WalletTypes.LEDGER,
-        ].includes(wallet.type as WalletTypes) &&
+        !DEFAULT_EVM_WALLETS.has(wallet.type) &&
         getWalletInfo(wallet.type).supportedChains.filter(
           (blockchain) => blockchain.type == 'EVM'
         ).length > 0

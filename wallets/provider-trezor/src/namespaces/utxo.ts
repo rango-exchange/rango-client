@@ -1,16 +1,16 @@
-import type { UtxoActions } from '@rango-dev/wallets-core/namespaces/utxo';
+import type { UtxoActions } from '@hub3js/bip122';
 
+import { builders, CAIP_BITCOIN_CHAIN_ID } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { builders } from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { utxoActions } from '../actions/utxo.js';
 import { WALLET_ID } from '../constants.js';
 
 const connect = builders
   .connect()
-  .action(utxoActions.connect())
+  .action(utxoActions.connect(CAIP_BITCOIN_CHAIN_ID))
   .or(standardizeAndThrowError)
   .build();
 

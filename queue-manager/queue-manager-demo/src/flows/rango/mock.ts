@@ -1,7 +1,7 @@
 import type { RawAccounts, Wallet } from './types';
-import type { Meta } from '@rango-dev/wallets-shared';
+import type { Meta } from '@rango-dev/queue-manager-rango-preset';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@rango-dev/provider-all';
 
 const evmAddress = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
 
@@ -4285,20 +4285,6 @@ export const meta = {
       'SOLANA',
     ],
     phantom: ['SOLANA'],
-    ctrl: [
-      'BSC',
-      'POLYGON',
-      'ETH',
-      'AVAX_CCHAIN',
-      'ARBITRUM',
-      'FANTOM',
-      'SOLANA',
-      'THOR',
-      'BNB',
-      'BTC',
-      'LTC',
-      'BCH',
-    ],
     'wallet-connect-2': [
       'BSC',
       'POLYGON',

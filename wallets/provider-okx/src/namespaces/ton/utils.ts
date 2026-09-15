@@ -7,7 +7,6 @@ import type {
 import type { CaipAccount } from '@hub3js/std/types';
 
 import { utils as tonCoreUtils } from '@hub3js/tvm';
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 
 export function isTonConnectEventSuccess(
   event: TonConnectEvent
@@ -67,9 +66,7 @@ export async function connectEventToCAIP(
     return tonCoreUtils.formatAccountsToCAIP([]);
   }
 
-  const { Address } = await dynamicImportWithRefinedError(
-    async () => await import('@ton/core')
-  );
+  const { Address } = await import('@ton/core');
   const userFriendlyAddress = Address.parseRaw(addressItem.address).toString({
     bounceable: false,
     urlSafe: true,

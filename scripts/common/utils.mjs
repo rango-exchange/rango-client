@@ -2,7 +2,6 @@
 import { readFileSync } from 'fs';
 import { execa } from 'execa';
 import process from 'node:process';
-import { NPM_ORG_NAME } from './constants.mjs';
 import { packageJsonPath } from './path.mjs';
 
 
@@ -76,23 +75,4 @@ export function packageNameWithoutScope(name) {
  */
 export function getEnvWithFallback(name) {
   return process.env[name] || 'NOT SET';
-}
-
-/**
- *
- * @param {import('./typedefs.mjs').Package} pkg
- * @returns
- */
-export function generateTagName(pkg) {
-  return `${packageNameWithoutScope(pkg.name)}@${pkg.version}`;
-}
-
-/**
- * Opposite of `generateTagName`
- *
- * @param {string} pkgNameWithoutScope
- * @returns
- */
-export function tagNameToPkgName(pkgNameWithoutScope) {
-  return `${NPM_ORG_NAME}/${pkgNameWithoutScope}`;
 }

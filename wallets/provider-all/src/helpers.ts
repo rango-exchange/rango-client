@@ -1,12 +1,9 @@
+import type { Provider, WalletType } from '@hub3js/core';
 import type { VersionedProviders } from '@hub3js/core/utils';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
-
-import { Provider } from '@hub3js/core';
 
 export const isWalletExcluded = (
-  providers: (WalletType | ProviderInterface | Provider)[],
-  wallet: { name: string; type: WalletTypes }
+  providers: (WalletType | Provider)[],
+  wallet: { name: string; type: WalletType }
 ) => {
   return (
     providers.length &&
@@ -14,10 +11,7 @@ export const isWalletExcluded = (
       if (typeof provider === 'string') {
         return provider === wallet.type;
       }
-      if (provider instanceof Provider) {
-        return provider.id === wallet.type;
-      }
-      return provider.getWalletInfo([]).name === wallet.name;
+      return provider.id === wallet.type;
     })
   );
 };

@@ -1,13 +1,13 @@
 import type { PropTypes } from './NamespaceItem.types';
 
 import { i18n } from '@lingui/core';
+import { getSupportedChainsFromNamespace } from '@rango-dev/internal-blockchains';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   Divider,
   Typography,
 } from '@rango-dev/ui';
-import { getSupportedChainsFromNamespace } from '@rango-dev/wallets-shared';
 import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

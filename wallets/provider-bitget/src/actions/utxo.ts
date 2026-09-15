@@ -1,11 +1,11 @@
-import type { Context, FunctionWithContext } from '@hub3js/core';
+import type { ProviderAPI, UtxoActions } from '@hub3js/bip122';
+import type {
+  CanEagerConnect,
+  Context,
+  FunctionWithContext,
+} from '@hub3js/core';
 
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  type ProviderAPI,
-  utils,
-  type UtxoActions,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+import { CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
 
 export function connect(
   instance: () => ProviderAPI
@@ -24,4 +24,13 @@ export function connect(
   };
 }
 
-export const utxoActions = { connect };
+export function canEagerConnect(
+  instance: () => ProviderAPI
+): CanEagerConnect<UtxoActions> {
+  return async () => {
+    const accounts = await instance().getAccounts();
+    return !!accounts.length;
+  };
+}
+
+export const utxoActions = { connect, canEagerConnect };

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 import process from 'node:process';
-import { logAsSection } from '../publish/utils.mjs';
+import { logAsSection } from '../common/log.mjs';
 import {
   deployProjectsToVercel,
   getClientsListToBeDeployed,

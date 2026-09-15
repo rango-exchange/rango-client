@@ -18,11 +18,9 @@ import type {
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import type {
-  AllBlockchains,
-  Network,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { WalletType } from '@hub3js/core';
+import type { Network } from '@rango-dev/internal-blockchains';
+import type { AllBlockchains } from '@rango-dev/queue-manager-rango-preset';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -32,8 +30,8 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
+import { WalletTypes } from '@rango-dev/provider-all';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';
@@ -311,7 +309,7 @@ export const ERROR_CREATE_TRANSACTION =
 export const ERROR_INPUT_WALLET_NOT_FOUND = 'Input wallet not found';
 
 export const DEFAULT_WALLET_INJECTION_ERROR =
-  'Failed to connect to wallet, if you have turned injection off (disable default wallet for xDefi), turn it on and refresh the page';
+  'Failed to connect to wallet, if you have turned injection off (disabled the default wallet in your extension), turn it on and refresh the page';
 
 export class PrettyError extends Error {
   private readonly detail?: string;
@@ -653,7 +651,6 @@ export const walletsAndSupportedChainsMetaSelector = (
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.PHANTOM]: solanaBlockchain,
-    [WalletTypes.CTRL]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.TRUST_WALLET]: evmBlockchains,
     [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>

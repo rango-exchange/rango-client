@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 12:47\n"
+"PO-Revision-Date: 2026-09-14 07:09\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: fi\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "Pyyntöäsi käsiteltäessä tapahtui verkkovirhe. Tarkista internetyhteytesi tai päivitä sivu ja yritä uudelleen."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "Tällä hetkellä jotkin tapahtumat ovat käynnissä ja niitä käsitell
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:150
 msgid "Confirm"
 msgstr "Vahvista"
 
@@ -220,7 +225,7 @@ msgstr "Lisää toinen mukautettu tunnus"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:491
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:494
 msgid "Swaps steps"
 msgstr "Swapin vaiheet"
 
@@ -542,7 +547,7 @@ msgstr "Luotu klo"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:379
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:382
 msgid "Swap Details"
 msgstr "Vaihda Tiedot"
 
@@ -557,44 +562,44 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Vaihda pyynnön ID = {requestId} ei löytynyt."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:117
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:118
 msgid "Change Network"
 msgstr "Vaihda Verkkoa"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:124
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:125
 msgid "Network Changed"
 msgstr "Verkko Muutettu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:131
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:132
 msgid "Network Switch Failed"
 msgstr "Verkkokytkin epäonnistui"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Olet saanut {amount} {token} {conciseAddress} -lompakossa {chain} -ketjussa."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Transaction was not sent."
 msgstr "Tapahtumaa ei lähetetty."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} {blockchain} jää lompakkoosi."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:393
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:396
 msgid "Delete"
 msgstr "Poista"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:420
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:423
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:60
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
@@ -605,9 +610,9 @@ msgstr "Näytä tapahtuma"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:75
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:184
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "Yhdistä"
@@ -624,7 +629,7 @@ msgstr "Tapahtuma Epäonnistui"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:57
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "Valmis"
@@ -661,20 +666,20 @@ msgid "No, Continue"
 msgstr "Ei, Jatka"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:121
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:103
+#: widget/embedded/src/utils/swap.ts:715
 msgid "Connect {wallet}"
 msgstr "Yhdistä {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:122
 msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
 msgstr "Lompakkosi tai joidenkin verkkojen yhteys on katkennut. Yhdistä jatkaaksesi vaihtoa."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:140
 msgid "Wallet connected successfully."
 msgstr "Lompakko yhdistetty onnistuneesti."
 
@@ -701,12 +706,12 @@ msgid "No, Cancel"
 msgstr "Ei, Peruuta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:38
 msgid "Install {wallet}"
 msgstr "Asenna {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:54
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
@@ -759,27 +764,27 @@ msgid "Click connect in your wallet popup."
 msgstr "Valitse yhdistä lompakon ponnahdusikkuna."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:94
 msgid "Select Derivation Path"
 msgstr "Valitse Derivation Polku"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:95
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "Jotta voit muodostaa yhteyden {type}, sinun täytyy ensin valita Derivation Path"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:110
 msgid "Choose Derivation Path Template"
 msgstr "Valitse Derivation Polku Malli"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
 msgid "Enter Path"
 msgstr "Syötä Polku"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
 msgid "Enter Index"
 msgstr "Syötä Hakemisto"
 
@@ -799,29 +804,29 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "Tämä lompakko tukee useita ketjuja. Valitse, mitkä ketjut haluat yhdistää tai irrottaa."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:70
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "Katkaise"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:106
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "Tämä lompakko tukee useita ketjuja. Valitse, mitkä ketjut haluat yhdistää."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:125
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "Tämä lompakko voi muodostaa yhteyden vain yhteen ketjuun kerrallaan. "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:148
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "Poista kaikki valinnat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:149
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "Valitse kaikki"
@@ -832,77 +837,77 @@ msgid "Failed Network, Please retry your swap."
 msgstr "Epäonnistunut verkko, yritä swapisi uudelleen."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:11
+#: widget/embedded/src/constants/errors.ts:14
 msgid "Please reset your liquidity sources."
 msgstr "Ole hyvä ja nollaa likviditeetin lähteet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:12
+#: widget/embedded/src/constants/errors.ts:15
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
 msgstr "Olet rajoittanut likviditeettilähteitä ja tämä saattaa johtaa Rangon löytämiseen ilman reittejä. Harkitse likviditeetin lähteiden uudelleenasettamista."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:17
+#: widget/embedded/src/constants/errors.ts:20
 msgid "No Routes Found."
 msgstr "Reittejä Ei Löytynyt."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:18
+#: widget/embedded/src/constants/errors.ts:21
 msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
 msgstr "Syyt miksi Rango ei löytänyt reittiä: alhainen likviditeetti token, hyvin alhainen syöte määrä tai ei reittejä käytettävissä valitun sisään- / ulostulo token yhdistelmä."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:23
+#: widget/embedded/src/constants/errors.ts:26
 msgid "Bridge Limit Error: Please increase your amount."
 msgstr "Bridge Limit virhe: Ole hyvä ja lisää summaasi."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
+#: widget/embedded/src/constants/errors.ts:29
 msgid "Bridge Limit Error: Please decrease your amount."
 msgstr "Bridge Limit virhe: pienennä summaasi."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:31
+#: widget/embedded/src/constants/errors.ts:34
 msgid "High Price Impact"
 msgstr "Korkean Hinnan Vaikutus"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:32
+#: widget/embedded/src/constants/errors.ts:35
 msgid "Price impact is too high!"
 msgstr "Hintavaikutus on liian suuri!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
+#: widget/embedded/src/constants/errors.ts:36
 msgid "The price impact is significantly higher than the allowed amount."
 msgstr "Hintavaikutus on huomattavasti suurempi kuin sallittu määrä."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:36
+#: widget/embedded/src/constants/errors.ts:39
 msgid "Confirm high price impact"
 msgstr "Vahvista hintavaikutus"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:39
+#: widget/embedded/src/constants/errors.ts:42
 msgid "Route updated and price impact is too high, try again later!"
 msgstr "Reitti päivitetty ja hintavaikutus on liian korkea, yritä myöhemmin uudelleen!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:44
+#: widget/embedded/src/constants/errors.ts:47
 msgid "USD Price Unknown"
 msgstr "Yhdysvaltain Hinta Tuntematon"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:45
+#: widget/embedded/src/constants/errors.ts:48
 msgid "USD Price Unknown, Cannot calculate Price Impact."
 msgstr "USD Hinta tuntematon, Ei voida laskea Hintavaikutusta."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:46
+#: widget/embedded/src/constants/errors.ts:49
 msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 msgstr "USD Hinta tuntematon, Ei voida laskea hintavaikutusta. Hintavaikutus voi olla tavallista suurempi. Oletko varma jatkamaan swap?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:49
+#: widget/embedded/src/constants/errors.ts:52
 msgid "Confirm USD Price Unknown"
 msgstr "Vahvista USD Hinta Tuntematon"
 
@@ -1240,57 +1245,57 @@ msgid "Your transaction is at risk of being frontrun due to high slippage tolera
 msgstr "Transaktiosi on vaarassa joutua ennakkoon korkean liukumistoleranssin vuoksi."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:148
+#: widget/embedded/src/utils/swap.ts:149
 msgid "Required: >= {min} {symbol}"
 msgstr "Pakollinen: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:161
+#: widget/embedded/src/utils/swap.ts:162
 msgid "Required: > {min} {symbol}"
 msgstr "Pakollinen: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:176
+#: widget/embedded/src/utils/swap.ts:177
 msgid "Required: <= {max} {symbol}"
 msgstr "Pakollinen: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:189
+#: widget/embedded/src/utils/swap.ts:190
 msgid "Required: < {max} {symbol}"
 msgstr "Pakollinen: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:647
+#: widget/embedded/src/utils/swap.ts:648
 msgid " for network fee"
 msgstr " verkkomaksua varten"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:650
+#: widget/embedded/src/utils/swap.ts:651
 msgid " for swap"
 msgstr " vaihtamista varten"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:653
+#: widget/embedded/src/utils/swap.ts:654
 msgid " for input and network fee"
 msgstr " syöttö- ja verkkomaksu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:655
+#: widget/embedded/src/utils/swap.ts:656
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Tarvitsee ≈ {requiredAmount} {symbol}{reason}, mutta sinulla on {currentAmount} {symbol} lompakossasi {blockchain} ."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:721
+#: widget/embedded/src/utils/swap.ts:722
 msgid "Waiting for other running tasks to be finished"
 msgstr "Odotetaan, että muut käynnissä olevat tehtävät valmistuvat"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:724
+#: widget/embedded/src/utils/swap.ts:725
 msgid "Waiting for changing wallet network"
 msgstr "Odotetaan lompakon verkon vaihtamista"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:729
+#: widget/embedded/src/utils/swap.ts:730
 msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
 msgstr "Verkon vaihtoa ei voitu suorittaa. Yritä uudelleen tai vaihda verkko manuaalisesti lompakossasi."
 

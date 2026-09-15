@@ -1,5 +1,5 @@
 import { execa } from 'execa';
-import { logAsSection } from '../publish/utils.mjs';
+import { logAsSection } from '../common/log.mjs';
 import {
   detectChannel,
   getBaseBranchForExperimental,

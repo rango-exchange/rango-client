@@ -12,7 +12,6 @@ declare global {
     exodus?: any;
     solana?: any;
     phantom?: any;
-    ctrl?: any;
     coinbaseWalletExtension?: any;
     coinbaseSolana?: any;
     coin98?: any;

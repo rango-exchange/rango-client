@@ -41,7 +41,7 @@ export function evmExodus(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaExodus(): SolanaProviderApi {

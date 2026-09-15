@@ -8,7 +8,7 @@ msgstr ""
 "Language: bn\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 12:47\n"
+"PO-Revision-Date: 2026-09-14 07:09\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: bn\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "আপনার অনুরোধটি প্রক্রিয়া করার সময় একটি নেটওয়ার্ক ত্রুটি ঘটেছে। অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন অথবা পৃষ্ঠাটি রিফ্রেশ করে আবার চেষ্টা করুন।"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -77,7 +82,7 @@ msgstr "বর্তমানে, কিছু লেনদেন চলছে �
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:34
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:377
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:143
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:150
 msgid "Confirm"
 msgstr "নিশ্চিত করুন"
 
@@ -220,7 +225,7 @@ msgstr "আরেকটি কাস্টম টোকেন যোগ কর�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:491
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:494
 msgid "Swaps steps"
 msgstr "ধাপগুলি অদলবদল করে"
 
@@ -542,7 +547,7 @@ msgstr "এ তৈরি করা হয়েছে"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:24
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:379
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:382
 msgid "Swap Details"
 msgstr "অদলবদল বিবরণ"
 
@@ -557,44 +562,44 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "অনুরোধ আইডি দিয়ে অদলবদল করুন = {requestId} পাওয়া যায়নি।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:117
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:118
 msgid "Change Network"
 msgstr "নেটওয়ার্ক পরিবর্তন করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:124
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:125
 msgid "Network Changed"
 msgstr "নেটওয়ার্ক পরিবর্তিত হয়েছে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:131
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:132
 msgid "Network Switch Failed"
 msgstr "নেটওয়ার্ক স্যুইচ ব্যর্থ হয়েছে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "আপনি {chain} চেইনে {conciseAddress} ওয়ালেটে {amount} {token} পেয়েছেন৷"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Transaction was not sent."
 msgstr "লেনদেন পাঠানো হয়নি."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "{amount} {symbol} on {blockchain} remains in your wallet."
 msgstr "{amount} {symbol} {blockchain} -এ আপনার ওয়ালেটে থেকে যায়৷"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:393
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:396
 msgid "Delete"
 msgstr "মুছে দিন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:420
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:72
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:423
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:60
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:73
 msgid "Try again"
 msgstr "আবার চেষ্টা করুন"
 
@@ -605,9 +610,9 @@ msgstr "লেনদেন দেখুন"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:53
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:64
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:74
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:189
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:62
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:75
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:184
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:37
 msgid "Connect"
 msgstr "সংযোগ করুন"
@@ -624,7 +629,7 @@ msgstr "লেনদেন ব্যর্থ হয়েছে৷"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:110
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:59
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:57
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:28
 msgid "Done"
 msgstr "সম্পন্ন"
@@ -661,20 +666,20 @@ msgid "No, Continue"
 msgstr "না, চালিয়ে যান"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:125
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:121
 #: widget/embedded/src/components/WalletStatefulConnect/Detached.tsx:163
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:108
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:103
+#: widget/embedded/src/utils/swap.ts:715
 msgid "Connect {wallet}"
 msgstr "সংযোগ করুন {wallet}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:126
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:122
 msgid "The connection of your wallet or some networks has been disconnected. Connect to continue the swap"
 msgstr "আপনার ওয়ালেট বা কিছু নেটওয়ার্কের সংযোগ বিচ্ছিন্ন করা হয়েছে। সোয়াপ চালিয়ে যেতে সংযোগ করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:144
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.ConnectWallet.tsx:140
 msgid "Wallet connected successfully."
 msgstr "ওয়ালেট সফলভাবে সংযুক্ত হয়েছে।"
 
@@ -701,12 +706,12 @@ msgid "No, Cancel"
 msgstr "না, বাতিল করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:32
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:38
 msgid "Install {wallet}"
 msgstr "{wallet}ইনস্টল করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:48
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.InstallWallet.tsx:54
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Install"
@@ -759,27 +764,27 @@ msgid "Click connect in your wallet popup."
 msgstr "আপনার ওয়ালেট পপআপে সংযোগ ক্লিক করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:87
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:94
 msgid "Select Derivation Path"
 msgstr "ডেরিভেশন পাথ নির্বাচন করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:88
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:95
 msgid "In order to connect to {type}, you must first select a Derivation Path"
 msgstr "{type}এর সাথে সংযোগ করার জন্য, আপনাকে প্রথমে একটি ডেরিভেশন পাথ নির্বাচন করতে হবে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:103
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:110
 msgid "Choose Derivation Path Template"
 msgstr "ডেরিভেশন পাথ টেমপ্লেট নির্বাচন করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:123
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:130
 msgid "Enter Path"
 msgstr "পাথ লিখুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:124
+#: widget/embedded/src/components/WalletStatefulConnect/DerivationPath.tsx:131
 msgid "Enter Index"
 msgstr "ইনডেক্স লিখুন"
 
@@ -799,29 +804,29 @@ msgid "This wallet supports multiple chains. Choose which chains you’d like to
 msgstr "এই ওয়ালেটটি একাধিক চেইন সমর্থন করে। আপনি কোন চেইনগুলি সংযুক্ত করতে বা সংযোগ বিচ্ছিন্ন করতে চান তা চয়ন করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:69
+#: widget/embedded/src/components/WalletStatefulConnect/NamespaceDetachedItem.tsx:70
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
 msgstr "সংযোগ বিচ্ছিন্ন করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:111
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:106
 msgid "This wallet supports multiple chains. Choose which chains you’d like to connect."
 msgstr "এই ওয়ালেটটি একাধিক চেইন সমর্থন করে। আপনি কোন চেইনগুলি সংযুক্ত করতে চান তা চয়ন করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:130
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:125
 msgid "This wallet can only connect to one chain at a time. "
 msgstr "এই ওয়ালেটটি একবারে কেবল একটি চেইনে সংযোগ করতে পারে। "
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:153
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:148
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Deselect all"
 msgstr "সব বাদ দিন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:154
+#: widget/embedded/src/components/WalletStatefulConnect/Namespaces.tsx:149
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:152
 msgid "Select all"
 msgstr "সব নির্বাচন করুন"
@@ -832,77 +837,77 @@ msgid "Failed Network, Please retry your swap."
 msgstr "ব্যর্থ নেটওয়ার্ক, আপনার অদলবদল পুনরায় চেষ্টা করুন."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:11
+#: widget/embedded/src/constants/errors.ts:14
 msgid "Please reset your liquidity sources."
 msgstr "অনুগ্রহ করে আপনার তারল্য উত্স পুনরায় সেট করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:12
+#: widget/embedded/src/constants/errors.ts:15
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources."
 msgstr "আপনি তারল্যের উত্স সীমিত করেছেন এবং এর ফলে Rango কোনো রুট খুঁজে না পেতে পারে। অনুগ্রহ করে আপনার তারল্য উত্স পুনরায় সেট করার কথা বিবেচনা করুন।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:17
+#: widget/embedded/src/constants/errors.ts:20
 msgid "No Routes Found."
 msgstr "কোন রুট পাওয়া যায়নি."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:18
+#: widget/embedded/src/constants/errors.ts:21
 msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
 msgstr "রেঙ্গো কেন একটি রুট খুঁজে পায়নি তার কারণ: টোকেনে কম তারল্য, খুব কম ইনপুট পরিমাণ বা নির্বাচিত ইনপুট/আউটপুট টোকেন সংমিশ্রণের জন্য কোনও রুট উপলব্ধ নেই।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:23
+#: widget/embedded/src/constants/errors.ts:26
 msgid "Bridge Limit Error: Please increase your amount."
 msgstr "সেতু সীমা ত্রুটি: আপনার পরিমাণ বৃদ্ধি করুন."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
+#: widget/embedded/src/constants/errors.ts:29
 msgid "Bridge Limit Error: Please decrease your amount."
 msgstr "সেতু সীমা ত্রুটি: আপনার পরিমাণ হ্রাস করুন."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:31
+#: widget/embedded/src/constants/errors.ts:34
 msgid "High Price Impact"
 msgstr "উচ্চ মূল্যের প্রভাব"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:32
+#: widget/embedded/src/constants/errors.ts:35
 msgid "Price impact is too high!"
 msgstr "দামের প্রভাব খুব বেশি!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
+#: widget/embedded/src/constants/errors.ts:36
 msgid "The price impact is significantly higher than the allowed amount."
 msgstr "মূল্যের প্রভাব অনুমোদিত পরিমাণের তুলনায় উল্লেখযোগ্যভাবে বেশি।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:36
+#: widget/embedded/src/constants/errors.ts:39
 msgid "Confirm high price impact"
 msgstr "উচ্চ মূল্য প্রভাব নিশ্চিত করুন"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:39
+#: widget/embedded/src/constants/errors.ts:42
 msgid "Route updated and price impact is too high, try again later!"
 msgstr "রুট আপডেট করা হয়েছে এবং দামের প্রভাব খুব বেশি, পরে আবার চেষ্টা করুন!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:44
+#: widget/embedded/src/constants/errors.ts:47
 msgid "USD Price Unknown"
 msgstr "USD মূল্য অজানা"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:45
+#: widget/embedded/src/constants/errors.ts:48
 msgid "USD Price Unknown, Cannot calculate Price Impact."
 msgstr "USD মূল্য অজানা, মূল্যের প্রভাব গণনা করা যাচ্ছে না।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:46
+#: widget/embedded/src/constants/errors.ts:49
 msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 msgstr "USD মূল্য অজানা, মূল্যের প্রভাব গণনা করা যাচ্ছে না। দামের প্রভাব স্বাভাবিকের চেয়ে বেশি হতে পারে। আপনি কি অদলবদল চালিয়ে যাওয়ার বিষয়ে নিশ্চিত?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:49
+#: widget/embedded/src/constants/errors.ts:52
 msgid "Confirm USD Price Unknown"
 msgstr "নিশ্চিত করুন USD মূল্য অজানা"
 
@@ -1240,57 +1245,57 @@ msgid "Your transaction is at risk of being frontrun due to high slippage tolera
 msgstr "উচ্চ স্লিপেজ সহনশীলতার কারণে আপনার লেনদেন অগ্রিম লেনদেনের ঝুঁকিতে রয়েছে।"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:148
+#: widget/embedded/src/utils/swap.ts:149
 msgid "Required: >= {min} {symbol}"
 msgstr "প্রয়োজনীয়: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:161
+#: widget/embedded/src/utils/swap.ts:162
 msgid "Required: > {min} {symbol}"
 msgstr "প্রয়োজনীয়: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:176
+#: widget/embedded/src/utils/swap.ts:177
 msgid "Required: <= {max} {symbol}"
 msgstr "প্রয়োজনীয়: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:189
+#: widget/embedded/src/utils/swap.ts:190
 msgid "Required: < {max} {symbol}"
 msgstr "প্রয়োজনীয়: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:647
+#: widget/embedded/src/utils/swap.ts:648
 msgid " for network fee"
 msgstr " নেটওয়ার্ক ফি জন্য"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:650
+#: widget/embedded/src/utils/swap.ts:651
 msgid " for swap"
 msgstr " অদলবদলের জন্য"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:653
+#: widget/embedded/src/utils/swap.ts:654
 msgid " for input and network fee"
 msgstr " ইনপুট এবং নেটওয়ার্ক ফি জন্য"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:655
+#: widget/embedded/src/utils/swap.ts:656
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "প্রয়োজন ≈ {requiredAmount} {symbol}{reason}, কিন্তু আপনার {blockchain} ওয়ালেটে {currentAmount} {symbol} আছে৷"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:721
+#: widget/embedded/src/utils/swap.ts:722
 msgid "Waiting for other running tasks to be finished"
 msgstr "অন্যান্য চলমান কাজ সমাপ্ত হওয়ার জন্য অপেক্ষা করা হচ্ছে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:724
+#: widget/embedded/src/utils/swap.ts:725
 msgid "Waiting for changing wallet network"
 msgstr "ওয়ালেট নেটওয়ার্ক পরিবর্তনের জন্য অপেক্ষা করা হচ্ছে"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:729
+#: widget/embedded/src/utils/swap.ts:730
 msgid "The network switch could not be completed. Please try again, or switch the network manually in your wallet."
 msgstr "নেটওয়ার্ক স্যুইচ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন, অথবা আপনার ওয়ালেটে ম্যানুয়ালি নেটওয়ার্ক স্যুইচ করুন।"
 

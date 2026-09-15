@@ -5,11 +5,11 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
+import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
+import { WalletTypes } from '@rango-dev/provider-all';
 import { Provider } from '@rango-dev/wallets-react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
@@ -89,7 +89,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={(type, event, value, state, info) => {
-          const eventParams: Parameters<LegacyEventHandler> = [
+          const eventParams: Parameters<EventHandler> = [
             type,
             event,
             value,
@@ -116,6 +116,18 @@ function Main(props: PropsWithChildren<PropTypes>) {
             },
             [WalletTypes.TREZOR]: {
               provider: { manifest: config.trezorManifest },
+            },
+            [WalletTypes.WALLET_CONNECT_2]: {
+              provider: {
+                WC_PROJECT_ID: config.walletConnectProjectId || '',
+                DISABLE_MODAL_AND_OPEN_LINK:
+                  config.__UNSTABLE_OR_INTERNAL__
+                    ?.walletConnectListedDesktopWalletLink,
+                meta: blockchains,
+              },
+            },
+            [WalletTypes.LEDGER_WALLET]: {
+              provider: config.ledgerWallet,
             },
           },
         }}>

@@ -1,3 +1,5 @@
+import type { InstanceMap } from '@hub3js/std/types';
+
 import {
   type Chain,
   type ChainId,
@@ -7,8 +9,10 @@ import {
 } from '@hub3js/evm';
 import { EVM_NAMESPACE } from '@hub3js/namespaces';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
+export type ProviderObject = {
+  [EVM_NAMESPACE]: EvmProviderApi;
+};
+export type Provider = InstanceMap<ProviderObject>;
 export function rabby(): Provider | null {
   const { ethereum } = window;
 
@@ -19,6 +23,16 @@ export function rabby(): Provider | null {
   const instances = new Map();
 
   instances.set(EVM_NAMESPACE, ethereum);
+
+  return instances;
+}
+
+export function getInstanceOrThrow(): Provider {
+  const instances = rabby();
+
+  if (!instances) {
+    throw new Error('Rabby is not injected. Please check your wallet.');
+  }
 
   return instances;
 }
@@ -34,7 +48,7 @@ export function evmRabby(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 export async function switchOrAddNetwork(
   instance: ProviderAPI,

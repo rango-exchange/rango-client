@@ -6,3 +6,4 @@ const versions = () =>
   defineVersions().version('1.0.0', buildProvider()).build();
 
 export { versions };
+export { WALLET_ID } from './constants.js';

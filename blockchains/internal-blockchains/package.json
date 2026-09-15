@@ -1,0 +1,44 @@
+{
+  "name": "@rango-dev/internal-blockchains",
+  "version": "0.1.1-next.3",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "typings": "dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "yarn run rangutopia library build",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@hub3js/core": "^0.62.0",
+    "@hub3js/evm": "^0.5.0",
+    "@hub3js/solana": "^0.5.0",
+    "@hub3js/starknet": "^0.4.0",
+    "@hub3js/stellar": "^0.4.0",
+    "@hub3js/sui": "^0.4.0",
+    "@hub3js/tvm": "^0.4.0",
+    "@hub3js/xrpl": "^0.4.0",
+    "@rango-dev/wallets-core": "^0.61.1-next.3",
+    "rango-types": "^0.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

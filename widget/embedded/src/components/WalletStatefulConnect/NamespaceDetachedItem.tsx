@@ -4,6 +4,7 @@ import { i18n } from '@lingui/core';
 import { Button, Spinner } from '@rango-dev/ui';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
+import { tryRefineError } from '../../utils/errors';
 import { getConciseAddress } from '../../utils/wallets';
 import { NamespaceItem } from '../NamespaceItem';
 
@@ -39,7 +40,7 @@ export function NamespaceDetachedItem(props: NamespaceDetachedItemPropTypes) {
       processingConnectAttempt.current = true;
       await handleConnect(options);
     } catch (error) {
-      setError(error as Error);
+      setError(tryRefineError(error) ?? (error as Error));
     } finally {
       processingConnectAttempt.current = false;
     }

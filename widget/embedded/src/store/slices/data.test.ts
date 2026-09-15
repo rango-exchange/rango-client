@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '../../types';
+import type { WidgetConfigWithoutLegacyProviders } from '../../types';
 import type { AppStoreState } from '../app';
 import type { EvmBlockchainMeta, Token } from 'rango-sdk';
 
@@ -18,7 +18,7 @@ let appStoreState: AppStoreState;
 let customTokens: [Token, Token, Token];
 let rangoBlockchain: EvmBlockchainMeta;
 
-const DEFAULT_CONFIG: WidgetConfig = {
+const DEFAULT_CONFIG: WidgetConfigWithoutLegacyProviders = {
   apiKey: '',
   walletConnectProjectId: 'e24844c5deb5193c1c14840a7af6a40b',
   title: undefined,

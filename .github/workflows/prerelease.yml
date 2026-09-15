@@ -19,7 +19,7 @@ jobs:
       REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
       REACT_APP_RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}

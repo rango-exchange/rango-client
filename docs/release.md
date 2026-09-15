@@ -17,25 +17,63 @@ If a package is a client, ensure:
 
 ## **Key Commands**
 
-* `yarn run publish` → Publishes NPM packages.
 * `yarn run deploy` → Deploys apps to Vercel.
 
 ---
 
 ## **Publish Flow**
 
-The `publish` script performs:
+The `Publish` workflow runs these as separate steps, so a failure is easy to place.
 
-1. Gets the last release (via git tags) and calculates changes.
-2. Bumps versions for changed packages.
-3. Creates changelogs, git tags, and GitHub releases.
-4. Publishes updated packages to NPM.
-5. Pushes updated package versions and tags to origin.
+**1. Versioning** — two commands, each its own script:
 
-**If run on `main` branch**, the publish script will also:
+| Script | What it does |
+| --- | --- |
+| `yarn run publish:version <flag>` | Gets the last release (via git tags), works out which public packages changed, and computes their next version from the conventional commits. Nothing is written to `package.json` yet — the result is saved to a state file. |
+| `yarn run publish:version:check` | Refuses to go on if any computed version is already on npm, already tagged, or already released on Github. |
 
-* Automatically bump `widget/app` and/or `widget/playground` versions if changed.
-* Automatically update the root `CHANGELOG.md`.
+`check` needs no flag — the state file records the channel.
+
+
+**2. The repository and its clients** — the
+[`release-root`](../.github/actions/release-root/action.yml) action, the part
+of a release that `library version` / `library publish` leave out. **Only runs
+on `--prod`, and only when stage 1 found a library to release** — the workflow
+gates it on the `count` output of `publish:version`, so a change to a private
+package alone doesn't bump anything. It is three commands, and only the last
+one isn't rangutopia:
+
+| Step | What it does |
+| --- | --- |
+| `rangutopia client version --prod --root --clients @rango-dev/widget-app,@rango-dev/widget-playground` | Bumps the repository version and the private clients (`widget/app`, `widget/playground`) from the conventional commits since the last release, and writes them on their `package.json`. |
+| `rangutopia changelog generate --root --mention @rango-dev/widget-embedded --save` | Writes the root `CHANGELOG.md`, mentioning the version of the package our users install. |
+| `git add` + `git commit` | Commits exactly those files (`package.json`, `CHANGELOG.md`, the two clients' `package.json`) as `chore(release): bump the repo and client versions` `[skip ci]`. Nothing is pushed here. |
+
+It sits **before** `publish`: `--mention` reads `@rango-dev/widget-embedded`'s 
+version out of the state file stage 1 saved, so it carries the version this 
+release is about to publish instead of the one already out. The changelog 
+header reads the root version, so`client version` still comes first within 
+this action.
+
+The commit is left unpushed on purpose: stage 3 pushes the branch, so this
+commit only reaches the remote if the release actually happened — a publish
+that fails leaves the bump and the changelog on the runner, and the next run
+computes them again.
+
+**3. `yarn run publish`** — `rangutopia library publish`. It takes no channel
+flag: it reads the channel, along with the versions, out of the state
+file stage 1 saved. It walks every package in dependency order: write 
+the version on `package.json` (dependents included), write the package's
+`CHANGELOG.md`, publish to npm. A package whose publish fails is rolled back to
+the version it was on and the walk stops there. Then it commits everything as
+`chore(release): publish`, tags each *published* package
+(`package-name@version`), pushes — carrying stage 2's commit with it — and
+creates the Github releases.
+
+The same commands work by hand (`client version` is monorepo-only, which this
+is), see the
+[rangutopia README](https://github.com/rango-exchange/rangutopia#client-version)
+for the flags.
 
 **Note:** Libraries are published under the `next` tag on npm. To install them:
 
@@ -89,8 +127,8 @@ It will:
 
 2. **Publish** *(on `main`)*
 
-   * Automatically bump `widget/app` and/or `widget/playground` versions if changed.
-   * Automatically update the root `CHANGELOG.md`.
+   * Bump the repository, `widget/app` and `widget/playground` versions when a library is released.
+   * Update the root `CHANGELOG.md`.
    * Publish to NPM.
 
 3. **Deploy**

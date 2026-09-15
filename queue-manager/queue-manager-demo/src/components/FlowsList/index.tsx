@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@hub3js/core';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { useEffect, useState } from 'react';

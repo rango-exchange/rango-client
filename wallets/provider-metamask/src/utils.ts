@@ -112,7 +112,7 @@ export function evmMetamask(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 export function solanaMetamask(): WalletStandardSolanaInstance {
   const instances = metamask();
@@ -122,7 +122,7 @@ export function solanaMetamask(): WalletStandardSolanaInstance {
       'Metamask Solana instance is not available. Ensure that Solana support is enabled in your wallet.'
     );
   }
-  return solanaInstance as WalletStandardSolanaInstance;
+  return solanaInstance;
 }
 export function getInstanceOrThrow(): Provider {
   const instances = metamask();

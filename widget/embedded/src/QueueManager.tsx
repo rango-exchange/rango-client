@@ -1,17 +1,17 @@
+import type { WalletType } from '@hub3js/core';
 import type {
   SwapQueueContext,
   TargetNamespace,
 } from '@rango-dev/queue-manager-rango-preset';
-import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
+import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/internal-blockchains';
 import {
   checkWaitingForNetworkChange,
   makeQueueDefinition,
 } from '@rango-dev/queue-manager-rango-preset';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import { useWallets } from '@rango-dev/wallets-react';
-import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-types';
 import React, { useMemo } from 'react';
 
@@ -19,11 +19,11 @@ import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
 import { getConfig } from './utils/configs';
+import { tryRefineError } from './utils/errors';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const {
-    providers,
     getSigners,
     state,
     connect,
@@ -82,8 +82,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     const { supportedChains } = getWalletInfo(type);
     return walletAndSupportedChainsNames(supportedChains);
   };
-  const allProviders = providers();
-
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
@@ -92,9 +90,14 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
         convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
       getSupportedChainNames,
     },
-    getSigners,
+    getSigners: async (type: WalletType) => {
+      try {
+        return await getSigners(type);
+      } catch (error) {
+        throw tryRefineError(error) ?? error;
+      }
+    },
     wallets,
-    providers: allProviders,
     switchNetwork,
     canSwitchNetworkTo,
     state,

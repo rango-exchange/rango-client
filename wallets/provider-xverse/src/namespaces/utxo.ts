@@ -1,36 +1,27 @@
+import type { UtxoActions } from '@hub3js/bip122';
+
+import { builders } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import {
-  CAIP_BITCOIN_CHAIN_ID,
-  utils,
-  type UtxoActions,
-} from '@rango-dev/wallets-core/namespaces/utxo';
-import { builders } from '@rango-dev/wallets-core/namespaces/utxo';
 
+import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
-import { bitcoinXverse, getBitcoinAccounts } from '../utils.js';
+import { bitcoinXverse } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = utxoBuilders
   .changeAccountSubscriber(bitcoinXverse)
   .build();
 
-const canEagerConnect = utxoBuilders.canEagerConnect(bitcoinXverse).build();
+const canEagerConnect = builders
+  .canEagerConnect()
+  .action(utxoActions.canEagerConnect(bitcoinXverse))
+  .build();
 
 const connect = builders
   .connect()
-  .action(async function () {
-    const accountsResult = await getBitcoinAccounts();
-
-    if (accountsResult.result?.addresses?.length === 0) {
-      throw new Error("Couldn't find any address!");
-    }
-    return utils.formatAccountsToCAIP(
-      accountsResult.result.addresses.map((address) => address.address),
-      CAIP_BITCOIN_CHAIN_ID
-    );
-  })
+  .action(utxoActions.connect())
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
   .or(standardizeAndThrowError)

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@walletconnect/utils/dist/types/cacao.d.ts b/node_modules/@walletconnect/utils/dist/types/cacao.d.ts
+index 7aac4c38011794e2c0f03db62dbce9d0fc1145d2..cc7bb473080d558ea7ba1f0d9915ad4d8c78550e 100644
+--- a/node_modules/@walletconnect/utils/dist/types/cacao.d.ts
++++ b/node_modules/@walletconnect/utils/dist/types/cacao.d.ts
+@@ -26,7 +26,7 @@ export declare function base64Decode(encodedString: string): string;
+ export declare function isValidRecap(recap: any): void;
+ export declare function createRecap(resource: string, ability: string, actions: string[], limits?: {}): {
+     att: {
+-        [resource]: any;
++        [key: string]: any;
+     };
+ };
+ type RecapType = {

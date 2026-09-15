@@ -1,10 +1,6 @@
+import { CAIP_ZCASH_CHAIN_ID, utils, type UtxoActions } from '@hub3js/bip122';
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { type NoirWalletProvider, type ZcashAccount } from '@noir-wallet/sdk';
-import {
-  CAIP_ZCASH_CHAIN_ID,
-  utils,
-  type UtxoActions,
-} from '@rango-dev/wallets-core/namespaces/utxo';
 
 import { getInstanceOrThrow } from '../utils.js';
 

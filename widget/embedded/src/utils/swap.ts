@@ -9,8 +9,8 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
+import type { WalletType } from '@hub3js/core';
 import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
   BlockchainMeta,
@@ -49,6 +49,7 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
 
+import { tryRefineError } from './errors';
 import { getBlockchainShortNameFor, isValidTokenAddress } from './meta';
 import { numberToString } from './numbers';
 import { getRequiredBalanceOfWallet } from './quote';
@@ -737,6 +738,12 @@ export function getSwapMessages(
   }
   detailedMessage = detailedMessage || '';
   message = message || '';
+  const refined = tryRefineError(message) ?? tryRefineError(detailedMessage);
+  if (refined) {
+    detailedMessage = [message, detailedMessage].filter(Boolean).join('\n');
+    message = refined.message;
+  }
+
   const isRpc =
     message?.indexOf('code') !== -1 && message?.indexOf('reason') !== -1;
 

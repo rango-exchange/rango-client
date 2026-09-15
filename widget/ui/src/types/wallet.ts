@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@hub3js/core';
 
 interface Wallet {
   chain: string;

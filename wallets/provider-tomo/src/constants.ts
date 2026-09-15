@@ -1,12 +1,11 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
-export const WALLET_ID = WalletTypes.TOMO;
+export const WALLET_ID = 'tomo';
 export const TOMO_INJECTION_DELAY = 1000;
 export const metadata: ProviderMetadata = {
   name: 'Tomo',

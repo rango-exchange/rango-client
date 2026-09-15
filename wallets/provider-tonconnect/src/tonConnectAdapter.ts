@@ -1,8 +1,6 @@
 import type { Environments } from './types.js';
 import type * as TonConnectUIModule from '@tonconnect/ui';
 
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
-
 export class TonConnectAdapter {
   #tonModule?: typeof TonConnectUIModule;
   #tonConnectInstance?: TonConnectUIModule.TonConnectUI;
@@ -12,9 +10,7 @@ export class TonConnectAdapter {
       throw new Error('Environments are not set');
     }
 
-    this.#tonModule = await dynamicImportWithRefinedError(
-      async () => await import('@tonconnect/ui')
-    );
+    this.#tonModule = await import('@tonconnect/ui');
     const { TonConnectUI } = this.#tonModule;
     this.#tonConnectInstance = new TonConnectUI(env);
   }

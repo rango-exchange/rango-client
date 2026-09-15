@@ -1,4 +1,4 @@
-export * from './legacy/helpers.js';
 export { default as Provider } from './provider.js';
-export { useWallets } from './legacy/hooks.js';
+export { useWallets } from './hooks.js';
+export type * from './types.js';
 export * from './legacy/types.js';

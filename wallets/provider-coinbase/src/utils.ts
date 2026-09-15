@@ -1,10 +1,14 @@
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { InstanceMap } from '@hub3js/std/types';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
+export type ProviderObject = {
+  [EVM_NAMESPACE]: EvmProviderApi;
+  [SOLANA_NAMESPACE]: SolanaProviderApi;
+};
+export type Provider = InstanceMap<ProviderObject>;
 
 export function coinbase(): Provider | null {
   const { coinbaseWalletExtension, coinbaseSolana } = window;
@@ -37,7 +41,7 @@ export function evmCoinbase(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaCoinbase(): SolanaProviderApi {
@@ -50,7 +54,7 @@ export function solanaCoinbase(): SolanaProviderApi {
     );
   }
 
-  return solanaInstance as SolanaProviderApi;
+  return solanaInstance;
 }
 export function getInstanceOrThrow(): Provider {
   const instances = coinbase();

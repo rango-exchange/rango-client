@@ -1,12 +1,11 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 
 import getSigners from './signer.js';
 import { evmSafe } from './utils.js';
 
-export const WALLET_ID = WalletTypes.SAFE;
+export const WALLET_ID = 'safe';
 
 export const metadata: ProviderMetadata = {
   name: 'Safe',

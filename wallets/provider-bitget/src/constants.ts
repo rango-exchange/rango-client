@@ -1,18 +1,18 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { isEvmNamespace } from '@hub3js/evm';
-import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
-import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
 import {
   CAIP_BITCOIN_CHAIN_ID,
-  isUtxoNamespace,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+  isChainSupported as isBip122ChainSupported,
+} from '@hub3js/bip122';
+import { isEvmNamespace } from '@hub3js/evm';
+import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'bitget';
 export const TronOKRequestCode = 200;
+
 export const metadata: ProviderMetadata = {
   name: 'Bitget',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/bitget/icon.svg',
@@ -45,9 +45,7 @@ export const metadata: ProviderMetadata = {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            isChainSupported: (chainId: string) =>
-              isUtxoNamespace(chainId) &&
-              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
+            isChainSupported: isBip122ChainSupported([CAIP_BITCOIN_CHAIN_ID]),
           },
         ],
       },

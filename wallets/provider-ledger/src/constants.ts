@@ -9,6 +9,10 @@ import getSigners from './signer.js';
 export const HEXADECIMAL_BASE = 16;
 export const WALLET_ID = 'ledger';
 
+export const ETHEREUM_CHAIN_ID = `0x${Number(CAIP_ETHEREUM_CHAIN_ID).toString(
+  HEXADECIMAL_BASE
+)}`;
+
 export const metadata: ProviderMetadata = {
   name: 'Ledger',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/ledger/icon.svg',

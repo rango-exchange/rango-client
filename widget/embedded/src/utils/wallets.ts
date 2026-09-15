@@ -5,30 +5,27 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
+import type { WalletType } from '@hub3js/core';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExtendedWalletInfo,
   ProviderContext,
 } from '@rango-dev/wallets-react';
-import type {
-  Network,
-  WalletType,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
-  BlockchainCategories,
-  WalletState as WalletStatus,
-} from '@rango-dev/ui';
-import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core/legacy';
-import {
-  detectInstallLink,
   getBlockChainNameFromId,
   HYPERLIQUID_SIGN_NETWORK,
-  isEvmAddress,
   Networks,
-} from '@rango-dev/wallets-shared';
+  readAccountAddress,
+} from '@rango-dev/internal-blockchains';
+import {
+  BlockchainCategories,
+  detectInstallLink,
+  WalletState as WalletStatus,
+} from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
+import { isAddress as isEvmAddress } from 'ethers';
 
 import { ZERO } from '../constants/numbers';
 import {
@@ -86,7 +83,7 @@ export function mapWalletTypesToWalletInfo(
   chain?: string
 ): ExtendedModalWalletInfo[] {
   return list
-    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
+    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet))
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
 
@@ -528,7 +525,7 @@ export function checkIsWalletPartiallyConnected(
   wallet: ExtendedWalletInfo,
   walletState: ReturnType<ProviderContext['state']>
 ) {
-  if (!wallet.isHub || !wallet.needsNamespace || !walletState.connected) {
+  if (!wallet.needsNamespace || !walletState.connected) {
     return false;
   }
   const namespaces = wallet.needsNamespace.data;

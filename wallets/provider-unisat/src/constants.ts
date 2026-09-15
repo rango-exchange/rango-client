@@ -1,10 +1,9 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import {
   CAIP_BITCOIN_CHAIN_ID,
-  isUtxoNamespace,
-} from '@rango-dev/wallets-core/namespaces/utxo';
+  isChainSupported as isBip122ChainSupported,
+} from '@hub3js/bip122';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -29,9 +28,7 @@ export const metadata: ProviderMetadata = {
             label: 'BTC',
             value: 'UTXO',
             id: 'BTC',
-            isChainSupported: (chainId: string) =>
-              isUtxoNamespace(chainId) &&
-              getChainIdFromCaip2ChainId(chainId) === CAIP_BITCOIN_CHAIN_ID,
+            isChainSupported: isBip122ChainSupported([CAIP_BITCOIN_CHAIN_ID]),
           },
         ],
       },

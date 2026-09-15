@@ -44,6 +44,9 @@ runs:
       # dependencies (^build) are restored from the nx cache produced by
       # build-libs, so only the apps themselves are compiled.
       run: node ./scripts/build-clients/command.mjs
+      env:
+        REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}
+        REACT_APP_RANGO_API_KEY: ${{ inputs.RANGO_API_KEY }}
 
     - name: Deploy Clients
       id: deploy-clients
@@ -59,7 +62,5 @@ runs:
         VERCEL_PROJECT_WIDGET_CONFIG: ${{ inputs.VERCEL_PROJECT_WIDGET_CONFIG }}
         VERCEL_PROJECT_WIDGET_APP: ${{ inputs.VERCEL_PROJECT_WIDGET_APP }}
         VERCEL_PROJECT_Q: ${{ inputs.VERCEL_PROJECT_Q }}
-        REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}
-        REACT_APP_RANGO_API_KEY: ${{ inputs.RANGO_API_KEY }}
-        ENABLE_PREVIEW_DEPLOY: ${{ inputs.ENABLE_PREVIEW_DEPLOY }}       
+        ENABLE_PREVIEW_DEPLOY: ${{ inputs.ENABLE_PREVIEW_DEPLOY }}
 

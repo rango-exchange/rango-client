@@ -3,7 +3,6 @@ import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
-import { dynamicImportWithRefinedError } from '@rango-dev/wallets-shared';
 import { PublicKey } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -24,11 +23,7 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
   async signMessage(msg: string): Promise<string> {
     try {
       const transport = await transportConnect();
-      const LedgerAppSolana = (
-        await dynamicImportWithRefinedError(
-          async () => await import('@ledgerhq/hw-app-solana')
-        )
-      ).default;
+      const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana')).default;
       const solana = new LedgerAppSolana(transport);
 
       const result = await solana.signOffchainMessage(
@@ -47,11 +42,8 @@ export class SolanaSigner implements GenericSigner<SolanaTransaction> {
         solanaWeb3Transaction: Transaction | VersionedTransaction
       ) => {
         const transport = await transportConnect();
-        const LedgerAppSolana = (
-          await dynamicImportWithRefinedError(
-            async () => await import('@ledgerhq/hw-app-solana')
-          )
-        ).default;
+        const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana'))
+          .default;
         const solana = new LedgerAppSolana(transport);
 
         let signResult;

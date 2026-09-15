@@ -1,7 +1,7 @@
 import type { OnUpdateState } from './Wallets.types';
-import type { LegacyEventHandler } from '@rango-dev/wallets-core/legacy';
+import type { EventHandler } from '@rango-dev/wallets-react';
 
-import { LegacyEvents } from '@rango-dev/wallets-core/legacy';
+import { Events } from '@rango-dev/wallets-react';
 
 /*
  * propagate updates for Dapps using external wallets
@@ -10,7 +10,7 @@ import { LegacyEvents } from '@rango-dev/wallets-core/legacy';
  */
 export function propagateEvents(
   cb: OnUpdateState,
-  eventParams: Parameters<LegacyEventHandler>
+  eventParams: Parameters<EventHandler>
 ): void {
   const [walletType, event, value, coreState, info] = eventParams;
 
@@ -18,7 +18,7 @@ export function propagateEvents(
    * PROVIDER_DISCONNECTED has conflict with WalletEventTypes.DISCONNECT since they are doing samething, the first one is using only for Hub, the second one is what we exposed to the lib users.
    * so for backward-compat we need to keep the behavior of WalletEventTypes.DISCONNECT
    */
-  if (event === LegacyEvents.PROVIDER_DISCONNECTED) {
+  if (event === Events.PROVIDER_DISCONNECTED) {
     return;
   }
 

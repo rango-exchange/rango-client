@@ -27,3 +27,12 @@ export function vultisigZcash(): VultisigZcashProviderApi {
 
   return zcashInstance;
 }
+
+export async function requestZcashAccounts(): Promise<string[]> {
+  return vultisigZcash().requestAccounts();
+}
+
+// `get_accounts` is the silent variant — it never opens the wallet.
+export async function getZcashAccounts(): Promise<string[]> {
+  return vultisigZcash().request({ method: 'get_accounts' });
+}

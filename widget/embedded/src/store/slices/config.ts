@@ -1,13 +1,20 @@
 import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
-import type { WidgetConfig } from '../../types';
+import type {
+  WidgetConfig,
+  WidgetConfigWithoutLegacyProviders,
+} from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 import type { VersionedProviders } from '@hub3js/core/utils';
 
-import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import {
+  allProviders as getAllProviders,
+  WalletTypes,
+} from '@rango-dev/provider-all';
 
 import { cacheService } from '../../services/cacheService';
 import {
+  configWalletsToWalletName,
   matchAndGenerateProviders,
   type ProvidersOptions,
 } from '../../utils/providers';
@@ -27,7 +34,7 @@ function makeProvidersOptionsFromConfig(
   return options;
 }
 
-export const DEFAULT_CONFIG: WidgetConfig = {
+export const DEFAULT_CONFIG: WidgetConfigWithoutLegacyProviders = {
   apiKey: '',
   title: undefined,
   multiWallets: true,
@@ -62,13 +69,13 @@ const DEFAULT_CAMPAIGN_MODE: CampaignMode = {
 
 export interface ConfigSlice {
   // What user can set directly.
-  config: WidgetConfig;
+  config: WidgetConfigWithoutLegacyProviders;
   campaignMode: CampaignMode;
   isInCampaignMode: () => boolean;
   getLiquiditySources: () => string[];
   getDisabledLiquiditySources: () => string[];
   excludeLiquiditySources: () => boolean;
-  updateConfig: (config: WidgetConfig) => void;
+  updateConfig: (config: WidgetConfigWithoutLegacyProviders) => void;
   updateCampaignMode: <K extends keyof CampaignMode>(
     name: K,
     value: CampaignMode[K]
@@ -84,36 +91,40 @@ export interface ConfigSlice {
   getAvailableProviders: () => VersionedProviders[];
 }
 
-function generateProviders(config: WidgetConfig) {
-  const options = makeProvidersOptionsFromConfig(config);
-  const envs = {
-    walletconnect2: {
-      WC_PROJECT_ID: options?.walletConnectProjectId || '',
-      DISABLE_MODAL_AND_OPEN_LINK:
-        options?.walletConnectListedDesktopWalletLink,
-    },
-    selectedProviders: config.wallets,
-    tonConnect: options?.tonConnect?.manifestUrl
-      ? { manifestUrl: options?.tonConnect.manifestUrl }
-      : undefined,
-  };
-  const allProviders = getAllProviders(envs);
+function generateProviders(
+  config: WidgetConfigWithoutLegacyProviders
+): VersionedProviders[] {
+  const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
-  return allBuiltProviders;
+  const providerNames = configWalletsToWalletName(allBuiltProviders);
+
+  const filteredProviders = allBuiltProviders.filter((_, index) => {
+    if (
+      providerNames[index] === WalletTypes.LEDGER_WALLET &&
+      (!config.ledgerWallet?.apiKey || !config.ledgerWallet?.dAppIdentifier)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+
+  return filteredProviders;
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
-  WidgetConfig,
+  WidgetConfigWithoutLegacyProviders,
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
-  const allBuiltProviders = generateProviders({
+  const config: WidgetConfigWithoutLegacyProviders = {
     ...DEFAULT_CONFIG,
     ...initialData,
-  });
+  };
+  const allBuiltProviders = generateProviders(config);
   return {
-    config: { ...DEFAULT_CONFIG, ...initialData },
+    config,
     iframe: DEFAULT_IFRAME_CONFIGS,
     campaignMode: DEFAULT_CAMPAIGN_MODE,
     allProviders: allBuiltProviders,
@@ -141,7 +152,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
     },
 
     // Actions
-    updateConfig: (nextConfig: WidgetConfig) => {
+    updateConfig: (nextConfig: WidgetConfigWithoutLegacyProviders) => {
       const currentConfig = get().config;
       const {
         _tokensMapByTokenHash: tokensMapByTokenHash,

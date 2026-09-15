@@ -1,5 +1,9 @@
-import type { LegacyWalletInfo } from '@rango-dev/wallets-core/legacy';
-import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@hub3js/core';
+import type {
+  InstallObjects,
+  NeedsDerivationPath,
+  NeedsNamespace,
+} from '@rango-dev/wallets-react';
 import type { TransactionType } from 'rango-types';
 
 export enum WalletState {
@@ -18,8 +22,8 @@ export type WalletInfo = {
   type: string;
   showOnMobile?: boolean;
   blockchainTypes: TransactionType[];
-  needsNamespace?: LegacyWalletInfo['needsNamespace'];
-  needsDerivationPath?: LegacyWalletInfo['needsDerivationPath'];
+  needsNamespace?: NeedsNamespace;
+  needsDerivationPath?: NeedsDerivationPath;
 };
 
 export interface Info {

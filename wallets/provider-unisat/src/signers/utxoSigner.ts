@@ -1,7 +1,7 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
 import { parseErrorAndThrowStandardizeError } from '@hub3js/std/utils';
-import { isBitcoinBlockchain } from '@rango-dev/wallets-shared';
+import { isBitcoinBlockchain } from '@rango-dev/internal-blockchains';
 import * as bitcoin from 'bitcoinjs-lib';
 import { SignerError } from 'rango-types';
 
@@ -71,6 +71,7 @@ export class BTCSigner implements GenericSigner<Transfer> {
     // 5. Broadcast PSBT to rpc node
     const response = await fetch(BTC_RPC_URL, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         method: 'sendrawtransaction',
         params: [finalPsbtBaseHex],

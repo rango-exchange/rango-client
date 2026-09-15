@@ -1,10 +1,16 @@
 import type { Context } from '@hub3js/core';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { InstanceMap } from '@hub3js/std/types';
+import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Provider = Record<string, any>;
+
+export type ProviderObject = {
+  [EVM_NAMESPACE]: EvmProviderApi;
+  [SOLANA_NAMESPACE]: SolanaExternalProvider;
+};
+export type Provider = InstanceMap<ProviderObject>;
 export function trustWallet(): Provider | null {
   const { trustwallet } = window;
 
@@ -44,7 +50,7 @@ export function evmTrustWallet(): EvmProviderApi {
     );
   }
 
-  return evmInstance as EvmProviderApi;
+  return evmInstance;
 }
 
 export function solanaTrustWallet(): SolanaProviderApi {
@@ -57,7 +63,7 @@ export function solanaTrustWallet(): SolanaProviderApi {
     );
   }
 
-  return solanaInstance as SolanaProviderApi;
+  return solanaInstance;
 }
 
 // Considering that the errors thrown in Trust Wallet in-app browser do not follow EIP-1193, we detect such errors and standardize them.

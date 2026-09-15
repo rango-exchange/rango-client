@@ -1,10 +1,8 @@
 import type { SOLANA_NAMESPACE } from '@hub3js/namespaces';
-import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
+import type { InstanceMap } from '@hub3js/std/types';
+import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 
 export type ProviderObject = {
-  [SOLANA_NAMESPACE]: SolanaProviderApi;
+  [SOLANA_NAMESPACE]: SolanaExternalProvider;
 };
-export type Provider = Map<
-  keyof ProviderObject,
-  ProviderObject[keyof ProviderObject]
->;
+export type Provider = InstanceMap<ProviderObject>;
