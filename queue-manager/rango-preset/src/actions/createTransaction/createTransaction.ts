@@ -1,4 +1,4 @@
-import type { SwapQueueContext, SwapStorage } from '../types';
+import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 import type { CreateTransactionRequest } from 'rango-sdk';
 
@@ -11,15 +11,17 @@ import {
   setCurrentStepTx,
   throwOnOK,
   updateSwapStatus,
-} from '../helpers';
-import { httpService } from '../services';
-import { notifier } from '../services/eventEmitter';
-import { prettifyErrorMessage } from '../shared-errors';
+} from '../../helpers';
+import { httpService } from '../../services';
+import { notifier } from '../../services/eventEmitter';
+import { prettifyErrorMessage } from '../../shared-errors';
 import {
   StepEventType,
   StepExecutionEventStatus,
   SwapActionTypes,
-} from '../types';
+} from '../../types';
+
+import { shouldUseApprovePrerequisite } from './utils';
 
 /**
  *
@@ -56,7 +58,11 @@ export async function createTransaction(
       validations: {
         balance: swap.validateBalanceOrFee,
         fee: swap.validateBalanceOrFee,
-        approve: true,
+        approve: !shouldUseApprovePrerequisite(
+          actions.context,
+          swap,
+          currentStep
+        ),
       },
     };
     try {
