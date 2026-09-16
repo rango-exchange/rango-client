@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/charts",
-  "version": "0.28.0",
+  "version": "0.28.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -12,7 +12,8 @@
   "typings": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build",
@@ -26,7 +27,7 @@
     "react-dom": ">=16"
   },
   "dependencies": {
-    "@rango-dev/ui": "^0.66.0",
+    "@rango-dev/ui": "^0.66.1",
     "@visx/axis": "2.18.0",
     "@visx/event": "2.17.0",
     "@visx/grid": "2.18.0",

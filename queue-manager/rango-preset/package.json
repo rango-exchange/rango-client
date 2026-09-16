@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.65.0",
+  "version": "0.65.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -11,7 +11,8 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build",
@@ -23,14 +24,14 @@
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/queue-manager-react": "*",
-    "@rango-dev/wallets-react": "^0.49.0",
+    "@rango-dev/wallets-react": "^0.49.1",
     "bignumber.js": "*",
     "rango-sdk": "*",
     "rango-types": "*",
     "uuid": "*"
   },
   "devDependencies": {
-    "@rango-dev/wallets-react": "^0.49.0",
+    "@rango-dev/wallets-react": "^0.49.1",
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
@@ -38,8 +39,8 @@
     "@hub3js/namespaces": "^0.5.1",
     "@hub3js/stellar": "^0.4.0",
     "@hub3js/xrpl": "^0.4.0",
-    "@rango-dev/internal-blockchains": "^0.2.0",
-    "@rango-dev/logging-core": "^0.14.0",
+    "@rango-dev/internal-blockchains": "^0.2.1",
+    "@rango-dev/logging-core": "^0.15.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "rango-types": "^0.5.0",
     "ts-results": "^3.3.0",
