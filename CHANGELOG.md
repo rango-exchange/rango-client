@@ -1,3 +1,11 @@
+## 0.63.1 (2026-09-16)
+_includes `@rango-dev/widget-embedded@0.64.1`_
+
+
+
+### Bug Fixes
+
+* ship dist and changelog when publishing with npm ([0a8bd5d](https://github.com/rango-exchange/rango-client/commit/0a8bd5d779bd652b6ca7195cda4ce465ba196f0e))
 # 0.63.0 (2026-09-15)
 _includes `@rango-dev/widget-embedded@0.64.0`_
 
