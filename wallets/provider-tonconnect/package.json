@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/namespaces": "^0.5.1",
-    "@hub3js/std": "^0.4.0",
-    "@hub3js/tvm": "^0.4.0",
+    "@hub3js/core": "0.0.0-experimental-2d18fd86-20260915",
+    "@hub3js/namespaces": "0.0.0-experimental-2d18fd86-20260915",
+    "@hub3js/std": "0.0.0-experimental-2d18fd86-20260915",
+    "@hub3js/tvm": "0.0.0-experimental-2d18fd86-20260915",
     "@rango-dev/signer-ton": "^0.30.0",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",

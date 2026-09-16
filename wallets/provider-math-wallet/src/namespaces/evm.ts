@@ -8,6 +8,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { WALLET_ID } from '../constants.js';
 import { evmMathWallet } from '../utils.js';
 
+// TODO: Give Math Wallet's rejections the standard rejection code once the wallet itself is fixed.
 const connect = builders
   .connect()
   .action(actions.connect(evmMathWallet))

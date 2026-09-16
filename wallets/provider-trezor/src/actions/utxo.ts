@@ -3,6 +3,7 @@ import type { Context, FunctionWithContext } from '@hub3js/core';
 
 import { utils } from '@hub3js/bip122';
 
+import { createTrezorConnectError } from '../errors.js';
 import { initTrezor } from '../init.js';
 import { setBitcoinDerivationPath } from '../state.js';
 import {
@@ -40,7 +41,7 @@ export function connect(
     });
 
     if (!result.success) {
-      throw new Error(result.payload.error);
+      throw createTrezorConnectError(result.payload);
     }
 
     const { address } = result.payload;

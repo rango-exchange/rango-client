@@ -8,6 +8,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { convertBitgetUtxoRejectionError } from '../errors.js';
 import { utxoHooks } from '../hooks/utxo.js';
 import { utxoBitget } from '../utils.js';
 
@@ -23,6 +24,7 @@ const connect = builders
   .before(disconnectSubscriber)
   .or(changeAccountCleanup)
   .or(disconnectSubscriberCleanup)
+  .or(convertBitgetUtxoRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

@@ -7,6 +7,7 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { AccountId } from 'caip';
 
 import { ETHEREUM_CHAIN_ID, WALLET_ID } from '../constants.js';
+import { convertLedgerRejectionError } from '../errors.js';
 import { setDerivationPath } from '../state.js';
 import {
   getEthereumAccounts,
@@ -40,6 +41,7 @@ const connect = builders
       network: result.chainId,
     };
   })
+  .or(convertLedgerRejectionError)
   .or(standardizeAndThrowLedgerError)
   .build();
 

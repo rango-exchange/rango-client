@@ -9,6 +9,7 @@ import type { Provider, WalletType } from '@hub3js/core';
 import type { NamespaceData as HubNamespaceData } from '@hub3js/core/store';
 import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Namespace } from '@hub3js/namespaces';
+import type { WalletConnectionFailure } from '@hub3js/std/utils';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
@@ -56,3 +57,9 @@ export type ProviderProps = PropsWithChildren<{
     };
   };
 }>;
+
+export type AutoConnectFailedEventValue = {
+  // The namespaces auto-connect tried to connect for the wallet, in order.
+  requestedNamespaces: Namespace[];
+  failures: WalletConnectionFailure[];
+};

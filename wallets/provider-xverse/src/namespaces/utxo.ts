@@ -8,6 +8,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { convertXverseRejectionError } from '../errors.js';
 import { bitcoinXverse } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = utxoBuilders
@@ -24,6 +25,7 @@ const connect = builders
   .action(utxoActions.connect())
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(convertXverseRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

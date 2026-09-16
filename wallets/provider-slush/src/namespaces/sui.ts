@@ -2,9 +2,11 @@ import type { SuiActions } from '@hub3js/sui';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { actions, builders } from '@hub3js/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
+import { convertSlushRejectionError } from '../errors.js';
 import { suiWalletInstance } from '../utils.js';
 
 const canEagerConnect = builders
@@ -20,6 +22,8 @@ const connect = builders
   .connect({
     name: WALLET_NAME_IN_WALLET_STANDARD,
   })
+  .or(convertSlushRejectionError)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders

@@ -8,6 +8,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { getAdapter } from '../../adapter/registry.js';
 import { WALLET_ID } from '../../constants.js';
+import { convertWalletConnectRejectionError } from '../../errors.js';
 import { getAccountsFromSession } from '../../session/accounts.js';
 import { filterEvmAccounts } from '../../session/evm.js';
 import { chainReferenceToHex, parseChainReference } from '../../utils.js';
@@ -63,6 +64,7 @@ const connect = builders
     void getAdapter().disconnectSession('evm');
     return err;
   })
+  .or(convertWalletConnectRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

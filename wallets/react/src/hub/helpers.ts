@@ -1,6 +1,9 @@
 import type { AllProxiedNamespaces } from './types.js';
-import type { ProviderProps } from '../types.js';
+import type { AutoConnectFailedEventValue, ProviderProps } from '../types.js';
+import type { Namespace } from '@hub3js/namespaces';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
+import type { WalletConnectionFailure } from '@hub3js/std/utils';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type { Result } from 'ts-results';
 
 import {
@@ -185,4 +188,40 @@ export function shouldTryAutoConnect(
   props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'>
 ): boolean {
   return !!props.allBlockChains?.length && !!props.autoConnect;
+}
+
+export type NamespaceConnectAttempt = {
+  namespace: Namespace;
+  // The network passed to connect the namespace, if any.
+  network?: Network;
+  result: Result<unknown, unknown>;
+};
+
+/**
+ * Lists every failed attempt, in the order the namespaces were attempted.
+ */
+export function collectConnectFailures(
+  attempts: NamespaceConnectAttempt[]
+): WalletConnectionFailure[] {
+  return attempts.flatMap(({ namespace, network, result }) =>
+    result.err ? [{ namespace, network, error: result.val }] : []
+  );
+}
+
+/**
+ * Builds the value of `Events.AUTO_CONNECT_FAILED` from the namespaces auto-connect
+ * tried to connect for a wallet. Returns `undefined` when none of them failed.
+ */
+export function buildAutoConnectFailedEventValue(
+  attempts: NamespaceConnectAttempt[]
+): AutoConnectFailedEventValue | undefined {
+  const failures = collectConnectFailures(attempts);
+  if (!failures.length) {
+    return undefined;
+  }
+
+  return {
+    requestedNamespaces: attempts.map((attempt) => attempt.namespace),
+    failures,
+  };
 }

@@ -23,9 +23,6 @@ const connect = builders
     const accountsResult = await instance.request({
       method: 'tron_requestAccounts',
     });
-    if (!accountsResult) {
-      throw new Error('Please unlock your Bitget extension first.');
-    }
 
     if (
       !!accountsResult?.code &&

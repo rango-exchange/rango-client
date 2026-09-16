@@ -8,6 +8,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { starknetActions } from '../actions/starknet.js';
 import { starknetBuilders } from '../builders/starknet.js';
 import { WALLET_ID } from '../constants.js';
+import { convertReadyRejectionError } from '../errors.js';
 import { starknetReady } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = starknetBuilders
@@ -18,6 +19,7 @@ const connect = builders
   .action(starknetActions.connect(starknetReady))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(convertReadyRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

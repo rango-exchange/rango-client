@@ -7,6 +7,7 @@ import { builders, utils } from '@hub3js/stellar';
 import * as freighterApi from '@stellar/freighter-api';
 
 import { WALLET_ID } from '../../constants.js';
+import { convertFreighterRejectionError } from '../../errors.js';
 
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
@@ -26,6 +27,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(convertFreighterRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

@@ -7,10 +7,12 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { utxoActions } from '../actions/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { convertTrezorRejectionError } from '../errors.js';
 
 const connect = builders
   .connect()
   .action(utxoActions.connect(CAIP_BITCOIN_CHAIN_ID))
+  .or(convertTrezorRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

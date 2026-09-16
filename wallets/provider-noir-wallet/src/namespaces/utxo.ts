@@ -7,6 +7,7 @@ import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { changeAccountSubscriberBuilder } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { convertNoirRejectionError } from '../errors.js';
 import { getInstanceOrThrow } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -36,6 +37,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(convertNoirRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

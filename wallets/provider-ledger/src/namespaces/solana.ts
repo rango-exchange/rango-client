@@ -7,6 +7,7 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
+import { convertLedgerRejectionError } from '../errors.js';
 import { setDerivationPath } from '../state.js';
 import { getSolanaAccounts, standardizeAndThrowLedgerError } from '../utils.js';
 
@@ -34,6 +35,7 @@ const connect = builders
 
     return formatAccounts;
   })
+  .or(convertLedgerRejectionError)
   .or(standardizeAndThrowLedgerError)
   .build();
 

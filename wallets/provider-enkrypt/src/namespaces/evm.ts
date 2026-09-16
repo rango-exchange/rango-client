@@ -6,6 +6,7 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
+import { convertEnkryptRejectionError } from '../errors.js';
 import { evmEnkrypt } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -15,6 +16,7 @@ const connect = builders
   .action(actions.connect(evmEnkrypt))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(convertEnkryptRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

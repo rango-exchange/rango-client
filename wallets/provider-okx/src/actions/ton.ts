@@ -4,6 +4,7 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
 import { type TonActions } from '@hub3js/tvm';
 
 import {
@@ -45,7 +46,9 @@ export function connect(
     if (!isTonConnectEventSuccess(connectEvent)) {
       // The bridge reports a user-cancelled prompt as a `connect_error` event.
       if (connectEvent.payload.code === TON_CONNECT_USER_REJECTED_CODE) {
-        throw new Error('User rejected the request.');
+        throw Object.assign(new Error('User rejected the request.'), {
+          code: USER_REJECTION_ERROR_CODE,
+        });
       }
       throw new Error(
         `Couldn't connect to OKX TON. code: ${connectEvent.payload.code}, message: ${connectEvent.payload.message}`

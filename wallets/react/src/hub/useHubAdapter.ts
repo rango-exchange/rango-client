@@ -8,7 +8,7 @@ import type { ProviderContext, ProviderProps } from '../types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
-import { utils } from '@hub3js/evm';
+import { isUserRejectionError, WalletConnectionError } from '@hub3js/std/utils';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
@@ -20,7 +20,11 @@ import { withErrorLoggingApi } from '../helpers.js';
 
 import { autoConnect } from './autoConnect.js';
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
-import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
+import {
+  collectConnectFailures,
+  createQueue,
+  fromAccountIdToLegacyAddressFormat,
+} from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useAutoConnect } from './useAutoConnect.js';
 import { useHubRefs } from './useHubRefs.js';
@@ -65,7 +69,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
   const queueTask = createQueue({
     onError: (error, actions) => {
-      if (utils.isUserRejectionError(error)) {
+      if (isUserRejectionError(error)) {
         actions.removeCurrentKeyFromQueue();
       }
     },
@@ -120,6 +124,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,
+        onUpdateState: params.onUpdateState,
       });
     },
   });
@@ -287,17 +292,23 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         );
       }
 
+      const failures = collectConnectFailures(
+        targetNamespaces.map(([namespaceInput], index) => ({
+          namespace: namespaceInput.namespace,
+          network: namespaceInput.network,
+          result: connectResultWithLegacyFormat[index],
+        }))
+      );
+      if (failures.length > 0) {
+        throw new WalletConnectionError({ failures });
+      }
+
       // Getting rid of `input` from Result
       const connectResults = connectResultWithLegacyFormat.map((result) =>
         result.andThen((okResult) => new Ok(okResult.response))
       );
 
-      const allResult = Result.all(...connectResults);
-      if (allResult.err) {
-        throw allResult.val;
-      }
-
-      return allResult.unwrap();
+      return Result.all(...connectResults).unwrap();
     },
     async disconnect(type, namespaces) {
       const wallet = getHub().get(type);
