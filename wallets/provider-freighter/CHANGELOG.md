@@ -1,3 +1,9 @@
+## [0.5.1](https://github.com/rango-exchange/rango-client/compare/provider-freighter@0.5.0...provider-freighter@0.5.1) (2026-09-16)
+
+
+### Bug Fixes
+
+* ship dist and changelog when publishing with npm ([0a8bd5d](https://github.com/rango-exchange/rango-client/commit/0a8bd5d779bd652b6ca7195cda4ce465ba196f0e))
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-freighter@0.4.0...provider-freighter@0.5.0) (2026-09-15)
 
 

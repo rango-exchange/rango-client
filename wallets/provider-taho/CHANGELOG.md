@@ -1,3 +1,9 @@
+## [0.64.1](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.64.0...provider-taho@0.64.1) (2026-09-16)
+
+
+### Bug Fixes
+
+* ship dist and changelog when publishing with npm ([0a8bd5d](https://github.com/rango-exchange/rango-client/commit/0a8bd5d779bd652b6ca7195cda4ce465ba196f0e))
 # [0.64.0](https://github.com/rango-exchange/rango-client/compare/provider-taho@0.63.0...provider-taho@0.64.0) (2026-09-15)
 
 
