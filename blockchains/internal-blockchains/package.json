@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/internal-blockchains",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -14,7 +14,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build",
@@ -35,7 +36,7 @@
     "@hub3js/sui": "^0.4.0",
     "@hub3js/tvm": "^0.4.0",
     "@hub3js/xrpl": "^0.4.0",
-    "@rango-dev/wallets-core": "^0.62.0",
+    "@rango-dev/wallets-core": "^0.62.1",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
