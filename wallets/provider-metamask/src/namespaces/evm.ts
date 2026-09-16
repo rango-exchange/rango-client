@@ -66,12 +66,24 @@ const getChainId = builders
   .action(actions.getChainId(evmMetamask))
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(actions.getAllowance(evmMetamask))
+  .build();
+
+const getTransactionReceipt = builders
+  .getTransactionReceipt()
+  .action(actions.getTransactionReceipt(evmMetamask))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canSwitchNetwork)
   .action(canEagerConnect)
   .action(getChainId)
+  .action(getAllowance)
+  .action(getTransactionReceipt)
   .build();
 
 export { evm };

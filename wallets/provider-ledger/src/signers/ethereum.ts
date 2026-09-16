@@ -41,6 +41,18 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     try {
+      /*
+       * Ledger signs a raw transaction on-device and does not estimate gas, so
+       * a gas limit must already be present. Client-built transactions that
+       * leave it null (e.g. approve prerequisites) are not supported yet.
+       */
+      if (!tx.gasLimit) {
+        throw new SignerError(
+          SignerErrorCode.SIGN_TX_ERROR,
+          'Gas limit is required for Ledger transactions.'
+        );
+      }
+
       const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
 
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
