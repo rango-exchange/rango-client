@@ -62,7 +62,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build --inputs src/mod.ts,src/utils/mod.ts,src/hub/store/mod.ts,src/namespaces/evm/mod.ts,src/namespaces/solana/mod.ts,src/namespaces/utxo/mod.ts,src/namespaces/sui/mod.ts,src/namespaces/tron/mod.ts,src/namespaces/starknet/mod.ts,src/namespaces/stellar/mod.ts,src/namespaces/xrpl/mod.ts,src/namespaces/common/mod.ts,src/namespaces/ton/mod.ts",
