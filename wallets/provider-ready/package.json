@@ -9,6 +9,11 @@
     ".": "./dist/mod.js"
   },
   "typings": "dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "yarn run rangutopia library build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",

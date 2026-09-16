@@ -12,7 +12,8 @@
   "typings": "./dist/widget/ui/src/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "dev": "yarn bundle --watch",

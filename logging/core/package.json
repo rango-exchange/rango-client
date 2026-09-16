@@ -11,7 +11,8 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "@rango-dev/logging-types": "^0.12.0"
