@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trezor",
-  "version": "0.31.0",
+  "version": "0.31.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -11,7 +11,8 @@
   "typings": "dist/mod.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build --splitting",
@@ -26,9 +27,9 @@
     "@hub3js/core": "^0.62.0",
     "@hub3js/evm": "^0.5.0",
     "@hub3js/std": "^0.4.0",
-    "@rango-dev/internal-blockchains": "^0.2.0",
-    "@rango-dev/signer-evm": "^0.46.0",
-    "@rango-dev/wallets-core": "^0.62.0",
+    "@rango-dev/internal-blockchains": "^0.2.1",
+    "@rango-dev/signer-evm": "^0.46.1",
+    "@rango-dev/wallets-core": "^0.62.1",
     "@trezor/connect-web": "^9.5.0",
     "bitcoinjs-lib": "^6.1.7",
     "ethers": "^6.13.2",

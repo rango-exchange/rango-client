@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-sui",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -11,7 +11,8 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build",

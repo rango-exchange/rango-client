@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tonconnect",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -11,7 +11,8 @@
   "typings": "dist/mod.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "yarn run rangutopia library build",
@@ -25,7 +26,7 @@
     "@hub3js/namespaces": "^0.5.1",
     "@hub3js/std": "^0.4.0",
     "@hub3js/tvm": "^0.4.0",
-    "@rango-dev/signer-ton": "^0.30.0",
+    "@rango-dev/signer-ton": "^0.30.1",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",
