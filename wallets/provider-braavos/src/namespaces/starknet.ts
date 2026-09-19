@@ -1,9 +1,10 @@
 import type { StarknetActions } from '@hub3js/starknet';
 
 import { NamespaceBuilder } from '@hub3js/core';
+import { STARKNET_NAMESPACE } from '@hub3js/namespaces';
 import { actions, builders } from '@hub3js/starknet';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 
 import { starknetActions } from '../actions/starknet.js';
 import { starknetBuilders } from '../builders/starknet.js';
@@ -18,7 +19,7 @@ const connect = builders
   .action(starknetActions.connect(starknetBraavos))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(STARKNET_NAMESPACE))
   .build();
 
 const disconnect = commonBuilders

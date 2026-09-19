@@ -1,6 +1,7 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
 import { ETHEREUM_CHAIN_ID } from './constants.js';
+import { createTrezorConnectError } from './errors.js';
 import { getDerivationPath } from './state.js';
 
 type DeviceAccounts = {
@@ -35,7 +36,7 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   });
 
   if (!result.success) {
-    throw new Error(result.payload.error);
+    throw createTrezorConnectError(result.payload);
   }
 
   return {

@@ -1,8 +1,10 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type {
   ConnectResult,
+  EventInfo,
   NamespaceInputForConnect,
   EventHandler as WalletEventHandler,
+  WalletState,
 } from '../legacy/mod.js';
 import type { ProviderProps } from '../types.js';
 import type { UtxoActions } from '@hub3js/bip122';
@@ -51,6 +53,38 @@ export function findProviderByType(
   type: string
 ): Provider | undefined {
   return providers.find((provider) => provider.id === type);
+}
+
+// The legacy wallet state sent with an event, before any namespace-specific fields.
+export function getProviderCoreState(provider: Provider): WalletState {
+  const [getProviderState] = provider.state();
+  return {
+    connected: getProviderState().connected,
+    connecting: getProviderState().connecting,
+    installed: getProviderState().installed,
+    accounts: null,
+    network: null,
+    reachable: true,
+  };
+}
+
+// The legacy event info sent with an event, before any namespace-specific fields.
+export function getProviderEventInfo(
+  provider: Provider,
+  allBlockChains: ProviderProps['allBlockChains']
+): EventInfo {
+  const detailsProperty = provider
+    .info()
+    ?.metadata.properties?.find((property) => property.name === 'details');
+
+  return {
+    supportedBlockchains: getSupportedChainsFromProvider(
+      provider,
+      allBlockChains
+    ),
+    isContractWallet: detailsProperty?.value?.isContractWallet ?? false,
+    isHub: true,
+  };
 }
 
 /**
@@ -105,28 +139,15 @@ export function mapHubEventsToLegacy(
     }
   }
 
-  const [getProviderState] = provider.state();
   const coreState = {
-    connected: getProviderState().connected,
-    connecting: getProviderState().connecting,
-    installed: getProviderState().installed,
+    ...getProviderCoreState(provider),
     accounts,
     network,
-    reachable: true,
     derivationPath,
   };
 
-  const detailsProperty = provider
-    .info()
-    ?.metadata.properties?.find((property) => property.name === 'details');
-
   const eventInfo = {
-    supportedBlockchains: getSupportedChainsFromProvider(
-      provider,
-      metadata.allBlockChains
-    ),
-    isContractWallet: detailsProperty?.value?.isContractWallet ?? false,
-    isHub: true,
+    ...getProviderEventInfo(provider, metadata.allBlockChains),
     namespace: namespaceId,
   };
 

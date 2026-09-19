@@ -8,7 +8,8 @@ More about implementation status can be found [here](../readme.md).
 
 
 ### Feature
-All features are currently supported, and **no limitations** have been identified for Braavos.
+#### ⚠️ Connect Rejection
+When the user rejects a connection, Braavos throws the same `Error during connection` error as a real failure, so the rejection **can't be told apart from a real failure**. It's reported as a regular connection error.
 
 ---
 

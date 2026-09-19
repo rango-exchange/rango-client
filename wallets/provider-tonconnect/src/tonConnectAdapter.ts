@@ -1,6 +1,8 @@
 import type { Environments } from './types.js';
 import type * as TonConnectUIModule from '@tonconnect/ui';
 
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
+
 export class TonConnectAdapter {
   #tonModule?: typeof TonConnectUIModule;
   #tonConnectInstance?: TonConnectUIModule.TonConnectUI;
@@ -33,6 +35,7 @@ export class TonConnectAdapter {
 
   async waitForConnection(): Promise<string> {
     const tonConnectUI = this.getInstance();
+    const { UserRejectsError } = this.getModule();
     return new Promise((resolve, reject) => {
       const unsubscribeStatusChange = tonConnectUI.onStatusChange(
         (state) => {
@@ -45,6 +48,9 @@ export class TonConnectAdapter {
         },
         (error) => {
           unsubscribe();
+          if (error instanceof UserRejectsError) {
+            Object.assign(error, { code: USER_REJECTION_ERROR_CODE });
+          }
           reject(error);
         }
       );
@@ -53,7 +59,11 @@ export class TonConnectAdapter {
         (modalState) => {
           if (modalState.closeReason === 'action-cancelled') {
             unsubscribe();
-            reject(new Error('The action was canceled by the user'));
+            reject(
+              Object.assign(new Error('The action was canceled by the user'), {
+                code: USER_REJECTION_ERROR_CODE,
+              })
+            );
           }
         }
       );

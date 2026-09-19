@@ -9,6 +9,7 @@ import type {
 import type { ISignClient, SessionTypes } from '@walletconnect/types';
 import type UniversalProvider from '@walletconnect/universal-provider';
 
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
 import { debug } from '@rango-dev/logging-core';
 
 import { prepareModalForNamespace } from '../adapter/modal.js';
@@ -221,7 +222,11 @@ async function createSession(
         onCloseModal = new Promise((_, reject) => {
           web3Modal.subscribeState((state) => {
             if (!state.open) {
-              reject(new Error('Modal has been closed.'));
+              reject(
+                Object.assign(new Error('Modal has been closed.'), {
+                  code: USER_REJECTION_ERROR_CODE,
+                })
+              );
             }
           });
         });

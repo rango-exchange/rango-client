@@ -78,6 +78,11 @@ export enum Events {
   NAMESPACE_DISCONNECTED = 'namespace_disconnected',
 
   PROVIDER_DISCONNECTED = 'provider_disconnected',
+  /**
+   * Internal: auto-connect couldn't connect one or more namespaces of a wallet.
+   * The value is an `AutoConnectionAttemptError`.
+   */
+  AUTO_CONNECT_FAILED = 'auto_connect_failed',
 }
 
 export type EventInfo = {
