@@ -1,4 +1,5 @@
 import type { Result } from '../../hooks/useStatefulConnect';
+import type { WithConnectTrigger } from '../../libs/connectLogging';
 import type { WalletInfoWithExtra } from '../../types';
 import type { Namespace } from '@hub3js/namespaces';
 
@@ -29,7 +30,7 @@ import {
 const KEEP_SUCCESS_MODAL_FOR = 3_000;
 const DELAY_SHOWING_MODAL_FOR = 300;
 
-interface PropTypes {
+interface PropTypes extends WithConnectTrigger {
   wallet: WalletInfoWithExtra | undefined;
   id: string;
   onClose: () => void;
@@ -56,7 +57,7 @@ export function StatefulConnectModal(props: PropTypes) {
     getState,
     resetState,
     handleDisconnect,
-  } = useStatefulConnect();
+  } = useStatefulConnect(props);
 
   const handleConfirmNamespaces = (selectedNamespaces: Namespace[]) => {
     handleNamespace(props.wallet!, selectedNamespaces)
@@ -208,6 +209,7 @@ export function StatefulConnectModal(props: PropTypes) {
           value={getState().namespace}
           selectedNamespaces={getState().selectedNamespaces}
           navigateToDerivationPath={handleNavigateToDerivationPath}
+          trigger={props.trigger}
         />
       )}
     </WatermarkedModal>

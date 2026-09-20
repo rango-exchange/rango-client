@@ -14,6 +14,7 @@ import {
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { useConnectWithLogging } from '../../hooks/useConnectWithLogging';
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
 import { NamespacesHeader } from './Detached.styles';
@@ -28,10 +29,12 @@ export function Detached(props: PropTypes) {
     confirmText = i18n.t('Done'),
     onDisconnectWallet,
     navigateToDerivationPath,
+    trigger,
   } = props;
   const { targetWallet } = value;
 
-  const { connect, disconnect, state } = useWallets();
+  const { disconnect, state } = useWallets();
+  const connect = useConnectWithLogging();
   const walletType = targetWallet.type;
   const walletState = state(walletType);
   const namespacesProperty = targetWallet.properties?.find(
@@ -57,13 +60,17 @@ export function Detached(props: PropTypes) {
     if (derivationPathProperty && options?.shouldAskForDerivationPath) {
       navigateToDerivationPath(namespace);
     } else {
-      await connect(walletType, [
-        {
-          namespace: namespace,
-          network: '',
-          derivationPath: options?.derivationPath ?? undefined,
-        },
-      ]);
+      await connect(
+        walletType,
+        [
+          {
+            namespace: namespace,
+            network: '',
+            derivationPath: options?.derivationPath ?? undefined,
+          },
+        ],
+        { trigger }
+      );
     }
   };
 

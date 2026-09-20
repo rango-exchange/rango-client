@@ -1,3 +1,4 @@
+import type { INTERNAL_EVENTS } from './Wallets.constants';
 import type { WidgetConfigWithoutLegacyProviders } from '../../types';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 import type { EventHandler, Events } from '@rango-dev/wallets-react';
@@ -19,8 +20,10 @@ export interface WidgetContextInterface {
   onDisconnectWallet(handler: OnWalletDisconnectHandler): void;
 }
 
+export type InternalEvent = (typeof INTERNAL_EVENTS)[number];
+
 type EventHandlerParams = Parameters<EventHandler>;
-type EventParam = Exclude<Events, Events.PROVIDER_DISCONNECTED>;
+type EventParam = Exclude<Events, InternalEvent>;
 
 export type OnUpdateState = (
   type: EventHandlerParams[0],
