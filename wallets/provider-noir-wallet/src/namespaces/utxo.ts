@@ -2,11 +2,13 @@ import type { UtxoActions } from '@hub3js/bip122';
 
 import { builders, CAIP_ZCASH_CHAIN_ID, utils } from '@hub3js/bip122';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 
 import { changeAccountSubscriberBuilder } from '../builders/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { utxoHooks } from '../hooks/utxo.js';
 import { getInstanceOrThrow } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -36,7 +38,8 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(utxoHooks.convertNoirRejectionError)
+  .or(throwWalletConnectionError(UTXO_NAMESPACE))
   .build();
 
 const canEagerConnect = new ActionBuilder<UtxoActions, 'canEagerConnect'>(

@@ -1,3 +1,4 @@
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
 import { utils } from '@rango-dev/wallets-core/namespaces/tron';
 
 import {
@@ -14,7 +15,9 @@ const connect = async () => {
 
   if (accountsResult?.code && accountsResult.code !== TRON_OK_REQUEST_CODE) {
     if (accountsResult.code === TRON_USER_REJECTION_CODE) {
-      throw new Error('User rejected the request.');
+      throw Object.assign(new Error('User rejected the request.'), {
+        code: USER_REJECTION_ERROR_CODE,
+      });
     }
     throw new Error(
       accountsResult.message ?? 'Failed to connect to OKX Wallet Tron.'

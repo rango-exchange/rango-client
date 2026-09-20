@@ -2,13 +2,16 @@ import type { SolanaActions } from '@hub3js/solana';
 import type { CaipAccount } from '@hub3js/std/types';
 
 import { NamespaceBuilder } from '@hub3js/core';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { builders, CAIP_NAMESPACE } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
+import { commonHooks } from '../hooks/common.js';
 import { setDerivationPath } from '../state.js';
-import { getSolanaAccounts, standardizeAndThrowLedgerError } from '../utils.js';
+import { getSolanaAccounts } from '../utils.js';
 
 const connect = builders
   .connect()
@@ -34,7 +37,9 @@ const connect = builders
 
     return formatAccounts;
   })
-  .or(standardizeAndThrowLedgerError)
+  .or(commonHooks.convertLedgerRejectionError)
+  .or(commonHooks.convertLedgerDeviceError)
+  .or(throwWalletConnectionError(SOLANA_NAMESPACE))
   .build();
 
 const disconnect = commonBuilders.disconnect<SolanaActions>().build();

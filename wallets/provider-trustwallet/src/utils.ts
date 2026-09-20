@@ -5,6 +5,7 @@ import type { InstanceMap } from '@hub3js/std/types';
 import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
 
 export type ProviderObject = {
   [EVM_NAMESPACE]: EvmProviderApi;
@@ -75,7 +76,7 @@ export function standardizeTrustWalletInAppBrowserError(
     const error = new Error('User rejected the request') as Error & {
       code: number;
     };
-    error.code = 4001;
+    error.code = USER_REJECTION_ERROR_CODE;
     return error;
   }
   return error;

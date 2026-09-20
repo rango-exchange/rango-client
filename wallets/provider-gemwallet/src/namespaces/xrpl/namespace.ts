@@ -2,8 +2,10 @@ import type { XRPLActions } from '@hub3js/xrpl';
 
 import { getAddress } from '@gemwallet/api';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { XRPL_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
+import { USER_REJECTION_ERROR_CODE } from '@hub3js/std/utils';
 import { builders, utils } from '@hub3js/xrpl';
 import { Client } from 'xrpl';
 
@@ -20,7 +22,9 @@ const connect = builders
     const response = await getAddress();
 
     if (response.type === 'reject') {
-      throw new Error('User has rejected the request.');
+      throw Object.assign(new Error('User has rejected the request.'), {
+        code: USER_REJECTION_ERROR_CODE,
+      });
     }
     if (!response.result?.address) {
       throw new Error(`Couldn't access to your wallet address.`);
@@ -30,7 +34,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(XRPL_NAMESPACE))
   .build();
 
 const accountLines = new ActionBuilder<XRPLActions, 'accountLines'>(

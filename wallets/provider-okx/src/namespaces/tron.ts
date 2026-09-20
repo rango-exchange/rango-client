@@ -1,6 +1,7 @@
 import { NamespaceBuilder } from '@hub3js/core';
+import { TRON_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 import { type TronActions } from '@rango-dev/wallets-core/namespaces/tron';
 import { builders } from '@rango-dev/wallets-core/namespaces/tron';
 
@@ -18,7 +19,7 @@ const connect = builders
   .action(tronActions.connect)
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(TRON_NAMESPACE))
   .build();
 
 const canEagerConnect = builders
