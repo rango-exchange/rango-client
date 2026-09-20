@@ -3,6 +3,7 @@ import type {
   NamespaceData,
   Result,
 } from './useStatefulConnect.types';
+import type { WithConnectTrigger } from '../../libs/connectLogging';
 import type { WalletInfoWithExtra } from '../../types';
 import type { Namespace } from '@hub3js/namespaces';
 
@@ -13,6 +14,7 @@ import { useReducer } from 'react';
 import { isOnDetached } from '../../components/StatefulConnectModal';
 import { tryRefineErrorMessage } from '../../utils/errors';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
+import { useConnectWithLogging } from '../useConnectWithLogging';
 
 import {
   isStateOnDerivationPathStep,
@@ -52,8 +54,11 @@ export interface UseStatefulConnect {
  * or what derivation path should be used for.
  *
  */
-export function useStatefulConnect(): UseStatefulConnect {
-  const { state, disconnect, connect } = useWallets();
+export function useStatefulConnect({
+  trigger,
+}: WithConnectTrigger = {}): UseStatefulConnect {
+  const { state, disconnect } = useWallets();
+  const connect = useConnectWithLogging();
 
   const [connectState, dispatch] = useReducer(reducer, initState);
 
@@ -75,7 +80,7 @@ export function useStatefulConnect(): UseStatefulConnect {
         ...namespaceInput,
         network: undefined,
       }));
-      await connect(wallet.type, legacyNamespacesInput);
+      await connect(wallet.type, legacyNamespacesInput, { trigger });
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

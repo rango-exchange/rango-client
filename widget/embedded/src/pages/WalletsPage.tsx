@@ -99,6 +99,7 @@ export function WalletsPage() {
           <StatefulConnectModal
             id="widget-state-full-connect-modal"
             wallet={selectedWalletToConnect}
+            trigger="wallets-page"
             onClose={() => {
               setSelectedWalletToConnect(undefined);
             }}

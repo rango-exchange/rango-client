@@ -31,6 +31,7 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { useConnectWithLogging } from '../../hooks/useConnectWithLogging';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
@@ -79,7 +80,8 @@ const SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY = 3000;
 
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel } = props;
-  const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
+  const { canSwitchNetworkTo, getWalletInfo } = useWallets();
+  const connect = useConnectWithLogging();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
   const { findToken } = useAppStore();
@@ -176,12 +178,16 @@ export function SwapDetails(props: SwapDetailsProps) {
   const handleSwitchNetwork = () => {
     if (switchNetworkIsAvailable) {
       handleShowSwitchNetworkLoading();
-      connect(currentStepWallet.walletType, [
-        {
-          namespace: currentStepNamespace.namespace,
-          network: currentStepNamespace.network,
-        },
-      ])
+      connect(
+        currentStepWallet.walletType,
+        [
+          {
+            namespace: currentStepNamespace.namespace,
+            network: currentStepNamespace.network,
+          },
+        ],
+        { trigger: 'swap-details-switch-network' }
+      )
         .then(() => {
           handleShowSwitchNetworkSucceeded();
         })
