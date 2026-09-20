@@ -1,4 +1,5 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
+import type { NamespaceConnectAttempt } from '../errors.js';
 import type {
   ConnectResult,
   NamespaceInputForConnect,
@@ -8,19 +9,22 @@ import type { ProviderContext, ProviderProps } from '../types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
-import { utils } from '@hub3js/evm';
+import { isUserRejectionError } from '@hub3js/std/utils';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
 } from '@rango-dev/internal-blockchains';
 import { useEffect, useRef, useState } from 'react';
-import { Ok, Result } from 'ts-results';
 
 import { withErrorLoggingApi } from '../helpers.js';
 
 import { autoConnect } from './autoConnect.js';
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
-import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
+import {
+  createQueue,
+  fromAccountIdToLegacyAddressFormat,
+  runConnectionAttempt,
+} from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useAutoConnect } from './useAutoConnect.js';
 import { useHubRefs } from './useHubRefs.js';
@@ -65,8 +69,8 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
   const queueTask = createQueue({
     onError: (error, actions) => {
-      if (utils.isUserRejectionError(error)) {
-        actions.removeCurrentKeyFromQueue();
+      if (isUserRejectionError(error)) {
+        actions.cancelWaitingItems();
       }
     },
   });
@@ -120,6 +124,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,
+        onUpdateState: params.onUpdateState,
       });
     },
   });
@@ -183,121 +188,117 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       });
     },
     async connect(type, namespaces) {
-      const wallet = getHub().get(type);
-      if (!wallet) {
-        throw new Error(
-          `You should add ${type} to provider first then call 'connect'.`
-        );
-      }
-
-      if (!namespaces) {
-        throw new Error('Passing namespace to `connect` is required.');
-      }
-
-      updateLastConnectAttemptParams(type, namespaces);
-
-      // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
-      const targetNamespaces: [
-        NamespaceInputForConnect,
-        AllProxiedNamespaces
-      ][] = [];
-      namespaces.forEach((namespace) => {
-        const targetNamespace = namespace.namespace;
-
-        const result = wallet.findByNamespace(targetNamespace);
-        if (!result) {
+      const connectNamespaces = async (
+        reportAttempts: (
+          attempts: NamespaceConnectAttempt<ConnectResult>[]
+        ) => void
+      ) => {
+        const wallet = getHub().get(type);
+        if (!wallet) {
           throw new Error(
-            `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
+            `You should add ${type} to provider first then call 'connect'.`
           );
         }
 
-        targetNamespaces.push([namespace, result]);
-      });
+        if (!namespaces) {
+          throw new Error('Passing namespace to `connect` is required.');
+        }
 
-      // Try to run `connect` on matched namespaces
-      const connectResultFromTargetNamespaces = targetNamespaces.map(
-        async ([namespaceInput, namespace]) => {
-          const network = tryConvertNamespaceNetworkToChainInfo(
-            namespaceInput,
-            params.allBlockChains || []
-          );
+        updateLastConnectAttemptParams(type, namespaces);
 
-          let connectNamespacePromise: () => Promise<
-            Accounts | AccountsWithActiveChain
-          >;
+        // Check `namespace` and look into hub to see how it can match given namespace to hub namespace.
+        const targetNamespaces: [
+          NamespaceInputForConnect,
+          AllProxiedNamespaces
+        ][] = [];
+        namespaces.forEach((namespace) => {
+          const targetNamespace = namespace.namespace;
 
-          if (isSolanaNamespace(namespace)) {
-            connectNamespacePromise = async () =>
-              namespace.connect({
-                derivationPath: namespaceInput.derivationPath,
-              });
-          } else if (isEvmNamespace(namespace)) {
-            connectNamespacePromise = async () =>
-              namespace.connect(network, {
-                derivationPath: namespaceInput.derivationPath,
-              });
-          } else if (isUtxoNamespace(namespace)) {
-            connectNamespacePromise = async () =>
-              namespace.connect({
-                derivationPath: namespaceInput.derivationPath,
-              });
-          } else {
-            connectNamespacePromise = async () => namespace.connect();
+          const result = wallet.findByNamespace(targetNamespace);
+          if (!result) {
+            throw new Error(
+              `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
+            );
           }
 
-          const connectNamespaceProcess = async () =>
-            connectNamespacePromise()
-              .then<ConnectResult>(transformHubResultToLegacyResult)
-              .then((connectResult) => {
-                return {
-                  response: connectResult,
-                  input: {
-                    namespace: namespaceInput.namespace,
-                    network: namespaceInput.network,
-                    supportsEagerConnect: 'canEagerConnect' in namespace,
-                  },
-                };
-              });
-          return queueTask(connectNamespaceProcess, type);
-        }
-      );
+          targetNamespaces.push([namespace, result]);
+        });
 
-      /*
-       * We need to connect to namespace one after another, sending multiple requests at the same time may be failed.
-       * e.g. when wallet popup opens and asking for the password from the user, it should be resolved first, then other request will be resolved.
-       */
-      const connectResultWithLegacyFormat = await Promise.all(
-        connectResultFromTargetNamespaces
-      );
+        // Try to run `connect` on matched namespaces
+        const connectAttemptsFromTargetNamespaces = targetNamespaces.map(
+          async ([namespaceInput, namespace]) => {
+            const network = tryConvertNamespaceNetworkToChainInfo(
+              namespaceInput,
+              params.allBlockChains || []
+            );
 
-      // Keeping only namespaces that connected successfully and support eager connect, then we'll store them on storage for auto connect functionality.
-      const successfullyConnectedSupportingEagerConnectNamespaces =
-        connectResultWithLegacyFormat
-          .filter(<T, E>(result: Result<T, E>): result is Ok<T> => result.ok)
-          .filter((result) => result.val.input.supportsEagerConnect)
-          .map((result) => ({
-            namespace: result.val.input.namespace,
-            network: result.val.input.network,
+            let connectNamespacePromise: () => Promise<
+              Accounts | AccountsWithActiveChain
+            >;
+
+            if (isSolanaNamespace(namespace)) {
+              connectNamespacePromise = async () =>
+                namespace.connect({
+                  derivationPath: namespaceInput.derivationPath,
+                });
+            } else if (isEvmNamespace(namespace)) {
+              connectNamespacePromise = async () =>
+                namespace.connect(network, {
+                  derivationPath: namespaceInput.derivationPath,
+                });
+            } else if (isUtxoNamespace(namespace)) {
+              connectNamespacePromise = async () =>
+                namespace.connect({
+                  derivationPath: namespaceInput.derivationPath,
+                });
+            } else {
+              connectNamespacePromise = async () => namespace.connect();
+            }
+
+            const connectNamespaceProcess = async () =>
+              connectNamespacePromise().then<ConnectResult>(
+                transformHubResultToLegacyResult
+              );
+            const { result, cancelled } = await queueTask(
+              connectNamespaceProcess,
+              type
+            );
+            return {
+              input: namespaceInput,
+              result,
+              cancelled,
+              supportsEagerConnect: 'canEagerConnect' in namespace,
+            };
+          }
+        );
+
+        /*
+         * We need to connect to namespace one after another, sending multiple requests at the same time may be failed.
+         * e.g. when wallet popup opens and asking for the password from the user, it should be resolved first, then other request will be resolved.
+         */
+        const attempts = await Promise.all(connectAttemptsFromTargetNamespaces);
+        reportAttempts(attempts);
+
+        // Keeping only namespaces that connected successfully and support eager connect, then we'll store them on storage for auto connect functionality.
+        const successfullyConnectedSupportingEagerConnectNamespaces = attempts
+          .filter(
+            ({ result, supportsEagerConnect }) =>
+              result.ok && supportsEagerConnect
+          )
+          .map(({ input }) => ({
+            namespace: input.namespace,
+            network: input.network,
           }));
 
-      if (successfullyConnectedSupportingEagerConnectNamespaces.length > 0) {
-        lastConnectedWalletsFromStorage.addWallet(
-          type,
-          successfullyConnectedSupportingEagerConnectNamespaces
-        );
-      }
+        if (successfullyConnectedSupportingEagerConnectNamespaces.length > 0) {
+          lastConnectedWalletsFromStorage.addWallet(
+            type,
+            successfullyConnectedSupportingEagerConnectNamespaces
+          );
+        }
+      };
 
-      // Getting rid of `input` from Result
-      const connectResults = connectResultWithLegacyFormat.map((result) =>
-        result.andThen((okResult) => new Ok(okResult.response))
-      );
-
-      const allResult = Result.all(...connectResults);
-      if (allResult.err) {
-        throw allResult.val;
-      }
-
-      return allResult.unwrap();
+      return runConnectionAttempt(namespaces, connectNamespaces);
     },
     async disconnect(type, namespaces) {
       const wallet = getHub().get(type);
