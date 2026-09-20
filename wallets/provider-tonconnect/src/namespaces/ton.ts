@@ -1,8 +1,9 @@
 import type { TonActions } from '@hub3js/tvm';
 
 import { NamespaceBuilder } from '@hub3js/core';
+import { TON_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 import { builders } from '@hub3js/tvm';
 
 import { tonActions } from '../actions/ton.js';
@@ -18,7 +19,7 @@ const connect = builders
   .action(tonActions.connect(tonConnect.getInstance.bind(tonConnect)))
   .and(disconnectSubscriber)
   .or(disconnectCleanUp)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(TON_NAMESPACE))
   .build();
 
 const canEagerConnect = builders

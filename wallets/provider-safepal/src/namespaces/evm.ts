@@ -2,12 +2,13 @@ import type { EvmActions } from '@hub3js/evm';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import { actions, builders } from '@hub3js/evm';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
 import {
   connectAndUpdateStateForMultiNetworks,
   intoConnecting,
   intoConnectionFinished,
-  standardizeAndThrowError,
+  throwWalletConnectionError,
 } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
@@ -38,7 +39,7 @@ const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
   .and(connectAndUpdateStateForMultiNetworks)
   .after(intoConnectionFinished)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(EVM_NAMESPACE))
   .build();
 
 const disconnect = commonBuilders

@@ -12,6 +12,9 @@ More about implementation status can be found [here](../readme.md).
 Tron connection attempts can fail unpredictably, often returning an error on the **first or second try**.  
 Users may need to **retry the connection** to successfully establish a Tron session.
 
+#### ⚠️ Connect Rejection (Tron)
+When the user rejects a Tron connection, Bitget returns nothing meaningful, so the rejection **can't be told apart from a real failure**. It's reported as a regular connection error.
+
 #### ⚠️ Switch Account
 Switching accounts in the Bitget Wallet triggers a **full page refresh**.
 Switch account would break if a single namespace account is connected.

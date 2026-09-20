@@ -2,9 +2,10 @@ import type { UtxoActions } from '@hub3js/bip122';
 
 import { builders } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import { actions as solanaActions } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 
 import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
@@ -20,7 +21,7 @@ const connect = builders
   .action(utxoActions.connect(bitcoinPhantom))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(UTXO_NAMESPACE))
   .build();
 
 const disconnect = commonBuilders

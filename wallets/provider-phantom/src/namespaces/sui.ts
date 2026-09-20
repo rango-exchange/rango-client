@@ -2,9 +2,10 @@ import type { SolanaActions } from '@hub3js/solana';
 import type { SuiActions } from '@hub3js/sui';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { SUI_NAMESPACE } from '@hub3js/namespaces';
 import { actions as solanaActions } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwWalletConnectionError } from '@hub3js/std/operators';
 import { builders, hooks } from '@hub3js/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
@@ -21,7 +22,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwWalletConnectionError(SUI_NAMESPACE))
   .build();
 
 const disconnect = commonBuilders

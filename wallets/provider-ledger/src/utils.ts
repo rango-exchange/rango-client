@@ -2,6 +2,7 @@ import type Transport from '@ledgerhq/hw-transport';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
+import { WALLET_LOCKED_ERROR_CODE } from '@hub3js/std/utils';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import bs58 from 'bs58';
 
@@ -29,8 +30,10 @@ export function ledger(): Provider | null {
   return instances;
 }
 
+const LOCKED_DEVICE_STATUS_CODE = 0x5515;
+
 const ledgerFrequentErrorMessages: { [statusCode: number]: string } = {
-  0x5515: 'The device is locked',
+  [LOCKED_DEVICE_STATUS_CODE]: 'The device is locked',
   0x650f: 'Related application is not ready on your device',
   0x6985: 'Action denied by user',
 };
@@ -59,8 +62,17 @@ export function getLedgerError(error: any) {
   return error;
 }
 
-export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
-  throw getLedgerError(error);
+/**
+ * Maps a device error thrown while connecting. Unlike `getLedgerError`, which the
+ * signers share, it attaches the standard code to a locked device.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getLedgerConnectError(error: any) {
+  const ledgerError = getLedgerError(error);
+  if (error?.statusCode === LOCKED_DEVICE_STATUS_CODE) {
+    return Object.assign(ledgerError, { code: WALLET_LOCKED_ERROR_CODE });
+  }
+  return ledgerError;
 }
 
 export async function getEthereumAccounts(): Promise<DeviceAccounts> {
@@ -81,7 +93,7 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
       derivationPath,
     };
   } catch (error: unknown) {
-    throw getLedgerError(error);
+    throw getLedgerConnectError(error);
   } finally {
     await transportDisconnect();
   }
@@ -105,7 +117,7 @@ export async function getSolanaAccounts(): Promise<DeviceAccounts> {
       derivationPath,
     };
   } catch (error: unknown) {
-    throw getLedgerError(error);
+    throw getLedgerConnectError(error);
   } finally {
     await transportDisconnect();
   }
