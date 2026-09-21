@@ -1,7 +1,9 @@
 import type { WalletType } from '../..';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
+import type { WalletEvent } from '@rango-dev/sdk';
 
 import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
+import { getClient } from '@rango-dev/sdk';
 import { isEvmBlockchain } from 'rango-sdk';
 import { useContext, useEffect, useState } from 'react';
 
@@ -65,6 +67,10 @@ export function useBootstrap() {
      * https://github.com/rango-exchange/rango-client/pull/630/files#r1518846728
      */
     widgetContext.onConnectWallet((walletFromEvent) => {
+      notifyClient({
+        type: 'wallet_connected',
+        walletType: walletFromEvent.walletType,
+      });
       /*
        * If no wallet was previously connected or the wallet type has changed,
        * replace the last connected wallet with the new one from the event.
@@ -89,6 +95,7 @@ export function useBootstrap() {
       });
     });
     widgetContext.onDisconnectWallet((walletType) => {
+      notifyClient({ type: 'wallet_disconnected', walletType });
       setDisconnectedWallet(walletType);
       setLastConnectedWallet((lastConnectedWallet) =>
         walletType === lastConnectedWallet?.walletType
@@ -99,4 +106,9 @@ export function useBootstrap() {
 
     return tabManager.destroy;
   }, []);
+}
+
+/** Tells the SDK engine a wallet changed, so swaps parked on it run again. */
+function notifyClient(event: WalletEvent) {
+  getClient().notify(event).catch(console.error);
 }

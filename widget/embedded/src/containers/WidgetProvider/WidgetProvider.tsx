@@ -10,6 +10,7 @@ import useFontLoader from '../../hooks/useFontLoader';
 import QueueManager from '../../QueueManager';
 import { initConfig } from '../../utils/configs';
 import { getApiKeyFromEnvOrThrow } from '../../utils/env';
+import { SdkClient } from '../SdkClient';
 import { WidgetWallets } from '../Wallets';
 import { WidgetInfo } from '../WidgetInfo';
 
@@ -57,9 +58,11 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
     <WidgetWallets
       config={{ ...config, wallets }}
       onUpdateState={onUpdateState}>
-      <QueueManager apiKey={config.apiKey}>
-        <WidgetInfo>{props.children}</WidgetInfo>
-      </QueueManager>
+      <SdkClient apiKey={config.apiKey}>
+        <QueueManager apiKey={config.apiKey}>
+          <WidgetInfo>{props.children}</WidgetInfo>
+        </QueueManager>
+      </SdkClient>
     </WidgetWallets>
   );
 }

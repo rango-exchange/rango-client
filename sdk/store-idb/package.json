@@ -1,0 +1,40 @@
+{
+  "name": "@rango-dev/sdk-store-idb",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/mod.ts",
+  "main": "./dist/mod.js",
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
+    }
+  },
+  "typings": "./dist/mod.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "idb": "^7.1.1"
+  },
+  "peerDependencies": {
+    "@rango-dev/sdk": "*"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "^6.0.0"
+  },
+  "scripts": {
+    "build": "yarn run rangutopia library build --inputs src/mod.ts",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

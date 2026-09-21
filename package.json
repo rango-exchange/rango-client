@@ -13,7 +13,8 @@
       "queue-manager/*",
       "wallets/*",
       "signers/*",
-      "logging/*"
+      "logging/*",
+      "sdk/*"
     ],
     "nohoist": [
       "**/@types/web"
