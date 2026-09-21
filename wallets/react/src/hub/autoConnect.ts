@@ -1,17 +1,26 @@
 import type { AllProxiedNamespaces } from './types.js';
 import type { UseAdapterParams } from './useHubAdapter.js';
-import type { NamespaceInputForConnect } from '../legacy/types.js';
+import type { NamespaceConnectAttempt } from '../errors.js';
+import type {
+  EventHandler,
+  NamespaceInputForConnect,
+} from '../legacy/types.js';
 import type { Hub, Provider, WalletType } from '@hub3js/core';
 import type { DefaultNamespaces, Namespace } from '@hub3js/namespaces';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
 import { Result } from 'ts-results';
 
+import { buildAutoConnectionAttemptError } from '../errors.js';
+import { Events } from '../legacy/types.js';
+
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
-import { runSequentiallyWithoutFailure } from './helpers.js';
+import { runSequentially, runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
   convertNamespaceNetworkToEvmChainId,
+  getProviderCoreState,
+  getProviderEventInfo,
   isEvmNamespace,
 } from './utils.js';
 
@@ -35,9 +44,10 @@ async function eagerConnect(
   params: {
     getHub: () => Hub;
     allBlockChains: UseAdapterParams['allBlockChains'];
+    onUpdateState?: EventHandler;
   }
 ) {
-  const { getHub, allBlockChains } = params;
+  const { getHub, allBlockChains, onUpdateState } = params;
   const wallet = getHub().get(type);
   if (!wallet) {
     throw new Error(
@@ -72,7 +82,7 @@ async function eagerConnect(
         : undefined;
       const chain = evmChain || info.network;
 
-      return async () => {
+      return async (): Promise<NamespaceConnectAttempt> => {
         let connectNamespacePromise: () => Promise<
           Accounts | AccountsWithActiveChain
         >;
@@ -81,19 +91,10 @@ async function eagerConnect(
         } else {
           connectNamespacePromise = async () => namespace.connect();
         }
-        try {
-          await connectNamespacePromise();
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
-          /*
-           * Since we check for connect failures using `instanceof Error`
-           * this check is added here to make sure the thrown error always is an instance of `Error`
-           */
-          if (e instanceof Error) {
-            throw e;
-          }
-          throw new Error(e);
-        }
+        return {
+          input: info,
+          result: await Result.wrapAsync(connectNamespacePromise),
+        };
       };
     }
   );
@@ -103,21 +104,31 @@ async function eagerConnect(
    * We are running a method at a time to make sure we are covering this.
    * e.g. when we are trying to eagerConnect evm and solana on phantom at the same time, the last namespace throw an error.
    */
-  const connectNamespacesResult = await runSequentiallyWithoutFailure(
-    connectNamespacesPromises
-  );
+  const attempts = await runSequentially(connectNamespacesPromises);
 
-  const failedNamespaces: NamespaceInputForConnect[] = targetNamespaces
-    .filter((_, index) => connectNamespacesResult[index].err)
-    .map((targetNamespace) => targetNamespace[0]);
+  const failedNamespaces = attempts
+    .filter(({ result }) => result.err)
+    .map(({ input }) => input.namespace);
 
   if (failedNamespaces.length > 0) {
     lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
       type,
-      failedNamespaces.map((namespace) => namespace.namespace)
+      failedNamespaces
     );
   }
 
+  const autoConnectionAttemptError = buildAutoConnectionAttemptError(attempts);
+  if (autoConnectionAttemptError) {
+    onUpdateState?.(
+      type,
+      Events.AUTO_CONNECT_FAILED,
+      autoConnectionAttemptError,
+      getProviderCoreState(wallet),
+      getProviderEventInfo(wallet, allBlockChains)
+    );
+  }
+
+  const connectNamespacesResult = attempts.map(({ result }) => result);
   const atLeastOneNamespaceConnectedSuccessfully = connectNamespacesResult.some(
     (result) => result.ok
   );
@@ -182,8 +193,9 @@ export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
   wallets?: (WalletType | Provider)[];
+  onUpdateState?: EventHandler;
 }): Promise<void> {
-  const { getHub, allBlockChains, wallets } = deps;
+  const { getHub, allBlockChains, wallets, onUpdateState } = deps;
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
   const walletIds = Object.keys(lastConnectedWallets);
 
@@ -235,6 +247,7 @@ export async function autoConnect(deps: {
         eagerConnect(providerName, successNamespaces, {
           allBlockChains,
           getHub,
+          onUpdateState,
         }).catch((error) => console.warn(error))
       );
     });

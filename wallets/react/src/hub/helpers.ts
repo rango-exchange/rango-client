@@ -1,7 +1,9 @@
 import type { AllProxiedNamespaces } from './types.js';
+import type { NamespaceConnectAttempt } from '../errors.js';
+import type { NamespaceInputForConnect } from '../legacy/types.js';
 import type { ProviderProps } from '../types.js';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
-import type { Result } from 'ts-results';
+import type { Option, Result } from 'ts-results';
 
 import {
   CAIP_BITCOIN_CHAIN_ID,
@@ -14,7 +16,9 @@ import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@hub3js/tvm';
 import { formatAddressWithNetwork } from '@rango-dev/internal-blockchains';
 import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import { AccountId, type ChainIdParams } from 'caip';
-import { Err, Ok } from 'ts-results';
+import { Err, None, Ok, Some } from 'ts-results';
+
+import { buildConnectionAttemptError } from '../errors.js';
 
 export function mapCaipNamespaceToLegacyNetworkName(
   chainId: ChainIdParams | string
@@ -69,9 +73,23 @@ export function fromAccountIdToLegacyAddressFormat(account: string): string {
 }
 
 /**
- * Getting a list of (lazy) promises and run them one after another.
+ * Runs a list of (lazy) promises one after another and returns their results in
+ * order. The first failure rejects, and the promises after it don't run.
  */
+export async function runSequentially<R>(
+  promises: Array<() => Promise<R>>
+): Promise<R[]> {
+  const results: R[] = [];
+  for (const task of promises) {
+    results.push(await task());
+  }
+  return results;
+}
 
+/**
+ * Runs a list of (lazy) promises one after another, even when one fails, and returns
+ * each one's outcome in order as a `Result`.
+ */
 export async function runSequentiallyWithoutFailure<R>(
   promises: Array<() => Promise<R>>
 ): Promise<Result<R, unknown>[]> {
@@ -98,9 +116,18 @@ export function isConnectResultSolana(
   return Array.isArray(result);
 }
 
+export type QueueTaskResult<T> = {
+  result: Result<T, unknown>;
+  /*
+   * The task never ran: the queue abandoned it after an earlier task with the same key
+   * failed. `result` then holds that earlier failure.
+   */
+  cancelled: boolean;
+};
+
 type QueueItem<T> = {
   task: () => Promise<T>;
-  resolve: (value: Result<T, unknown>) => void;
+  resolve: (value: QueueTaskResult<T>) => void;
   key: string;
 };
 /**
@@ -114,22 +141,22 @@ export function createQueue(options?: {
   onError?: (
     error: unknown,
     actions: {
-      removeCurrentKeyFromQueue: () => void;
+      cancelWaitingItems: () => void;
     }
   ) => void;
 }) {
   const processingKeys = new Set<string>();
   let queue: QueueItem<unknown>[] = [];
 
-  const removeKeyFromQueue = (
-    key: string,
-    result: Result<unknown, unknown>
+  const cancelWaitingItems = (
+    currentItem: QueueItem<unknown>,
+    error: unknown
   ) => {
     queue = queue.filter((q) => {
-      if (q.key !== key) {
+      if (q === currentItem || q.key !== currentItem.key) {
         return true;
       }
-      q.resolve(result);
+      q.resolve({ result: new Err(error), cancelled: true });
       return false;
     });
   };
@@ -145,16 +172,15 @@ export function createQueue(options?: {
 
     try {
       const result = await task();
-      resolve(new Ok(result));
+      resolve({ result: new Ok(result), cancelled: false });
     } catch (error) {
       if (options?.onError) {
         options.onError(error, {
-          removeCurrentKeyFromQueue: () =>
-            removeKeyFromQueue(key, new Err(error)),
+          cancelWaitingItems: () => cancelWaitingItems(currentItem, error),
         });
       }
 
-      resolve(new Err(error));
+      resolve({ result: new Err(error), cancelled: false });
     } finally {
       const indexOfCurrentItem = queue.findIndex((item) => item.key === key);
       if (indexOfCurrentItem >= 0) {
@@ -168,17 +194,55 @@ export function createQueue(options?: {
   const queueTask = async <T>(
     task: () => Promise<T>,
     key: string
-  ): Promise<Result<T, unknown>> =>
+  ): Promise<QueueTaskResult<T>> =>
     new Promise((resolve) => {
       queue.push({
         task,
-        resolve: resolve as (value: Result<unknown, unknown>) => void,
+        resolve: resolve as (value: QueueTaskResult<unknown>) => void,
         key,
       });
       void processQueue();
     });
 
   return queueTask;
+}
+
+/**
+ * Runs one `connect` attempt for the requested namespaces. `connectNamespaces` passes
+ * each namespace's attempt to `reportAttempts` once they have all settled. Anything it
+ * throws, such as a config error or saving to storage failing, is added after the
+ * namespace failures, unchanged.
+ *
+ * Throws a `WalletConnectionAttemptError` if anything failed; otherwise returns each
+ * namespace's result in request order.
+ */
+export async function runConnectionAttempt<T>(
+  namespaces: NamespaceInputForConnect[] | undefined,
+  connectNamespaces: (
+    reportAttempts: (attempts: NamespaceConnectAttempt<T>[]) => void
+  ) => Promise<void>
+): Promise<T[]> {
+  let attempts: NamespaceConnectAttempt<T>[] = [];
+  let nonNamespaceError: Option<unknown> = None;
+
+  try {
+    await connectNamespaces((settledAttempts) => {
+      attempts = settledAttempts;
+    });
+  } catch (error) {
+    nonNamespaceError = new Some(error);
+  }
+
+  const attemptError = buildConnectionAttemptError({
+    requestedNamespaces: namespaces ?? [],
+    attempts,
+    nonNamespaceError,
+  });
+  if (attemptError) {
+    throw attemptError;
+  }
+
+  return attempts.map(({ result }) => result.unwrap());
 }
 
 export function shouldTryAutoConnect(
