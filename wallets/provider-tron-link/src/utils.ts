@@ -5,13 +5,13 @@ import { TRON_NAMESPACE } from '@hub3js/namespaces';
 
 export function tronlink(): Provider | null {
   const instances: Provider = new Map();
-  const { tronLink } = window;
+  const { tron } = window;
 
-  if (!tronLink) {
+  if (tron?.isTronLink !== true) {
     return null;
   }
 
-  instances.set(TRON_NAMESPACE, tronLink);
+  instances.set(TRON_NAMESPACE, tron);
 
   return instances;
 }
