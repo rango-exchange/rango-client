@@ -1,3 +1,9 @@
+## [0.58.2](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.58.1...provider-walletconnect-2@0.58.2) (2026-09-21)
+
+
+### Bug Fixes
+
+* isolate walletconnect client from the host app's clients ([5b5f917](https://github.com/rango-exchange/rango-client/commit/5b5f917246f2784968611c1438733c6889db8c5a))
 ## [0.58.1](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.58.0...provider-walletconnect-2@0.58.1) (2026-09-16)
 
 

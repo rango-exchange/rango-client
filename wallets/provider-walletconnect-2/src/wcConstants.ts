@@ -92,3 +92,9 @@ export const DEFAULT_APP_METADATA = {
 };
 
 export const RELAY_URL = 'wss://relay.walletconnect.com';
+
+/*
+ * Changing this orphans every session stored under the old value - users would
+ * have to reconnect. See `createUniversalProvider` for why it exists.
+ */
+export const WC_STORAGE_PREFIX = 'rango';

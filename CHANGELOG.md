@@ -1,3 +1,11 @@
+## 0.63.2 (2026-09-21)
+_includes `@rango-dev/widget-embedded@0.64.2`_
+
+
+
+### Bug Fixes
+
+* isolate walletconnect client from the host app's clients ([5b5f917](https://github.com/rango-exchange/rango-client/commit/5b5f917246f2784968611c1438733c6889db8c5a))
 ## 0.63.1 (2026-09-16)
 _includes `@rango-dev/widget-embedded@0.64.1`_
 
