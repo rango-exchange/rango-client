@@ -2,8 +2,9 @@ import type { UtxoActions } from '@hub3js/bip122';
 
 import { builders } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { utxoActions } from '../actions/utxo.js';
 import { utxoBuilders } from '../builders/utxo.js';
@@ -23,7 +24,10 @@ const connect = builders
   .before(disconnectSubscriber)
   .or(changeAccountCleanup)
   .or(disconnectSubscriberCleanup)
-  .or(standardizeAndThrowError)
+  .or(utxoHooks.classifyBitgetConnectionError(UTXO_NAMESPACE))
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: UTXO_NAMESPACE })
+  )
   .build();
 
 const disconnect = commonBuilders

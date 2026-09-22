@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
+    "@hub3js/core": "0.0.0-experimental-16dab4fe-20260922",
     "@rango-dev/provider-binance": "^0.7.2-next.0",
     "@rango-dev/provider-bitget": "^0.61.3-next.0",
     "@rango-dev/provider-braavos": "^0.57.2-next.0",

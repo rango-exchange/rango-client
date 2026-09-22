@@ -4,11 +4,14 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
+import { TON_NAMESPACE } from '@hub3js/namespaces';
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
 import { type TonActions } from '@hub3js/tvm';
 
 import {
   TON_CONNECT_PROTOCOL_VERSION,
   TON_CONNECT_USER_REJECTED_CODE,
+  WALLET_ID,
 } from '../constants.js';
 import {
   connectEventToCAIP,
@@ -20,7 +23,7 @@ import {
 export function connect(
   getInstance: () => TonProviderApi
 ): FunctionWithContext<TonActions['connect'], Context> {
-  return async () => {
+  return async (context) => {
     const instance = getInstance();
 
     /*
@@ -45,7 +48,15 @@ export function connect(
     if (!isTonConnectEventSuccess(connectEvent)) {
       // The bridge reports a user-cancelled prompt as a `connect_error` event.
       if (connectEvent.payload.code === TON_CONNECT_USER_REJECTED_CODE) {
-        throw new Error('User rejected the request.');
+        const [getState] = context.state();
+        const { accounts, ...state } = getState();
+        throw new WalletConnectionError({
+          walletType: WALLET_ID,
+          namespace: TON_NAMESPACE,
+          type: ConnectionErrorType.Rejected,
+          state,
+          cause: connectEvent.payload,
+        });
       }
       throw new Error(
         `Couldn't connect to OKX TON. code: ${connectEvent.payload.code}, message: ${connectEvent.payload.message}`

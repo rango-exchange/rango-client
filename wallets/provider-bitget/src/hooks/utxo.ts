@@ -1,5 +1,18 @@
 import type { ProviderAPI, UtxoActions } from '@hub3js/bip122';
-import type { AnyFunction, Subscriber, SubscriberCleanUp } from '@hub3js/core';
+import type {
+  AnyFunction,
+  Context,
+  Subscriber,
+  SubscriberCleanUp,
+} from '@hub3js/core';
+
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
+
+import { WALLET_ID } from '../constants.js';
+
+// Bitget reports a UTXO rejection with the generic JSON-RPC internal error code, so its message is matched too.
+const BITGET_UTXO_REJECTION_CODE = -32603;
+const BITGET_UTXO_REJECTION_MESSAGE = 'User rejected the request';
 
 function disconnectSubscriber(
   instance: () => ProviderAPI
@@ -37,4 +50,34 @@ function disconnectSubscriber(
     },
   ];
 }
-export const utxoHooks = { disconnectSubscriber };
+
+function classifyBitgetConnectionError(namespace: string) {
+  return (context: Context, error: unknown): unknown => {
+    if (
+      typeof error !== 'object' ||
+      error === null ||
+      !('code' in error) ||
+      error.code !== BITGET_UTXO_REJECTION_CODE ||
+      !('message' in error) ||
+      error.message !== BITGET_UTXO_REJECTION_MESSAGE
+    ) {
+      return error;
+    }
+
+    const [getState] = context.state();
+    const { accounts, ...state } = getState();
+
+    return new WalletConnectionError({
+      walletType: WALLET_ID,
+      namespace,
+      type: ConnectionErrorType.Rejected,
+      state,
+      cause: error,
+    });
+  };
+}
+
+export const utxoHooks = {
+  disconnectSubscriber,
+  classifyBitgetConnectionError,
+};

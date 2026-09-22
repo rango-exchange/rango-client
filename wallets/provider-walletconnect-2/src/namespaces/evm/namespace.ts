@@ -3,11 +3,13 @@ import type { EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { getAdapter } from '../../adapter/registry.js';
 import { WALLET_ID } from '../../constants.js';
+import { evmHooks } from '../../hooks/evm.js';
 import { getAccountsFromSession } from '../../session/accounts.js';
 import { filterEvmAccounts } from '../../session/evm.js';
 import { chainReferenceToHex, parseChainReference } from '../../utils.js';
@@ -63,7 +65,8 @@ const connect = builders
     void getAdapter().disconnectSession('evm');
     return err;
   })
-  .or(standardizeAndThrowError)
+  .or(evmHooks.classifyWalletConnectConnectionError(EVM_NAMESPACE))
+  .or(throwConnectionError({ walletType: WALLET_ID, namespace: EVM_NAMESPACE }))
   .build();
 
 const canEagerConnect = builders

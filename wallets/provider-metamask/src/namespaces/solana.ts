@@ -1,7 +1,8 @@
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { builders, type SolanaActions } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { solanaActions } from '../actions/solana.js';
 import { solanaBuilders } from '../builders/solana.js';
@@ -17,7 +18,9 @@ const connect = builders
   .action(solanaActions.connect(solanaMetamask))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: SOLANA_NAMESPACE })
+  )
   .build();
 
 const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(

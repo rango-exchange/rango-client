@@ -1,13 +1,14 @@
 import type { SolanaActions } from '@hub3js/solana';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { actions, builders } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
 import {
   connectAndUpdateStateForSingleNetwork,
   intoConnecting,
   intoConnectionFinished,
-  standardizeAndThrowError,
+  throwConnectionError,
 } from '@hub3js/std/operators';
 
 import { solanaActions } from '../actions/solana.js';
@@ -30,7 +31,9 @@ const connect = new ActionBuilder<SolanaActions, 'connect'>('connect')
   .before(changeAccountSubscriber)
   .after(intoConnectionFinished)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: SOLANA_NAMESPACE })
+  )
   .build();
 
 const disconnect = commonBuilders

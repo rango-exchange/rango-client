@@ -3,15 +3,15 @@ import type { CaipAccount } from '@hub3js/std/types';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { builders, CAIP_NAMESPACE } from '@hub3js/evm';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
+import { throwConnectionError } from '@hub3js/std/operators';
 import { AccountId } from 'caip';
 
 import { ETHEREUM_CHAIN_ID, WALLET_ID } from '../constants.js';
+import { commonHooks } from '../hooks/common.js';
 import { setDerivationPath } from '../state.js';
-import {
-  getEthereumAccounts,
-  standardizeAndThrowLedgerError,
-} from '../utils.js';
+import { getEthereumAccounts } from '../utils.js';
 
 const connect = builders
   .connect()
@@ -40,7 +40,8 @@ const connect = builders
       network: result.chainId,
     };
   })
-  .or(standardizeAndThrowLedgerError)
+  .or(commonHooks.classifyLedgerConnectionError(EVM_NAMESPACE))
+  .or(throwConnectionError({ walletType: WALLET_ID, namespace: EVM_NAMESPACE }))
   .build();
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();

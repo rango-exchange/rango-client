@@ -35,14 +35,14 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/namespaces": "^0.5.1",
-    "@hub3js/stellar": "^0.4.0",
-    "@hub3js/xrpl": "^0.4.0",
+    "@hub3js/core": "0.0.0-experimental-16dab4fe-20260922",
+    "@hub3js/namespaces": "0.0.0-experimental-16dab4fe-20260922",
+    "@hub3js/stellar": "0.0.0-experimental-16dab4fe-20260922",
+    "@hub3js/xrpl": "0.0.0-experimental-16dab4fe-20260922",
     "@rango-dev/internal-blockchains": "^0.2.2-next.0",
     "@rango-dev/logging-core": "^0.15.1-next.0",
     "@stellar/stellar-sdk": "^15.0.1",
-    "rango-types": "^0.5.0",
+    "rango-types": "0.0.0-experimental-009f8a4d-20260921",
     "ts-results": "^3.3.0",
     "uuid": "^9.0.0"
   },

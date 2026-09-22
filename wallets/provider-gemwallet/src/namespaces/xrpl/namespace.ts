@@ -1,9 +1,12 @@
+import type { Context } from '@hub3js/core';
 import type { XRPLActions } from '@hub3js/xrpl';
 
 import { getAddress } from '@gemwallet/api';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { XRPL_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
 import { builders, utils } from '@hub3js/xrpl';
 import { Client } from 'xrpl';
 
@@ -14,23 +17,45 @@ import { changeAccountSubscriberBuilder } from './hooks.js';
 const [changeAccountSubscriber, changeAccountCleanup] =
   changeAccountSubscriberBuilder();
 
+function connectionError(
+  context: Context,
+  type: ConnectionErrorType,
+  message?: string
+) {
+  const [getState] = context.state();
+  const { accounts, ...state } = getState();
+  return new WalletConnectionError({
+    walletType: WALLET_ID,
+    namespace: XRPL_NAMESPACE,
+    type,
+    state,
+    message,
+  });
+}
+
 const connect = builders
   .connect()
-  .action(async function () {
+  .action(async function (context: Context) {
     const response = await getAddress();
 
     if (response.type === 'reject') {
-      throw new Error('User has rejected the request.');
+      throw connectionError(context, ConnectionErrorType.Rejected);
     }
     if (!response.result?.address) {
-      throw new Error(`Couldn't access to your wallet address.`);
+      throw connectionError(
+        context,
+        ConnectionErrorType.Unknown,
+        `Couldn't access to your wallet address.`
+      );
     }
 
     return [utils.formatAddressToCAIP(response.result.address)];
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: XRPL_NAMESPACE })
+  )
   .build();
 
 const accountLines = new ActionBuilder<XRPLActions, 'accountLines'>(

@@ -23,8 +23,8 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/namespaces": "^0.5.1",
+    "@hub3js/core": "0.0.0-experimental-16dab4fe-20260922",
+    "@hub3js/namespaces": "0.0.0-experimental-16dab4fe-20260922",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
     "@rango-dev/internal-blockchains": "^0.2.2-next.0",
@@ -44,7 +44,7 @@
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "rango-sdk": "^0.5.0",
-    "rango-types": "^0.5.0",
+    "rango-types": "0.0.0-experimental-009f8a4d-20260921",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",

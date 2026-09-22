@@ -1,8 +1,9 @@
 import type { SuiActions } from '@hub3js/sui';
 
 import { NamespaceBuilder } from '@hub3js/core';
+import { SUI_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 import { actions, builders, hooks } from '@hub3js/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
@@ -35,7 +36,7 @@ const connect = builders
   .before(disconnectSubscriber)
   .or(changeAccountCleanup)
   .or(disconnectCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwConnectionError({ walletType: WALLET_ID, namespace: SUI_NAMESPACE }))
   .build();
 
 const disconnect = commonBuilders
