@@ -1,3 +1,9 @@
+## [0.61.2](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.61.1...provider-bitget@0.61.2) (2026-09-22)
+
+
+### Bug Fixes
+
+* add jsonrpc field to btc broadcast requests ([2b96692](https://github.com/rango-exchange/rango-client/commit/2b96692a9e8941ec46285a2060593158ac9693e2))
 ## [0.61.1](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.61.0...provider-bitget@0.61.1) (2026-09-16)
 
 

@@ -1,3 +1,11 @@
+## 0.63.3 (2026-09-22)
+_includes `@rango-dev/widget-embedded@0.64.3`_
+
+
+
+### Bug Fixes
+
+* add jsonrpc field to btc broadcast requests ([2b96692](https://github.com/rango-exchange/rango-client/commit/2b96692a9e8941ec46285a2060593158ac9693e2))
 ## 0.63.2 (2026-09-21)
 _includes `@rango-dev/widget-embedded@0.64.2`_
 
