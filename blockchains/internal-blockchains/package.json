@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/internal-blockchains",
-  "version": "0.2.1",
+  "version": "0.2.2-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -36,7 +36,7 @@
     "@hub3js/sui": "^0.4.0",
     "@hub3js/tvm": "^0.4.0",
     "@hub3js/xrpl": "^0.4.0",
-    "@rango-dev/wallets-core": "^0.62.1",
+    "@rango-dev/wallets-core": "^0.62.2-next.0",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {

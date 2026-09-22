@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tron-link",
-  "version": "0.63.1",
+  "version": "0.63.2-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -25,8 +25,8 @@
     "@hub3js/core": "^0.62.0",
     "@hub3js/namespaces": "^0.5.1",
     "@hub3js/std": "^0.4.0",
-    "@rango-dev/signer-tron": "^0.43.0",
-    "@rango-dev/wallets-core": "^0.62.1",
+    "@rango-dev/signer-tron": "^0.43.1-next.0",
+    "@rango-dev/wallets-core": "^0.62.2-next.0",
     "rango-types": "^0.5.0"
   },
   "publishConfig": {
