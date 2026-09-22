@@ -1,12 +1,14 @@
 import type { StellarActions } from '@hub3js/stellar';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { STELLAR_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 import { builders, utils } from '@hub3js/stellar';
 import * as freighterApi from '@stellar/freighter-api';
 
 import { WALLET_ID } from '../../constants.js';
+import { stellarHooks } from '../../hooks/stellar.js';
 
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
@@ -26,7 +28,13 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(stellarHooks.classifyFreighterConnectionError(STELLAR_NAMESPACE))
+  .or(
+    throwConnectionError({
+      walletType: WALLET_ID,
+      namespace: STELLAR_NAMESPACE,
+    })
+  )
   .build();
 
 const canEagerConnect = new ActionBuilder<StellarActions, 'canEagerConnect'>(

@@ -1,6 +1,7 @@
 import { NamespaceBuilder } from '@hub3js/core';
+import { TRON_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 import {
   type TronActions,
   utils,
@@ -23,9 +24,6 @@ const connect = builders
     const accountsResult = await instance.request({
       method: 'tron_requestAccounts',
     });
-    if (!accountsResult) {
-      throw new Error('Please unlock your Bitget extension first.');
-    }
 
     if (
       !!accountsResult?.code &&
@@ -37,8 +35,10 @@ const connect = builders
     return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);
   })
   .before(changeAccountSubscriber)
-  .or(standardizeAndThrowError)
   .or(changeAccountCleanup)
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: TRON_NAMESPACE })
+  )
   .build();
 
 const disconnect = commonBuilders

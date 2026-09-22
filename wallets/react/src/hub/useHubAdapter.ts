@@ -8,7 +8,7 @@ import type { ProviderContext, ProviderProps } from '../types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
-import { utils } from '@hub3js/evm';
+import { isUserRejectionError, WalletConnectionError } from '@hub3js/std/utils';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
@@ -65,7 +65,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
   const queueTask = createQueue({
     onError: (error, actions) => {
-      if (utils.isUserRejectionError(error)) {
+      // A connection failure carries the wallet's own error, and so its code, as its cause.
+      const walletError =
+        error instanceof WalletConnectionError ? error.cause : error;
+      if (isUserRejectionError(walletError)) {
         actions.removeCurrentKeyFromQueue();
       }
     },

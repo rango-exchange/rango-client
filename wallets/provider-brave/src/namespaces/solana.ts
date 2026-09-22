@@ -1,9 +1,10 @@
 import type { SolanaActions } from '@hub3js/solana';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { actions, builders, hooks } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { solanaBrave } from '../utils.js';
@@ -16,7 +17,9 @@ const connect = builders
   .action(actions.connect(solanaBrave))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: SOLANA_NAMESPACE })
+  )
   .build();
 
 const disconnect = commonBuilders

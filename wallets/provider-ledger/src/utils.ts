@@ -59,10 +59,6 @@ export function getLedgerError(error: any) {
   return error;
 }
 
-export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
-  throw getLedgerError(error);
-}
-
 export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   try {
     const transport = await transportConnect();
@@ -80,8 +76,6 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
       chainId: ETHEREUM_CHAIN_ID,
       derivationPath,
     };
-  } catch (error: unknown) {
-    throw getLedgerError(error);
   } finally {
     await transportDisconnect();
   }
@@ -104,8 +98,6 @@ export async function getSolanaAccounts(): Promise<DeviceAccounts> {
       chainId: CAIP_SOLANA_CHAIN_ID,
       derivationPath,
     };
-  } catch (error: unknown) {
-    throw getLedgerError(error);
   } finally {
     await transportDisconnect();
   }

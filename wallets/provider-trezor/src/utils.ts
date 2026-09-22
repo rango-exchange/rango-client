@@ -1,4 +1,4 @@
-import type { TrezorConnect } from '@trezor/connect-web';
+import type { TrezorConnect, Unsuccessful } from '@trezor/connect-web';
 
 import { ETHEREUM_CHAIN_ID } from './constants.js';
 import { getDerivationPath } from './state.js';
@@ -27,6 +27,11 @@ export async function getTrezorModule() {
   return mod.default;
 }
 
+// Keeps the payload's `code`, which tells a user's cancellation apart; its `error` text changes between versions.
+export function getTrezorError({ error, code }: Unsuccessful['payload']) {
+  return Object.assign(new Error(error), { code });
+}
+
 export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   const TrezorConnect = await getTrezorModule();
   const derivationPath = getDerivationPath();
@@ -35,7 +40,7 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   });
 
   if (!result.success) {
-    throw new Error(result.payload.error);
+    throw getTrezorError(result.payload);
   }
 
   return {

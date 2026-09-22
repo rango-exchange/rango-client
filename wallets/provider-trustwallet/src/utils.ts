@@ -1,4 +1,3 @@
-import type { Context } from '@hub3js/core';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { InstanceMap } from '@hub3js/std/types';
@@ -64,19 +63,4 @@ export function solanaTrustWallet(): SolanaProviderApi {
   }
 
   return solanaInstance;
-}
-
-// Considering that the errors thrown in Trust Wallet in-app browser do not follow EIP-1193, we detect such errors and standardize them.
-export function standardizeTrustWalletInAppBrowserError(
-  _context: Context,
-  error: unknown
-) {
-  if (typeof error === 'string' && error === 'cancelled') {
-    const error = new Error('User rejected the request') as Error & {
-      code: number;
-    };
-    error.code = 4001;
-    return error;
-  }
-  return error;
 }

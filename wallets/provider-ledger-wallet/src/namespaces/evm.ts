@@ -3,8 +3,9 @@ import type { Chain, ChainId, EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { getProvider } from '../ledgerProvider.js';
@@ -54,7 +55,7 @@ const connect = builders
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwConnectionError({ walletType: WALLET_ID, namespace: EVM_NAMESPACE }))
   .build();
 
 const disconnect = commonBuilders

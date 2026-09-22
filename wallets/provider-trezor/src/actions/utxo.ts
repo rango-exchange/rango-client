@@ -6,6 +6,7 @@ import { utils } from '@hub3js/bip122';
 import { initTrezor } from '../init.js';
 import { setBitcoinDerivationPath } from '../state.js';
 import {
+  getTrezorError,
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
 } from '../utils.js';
@@ -40,7 +41,7 @@ export function connect(
     });
 
     if (!result.success) {
-      throw new Error(result.payload.error);
+      throw getTrezorError(result.payload);
     }
 
     const { address } = result.payload;

@@ -1,6 +1,10 @@
+import type { Context } from '@hub3js/core';
+
 import { NamespaceBuilder } from '@hub3js/core';
+import { TRON_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
 import {
   type TronActions,
   utils,
@@ -10,6 +14,7 @@ import { builders } from '@rango-dev/wallets-core/namespaces/tron';
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
 import { TronOKRequestCode, WALLET_ID } from '../constants.js';
+import { tronHooks } from '../hooks/tron.js';
 import { tronTronlink } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
@@ -18,13 +23,20 @@ const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
 
 const connect = builders
   .connect()
-  .action(async () => {
+  .action(async (context: Context) => {
     const instance = tronTronlink();
     const accountsResult = await instance.request({
       method: 'tron_requestAccounts',
     });
     if (!accountsResult) {
-      throw new Error('Please unlock your TronLink extension first.');
+      const [getState] = context.state();
+      const { accounts, ...state } = getState();
+      throw new WalletConnectionError({
+        walletType: WALLET_ID,
+        namespace: TRON_NAMESPACE,
+        type: ConnectionErrorType.Locked,
+        state,
+      });
     }
 
     if (
@@ -37,8 +49,10 @@ const connect = builders
     return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);
   })
   .before(changeAccountSubscriber)
-  .or(standardizeAndThrowError)
-  .or(changeAccountCleanup)
+  .or(tronHooks.classifyTronLinkConnectionError(TRON_NAMESPACE))
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: TRON_NAMESPACE })
+  )
   .build();
 
 const canEagerConnect = builders

@@ -31,7 +31,8 @@ export class TonConnectAdapter {
     return this.#tonModule;
   }
 
-  async waitForConnection(): Promise<string> {
+  // Resolves `null` when the user closes the modal without connecting.
+  async waitForConnection(): Promise<string | null> {
     const tonConnectUI = this.getInstance();
     return new Promise((resolve, reject) => {
       const unsubscribeStatusChange = tonConnectUI.onStatusChange(
@@ -53,7 +54,7 @@ export class TonConnectAdapter {
         (modalState) => {
           if (modalState.closeReason === 'action-cancelled') {
             unsubscribe();
-            reject(new Error('The action was canceled by the user'));
+            resolve(null);
           }
         }
       );

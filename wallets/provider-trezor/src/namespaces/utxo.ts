@@ -2,16 +2,21 @@ import type { UtxoActions } from '@hub3js/bip122';
 
 import { builders, CAIP_BITCOIN_CHAIN_ID } from '@hub3js/bip122';
 import { NamespaceBuilder } from '@hub3js/core';
+import { UTXO_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { utxoActions } from '../actions/utxo.js';
 import { WALLET_ID } from '../constants.js';
+import { commonHooks } from '../hooks/common.js';
 
 const connect = builders
   .connect()
   .action(utxoActions.connect(CAIP_BITCOIN_CHAIN_ID))
-  .or(standardizeAndThrowError)
+  .or(commonHooks.classifyTrezorConnectionError(UTXO_NAMESPACE))
+  .or(
+    throwConnectionError({ walletType: WALLET_ID, namespace: UTXO_NAMESPACE })
+  )
   .build();
 
 const disconnect = commonBuilders.disconnect<UtxoActions>().build();

@@ -2,8 +2,9 @@ import type { EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, hooks } from '@hub3js/evm';
+import { EVM_NAMESPACE } from '@hub3js/namespaces';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import { throwConnectionError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { evmBitget } from '../utils.js';
@@ -15,7 +16,7 @@ const connect = builders
   .action(actions.connect(evmBitget))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeAndThrowError)
+  .or(throwConnectionError({ walletType: WALLET_ID, namespace: EVM_NAMESPACE }))
   .build();
 
 const disconnect = commonBuilders
