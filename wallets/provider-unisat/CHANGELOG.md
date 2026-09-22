@@ -1,3 +1,9 @@
+## [0.19.2](https://github.com/rango-exchange/rango-client/compare/provider-unisat@0.19.1...provider-unisat@0.19.2) (2026-09-22)
+
+
+### Bug Fixes
+
+* add jsonrpc field to btc broadcast requests ([2b96692](https://github.com/rango-exchange/rango-client/commit/2b96692a9e8941ec46285a2060593158ac9693e2))
 ## [0.19.1](https://github.com/rango-exchange/rango-client/compare/provider-unisat@0.19.0...provider-unisat@0.19.1) (2026-09-16)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.64.2",
+  "version": "0.64.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -29,7 +29,7 @@
     "@lingui/react": "4.2.1",
     "@rango-dev/internal-blockchains": "^0.2.1",
     "@rango-dev/logging-core": "^0.15.0",
-    "@rango-dev/provider-all": "^0.66.2",
+    "@rango-dev/provider-all": "^0.66.3",
     "@rango-dev/queue-manager-core": "^0.35.0",
     "@rango-dev/queue-manager-rango-preset": "^0.65.1",
     "@rango-dev/queue-manager-react": "^0.35.0",
