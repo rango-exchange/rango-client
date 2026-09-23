@@ -11,6 +11,7 @@ import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
 import { isOnDetached } from '../../components/StatefulConnectModal';
+import { reportConnectionError } from '../../utils/connectionReporting';
 import { tryRefineErrorMessage } from '../../utils/errors';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
@@ -79,6 +80,7 @@ export function useStatefulConnect(): UseStatefulConnect {
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      reportConnectionError(e, { source: 'user' });
       const message = tryRefineErrorMessage(
         e,
         e?.message

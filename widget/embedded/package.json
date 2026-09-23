@@ -25,6 +25,7 @@
   "dependencies": {
     "@hub3js/core": "0.0.0-experimental-16dab4fe-20260922",
     "@hub3js/namespaces": "0.0.0-experimental-16dab4fe-20260922",
+    "@hub3js/std": "0.0.0-experimental-16dab4fe-20260922",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
     "@rango-dev/internal-blockchains": "^0.2.2-next.0",

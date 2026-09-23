@@ -10,6 +10,7 @@ import { Events } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 
 import { useAppStore } from '../../store/AppStore';
+import { reportConnectionError } from '../../utils/connectionReporting';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -100,6 +101,10 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
 
     if (event === Events.NAMESPACE_DISCONNECTED) {
       disconnectNamespaces(type, value);
+    }
+
+    if (event === Events.AUTO_CONNECT_FAILED) {
+      reportConnectionError(value, { source: 'auto-connect' });
     }
 
     if (event === Events.CONNECTED && value) {

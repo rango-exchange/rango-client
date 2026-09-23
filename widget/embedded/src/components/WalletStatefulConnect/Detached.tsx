@@ -14,6 +14,7 @@ import {
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { reportConnectionError } from '../../utils/connectionReporting';
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
 import { NamespacesHeader } from './Detached.styles';
@@ -63,7 +64,10 @@ export function Detached(props: PropTypes) {
           network: '',
           derivationPath: options?.derivationPath ?? undefined,
         },
-      ]);
+      ]).catch((error: unknown) => {
+        reportConnectionError(error, { source: 'user' });
+        throw error;
+      });
     }
   };
 

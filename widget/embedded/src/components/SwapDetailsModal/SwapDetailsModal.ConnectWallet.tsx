@@ -16,6 +16,7 @@ import React, { useState } from 'react';
 
 import { useWalletList } from '../../hooks/useWalletList';
 import { useUiStore } from '../../store/ui';
+import { reportConnectionError } from '../../utils/connectionReporting';
 import { tryRefineError } from '../../utils/errors';
 import { getConciseAddress } from '../../utils/wallets';
 import { NamespaceItem } from '../NamespaceItem';
@@ -87,6 +88,7 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
           : undefined
       );
     } catch (error) {
+      reportConnectionError(error, { source: 'user' });
       setError(tryRefineError(error) ?? (error as Error));
     }
   };

@@ -36,6 +36,7 @@ import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
 import { UiEventTypes } from '../../types';
 import { getContainer } from '../../utils/common';
+import { reportConnectionError } from '../../utils/connectionReporting';
 import { tryRefineError } from '../../utils/errors';
 import { emitUiEvent } from '../../utils/events';
 import {
@@ -186,6 +187,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           handleShowSwitchNetworkSucceeded();
         })
         .catch((error: unknown) => {
+          reportConnectionError(error, { source: 'user' });
           handleShowSwitchNetworkFailed(
             tryRefineError(error) ?? (error as Error)
           );

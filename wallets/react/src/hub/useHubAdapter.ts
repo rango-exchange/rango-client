@@ -123,6 +123,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,
+        onUpdateState: params.onUpdateState,
       });
     },
   });
