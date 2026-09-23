@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-noir-wallet",
-  "version": "0.3.2-next.0",
+  "version": "0.3.2-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
