@@ -19,6 +19,7 @@ import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
 import { getConfig } from './utils/configs';
+import { reportConnectionError } from './utils/connectionReporting';
 import { tryRefineError } from './utils/errors';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
@@ -59,9 +60,12 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     if (!canSwitchNetworkTo(wallet, namespace.network, namespace)) {
       return undefined;
     }
-    const result = await connect(wallet, [namespace]);
-
-    return result;
+    try {
+      return await connect(wallet, [namespace]);
+    } catch (error) {
+      reportConnectionError(error, { source: 'user' });
+      throw error;
+    }
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>

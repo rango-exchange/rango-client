@@ -78,6 +78,7 @@ export enum Events {
   NAMESPACE_DISCONNECTED = 'namespace_disconnected',
 
   PROVIDER_DISCONNECTED = 'provider_disconnected',
+  AUTO_CONNECT_FAILED = 'auto_connect_failed',
 }
 
 export type EventInfo = {
