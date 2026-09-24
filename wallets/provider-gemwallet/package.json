@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@gemwallet/api": "^3.8.0",
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/std": "^0.4.0",
-    "@hub3js/xrpl": "^0.4.0",
-    "rango-types": "^0.5.0",
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/std": "^0.5.0",
+    "@hub3js/xrpl": "^0.5.0",
+    "rango-types": "^0.6.0",
     "xrpl": "^4.2.0"
   },
   "publishConfig": {

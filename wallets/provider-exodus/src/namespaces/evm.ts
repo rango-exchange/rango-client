@@ -31,12 +31,24 @@ const canEagerConnect = builders
   .action(actions.canEagerConnect(evmExodus))
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(actions.getAllowance(evmExodus))
+  .build();
+
+const getTransactionReceipt = builders
+  .getTransactionReceipt()
+  .action(actions.getTransactionReceipt(evmExodus))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
   .action(getChainId)
   .action(canSwitchNetwork)
+  .action(getAllowance)
+  .action(getTransactionReceipt)
   .build();
 
 export { evm };

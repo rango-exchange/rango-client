@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
-    "@hub3js/bip122": "^0.2.1",
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/evm": "^0.5.0",
-    "@hub3js/std": "^0.4.0",
+    "@hub3js/bip122": "^0.3.0",
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/std": "^0.5.0",
     "@rango-dev/internal-blockchains": "^0.2.2-next.0",
     "@rango-dev/logging-core": "^0.15.1-next.0",
     "@rango-dev/signer-evm": "^0.46.2-next.0",
@@ -40,7 +40,7 @@
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "ethers": "^6.13.2",
-    "rango-types": "^0.5.0"
+    "rango-types": "^0.6.0"
   },
   "devDependencies": {
     "@walletconnect/types": "2.23.7"
