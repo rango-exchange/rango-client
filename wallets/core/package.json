@@ -82,11 +82,11 @@
     "xrpl": "^4.2.0"
   },
   "dependencies": {
-    "@hub3js/std": "^0.4.0",
+    "@hub3js/std": "^0.5.0",
     "@stellar/stellar-sdk": "^15.0.1",
     "caip": "^1.1.1",
     "immer": "^10.0.4",
-    "rango-types": "^0.5.0",
+    "rango-types": "^0.6.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

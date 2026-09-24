@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.5.0"
+    "rango-types": "^0.6.0"
   },
   "publishConfig": {
     "access": "public"
