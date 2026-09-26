@@ -13,6 +13,7 @@ import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
+import { WalletAnalyticsTracker } from '../../services/walletAnalyticsTracker';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 
@@ -26,6 +27,7 @@ export const WidgetContext = createContext<WidgetContextInterface>({
   onDisconnectWallet: () => {
     return;
   },
+  walletAnalyticsTracker: null,
 });
 
 function Main(props: PropsWithChildren<PropTypes>) {
@@ -79,6 +81,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
       onDisconnectWallet: (handler: OnWalletDisconnectHandler) => {
         onDisconnectWalletHandler.current = handler;
       },
+      walletAnalyticsTracker: new WalletAnalyticsTracker(),
     }),
     []
   );
@@ -97,6 +100,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
             info,
           ];
           handleEvent(...eventParams);
+          handlers.walletAnalyticsTracker.handleWalletsReactUpdate(
+            ...eventParams
+          );
 
           if (props.onUpdateState) {
             propagateEvents(props.onUpdateState, eventParams);

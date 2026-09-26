@@ -1,3 +1,4 @@
+import type { WalletAnalyticsTracker } from '../../services/walletAnalyticsTracker';
 import type { WidgetConfigWithoutLegacyProviders } from '../../types';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 import type { EventHandler, Events } from '@rango-dev/wallets-react';
@@ -5,6 +6,8 @@ import type { EventHandler, Events } from '@rango-dev/wallets-react';
 export type OnWalletConnectHandler = (wallet: LastConnectedWallet) => void;
 export type OnWalletDisconnectHandler = (walletType: string) => void;
 export interface WidgetContextInterface {
+  /** The widget's wallet analytics tracker, or `null` outside the provider. */
+  walletAnalyticsTracker: WalletAnalyticsTracker | null;
   /**
    * A wallet connection handler, utilized within the wallet provider,
    * is linked to the useBootstrap hook for synchronizing the state of the last connected wallet.

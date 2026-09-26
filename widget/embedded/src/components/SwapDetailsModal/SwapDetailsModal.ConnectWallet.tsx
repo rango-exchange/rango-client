@@ -14,6 +14,7 @@ import {
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
+import { useConnectWallet } from '../../hooks/useConnectWallet';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useUiStore } from '../../store/ui';
 import { tryRefineError } from '../../utils/errors';
@@ -31,7 +32,8 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
   const [error, setError] = useState<Error | null>(null);
   const { list } = useWalletList();
   const isActiveTab = useUiStore.use.isActiveTab();
-  const { state, connect } = useWallets();
+  const { state } = useWallets();
+  const connect = useConnectWallet();
 
   const wallet = list.find(
     (wallet) => wallet.type === currentStepWallet.walletType

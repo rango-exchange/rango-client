@@ -18,7 +18,7 @@ import {
 import { useWallets } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import { PendingSwapNetworkStatus } from 'rango-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -31,6 +31,8 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { WidgetContext } from '../../containers/Wallets';
+import { useConnectWallet } from '../../hooks/useConnectWallet';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
@@ -79,7 +81,9 @@ const SUCCESS_SWITCH_NETWORK_MODAL_CLOSE_DELAY = 3000;
 
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel } = props;
-  const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
+  const { canSwitchNetworkTo, getWalletInfo } = useWallets();
+  const connect = useConnectWallet();
+  const { walletAnalyticsTracker } = useContext(WidgetContext);
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
   const { findToken } = useAppStore();
@@ -194,6 +198,12 @@ export function SwapDetails(props: SwapDetailsProps) {
   };
 
   const handleSwitchNetworkClick = () => {
+    if (currentStepWallet && currentStepNamespace) {
+      walletAnalyticsTracker?.handleNetworkSuggestion(
+        currentStepWallet.walletType,
+        currentStepNamespace
+      );
+    }
     handleChangeModalState('switchNetwork');
     handleSwitchNetwork();
   };

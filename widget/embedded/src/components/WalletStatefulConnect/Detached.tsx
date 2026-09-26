@@ -14,6 +14,7 @@ import {
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { useConnectWallet } from '../../hooks/useConnectWallet';
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
 import { NamespacesHeader } from './Detached.styles';
@@ -31,7 +32,8 @@ export function Detached(props: PropTypes) {
   } = props;
   const { targetWallet } = value;
 
-  const { connect, disconnect, state } = useWallets();
+  const { disconnect, state } = useWallets();
+  const connect = useConnectWallet();
   const walletType = targetWallet.type;
   const walletState = state(walletType);
   const namespacesProperty = targetWallet.properties?.find(

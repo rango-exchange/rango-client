@@ -4,8 +4,11 @@ import { useEffect, useRef } from 'react';
 import { SearchParams } from '../constants/searchParams';
 import { useAppStore } from '../store/AppStore';
 
+import { useConnectWallet } from './useConnectWallet';
+
 export function useForceAutoConnect(): void {
-  const { connect, state } = useWallets();
+  const { state } = useWallets();
+  const connect = useConnectWallet();
   const initiated = useRef<{ [key: string]: boolean }>({});
   const { fetchStatus } = useAppStore();
   const walletType =

@@ -1,5 +1,5 @@
 import type { SelectedQuote } from './quote';
-import type { Wallet } from './wallets';
+import type { Namespace } from '@hub3js/namespaces';
 import type {
   RouteEventData,
   StepEventData,
@@ -16,8 +16,6 @@ export type PreventableEventPayload<
   preventDefault: () => void;
 } & T;
 
-type Account = Wallet;
-
 export enum QuoteEventTypes {
   QUOTE_INPUT_UPDATE = 'quoteInputUpdate',
   QUOTE_OUTPUT_UPDATE = 'quoteOutputUpdate',
@@ -32,9 +30,69 @@ export enum QuoteEventTypes {
 }
 
 export enum WalletEventTypes {
+  /**
+   * Fires once when a wallet becomes a **connected wallet**, i.e. when its
+   * first namespace connects. Doesn't fire again for a namespace added to an
+   * already connected wallet, or when a namespace's accounts arrive or change.
+   */
   CONNECT = 'connect',
+  /**
+   * Fires once when a connected wallet disconnects, after `NAMESPACE_DISCONNECTED`
+   * for each of its namespaces that was connected.
+   */
   DISCONNECT = 'disconnect',
+  /**
+   * Fires at most once per session for each browser-injected wallet that is
+   * detected. Hardware wallets, WalletConnect and TON Connect are excluded.
+   */
   DETECTED = 'detected',
+  /**
+   * Fires when a wallet that isn't connected starts connecting, whether the
+   * user started it or auto-connect did.
+   */
+  CONNECT_INITIATED = 'connectInitiated',
+  /**
+   * Fires when the widget asks a wallet to connect a namespace that isn't
+   * connected yet, once for each requested namespace (including the first).
+   *
+   * Caveats:
+   * - Auto-connect doesn't fire it.
+   * - On a fresh connect, it fires before `CONNECT_INITIATED`.
+   */
+  NAMESPACE_CONNECT_INITIATED = 'namespaceConnectInitiated',
+  /**
+   * Fires when one of a wallet's namespaces connects, whether it's the
+   * wallet's first namespace or one added to an already connected wallet.
+   * Doesn't fire for the accounts that arrive with an account switch or an
+   * in-place accounts update.
+   */
+  NAMESPACE_CONNECTED = 'namespaceConnected',
+  /**
+   * Fires when one of a wallet's namespaces disconnects. When the whole
+   * wallet disconnects, this fires once for each namespace that was
+   * connected, before `DISCONNECT`. Doesn't fire for an account switch.
+   */
+  NAMESPACE_DISCONNECTED = 'namespaceDisconnected',
+  /**
+   * Fires when the user switches account inside the wallet on a connected
+   * namespace, i.e. its set of addresses changes. The same address on a
+   * different network (e.g. an EVM chain change) isn't an account switch.
+   */
+  SWITCH_ACCOUNT = 'switchAccount',
+  /**
+   * Fires when a connected namespace moves to a different network, whether
+   * the widget suggested the switch or the user changed the network inside
+   * the wallet. The network a namespace gets while connecting isn't a switch.
+   */
+  SWITCH_NETWORK = 'switchNetwork',
+  /**
+   * Fires on every network suggestion: each time the swap queue asks for a
+   * swap step's wallet to switch network (including wallets the user has to
+   * switch by hand), and each time the user presses the switch-network button
+   * in swap details. A blocked step can fire it several times. It doesn't say
+   * whether the wallet itself was asked to switch.
+   */
+  NETWORK_SUGGESTED = 'networkSuggested',
 }
 
 /**
@@ -72,14 +130,31 @@ export type QuoteUpdateEventPayload = Pick<
   'requestAmount' | 'swaps' | 'outputAmount' | 'resultType' | 'tags'
 > | null;
 
-export type ConnectWalletEventPayload = {
+/**
+ * Fields shared by `connectInitiated`, `connect`, `disconnect`, `namespaceConnectInitiated`, `namespaceConnected`,
+ * `namespaceDisconnected`, `switchAccount`, `switchNetwork` and `networkSuggested`.
+ */
+type WalletConnectionEventPayload = {
+  /** Type of the wallet whose connection changed when the event fired. */
   walletType: string;
-  accounts: Account[];
-  /** Blockchain of the first connected account. */
-  chain: string | null;
-  /** wallet type (e.g. "metamask"). */
+  /** Wallet type (e.g. "metamask") of the wallet whose connection changed when the event fired. */
   walletName: string;
 };
+
+/** Fields shared by `namespaceConnectInitiated`, `namespaceConnected`, `namespaceDisconnected`, `switchAccount`, `switchNetwork` and `networkSuggested`. */
+type NamespaceConnectionEventPayload = WalletConnectionEventPayload & {
+  /**
+   * The namespace that started connecting, connected, disconnected, switched account or network, or had a network suggested when the event fired, as the
+   * id wallets-react uses (e.g. `EVM` or `Solana`). Same id Sentry tags use.
+   */
+  namespace: Namespace;
+};
+
+/** Payload of `connectInitiated`, sent each time a wallet that isn't connected starts connecting. */
+export type ConnectInitiatedEventPayload = WalletConnectionEventPayload;
+
+/** Payload of `connect`, sent once each time a wallet becomes connected. */
+export type ConnectWalletEventPayload = WalletConnectionEventPayload;
 
 export type DisconnectWalletEventPayload = {
   walletType: string;
@@ -88,6 +163,38 @@ export type DisconnectWalletEventPayload = {
 
 export type WalletDetectedEventPayload = {
   walletName: string;
+};
+
+/** Payload of `namespaceConnectInitiated`, sent for each namespace the widget asks a wallet to connect. */
+export type NamespaceConnectInitiatedEventPayload =
+  NamespaceConnectionEventPayload;
+
+/** Payload of `namespaceConnected`, sent each time one of a wallet's namespaces connects. */
+export type NamespaceConnectedEventPayload = NamespaceConnectionEventPayload;
+
+/** Payload of `namespaceDisconnected`, sent each time one of a wallet's namespaces disconnects. */
+export type NamespaceDisconnectedEventPayload = NamespaceConnectionEventPayload;
+
+/** Payload of `switchAccount`, sent each time a connected namespace switches account. Carries no addresses. */
+export type SwitchAccountEventPayload = NamespaceConnectionEventPayload;
+
+/** Payload of `switchNetwork`, sent each time a connected namespace moves to a different network. */
+export type SwitchNetworkEventPayload = NamespaceConnectionEventPayload & {
+  /**
+   * The network the namespace moved to, as a Rango blockchain name (e.g.
+   * `ETH` or `POLYGON`). EVM chain ids are converted using blockchain meta;
+   * a value that can't be mapped is sent unchanged.
+   */
+  network: string;
+};
+
+/** Payload of `networkSuggested`, sent on every network suggestion. */
+export type NetworkSuggestedEventPayload = NamespaceConnectionEventPayload & {
+  /**
+   * The requested network, as a Rango blockchain name (e.g. `ETH` or
+   * `POLYGON`). `namespace` is the namespace this network belongs to.
+   */
+  network: string;
 };
 
 export type ClickConnectWalletPayload = PreventableEventPayload;
@@ -220,7 +327,23 @@ export type QuoteEventData =
 export type WalletEventData =
   | EventData<WalletEventTypes.CONNECT, ConnectWalletEventPayload>
   | EventData<WalletEventTypes.DISCONNECT, DisconnectWalletEventPayload>
-  | EventData<WalletEventTypes.DETECTED, WalletDetectedEventPayload>;
+  | EventData<WalletEventTypes.DETECTED, WalletDetectedEventPayload>
+  | EventData<WalletEventTypes.CONNECT_INITIATED, ConnectInitiatedEventPayload>
+  | EventData<
+      WalletEventTypes.NAMESPACE_CONNECT_INITIATED,
+      NamespaceConnectInitiatedEventPayload
+    >
+  | EventData<
+      WalletEventTypes.NAMESPACE_CONNECTED,
+      NamespaceConnectedEventPayload
+    >
+  | EventData<
+      WalletEventTypes.NAMESPACE_DISCONNECTED,
+      NamespaceDisconnectedEventPayload
+    >
+  | EventData<WalletEventTypes.SWITCH_ACCOUNT, SwitchAccountEventPayload>
+  | EventData<WalletEventTypes.SWITCH_NETWORK, SwitchNetworkEventPayload>
+  | EventData<WalletEventTypes.NETWORK_SUGGESTED, NetworkSuggestedEventPayload>;
 
 export type UiEventData =
   | EventData<UiEventTypes.CLICK_CONNECT_WALLET, ClickConnectWalletPayload>

@@ -13,6 +13,7 @@ import { useReducer } from 'react';
 import { isOnDetached } from '../../components/StatefulConnectModal';
 import { tryRefineErrorMessage } from '../../utils/errors';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
+import { useConnectWallet } from '../useConnectWallet';
 
 import {
   isStateOnDerivationPathStep,
@@ -53,7 +54,8 @@ export interface UseStatefulConnect {
  *
  */
 export function useStatefulConnect(): UseStatefulConnect {
-  const { state, disconnect, connect } = useWallets();
+  const { state, disconnect } = useWallets();
+  const connect = useConnectWallet();
 
   const [connectState, dispatch] = useReducer(reducer, initState);
 

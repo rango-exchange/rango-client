@@ -13,8 +13,10 @@ import {
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import { useWallets } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-types';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
+import { WidgetContext } from './containers/Wallets';
+import { useConnectWallet } from './hooks/useConnectWallet';
 import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
@@ -23,14 +25,10 @@ import { tryRefineError } from './utils/errors';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
-  const {
-    getSigners,
-    state,
-    connect,
-    canSwitchNetworkTo,
-    getWalletInfo,
-    hubProvider,
-  } = useWallets();
+  const { getSigners, state, canSwitchNetworkTo, getWalletInfo, hubProvider } =
+    useWallets();
+  const { walletAnalyticsTracker } = useContext(WidgetContext);
+  const connect = useConnectWallet();
 
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({
@@ -56,6 +54,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     wallet: WalletType,
     namespace: TargetNamespace
   ) => {
+    walletAnalyticsTracker?.handleNetworkSuggestion(wallet, namespace);
     if (!canSwitchNetworkTo(wallet, namespace.network, namespace)) {
       return undefined;
     }
