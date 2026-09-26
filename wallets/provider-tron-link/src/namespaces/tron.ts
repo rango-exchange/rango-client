@@ -9,7 +9,7 @@ import { actions, builders } from '@rango-dev/wallets-core/namespaces/tron';
 
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
-import { TronOKRequestCode, WALLET_ID } from '../constants.js';
+import { WALLET_ID } from '../constants.js';
 import { tronTronlink } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
@@ -20,21 +20,10 @@ const connect = builders
   .connect()
   .action(async () => {
     const instance = tronTronlink();
-    const accountsResult = await instance.request({
-      method: 'tron_requestAccounts',
+    const accounts: string[] = await instance.request({
+      method: 'eth_requestAccounts',
     });
-    if (!accountsResult) {
-      throw new Error('Please unlock your TronLink extension first.');
-    }
-
-    if (
-      !!accountsResult?.code &&
-      !!accountsResult.message &&
-      accountsResult.code !== TronOKRequestCode
-    ) {
-      throw new Error(accountsResult.message);
-    }
-    return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);
+    return utils.formatAccountsToCAIP(accounts);
   })
   .before(changeAccountSubscriber)
   .or(standardizeAndThrowError)
