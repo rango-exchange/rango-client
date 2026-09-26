@@ -6,7 +6,6 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'tron-link';
-export const TronOKRequestCode = 200;
 export const TRONLINK_INJECTION_DELAY = 1000;
 export const metadata: ProviderMetadata = {
   name: 'TronLink',

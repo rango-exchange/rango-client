@@ -24,7 +24,10 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
         event.preventDefault();
         return;
       }
-      if (!event.payload?.data?.message.data.address || !tronTronlink().ready) {
+      if (
+        !event.payload?.data?.message.data.address ||
+        !tronTronlink().tronWeb?.ready
+      ) {
         event.preventDefault();
         context.action('connect').catch(() => {
           console.debug('There were a problem during connecting');
