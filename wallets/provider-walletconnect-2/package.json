@@ -30,7 +30,6 @@
     "@rango-dev/internal-blockchains": "^0.2.2-next.1",
     "@rango-dev/logging-core": "^0.15.1-next.0",
     "@rango-dev/signer-evm": "^0.46.2-next.1",
-    "@rango-dev/wallets-core": "^0.62.2-next.1",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "2.23.7",
