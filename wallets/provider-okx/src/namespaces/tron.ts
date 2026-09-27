@@ -1,8 +1,8 @@
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import { type TronActions } from '@rango-dev/wallets-core/namespaces/tron';
-import { actions, builders } from '@rango-dev/wallets-core/namespaces/tron';
+import { type TronActions } from '@hub3js/tron';
+import { actions, builders } from '@hub3js/tron';
 
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';

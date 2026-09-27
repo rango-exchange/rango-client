@@ -1,6 +1,6 @@
 import type { ProviderMetadata } from '@hub3js/core';
 
-import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
+import { isTronNamespace } from '@hub3js/tron';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';

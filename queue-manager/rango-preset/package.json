@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.63.0",
-    "@hub3js/namespaces": "^0.6.0",
+    "@hub3js/namespaces": "^0.7.0",
     "@hub3js/stellar": "^0.5.0",
     "@hub3js/xrpl": "^0.5.0",
     "@rango-dev/internal-blockchains": "^0.2.2-next.1",

@@ -23,8 +23,8 @@ import {
 import { isSolanaNamespace } from '@hub3js/solana';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 import { isSuiNamespace } from '@hub3js/sui';
+import { isTronNamespace } from '@hub3js/tron';
 import { isTvmNamespace } from '@hub3js/tvm';
-import { isTronNamespace } from '@rango-dev/wallets-core/namespaces/tron';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';

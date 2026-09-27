@@ -4,9 +4,8 @@ Core package for handling web3 wallets supported by Rango
 
 > **⚠️ Deprecated — this package is being split up and moved to [hub3js](https://github.com/rango-exchange/hub3js).**
 >
-> Most of what lives here now ships as focused `@hub3js/*` packages. New code should import
-> from those instead. The subpaths marked "not migrated yet" below are still served from this
-> package and will keep working until their replacements are released.
+> Everything that lived here now ships as focused `@hub3js/*` packages. New code should import
+> from those instead.
 
 ## Migrating imports
 
@@ -24,7 +23,7 @@ Core package for handling web3 wallets supported by Rango
 | `.../namespaces/ton` | `@hub3js/tvm` |
 | `.../namespaces/xrpl` | `@hub3js/xrpl` |
 | `.../namespaces/utxo` | `@hub3js/bip122` |
-| `.../namespaces/tron` | Not migrated yet — still served from this package |
+| `.../namespaces/tron` | `@hub3js/tron` |
 
 A couple of things worth noting:
 

@@ -29,6 +29,10 @@ import {
   CAIP_NAMESPACE as CAIP_SUI_NAMESPACE,
 } from '@hub3js/sui';
 import {
+  CAIP_TRON_CHAIN_ID,
+  CAIP_NAMESPACE as CAIP_TRON_NAMESPACE,
+} from '@hub3js/tron';
+import {
   CAIP_TON_CHAIN_ID,
   CAIP_NAMESPACE as CAIP_TVM_NAMESPACE,
 } from '@hub3js/tvm';
@@ -36,10 +40,6 @@ import {
   CAIP_XRPL_CHAIN_ID,
   CAIP_NAMESPACE as CAIP_XRPL_NAMESPACE,
 } from '@hub3js/xrpl';
-import {
-  CAIP_TRON_CHAIN_ID,
-  CAIP_NAMESPACE as CAIP_TRON_NAMESPACE,
-} from '@rango-dev/wallets-core/namespaces/tron';
 import { TransactionType } from 'rango-types';
 
 import { Networks } from './networks.js';

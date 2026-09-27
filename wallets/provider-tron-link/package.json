@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@hub3js/core": "^0.63.0",
-    "@hub3js/namespaces": "^0.6.0",
+    "@hub3js/namespaces": "^0.7.0",
     "@hub3js/std": "^0.5.0",
+    "@hub3js/tron": "^0.2.0",
     "@rango-dev/signer-tron": "^0.43.1-next.1",
-    "@rango-dev/wallets-core": "^0.62.2-next.1",
     "rango-types": "^0.6.0"
   },
   "publishConfig": {

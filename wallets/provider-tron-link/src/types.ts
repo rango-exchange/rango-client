@@ -1,6 +1,6 @@
 import type { TRON_NAMESPACE } from '@hub3js/namespaces';
 import type { InstanceMap } from '@hub3js/std/types';
-import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { ProviderAPI as TronProviderApi } from '@hub3js/tron';
 
 /**
  * `ready` is TronLink's own addition
