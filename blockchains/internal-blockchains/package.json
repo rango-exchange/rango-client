@@ -34,9 +34,9 @@
     "@hub3js/starknet": "^0.5.0",
     "@hub3js/stellar": "^0.5.0",
     "@hub3js/sui": "^0.5.0",
+    "@hub3js/tron": "^0.2.0",
     "@hub3js/tvm": "^0.5.0",
     "@hub3js/xrpl": "^0.5.0",
-    "@rango-dev/wallets-core": "^0.62.2-next.1",
     "rango-types": "^0.6.0"
   },
   "publishConfig": {

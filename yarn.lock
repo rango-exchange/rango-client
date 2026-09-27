@@ -2936,10 +2936,10 @@
     caip "^1.1.1"
     rango-types "^0.6.0"
 
-"@hub3js/namespaces@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.6.0.tgz#f4697284b0ebae2385a5d2a3780534c3865f1bd9"
-  integrity sha512-wKn4XBoE5E22tfGGwOmMkgSq5cxOhrKWW9I+QHLb0A/N22QqZyfAKUlBvCU4NfC5OLwqr9PW3U4yJTp7XdLodQ==
+"@hub3js/namespaces@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.7.0.tgz#c35798d82a3a037b8976b15b4bf615c621d4659b"
+  integrity sha512-e37vDMNpyAG5uosBRPgv7v0wctFMIgrxARKbRWkM0SNaavo2Y+Tni1YJh0kP5R07XlEXsgLVkbIuEXlvCifdEw==
   dependencies:
     "@hub3js/bip122" "^0.3.0"
     "@hub3js/evm" "^0.6.0"
@@ -2947,6 +2947,7 @@
     "@hub3js/starknet" "^0.5.0"
     "@hub3js/stellar" "^0.5.0"
     "@hub3js/sui" "^0.5.0"
+    "@hub3js/tron" "^0.2.0"
     "@hub3js/tvm" "^0.5.0"
     "@hub3js/xrpl" "^0.5.0"
 
@@ -2994,6 +2995,14 @@
     "@mysten/wallet-standard" "^0.13.26"
     caip "^1.1.1"
     rango-types "^0.6.0"
+
+"@hub3js/tron@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hub3js/tron/-/tron-0.2.0.tgz#22bce9ba45fa9e9e8366dc12c4773d3a5d700985"
+  integrity sha512-qLFqqreoaB/q+lCPjCH+218oe4m4f2Fb2SfVFVTqBJywvASQj6nxzc60XxSjaSXow5wPdmDVVB7+X0+MkKakDw==
+  dependencies:
+    "@hub3js/std" "^0.5.0"
+    caip "^1.1.1"
 
 "@hub3js/tvm@^0.5.0":
   version "0.5.0"
