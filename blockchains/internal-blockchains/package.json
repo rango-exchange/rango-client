@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/internal-blockchains",
-  "version": "0.2.2-next.1",
+  "version": "0.2.2-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
