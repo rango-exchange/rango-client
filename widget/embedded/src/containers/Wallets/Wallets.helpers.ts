@@ -6,7 +6,7 @@ import { Events } from '@rango-dev/wallets-react';
 /*
  * propagate updates for Dapps using external wallets
  *
- * Note: to take more control over the public interface and wallets-core interface (which may be changed) we use this layer
+ * Note: to take more control over the public interface and `@hub3js/core` interface (which may be changed) we use this layer
  */
 export function propagateEvents(
   cb: OnUpdateState,

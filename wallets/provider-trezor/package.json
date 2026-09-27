@@ -29,7 +29,6 @@
     "@hub3js/std": "^0.5.0",
     "@rango-dev/internal-blockchains": "^0.2.2-next.1",
     "@rango-dev/signer-evm": "^0.46.2-next.1",
-    "@rango-dev/wallets-core": "^0.62.2-next.1",
     "@trezor/connect-web": "^9.5.0",
     "bitcoinjs-lib": "^6.1.7",
     "ethers": "^6.13.2",

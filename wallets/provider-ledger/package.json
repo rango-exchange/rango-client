@@ -35,7 +35,6 @@
     "@ledgerhq/types-devices": "^6.24.0",
     "@rango-dev/signer-evm": "^0.46.2-next.1",
     "@rango-dev/signer-solana": "^0.50.1-next.1",
-    "@rango-dev/wallets-core": "^0.62.2-next.1",
     "@solana/web3.js": "^1.91.4",
     "@types/w3c-web-hid": "^1.0.2",
     "bs58": "^5.0.0",

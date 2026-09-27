@@ -18,7 +18,7 @@ const [changeAccountSubscriber, changeAccountCleanup] = builders
   .build();
 
 /**
- * Important: Keep this implementation in sync with wallets/core/src/namespaces/evm/builders
+ * Important: Keep this implementation in sync with `@hub3js/evm`'s builders
  */
 const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
   .action(actions.connect(evmSafepal))
