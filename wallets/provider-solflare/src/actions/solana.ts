@@ -1,19 +1,36 @@
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
 import { type ProviderAPI, type SolanaActions, utils } from '@hub3js/solana';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 
 function connect(
   instance: () => ProviderAPI
 ): FunctionWithContext<SolanaActions['connect'], Context> {
   return async () => {
-    const solanaInstance = instance();
-    const isConnected = await solanaInstance.connect();
+    try {
+      const solanaInstance = instance();
+      const isConnected = await solanaInstance.connect();
 
-    if (!isConnected) {
-      throw new Error('Connecting to solana has been failed');
+      if (!isConnected) {
+        throw new Error('Connecting to solana has been failed');
+      }
+
+      return utils.formatAccountsToCAIP([solanaInstance.publicKey.toString()]);
+    } catch (error) {
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-
-    return utils.formatAccountsToCAIP([solanaInstance.publicKey.toString()]);
   };
 }
 function canEagerConnect(instance: () => ProviderAPI) {

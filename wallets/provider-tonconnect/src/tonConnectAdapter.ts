@@ -1,6 +1,12 @@
 import type { Environments } from './types.js';
 import type * as TonConnectUIModule from '@tonconnect/ui';
 
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
+
 export class TonConnectAdapter {
   #tonModule?: typeof TonConnectUIModule;
   #tonConnectInstance?: TonConnectUIModule.TonConnectUI;
@@ -53,7 +59,12 @@ export class TonConnectAdapter {
         (modalState) => {
           if (modalState.closeReason === 'action-cancelled') {
             unsubscribe();
-            reject(new Error('The action was canceled by the user'));
+            reject(
+              new WalletConnectionError(
+                CONNECTION_ERROR_MESSAGES[ConnectionErrorType.Rejected],
+                { type: ConnectionErrorType.Rejected }
+              )
+            );
           }
         }
       );

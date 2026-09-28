@@ -3,16 +3,11 @@ import type { EvmActions } from '@hub3js/evm';
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
 import { evmExodus } from '../utils.js';
 
-const connect = builders
-  .connect()
-  .action(actions.connect(evmExodus))
-  .or(standardizeAndThrowError)
-  .build();
+const connect = builders.connect().action(actions.connect(evmExodus)).build();
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();
 

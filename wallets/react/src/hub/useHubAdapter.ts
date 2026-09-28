@@ -8,7 +8,6 @@ import type { ProviderContext, ProviderProps } from '../types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
-import { utils } from '@hub3js/evm';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
@@ -20,7 +19,11 @@ import { withErrorLoggingApi } from '../helpers.js';
 
 import { autoConnect } from './autoConnect.js';
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
-import { createQueue, fromAccountIdToLegacyAddressFormat } from './helpers.js';
+import {
+  createQueue,
+  fromAccountIdToLegacyAddressFormat,
+  removeQueuedNamespacesOnRejection,
+} from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useAutoConnect } from './useAutoConnect.js';
 import { useHubRefs } from './useHubRefs.js';
@@ -64,11 +67,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   };
 
   const queueTask = createQueue({
-    onError: (error, actions) => {
-      if (utils.isUserRejectionError(error)) {
-        actions.removeCurrentKeyFromQueue();
-      }
-    },
+    onError: removeQueuedNamespacesOnRejection,
   });
 
   useEffect(() => {

@@ -22,12 +22,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/bip122": "^0.3.0",
-    "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
-    "@hub3js/namespaces": "^0.7.0",
-    "@hub3js/std": "^0.5.0",
-    "@hub3js/tron": "^0.2.0",
+    "@hub3js/bip122": "0.0.0-experimental-85b4ae35-20260928",
+    "@hub3js/core": "0.0.0-experimental-85b4ae35-20260928",
+    "@hub3js/evm": "0.0.0-experimental-85b4ae35-20260928",
+    "@hub3js/namespaces": "0.0.0-experimental-85b4ae35-20260928",
+    "@hub3js/std": "0.0.0-experimental-85b4ae35-20260928",
+    "@hub3js/tron": "0.0.0-experimental-85b4ae35-20260928",
     "@rango-dev/internal-blockchains": "^0.2.2-next.2",
     "@rango-dev/signer-evm": "^0.46.2-next.1",
     "@rango-dev/signer-tron": "^0.43.1-next.1",

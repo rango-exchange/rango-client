@@ -8,7 +8,9 @@ More about implementation status can be found [here](../readme.md).
 
 
 ### Feature
-All features are currently supported, and **no limitations** have been identified for Braavos.
+
+#### ⚠️ Connect
+Braavos reports a rejected connection request with the same `Error during connection` message it uses for a real failure, so a rejection **can't be told apart** from other connection failures and is reported as `unknown`.
 
 ---
 

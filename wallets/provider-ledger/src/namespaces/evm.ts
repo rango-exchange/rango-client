@@ -17,7 +17,7 @@ import { setDerivationPath } from '../state.js';
 import {
   getEthereumAccounts,
   getEvmRpcProvider,
-  standardizeAndThrowLedgerError,
+  toLedgerConnectionError,
 } from '../utils.js';
 
 const ERC20_ALLOWANCE_ABI = [
@@ -27,31 +27,34 @@ const ERC20_ALLOWANCE_ABI = [
 const connect = builders
   .connect()
   .action(async function (_context, _chain, options) {
-    if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+    try {
+      if (!options?.derivationPath) {
+        throw new Error('Derivation Path can not be empty.');
+      }
+
+      setDerivationPath(options.derivationPath);
+
+      const result = await getEthereumAccounts();
+
+      const formatAccounts = result.accounts.map(
+        (account) =>
+          AccountId.format({
+            address: account,
+            chainId: {
+              namespace: CAIP_NAMESPACE,
+              reference: result.chainId,
+            },
+          }) as CaipAccount
+      );
+
+      return {
+        accounts: formatAccounts,
+        network: result.chainId,
+      };
+    } catch (error) {
+      throw toLedgerConnectionError(error);
     }
-
-    setDerivationPath(options.derivationPath);
-
-    const result = await getEthereumAccounts();
-
-    const formatAccounts = result.accounts.map(
-      (account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: result.chainId,
-          },
-        }) as CaipAccount
-    );
-
-    return {
-      accounts: formatAccounts,
-      network: result.chainId,
-    };
   })
-  .or(standardizeAndThrowLedgerError)
   .build();
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();

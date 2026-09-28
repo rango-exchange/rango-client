@@ -8,7 +8,13 @@ import type {
 import { NamespaceBuilder } from '@hub3js/core';
 import { builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 import { Contract, toBeHex } from 'ethers';
 
 import { ETHEREUM_CHAIN_ID, WALLET_ID } from '../constants.js';
@@ -27,28 +33,40 @@ const ERC20_ALLOWANCE_ABI = [
 const connect = builders
   .connect()
   .action(async function (_context, _chain, options) {
-    if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+    try {
+      if (!options?.derivationPath) {
+        throw new Error('Derivation Path can not be empty.');
+      }
+      setDerivationPath(
+        getTrezorNormalizedDerivationPath(options.derivationPath)
+      );
+
+      await initTrezor();
+
+      const result = await getEthereumAccounts();
+
+      const formatAccounts = utils.formatAccountsToCAIP(
+        result.accounts,
+        result.chainId
+      );
+
+      return {
+        accounts: formatAccounts,
+        network: result.chainId,
+      };
+    } catch (error) {
+      if (error instanceof WalletConnectionError) {
+        throw error;
+      }
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-    setDerivationPath(
-      getTrezorNormalizedDerivationPath(options.derivationPath)
-    );
-
-    await initTrezor();
-
-    const result = await getEthereumAccounts();
-
-    const formatAccounts = utils.formatAccountsToCAIP(
-      result.accounts,
-      result.chainId
-    );
-
-    return {
-      accounts: formatAccounts,
-      network: result.chainId,
-    };
   })
-  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();

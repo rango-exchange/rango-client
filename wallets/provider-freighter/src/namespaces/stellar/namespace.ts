@@ -3,10 +3,16 @@ import type { StellarActions } from '@hub3js/stellar';
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  getErrorMessage,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 import { builders, utils } from '@hub3js/stellar';
 import * as freighterApi from '@stellar/freighter-api';
 
 import { WALLET_ID } from '../../constants.js';
+import { classifyFreighterConnectionError } from '../../utils.js';
 
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
@@ -16,13 +22,21 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 const connect = builders
   .connect()
   .action(async function () {
-    const result = await freighterApi.requestAccess();
+    try {
+      const result = await freighterApi.requestAccess();
 
-    if (result.error) {
-      throw result.error;
+      if (result.error) {
+        throw result.error;
+      }
+
+      return [utils.formatAddressToCAIP(result.address)];
+    } catch (error) {
+      const type = classifyFreighterConnectionError(error);
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-
-    return [utils.formatAddressToCAIP(result.address)];
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)

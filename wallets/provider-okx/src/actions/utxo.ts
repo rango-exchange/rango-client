@@ -6,6 +6,13 @@ import type {
 } from '@hub3js/core';
 
 import { CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 
 import { getBitcoinAccounts } from '../utils.js';
 
@@ -14,16 +21,26 @@ export function connect(): FunctionWithContext<
   Context
 > {
   return async () => {
-    const accountsResult = await getBitcoinAccounts();
+    try {
+      const accountsResult = await getBitcoinAccounts();
 
-    if (!accountsResult?.address) {
-      throw new Error("Couldn't find any address!");
+      if (!accountsResult?.address) {
+        throw new Error("Couldn't find any address!");
+      }
+
+      return utils.formatAccountsToCAIP(
+        [accountsResult.address],
+        CAIP_BITCOIN_CHAIN_ID
+      );
+    } catch (error) {
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-
-    return utils.formatAccountsToCAIP(
-      [accountsResult.address],
-      CAIP_BITCOIN_CHAIN_ID
-    );
   };
 }
 

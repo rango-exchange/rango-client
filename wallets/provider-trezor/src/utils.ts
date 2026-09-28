@@ -1,5 +1,6 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
 import { JsonRpcProvider } from 'ethers';
 
@@ -28,6 +29,29 @@ export function getEvmRpcProvider(): JsonRpcProvider {
   return evmRpcProvider;
 }
 
+// The user closed the popup, denied its permissions, or cancelled in the popup or on the device.
+const TREZOR_USER_CANCELLATION_CODES = [
+  'Method_Interrupted',
+  'Method_PermissionsNotGranted',
+  'Method_Cancel',
+  'Failure_ActionCancelled',
+  'Failure_PinCancelled',
+];
+
+// Trezor resolves a failed connect call instead of throwing; its `code`, not its `error` text, says whether the user cancelled.
+export function toTrezorConnectionFailure(payload: {
+  error: string;
+  code?: string;
+}): Error {
+  if (payload.code && TREZOR_USER_CANCELLATION_CODES.includes(payload.code)) {
+    return new WalletConnectionError(payload.error, {
+      type: ConnectionErrorType.Rejected,
+      cause: payload,
+    });
+  }
+  return new Error(payload.error);
+}
+
 export const trezorErrorMessages: { [statusCode: string]: string } = {
   Failure_ActionCancelled: 'User rejected the transaction.',
 };
@@ -54,7 +78,7 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   });
 
   if (!result.success) {
-    throw new Error(result.payload.error);
+    throw toTrezorConnectionFailure(result.payload);
   }
 
   return {

@@ -10,6 +10,7 @@ import {
   CAIP_LITECOIN_CHAIN_ID,
   CAIP_ZCASH_CHAIN_ID,
 } from '@hub3js/bip122';
+import { ConnectionErrorType, WalletConnectionError } from '@hub3js/std/utils';
 import { CAIP_TRON_CHAIN_ID } from '@hub3js/tron';
 import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@hub3js/tvm';
 import { formatAddressWithNetwork } from '@rango-dev/internal-blockchains';
@@ -179,6 +180,19 @@ export function createQueue(options?: {
     });
 
   return queueTask;
+}
+
+// Once the user rejects one of a wallet's namespaces, its remaining queued namespaces are abandoned.
+export function removeQueuedNamespacesOnRejection(
+  error: unknown,
+  actions: { removeCurrentKeyFromQueue: () => void }
+) {
+  if (
+    error instanceof WalletConnectionError &&
+    error.type === ConnectionErrorType.Rejected
+  ) {
+    actions.removeCurrentKeyFromQueue();
+  }
 }
 
 export function shouldTryAutoConnect(
