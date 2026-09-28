@@ -20,6 +20,7 @@ import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
 import { getConfig } from './utils/configs';
 import { tryRefineError } from './utils/errors';
+import { reportRangoError } from './utils/reportRangoError';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
@@ -59,7 +60,17 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     if (!canSwitchNetworkTo(wallet, namespace.network, namespace)) {
       return undefined;
     }
-    const result = await connect(wallet, [namespace]);
+    const result = await connect(wallet, [namespace]).catch(
+      (error: unknown) => {
+        reportRangoError(error, {
+          walletConnection: {
+            walletType: wallet,
+            namespace: namespace.namespace,
+          },
+        });
+        throw error;
+      }
+    );
 
     return result;
   };

@@ -12,6 +12,7 @@ import { useReducer } from 'react';
 
 import { isOnDetached } from '../../components/StatefulConnectModal';
 import { tryRefineErrorMessage } from '../../utils/errors';
+import { reportRangoError } from '../../utils/reportRangoError';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
 import {
@@ -79,6 +80,13 @@ export function useStatefulConnect(): UseStatefulConnect {
       return { status: ResultStatus.Connected };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      reportRangoError(e, {
+        walletConnection: {
+          walletType: wallet.type,
+          namespace: namespaces?.[0]?.namespace,
+        },
+      });
+
       const message = tryRefineErrorMessage(
         e,
         e?.message
