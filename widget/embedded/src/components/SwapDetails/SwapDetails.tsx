@@ -48,6 +48,7 @@ import {
   getPriceImpact,
   getPriceImpactLevel,
 } from '../../utils/quote';
+import { reportRangoError } from '../../utils/reportRangoError';
 import {
   getLastConvertedTokenInFailedSwap,
   getSwapMessages,
@@ -176,16 +177,16 @@ export function SwapDetails(props: SwapDetailsProps) {
   const handleSwitchNetwork = () => {
     if (switchNetworkIsAvailable) {
       handleShowSwitchNetworkLoading();
-      connect(currentStepWallet.walletType, [
-        {
-          namespace: currentStepNamespace.namespace,
-          network: currentStepNamespace.network,
-        },
-      ])
+      const { walletType } = currentStepWallet;
+      const { namespace, network } = currentStepNamespace;
+      connect(walletType, [{ namespace, network }])
         .then(() => {
           handleShowSwitchNetworkSucceeded();
         })
         .catch((error: unknown) => {
+          reportRangoError(error, {
+            walletConnection: { walletType, namespace },
+          });
           handleShowSwitchNetworkFailed(
             tryRefineError(error) ?? (error as Error)
           );

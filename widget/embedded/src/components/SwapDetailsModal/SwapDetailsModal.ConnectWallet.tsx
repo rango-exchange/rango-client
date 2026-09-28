@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import { useWalletList } from '../../hooks/useWalletList';
 import { useUiStore } from '../../store/ui';
 import { tryRefineError } from '../../utils/errors';
+import { reportRangoError } from '../../utils/reportRangoError';
 import { getConciseAddress } from '../../utils/wallets';
 import { NamespaceItem } from '../NamespaceItem';
 
@@ -74,19 +75,23 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
   const handleConnect = async () => {
     try {
       setError(null);
-      await connect(
-        wallet.type,
-        namespace?.namespace
-          ? [
-              {
-                namespace: namespace?.namespace,
-                network: undefined,
-                derivationPath: currentStepWallet.derivationPath,
-              },
-            ]
-          : undefined
-      );
+      const namespaces = namespace?.namespace
+        ? [
+            {
+              namespace: namespace.namespace,
+              network: undefined,
+              derivationPath: currentStepWallet.derivationPath,
+            },
+          ]
+        : undefined;
+      await connect(wallet.type, namespaces);
     } catch (error) {
+      reportRangoError(error, {
+        walletConnection: {
+          walletType: wallet.type,
+          namespace: namespace?.namespace,
+        },
+      });
       setError(tryRefineError(error) ?? (error as Error));
     }
   };

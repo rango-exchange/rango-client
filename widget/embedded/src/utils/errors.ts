@@ -21,6 +21,8 @@ const MODULE_LOAD_ERROR_MESSAGES = [
   'chunkloaderror',
 ];
 
+const MAX_CAUSE_DEPTH = 3;
+
 function toMessage(value: unknown): string {
   if (typeof value === 'string') {
     return value;
@@ -35,12 +37,29 @@ function toMessage(value: unknown): string {
 }
 
 export function isModuleLoadError(value: unknown): boolean {
-  const message = toMessage(value).toLowerCase();
+  /*
+   * A connection failure carries the wallet's own error as its cause, so a
+   * failed import can sit a few causes down.
+   */
+  let current = value;
+  for (let depth = 0; depth < MAX_CAUSE_DEPTH; depth++) {
+    const message = toMessage(current).toLowerCase();
+    if (
+      message &&
+      MODULE_LOAD_ERROR_MESSAGES.some((candidate) =>
+        message.includes(candidate)
+      )
+    ) {
+      return true;
+    }
 
-  return (
-    !!message &&
-    MODULE_LOAD_ERROR_MESSAGES.some((candidate) => message.includes(candidate))
-  );
+    if (!(current instanceof Error)) {
+      return false;
+    }
+    current = current.cause;
+  }
+
+  return false;
 }
 
 /**

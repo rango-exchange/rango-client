@@ -28,6 +28,34 @@ describe('error refinement', () => {
         isModuleLoadError('TypeError: importing a module script failed')
       ).toBe(true);
     });
+
+    test('match a failed import carried as the cause of another error', () => {
+      const failedImport = new TypeError(
+        'Failed to fetch dynamically imported module: https://cdn.example/ledger.js'
+      );
+      const connectionError = new Error("Couldn't connect to your wallet.", {
+        cause: failedImport,
+      });
+
+      expect(isModuleLoadError(connectionError)).toBe(true);
+    });
+
+    test('match a failed import two causes down', () => {
+      const failedImport = new TypeError('loading chunk 42 failed');
+      const error = new Error('outer', {
+        cause: new Error('middle', { cause: failedImport }),
+      });
+
+      expect(isModuleLoadError(error)).toBe(true);
+    });
+
+    test('stop following causes that refer to each other', () => {
+      const first = new Error('first');
+      const second = new Error('second', { cause: first });
+      first.cause = second;
+
+      expect(isModuleLoadError(first)).toBe(false);
+    });
   });
 
   describe('leaving unrecognized failures alone', () => {
@@ -41,6 +69,25 @@ describe('error refinement', () => {
       expect(isModuleLoadError(null)).toBe(false);
       expect(isModuleLoadError(undefined)).toBe(false);
       expect(isModuleLoadError('')).toBe(false);
+    });
+
+    test('leave an error whose cause is unrelated alone', () => {
+      const error = new Error("Couldn't connect to your wallet.", {
+        cause: { code: 4001, message: 'User rejected the request.' },
+      });
+
+      expect(isModuleLoadError(error)).toBe(false);
+    });
+
+    test('ignore a failed import deeper than three levels', () => {
+      const failedImport = new TypeError('loading chunk 42 failed');
+      const error = new Error('outer', {
+        cause: new Error('first', {
+          cause: new Error('second', { cause: failedImport }),
+        }),
+      });
+
+      expect(isModuleLoadError(error)).toBe(false);
     });
   });
 
