@@ -5,6 +5,13 @@ import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 
 import { WALLET_ID } from '../constants.js';
 import { getProvider } from '../ledgerProvider.js';
@@ -29,28 +36,38 @@ const [changeAccountSubscriber, changeAccountCleanup] = builders
 const connect = builders
   .connect()
   .action(async (_context: Context<EvmActions>, chain?: Chain | ChainId) => {
-    const provider = getProvider();
+    try {
+      const provider = getProvider();
 
-    const accounts = await provider.request({
-      method: 'eth_requestAccounts',
-    });
+      const accounts = await provider.request({
+        method: 'eth_requestAccounts',
+      });
 
-    if (chain) {
-      await utils.switchOrAddNetwork(provider, chain);
+      if (chain) {
+        await utils.switchOrAddNetwork(provider, chain);
+      }
+
+      const chainId = await provider.request({
+        method: 'eth_chainId',
+      });
+
+      /*
+       * The Ledger provider returns the connected accounts with the active one
+       * first, so we take the first element as the active account.
+       */
+      return {
+        accounts: utils.formatAccountsToCAIP([accounts[0]], chainId),
+        network: chainId,
+      };
+    } catch (error) {
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-
-    const chainId = await provider.request({
-      method: 'eth_chainId',
-    });
-
-    /*
-     * The Ledger provider returns the connected accounts with the active one
-     * first, so we take the first element as the active account.
-     */
-    return {
-      accounts: utils.formatAccountsToCAIP([accounts[0]], chainId),
-      network: chainId,
-    };
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)

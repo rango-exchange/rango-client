@@ -2,12 +2,20 @@ import type { Bip122ChainId, UtxoActions } from '@hub3js/bip122';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
 import { utils } from '@hub3js/bip122';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 
 import { initTrezor } from '../init.js';
 import { setBitcoinDerivationPath } from '../state.js';
 import {
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
+  toTrezorConnectionFailure,
 } from '../utils.js';
 import { BITCOIN_COIN_NAME, resolveBitcoinScriptType } from '../utxo/config.js';
 
@@ -21,31 +29,44 @@ export function connect(
   network: Bip122ChainId
 ): FunctionWithContext<UtxoActions['connect'], Context> {
   return async (_context, options) => {
-    if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+    try {
+      if (!options?.derivationPath) {
+        throw new Error('Derivation Path can not be empty.');
+      }
+
+      await initTrezor();
+
+      const path = getTrezorNormalizedDerivationPath(options.derivationPath);
+      const inputScriptType = resolveBitcoinScriptType(path);
+      setBitcoinDerivationPath(path);
+
+      const TrezorConnect = await getTrezorModule();
+      const result = await TrezorConnect.getAddress({
+        path,
+        coin: BITCOIN_COIN_NAME,
+        scriptType: inputScriptType,
+        showOnTrezor: false,
+      });
+
+      if (!result.success) {
+        throw toTrezorConnectionFailure(result.payload);
+      }
+
+      const { address } = result.payload;
+
+      return utils.formatAccountsToCAIP([address], network);
+    } catch (error) {
+      if (error instanceof WalletConnectionError) {
+        throw error;
+      }
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
+      );
     }
-
-    await initTrezor();
-
-    const path = getTrezorNormalizedDerivationPath(options.derivationPath);
-    const inputScriptType = resolveBitcoinScriptType(path);
-    setBitcoinDerivationPath(path);
-
-    const TrezorConnect = await getTrezorModule();
-    const result = await TrezorConnect.getAddress({
-      path,
-      coin: BITCOIN_COIN_NAME,
-      scriptType: inputScriptType,
-      showOnTrezor: false,
-    });
-
-    if (!result.success) {
-      throw new Error(result.payload.error);
-    }
-
-    const { address } = result.payload;
-
-    return utils.formatAccountsToCAIP([address], network);
   };
 }
 

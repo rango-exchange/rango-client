@@ -4,6 +4,13 @@ import type {
 } from '../namespaces/ton/types.js';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 import { type TonActions } from '@hub3js/tvm';
 
 import {
@@ -21,43 +28,60 @@ export function connect(
   getInstance: () => TonProviderApi
 ): FunctionWithContext<TonActions['connect'], Context> {
   return async () => {
-    const instance = getInstance();
-
-    /*
-     * If the dApp was approved before, `restoreConnection` resolves the current
-     * session without prompting the user; otherwise fall back to a fresh
-     * connect request.
-     */
-    let connectEvent: TonConnectEvent | undefined;
     try {
-      connectEvent = await instance.restoreConnection();
-    } catch {
-      // No restorable session; a fresh connect request is made below.
-    }
+      const instance = getInstance();
 
-    if (!connectEvent || !isTonConnectEventSuccess(connectEvent)) {
-      connectEvent = await instance.connect(TON_CONNECT_PROTOCOL_VERSION, {
-        manifestUrl: getTonConnectManifestUrl(),
-        items: [{ name: 'ton_addr' }],
-      });
-    }
-
-    if (!isTonConnectEventSuccess(connectEvent)) {
-      // The bridge reports a user-cancelled prompt as a `connect_error` event.
-      if (connectEvent.payload.code === TON_CONNECT_USER_REJECTED_CODE) {
-        throw new Error('User rejected the request.');
+      /*
+       * If the dApp was approved before, `restoreConnection` resolves the current
+       * session without prompting the user; otherwise fall back to a fresh
+       * connect request.
+       */
+      let connectEvent: TonConnectEvent | undefined;
+      try {
+        connectEvent = await instance.restoreConnection();
+      } catch {
+        // No restorable session; a fresh connect request is made below.
       }
-      throw new Error(
-        `Couldn't connect to OKX TON. code: ${connectEvent.payload.code}, message: ${connectEvent.payload.message}`
+
+      if (!connectEvent || !isTonConnectEventSuccess(connectEvent)) {
+        connectEvent = await instance.connect(TON_CONNECT_PROTOCOL_VERSION, {
+          manifestUrl: getTonConnectManifestUrl(),
+          items: [{ name: 'ton_addr' }],
+        });
+      }
+
+      if (!isTonConnectEventSuccess(connectEvent)) {
+        // The bridge reports a user-cancelled prompt as a `connect_error` event.
+        if (connectEvent.payload.code === TON_CONNECT_USER_REJECTED_CODE) {
+          throw new WalletConnectionError(
+            getErrorMessage(connectEvent.payload) ??
+              CONNECTION_ERROR_MESSAGES[ConnectionErrorType.Rejected],
+            { type: ConnectionErrorType.Rejected, cause: connectEvent.payload }
+          );
+        }
+        throw new Error(
+          `Couldn't connect to OKX TON. code: ${connectEvent.payload.code}, message: ${connectEvent.payload.message}`
+        );
+      }
+
+      const accounts = await connectEventToCAIP(connectEvent);
+      if (!accounts.length) {
+        throw new Error("Couldn't find any TON address!");
+      }
+
+      return accounts;
+    } catch (error) {
+      if (error instanceof WalletConnectionError) {
+        throw error;
+      }
+      const type = isUserRejectionError(error)
+        ? ConnectionErrorType.Rejected
+        : ConnectionErrorType.Unknown;
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
       );
     }
-
-    const accounts = await connectEventToCAIP(connectEvent);
-    if (!accounts.length) {
-      throw new Error("Couldn't find any TON address!");
-    }
-
-    return accounts;
   };
 }
 

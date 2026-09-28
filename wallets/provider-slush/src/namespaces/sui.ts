@@ -5,6 +5,7 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { actions, builders } from '@hub3js/sui';
 
 import { WALLET_ID, WALLET_NAME_IN_WALLET_STANDARD } from '../constants.js';
+import { suiHooks } from '../hooks/sui.js';
 import { suiWalletInstance } from '../utils.js';
 
 const canEagerConnect = builders
@@ -20,6 +21,7 @@ const connect = builders
   .connect({
     name: WALLET_NAME_IN_WALLET_STANDARD,
   })
+  .or(suiHooks.reclassifySlushConnectionError)
   .build();
 
 const disconnect = commonBuilders

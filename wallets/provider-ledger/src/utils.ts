@@ -2,6 +2,13 @@ import type Transport from '@ledgerhq/hw-transport';
 
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  ConnectionErrorType,
+  getErrorMessage,
+  isUserRejectionError,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 import { getAltStatusMessage } from '@ledgerhq/errors';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
 import bs58 from 'bs58';
@@ -47,10 +54,17 @@ export function ledger(): Provider | null {
   return instances;
 }
 
+const LedgerStatusCode = {
+  LockedDevice: 0x5515,
+  AppNotReady: 0x650f,
+  ActionDenied: 0x6985,
+} as const;
+
 const ledgerFrequentErrorMessages: { [statusCode: number]: string } = {
-  0x5515: 'The device is locked',
-  0x650f: 'Related application is not ready on your device',
-  0x6985: 'Action denied by user',
+  [LedgerStatusCode.LockedDevice]: 'The device is locked',
+  [LedgerStatusCode.AppNotReady]:
+    'Related application is not ready on your device',
+  [LedgerStatusCode.ActionDenied]: 'Action denied by user',
 };
 
 function getLedgerErrorMessage(statusCode: number): string {
@@ -77,8 +91,52 @@ export function getLedgerError(error: any) {
   return error;
 }
 
-export function standardizeAndThrowLedgerError(_: unknown, error: unknown) {
-  throw getLedgerError(error);
+const LEDGER_USER_CANCELLED_ERROR_NAME = 'TransportOpenUserCancelled';
+
+function getStatusCode(error: unknown): number | undefined {
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'statusCode' in error &&
+    typeof error.statusCode === 'number'
+  ) {
+    return error.statusCode;
+  }
+  return undefined;
+}
+
+// Reads the device status rather than the message `getLedgerError` flattens it into, and the error's name rather than `instanceof`.
+export function classifyLedgerConnectionError(
+  error: unknown
+): ConnectionErrorType {
+  const statusCode = getStatusCode(error);
+  if (statusCode === LedgerStatusCode.LockedDevice) {
+    return ConnectionErrorType.Locked;
+  }
+  if (statusCode === LedgerStatusCode.ActionDenied) {
+    return ConnectionErrorType.Rejected;
+  }
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'name' in error &&
+    error.name === LEDGER_USER_CANCELLED_ERROR_NAME
+  ) {
+    return ConnectionErrorType.Rejected;
+  }
+  return isUserRejectionError(error)
+    ? ConnectionErrorType.Rejected
+    : ConnectionErrorType.Unknown;
+}
+
+export function toLedgerConnectionError(error: unknown): WalletConnectionError {
+  const type = classifyLedgerConnectionError(error);
+  const statusCode = getStatusCode(error);
+  const message =
+    statusCode === undefined
+      ? getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type]
+      : getLedgerErrorMessage(statusCode);
+  return new WalletConnectionError(message, { type, cause: error });
 }
 
 export async function getEthereumAccounts(): Promise<DeviceAccounts> {
@@ -98,8 +156,6 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
       chainId: ETHEREUM_CHAIN_ID,
       derivationPath,
     };
-  } catch (error: unknown) {
-    throw getLedgerError(error);
   } finally {
     await transportDisconnect();
   }
@@ -122,8 +178,6 @@ export async function getSolanaAccounts(): Promise<DeviceAccounts> {
       chainId: CAIP_SOLANA_CHAIN_ID,
       derivationPath,
     };
-  } catch (error: unknown) {
-    throw getLedgerError(error);
   } finally {
     await transportDisconnect();
   }

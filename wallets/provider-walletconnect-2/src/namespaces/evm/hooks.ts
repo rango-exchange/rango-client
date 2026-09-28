@@ -1,8 +1,10 @@
+import type { Context } from '@hub3js/core';
 import type { EvmActions } from '@hub3js/evm';
 
 import { utils } from '@hub3js/evm';
 import { ChainId } from 'caip';
 
+import { getAdapter } from '../../adapter/registry.js';
 import {
   extractAddress,
   getAccountsFromEvent,
@@ -145,4 +147,13 @@ export function sessionDeleteSubscriber() {
       context.action('disconnect');
     }
   );
+}
+
+// The connect chain's last or-hook, so it throws: an error it returned would become connect's result.
+export function disconnectSessionAndRethrow(
+  _context: Context<EvmActions>,
+  error: unknown
+): never {
+  void getAdapter().disconnectSession('evm');
+  throw error;
 }

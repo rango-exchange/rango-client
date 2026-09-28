@@ -8,15 +8,24 @@ import type {
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
+import {
+  CONNECTION_ERROR_MESSAGES,
+  getErrorMessage,
+  WalletConnectionError,
+} from '@hub3js/std/utils';
 
 import { getAdapter } from '../../adapter/registry.js';
 import { WALLET_ID } from '../../constants.js';
 import { getAccountsFromSession } from '../../session/accounts.js';
 import { filterEvmAccounts } from '../../session/evm.js';
-import { chainReferenceToHex, parseChainReference } from '../../utils.js';
+import {
+  chainReferenceToHex,
+  classifyWalletConnectConnectionError,
+  parseChainReference,
+} from '../../utils.js';
 
 import {
+  disconnectSessionAndRethrow,
   sessionDeleteSubscriber,
   sessionEventSubscriber,
   sessionUpdateSubscriber,
@@ -29,33 +38,41 @@ const [sessionDelete, sessionDeleteCleanup] = sessionDeleteSubscriber();
 const connect = builders
   .connect()
   .action(async function (_context: Context<EvmActions>, chain?: string) {
-    const adapter = getAdapter();
-    // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
-    const requestedReference = chain ? parseChainReference(chain) : undefined;
-    const session = await adapter.ensureConnectedToChain(chain);
-    const activeReference =
-      requestedReference ?? (await adapter.resolveActiveChainReference());
+    try {
+      const adapter = getAdapter();
+      // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
+      const requestedReference = chain ? parseChainReference(chain) : undefined;
+      const session = await adapter.ensureConnectedToChain(chain);
+      const activeReference =
+        requestedReference ?? (await adapter.resolveActiveChainReference());
 
-    if (!activeReference) {
-      throw new Error(
-        'Unable to determine EVM chain id from WalletConnect session.'
+      if (!activeReference) {
+        throw new Error(
+          'Unable to determine EVM chain id from WalletConnect session.'
+        );
+      }
+
+      const accounts = getAccountsFromSession(session);
+      const evmAccounts = filterEvmAccounts(accounts, activeReference);
+
+      if (!evmAccounts.length) {
+        throw new Error('No EVM accounts found in WalletConnect session.');
+      }
+
+      return {
+        accounts: utils.formatAccountsToCAIP(
+          evmAccounts.map((account) => account.accounts[0]),
+          activeReference
+        ),
+        network: chainReferenceToHex(activeReference),
+      };
+    } catch (error) {
+      const type = classifyWalletConnectConnectionError(error);
+      throw new WalletConnectionError(
+        getErrorMessage(error) ?? CONNECTION_ERROR_MESSAGES[type],
+        { type, cause: error }
       );
     }
-
-    const accounts = getAccountsFromSession(session);
-    const evmAccounts = filterEvmAccounts(accounts, activeReference);
-
-    if (!evmAccounts.length) {
-      throw new Error('No EVM accounts found in WalletConnect session.');
-    }
-
-    return {
-      accounts: utils.formatAccountsToCAIP(
-        evmAccounts.map((account) => account.accounts[0]),
-        activeReference
-      ),
-      network: chainReferenceToHex(activeReference),
-    };
   })
   .before(sessionUpdate)
   .before(sessionEvent)
@@ -63,11 +80,7 @@ const connect = builders
   .or(sessionUpdateCleanup)
   .or(sessionEventCleanup)
   .or(sessionDeleteCleanup)
-  .or((_, err) => {
-    void getAdapter().disconnectSession('evm');
-    return err;
-  })
-  .or(standardizeAndThrowError)
+  .or(disconnectSessionAndRethrow)
   .build();
 
 const canEagerConnect = builders

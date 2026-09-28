@@ -2,11 +2,35 @@ import type { Chain } from '@hub3js/evm';
 import type { ChainIdParams } from 'caip';
 import type { BlockchainMeta } from 'rango-types';
 
+import { ConnectionErrorType, isUserRejectionError } from '@hub3js/std/utils';
+import { getSdkError } from '@walletconnect/utils';
 import { isEvmBlockchain } from 'rango-types';
 
 import { NAMESPACES } from './wcConstants.js';
 
 const HEX_RADIX = 16;
+
+// The documented codes a wallet answers a session proposal with when the user rejects it.
+const WALLETCONNECT_REJECTION_CODES = [
+  getSdkError('USER_REJECTED').code,
+  getSdkError('USER_REJECTED_METHODS').code,
+];
+
+export function classifyWalletConnectConnectionError(
+  error: unknown
+): ConnectionErrorType {
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    WALLETCONNECT_REJECTION_CODES.some((code) => code === error.code)
+  ) {
+    return ConnectionErrorType.Rejected;
+  }
+  return isUserRejectionError(error)
+    ? ConnectionErrorType.Rejected
+    : ConnectionErrorType.Unknown;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function timeout<T = any>(

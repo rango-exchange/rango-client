@@ -1,6 +1,20 @@
 import type { Provider, TronLinkProviderApi } from './types.js';
 
 import { TRON_NAMESPACE } from '@hub3js/namespaces';
+import { ConnectionErrorType, isUserRejectionError } from '@hub3js/std/utils';
+
+const TRONLINK_REJECTION_MESSAGE = 'User rejected the request.';
+
+export function classifyTronLinkConnectionError(
+  error: unknown
+): ConnectionErrorType {
+  if (error instanceof Error && error.message === TRONLINK_REJECTION_MESSAGE) {
+    return ConnectionErrorType.Rejected;
+  }
+  return isUserRejectionError(error)
+    ? ConnectionErrorType.Rejected
+    : ConnectionErrorType.Unknown;
+}
 
 export function tronlink(): Provider | null {
   const instances: Provider = new Map();

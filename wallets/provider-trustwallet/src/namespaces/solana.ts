@@ -3,13 +3,10 @@ import type { SolanaActions } from '@hub3js/solana';
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, hooks } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
-import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
-import {
-  solanaTrustWallet,
-  standardizeTrustWalletInAppBrowserError,
-} from '../utils.js';
+import { commonHooks } from '../hooks/common.js';
+import { solanaTrustWallet } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   hooks.changeAccountSubscriber(solanaTrustWallet);
@@ -19,8 +16,7 @@ const connect = builders
   .action(actions.connect(solanaTrustWallet))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeTrustWalletInAppBrowserError)
-  .or(standardizeAndThrowError)
+  .or(commonHooks.reclassifyTrustWalletConnectionError)
   .build();
 
 const disconnect = commonBuilders
