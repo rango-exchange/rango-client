@@ -3,7 +3,6 @@ import { ProviderBuilder } from '@hub3js/core';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
-import { sui } from './namespaces/sui.js';
 import { phantom as phantomInstance } from './utils.js';
 
 const buildProvider = () =>
@@ -19,7 +18,6 @@ const buildProvider = () =>
     .config('metadata', metadata)
     .add('solana', solana)
     .add('evm', evm)
-    .add('sui', sui)
     .build();
 
 export { buildProvider };
