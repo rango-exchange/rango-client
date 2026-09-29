@@ -2,13 +2,11 @@ import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { InstanceMap } from '@hub3js/std/types';
-import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
 import type { SolanaExternalProvider } from '@rango-dev/signer-solana';
 
 import {
   EVM_NAMESPACE,
   SOLANA_NAMESPACE,
-  SUI_NAMESPACE,
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 
@@ -16,7 +14,6 @@ export type ProviderObject = {
   [EVM_NAMESPACE]: EvmProviderApi;
   [SOLANA_NAMESPACE]: SolanaExternalProvider;
   [UTXO_NAMESPACE]: UtxoProviderApi;
-  [SUI_NAMESPACE]: SuiProviderApi;
 };
 export type Provider = InstanceMap<ProviderObject>;
 
@@ -27,7 +24,7 @@ export function phantom(): Provider | null {
     return null;
   }
 
-  const { solana, ethereum, bitcoin, sui } = phantom;
+  const { solana, ethereum, bitcoin } = phantom;
 
   const instances: Provider = new Map();
 
@@ -41,9 +38,6 @@ export function phantom(): Provider | null {
 
   if (bitcoin && bitcoin.isPhantom) {
     instances.set(UTXO_NAMESPACE, bitcoin);
-  }
-  if (sui && sui.isPhantom) {
-    instances.set(SUI_NAMESPACE, sui);
   }
 
   return instances;
@@ -97,18 +91,6 @@ export function bitcoinPhantom(): SolanaProviderApi {
   }
 
   return bitcoinInstance;
-}
-export function suiPhantom(): SuiProviderApi {
-  const instance = phantom();
-  const suiInstance = instance?.get(SUI_NAMESPACE);
-
-  if (!suiInstance) {
-    throw new Error(
-      'Phantom not injected or Sui not enabled. Please check your wallet.'
-    );
-  }
-
-  return suiInstance;
 }
 
 export type BtcAccount = {
