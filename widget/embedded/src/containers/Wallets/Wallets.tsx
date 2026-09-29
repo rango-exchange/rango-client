@@ -5,11 +5,7 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type {
-  Emitter,
-  EventHandler,
-  WalletEvents,
-} from '@rango-dev/wallets-react';
+import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
 import { WalletTypes } from '@rango-dev/provider-all';
@@ -17,15 +13,12 @@ import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
+import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 
 import { useUpdates } from './useUpdates';
 import { propagateEvents } from './Wallets.helpers';
-
-const walletEventEmitter: Emitter<WalletEvents> = {
-  emit: () => undefined,
-};
 
 export const WidgetContext = createContext<WidgetContextInterface>({
   onConnectWallet: () => {
@@ -96,7 +89,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
       <Provider
         allBlockChains={blockchains}
         providers={providers}
-        emitter={walletEventEmitter}
+        emitter={eventEmitter}
         onUpdateState={(type, event, value, state, info) => {
           const eventParams: Parameters<EventHandler> = [
             type,
