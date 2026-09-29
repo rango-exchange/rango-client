@@ -11,6 +11,10 @@ const buildProvider = () =>
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
 
+      if (!environments) {
+        throw new Error('TonConnect environments are required!');
+      }
+
       async function initializeTon() {
         try {
           await tonConnect.initialize(environments);

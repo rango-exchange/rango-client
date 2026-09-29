@@ -13,7 +13,7 @@ const buildProvider = () =>
       const [, setState] = context.state();
 
       if (!environments.WC_PROJECT_ID) {
-        return;
+        throw new Error('Wallet connect project Id is required!');
       }
 
       setAdapter(
