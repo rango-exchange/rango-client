@@ -5,11 +5,7 @@ export class TonConnectAdapter {
   #tonModule?: typeof TonConnectUIModule;
   #tonConnectInstance?: TonConnectUIModule.TonConnectUI;
 
-  async initialize(env?: Environments) {
-    if (!env) {
-      throw new Error('Environments are not set');
-    }
-
+  async initialize(env: Environments) {
     this.#tonModule = await import('@tonconnect/ui');
     const { TonConnectUI } = this.#tonModule;
     this.#tonConnectInstance = new TonConnectUI(env);
