@@ -6,7 +6,6 @@ import type {
   QuoteEventData,
   Tokens,
   UiEventData,
-  WalletEventData,
   WalletInfoWithExtra,
   WidgetColors,
   WidgetColorsKeys,
@@ -39,6 +38,7 @@ import type {
 import type {
   EventHandler as HandleWalletsUpdate,
   ProviderInterface,
+  WalletEventData,
   WalletInfo,
   WalletState,
 } from '@rango-dev/wallets-react';
@@ -52,7 +52,11 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets, Events as WalletEvents } from '@rango-dev/wallets-react';
+import {
+  useWallets,
+  Events as WalletEvents,
+  WalletEventTypes,
+} from '@rango-dev/wallets-react';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {
@@ -81,7 +85,6 @@ import {
   WidgetEvents as MainEvents,
   QuoteEventTypes,
   UiEventTypes,
-  WalletEventTypes,
   WidgetEvents,
 } from './types';
 import { customizedThemeTokens } from './utils/ui';

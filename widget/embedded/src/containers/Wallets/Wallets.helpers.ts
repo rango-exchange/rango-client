@@ -14,10 +14,7 @@ export function propagateEvents(
 ): void {
   const [walletType, event, value, coreState, info] = eventParams;
 
-  /*
-   * PROVIDER_DISCONNECTED has conflict with WalletEventTypes.DISCONNECT since they are doing samething, the first one is using only for Hub, the second one is what we exposed to the lib users.
-   * so for backward-compat we need to keep the behavior of WalletEventTypes.DISCONNECT
-   */
+  // PROVIDER_DISCONNECTED is used only by the hub, so it isn't propagated to lib users.
   if (event === Events.PROVIDER_DISCONNECTED) {
     return;
   }
