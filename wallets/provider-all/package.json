@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.66.4-next.5",
+  "version": "0.66.4-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -40,7 +40,7 @@
     "@rango-dev/provider-metamask": "^0.64.2-next.3",
     "@rango-dev/provider-noir-wallet": "^0.3.2-next.3",
     "@rango-dev/provider-okx": "^0.65.2-next.3",
-    "@rango-dev/provider-phantom": "^0.64.3-next.3",
+    "@rango-dev/provider-phantom": "^0.64.3-next.4",
     "@rango-dev/provider-rabby": "^0.31.2-next.3",
     "@rango-dev/provider-ready": "^0.63.2-next.3",
     "@rango-dev/provider-safe": "^0.57.2-next.2",
