@@ -42,6 +42,7 @@
     "@hub3js/tvm": "^0.5.0",
     "@rango-dev/internal-blockchains": "^0.2.2-next.2",
     "@rango-dev/logging-core": "^0.15.1-next.0",
+    "@rango-dev/provider-all": "^0.66.4-next.4",
     "caip": "^1.1.1",
     "rango-types": "^0.6.0",
     "ts-results": "^3.3.0"

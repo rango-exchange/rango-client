@@ -40,6 +40,7 @@ function AppContainer() {
     <Provider
       providers={providers}
       allBlockChains={blockchains}
+      emitter={{ emit: () => undefined }}
       configs={{
         walletOptions: {
           [WalletTypes.WALLET_CONNECT_2]: {

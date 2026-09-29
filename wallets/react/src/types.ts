@@ -1,3 +1,4 @@
+import type { Emitter, WalletEvents } from './events.js';
 import type {
   ConnectResult,
   EventHandler,
@@ -43,6 +44,8 @@ export type ProviderProps = PropsWithChildren<{
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
   providers: Provider[];
+  /** Receives wallet events on the `walletEvent` channel. */
+  emitter: Emitter<WalletEvents>;
   configs?: {
     wallets?: (WalletType | Provider)[];
     walletOptions?: {
