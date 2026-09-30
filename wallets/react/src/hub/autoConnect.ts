@@ -8,6 +8,7 @@ import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 import { Result } from 'ts-results';
 
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
+import { reportConnectionFailure } from './errors.js';
 import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
@@ -85,6 +86,11 @@ async function eagerConnect(
           await connectNamespacePromise();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
+          reportConnectionFailure(e, {
+            walletType: type,
+            namespace: info.namespace,
+            origin: 'auto',
+          });
           /*
            * Since we check for connect failures using `instanceof Error`
            * this check is added here to make sure the thrown error always is an instance of `Error`

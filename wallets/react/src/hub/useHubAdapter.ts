@@ -19,6 +19,7 @@ import { withErrorLoggingApi } from '../helpers.js';
 
 import { autoConnect } from './autoConnect.js';
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
+import { reportConnectionFailure } from './errors.js';
 import {
   createQueue,
   fromAccountIdToLegacyAddressFormat,
@@ -246,6 +247,14 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
 
           const connectNamespaceProcess = async () =>
             connectNamespacePromise()
+              .catch((error: unknown) => {
+                reportConnectionFailure(error, {
+                  walletType: type,
+                  namespace: namespaceInput.namespace,
+                  origin: 'manual',
+                });
+                throw error;
+              })
               .then<ConnectResult>(transformHubResultToLegacyResult)
               .then((connectResult) => {
                 return {
