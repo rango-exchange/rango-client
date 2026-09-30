@@ -23,8 +23,18 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
     "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/solana": "^0.6.0",
+    "@hub3js/starknet": "^0.5.0",
+    "@hub3js/std": "^0.5.0",
+    "@hub3js/stellar": "^0.5.0",
+    "@hub3js/sui": "^0.5.0",
+    "@hub3js/tron": "^0.2.0",
+    "@hub3js/tvm": "^0.5.0",
+    "@hub3js/xrpl": "^0.5.0",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
     "@rango-dev/internal-blockchains": "^0.2.2-next.2",
