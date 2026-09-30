@@ -22,12 +22,20 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@rango-dev/signer-evm": "^0.46.2-next.1",
+    "rango-types": "^0.6.0"
+  },
+  "devDependencies": {
     "@hub3js/core": "^0.63.0",
     "@hub3js/evm": "^0.6.0",
     "@hub3js/namespaces": "^0.7.0",
-    "@hub3js/std": "^0.5.0",
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
-    "rango-types": "^0.6.0"
+    "@hub3js/std": "^0.5.0"
+  },
+  "peerDependencies": {
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/std": "^0.5.0"
   },
   "publishConfig": {
     "access": "public"
