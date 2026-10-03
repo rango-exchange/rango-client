@@ -22,15 +22,23 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.63.0",
-    "@hub3js/namespaces": "^0.7.0",
-    "@hub3js/std": "^0.5.0",
-    "@hub3js/tvm": "^0.5.0",
     "@rango-dev/signer-ton": "^0.30.2-next.1",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@tonconnect/ui": "^2.0.9",
     "rango-types": "^0.6.0"
+  },
+  "devDependencies": {
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/std": "^0.5.0",
+    "@hub3js/tvm": "^0.5.0"
+  },
+  "peerDependencies": {
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/std": "^0.5.0",
+    "@hub3js/tvm": "^0.5.0"
   },
   "publishConfig": {
     "access": "public"
