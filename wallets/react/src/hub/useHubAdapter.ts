@@ -1,11 +1,13 @@
 import type { AllProxiedNamespaces, ExtensionLink } from './types.js';
 import type {
   ConnectResult,
+  EventHandler,
   NamespaceInputForConnect,
   WalletInfo,
 } from '../legacy/mod.js';
 import type { ProviderContext, ProviderProps } from '../types.js';
 import type { Provider, WalletType } from '@hub3js/core';
+import type { Event } from '@hub3js/core/store';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
 import { utils } from '@hub3js/evm';
@@ -16,7 +18,14 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Ok, Result } from 'ts-results';
 
+import {
+  emitWalletDetectedOnce,
+  toBlockchainName,
+  WalletEventChannel,
+  WalletEventTypes,
+} from '../events.js';
 import { withErrorLoggingApi } from '../helpers.js';
+import { Events } from '../legacy/mod.js';
 
 import { autoConnect } from './autoConnect.js';
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
@@ -45,6 +54,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   const dataRef = useRef({
     onUpdateState: params.onUpdateState,
     allBlockChains: params.allBlockChains,
+    emitter: params.emitter,
   });
   const hubInitiated = useRef(false);
 
@@ -75,30 +85,31 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     dataRef.current = {
       onUpdateState: params.onUpdateState,
       allBlockChains: params.allBlockChains,
+      emitter: params.emitter,
     };
   }, [params]);
 
   useEffect(() => {
-    getStore()
-      .subscribe((event) => {
-        if (dataRef.current.onUpdateState) {
-          try {
-            mapHubEventsToLegacy(
-              getHub(),
-              event,
-              dataRef.current.onUpdateState,
-              {
-                allBlockChains: dataRef.current.allBlockChains,
-                lastConnectAttemptParams: lastConnectAttemptParamsRef.current,
-              }
-            );
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        rerender((currentRender) => currentRender + 1);
-      })
-      .flushEvents();
+    const onUpdateState: EventHandler = (type, event, value, state, info) => {
+      if (event === Events.INSTALLED && state.installed) {
+        emitWalletDetectedOnce(type, dataRef.current.emitter);
+      }
+      dataRef.current.onUpdateState?.(type, event, value, state, info);
+    };
+
+    const onStoreEvent = (event: Event) => {
+      try {
+        mapHubEventsToLegacy(getHub(), event, onUpdateState, {
+          allBlockChains: dataRef.current.allBlockChains,
+          lastConnectAttemptParams: lastConnectAttemptParamsRef.current,
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      rerender((currentRender) => currentRender + 1);
+    };
+
+    getStore().subscribe(onStoreEvent).flushEvents();
   }, []);
 
   // Initialize hub only after blockchain meta is available (e.g. WalletConnect needs it at init).
@@ -120,6 +131,7 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         allBlockChains: params.allBlockChains,
         getHub,
         wallets: params.configs?.wallets,
+        emitter: dataRef.current.emitter,
       });
     },
   });
@@ -258,7 +270,46 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
                   },
                 };
               });
-          return queueTask(connectNamespaceProcess, type);
+
+          // Reconnecting an already connected namespace (e.g. only to switch its network) isn't reported.
+          const connectNamespaceProcessWithEvents = async () => {
+            if (namespace.state()[0]().connected) {
+              return connectNamespaceProcess();
+            }
+
+            const eventPayload = {
+              walletName: type,
+              namespace: namespaceInput.namespace,
+              origin: 'manual' as const,
+            };
+            const requestedChain = namespaceInput.network || null;
+
+            dataRef.current.emitter?.emit(WalletEventChannel, {
+              type: WalletEventTypes.WALLET_CONNECT_INITIATED,
+              payload: { ...eventPayload, chain: requestedChain },
+            });
+            try {
+              const result = await connectNamespaceProcess();
+              dataRef.current.emitter?.emit(WalletEventChannel, {
+                type: WalletEventTypes.WALLET_CONNECTED,
+                payload: {
+                  ...eventPayload,
+                  chain: toBlockchainName(
+                    result.response.network,
+                    params.allBlockChains
+                  ),
+                },
+              });
+              return result;
+            } catch (error) {
+              dataRef.current.emitter?.emit(WalletEventChannel, {
+                type: WalletEventTypes.WALLET_CONNECT_FAILED,
+                payload: { ...eventPayload, chain: requestedChain },
+              });
+              throw error;
+            }
+          };
+          return queueTask(connectNamespaceProcessWithEvents, type);
         }
       );
 
@@ -312,6 +363,10 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
           !namespaces || namespaces.includes(namespace.namespaceId);
         const namespaceIsConnected = namespace.state()[0]().connected;
         if (namespaceShouldBeDisconnected && namespaceIsConnected) {
+          dataRef.current.emitter?.emit(WalletEventChannel, {
+            type: WalletEventTypes.WALLET_DISCONNECTED,
+            payload: { walletName: type, namespace: namespace.namespaceId },
+          });
           return namespace.disconnect();
         }
       });
