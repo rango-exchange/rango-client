@@ -1,5 +1,5 @@
 diff --git a/node_modules/@ledgerhq/ledger-wallet-provider/package.json b/node_modules/@ledgerhq/ledger-wallet-provider/package.json
-index 700804b..fc89532 100644
+index 4713cd9..1d05b96 100644
 --- a/node_modules/@ledgerhq/ledger-wallet-provider/package.json
 +++ b/node_modules/@ledgerhq/ledger-wallet-provider/package.json
 @@ -22,9 +22,9 @@

@@ -1,0 +1,36 @@
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/EvmBlockchainProvider.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/EvmBlockchainProvider.d.ts
+index c64ea4b..ccfb3e4 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/EvmBlockchainProvider.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/EvmBlockchainProvider.d.ts
+@@ -1,4 +1,4 @@
+-import { BlockchainConfig, BlockchainProvider, BlockchainProviderFactory, CoreFacade, CurrencyDescriptor, ProviderAccount } from '@ledgerhq/ledger-wallet-provider-core';
++import { BlockchainConfig, BlockchainFamily, BlockchainProvider, BlockchainProviderFactory, CoreFacade, CurrencyDescriptor, ProviderAccount } from '@ledgerhq/ledger-wallet-provider-core';
+ import { EVM_FAMILY } from './utils/chainUtils';
+ /**
+  * EVM {@link BlockchainProvider}: entry point for the EVM family.
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts
+index 8472a39..22e899a 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts
+@@ -1,4 +1,4 @@
+-import { CurrencyDescriptor } from '@ledgerhq/ledger-wallet-provider-core';
++import { BlockchainFamily, CurrencyDescriptor } from '@ledgerhq/ledger-wallet-provider-core';
+ export declare const EVM_NATIVE_DECIMALS = 18;
+ export declare const EVM_FAMILY: BlockchainFamily;
+ export declare function getChainIdFromCurrencyId(currencyId: string): number;
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
+index c7b5448..2526e2e 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
+@@ -13,9 +13,9 @@
+   "exports": {
+     ".": {
+       "@ledgerhq/ledger-button-workspace": "./src/index.ts",
+-      "default": "./dist/index.js",
++      "types": "./dist/index.d.ts",
+       "import": "./dist/index.js",
+-      "types": "./dist/index.d.ts"
++      "default": "./dist/index.js"
+     },
+     "./package.json": "./package.json"
+   },

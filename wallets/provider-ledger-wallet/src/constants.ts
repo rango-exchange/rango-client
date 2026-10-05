@@ -13,11 +13,16 @@ import {
   CAIP_ZKSYNC_CHAIN_ID,
   isEvmNamespace,
 } from '@hub3js/evm';
+import { isSolanaNamespace } from '@hub3js/solana';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
 import getSigners from './signer.js';
 
 export const WALLET_ID = 'ledger-wallet';
+
+// Name and chain the Ledger Solana wallet registers with in the Wallet Standard.
+export const SOLANA_WALLET_STANDARD_NAME = 'Ledger';
+export const SOLANA_WALLET_STANDARD_MAINNET = 'solana:mainnet';
 
 /*
  * EVM chains supported by the Ledger Wallet Provider (Ledger Button).
@@ -60,6 +65,12 @@ export const metadata: ProviderMetadata = {
               EVM_SUPPORTED_CHAINS.includes(
                 getChainIdFromCaip2ChainId(chainId)
               ),
+          },
+          {
+            label: 'Solana',
+            value: 'Solana',
+            id: 'SOLANA',
+            isChainSupported: isSolanaNamespace,
           },
         ],
       },
