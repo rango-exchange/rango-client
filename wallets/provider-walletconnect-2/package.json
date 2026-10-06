@@ -25,7 +25,6 @@
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@rango-dev/internal-blockchains": "^0.2.2-next.3",
     "@rango-dev/logging-core": "^0.15.1-next.0",
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "2.23.7",
@@ -40,14 +39,16 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/std": "^0.5.0",
     "@walletconnect/types": "2.23.7"
   },
   "peerDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/std": "^0.5.0"
   },
   "publishConfig": {

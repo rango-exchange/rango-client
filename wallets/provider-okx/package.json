@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@rango-dev/internal-blockchains": "^0.2.2-next.3",
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
     "@rango-dev/signer-solana": "^0.50.1-next.1",
     "@rango-dev/signer-sui": "^0.12.1-next.1",
     "@rango-dev/signer-ton": "^0.30.2-next.1",
@@ -34,8 +33,8 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
-    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/solana": "^0.6.0",
     "@hub3js/std": "^0.5.0",
     "@hub3js/sui": "^0.5.0",
@@ -45,8 +44,8 @@
   "peerDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
-    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/solana": "^0.6.0",
     "@hub3js/std": "^0.5.0",
     "@hub3js/sui": "^0.5.0",
