@@ -4,9 +4,7 @@ import { getErrorMessage, Hub3Error } from '@hub3js/core';
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { getEthereumRpcUrl } from '@rango-dev/signer-evm';
 import bs58 from 'bs58';
-import { JsonRpcProvider } from 'ethers';
 
 import {
   ETHEREUM_CHAIN_ID,
@@ -16,23 +14,6 @@ import {
 import { getDerivationPath } from './state.js';
 
 export type Provider = Map<string, unknown>;
-
-/**
- * Ledger EVM is Ethereum-only today and has no injected provider, so a single
- * JSON-RPC provider over the Ethereum endpoint serves both the signer (nonce +
- * broadcast) and the read-only namespace actions (allowance, receipt).
- *
- * NOTE: If Ledger EVM support ever expands beyond Ethereum, this must select
- * the RPC per chain instead of the single Ethereum endpoint.
- */
-let evmRpcProvider: { url: string; provider: JsonRpcProvider } | undefined;
-export function getEvmRpcProvider(): JsonRpcProvider {
-  const url = getEthereumRpcUrl();
-  if (evmRpcProvider?.url !== url) {
-    evmRpcProvider = { url, provider: new JsonRpcProvider(url) };
-  }
-  return evmRpcProvider.provider;
-}
 
 type DeviceAccounts = {
   accounts: string[];
