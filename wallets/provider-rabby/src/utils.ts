@@ -27,16 +27,6 @@ export function rabby(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = rabby();
-
-  if (!instances) {
-    throw new Error('Rabby is not injected. Please check your wallet.');
-  }
-
-  return instances;
-}
-
 export function evmRabby(): EvmProviderApi {
   const instances = rabby();
 
