@@ -1,4 +1,5 @@
 import type { Environments } from './types.js';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 
 import { ProviderBuilder } from '@hub3js/core';
 
@@ -6,7 +7,8 @@ import { metadata, WALLET_ID } from './constants.js';
 import { ton } from './namespaces/ton.js';
 import { tonConnect } from './utils.js';
 
-const buildProvider = () =>
+// RPC URLs are accepted for every namespace, so any of them can start using one.
+const buildProvider = (_rpcURLs: NamespacesRPCUrls) =>
   new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
