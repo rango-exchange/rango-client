@@ -15805,10 +15805,10 @@ rango-types@^0.6.0:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.6.0.tgz#2049be2ee6272dbdd34fe8288d7ae81f068cbbff"
   integrity sha512-BWCinnZTNh/QeA7bWHNX8soY1MhJ7DI1SLv3xTm4m7VaktNBNYeItv1iKDUdZEQ00yzu/wu+PN67TiarPWqhxA==
 
-rangutopia@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rangutopia/-/rangutopia-1.0.0.tgz#ac043dcfe3085e10c32bf16626e11e2ce024327a"
-  integrity sha512-hUVt/Oiqoy7eAWw6TbsHJZIgKisGwzAqrh7r7Y+H/U7JjZbPsEGlMZVWzS8BA7aLhsoms2NlNYp4ALZb7EuW/A==
+rangutopia@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/rangutopia/-/rangutopia-1.0.1.tgz#300ea7ec99d71e2987989cceeb48ab711308ad7d"
+  integrity sha512-IY7y3KB6J5nOYxGSMDg19SFX5IVFc1sst+bGxC9L72HhmzkHCQI8w7jPAYRtGloi/HIMV0hI7KsF1Ve2pNrmjg==
   dependencies:
     "@actions/core" "^3.0.1"
     "@conventional-changelog/git-client" "^2.6.0"
