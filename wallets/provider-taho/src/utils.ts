@@ -14,16 +14,6 @@ export function taho(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = taho();
-
-  if (!instances) {
-    throw new Error('Taho Wallet is not injected. Please check your wallet.');
-  }
-
-  return instances;
-}
-
 export function evmTaho(): EvmProviderApi {
   const instances = taho();
 
