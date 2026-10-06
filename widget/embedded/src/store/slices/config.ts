@@ -9,6 +9,7 @@ import type { Provider } from '@hub3js/core';
 
 import {
   allProviders as getAllProviders,
+  RPC_URLS,
   WalletTypes,
 } from '@rango-dev/provider-all';
 
@@ -86,7 +87,7 @@ function generateProviders(
   config: WidgetConfigWithoutLegacyProviders
 ): Provider[] {
   const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build());
+  const allBuiltProviders = allProviders.map((build) => build(RPC_URLS));
 
   return allBuiltProviders.filter((provider) =>
     hasRequiredConfig(provider.id, config)
