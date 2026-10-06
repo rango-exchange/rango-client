@@ -21,16 +21,6 @@ export function defaultInjected(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = defaultInjected();
-
-  if (!instances) {
-    throw new Error('ethereum is not injected. Please check your wallet.');
-  }
-
-  return instances;
-}
-
 export function evmDefault(): EvmProviderApi {
   const instances = defaultInjected();
 
