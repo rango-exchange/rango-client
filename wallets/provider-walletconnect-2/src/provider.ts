@@ -1,14 +1,19 @@
 import type { Environments } from './types.js';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 
 import { ProviderBuilder } from '@hub3js/core';
 
 import { WalletConnectAdapter } from './adapter/adapter.js';
 import { setAdapter } from './adapter/registry.js';
 import { metadata, WALLET_ID } from './constants.js';
-import { evm } from './namespaces/evm/namespace.js';
+import { buildEvm } from './namespaces/evm/namespace.js';
 
-const buildProvider = () =>
-  new ProviderBuilder(WALLET_ID)
+const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
+  if (!rpcURLs?.evm) {
+    throw new Error('An RPC URL for the EVM namespace is required.');
+  }
+
+  return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
 
@@ -29,7 +34,8 @@ const buildProvider = () =>
       console.debug('[wallet-connect-2] provider initialized.', context);
     })
     .config('metadata', metadata)
-    .add('evm', evm)
+    .add('evm', buildEvm(rpcURLs.evm))
     .build();
+};
 
 export { buildProvider };
