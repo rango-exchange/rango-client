@@ -1,17 +1,22 @@
 import type { Environments } from './types.js';
 import type { ProviderAPI } from '@hub3js/evm';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 import type { EIP6963ProviderDetail } from '@ledgerhq/ledger-wallet-provider';
 
 import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { setProvider } from './ledgerProvider.js';
-import { evm } from './namespaces/evm.js';
+import { buildEvm } from './namespaces/evm.js';
 
 const LEDGER_PROVIDER_NAME = 'Ledger Wallet';
 
-const buildProvider = () =>
-  new ProviderBuilder(WALLET_ID)
+const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
+  if (!rpcURLs?.evm) {
+    throw new Error('An RPC URL for the EVM namespace is required.');
+  }
+
+  return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
 
@@ -92,7 +97,8 @@ const buildProvider = () =>
       };
     })
     .config('metadata', metadata)
-    .add('evm', evm)
+    .add('evm', buildEvm(rpcURLs.evm))
     .build();
+};
 
 export { buildProvider };
