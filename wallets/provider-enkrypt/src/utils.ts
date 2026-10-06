@@ -14,18 +14,6 @@ export function enkrypt(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = enkrypt();
-
-  if (!instances) {
-    throw new Error(
-      'Enkrypt Wallet is not injected. Please check your wallet.'
-    );
-  }
-
-  return instances;
-}
-
 export function evmEnkrypt(): EnkryptEvmProvider {
   const instances = enkrypt();
 
