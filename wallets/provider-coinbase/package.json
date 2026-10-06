@@ -22,7 +22,6 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.47.0",
     "@rango-dev/signer-solana": "^0.51.0",
     "bs58": "^5.0.0",
     "rango-types": "^0.6.0"

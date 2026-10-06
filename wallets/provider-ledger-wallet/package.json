@@ -22,9 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@ledgerhq/ledger-wallet-provider": "^1.4.2",
-    "@rango-dev/signer-evm": "^0.47.0",
-    "rango-types": "^0.6.0"
+    "@ledgerhq/ledger-wallet-provider": "^1.4.2"
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
