@@ -35,9 +35,9 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, RPC_URLS } from '@rango-dev/provider-all';
 
-const providers = allProviders().map((build) => build());
+const providers = allProviders().map((build) => build(RPC_URLS));
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -57,7 +57,9 @@ import { Provider } from '@rango-dev/wallets-react';
 import { buildProvider as metamask } from '@rango-dev/provider-metamask';
 import { buildProvider as phantom } from '@rango-dev/provider-phantom';
 
-const providers = [metamask(), phantom()];
+// RPC endpoints per namespace, shared by every provider.
+const rpcURLs = { evm: 'https://your-ethereum-rpc' };
+const providers = [metamask(rpcURLs), phantom(rpcURLs)];
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -103,9 +105,9 @@ With the use of auto-connect, after reloading the app, wallet provider will auto
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, RPC_URLS } from '@rango-dev/provider-all';
 
-const providers = allProviders().map((build) => build());
+const providers = allProviders().map((build) => build(RPC_URLS));
 
 export function App() {
   const blockchains = [...] // An array of blockchains
