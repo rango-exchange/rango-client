@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.64.2-next.3",
+  "version": "0.64.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",

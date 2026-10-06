@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-noir-wallet",
-  "version": "0.3.2-next.3",
+  "version": "0.3.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@noir-wallet/sdk": "^0.1.9",
-    "@rango-dev/internal-blockchains": "^0.2.2-next.2",
+    "@rango-dev/internal-blockchains": "^0.2.2-next.3",
     "bignumber.js": "^9.1.1",
     "rango-types": "^0.6.0"
   },

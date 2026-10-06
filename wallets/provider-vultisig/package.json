@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-vultisig",
-  "version": "0.5.2-next.3",
+  "version": "0.5.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/internal-blockchains": "^0.2.2-next.2",
+    "@rango-dev/internal-blockchains": "^0.2.2-next.3",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {
