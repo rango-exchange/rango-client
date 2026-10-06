@@ -15,18 +15,6 @@ export function tokenPocket(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = tokenPocket();
-
-  if (!instances) {
-    throw new Error(
-      'TokenPocket Wallet is not injected. Please check your wallet.'
-    );
-  }
-
-  return instances;
-}
-
 export function evmTokenPocket(): ProviderAPI {
   const instances = tokenPocket();
 
