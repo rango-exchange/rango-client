@@ -2,9 +2,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
 
-import getSigners from './signer.js';
-import { evmSafe } from './utils.js';
-
 export const WALLET_ID = 'safe';
 
 export const metadata: ProviderMetadata = {
@@ -31,10 +28,6 @@ export const metadata: ProviderMetadata = {
     {
       name: 'details',
       value: { isContractWallet: true },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(evmSafe()) },
     },
   ],
 };
