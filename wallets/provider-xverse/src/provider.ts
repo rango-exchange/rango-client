@@ -1,10 +1,13 @@
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
+
 import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID, XVERSE_INJECTION_DELAY_MS } from './constants.js';
 import { utxo } from './namespaces/utxo.js';
 import { xverse as unisatInstance } from './utils.js';
 
-const buildProvider = () =>
+// RPC URLs are accepted for every namespace, so any of them can start using one.
+const buildProvider = (_rpcURLs: NamespacesRPCUrls) =>
   new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();
