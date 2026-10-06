@@ -6,6 +6,8 @@ import type {
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 import type { SignerFactory } from 'rango-types';
 
+import { TransactionType } from 'rango-types';
+
 import {
   getCurrentStep,
   getCurrentStepTx,
@@ -16,6 +18,7 @@ import {
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
+import { sendEvmTransaction } from '../common/evm';
 import {
   onNextStateError,
   onNextStateOk,
@@ -82,6 +85,30 @@ export async function executeTransaction(
   const walletAddress = getCurrentAddressOf(swap, currentStep);
 
   const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
+
+  // EVM transactions go through the wallet's EVM namespace.
+  if (tx.type === TransactionType.EVM) {
+    const namespace = context.hubProvider(sourceWallet.walletType).get('evm');
+    if (!namespace) {
+      handleRejectedSign(actions)(
+        new Error('The EVM namespace is not available on your wallet.')
+      );
+      onFinish();
+      return;
+    }
+
+    await sendEvmTransaction(namespace, tx, walletAddress, chainId ?? null)
+      .then(
+        handleSuccessfulSign(actions, {
+          isApproval,
+        }),
+        handleRejectedSign(actions)
+      )
+      .finally(() => {
+        onFinish();
+      });
+    return;
+  }
 
   let walletSigners: SignerFactory;
   try {

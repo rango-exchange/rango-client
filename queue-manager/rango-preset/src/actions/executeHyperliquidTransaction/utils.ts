@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { EthersV6CompatibleTypedData } from './types';
+import type { HyperliquidTypedData } from './types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
 import type { HyperliquidTransaction, Transaction } from 'rango-sdk';
 import type { Result } from 'ts-results';
@@ -56,19 +56,19 @@ export function ensureHyperliquidTransactionIsValid(
   return Ok(tx);
 }
 
-export function getEthersV6CompatibleTypedDataFromMessage(
+export function getTypedDataFromMessage(
   message: string
-): Result<EthersV6CompatibleTypedData, NextTransactionStateError> {
+): Result<HyperliquidTypedData, NextTransactionStateError> {
   try {
     const typedData = JSON.parse(message);
-    const ethersV6CompatibleTypedData = {
+    return Ok({
       domain: typedData.domain,
       types: {
         [typedData.primaryType]: typedData.types[typedData.primaryType],
       },
-      value: typedData.message,
-    };
-    return Ok(ethersV6CompatibleTypedData);
+      primaryType: typedData.primaryType,
+      message: typedData.message,
+    });
   } catch {
     return new Err({
       nextStatus: 'failed',
