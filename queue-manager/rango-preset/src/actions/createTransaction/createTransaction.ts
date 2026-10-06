@@ -56,7 +56,7 @@ export async function createTransaction(
       validations: {
         balance: swap.validateBalanceOrFee,
         fee: swap.validateBalanceOrFee,
-        approve: true,
+        approve: false,
       },
     };
     try {
