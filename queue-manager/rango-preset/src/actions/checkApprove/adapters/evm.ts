@@ -14,8 +14,24 @@ import {
 } from 'rango-types';
 import { Ok } from 'ts-results';
 
-/** A receipt reporting a transaction that did not revert. */
-const RECEIPT_STATUS_SUCCESS = 1;
+import { sendEvmTransaction } from '../../common/evm';
+
+/**
+ * viem throws this while the transaction is pending. It is matched by name so
+ * queue-manager doesn't depend on viem.
+ */
+const RECEIPT_NOT_FOUND_ERROR_NAME = 'TransactionReceiptNotFoundError';
+
+function isReceiptNotFoundError(error: unknown): boolean {
+  let current: unknown = error;
+  while (current instanceof Error) {
+    if (current.name === RECEIPT_NOT_FOUND_ERROR_NAME) {
+      return true;
+    }
+    current = current.cause;
+  }
+  return false;
+}
 
 export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
   prerequisiteType: EVM_APPROVE_TYPE,
@@ -49,23 +65,22 @@ export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
       })
     ),
 
+  sendTransaction: sendEvmTransaction,
+
   getTransactionStatus: async (
     namespace,
     executedTransactionHash
   ): Promise<ApproveTransactionStatus> => {
-    const receipt = await namespace.getTransactionReceipt(
-      executedTransactionHash as `0x${string}`
-    );
-    if (!receipt) {
-      return 'pending';
+    try {
+      const receipt = await namespace.getTransactionReceipt({
+        hash: executedTransactionHash as `0x${string}`,
+      });
+      return receipt.status === 'success' ? 'success' : 'failed';
+    } catch (error) {
+      if (isReceiptNotFoundError(error)) {
+        return 'pending';
+      }
+      throw error;
     }
-    /*
-     * The receipt status is a quantity, and wallets are not consistent about
-     * how they hand it over - `0x1`, `0x01` and `1` all occur - so it is
-     * compared as a number rather than as the exact string the spec suggests.
-     */
-    return Number(receipt.status) === RECEIPT_STATUS_SUCCESS
-      ? 'success'
-      : 'failed';
   },
 };
