@@ -8,6 +8,8 @@ import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'math';
 export const MATH_WALLET_INJECTION_DELAY = 1000;
+export const MATH_WALLET_REJECTION_MESSAGE =
+  'User rejected the provision of an Identity';
 export const metadata: ProviderMetadata = {
   name: 'Math Wallet',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/math/icon.svg',

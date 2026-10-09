@@ -6,6 +6,7 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'ready';
+export const READY_REJECTION_MESSAGE = 'User aborted';
 export const metadata: ProviderMetadata = {
   name: 'Ready',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/argentx/icon.svg',

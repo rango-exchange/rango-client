@@ -8,6 +8,7 @@ import getSigners from './signer.js';
 
 export const HEXADECIMAL_BASE = 16;
 export const WALLET_ID = 'ledger';
+export const LEDGER_USER_CANCELLED_ERROR_NAME = 'TransportOpenUserCancelled';
 
 export const ETHEREUM_CHAIN_ID = `0x${Number(CAIP_ETHEREUM_CHAIN_ID).toString(
   HEXADECIMAL_BASE

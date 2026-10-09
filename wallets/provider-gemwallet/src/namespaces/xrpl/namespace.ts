@@ -1,7 +1,7 @@
 import type { XRPLActions } from '@hub3js/xrpl';
 
 import { getAddress } from '@gemwallet/api';
-import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import { ActionBuilder, Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { builders, utils } from '@hub3js/xrpl';
@@ -20,10 +20,18 @@ const connect = builders
     const response = await getAddress();
 
     if (response.type === 'reject') {
-      throw new Error('User has rejected the request.');
+      throw new Hub3Error(
+        'PROVIDER_USER_REJECTED_REQUEST',
+        'User has rejected the request.',
+        { cause: response }
+      );
     }
     if (!response.result?.address) {
-      throw new Error(`Couldn't access to your wallet address.`);
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        `Couldn't access to your wallet address.`,
+        { cause: response }
+      );
     }
 
     return [utils.formatAddressToCAIP(response.result.address)];

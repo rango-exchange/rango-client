@@ -2,12 +2,14 @@ import type { Bip122ChainId, UtxoActions } from '@hub3js/bip122';
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
 import { utils } from '@hub3js/bip122';
+import { Hub3Error } from '@hub3js/core';
 
 import { initTrezor } from '../init.js';
 import { setBitcoinDerivationPath } from '../state.js';
 import {
   getTrezorModule,
   getTrezorNormalizedDerivationPath,
+  throwTrezorConnectionError,
 } from '../utils.js';
 import { BITCOIN_COIN_NAME, resolveBitcoinScriptType } from '../utxo/config.js';
 
@@ -22,7 +24,11 @@ export function connect(
 ): FunctionWithContext<UtxoActions['connect'], Context> {
   return async (_context, options) => {
     if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        'Derivation Path can not be empty.',
+        { cause: options }
+      );
     }
 
     await initTrezor();
@@ -40,7 +46,7 @@ export function connect(
     });
 
     if (!result.success) {
-      throw new Error(result.payload.error);
+      throwTrezorConnectionError(result.payload);
     }
 
     const { address } = result.payload;

@@ -6,19 +6,16 @@ import type {
 } from '@hub3js/evm';
 import type { CaipAccount } from '@hub3js/std/types';
 
-import { NamespaceBuilder } from '@hub3js/core';
+import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import { builders, CAIP_NAMESPACE } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { AccountId } from 'caip';
 import { Contract, toBeHex } from 'ethers';
 
 import { ETHEREUM_CHAIN_ID, WALLET_ID } from '../constants.js';
 import { setDerivationPath } from '../state.js';
-import {
-  getEthereumAccounts,
-  getEvmRpcProvider,
-  standardizeAndThrowLedgerError,
-} from '../utils.js';
+import { getEthereumAccounts, getEvmRpcProvider } from '../utils.js';
 
 const ERC20_ALLOWANCE_ABI = [
   'function allowance(address owner, address spender) view returns (uint256)',
@@ -28,7 +25,11 @@ const connect = builders
   .connect()
   .action(async function (_context, _chain, options) {
     if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        'Derivation Path can not be empty.',
+        { cause: options }
+      );
     }
 
     setDerivationPath(options.derivationPath);
@@ -51,7 +52,7 @@ const connect = builders
       network: result.chainId,
     };
   })
-  .or(standardizeAndThrowLedgerError)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders.disconnect<EvmActions>().build();

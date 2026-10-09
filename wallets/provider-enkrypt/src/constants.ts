@@ -6,6 +6,9 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'enkrypt';
+// Enkrypt rejects with a bare string, not an error object.
+export const ENKRYPT_REJECTION =
+  'User Rejected Request: The user rejected the request.';
 export const metadata: ProviderMetadata = {
   name: 'Enkrypt',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/enkrypt/icon.svg',

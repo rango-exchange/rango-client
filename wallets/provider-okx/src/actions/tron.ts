@@ -1,3 +1,4 @@
+import { getErrorMessage, Hub3Error } from '@hub3js/core';
 import { utils } from '@hub3js/tron';
 
 import {
@@ -14,10 +15,16 @@ const connect = async () => {
 
   if (accountsResult?.code && accountsResult.code !== TRON_OK_REQUEST_CODE) {
     if (accountsResult.code === TRON_USER_REJECTION_CODE) {
-      throw new Error('User rejected the request.');
+      throw new Hub3Error(
+        'PROVIDER_USER_REJECTED_REQUEST',
+        getErrorMessage(accountsResult),
+        { cause: accountsResult }
+      );
     }
-    throw new Error(
-      accountsResult.message ?? 'Failed to connect to OKX Wallet Tron.'
+    throw new Hub3Error(
+      'PROVIDER_UNEXPECTED',
+      accountsResult.message ?? 'Failed to connect to OKX Wallet Tron.',
+      { cause: accountsResult }
     );
   }
   return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);

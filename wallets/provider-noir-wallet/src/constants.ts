@@ -8,6 +8,7 @@ import {
 import getSigners from './signer.js';
 
 export const WALLET_ID = 'noir-wallet';
+export const NOIR_REJECTION_MESSAGE = 'User rejected the request';
 
 export const info: ProviderMetadata = {
   name: 'Noir Wallet',

@@ -5,13 +5,13 @@ import type {
   EvmTransactionReceipt,
 } from '@hub3js/evm';
 
-import { NamespaceBuilder } from '@hub3js/core';
+import { getErrorMessage, Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { getAdapter } from '../../adapter/registry.js';
-import { WALLET_ID } from '../../constants.js';
+import { WALLET_ID, WALLETCONNECT_REJECTION_CODES } from '../../constants.js';
 import { getAccountsFromSession } from '../../session/accounts.js';
 import { filterEvmAccounts } from '../../session/evm.js';
 import { chainReferenceToHex, parseChainReference } from '../../utils.js';
@@ -29,33 +29,55 @@ const [sessionDelete, sessionDeleteCleanup] = sessionDeleteSubscriber();
 const connect = builders
   .connect()
   .action(async function (_context: Context<EvmActions>, chain?: string) {
-    const adapter = getAdapter();
-    // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
-    const requestedReference = chain ? parseChainReference(chain) : undefined;
-    const session = await adapter.ensureConnectedToChain(chain);
-    const activeReference =
-      requestedReference ?? (await adapter.resolveActiveChainReference());
+    try {
+      const adapter = getAdapter();
+      // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
+      const requestedReference = chain ? parseChainReference(chain) : undefined;
+      const session = await adapter.ensureConnectedToChain(chain);
+      const activeReference =
+        requestedReference ?? (await adapter.resolveActiveChainReference());
 
-    if (!activeReference) {
-      throw new Error(
-        'Unable to determine EVM chain id from WalletConnect session.'
-      );
+      if (!activeReference) {
+        throw new Hub3Error(
+          'PROVIDER_UNEXPECTED',
+          'Unable to determine EVM chain id from WalletConnect session.'
+        );
+      }
+
+      const accounts = getAccountsFromSession(session);
+      const evmAccounts = filterEvmAccounts(accounts, activeReference);
+
+      if (!evmAccounts.length) {
+        throw new Hub3Error(
+          'PROVIDER_UNEXPECTED',
+          'No EVM accounts found in WalletConnect session.',
+          { cause: { accounts, activeReference } }
+        );
+      }
+
+      return {
+        accounts: utils.formatAccountsToCAIP(
+          evmAccounts.map((account) => account.accounts[0]),
+          activeReference
+        ),
+        network: chainReferenceToHex(activeReference),
+      };
+    } catch (error) {
+      const isRejection =
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        WALLETCONNECT_REJECTION_CODES.some((code) => code === error.code);
+
+      if (isRejection) {
+        throw new Hub3Error(
+          'PROVIDER_USER_REJECTED_REQUEST',
+          getErrorMessage(error),
+          { cause: error }
+        );
+      }
+      throw error;
     }
-
-    const accounts = getAccountsFromSession(session);
-    const evmAccounts = filterEvmAccounts(accounts, activeReference);
-
-    if (!evmAccounts.length) {
-      throw new Error('No EVM accounts found in WalletConnect session.');
-    }
-
-    return {
-      accounts: utils.formatAccountsToCAIP(
-        evmAccounts.map((account) => account.accounts[0]),
-        activeReference
-      ),
-      network: chainReferenceToHex(activeReference),
-    };
   })
   .before(sessionUpdate)
   .before(sessionEvent)

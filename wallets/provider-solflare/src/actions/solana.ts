@@ -1,5 +1,6 @@
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
+import { Hub3Error } from '@hub3js/core';
 import { type ProviderAPI, type SolanaActions, utils } from '@hub3js/solana';
 
 function connect(
@@ -10,7 +11,11 @@ function connect(
     const isConnected = await solanaInstance.connect();
 
     if (!isConnected) {
-      throw new Error('Connecting to solana has been failed');
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        'Connecting to solana has been failed',
+        { cause: { isConnected, solanaInstance } }
+      );
     }
 
     return utils.formatAccountsToCAIP([solanaInstance.publicKey.toString()]);

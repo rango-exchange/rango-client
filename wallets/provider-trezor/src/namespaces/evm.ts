@@ -5,7 +5,7 @@ import type {
   EvmTransactionReceipt,
 } from '@hub3js/evm';
 
-import { NamespaceBuilder } from '@hub3js/core';
+import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import { builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
@@ -28,7 +28,11 @@ const connect = builders
   .connect()
   .action(async function (_context, _chain, options) {
     if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        'Derivation Path can not be empty.',
+        { cause: options }
+      );
     }
     setDerivationPath(
       getTrezorNormalizedDerivationPath(options.derivationPath)
