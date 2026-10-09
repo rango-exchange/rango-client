@@ -9,6 +9,8 @@ export const HORIZON_URL = 'https://horizon.stellar.org';
 export const RPC_URL = 'https://mainnet.sorobanrpc.com';
 export const NETWORK_PASSPHRASE =
   'Public Global Stellar Network ; September 2015';
+// The code of Freighter's `FreighterApiDeclinedError`.
+export const FREIGHTER_DECLINED_ERROR_CODE = -4;
 
 export const metadata: ProviderMetadata = {
   name: 'Freighter',

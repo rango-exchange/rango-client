@@ -28,16 +28,16 @@
     "rango-types": "^0.6.0"
   },
   "devDependencies": {
-    "@hub3js/core": "^0.63.0",
-    "@hub3js/namespaces": "^0.7.0",
-    "@hub3js/solana": "^0.6.0",
-    "@hub3js/std": "^0.5.0"
+    "@hub3js/core": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/namespaces": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/solana": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/std": "0.0.0-experimental-c87c8dd0-20261009"
   },
   "peerDependencies": {
-    "@hub3js/core": "^0.63.0",
-    "@hub3js/namespaces": "^0.7.0",
-    "@hub3js/solana": "^0.6.0",
-    "@hub3js/std": "^0.5.0"
+    "@hub3js/core": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/namespaces": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/solana": "0.0.0-experimental-c87c8dd0-20261009",
+    "@hub3js/std": "0.0.0-experimental-c87c8dd0-20261009"
   },
   "publishConfig": {
     "access": "public"

@@ -6,8 +6,12 @@ import type {
 } from '@hub3js/core';
 
 import { CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
+import { getErrorMessage, Hub3Error } from '@hub3js/core';
 
-import { XVERSE_ACCESS_DENIED_ERROR_CODE } from '../constants.js';
+import {
+  XVERSE_ACCESS_DENIED_ERROR_CODE,
+  XVERSE_REJECTION_MESSAGE,
+} from '../constants.js';
 import { getBitcoinAccounts } from '../utils.js';
 
 export function connect(): FunctionWithContext<
@@ -15,16 +19,47 @@ export function connect(): FunctionWithContext<
   Context
 > {
   return async () => {
-    const accountsResult = await getBitcoinAccounts();
+    try {
+      const accountsResult = await getBitcoinAccounts();
 
-    if (accountsResult.result?.addresses?.length === 0) {
-      throw new Error("Couldn't find any address!");
+      if (accountsResult.error?.message) {
+        const type =
+          accountsResult.error.message === XVERSE_REJECTION_MESSAGE
+            ? 'PROVIDER_USER_REJECTED_REQUEST'
+            : 'PROVIDER_UNEXPECTED';
+        throw new Hub3Error(type, accountsResult.error.message, {
+          cause: accountsResult,
+        });
+      }
+
+      if (accountsResult.result?.addresses?.length === 0) {
+        throw new Hub3Error(
+          'PROVIDER_UNEXPECTED',
+          "Couldn't find any address!",
+          { cause: accountsResult }
+        );
+      }
+
+      return utils.formatAccountsToCAIP(
+        accountsResult.result.addresses.map((address) => address.address),
+        CAIP_BITCOIN_CHAIN_ID
+      );
+    } catch (error) {
+      if (error instanceof Hub3Error) {
+        throw error;
+      }
+      if (
+        error instanceof Error &&
+        error.message === XVERSE_REJECTION_MESSAGE
+      ) {
+        throw new Hub3Error(
+          'PROVIDER_USER_REJECTED_REQUEST',
+          getErrorMessage(error),
+          { cause: error }
+        );
+      }
+      throw error;
     }
-
-    return utils.formatAccountsToCAIP(
-      accountsResult.result.addresses.map((address) => address.address),
-      CAIP_BITCOIN_CHAIN_ID
-    );
   };
 }
 

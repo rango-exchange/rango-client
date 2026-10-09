@@ -4,6 +4,7 @@ import {
   CAIP_BITCOIN_CHAIN_ID,
   isChainSupported as isBip122ChainSupported,
 } from '@hub3js/bip122';
+import { EIP1193_USER_REJECTED_REQUEST } from '@hub3js/core';
 import {
   CAIP_ARBITRUM_CHAIN_ID,
   CAIP_AVAX_CHAIN_ID,
@@ -36,7 +37,7 @@ export const TON_CONNECT_USER_REJECTED_CODE = 300;
 
 export const TRON_OK_REQUEST_CODE = 200;
 // EIP-1193 user-rejected-request code returned by `tron_requestAccounts`.
-export const TRON_USER_REJECTION_CODE = 4001;
+export const TRON_USER_REJECTION_CODE = EIP1193_USER_REJECTED_REQUEST;
 
 export const WALLET_NAME_IN_WALLET_STANDARD = 'OKX Wallet';
 

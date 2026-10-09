@@ -6,6 +6,7 @@ import type {
 } from '@hub3js/core';
 
 import { CAIP_BITCOIN_CHAIN_ID, utils } from '@hub3js/bip122';
+import { Hub3Error } from '@hub3js/core';
 
 import { getBitcoinAccounts } from '../utils.js';
 
@@ -17,7 +18,9 @@ export function connect(): FunctionWithContext<
     const accountsResult = await getBitcoinAccounts();
 
     if (!accountsResult?.address) {
-      throw new Error("Couldn't find any address!");
+      throw new Hub3Error('PROVIDER_UNEXPECTED', "Couldn't find any address!", {
+        cause: accountsResult,
+      });
     }
 
     return utils.formatAccountsToCAIP(

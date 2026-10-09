@@ -1,9 +1,13 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
+import { Hub3Error } from '@hub3js/core';
 import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
 import { JsonRpcProvider } from 'ethers';
 
-import { ETHEREUM_CHAIN_ID } from './constants.js';
+import {
+  ETHEREUM_CHAIN_ID,
+  TREZOR_USER_CANCELLATION_CODES,
+} from './constants.js';
 import { getDerivationPath } from './state.js';
 
 type DeviceAccounts = {
@@ -26,6 +30,18 @@ export function getEvmRpcProvider(): JsonRpcProvider {
     evmRpcProvider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL);
   }
   return evmRpcProvider;
+}
+
+// Trezor resolves a failed connect call instead of throwing; its `code`, not its `error` text, says whether the user cancelled.
+export function throwTrezorConnectionError(payload: {
+  error: string;
+  code?: string;
+}): never {
+  const type =
+    payload.code && TREZOR_USER_CANCELLATION_CODES.includes(payload.code)
+      ? 'PROVIDER_USER_REJECTED_REQUEST'
+      : 'PROVIDER_UNEXPECTED';
+  throw new Hub3Error(type, payload.error, { cause: payload });
 }
 
 export const trezorErrorMessages: { [statusCode: string]: string } = {
@@ -54,7 +70,7 @@ export async function getEthereumAccounts(): Promise<DeviceAccounts> {
   });
 
   if (!result.success) {
-    throw new Error(result.payload.error);
+    throwTrezorConnectionError(result.payload);
   }
 
   return {

@@ -1,5 +1,6 @@
 import type { Context, FunctionWithContext } from '@hub3js/core';
 
+import { Hub3Error } from '@hub3js/core';
 import {
   CAIP_STARKNET_CHAIN_ID,
   type ProviderAPI,
@@ -19,14 +20,18 @@ export function connect(
       !starknetInstance.isConnected ||
       !connectResult?.length
     ) {
-      throw new Error('Error during connection');
+      throw new Hub3Error('PROVIDER_UNEXPECTED', 'Error during connection', {
+        cause: { connectResult, starknetInstance },
+      });
     }
     if (
       starknetInstance?.chainId &&
       starknetInstance.chainId !== CAIP_STARKNET_CHAIN_ID
     ) {
-      throw new Error(
-        `Please switch to Mainnet, current network is ${starknetInstance?.chainId}`
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        `Please switch to Mainnet, current network is ${starknetInstance?.chainId}`,
+        { cause: starknetInstance }
       );
     }
 

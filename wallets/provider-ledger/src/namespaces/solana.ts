@@ -1,20 +1,25 @@
 import type { SolanaActions } from '@hub3js/solana';
 import type { CaipAccount } from '@hub3js/std/types';
 
-import { NamespaceBuilder } from '@hub3js/core';
+import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import { builders, CAIP_NAMESPACE } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
+import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { AccountId } from 'caip';
 
 import { WALLET_ID } from '../constants.js';
 import { setDerivationPath } from '../state.js';
-import { getSolanaAccounts, standardizeAndThrowLedgerError } from '../utils.js';
+import { getSolanaAccounts } from '../utils.js';
 
 const connect = builders
   .connect()
   .action(async function (_context, options) {
     if (!options?.derivationPath) {
-      throw new Error('Derivation Path can not be empty.');
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        'Derivation Path can not be empty.',
+        { cause: options }
+      );
     }
 
     setDerivationPath(options.derivationPath);
@@ -34,7 +39,7 @@ const connect = builders
 
     return formatAccounts;
   })
-  .or(standardizeAndThrowLedgerError)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders.disconnect<SolanaActions>().build();

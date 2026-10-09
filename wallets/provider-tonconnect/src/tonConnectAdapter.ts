@@ -1,6 +1,8 @@
 import type { Environments } from './types.js';
 import type * as TonConnectUIModule from '@tonconnect/ui';
 
+import { Hub3Error } from '@hub3js/core';
+
 // TonConnect SDK has no public API for discarding a pending connection, so we rely on its internal storage key.
 const BRIDGE_CONNECTION_STORAGE_KEY = 'ton-connect-storage_bridge-connection';
 
@@ -58,7 +60,13 @@ export class TonConnectAdapter {
         (modalState) => {
           if (modalState.closeReason === 'action-cancelled') {
             unsubscribe();
-            reject(new Error('The action was canceled by the user'));
+            reject(
+              new Hub3Error(
+                'PROVIDER_USER_REJECTED_REQUEST',
+                'You rejected the request',
+                { cause: modalState }
+              )
+            );
           }
         }
       );
