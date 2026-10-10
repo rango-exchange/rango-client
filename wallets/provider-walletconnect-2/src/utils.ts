@@ -23,14 +23,6 @@ export async function timeout<T = any>(
   return Promise.race([forPromise, timeoutPromise]);
 }
 
-export function utf8ToHex(value: string, prefixed = false): string {
-  const hex = Array.from(new TextEncoder().encode(value))
-    .map((byte) => byte.toString(HEX_RADIX).padStart(2, '0'))
-    .join('');
-
-  return prefixed ? `0x${hex}` : hex;
-}
-
 /** Normalizes hub chain input (hex, decimal, or AddEthereumChainParameter) to a decimal reference. */
 export function parseChainReference(
   chain?: string | Chain

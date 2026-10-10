@@ -1,7 +1,7 @@
 import type { WalletType } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-types';
 
-import { allProviders, WalletTypes } from '@rango-dev/provider-all';
+import { allProviders, RPC_URLS, WalletTypes } from '@rango-dev/provider-all';
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ import {
   WC_PROJECT_ID,
 } from './configs';
 
-const providers = allProviders().map((build) => build());
+const providers = allProviders().map((build) => build(RPC_URLS));
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);

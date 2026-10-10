@@ -1,8 +1,8 @@
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, RPC_URLS } from '@rango-dev/provider-all';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
-export const providers = allProviders().map((build) => build());
+export const providers = allProviders().map((build) => build(RPC_URLS));
 
 export const wallets = providers.map((provider) => provider.id);
 

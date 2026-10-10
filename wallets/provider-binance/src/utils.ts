@@ -22,18 +22,6 @@ export function binance(): Provider | null {
   return instances;
 }
 
-export function getInstanceOrThrow(): Provider {
-  const instances = binance();
-
-  if (!instances) {
-    throw new Error(
-      'Binance Wallet is not injected. Please check your wallet.'
-    );
-  }
-
-  return instances;
-}
-
 export function evmBinance(): EvmProviderApi {
   const instances = binance();
 

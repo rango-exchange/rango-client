@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@rango-dev/internal-blockchains": "^0.2.2-next.3",
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
     "@rango-dev/signer-tron": "^0.43.1-next.1",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.6.0"
@@ -31,16 +30,16 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
-    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/std": "^0.5.0",
     "@hub3js/tron": "^0.2.0"
   },
   "peerDependencies": {
     "@hub3js/bip122": "^0.3.0",
     "@hub3js/core": "^0.63.0",
-    "@hub3js/evm": "^0.6.0",
-    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/evm": "0.0.0-experimental-c47ee161-20261006",
+    "@hub3js/namespaces": "0.0.0-experimental-c47ee161-20261006",
     "@hub3js/std": "^0.5.0",
     "@hub3js/tron": "^0.2.0"
   },

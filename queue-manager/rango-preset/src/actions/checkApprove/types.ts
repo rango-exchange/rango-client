@@ -65,7 +65,7 @@ export interface ApproveAdapter<
   prerequisiteType: TransactionPrerequisiteType;
   /** The hub namespace key backing this chain, e.g. `'evm'` | `'tron'`. */
   namespaceKey: K;
-  /** The signer transaction type used to sign the approve tx. */
+  /** The signer transaction type used to sign the approve tx, when `sendTransaction` isn't set. */
   signerTxType: TransactionType;
   /** Type guard for this chain's approve prerequisite. */
   isApprovePrerequisite: (
@@ -80,6 +80,16 @@ export interface ApproveAdapter<
     prerequisite: ApprovePrerequisite,
     namespace: ApproveCapableNamespace<K>
   ) => Promise<Result<TTransaction, NextTransactionStateError>>;
+  /**
+   * Sends the approve transaction through the namespace. Without it, the
+   * wallet's signer for `signerTxType` sends it.
+   */
+  sendTransaction?: (
+    namespace: ApproveCapableNamespace<K>,
+    transaction: TTransaction,
+    walletAddress: string,
+    chainId: string | null
+  ) => Promise<{ hash: string }>;
   /** Reads the on-chain status of a submitted approve transaction. */
   getTransactionStatus: (
     namespace: ApproveCapableNamespace<K>,
