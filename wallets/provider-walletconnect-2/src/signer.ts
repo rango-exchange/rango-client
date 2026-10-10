@@ -14,9 +14,14 @@ export default async function getSigners(): Promise<SignerFactory> {
 
   const signers = new DefaultSignerFactory();
   const EVMSigner = (await import('./signers/evm.js')).default;
+  const UtxoSigner = (await import('./signers/utxo.js')).default;
   signers.registerSigner(
     TxType.EVM,
     new EVMSigner(client, () => adapter.getSession('evm'))
+  );
+  signers.registerSigner(
+    TxType.TRANSFER,
+    new UtxoSigner(client, () => adapter.getSession('utxo'))
   );
 
   return signers;
