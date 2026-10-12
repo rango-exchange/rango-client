@@ -29,6 +29,10 @@ export function App() {
      */
     externalWallets: true,
     apiKey: getApiKeyFromEnvOrThrow(),
+    // TODO: remove once the approval prerequisites routing is no longer experimental on the backend.
+    routing: {
+      experimental: 'enabled',
+    },
     features: {
       theme: 'hidden',
     },
