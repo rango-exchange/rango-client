@@ -7,7 +7,7 @@ import type {
 import type { Provider as HubProvider } from '@hub3js/core';
 import type { EvmBlockchainMeta } from 'rango-types';
 
-import { NamespaceBuilder, ProviderBuilder } from '@hub3js/core';
+import { Hub3Error, NamespaceBuilder, ProviderBuilder } from '@hub3js/core';
 import { garbageWalletMetaData } from '@hub3js/core/test-utils';
 import { act, renderHook } from '@testing-library/react-hooks/dom';
 import { TransactionType } from 'rango-types';
@@ -282,7 +282,7 @@ describe('manual connect', () => {
 
   test('emits nothing for namespaces cancelled after a rejection', async () => {
     const { events, emitter } = createRecordingEmitter();
-    const rejection = Object.assign(new Error('User rejected'), { code: 4001 });
+    const rejection = new Hub3Error('PROVIDER_USER_REJECTED_REQUEST');
     const wallet = buildWallet('manual-cancelled', {
       evm: { connect: rejectWith(rejection) },
       solana: {},
