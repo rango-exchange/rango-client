@@ -41,6 +41,10 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        // TODO: remove once the approval prerequisites routing is no longer experimental on the backend.
+        routing: {
+          experimental: 'enabled',
+        },
       };
     }
     if (!!config) {
