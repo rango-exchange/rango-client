@@ -6,6 +6,8 @@ import getSigners from './signer.js';
 
 export const WALLET_ID = 'slush';
 export const WALLET_NAME_IN_WALLET_STANDARD = 'Slush';
+export const SLUSH_REJECTION_ERROR_NAME = 'TRPCClientError';
+export const SLUSH_REJECTION_MESSAGE = 'User rejected the request.';
 
 export const metadata: ProviderMetadata = {
   name: 'Slush',

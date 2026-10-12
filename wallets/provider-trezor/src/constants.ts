@@ -12,6 +12,15 @@ import { BITCOIN_ADDRESS_TYPES } from './utxo/config.js';
 
 export const WALLET_ID = 'trezor';
 
+// The user closed the popup, denied its permissions, or cancelled in the popup or on the device.
+export const TREZOR_USER_CANCELLATION_CODES = [
+  'Method_Interrupted',
+  'Method_PermissionsNotGranted',
+  'Method_Cancel',
+  'Failure_ActionCancelled',
+  'Failure_PinCancelled',
+];
+
 const HEXADECIMAL_BASE = 16;
 export const ETHEREUM_CHAIN_ID = `0x${Number(CAIP_ETHEREUM_CHAIN_ID).toString(
   HEXADECIMAL_BASE

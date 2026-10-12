@@ -7,6 +7,8 @@ import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'trust-wallet';
+// Trust Wallet's in-app browser rejects with a bare string, not an EIP-1193 error.
+export const IN_APP_BROWSER_REJECTION = 'cancelled';
 
 export const metadata: ProviderMetadata = {
   name: 'Trust Wallet',

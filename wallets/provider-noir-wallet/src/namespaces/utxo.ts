@@ -1,12 +1,17 @@
 import type { UtxoActions } from '@hub3js/bip122';
 
 import { builders, CAIP_ZCASH_CHAIN_ID, utils } from '@hub3js/bip122';
-import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import {
+  ActionBuilder,
+  getErrorMessage,
+  Hub3Error,
+  NamespaceBuilder,
+} from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { changeAccountSubscriberBuilder } from '../builders/utxo.js';
-import { WALLET_ID } from '../constants.js';
+import { NOIR_REJECTION_MESSAGE, WALLET_ID } from '../constants.js';
 import { getInstanceOrThrow } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
@@ -15,24 +20,35 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 const connect = builders
   .connect()
   .action(async function () {
-    const noirWallet = getInstanceOrThrow();
-    const zcash = noirWallet.zcash;
+    try {
+      const noirWallet = getInstanceOrThrow();
+      const zcash = noirWallet.zcash;
 
-    // Check existing connection (silent, no popup)
-    const accounts = await zcash.getAccounts();
+      // Check existing connection (silent, no popup)
+      const accounts = await zcash.getAccounts();
 
-    // Connect wallet if not connected (shows popup)
-    if (!accounts) {
-      const newAccounts = await zcash.connect();
+      // Connect wallet if not connected (shows popup)
+      if (!accounts) {
+        const newAccounts = await zcash.connect();
+        return utils.formatAccountsToCAIP(
+          [newAccounts.transparent],
+          CAIP_ZCASH_CHAIN_ID
+        );
+      }
       return utils.formatAccountsToCAIP(
-        [newAccounts.transparent],
+        [accounts.transparent],
         CAIP_ZCASH_CHAIN_ID
       );
+    } catch (error) {
+      if (error instanceof Error && error.message === NOIR_REJECTION_MESSAGE) {
+        throw new Hub3Error(
+          'PROVIDER_USER_REJECTED_REQUEST',
+          getErrorMessage(error),
+          { cause: error }
+        );
+      }
+      throw error;
     }
-    return utils.formatAccountsToCAIP(
-      [accounts.transparent],
-      CAIP_ZCASH_CHAIN_ID
-    );
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
