@@ -8,7 +8,7 @@ msgstr ""
 "Language: fil\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-14 07:09\n"
+"PO-Revision-Date: 2026-10-12 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Filipino\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: fil\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
-msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-msgstr "Nagkaroon ng error sa network habang pinoproseso ang iyong kahilingan. Pakisuri ang iyong koneksyon sa internet o i-refresh ang pahina at subukang muli."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -835,6 +830,11 @@ msgstr "Piliin lahat"
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Nabigong Network, Pakisubukang muli ang iyong swap."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "Nagkaroon ng error sa network habang pinoproseso ang iyong kahilingan. Pakisuri ang iyong koneksyon sa internet o i-refresh ang pahina at subukang muli."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:14

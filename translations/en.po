@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
-msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-msgstr "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
 #: widget/embedded/src/components/TokenList/TokenList.tsx:385
 #: widget/embedded/src/pages/HistoryPage.tsx:237
@@ -832,6 +827,11 @@ msgstr "Select all"
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Failed Network, Please retry your swap."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:14

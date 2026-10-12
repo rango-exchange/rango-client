@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-14 07:09\n"
+"PO-Revision-Date: 2026-10-12 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
-msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-msgstr "Er is een netwerkfout opgetreden tijdens het verwerken van uw verzoek. Controleer uw internetverbinding of vernieuw de pagina en probeer het opnieuw."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -835,6 +830,11 @@ msgstr "Alles selecteren"
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Mislukt netwerk. Probeer het opnieuw."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "Er is een netwerkfout opgetreden tijdens het verwerken van uw verzoek. Controleer uw internetverbinding of vernieuw de pagina en probeer het opnieuw."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:14

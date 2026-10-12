@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-14 07:09\n"
+"PO-Revision-Date: 2026-10-12 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
-msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-msgstr "处理您的请求时发生网络错误。请检查您的网络连接或刷新页面后重试。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -835,6 +830,11 @@ msgstr "选择所有"
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "网络失败，请重试您的交换。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "处理您的请求时发生网络错误。请检查您的网络连接或刷新页面后重试。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:14
