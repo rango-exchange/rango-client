@@ -24,6 +24,10 @@ export function layer(client: Client): Layer {
           const tags = payload.data.tags as Parameters<Scope['setTags']>[0];
           scope.setTags(tags);
         }
+
+        if (payload.data?.fingerprint) {
+          scope.setFingerprint(payload.data.fingerprint);
+        }
         /*
          * https://forum.sentry.io/t/error-object-details-not-showing-up-in-sentry/7081/3
          * We could use this to capture normalized error fields in sentry
