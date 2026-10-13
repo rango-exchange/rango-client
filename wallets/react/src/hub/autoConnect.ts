@@ -15,6 +15,7 @@ import {
 } from '../events.js';
 
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
+import { reportConnectionFailure } from './errors.js';
 import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
@@ -117,6 +118,11 @@ async function eagerConnect(
           });
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
+          reportConnectionFailure(e, {
+            walletType: type,
+            namespace: info.namespace,
+            origin: 'auto',
+          });
           emitter?.emit(WalletEventChannel, {
             type: WalletEventTypes.WALLET_CONNECT_FAILED,
             payload: eventPayload,
