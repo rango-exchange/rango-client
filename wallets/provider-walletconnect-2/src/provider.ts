@@ -6,6 +6,7 @@ import { WalletConnectAdapter } from './adapter/adapter.js';
 import { setAdapter } from './adapter/registry.js';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm/namespace.js';
+import { utxo } from './namespaces/utxo/namespace.js';
 
 const buildProvider = () =>
   new ProviderBuilder(WALLET_ID)
@@ -30,6 +31,7 @@ const buildProvider = () =>
     })
     .config('metadata', metadata)
     .add('evm', evm)
+    .add('utxo', utxo)
     .build();
 
 export { buildProvider };
