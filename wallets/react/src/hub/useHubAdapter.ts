@@ -34,7 +34,6 @@ import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import { useAutoConnect } from './useAutoConnect.js';
 import { useHubRefs } from './useHubRefs.js';
 import {
-  findProviderByType,
   isEvmNamespace,
   isSolanaNamespace,
   isUtxoNamespace,
@@ -553,7 +552,12 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
       );
     },
     hubProvider(type) {
-      const provider = findProviderByType(params.providers, type);
+      /*
+       * Return the instance registered in the hub, which holds the store. A
+       * provider list can be rebuilt with the same ids, and the hub keeps the
+       * instances it registered first, so a rebuilt one would have no store.
+       */
+      const provider = getHub().get(type);
 
       if (!provider) {
         throw new Error(
