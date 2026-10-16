@@ -7,15 +7,12 @@ import {
   metadata,
   WALLET_ID,
 } from './constants.js';
-import { buildEvm } from './namespaces/evm.js';
+import { evm } from './namespaces/evm.js';
 import { solana } from './namespaces/solana.js';
 import { mathWallet } from './utils.js';
 
-const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
-  if (!rpcURLs?.evm) {
-    throw new Error('An RPC URL for the EVM namespace is required.');
-  }
-
+// RPC URLs are accepted for every namespace, so any of them can start using one.
+const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();
@@ -29,7 +26,7 @@ const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
     })
     .config('metadata', metadata)
     .add('solana', solana)
-    .add('evm', buildEvm(rpcURLs.evm))
+    .add('evm', evm)
     .build();
 };
 

@@ -3,13 +3,7 @@ import type { EvmActions } from '@hub3js/evm';
 import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
 
 import { NamespaceBuilder } from '@hub3js/core';
-import {
-  actions,
-  builders,
-  hooks,
-  viemPublicAdapter,
-  viemWalletAdapter,
-} from '@hub3js/evm';
+import { actions, builders, hooks, viemWalletAdapter } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -54,16 +48,6 @@ const getAllowance = builders
   .action(actions.getAllowance(evmSafe))
   .build();
 
-const getTransactionReceipt = builders
-  .getTransactionReceipt()
-  .action(actions.getTransactionReceipt(evmSafe))
-  .build();
-
-const waitForTransactionReceipt = builders
-  .waitForTransactionReceipt()
-  .action(actions.waitForTransactionReceipt(evmSafe))
-  .build();
-
 // Safe signs messages off-chain through its SDK.
 const signMessage: FunctionWithContext<
   EvmActions['signMessage'],
@@ -92,20 +76,16 @@ const resolveTransactionHashAction = (async (
   Context<EvmActions>
 >;
 
-const buildEvm = (rpcUrl: string) =>
-  new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
-    .action(connect)
-    .action(disconnect)
-    .action(canEagerConnect)
-    .action(canSwitchNetwork)
-    .action(getChainId)
-    .action(getAllowance)
-    .action(getTransactionReceipt)
-    .action(waitForTransactionReceipt)
-    .action(viemWalletAdapter(evmSafe))
-    .action(viemPublicAdapter(rpcUrl))
-    .action('signMessage', signMessage)
-    .action(RESOLVE_TRANSACTION_HASH, resolveTransactionHashAction)
-    .build();
+const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+  .action(viemWalletAdapter(evmSafe))
+  .action(connect)
+  .action(disconnect)
+  .action(canEagerConnect)
+  .action(canSwitchNetwork)
+  .action(getChainId)
+  .action(getAllowance)
+  .action('signMessage', signMessage)
+  .action(RESOLVE_TRANSACTION_HASH, resolveTransactionHashAction)
+  .build();
 
-export { buildEvm };
+export { evm };

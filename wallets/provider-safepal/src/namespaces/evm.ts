@@ -1,12 +1,7 @@
 import type { EvmActions } from '@hub3js/evm';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
-import {
-  actions,
-  builders,
-  viemPublicAdapter,
-  viemWalletAdapter,
-} from '@hub3js/evm';
+import { actions, builders, viemWalletAdapter } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import {
   connectAndUpdateStateForMultiNetworks,
@@ -66,27 +61,13 @@ const getAllowance = builders
   .action(actions.getAllowance(evmSafepal))
   .build();
 
-const getTransactionReceipt = builders
-  .getTransactionReceipt()
-  .action(actions.getTransactionReceipt(evmSafepal))
+const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+  .action(viemWalletAdapter(evmSafepal))
+  .action(connect)
+  .action(disconnect)
+  .action(canSwitchNetwork)
+  .action(getChainId)
+  .action(getAllowance)
   .build();
 
-const waitForTransactionReceipt = builders
-  .waitForTransactionReceipt()
-  .action(actions.waitForTransactionReceipt(evmSafepal))
-  .build();
-
-const buildEvm = (rpcUrl: string) =>
-  new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
-    .action(connect)
-    .action(disconnect)
-    .action(canSwitchNetwork)
-    .action(getChainId)
-    .action(getAllowance)
-    .action(getTransactionReceipt)
-    .action(waitForTransactionReceipt)
-    .action(viemWalletAdapter(evmSafepal))
-    .action(viemPublicAdapter(rpcUrl))
-    .build();
-
-export { buildEvm };
+export { evm };
