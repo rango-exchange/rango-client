@@ -45,7 +45,9 @@ export { WalletTypes } from './walletTypes.js';
  * actions go to `evm`.
  */
 export const RPC_URLS: NamespacesRPCUrls = {
-  evm: 'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2',
+  evm: [
+    'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2',
+  ],
 };
 
 // Providers register different namespaces, so the list is typed loosely instead of `Provider<unknown>`.

@@ -2,12 +2,7 @@ import type { Context } from '@hub3js/core';
 import type { AllowanceParams, EvmActions } from '@hub3js/evm';
 
 import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
-import {
-  builders,
-  utils,
-  viemPublicActions,
-  viemPublicAdapter,
-} from '@hub3js/evm';
+import { builders, utils, viemPublicAdapter } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -92,20 +87,14 @@ const getAllowance = builders
   )
   .build();
 
-const buildEvm = (rpcUrl: string) =>
+const buildEvm = (rpcUrls: string[]) =>
   new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+    // No wallet RPC, so viem's public actions go to our RPC endpoints.
+    .action(viemPublicAdapter(rpcUrls))
     .action(connect)
     .action(disconnect)
     .action(getChainId)
     .action(getAllowance)
-    // Every public action except the receipt ones, which are picked below.
-    .action(viemPublicAdapter(rpcUrl))
-    .action(
-      viemPublicActions(rpcUrl, [
-        'getTransactionReceipt',
-        'waitForTransactionReceipt',
-      ])
-    )
     // Signed on the device, see `signers/ethereum.ts`.
     .action('sendTransaction', sendTransaction)
     .action('signMessage', signMessage)
