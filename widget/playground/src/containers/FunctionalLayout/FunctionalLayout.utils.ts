@@ -3,7 +3,10 @@ import type { Provider } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { getSupportedChainsFromProvider } from '@rango-dev/internal-blockchains';
-import { allProviders as getAllProviders } from '@rango-dev/provider-all';
+import {
+  allProviders as getAllProviders,
+  RPC_URLS,
+} from '@rango-dev/provider-all';
 
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
@@ -13,7 +16,7 @@ export function getWalletsList(
   blockchains: BlockchainMeta[]
 ): MapSupportedList[] {
   const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build());
+  const allBuiltProviders = allProviders.map((build) => build(RPC_URLS));
   const walletsList: MapSupportedList[] = [];
   allBuiltProviders.forEach((provider: Provider) => {
     if (excludedWallets.includes(provider.id)) {

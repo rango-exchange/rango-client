@@ -1,20 +1,31 @@
-import type { FeeData } from 'ethers';
-import type { EvmTransaction } from 'rango-types/mainApi';
+import type { Context, FunctionWithContext } from '@hub3js/core';
+import type { EvmActions } from '@hub3js/evm';
 
-import {
-  cleanEvmError,
-  DEFAULT_ETHEREUM_RPC_URL,
-  toHexQuantity,
-} from '@rango-dev/signer-evm';
-import { JsonRpcProvider, Transaction } from 'ethers';
-import { type GenericSigner } from 'rango-types';
+import { Transaction } from 'ethers';
 
+import { ETHEREUM_CHAIN_ID } from '../constants.js';
 import { getDerivationPath } from '../state.js';
 import { getTrezorModule, trezorErrorMessages } from '../utils.js';
 
-/** Whether a transaction already prices itself under either scheme. */
-function hasGasPricing(tx: EvmTransaction): boolean {
-  return !!tx.gasPrice || (!!tx.maxFeePerGas && !!tx.maxPriorityFeePerGas);
+type Pricing = {
+  gasPrice: bigint | null;
+  maxFeePerGas: bigint | null;
+  maxPriorityFeePerGas: bigint | null;
+};
+
+const ZERO = BigInt(0);
+
+const HEXADECIMAL_BASE = 16;
+
+/** TrezorConnect parses quantities as hex. */
+const toHexQuantity = (value: bigint | number): string =>
+  `0x${value.toString(HEXADECIMAL_BASE)}`;
+
+function getAddress(account: unknown): `0x${string}` {
+  if (typeof account === 'string') {
+    return account as `0x${string}`;
+  }
+  return (account as { address: `0x${string}` }).address;
 }
 
 /**
@@ -22,23 +33,29 @@ function hasGasPricing(tx: EvmTransaction): boolean {
  * exclusive in a signed transaction, so EIP-1559 is used wherever the chain
  * quotes it and a legacy price is the fallback.
  */
-function pricingFromFeeData(fees: FeeData) {
-  if (fees.maxFeePerGas && fees.maxPriorityFeePerGas) {
+async function getPricingFromNode(
+  context: Context<EvmActions>
+): Promise<Pricing> {
+  try {
+    const fees = (await context.action('estimateFeesPerGas')) as {
+      maxFeePerGas: bigint;
+      maxPriorityFeePerGas: bigint;
+    };
     return {
       gasPrice: null,
-      maxFeePerGas: fees.maxFeePerGas.toString(),
-      maxPriorityFeePerGas: fees.maxPriorityFeePerGas.toString(),
+      maxFeePerGas: fees.maxFeePerGas,
+      maxPriorityFeePerGas: fees.maxPriorityFeePerGas,
+    };
+  } catch {
+    return {
+      gasPrice: (await context.action('getGasPrice')) as bigint,
+      maxFeePerGas: null,
+      maxPriorityFeePerGas: null,
     };
   }
-
-  return {
-    gasPrice: fees.gasPrice?.toString() ?? null,
-    maxFeePerGas: null,
-    maxPriorityFeePerGas: null,
-  };
 }
 
-export function getTrezorErrorMessage(error: unknown) {
+function getTrezorErrorMessage(error: unknown) {
   if (
     typeof error === 'object' &&
     error !== null &&
@@ -51,119 +68,140 @@ export function getTrezorErrorMessage(error: unknown) {
      */
     return new Error(error.shortMessage, { cause: error });
   }
-  return cleanEvmError(error);
+  return error;
 }
 
-export class EthereumSigner implements GenericSigner<EvmTransaction> {
-  async signMessage(msg: string): Promise<string> {
+export const signMessage: FunctionWithContext<
+  EvmActions['signMessage'],
+  Context<EvmActions>
+> = async (_context, params) => {
+  const message = params?.message;
+  if (typeof message !== 'string') {
+    throw new Error('Trezor can only sign text messages.');
+  }
+
+  const TrezorConnect = await getTrezorModule();
+
+  const { success, payload } = await TrezorConnect.ethereumSignMessage({
+    message,
+    path: getDerivationPath(),
+  });
+  if (!success) {
+    throw new Error(payload.error);
+  }
+  return payload.signature as `0x${string}`;
+};
+
+/**
+ * Trezor has no injected provider: the transaction is completed through the
+ * namespace's public client, signed on the device, then broadcast.
+ */
+export const sendTransaction: FunctionWithContext<
+  EvmActions['sendTransaction'],
+  Context<EvmActions>
+> = async (context, request) => {
+  if (!request) {
+    throw new Error('A transaction is required.');
+  }
+  const from = getAddress(request.account);
+  const { to, data, value } = request;
+
+  try {
     const TrezorConnect = await getTrezorModule();
 
-    const { success, payload } = await TrezorConnect.ethereumSignMessage({
-      message: msg,
+    const nonce =
+      request.nonce ??
+      ((await context.action('getTransactionCount', {
+        address: from,
+      })) as number);
+
+    /*
+     * Trezor signs a raw transaction on-device and does not estimate gas, so
+     * a limit has to be present. Server-built transactions arrive with one;
+     * client-built ones - approve prerequisites among them - do not, so it is
+     * estimated here. Everything else is taken as the transaction sends it.
+     */
+    const gasLimit =
+      request.gas ??
+      ((await context.action('estimateGas', {
+        account: from,
+        to,
+        data,
+        value,
+      })) as bigint);
+
+    /*
+     * Whatever pricing the transaction came with wins - a server-built one
+     * always carries it, and it is signed with exactly what it was created
+     * with. Only a client-built transaction, which leaves both schemes null,
+     * is priced from the node.
+     */
+    const hasPricing =
+      !!request.gasPrice ||
+      (!!request.maxFeePerGas && !!request.maxPriorityFeePerGas);
+    const pricing: Pricing = hasPricing
+      ? {
+          gasPrice: request.gasPrice ?? null,
+          maxFeePerGas: request.maxFeePerGas ?? null,
+          maxPriorityFeePerGas: request.maxPriorityFeePerGas ?? null,
+        }
+      : await getPricingFromNode(context);
+
+    const isEIP1559 = !!pricing.maxFeePerGas && !!pricing.maxPriorityFeePerGas;
+
+    if (!isEIP1559 && !pricing.gasPrice) {
+      throw new Error('Missing gasPrice');
+    }
+
+    const additionalFields = isEIP1559
+      ? {
+          maxFeePerGas: toHexQuantity(pricing.maxFeePerGas ?? ZERO),
+          maxPriorityFeePerGas: toHexQuantity(
+            pricing.maxPriorityFeePerGas ?? ZERO
+          ),
+        }
+      : {
+          gasPrice: toHexQuantity(pricing.gasPrice ?? ZERO),
+        };
+
+    const transaction = {
+      to: to ?? null,
+      data: data ?? '0x',
+      value: toHexQuantity(value ?? ZERO),
+      gasLimit: toHexQuantity(gasLimit),
+      chainId: Number(ETHEREUM_CHAIN_ID),
+      nonce: toHexQuantity(nonce),
+      ...additionalFields,
+    };
+
+    const { success, payload } = await TrezorConnect.ethereumSignTransaction({
       path: getDerivationPath(),
+      transaction,
     });
+
     if (!success) {
-      throw new Error(payload.error);
+      const errorMessage =
+        trezorErrorMessages[payload?.code || ''] || payload.error;
+      throw new Error(errorMessage);
     }
-    return payload.signature;
-  }
+    const { r, s, v } = payload;
 
-  async signAndSendTx(
-    tx: EvmTransaction,
-    fromAddress: string,
-    chainId: string
-  ): Promise<{ hash: string }> {
-    try {
-      const TrezorConnect = await getTrezorModule();
-      const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
-      const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
-
+    const serializedTx = Transaction.from({
+      ...transaction,
+      nonce: Number.parseInt(transaction.nonce),
       /*
-       * Trezor signs a raw transaction on-device and does not estimate gas, so
-       * a limit has to be present. Server-built transactions arrive with one;
-       * client-built ones - approve prerequisites among them - do not, so it is
-       * estimated here. Everything else is taken as the transaction sends it.
+       * Type 0: This refers to the legacy transaction type that has been used since Ethereum's inception.
+       * Type 2: This refers to the new transaction type introduced with the EIP-1559 (Ethereum Improvement Proposal 1559) update,
+       * which was part of the London hard fork.
        */
-      const gasLimit =
-        tx.gasLimit ??
-        (
-          await provider.estimateGas({
-            from: fromAddress,
-            to: tx.to,
-            data: tx.data ?? undefined,
-            value: tx.value ?? undefined,
-          })
-        ).toString();
-      /*
-       * Whatever pricing the transaction came with wins - a server-built one
-       * always carries it, and it is signed with exactly what it was created
-       * with. Only a client-built transaction, which leaves both schemes null,
-       * is priced from the node.
-       */
-      const pricing = hasGasPricing(tx)
-        ? {
-            gasPrice: tx.gasPrice,
-            maxFeePerGas: tx.maxFeePerGas,
-            maxPriorityFeePerGas: tx.maxPriorityFeePerGas,
-          }
-        : pricingFromFeeData(await provider.getFeeData());
+      type: isEIP1559 ? 2 : 0,
+      signature: { r, s, v: parseInt(v) },
+    }).serialized as `0x${string}`;
 
-      const isEIP1559 =
-        !!pricing.maxFeePerGas && !!pricing.maxPriorityFeePerGas;
-
-      if (!isEIP1559 && !pricing.gasPrice) {
-        throw new Error('Missing gasPrice');
-      }
-
-      const additionalFields = isEIP1559
-        ? {
-            maxFeePerGas: toHexQuantity(pricing.maxFeePerGas || '0'),
-            maxPriorityFeePerGas: toHexQuantity(
-              pricing.maxPriorityFeePerGas || '0'
-            ),
-          }
-        : {
-            gasPrice: toHexQuantity(pricing.gasPrice || '0'),
-          };
-
-      const transaction = {
-        to: tx.to,
-        data: tx.data || '0x',
-        value: toHexQuantity(tx.value?.toString() || '0'),
-        gasLimit: toHexQuantity(gasLimit),
-        chainId: Number.parseInt(chainId),
-        nonce: toHexQuantity(transactionCount.toString()),
-        ...additionalFields,
-      };
-
-      const { success, payload } = await TrezorConnect.ethereumSignTransaction({
-        path: getDerivationPath(),
-        transaction,
-      });
-
-      if (!success) {
-        const errorMessage =
-          trezorErrorMessages[payload?.code || ''] || payload.error;
-        throw new Error(errorMessage);
-      }
-      const { r, s, v } = payload;
-
-      const serializedTx = Transaction.from({
-        ...transaction,
-        nonce: Number.parseInt(transaction.nonce),
-        /*
-         * Type 0: This refers to the legacy transaction type that has been used since Ethereum's inception.
-         * Type 2: This refers to the new transaction type introduced with the EIP-1559 (Ethereum Improvement Proposal 1559) update,
-         * which was part of the London hard fork.
-         */
-        type: isEIP1559 ? 2 : 0,
-        signature: { r, s, v: parseInt(v) },
-      }).serialized;
-      const broadcastResult = await provider.broadcastTransaction(serializedTx);
-
-      return { hash: broadcastResult.hash };
-    } catch (error) {
-      throw getTrezorErrorMessage(error);
-    }
+    return (await context.action('sendRawTransaction', {
+      serializedTransaction: serializedTx,
+    })) as `0x${string}`;
+  } catch (error) {
+    throw getTrezorErrorMessage(error);
   }
-}
+};

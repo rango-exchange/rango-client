@@ -203,9 +203,20 @@ export async function checkApprove<
     const chainId =
       meta.blockchains[unmetApproveMeta.prerequisite.blockChain]?.chainId;
     const walletAddress = getCurrentAddressOf(swap, currentStep);
-    const walletSigners = await getSigners(sourceWallet.walletType);
-    const signer: GenericSigner<TTransaction> =
-      walletSigners.getSigner<TTransaction>(approveAdapter.signerTxType);
+    const sendApproveTransaction = async (transaction: TTransaction) => {
+      if (approveAdapter.sendTransaction) {
+        return approveAdapter.sendTransaction(
+          namespace,
+          transaction,
+          walletAddress,
+          chainId ?? null
+        );
+      }
+      const walletSigners = await getSigners(sourceWallet.walletType);
+      const signer: GenericSigner<TTransaction> =
+        walletSigners.getSigner<TTransaction>(approveAdapter.signerTxType);
+      return signer.signAndSendTx(transaction, walletAddress, chainId);
+    };
 
     /*
      * Approving takes two waits, and telling them apart matters to the user: a
@@ -235,10 +246,8 @@ export async function checkApprove<
       isApproval: true,
     });
 
-    const transactionResult = await signer.signAndSendTx(
-      approveTransactionResult.val,
-      walletAddress,
-      chainId
+    const transactionResult = await sendApproveTransaction(
+      approveTransactionResult.val
     );
 
     updateStorageWithPrerequisiteResult(actions, {

@@ -1,5 +1,6 @@
 import type { Environments } from './types.js';
 import type { ProviderAPI } from '@hub3js/evm';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 import type { EIP6963ProviderDetail } from '@ledgerhq/ledger-wallet-provider';
 
 import { ProviderBuilder } from '@hub3js/core';
@@ -10,8 +11,9 @@ import { evm } from './namespaces/evm.js';
 
 const LEDGER_PROVIDER_NAME = 'Ledger Wallet';
 
-const buildProvider = () =>
-  new ProviderBuilder(WALLET_ID)
+// RPC URLs are accepted for every namespace, so any of them can start using one.
+const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+  return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
 
@@ -94,5 +96,6 @@ const buildProvider = () =>
     .config('metadata', metadata)
     .add('evm', evm)
     .build();
+};
 
 export { buildProvider };

@@ -31,15 +31,6 @@ export function evmSafepal(): EvmProviderApi {
   }
   return evmInstance;
 }
-export function getInstanceOrThrow(): Provider {
-  const instances = safepal();
-
-  if (!instances) {
-    throw new Error('Trust Wallet is not injected. Please check your wallet.');
-  }
-
-  return instances;
-}
 /**
  * Return true if address is a valid EVM address.
  * Accepts:

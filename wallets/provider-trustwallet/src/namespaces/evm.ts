@@ -1,7 +1,7 @@
 import type { EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
-import { actions, builders, hooks } from '@hub3js/evm';
+import { actions, builders, hooks, viemWalletAdapter } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -43,18 +43,13 @@ const getAllowance = builders
   .action(actions.getAllowance(evmTrustWallet))
   .build();
 
-const getTransactionReceipt = builders
-  .getTransactionReceipt()
-  .action(actions.getTransactionReceipt(evmTrustWallet))
-  .build();
-
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+  .action(viemWalletAdapter(evmTrustWallet))
   .action(connect)
   .action(disconnect)
   .action(canSwitchNetwork)
   .action(getChainId)
   .action(getAllowance)
-  .action(getTransactionReceipt)
   .build();
 
 export { evm };

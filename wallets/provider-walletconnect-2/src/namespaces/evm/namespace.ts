@@ -1,12 +1,8 @@
 import type { Context } from '@hub3js/core';
-import type {
-  AllowanceParams,
-  EvmActions,
-  EvmTransactionReceipt,
-} from '@hub3js/evm';
+import type { AllowanceParams, EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
-import { actions, builders, utils } from '@hub3js/evm';
+import { actions, builders, utils, viemWalletAdapter } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -105,25 +101,16 @@ const getAllowance = builders
   )
   .build();
 
-const getTransactionReceipt = builders
-  .getTransactionReceipt()
-  .action(
-    async (
-      _context: Context<EvmActions>,
-      txHash: `0x${string}`
-    ): Promise<EvmTransactionReceipt | null> =>
-      getAdapter().getTransactionReceipt(txHash)
-  )
-  .build();
+const getEip1193Provider = () => getAdapter().getEip1193Provider();
 
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+  .action(viemWalletAdapter(getEip1193Provider))
   .action(connect)
   .action(canEagerConnect)
   .action(canSwitchNetwork)
   .action(disconnect)
   .action(getChainId)
   .action(getAllowance)
-  .action(getTransactionReceipt)
   .build();
 
 export { evm };
