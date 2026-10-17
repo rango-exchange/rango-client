@@ -1,3 +1,9 @@
+# [0.62.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.61.2...provider-bitget@0.62.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.61.2](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.61.1...provider-bitget@0.61.2) (2026-09-22)
 
 

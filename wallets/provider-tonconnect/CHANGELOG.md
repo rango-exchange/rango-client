@@ -1,3 +1,14 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.25.1...provider-tonconnect@0.26.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* discard pending ton connect connection when modal is cancelled ([b700514](https://github.com/rango-exchange/rango-client/commit/b700514c2b203913ec61d38172b1d3d27763e8a0))
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.25.1](https://github.com/rango-exchange/rango-client/compare/provider-tonconnect@0.25.0...provider-tonconnect@0.25.1) (2026-09-16)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-ledger-wallet",
-  "version": "0.2.2-next.3",
+  "version": "0.3.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@ledgerhq/ledger-wallet-provider": "^1.4.2",
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
+    "@rango-dev/signer-evm": "^0.47.0",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {

@@ -1,3 +1,9 @@
+# [0.45.0](https://github.com/rango-exchange/rango-client/compare/signer-starknet@0.44.0...signer-starknet@0.45.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 # [0.44.0](https://github.com/rango-exchange/rango-client/compare/signer-starknet@0.43.0...signer-starknet@0.44.0) (2026-09-16)
 
 

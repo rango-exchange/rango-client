@@ -1,3 +1,9 @@
+# [0.58.0](https://github.com/rango-exchange/rango-client/compare/provider-safe@0.57.1...provider-safe@0.58.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.57.1](https://github.com/rango-exchange/rango-client/compare/provider-safe@0.57.0...provider-safe@0.57.1) (2026-09-16)
 
 

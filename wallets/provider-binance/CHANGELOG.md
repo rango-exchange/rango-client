@@ -1,3 +1,9 @@
+# [0.8.0](https://github.com/rango-exchange/rango-client/compare/provider-binance@0.7.1...provider-binance@0.8.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.7.1](https://github.com/rango-exchange/rango-client/compare/provider-binance@0.7.0...provider-binance@0.7.1) (2026-09-16)
 
 

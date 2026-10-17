@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tron-link",
-  "version": "0.63.2-next.5",
+  "version": "0.64.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-tron": "^0.43.1-next.1",
+    "@rango-dev/signer-tron": "^0.44.0",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {

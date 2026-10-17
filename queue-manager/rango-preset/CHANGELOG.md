@@ -1,3 +1,14 @@
+# [0.66.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.65.1...queue-manager-rango-preset@0.66.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* set false on approve tranasction to fill prequisite ([e303263](https://github.com/rango-exchange/rango-client/commit/e303263cc9623bab6d83d34f146092cc7a7127d5))
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.65.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.65.0...queue-manager-rango-preset@0.65.1) (2026-09-16)
 
 

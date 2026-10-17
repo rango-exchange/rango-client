@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-brave",
-  "version": "0.66.2-next.4",
+  "version": "0.67.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,8 +22,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
-    "@rango-dev/signer-solana": "^0.50.1-next.1",
+    "@rango-dev/signer-evm": "^0.47.0",
+    "@rango-dev/signer-solana": "^0.51.0",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {

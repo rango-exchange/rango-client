@@ -1,3 +1,4 @@
+# [0.15.0](https://github.com/rango-exchange/rango-client/compare/logging-subscriber@0.14.0...logging-subscriber@0.15.0) (2026-10-17)
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/logging-subscriber@0.13.0...logging-subscriber@0.14.0) (2026-09-16)
 
 
