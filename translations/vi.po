@@ -8,7 +8,7 @@ msgstr ""
 "Language: vi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-14 07:09\n"
+"PO-Revision-Date: 2026-10-12 10:02\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,11 +17,6 @@ msgstr ""
 "X-Crowdin-Language: vi\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
-msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
-msgstr "Đã xảy ra lỗi mạng trong quá trình xử lý yêu cầu của bạn. Vui lòng kiểm tra kết nối internet hoặc làm mới trang và thử lại."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:41
@@ -835,6 +830,11 @@ msgstr "Chọn tất cả"
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
 msgstr "Mạng bị lỗi, vui lòng thử lại việc hoán đổi."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:10
+msgid "A network error occurred while processing your request. Please check your internet connection or refresh the page and try again."
+msgstr "Đã xảy ra lỗi mạng trong quá trình xử lý yêu cầu của bạn. Vui lòng kiểm tra kết nối internet hoặc làm mới trang và thử lại."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:14

@@ -23,7 +23,7 @@ declare global {
     okxTonWallet?: any;
     starknet_argentX?: any;
     starknet_braavos?: any;
-    tronLink?: any;
+    tron?: any;
     tokenpocket?: any;
     leap?: any;
     enkrypt?: any;

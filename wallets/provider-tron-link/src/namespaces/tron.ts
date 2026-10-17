@@ -1,15 +1,12 @@
 import { NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
-import {
-  type TronActions,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/tron';
-import { builders } from '@rango-dev/wallets-core/namespaces/tron';
+import { type TronActions, utils } from '@hub3js/tron';
+import { actions, builders } from '@hub3js/tron';
 
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
-import { TronOKRequestCode, WALLET_ID } from '../constants.js';
+import { WALLET_ID } from '../constants.js';
 import { tronTronlink } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
@@ -20,21 +17,10 @@ const connect = builders
   .connect()
   .action(async () => {
     const instance = tronTronlink();
-    const accountsResult = await instance.request({
-      method: 'tron_requestAccounts',
+    const accounts: string[] = await instance.request({
+      method: 'eth_requestAccounts',
     });
-    if (!accountsResult) {
-      throw new Error('Please unlock your TronLink extension first.');
-    }
-
-    if (
-      !!accountsResult?.code &&
-      !!accountsResult.message &&
-      accountsResult.code !== TronOKRequestCode
-    ) {
-      throw new Error(accountsResult.message);
-    }
-    return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);
+    return utils.formatAccountsToCAIP(accounts);
   })
   .before(changeAccountSubscriber)
   .or(standardizeAndThrowError)
@@ -51,10 +37,28 @@ const disconnect = commonBuilders
   .after(changeAccountCleanup)
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(actions.getAllowance(tronTronlink))
+  .build();
+
+const buildApproveTransaction = builders
+  .buildApproveTransaction()
+  .action(actions.buildApproveTransaction(tronTronlink))
+  .build();
+
+const getTransactionInfo = builders
+  .getTransactionInfo()
+  .action(actions.getTransactionInfo(tronTronlink))
+  .build();
+
 const tron = new NamespaceBuilder<TronActions>('Tron', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
+  .action(getAllowance)
+  .action(buildApproveTransaction)
+  .action(getTransactionInfo)
   .build();
 
 export { tron };

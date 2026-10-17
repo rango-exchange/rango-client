@@ -8,7 +8,6 @@ import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { detectMobileScreens } from '../utils/common';
-import { emitWalletDetected } from '../utils/events';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
@@ -17,26 +16,6 @@ import {
 } from '../utils/wallets';
 
 import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
-
-/**
- * Wallet types we've already reported as detected this session. Module-scoped so
- * the `walletDetected` event fires at most once per provider regardless of how
- * often the wallet list re-renders or remounts.
- */
-const detectedWalletsReported = new Set<string>();
-
-/**
- * Wallet types that aren't browser-injected extensions (hardware wallets,
- * WalletConnect, TON Connect). Their presence doesn't indicate an installed
- * wallet, so they're excluded from the `walletDetected` signal.
- */
-const NON_INJECTED_WALLET_TYPES = new Set<string>([
-  WalletTypes.LEDGER,
-  WalletTypes.TREZOR,
-  WalletTypes.WALLET_CONNECT_2,
-  WalletTypes.TON_CONNECT,
-  WalletTypes.DEFAULT,
-]);
 
 const DEFAULT_EVM_WALLETS = new Set<string>([
   WalletTypes.DEFAULT,
@@ -86,21 +65,6 @@ export function useWalletList(params?: Params): API {
     : wallets;
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
-
-  useEffect(() => {
-    wallets.forEach((wallet) => {
-      if (NON_INJECTED_WALLET_TYPES.has(wallet.type)) {
-        return;
-      }
-      const isDetected = wallet.state !== WalletState.NOT_INSTALLED;
-      if (isDetected && !detectedWalletsReported.has(wallet.type)) {
-        detectedWalletsReported.add(wallet.type);
-        emitWalletDetected({
-          walletName: wallet.type,
-        });
-      }
-    });
-  }, [hashWalletsState(wallets)]);
 
   const terminateConnectingWallets = useCallback(() => {
     const connectingWallets =

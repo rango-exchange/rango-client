@@ -47,7 +47,7 @@ export interface UseStatefulConnect {
  * This hook maintains state of wallet and checks if additional information
  * is required to call the `connect` method of `core` package properly.
  *
- * The final goal is running `runConnect` which calls `wallets/core`'s `connect` method.
+ * The final goal is running `runConnect` which calls `@hub3js/core`'s `connect` method.
  * But sometimes it needs to get more information like what namespace it should be connected to,
  * or what derivation path should be used for.
  *

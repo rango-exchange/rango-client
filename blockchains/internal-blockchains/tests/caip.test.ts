@@ -1,13 +1,13 @@
 import { CAIP_NAMESPACE as CAIP_EVM_NAMESPACE } from '@hub3js/evm';
 import { CAIP_NAMESPACE as CAIP_SOLANA_NAMESPACE } from '@hub3js/solana';
 import { CAIP_NAMESPACE as CAIP_STARKNET_NAMESPACE } from '@hub3js/starknet';
+import { CAIP_NAMESPACE as CAIP_TRON_NAMESPACE } from '@hub3js/tron';
 import {
   CAIP_CHAINS,
   convertBlockchainMetaToCaip,
   isBitcoinBlockchain,
   isZcashBlockchain,
 } from '@rango-dev/internal-blockchains';
-import { CAIP_NAMESPACE as CAIP_TRON_NAMESPACE } from '@rango-dev/wallets-core/namespaces/tron';
 import { TransactionType } from 'rango-types';
 import { describe, expect, it } from 'vitest';
 

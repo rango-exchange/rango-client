@@ -1,9 +1,5 @@
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import {
-  type ProviderAPI,
-  type TronActions,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/tron';
+import { type ProviderAPI, type TronActions, utils } from '@hub3js/tron';
 
 import { isOkxTronMessageEvent } from '../utils.js';
 

@@ -32,7 +32,7 @@ export function WalletSection() {
   } = useMetaStore();
 
   const { externalWallets, wallets, multiWallets } = config;
-  const allWalletList = getWalletsList(config, blockchains);
+  const allWalletList = getWalletsList(blockchains);
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {

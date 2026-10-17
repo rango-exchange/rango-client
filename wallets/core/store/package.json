@@ -1,8 +1,0 @@
-{
-  "name": "@rango-dev/wallets-core/store",
-  "type": "module",
-  "main": "../dist/hub/store/mod.js",
-  "module": "../dist/hub/store/mod.js",
-  "types": "../dist/hub/store/mod.d.ts",
-  "sideEffects": false
-}

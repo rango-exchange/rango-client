@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-starknet",
-  "version": "0.44.0",
+  "version": "0.44.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "rango-types": "^0.5.0"
+    "rango-types": "^0.6.0"
   },
   "publishConfig": {
     "access": "public"

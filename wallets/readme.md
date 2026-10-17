@@ -54,8 +54,8 @@ or some specific wallets:
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { versions as metamask } from '@rango-dev/provider-metamask';
-import { versions as phantom } from '@rango-dev/provider-phantom';
+import { buildProvider as metamask } from '@rango-dev/provider-metamask';
+import { buildProvider as phantom } from '@rango-dev/provider-phantom';
 
 const providers = [metamask(), phantom()];
 
@@ -143,7 +143,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [Ledger Wallet](provider-ledger-wallet/readme.md)   | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [MathWallet](provider-math-wallet/readme.md)        | ✅  | 🚧   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [MetaMask](provider-metamask/readme.md)             | ✅  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
-| [Phantom](provider-phantom/readme.md)               | ⚠️  | ❌   | ✅     | ❌  | ❌   | ✅  | ❌       | ❌      |
+| [Phantom](provider-phantom/readme.md)               | ⚠️  | ❌   | ✅     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [OKX](provider-okx/readme.md)                       | ⚠️  | ⚠️   | ✅     | ✅  | ✅   | ✅  | ❌       | ❌      |
 | [Rabby](provider-rabby/readme.md)                   | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Ready](provider-ready/readme.md)                   | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ✅       |

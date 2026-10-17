@@ -1,11 +1,7 @@
 import type { TronChangeAccountEvent } from '../types.js';
 
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
-import {
-  type ProviderAPI,
-  type TronActions,
-  utils,
-} from '@rango-dev/wallets-core/namespaces/tron';
+import { type ProviderAPI, type TronActions, utils } from '@hub3js/tron';
 
 import { tronTronlink } from '../utils.js';
 
@@ -24,7 +20,10 @@ export const changeAccountSubscriber = (getInstance: () => ProviderAPI) =>
         event.preventDefault();
         return;
       }
-      if (!event.payload?.data?.message.data.address || !tronTronlink().ready) {
+      if (
+        !event.payload?.data?.message.data.address ||
+        !tronTronlink().tronWeb?.ready
+      ) {
         event.preventDefault();
         context.action('connect').catch(() => {
           console.debug('There were a problem during connecting');

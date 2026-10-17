@@ -1,3 +1,4 @@
+import type { Emitter, WalletEvents } from './events.js';
 import type {
   ConnectResult,
   EventHandler,
@@ -7,7 +8,6 @@ import type {
 } from './legacy/types.js';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { NamespaceData as HubNamespaceData } from '@hub3js/core/store';
-import type { VersionedProviders } from '@hub3js/core/utils';
 import type { Namespace } from '@hub3js/namespaces';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
@@ -43,7 +43,9 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: EventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: VersionedProviders[];
+  providers: Provider[];
+  /** Receives wallet events on the `walletEvent` channel. */
+  emitter?: Emitter<WalletEvents>;
   configs?: {
     wallets?: (WalletType | Provider)[];
     walletOptions?: {

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/internal-blockchains",
-  "version": "0.2.1",
+  "version": "0.2.2-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -28,16 +28,22 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/evm": "^0.5.0",
-    "@hub3js/solana": "^0.5.0",
-    "@hub3js/starknet": "^0.4.0",
-    "@hub3js/stellar": "^0.4.0",
-    "@hub3js/sui": "^0.4.0",
-    "@hub3js/tvm": "^0.4.0",
-    "@hub3js/xrpl": "^0.4.0",
-    "@rango-dev/wallets-core": "^0.62.1",
-    "rango-types": "^0.5.0"
+    "@hub3js/bip122": "^0.3.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/solana": "^0.6.0",
+    "@hub3js/starknet": "^0.5.0",
+    "@hub3js/stellar": "^0.5.0",
+    "@hub3js/sui": "^0.5.0",
+    "@hub3js/tron": "^0.2.0",
+    "@hub3js/tvm": "^0.5.0",
+    "@hub3js/xrpl": "^0.5.0",
+    "rango-types": "^0.6.0"
+  },
+  "devDependencies": {
+    "@hub3js/core": "^0.63.0"
+  },
+  "peerDependencies": {
+    "@hub3js/core": "^0.63.0"
   },
   "publishConfig": {
     "access": "public"

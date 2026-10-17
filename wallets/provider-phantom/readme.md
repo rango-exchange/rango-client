@@ -14,11 +14,7 @@ Bitcoin support is temporarily disabled because Phantom no longer injects a Bitc
 #### ⚠️ EVM
 Only supports Ethereum, Base, and Polygon.
 
-### Feature
 
-#### ⚠️ Auto Connect
-On Sui, Phantom uses Solana's auto-connect mechanism.  
-This means if Solana is not connected simultaneously, the auto-connect feature on Sui will not work properly.
 
 ---
 

@@ -13,6 +13,7 @@ import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
+import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 
@@ -88,6 +89,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
       <Provider
         allBlockChains={blockchains}
         providers={providers}
+        emitter={eventEmitter}
         onUpdateState={(type, event, value, state, info) => {
           const eventParams: Parameters<EventHandler> = [
             type,

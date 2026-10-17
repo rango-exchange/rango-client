@@ -1,4 +1,4 @@
-import { utils } from '@rango-dev/wallets-core/namespaces/tron';
+import { utils } from '@hub3js/tron';
 
 import {
   TRON_OK_REQUEST_CODE,

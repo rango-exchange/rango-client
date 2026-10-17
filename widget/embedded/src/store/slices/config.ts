@@ -5,7 +5,7 @@ import type {
   WidgetConfigWithoutLegacyProviders,
 } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
-import type { VersionedProviders } from '@hub3js/core/utils';
+import type { Provider } from '@hub3js/core';
 
 import {
   allProviders as getAllProviders,
@@ -14,7 +14,6 @@ import {
 
 import { cacheService } from '../../services/cacheService';
 import {
-  configWalletsToWalletName,
   matchAndGenerateProviders,
   type ProvidersOptions,
 } from '../../utils/providers';
@@ -41,14 +40,6 @@ export const DEFAULT_CONFIG: WidgetConfigWithoutLegacyProviders = {
   excludeLiquiditySources: true,
   customDestination: true,
   variant: 'default',
-  trezorManifest: {
-    appUrl: 'https://widget.rango.exchange/',
-    email: 'hi+trezorwidget@rango.exchange',
-  },
-  tonConnect: {
-    manifestUrl:
-      'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/manifests/tonconnect/manifest.json',
-  },
 };
 
 interface IframeConfigs {
@@ -86,31 +77,44 @@ export interface ConfigSlice {
     name: K,
     value: IframeConfigs[K]
   ) => void;
-  allProviders: VersionedProviders[];
+  allProviders: Provider[];
   buildAndSetProviders: () => void;
-  getAvailableProviders: () => VersionedProviders[];
+  getAvailableProviders: () => Provider[];
 }
 
 function generateProviders(
   config: WidgetConfigWithoutLegacyProviders
-): VersionedProviders[] {
+): Provider[] {
   const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
-  const providerNames = configWalletsToWalletName(allBuiltProviders);
+  return allBuiltProviders.filter((provider) =>
+    hasRequiredConfig(provider.id, config)
+  );
+}
 
-  const filteredProviders = allBuiltProviders.filter((_, index) => {
-    if (
-      providerNames[index] === WalletTypes.LEDGER_WALLET &&
-      (!config.ledgerWallet?.apiKey || !config.ledgerWallet?.dAppIdentifier)
-    ) {
-      return false;
-    }
+const REQUIRED_CONFIG_BY_WALLET: Partial<
+  Record<string, keyof WidgetConfigWithoutLegacyProviders>
+> = {
+  [WalletTypes.LEDGER_WALLET]: 'ledgerWallet',
+  [WalletTypes.TREZOR]: 'trezorManifest',
+  [WalletTypes.TON_CONNECT]: 'tonConnect',
+  [WalletTypes.WALLET_CONNECT_2]: 'walletConnectProjectId',
+};
 
+function hasRequiredConfig(
+  walletId: string,
+  config: WidgetConfigWithoutLegacyProviders
+): boolean {
+  const requiredKey = REQUIRED_CONFIG_BY_WALLET[walletId];
+  if (!requiredKey || config[requiredKey]) {
     return true;
-  });
+  }
 
-  return filteredProviders;
+  console.warn(
+    `${walletId} is listed in config wallets but ${requiredKey} config is not provided!`
+  );
+  return false;
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<

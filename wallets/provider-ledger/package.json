@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-ledger",
-  "version": "0.34.1",
+  "version": "0.34.2-next.4",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,26 +22,34 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@hub3js/core": "^0.62.0",
-    "@hub3js/evm": "^0.5.0",
-    "@hub3js/namespaces": "^0.5.1",
-    "@hub3js/solana": "^0.5.0",
-    "@hub3js/std": "^0.4.0",
     "@ledgerhq/errors": "^6.16.4",
     "@ledgerhq/hw-app-eth": "^6.36.0",
     "@ledgerhq/hw-app-solana": "^7.1.6",
     "@ledgerhq/hw-transport-webhid": "^6.28.6",
     "@ledgerhq/types-cryptoassets": "^7.11.0",
     "@ledgerhq/types-devices": "^6.24.0",
-    "@rango-dev/signer-evm": "^0.46.1",
-    "@rango-dev/signer-solana": "^0.50.0",
-    "@rango-dev/wallets-core": "^0.62.1",
+    "@rango-dev/signer-evm": "^0.46.2-next.1",
+    "@rango-dev/signer-solana": "^0.50.1-next.1",
     "@solana/web3.js": "^1.91.4",
     "@types/w3c-web-hid": "^1.0.2",
     "bs58": "^5.0.0",
     "caip": "^1.1.1",
     "ethers": "^6.13.2",
-    "rango-types": "^0.5.0"
+    "rango-types": "^0.6.0"
+  },
+  "devDependencies": {
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/solana": "^0.6.0",
+    "@hub3js/std": "^0.5.0"
+  },
+  "peerDependencies": {
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/namespaces": "^0.7.0",
+    "@hub3js/solana": "^0.6.0",
+    "@hub3js/std": "^0.5.0"
   },
   "publishConfig": {
     "access": "public"

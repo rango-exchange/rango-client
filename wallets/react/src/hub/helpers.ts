@@ -10,9 +10,9 @@ import {
   CAIP_LITECOIN_CHAIN_ID,
   CAIP_ZCASH_CHAIN_ID,
 } from '@hub3js/bip122';
+import { CAIP_TRON_CHAIN_ID } from '@hub3js/tron';
 import { CAIP_NAMESPACE as CAIP_TON_NAMESPACE } from '@hub3js/tvm';
 import { formatAddressWithNetwork } from '@rango-dev/internal-blockchains';
-import { CAIP_TRON_CHAIN_ID } from '@rango-dev/wallets-core/namespaces/tron';
 import { AccountId, type ChainIdParams } from 'caip';
 import { Err, Ok } from 'ts-results';
 

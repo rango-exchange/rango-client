@@ -48,4 +48,7 @@ export function areTokensEqual(tokenA?: Asset, tokenB?: Asset) {
   );
 }
 
-export const excludedWallets = [WalletTypes.DEFAULT, WalletTypes.SAFE];
+export const excludedWallets: string[] = [
+  WalletTypes.DEFAULT,
+  WalletTypes.SAFE,
+];

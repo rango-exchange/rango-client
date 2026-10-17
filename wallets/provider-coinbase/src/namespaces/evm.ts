@@ -31,7 +31,7 @@ const connect = new ActionBuilder<EvmActions, 'connect'>('connect')
    * Coinbase Wallet's `connect` returns a list where the currently selected account
    * is always the first item. We're directly taking this first item as the active account.
    *
-   * ***NOTE***: Please keep it synced with `wallets/core/src/namespaces/solana/builders.ts`.
+   * ***NOTE***: Please keep it synced with `@hub3js/solana`'s builders.
    *
    */
   .and((_, connectResult) => ({
@@ -73,12 +73,24 @@ const getChainId = builders
   .action(actions.getChainId(evmCoinbase))
   .build();
 
+const getAllowance = builders
+  .getAllowance()
+  .action(actions.getAllowance(evmCoinbase))
+  .build();
+
+const getTransactionReceipt = builders
+  .getTransactionReceipt()
+  .action(actions.getTransactionReceipt(evmCoinbase))
+  .build();
+
 const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
   .action(connect)
   .action(disconnect)
   .action(canEagerConnect)
   .action(canSwitchNetwork)
   .action(getChainId)
+  .action(getAllowance)
+  .action(getTransactionReceipt)
   .build();
 
 export { evm };

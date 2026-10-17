@@ -6,7 +6,7 @@ import { Events } from '@rango-dev/wallets-react';
 /*
  * propagate updates for Dapps using external wallets
  *
- * Note: to take more control over the public interface and wallets-core interface (which may be changed) we use this layer
+ * Note: to take more control over the public interface and `@hub3js/core` interface (which may be changed) we use this layer
  */
 export function propagateEvents(
   cb: OnUpdateState,
@@ -14,10 +14,7 @@ export function propagateEvents(
 ): void {
   const [walletType, event, value, coreState, info] = eventParams;
 
-  /*
-   * PROVIDER_DISCONNECTED has conflict with WalletEventTypes.DISCONNECT since they are doing samething, the first one is using only for Hub, the second one is what we exposed to the lib users.
-   * so for backward-compat we need to keep the behavior of WalletEventTypes.DISCONNECT
-   */
+  // PROVIDER_DISCONNECTED is used only by the hub, so it isn't propagated to lib users.
   if (event === Events.PROVIDER_DISCONNECTED) {
     return;
   }

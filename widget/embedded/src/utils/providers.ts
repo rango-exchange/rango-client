@@ -1,11 +1,6 @@
 import type { WidgetConfig } from '../types';
 
 import { Provider } from '@hub3js/core';
-import {
-  defineVersions,
-  pickVersion,
-  type VersionedProviders,
-} from '@hub3js/core/utils';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
@@ -19,23 +14,23 @@ export interface ProvidersOptions {
 /**
  *
  * Generate a list of providers by passing a provider name (e.g. metamask) or a custom hub `Provider`.
- * @returns VersionedProviders[] a list of VersionedProviders
+ * @returns Provider[] a list of hub Providers
  *
  */
 export function matchAndGenerateProviders({
   allProviders,
   configWallets,
 }: {
-  allProviders: VersionedProviders[];
+  allProviders: Provider[];
   configWallets: WidgetConfig['wallets'];
   options?: ProvidersOptions;
-}): VersionedProviders[] {
+}): Provider[] {
   if (configWallets) {
     /*
      * If `wallets`  is included in widget config,
      * allProviders should be filtered based on wallets list
      */
-    const selectedProviders: VersionedProviders[] = [];
+    const selectedProviders: Provider[] = [];
 
     configWallets.forEach((requestedWallet) => {
       /*
@@ -45,7 +40,7 @@ export function matchAndGenerateProviders({
        */
       if (typeof requestedWallet === 'string') {
         const result = allProviders.find(
-          (provider) => pickProviderVersion(provider).id === requestedWallet
+          (provider) => provider.id === requestedWallet
         );
 
         if (result) {
@@ -56,16 +51,11 @@ export function matchAndGenerateProviders({
             `Couldn't find ${requestedWallet} provider. Please make sure you are passing the correct name.`
           );
         }
+      } else if (requestedWallet instanceof Provider) {
+        selectedProviders.push(requestedWallet);
       } else {
-        // It's a custom provider so we directly push it to the list.
-        if (!(requestedWallet instanceof Provider)) {
-          throw new Error(
-            `Legacy providers aren't supported anymore. Pass a hub 'Provider' instance in 'wallets' instead.`
-          );
-        }
-
-        selectedProviders.push(
-          defineVersions().version('1.0.0', requestedWallet).build()
+        throw new Error(
+          `Invalid item in widget config 'wallets': expected a wallet type string (e.g. 'metamask') or a hub 'Provider' instance, but received ${typeof requestedWallet}.`
         );
       }
     });
@@ -76,12 +66,6 @@ export function matchAndGenerateProviders({
   return allProviders;
 }
 
-export function pickProviderVersion(provider: VersionedProviders): Provider {
-  return pickVersion(provider, '1.0.0')[1];
-}
-
-export function configWalletsToWalletName(
-  providers: VersionedProviders[]
-): string[] {
-  return providers.map((provider) => pickProviderVersion(provider).id);
+export function configWalletsToWalletName(providers: Provider[]): string[] {
+  return providers.map((provider) => provider.id);
 }

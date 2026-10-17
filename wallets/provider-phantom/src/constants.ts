@@ -8,7 +8,6 @@ import {
 } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
-import { isSuiNamespace } from '@hub3js/sui';
 
 import getSigners from './signer.js';
 import { getInstanceOrThrow } from './utils.js';
@@ -20,7 +19,6 @@ export const EVM_SUPPORTED_CHAINS = [
 ];
 
 export const WALLET_ID = 'phantom';
-export const WALLET_NAME_IN_WALLET_STANDARD = 'Phantom';
 
 export const metadata: ProviderMetadata = {
   name: 'Phantom',
@@ -51,12 +49,6 @@ export const metadata: ProviderMetadata = {
             value: 'Solana',
             id: 'SOLANA',
             isChainSupported: isSolanaNamespace,
-          },
-          {
-            label: 'Sui',
-            value: 'Sui',
-            id: 'SUI',
-            isChainSupported: isSuiNamespace,
           },
         ],
       },

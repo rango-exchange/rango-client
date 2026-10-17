@@ -4,7 +4,7 @@ import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
 import type { ProviderAPI as SolanaProviderApi } from '@hub3js/solana';
 import type { ProviderAPI as SuiProviderApi } from '@hub3js/sui';
-import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { ProviderAPI as TronProviderApi } from '@hub3js/tron';
 
 import {
   EVM_NAMESPACE,

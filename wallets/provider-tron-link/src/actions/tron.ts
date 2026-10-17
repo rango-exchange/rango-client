@@ -8,6 +8,6 @@ const canEagerConnectAction = () => {
       'Trying to eagerly connect to your wallet, but seems its tron instance is not available.'
     );
   }
-  return tronInstance.ready;
+  return !!tronInstance.tronWeb?.ready;
 };
 export const tronActions = { canEagerConnectAction };

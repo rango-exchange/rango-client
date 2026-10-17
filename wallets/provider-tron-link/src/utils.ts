@@ -1,17 +1,16 @@
-import type { Provider } from './types.js';
-import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { Provider, TronLinkProviderApi } from './types.js';
 
 import { TRON_NAMESPACE } from '@hub3js/namespaces';
 
 export function tronlink(): Provider | null {
   const instances: Provider = new Map();
-  const { tronLink } = window;
+  const { tron } = window;
 
-  if (!tronLink) {
+  if (tron?.isTronLink !== true) {
     return null;
   }
 
-  instances.set(TRON_NAMESPACE, tronLink);
+  instances.set(TRON_NAMESPACE, tron);
 
   return instances;
 }
@@ -26,7 +25,7 @@ export function getInstanceOrThrow(): Provider {
   return instances;
 }
 
-export function tronTronlink(): TronProviderApi {
+export function tronTronlink(): TronLinkProviderApi {
   const instance = tronlink();
   const tronInstance = instance?.get(TRON_NAMESPACE);
 

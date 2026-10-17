@@ -1,7 +1,7 @@
 import type { Provider } from './types.js';
 import type { ProviderAPI as UtxoProviderApi } from '@hub3js/bip122';
 import type { ProviderAPI as EvmProviderApi } from '@hub3js/evm';
-import type { ProviderAPI as TronProviderApi } from '@rango-dev/wallets-core/namespaces/tron';
+import type { ProviderAPI as TronProviderApi } from '@hub3js/tron';
 
 import {
   EVM_NAMESPACE,

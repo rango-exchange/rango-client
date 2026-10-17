@@ -1,12 +1,15 @@
 import type { SelectedQuote } from './quote';
-import type { Wallet } from './wallets';
 import type {
   RouteEventData,
   StepEventData,
 } from '@rango-dev/queue-manager-rango-preset';
+import type { WalletEventData } from '@rango-dev/wallets-react';
+
+import { WidgetEvents as QueueManagerEvents } from '@rango-dev/queue-manager-rango-preset';
+import { WalletEventChannel } from '@rango-dev/wallets-react';
 
 type EventData<
-  T extends QuoteEventTypes | WalletEventTypes | UiEventTypes,
+  T extends QuoteEventTypes | UiEventTypes,
   U extends Record<string, unknown> | null
 > = { type: T; payload: U };
 
@@ -15,8 +18,6 @@ export type PreventableEventPayload<
 > = {
   preventDefault: () => void;
 } & T;
-
-type Account = Wallet;
 
 export enum QuoteEventTypes {
   QUOTE_INPUT_UPDATE = 'quoteInputUpdate',
@@ -29,12 +30,6 @@ export enum QuoteEventTypes {
   ROUTE_FETCH_FAILED = 'routeFetchFailed',
   /** The user overrode the auto-selected route. */
   ROUTE_CHANGED = 'routeChanged',
-}
-
-export enum WalletEventTypes {
-  CONNECT = 'connect',
-  DISCONNECT = 'disconnect',
-  DETECTED = 'detected',
 }
 
 /**
@@ -71,24 +66,6 @@ export type QuoteUpdateEventPayload = Pick<
   SelectedQuote,
   'requestAmount' | 'swaps' | 'outputAmount' | 'resultType' | 'tags'
 > | null;
-
-export type ConnectWalletEventPayload = {
-  walletType: string;
-  accounts: Account[];
-  /** Blockchain of the first connected account. */
-  chain: string | null;
-  /** wallet type (e.g. "metamask"). */
-  walletName: string;
-};
-
-export type DisconnectWalletEventPayload = {
-  walletType: string;
-  walletName: string;
-};
-
-export type WalletDetectedEventPayload = {
-  walletName: string;
-};
 
 export type ClickConnectWalletPayload = PreventableEventPayload;
 
@@ -217,11 +194,6 @@ export type QuoteEventData =
   | EventData<QuoteEventTypes.ROUTE_FETCH_FAILED, RouteFetchFailedEventPayload>
   | EventData<QuoteEventTypes.ROUTE_CHANGED, RouteChangedEventPayload>;
 
-export type WalletEventData =
-  | EventData<WalletEventTypes.CONNECT, ConnectWalletEventPayload>
-  | EventData<WalletEventTypes.DISCONNECT, DisconnectWalletEventPayload>
-  | EventData<WalletEventTypes.DETECTED, WalletDetectedEventPayload>;
-
 export type UiEventData =
   | EventData<UiEventTypes.CLICK_CONNECT_WALLET, ClickConnectWalletPayload>
   | EventData<UiEventTypes.TOKEN_SELECTED, TokenSelectedEventPayload>
@@ -248,17 +220,12 @@ export type UiEventData =
   | EventData<UiEventTypes.SWAP_RETRIED, SwapRetriedEventPayload>
   | EventData<UiEventTypes.SWAP_CANCELLED, SwapCancelledEventPayload>;
 
-/**
- * RouteEvent/StepEvent must match the queue-manager's `WidgetEvents` string
- * values (`QueueManagerEvents`) so events route correctly. They're inlined as
- * literals rather than referencing the other enum to keep this a pure string
- * enum (a cross-enum reference makes `no-mixed-enums` read them as numeric).
- */
 export enum WidgetEvents {
-  RouteEvent = 'routeEvent',
-  StepEvent = 'stepEvent',
+  RouteEvent = QueueManagerEvents.RouteEvent,
+  StepEvent = QueueManagerEvents.StepEvent,
   QuoteEvent = 'quoteEvent',
-  WalletEvent = 'walletEvent',
+  // `isolatedModules` rejects a bare const reference in an enum initializer (TS18055).
+  WalletEvent = `${WalletEventChannel}`,
   UiEvent = 'uiEvent',
 }
 

@@ -4,8 +4,6 @@ import {
   type QuoteEventData,
   type UiEventData,
   type UiEventTypes,
-  type WalletDetectedEventPayload,
-  WalletEventTypes,
   WidgetEvents,
 } from '../types';
 
@@ -40,11 +38,4 @@ export function emitPreventableEvent(
 
 export function emitQuoteEvent(event: QuoteEventData): void {
   eventEmitter.emit(WidgetEvents.QuoteEvent, event);
-}
-
-export function emitWalletDetected(payload: WalletDetectedEventPayload): void {
-  eventEmitter.emit(WidgetEvents.WalletEvent, {
-    type: WalletEventTypes.DETECTED,
-    payload,
-  });
 }

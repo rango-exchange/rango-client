@@ -7,13 +7,33 @@ import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
 import { Result } from 'ts-results';
 
+import {
+  toBlockchainName,
+  WalletEventChannel,
+  type WalletEventEmitter,
+  WalletEventTypes,
+} from '../events.js';
+
 import { HUB_LAST_CONNECTED_WALLETS } from './constants.js';
 import { runSequentiallyWithoutFailure } from './helpers.js';
 import { LastConnectedWalletsFromStorage } from './lastConnectedWallets.js';
 import {
   convertNamespaceNetworkToEvmChainId,
   isEvmNamespace,
+  transformHubResultToLegacyResult,
 } from './utils.js';
+
+function createAutoConnectEventPayload(
+  walletName: WalletType,
+  namespaceInput: NamespaceInputForConnect
+) {
+  return {
+    walletName,
+    namespace: namespaceInput.namespace,
+    chain: namespaceInput.network || null,
+    origin: 'auto' as const,
+  };
+}
 
 function isEvmNamespaceInput(
   namespace: NamespaceInputForConnect
@@ -35,9 +55,10 @@ async function eagerConnect(
   params: {
     getHub: () => Hub;
     allBlockChains: UseAdapterParams['allBlockChains'];
+    emitter?: WalletEventEmitter;
   }
 ) {
-  const { getHub, allBlockChains } = params;
+  const { getHub, allBlockChains, emitter } = params;
   const wallet = getHub().get(type);
   if (!wallet) {
     throw new Error(
@@ -81,10 +102,25 @@ async function eagerConnect(
         } else {
           connectNamespacePromise = async () => namespace.connect();
         }
+        const eventPayload = createAutoConnectEventPayload(type, info);
         try {
-          await connectNamespacePromise();
+          const result = await connectNamespacePromise();
+          emitter?.emit(WalletEventChannel, {
+            type: WalletEventTypes.WALLET_CONNECTED,
+            payload: {
+              ...eventPayload,
+              chain: toBlockchainName(
+                transformHubResultToLegacyResult(result).network,
+                allBlockChains
+              ),
+            },
+          });
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
+          emitter?.emit(WalletEventChannel, {
+            type: WalletEventTypes.WALLET_CONNECT_FAILED,
+            payload: eventPayload,
+          });
           /*
            * Since we check for connect failures using `instanceof Error`
            * this check is added here to make sure the thrown error always is an instance of `Error`
@@ -182,8 +218,9 @@ export async function autoConnect(deps: {
   getHub: () => Hub;
   allBlockChains: UseAdapterParams['allBlockChains'];
   wallets?: (WalletType | Provider)[];
+  emitter?: WalletEventEmitter;
 }): Promise<void> {
-  const { getHub, allBlockChains, wallets } = deps;
+  const { getHub, allBlockChains, wallets, emitter } = deps;
   const lastConnectedWallets = lastConnectedWalletsFromStorage.list();
   const walletIds = Object.keys(lastConnectedWallets);
 
@@ -219,8 +256,22 @@ export async function autoConnect(deps: {
         return;
       }
 
+      lastConnectedNamespaces.forEach((namespace) => {
+        emitter?.emit(WalletEventChannel, {
+          type: WalletEventTypes.WALLET_CONNECT_INITIATED,
+          payload: createAutoConnectEventPayload(providerName, namespace),
+        });
+      });
+
       const { successNamespaces, failedNamespaces } =
         await tryRunCanEagerConnect(lastConnectedNamespaces, wallet);
+
+      failedNamespaces.forEach((namespace) => {
+        emitter?.emit(WalletEventChannel, {
+          type: WalletEventTypes.WALLET_CONNECT_FAILED,
+          payload: createAutoConnectEventPayload(providerName, namespace),
+        });
+      });
 
       if (!successNamespaces.length) {
         walletsToRemoveFromPersistence.push(providerName);
@@ -235,6 +286,7 @@ export async function autoConnect(deps: {
         eagerConnect(providerName, successNamespaces, {
           allBlockChains,
           getHub,
+          emitter,
         }).catch((error) => console.warn(error))
       );
     });

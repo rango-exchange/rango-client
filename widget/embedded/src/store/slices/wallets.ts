@@ -6,14 +6,8 @@ import BigNumber from 'bignumber.js';
 
 import { ZERO } from '../../constants/numbers';
 import { BALANCE_SEPARATOR } from '../../constants/wallets';
-import { eventEmitter } from '../../services/eventEmitter';
 import { httpService } from '../../services/httpService';
-import {
-  type Balance,
-  type Wallet,
-  WalletEventTypes,
-  WidgetEvents,
-} from '../../types';
+import { type Balance, type Wallet } from '../../types';
 import { memoizedResult } from '../../utils/common';
 import { isAccountAndWalletMatched } from '../../utils/wallets';
 import { keepLastUpdated } from '../middlewares/keepLastUpdated';
@@ -114,8 +108,7 @@ export interface WalletsSlice {
   newWalletConnected: (
     accounts: Wallet[],
     namespace?: Namespace,
-    derivationPath?: string,
-    meta?: { walletName?: string }
+    derivationPath?: string
   ) => Promise<void>;
   disconnectNamespaces: (walletType: string, namespaces: Namespace[]) => void;
   /**
@@ -444,20 +437,11 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         connectedWallets: nextConnectedWalletsWithUpdatedSelectedStatus,
       });
     },
-    newWalletConnected: async (accounts, namespace, derivationPath, meta) => {
+    newWalletConnected: async (accounts, namespace, derivationPath) => {
       const newAccount = accounts[0];
       if (!newAccount) {
         return;
       }
-      eventEmitter.emit(WidgetEvents.WalletEvent, {
-        type: WalletEventTypes.CONNECT,
-        payload: {
-          walletType: newAccount.walletType,
-          accounts,
-          chain: newAccount.chain ?? null,
-          walletName: meta?.walletName ?? newAccount.walletType,
-        },
-      });
 
       get().addConnectedWallet(accounts, namespace, derivationPath);
 
@@ -525,15 +509,6 @@ export const createWalletsSlice = keepLastUpdated<AppStoreState, WalletsSlice>(
         get().connectedWallets.find(
           (wallet) => wallet.walletType === walletType
         );
-      /*
-       * Previously DISCONNECT event was being emitted if target wallet existed in connected wallets.
-       * Considering that connected wallets get clear on namespace disconnect in hub,
-       * now emitting this event is done without checking for connected wallets to be compatible with hub.
-       */
-      eventEmitter.emit(WidgetEvents.WalletEvent, {
-        type: WalletEventTypes.DISCONNECT,
-        payload: { walletType, walletName: walletType },
-      });
       if (isTargetWalletExistsInConnectedWallets) {
         // This should be called before updating connectedWallets since we need the old state to remove balances.
         get().removeBalancesForWallet(walletType);
