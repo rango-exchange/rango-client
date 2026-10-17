@@ -1,3 +1,10 @@
+# [0.65.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.64.2...provider-phantom@0.65.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
+* remove sui chain from phantom ([2ea2229](https://github.com/rango-exchange/rango-client/commit/2ea22291ea0a4b3b5d7a6f20d1da0e686c86c7eb))
 ## [0.64.2](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.64.1...provider-phantom@0.64.2) (2026-09-22)
 
 

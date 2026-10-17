@@ -1,3 +1,9 @@
+# [0.65.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.64.1...provider-trustwallet@0.65.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.64.1](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.64.0...provider-trustwallet@0.64.1) (2026-09-16)
 
 

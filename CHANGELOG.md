@@ -1,3 +1,23 @@
+# 0.64.0 (2026-10-17)
+_includes `@rango-dev/widget-embedded@0.65.0`_
+
+
+
+### Bug Fixes
+
+* discard pending ton connect connection when modal is cancelled ([b700514](https://github.com/rango-exchange/rango-client/commit/b700514c2b203913ec61d38172b1d3d27763e8a0))
+* isolate walletconnect client from the host app's clients ([3094543](https://github.com/rango-exchange/rango-client/commit/309454373f0029ec77c21dde1ed8ba37432523e8))
+* **provider-tron-link:** use window.tron instead of window.tronLink ([4f08bfb](https://github.com/rango-exchange/rango-client/commit/4f08bfbf2db7754c3c90af7fb0cdf94d5b8bd270))
+* set false on approve tranasction to fill prequisite ([e303263](https://github.com/rango-exchange/rango-client/commit/e303263cc9623bab6d83d34f146092cc7a7127d5))
+* **wallets:** remove leftover file ([8a9b9e5](https://github.com/rango-exchange/rango-client/commit/8a9b9e54eebac2221f77bdc955e139614f5f2f18))
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
+* remove sui chain from phantom ([2ea2229](https://github.com/rango-exchange/rango-client/commit/2ea22291ea0a4b3b5d7a6f20d1da0e686c86c7eb))
+* **wallets:** emit wallet connection events from wallets-react ([b9666fd](https://github.com/rango-exchange/rango-client/commit/b9666fd4225905771c73733b3726c0067189baa9))
+* **widget:** switch to the wallets-react wallet events ([4b9730a](https://github.com/rango-exchange/rango-client/commit/4b9730a5270a6abcc16e21163b3f6a2f12440697))
 ## 0.63.3 (2026-09-22)
 _includes `@rango-dev/widget-embedded@0.64.3`_
 

@@ -1,3 +1,9 @@
+# [0.20.0](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.19.1...provider-slush@0.20.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 ## [0.19.1](https://github.com/rango-exchange/rango-client/compare/provider-slush@0.19.0...provider-slush@0.19.1) (2026-09-16)
 
 

@@ -1,3 +1,11 @@
+# [0.65.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.64.3...widget-embedded@0.65.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
+* **wallets:** emit wallet connection events from wallets-react ([b9666fd](https://github.com/rango-exchange/rango-client/commit/b9666fd4225905771c73733b3726c0067189baa9))
+* **widget:** switch to the wallets-react wallet events ([4b9730a](https://github.com/rango-exchange/rango-client/commit/4b9730a5270a6abcc16e21163b3f6a2f12440697))
 ## [0.64.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.64.2...widget-embedded@0.64.3) (2026-09-22)
 ## [0.64.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.64.1...widget-embedded@0.64.2) (2026-09-21)
 ## [0.64.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.64.0...widget-embedded@0.64.1) (2026-09-16)

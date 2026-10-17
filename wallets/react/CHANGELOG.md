@@ -1,3 +1,10 @@
+# [0.50.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.49.1...wallets-react@0.50.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
+* **wallets:** emit wallet connection events from wallets-react ([b9666fd](https://github.com/rango-exchange/rango-client/commit/b9666fd4225905771c73733b3726c0067189baa9))
 ## [0.49.1](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.49.0...wallets-react@0.49.1) (2026-09-16)
 
 

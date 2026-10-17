@@ -1,3 +1,9 @@
+# [0.13.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.12.0...signer-sui@0.13.0) (2026-10-17)
+
+
+### Features
+
+* **approval:** migrate EVM and Tron approval to the prerequisites flow ([23f3bf4](https://github.com/rango-exchange/rango-client/commit/23f3bf4bb871c5b367214c3b82c5786dd9748adc))
 # [0.12.0](https://github.com/rango-exchange/rango-client/compare/signer-sui@0.11.0...signer-sui@0.12.0) (2026-09-16)
 
 

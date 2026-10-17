@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tomo",
-  "version": "0.31.2-next.4",
+  "version": "0.32.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.46.2-next.1",
+    "@rango-dev/signer-evm": "^0.47.0",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {
