@@ -4,6 +4,7 @@ import type { StandardEventsChangeProperties } from '@wallet-standard/features';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { builders, type SolanaActions, utils } from '@hub3js/solana';
+import { disconnect as disconnectAction } from '@hub3js/std/actions';
 import * as commonBuilders from '@hub3js/std/builders';
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
@@ -66,13 +67,19 @@ const disconnect = commonBuilders
    * Tell the Ledger wallet to clear its announced accounts so a later
    * reconnect starts clean. It must never make our own disconnect flow fail,
    * hence the guard.
+   *
+   * This lives in the action rather than a `before` hook because hub3 doesn't
+   * await `before` hooks. Awaiting it here makes callers wait for Ledger's
+   * session reset to finish before, e.g., connecting another namespace.
    */
-  .before(async () => {
+  .action(async (context: Context<SolanaActions>) => {
     try {
       await getSolanaWallet().features['standard:disconnect'].disconnect();
     } catch (error) {
       console.error('[ledger-wallet] solana disconnect failed', error);
     }
+
+    disconnectAction(context);
   })
   .after(changeAccountCleanup)
   .build();
