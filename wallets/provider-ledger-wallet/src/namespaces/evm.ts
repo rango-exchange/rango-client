@@ -2,7 +2,13 @@ import type { Context } from '@hub3js/core';
 import type { Chain, ChainId, EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
-import { actions, builders, utils, viemWalletAdapter } from '@hub3js/evm';
+import {
+  actions,
+  builders,
+  utils,
+  viemPublicAdapter,
+  viemWalletAdapter,
+} from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -101,14 +107,56 @@ const getAllowance = builders
   .action(actions.getAllowance(getProvider))
   .build();
 
-const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
-  .action(viemWalletAdapter(getProvider))
-  .action(connect)
-  .action(disconnect)
-  .action(canEagerConnect)
-  .action(canSwitchNetwork)
-  .action(getChainId)
-  .action(getAllowance)
-  .build();
+/*
+ * viem's public actions that only use the reads the Ledger provider forwards
+ * to its node: `eth_blockNumber`, `eth_getBalance`, `eth_getCode`,
+ * `eth_estimateGas` and `eth_call`. It rejects every other read, e.g.
+ * `eth_getTransactionReceipt`, with 4200 (unsupported method).
+ *
+ * Ledger's list (`BROADCASTED_TO_NODE_RPC_METHODS`), as of the latest release
+ * (`@ledgerhq/ledger-wallet-provider` 2.0.2):
+ * https://github.com/LedgerHQ/ledger-button-public/blob/cc33f953aa/packages/ledger-wallet-provider-evm/src/utils/supportedRpcMethods.ts
+ * `eth_getTransactionReceipt` is added on their develop branch, so the receipt
+ * actions can move here once it's released.
+ */
+const LEDGER_PUBLIC_ACTIONS: ReadonlyArray<keyof EvmActions> = [
+  'getBalance',
+  'getBlockNumber',
+  'getCode',
+  'getBytecode',
+  'estimateGas',
+  'estimateContractGas',
+  'call',
+  'readContract',
+  'simulateContract',
+];
 
-export { evm };
+const buildEvm = (rpcUrls: string[]) => {
+  const publicActions = viemPublicAdapter(rpcUrls);
+  const publicActionNames = new Set(publicActions.map(([name]) => name));
+
+  return (
+    new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
+      // Every public action from our RPC, for the reads Ledger doesn't serve.
+      .action(publicActions)
+      /*
+       * Wallet actions, and the reads Ledger serves, come from the wallet (on
+       * the chain it's on). Its other reads are left to the actions above.
+       */
+      .action(
+        viemWalletAdapter(getProvider).filter(
+          ([name]) =>
+            !publicActionNames.has(name) || LEDGER_PUBLIC_ACTIONS.includes(name)
+        )
+      )
+      .action(connect)
+      .action(disconnect)
+      .action(canEagerConnect)
+      .action(canSwitchNetwork)
+      .action(getChainId)
+      .action(getAllowance)
+      .build()
+  );
+};
+
+export { buildEvm };

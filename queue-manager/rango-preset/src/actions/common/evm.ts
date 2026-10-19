@@ -123,7 +123,8 @@ export function toEvmTransactionRequest(
     request.gasPrice = BigInt(tx.gasPrice);
   }
 
-  return request;
+  // Built loosely because viem types each fee scheme as its own variant.
+  return request as SendTransactionParameters;
 }
 
 function getActiveAddress(namespace: EvmNamespace): string | undefined {
