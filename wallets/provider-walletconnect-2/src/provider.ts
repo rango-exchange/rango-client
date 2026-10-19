@@ -1,4 +1,5 @@
 import type { Environments } from './types.js';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 
 import { ProviderBuilder } from '@hub3js/core';
 
@@ -7,8 +8,9 @@ import { setAdapter } from './adapter/registry.js';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm/namespace.js';
 
-const buildProvider = () =>
-  new ProviderBuilder(WALLET_ID)
+// RPC URLs are accepted for every namespace, so any of them can start using one.
+const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+  return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
 
@@ -31,5 +33,6 @@ const buildProvider = () =>
     .config('metadata', metadata)
     .add('evm', evm)
     .build();
+};
 
 export { buildProvider };

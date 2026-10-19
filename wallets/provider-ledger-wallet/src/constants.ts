@@ -15,8 +15,6 @@ import {
 } from '@hub3js/evm';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
-import getSigners from './signer.js';
-
 export const WALLET_ID = 'ledger-wallet';
 
 /*
@@ -63,10 +61,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners() },
     },
     {
       name: 'details',

@@ -2,9 +2,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'tomo';
 export const TOMO_INJECTION_DELAY = 1000;
 export const metadata: ProviderMetadata = {
@@ -30,12 +27,6 @@ export const metadata: ProviderMetadata = {
             isChainSupported: isEvmNamespace,
           },
         ],
-      },
-    },
-    {
-      name: 'signers',
-      value: {
-        getSigners: async () => getSigners(getInstanceOrThrow()),
       },
     },
   ],
