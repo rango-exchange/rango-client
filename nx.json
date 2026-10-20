@@ -20,7 +20,10 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": [],
+    "sharedGlobals": [
+      { "env": "REACT_APP_LEDGER_WALLET_IDENTIFIER" },
+      { "env": "REACT_APP_LEDGER_WALLET_API_KEY" }
+    ],
     "production": ["default"]
   },
   "defaultBase": "next",
