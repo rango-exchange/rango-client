@@ -256,6 +256,15 @@ export async function autoConnect(deps: {
         return;
       }
 
+      /*
+       * The wallet may not be injected yet when the page loads. Skip it instead of
+       * trying (and failing) to connect, and keep it in storage for the next load.
+       */
+      const [getWalletState] = wallet.state();
+      if (!getWalletState().installed) {
+        return;
+      }
+
       lastConnectedNamespaces.forEach((namespace) => {
         emitter?.emit(WalletEventChannel, {
           type: WalletEventTypes.WALLET_CONNECT_INITIATED,

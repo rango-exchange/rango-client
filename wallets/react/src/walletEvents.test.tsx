@@ -342,11 +342,18 @@ describe('disconnect', () => {
     });
     events.length = 0;
 
+    let disconnectSettled = false;
+    let disconnectPromise: Promise<void> = Promise.resolve();
     await act(async () => {
-      await result.current.disconnect('disconnect-wallet');
+      disconnectPromise = result.current
+        .disconnect('disconnect-wallet')
+        .then(() => {
+          disconnectSettled = true;
+        });
     });
 
     // Both events fire before the pending EVM disconnect settles.
+    expect(disconnectSettled).toBe(false);
     expect(events).toEqual([
       {
         type: WalletEventTypes.WALLET_DISCONNECTED,
@@ -360,8 +367,11 @@ describe('disconnect', () => {
 
     await act(async () => {
       finishEvmDisconnect();
+      await disconnectPromise;
     });
 
+    // `disconnect` only resolves once every namespace has disconnected.
+    expect(disconnectSettled).toBe(true);
     expect(events).toHaveLength(2);
   });
 });

@@ -358,18 +358,31 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         );
       }
 
-      wallet.getAll().forEach((namespace) => {
-        const namespaceShouldBeDisconnected =
-          !namespaces || namespaces.includes(namespace.namespaceId);
-        const namespaceIsConnected = namespace.state()[0]().connected;
-        if (namespaceShouldBeDisconnected && namespaceIsConnected) {
+      /*
+       * Wait for every namespace to finish disconnecting, so callers (e.g.
+       * single-namespace wallets switching namespace) don't start a new
+       * connect while the previous disconnect is still in flight.
+       */
+      const disconnectPromises = Array.from(wallet.getAll().values())
+        .filter((namespace) => {
+          const namespaceShouldBeDisconnected =
+            !namespaces || namespaces.includes(namespace.namespaceId);
+          const namespaceIsConnected = namespace.state()[0]().connected;
+          return namespaceShouldBeDisconnected && namespaceIsConnected;
+        })
+        .map(async (namespace) => {
           dataRef.current.emitter?.emit(WalletEventChannel, {
             type: WalletEventTypes.WALLET_DISCONNECTED,
             payload: { walletName: type, namespace: namespace.namespaceId },
           });
           return namespace.disconnect();
-        }
-      });
+        });
+
+      /*
+       * `allSettled` keeps a failing namespace from rejecting the whole call
+       * or skipping the storage cleanup below.
+       */
+      await Promise.allSettled(disconnectPromises);
 
       if (params.autoConnect) {
         if (namespaces) {

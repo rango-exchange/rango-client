@@ -7,6 +7,12 @@ inputs:
   RANGO_API_KEY:
     required: true
     type: string
+  LEDGER_WALLET_IDENTIFIER:
+    required: false
+    type: string
+  LEDGER_WALLET_API_KEY:
+    required: false
+    type: string
   VERCEL_ORG_ID:
     required: true
     type: string    
@@ -47,6 +53,8 @@ runs:
       env:
         REACT_APP_PLAYGROUND_RANGO_API_KEY: ${{ inputs.PLAYGROUND_RANGO_API_KEY }}
         REACT_APP_RANGO_API_KEY: ${{ inputs.RANGO_API_KEY }}
+        REACT_APP_LEDGER_WALLET_IDENTIFIER: ${{ inputs.LEDGER_WALLET_IDENTIFIER }}
+        REACT_APP_LEDGER_WALLET_API_KEY: ${{ inputs.LEDGER_WALLET_API_KEY }}
 
     - name: Deploy Clients
       id: deploy-clients
