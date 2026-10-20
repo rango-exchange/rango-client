@@ -1,0 +1,11 @@
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/zod/v4/classic/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/zod/v4/classic/package.json
+index f5d2e90..65ac759 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/zod/v4/classic/package.json
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-core/node_modules/zod/v4/classic/package.json
+@@ -3,5 +3,5 @@
+   "main": "./index.cjs",
+   "module": "./index.js",
+   "types": "./index.d.cts",
+-  "sideEffects": false
++  "sideEffects": true
+ }

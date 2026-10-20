@@ -1,0 +1,36 @@
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/SolanaBlockchainProvider.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/SolanaBlockchainProvider.d.ts
+index 1931428..e08da22 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/SolanaBlockchainProvider.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/SolanaBlockchainProvider.d.ts
+@@ -1,4 +1,4 @@
+-import { BlockchainConfig, BlockchainProvider, BlockchainProviderFactory, CoreFacade, CurrencyDescriptor, ProviderAccount } from '@ledgerhq/ledger-wallet-provider-core';
++import { BlockchainConfig, BlockchainFamily, BlockchainProvider, BlockchainProviderFactory, CoreFacade, CurrencyDescriptor, ProviderAccount } from '@ledgerhq/ledger-wallet-provider-core';
+ import { SOLANA_FAMILY } from './utils/clusterUtils';
+ /**
+  * Solana {@link BlockchainProvider}: entry point for the Solana family.
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/utils/clusterUtils.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/utils/clusterUtils.d.ts
+index c86f643..0e4822e 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/utils/clusterUtils.d.ts
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-solana/dist/utils/clusterUtils.d.ts
+@@ -1,4 +1,4 @@
+-import { CurrencyDescriptor } from '@ledgerhq/ledger-wallet-provider-core';
++import { BlockchainFamily, CurrencyDescriptor } from '@ledgerhq/ledger-wallet-provider-core';
+ import { SolanaCluster } from '../model/SolanaTypes';
+ export declare const SOLANA_MAPPING_TABLE: Record<string, SolanaCluster>;
+ export declare const DEFAULT_SOLANA_CLUSTER: SolanaCluster;
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
+index 41a2750..3774fbb 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
+@@ -17,9 +17,9 @@
+   "exports": {
+     ".": {
+       "@ledgerhq/ledger-button-workspace": "./src/index.ts",
+-      "default": "./dist/index.js",
++      "types": "./dist/index.d.ts",
+       "import": "./dist/index.js",
+-      "types": "./dist/index.d.ts"
++      "default": "./dist/index.js"
+     },
+     "./package.json": "./package.json"
+   },
