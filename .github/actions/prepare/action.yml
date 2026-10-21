@@ -25,14 +25,17 @@ runs:
         echo "hash=$WORKSPACE_KEYS_HASH" >> "$GITHUB_OUTPUT"
       shell: 'bash'
 
+    # patches/ is part of the key because patch-package only runs on install;
+    # a cache hit would otherwise keep node_modules patched with stale patches.
+    # There is no restore-keys fallback on purpose: yarn v1 doesn't prune
+    # stale nested packages when installing over an older node_modules, so a
+    # dependency or patch change must install into an empty tree.
     - name: Cache dependencies
       uses: actions/cache@v6
       id: cache
       with:
         path: '**/node_modules'
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.workspace-keys.outputs.hash }}
-        restore-keys: |
-          ${{ runner.os }}-node-modules-
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock', 'patches/**') }}-${{ steps.workspace-keys.outputs.hash }}
 
     - name: Install packages
       if: steps.cache.outputs.cache-hit != 'true'
