@@ -3232,22 +3232,6 @@
     ws "^8.18.0"
     xstate "5.19.2"
 
-"@ledgerhq/device-management-kit@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/device-management-kit/-/device-management-kit-1.11.0.tgz#b5213b4b03bc3d09f05ee34b8ade7f1340626fab"
-  integrity sha512-1KAC6tmtLZz+9X0KQY0lukzEAXgIDoMM3LP0pTRh9/Rab/NmZv5+74R9coL2mYTnDQTp8EfR41uJLJ5FylRCug==
-  dependencies:
-    "@noble/hashes" "^1.8.0"
-    "@sentry/minimal" "6.19.7"
-    inversify "7.5.1"
-    isomorphic-ws "^5.0.0"
-    purify-ts "2.1.0"
-    reflect-metadata "0.2.2"
-    semver "7.7.2"
-    uuid "11.0.3"
-    ws "^8.18.0"
-    xstate "5.19.2"
-
 "@ledgerhq/device-signer-kit-ethereum@1.18.1":
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/device-signer-kit-ethereum/-/device-signer-kit-ethereum-1.18.1.tgz#ee6dc76469b979a7202a9028f7767f74657f3e61"
@@ -3443,7 +3427,7 @@
     xstate "5.19.2"
     zod "4.5.4"
 
-"@ledgerhq/ledger-wallet-provider-evm@^1.0.1":
+"@ledgerhq/ledger-wallet-provider-evm@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-evm/-/ledger-wallet-provider-evm-1.0.1.tgz#5aa8ccd5d658300477259ddcb09b5e5bede21c5a"
   integrity sha512-RsazPCQleuKZxw+1g0ix4/g3K5WNwtyKk2JUDrdx/4jSmSstmAgRLI+2kDlDdWQcN/j9v1a1KiDiL5aBdBAYNg==
@@ -3453,7 +3437,7 @@
     ethers "^6.17.0"
     inversify "^7.5.1"
 
-"@ledgerhq/ledger-wallet-provider-solana@^1.0.1":
+"@ledgerhq/ledger-wallet-provider-solana@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-solana/-/ledger-wallet-provider-solana-1.0.1.tgz#093ab3d606504509ece1f37f95f6b7bd5283743d"
   integrity sha512-LySKCnmQJgAZevxHeCA6a5h4+gRlOEkrDqk02SlMtI0k7lILebEwuXs83jC2rURKBkSe7Yvf5lK5i7zuPrL5qg==
@@ -3467,7 +3451,7 @@
     "@wallet-standard/wallet" "^1.1.0"
     inversify "^7.5.1"
 
-"@ledgerhq/ledger-wallet-provider@^2.0.2":
+"@ledgerhq/ledger-wallet-provider@2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider/-/ledger-wallet-provider-2.0.2.tgz#f40713c0c46261a06d8612874ee51557d1bff84a"
   integrity sha512-rWAWIXobpWJXkDVfUCNqIzZe/GxFTZQAOWLPotUTAXFQ1a2t+VFHKzGJnpAP7DqVJ2LL3IsAVUOr1jMrAtj07A==
@@ -16183,7 +16167,7 @@ run-async@^2.4.0:
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
   integrity sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==
 
-rxjs@7.8.2:
+rxjs@7.8.2, rxjs@^7.8.1:
   version "7.8.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
   integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
@@ -16196,13 +16180,6 @@ rxjs@^6.6.0:
   integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
   dependencies:
     tslib "^1.9.0"
-
-rxjs@^7.8.1:
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
-  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
-  dependencies:
-    tslib "^2.1.0"
 
 safe-array-concat@^1.0.1:
   version "1.0.1"
