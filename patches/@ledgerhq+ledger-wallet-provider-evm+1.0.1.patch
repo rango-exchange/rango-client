@@ -8,6 +8,23 @@ index c64ea4b..ccfb3e4 100644
  import { EVM_FAMILY } from './utils/chainUtils';
  /**
   * EVM {@link BlockchainProvider}: entry point for the EVM family.
+diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/index.js b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/index.js
+index 31ff638..1035f8d 100644
+--- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/index.js
++++ b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/index.js
+@@ -1,7 +1,11 @@
+ import { AccountNotSelectedError as e, BlindSigningDisabledError as t, IncorrectSeedError as n, SignTransactionError as r, UserRejectedTransactionError as i, createOpenAppConfig as a, findBlockchainConfig as o, hexToUtf8 as s, isBroadcastedTransactionResult as c, isCoinServiceBroadcastResponse as l, isJsonRpcResponseSuccess as u, isSignedMessageOrTypedDataResult as d, isSignedTransactionResult as f, mapOpenAppDeviceActionError as p, normalizeDeviceError as ee, normalizeSignFlowStatusError as te, toSignIntentType as ne, waitForDeviceSession as m } from "@ledgerhq/ledger-wallet-provider-core";
+ import { Container as re, ContainerModule as ie, inject as h, injectable as g } from "inversify";
+ import { Left as _, Right as v } from "purify-ts";
+-import { Transaction as ae, ethers as y } from "ethers";
++import { Signature as __ethersSignature, Transaction as ae } from "ethers";
++const y = {
++	Signature: __ethersSignature,
++	Transaction: ae
++};
+ import { ContextModuleBuilder as oe, ContextModuleChainID as b } from "@ledgerhq/context-module";
+ import { GetAddressDeviceActionFactory as x, SignPersonalMessageDeviceActionFactory as se, SignTransactionDAStep as ce, SignTransactionDeviceActionFactory as le, SignTypedDataDAStateStep as ue, SignTypedDataDeviceActionFactory as de, SignerEthBuilder as fe } from "@ledgerhq/device-signer-kit-ethereum";
+ import { DeviceActionStatus as S, GlobalCommandError as C, OpenAppWithDependenciesDeviceAction as w, RefusedByUserDAError as pe, UnknownDAError as T, UserInteractionRequired as E, XStateDeviceAction as D, hexaStringToBuffer as me } from "@ledgerhq/device-management-kit";
 diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts b/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts
 index 8472a39..22e899a 100644
 --- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/dist/utils/chainUtils.d.ts
@@ -19,7 +36,7 @@ index 8472a39..22e899a 100644
  export declare const EVM_FAMILY: BlockchainFamily;
  export declare function getChainIdFromCurrencyId(currencyId: string): number;
 diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
-index c7b5448..2526e2e 100644
+index 3736377..2ca59ac 100644
 --- a/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
 +++ b/node_modules/@ledgerhq/ledger-wallet-provider-evm/package.json
 @@ -13,9 +13,9 @@
