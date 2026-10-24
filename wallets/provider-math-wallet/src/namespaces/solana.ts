@@ -4,11 +4,13 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
+import { solanaHooks } from '../hooks/solana.js';
 import { solanaMathWallet } from '../utils.js';
 
 const connect = builders
   .connect()
   .action(actions.connect(solanaMathWallet))
+  .or(solanaHooks.convertRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

@@ -13,6 +13,9 @@ It is **not supported** on Firefox or Safari.
 
 ### Feature
 
+#### ⚠️ Connect (EVM)
+A rejection of the **EVM** connection request **can't be detected**, so it is reported as `PROVIDER_UNEXPECTED`.
+
 #### ❌ Auto Connect (Solana)
 MathWallet does **not** provide a silent or eager-connect mechanism for **Solana**.  
 A manual approval popup is required each time.

@@ -7,6 +7,7 @@ import { actions, builders } from '@hub3js/tron';
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
 import { WALLET_ID } from '../constants.js';
+import { tronHooks } from '../hooks/tron.js';
 import { tronOKX } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
@@ -18,6 +19,7 @@ const connect = builders
   .action(tronActions.connect)
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
+  .or(tronHooks.addRejectionMessage)
   .or(standardizeAndThrowError)
   .build();
 

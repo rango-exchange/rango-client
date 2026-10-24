@@ -1,4 +1,4 @@
-import { NamespaceBuilder } from '@hub3js/core';
+import { getErrorMessage, Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { type TronActions, utils } from '@hub3js/tron';
@@ -20,22 +20,19 @@ const connect = builders
     const accountsResult = await instance.request({
       method: 'tron_requestAccounts',
     });
-    if (!accountsResult) {
-      throw new Error('Please unlock your Bitget extension first.');
-    }
 
-    if (
-      !!accountsResult?.code &&
-      !!accountsResult.message &&
-      accountsResult.code !== TronOKRequestCode
-    ) {
-      throw new Error(accountsResult.message);
+    if (!!accountsResult?.code && accountsResult.code !== TronOKRequestCode) {
+      throw new Hub3Error(
+        'PROVIDER_UNEXPECTED',
+        getErrorMessage(accountsResult),
+        { cause: accountsResult }
+      );
     }
     return utils.formatAccountsToCAIP([instance.tronWeb.defaultAddress.base58]);
   })
   .before(changeAccountSubscriber)
-  .or(standardizeAndThrowError)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const disconnect = commonBuilders

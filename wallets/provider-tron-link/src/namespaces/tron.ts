@@ -1,4 +1,4 @@
-import { NamespaceBuilder } from '@hub3js/core';
+import { getErrorMessage, Hub3Error, NamespaceBuilder } from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { type TronActions, utils } from '@hub3js/tron';
@@ -6,7 +6,7 @@ import { actions, builders } from '@hub3js/tron';
 
 import { tronActions } from '../actions/tron.js';
 import { tronBuilders } from '../builders/tron.js';
-import { WALLET_ID } from '../constants.js';
+import { TRONLINK_REJECTION_MESSAGE, WALLET_ID } from '../constants.js';
 import { tronTronlink } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
@@ -16,15 +16,29 @@ const [changeAccountSubscriber, changeAccountCleanup] = tronBuilders
 const connect = builders
   .connect()
   .action(async () => {
-    const instance = tronTronlink();
-    const accounts: string[] = await instance.request({
-      method: 'eth_requestAccounts',
-    });
-    return utils.formatAccountsToCAIP(accounts);
+    try {
+      const instance = tronTronlink();
+      const accounts: string[] = await instance.request({
+        method: 'eth_requestAccounts',
+      });
+      return utils.formatAccountsToCAIP(accounts);
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message === TRONLINK_REJECTION_MESSAGE
+      ) {
+        throw new Hub3Error(
+          'PROVIDER_USER_REJECTED_REQUEST',
+          getErrorMessage(error),
+          { cause: error }
+        );
+      }
+      throw error;
+    }
   })
   .before(changeAccountSubscriber)
-  .or(standardizeAndThrowError)
   .or(changeAccountCleanup)
+  .or(standardizeAndThrowError)
   .build();
 
 const canEagerConnect = builders

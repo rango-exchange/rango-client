@@ -7,6 +7,7 @@ import { getInstanceOrThrow } from './utils.js';
 
 export const WALLET_ID = 'tron-link';
 export const TRONLINK_INJECTION_DELAY = 1000;
+export const TRONLINK_REJECTION_MESSAGE = 'User rejected the request.';
 export const metadata: ProviderMetadata = {
   name: 'TronLink',
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/tronlink/icon.svg',
