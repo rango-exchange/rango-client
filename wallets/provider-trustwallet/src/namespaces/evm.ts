@@ -6,10 +6,8 @@ import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
-import {
-  evmTrustWallet,
-  standardizeTrustWalletInAppBrowserError,
-} from '../utils.js';
+import { commonHooks } from '../hooks/common.js';
+import { evmTrustWallet } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   hooks.changeAccountSubscriber(evmTrustWallet);
@@ -19,7 +17,7 @@ const connect = builders
   .action(actions.connect(evmTrustWallet))
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)
-  .or(standardizeTrustWalletInAppBrowserError)
+  .or(commonHooks.convertRejectionError)
   .or(standardizeAndThrowError)
   .build();
 

@@ -18,6 +18,7 @@ export function connect(
       userFriendlyAddress = toUserFriendlyAddress(tonInstance.account.address);
     } else {
       await tonInstance.openModal();
+      // Rejects with a Hub3Error rejection when the user closes the modal.
       const result = await tonConnect.waitForConnection();
       userFriendlyAddress = toUserFriendlyAddress(result);
     }

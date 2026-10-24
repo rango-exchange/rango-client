@@ -1,12 +1,17 @@
 import type { StellarActions } from '@hub3js/stellar';
 
-import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
+import {
+  ActionBuilder,
+  getErrorMessage,
+  Hub3Error,
+  NamespaceBuilder,
+} from '@hub3js/core';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { builders, utils } from '@hub3js/stellar';
 import * as freighterApi from '@stellar/freighter-api';
 
-import { WALLET_ID } from '../../constants.js';
+import { FREIGHTER_DECLINED_ERROR_CODE, WALLET_ID } from '../../constants.js';
 
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
@@ -16,13 +21,30 @@ const [changeAccountSubscriber, changeAccountCleanup] =
 const connect = builders
   .connect()
   .action(async function () {
-    const result = await freighterApi.requestAccess();
+    try {
+      const result = await freighterApi.requestAccess();
 
-    if (result.error) {
-      throw result.error;
+      if (result.error) {
+        throw result.error;
+      }
+
+      return [utils.formatAddressToCAIP(result.address)];
+    } catch (error) {
+      const isDeclined =
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        error.code === FREIGHTER_DECLINED_ERROR_CODE;
+
+      if (isDeclined) {
+        throw new Hub3Error(
+          'PROVIDER_USER_REJECTED_REQUEST',
+          getErrorMessage(error),
+          { cause: error }
+        );
+      }
+      throw error;
     }
-
-    return [utils.formatAddressToCAIP(result.address)];
   })
   .before(changeAccountSubscriber)
   .or(changeAccountCleanup)

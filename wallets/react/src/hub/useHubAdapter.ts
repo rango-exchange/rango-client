@@ -10,7 +10,7 @@ import type { Provider, WalletType } from '@hub3js/core';
 import type { Event } from '@hub3js/core/store';
 import type { Accounts, AccountsWithActiveChain } from '@hub3js/std/types';
 
-import { utils } from '@hub3js/evm';
+import { Hub3Error } from '@hub3js/core';
 import {
   getSupportedChainsFromNamespace,
   getSupportedChainsFromProvider,
@@ -74,8 +74,9 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   };
 
   const queueTask = createQueue({
+    // Once the user rejects one of a wallet's namespaces, or the wallet is locked, its remaining queued namespaces are abandoned.
     onError: (error, actions) => {
-      if (utils.isUserRejectionError(error)) {
+      if (error instanceof Hub3Error && error.type !== 'PROVIDER_UNEXPECTED') {
         actions.removeCurrentKeyFromQueue();
       }
     },

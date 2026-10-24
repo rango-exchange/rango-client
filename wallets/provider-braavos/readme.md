@@ -8,7 +8,9 @@ More about implementation status can be found [here](../readme.md).
 
 
 ### Feature
-All features are currently supported, and **no limitations** have been identified for Braavos.
+
+#### ⚠️ Connect
+A rejection of the connection request **can't be detected**, so it is reported as `PROVIDER_UNEXPECTED`.
 
 ---
 
