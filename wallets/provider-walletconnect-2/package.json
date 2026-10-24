@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.59.0",
+  "version": "0.59.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
-    "@rango-dev/internal-blockchains": "^0.3.0",
-    "@rango-dev/logging-core": "^0.16.0",
+    "@rango-dev/internal-blockchains": "^0.3.1-next.0",
+    "@rango-dev/logging-core": "^0.16.1-next.0",
     "@rango-dev/signer-evm": "^0.47.0",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",

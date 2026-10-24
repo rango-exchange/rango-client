@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-okx",
-  "version": "0.66.0",
+  "version": "0.66.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/internal-blockchains": "^0.3.0",
+    "@rango-dev/internal-blockchains": "^0.3.1-next.0",
     "@rango-dev/signer-evm": "^0.47.0",
     "@rango-dev/signer-solana": "^0.51.0",
     "@rango-dev/signer-sui": "^0.13.0",
