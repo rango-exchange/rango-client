@@ -46,9 +46,5 @@ export async function getBitcoinAccounts(): Promise<XVerseResponse> {
     network: 'Mainnet',
   });
 
-  if (requestResult.error?.message) {
-    throw new Error(requestResult.error.message);
-  }
-
   return requestResult;
 }

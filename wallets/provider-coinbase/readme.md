@@ -36,6 +36,10 @@ Coinbase Wallet does **not provide a `onlyIfTrusted` option** or any silent auth
   - Auto-connect works **only when both Solana and EVM are connected simultaneously**, relying on EVM’s eager connection logic.
 - Even in this case, the wallet may **return an incorrect account** if the user has changed accounts while disconnected from the dApp.
 
+#### ⚠️ Connect
+
+Coinbase Wallet returns nothing meaningful when the user rejects the **Solana** connection request, so a rejection **can't be told apart** from other connection failures and is reported as `unknown`.
+
 #### ⚠️ Cross Browser
 
 Coinbase Wallet is **only available on chromium based browsers (eg. Chrome, Brave...).**.

@@ -1,9 +1,8 @@
 import type { GenericSigner, Transfer } from 'rango-types';
 
-import { parseErrorAndThrowStandardizeError } from '@hub3js/std/utils';
 import { isBitcoinBlockchain } from '@rango-dev/internal-blockchains';
 import * as bitcoin from 'bitcoinjs-lib';
-import { SignerError } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TransferExternalProvider = any;
@@ -60,8 +59,8 @@ export class BTCSigner implements GenericSigner<Transfer> {
         autoFinalized: true,
         toSignInputs,
       })
-      .catch((e: unknown) => {
-        parseErrorAndThrowStandardizeError(e);
+      .catch((error: unknown) => {
+        throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
       });
 
     // 4. Parse the PSBT hex and extract the raw transaction
