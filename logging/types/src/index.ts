@@ -17,7 +17,12 @@ export interface Layer {
 export type Message = Error;
 export type Context = Record<string, unknown>;
 export type Tags = Record<string, unknown>;
-export type Data = { tags?: Tags; context?: Context } & Record<string, unknown>;
+export type Fingerprint = string[];
+export type Data = {
+  tags?: Tags;
+  context?: Context;
+  fingerprint?: Fingerprint;
+} & Record<string, unknown>;
 
 export interface EventPayload {
   level: Level;
