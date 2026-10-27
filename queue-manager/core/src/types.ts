@@ -15,6 +15,17 @@ export const SYNC_POLLING_INTERVAL = 5_000;
 
 export type QueueStorage = Record<string, unknown>;
 
+/**
+ * A task payload: a serializable value only, so it is persisted and restored unchanged.
+ */
+export type TaskPayload =
+  | string
+  | number
+  | boolean
+  | null
+  | TaskPayload[]
+  | { [key: string]: TaskPayload };
+
 export type QueueType = Queue;
 
 export interface PersistedQueue {

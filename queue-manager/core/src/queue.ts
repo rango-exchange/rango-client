@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ManagerContext, QueueDef, QueueID } from './manager';
-import { QueueStorage, Status } from './types';
+import { QueueStorage, Status, TaskPayload } from './types';
 
 type TaskId = string;
 export type TaskState = {
@@ -28,6 +28,7 @@ export interface QueueState {
 export interface Task {
   id: TaskId;
   action: string;
+  payload?: TaskPayload;
 }
 
 export type InitTasks = {
@@ -128,12 +129,14 @@ class Queue {
    *
    * this method creating the task, push it to the queue's tasks and trigger an event.
    * @param action
+   * @param payload a serializable value, handed back to the action as `actions.payload`.
    */
-  createTask(action: string) {
+  createTask(action: string, payload?: TaskPayload) {
     const id = uuidv4();
     this.tasks.push({
       action,
       id,
+      payload,
     });
     this.state.tasks[id] = {
       status: Status.PENDING,
@@ -358,10 +361,11 @@ class Queue {
           });
           this.check();
         },
-        schedule: (action) => {
-          this.createTask(action);
+        schedule: (action, payload) => {
+          this.createTask(action, payload);
           this.check();
         },
+        payload: activeTask.payload,
         getStorage: this.getStorage.bind(this),
         setStorage: this.setStorage.bind(this),
         block: (reason: Record<string, unknown>) => {
@@ -468,10 +472,11 @@ class Queue {
         });
         this.check();
       },
-      schedule: (action) => {
-        this.createTask(action);
+      schedule: (action, payload) => {
+        this.createTask(action, payload);
         this.check();
       },
+      payload: currentTask.task.payload,
       getStorage: this.getStorage.bind(this),
       setStorage: this.setStorage.bind(this),
       block: (reason: Record<string, unknown>) => {
