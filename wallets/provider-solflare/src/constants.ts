@@ -2,9 +2,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { isSolanaNamespace } from '@hub3js/solana';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'solflare';
 export const SOLFLARE_INJECTION_DELAY = 1000;
 export const metadata: ProviderMetadata = {
@@ -33,10 +30,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

@@ -2,14 +2,12 @@ import type { Provider } from './types.js';
 import type { SignerFactory } from 'rango-types';
 
 import {
-  SOLANA_NAMESPACE,
   TON_NAMESPACE,
   TRON_NAMESPACE,
   UTXO_NAMESPACE,
 } from '@hub3js/namespaces';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
-import { OKXSolanaSigner } from './signers/solana.js';
 import { OKXTonSigner } from './signers/ton.js';
 import { OKXUTXOSigner } from './signers/utxo.js';
 import { suiWalletInstance } from './utils.js';
@@ -17,16 +15,12 @@ import { suiWalletInstance } from './utils.js';
 export default async function getSigners(
   provider: Provider
 ): Promise<SignerFactory> {
-  const solProvider = provider.get(SOLANA_NAMESPACE);
   const utxoProvider = provider.get(UTXO_NAMESPACE);
   const tonProvider = provider.get(TON_NAMESPACE);
   const tronProvider = provider.get(TRON_NAMESPACE);
 
   const signers = new DefaultSignerFactory();
   const { DefaultTronSigner } = await import('@rango-dev/signer-tron');
-  if (!!solProvider) {
-    signers.registerSigner(TxType.SOLANA, new OKXSolanaSigner(solProvider));
-  }
   if (!!utxoProvider) {
     signers.registerSigner(TxType.TRANSFER, new OKXUTXOSigner(utxoProvider));
   }

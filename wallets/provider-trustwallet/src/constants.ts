@@ -3,9 +3,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 import { isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'trust-wallet';
 // Trust Wallet's in-app browser rejects with a bare string, not an EIP-1193 error.
 export const IN_APP_BROWSER_REJECTION = 'cancelled';
@@ -40,10 +37,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };
