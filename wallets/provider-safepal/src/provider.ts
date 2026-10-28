@@ -8,7 +8,7 @@ import { safepal as safepalInstance } from './utils.js';
 
 const WAIT_TO_LOAD_INSTANCE_DELAY = 1000;
 // RPC URLs are accepted for every namespace, so any of them can start using one.
-const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+const buildProvider = (_rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       setTimeout(() => {
