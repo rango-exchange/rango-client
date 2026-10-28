@@ -1,5 +1,5 @@
 import type { Context } from '@hub3js/core';
-import type { AllowanceParams, EvmActions } from '@hub3js/evm';
+import type { AllowanceParams, EvmActions, EvmRpcUrls } from '@hub3js/evm';
 import type { CaipAccount } from '@hub3js/std/types';
 
 import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
@@ -88,7 +88,7 @@ const getAllowance = builders
   )
   .build();
 
-const buildEvm = (rpcUrls: string[]) =>
+const buildEvm = (rpcUrls?: EvmRpcUrls) =>
   new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
     // No wallet RPC, so viem's public actions go to our RPC endpoints.
     .action(viemPublicAdapter(rpcUrls))

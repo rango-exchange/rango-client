@@ -4,12 +4,12 @@ import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm.js';
-import { solana } from './namespaces/solana.js';
+import { buildSolana } from './namespaces/solana.js';
 import { exodus as exodusInstance } from './utils.js';
 
 const WALLET_INJECTION_DELAY_MS = 1000;
 // RPC URLs are accepted for every namespace, so any of them can start using one.
-const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+const buildProvider = (rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init((context) =>
       setTimeout(function () {
@@ -22,7 +22,7 @@ const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
       }, WALLET_INJECTION_DELAY_MS)
     )
     .config('metadata', metadata)
-    .add('solana', solana)
+    .add('solana', buildSolana(rpcURLs?.solana))
     .add('evm', evm)
     .build();
 };

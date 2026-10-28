@@ -36,6 +36,7 @@ import { buildProvider as unisat } from '@rango-dev/provider-unisat';
 import { buildProvider as vultisig } from '@rango-dev/provider-vultisig';
 import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconnect-2';
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
+import { mainnet } from 'viem/chains';
 
 export { WalletTypes } from './walletTypes.js';
 
@@ -46,13 +47,22 @@ export { WalletTypes } from './walletTypes.js';
  */
 export const RPC_URLS: NamespacesRPCUrls = {
   evm: [
-    'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2',
+    {
+      chain: mainnet,
+      rpcUrls: [
+        'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2',
+      ],
+    },
+  ],
+  // The node `@rango-dev/signer-solana` sends Solana transactions through.
+  solana: [
+    'https://purple-practical-friday.solana-mainnet.quiknode.pro/d94ab067f793d48c81354c78c86ae908d9fc1582/',
   ],
 };
 
 // Providers register different namespaces, so the list is typed loosely instead of `Provider<unknown>`.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type BuildProvider = (rpcURLs: NamespacesRPCUrls) => Provider<any>;
+type BuildProvider = (rpcURLs?: NamespacesRPCUrls) => Provider<any>;
 
 export const allProviders = (): BuildProvider[] => {
   return [
