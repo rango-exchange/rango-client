@@ -1,12 +1,20 @@
 import type { SolanaActions } from '@hub3js/solana';
 
 import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
-import { actions, builders, hooks } from '@hub3js/solana';
+import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
+import {
+  actions,
+  builders,
+  hooks,
+  injectedToWalletStandard,
+  solanaKitAdapter,
+  walletStandardAdapter,
+} from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
 import { WALLET_ID } from '../constants.js';
-import { solanaPhantom } from '../utils.js';
+import { phantom, solanaPhantom } from '../utils.js';
 
 const [changeAccountSubscriber, changeAccountCleanup] =
   hooks.changeAccountSubscriber(solanaPhantom);
@@ -36,10 +44,28 @@ const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
   .action(actions.canEagerConnect(solanaPhantom))
   .build();
 
-const solana = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
-  .action(connect)
-  .action(disconnect)
-  .action(canEagerConnect)
-  .build();
+/*
+ * The wallet's injected Solana provider, wrapped in the Wallet Standard sign
+ * features. Unlike the getter `connect` uses, it doesn't throw, so the sign
+ * actions report a missing wallet themselves.
+ */
+const signWallet = () =>
+  injectedToWalletStandard(phantom()?.get(SOLANA_NAMESPACE));
 
-export { solana };
+// Signs through the wallet, and reads through the Solana RPC URL when one is given.
+const buildSolana = (rpcURLs?: string[]) => {
+  const builder = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
+    .action(connect)
+    .action(disconnect)
+    .action(canEagerConnect)
+    .action(walletStandardAdapter(signWallet));
+
+  const [rpcURL] = rpcURLs ?? [];
+  if (rpcURL) {
+    builder.action(solanaKitAdapter(rpcURL));
+  }
+
+  return builder.build();
+};
+
+export { buildSolana };

@@ -3,9 +3,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 import { isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'metamask';
 export const WALLET_STANDARD_NAME = 'MetaMask';
 export const SOLANA_WALLET_STANDARD_MAINNET = 'solana:mainnet';
@@ -40,12 +37,6 @@ export const metadata: ProviderMetadata = {
             isChainSupported: isSolanaNamespace,
           },
         ],
-      },
-    },
-    {
-      name: 'signers',
-      value: {
-        getSigners: async () => getSigners(getInstanceOrThrow()),
       },
     },
   ],
