@@ -71,6 +71,11 @@ async function getTransactionWaiter(
       : null;
   }
 
+  // A Solana transaction is confirmed before it's reported as sent.
+  if (txType === TransactionType.SOLANA) {
+    return null;
+  }
+
   const signer = (await context.getSigners(sourceWallet.walletType)).getSigner(
     txType
   );
