@@ -33,9 +33,9 @@
   "dependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/namespaces": "^0.8.0",
-    "@hub3js/solana": "^0.7.0",
+    "@hub3js/evm": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/namespaces": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/solana": "0.0.0-experimental-80c90a72-20261028",
     "@hub3js/std": "^0.6.0",
     "@hub3js/sui": "^0.6.0",
     "@hub3js/tron": "^0.3.0",
