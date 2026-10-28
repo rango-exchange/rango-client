@@ -4,8 +4,6 @@ import { CAIP_ETHEREUM_CHAIN_ID, isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
-import getSigners from './signer.js';
-
 export const HEXADECIMAL_BASE = 16;
 export const WALLET_ID = 'ledger';
 export const LEDGER_USER_CANCELLED_ERROR_NAME = 'TransportOpenUserCancelled';
@@ -80,10 +78,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners() },
     },
   ],
 };

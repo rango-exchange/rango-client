@@ -1,9 +1,7 @@
-import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
-import type { Transaction, VersionedTransaction } from '@solana/web3.js';
-import type { GenericSigner, SolanaTransaction } from 'rango-types';
+import type { Context, FunctionWithContext } from '@hub3js/core';
+import type { SolanaActions } from '@hub3js/solana';
 
-import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, Transaction, VersionedTransaction } from '@solana/web3.js';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { getDerivationPath } from '../state.js';
@@ -13,74 +11,83 @@ import {
   transportDisconnect,
 } from '../utils.js';
 
-export function isVersionedTransaction(
-  transaction: Transaction | VersionedTransaction
-): transaction is VersionedTransaction {
-  return 'version' in transaction;
+async function ledgerSolanaApp() {
+  const transport = await transportConnect();
+  const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana')).default;
+  return new LedgerAppSolana(transport);
 }
 
-export class SolanaSigner implements GenericSigner<SolanaTransaction> {
-  async signMessage(msg: string): Promise<string> {
-    try {
-      const transport = await transportConnect();
-      const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana')).default;
-      const solana = new LedgerAppSolana(transport);
+/*
+ * The device signs the transaction's message, and the signature is added to
+ * the transaction it came in. A legacy message is handed over as a legacy
+ * transaction, so its bytes stay what the caller built.
+ */
+async function signOnDevice(bytes: Uint8Array): Promise<Uint8Array> {
+  const solana = await ledgerSolanaApp();
+  const derivationPath = getDerivationPath();
+  const { address } = await solana.getAddress(derivationPath);
+  const publicKey = new PublicKey(address);
 
-      const result = await solana.signOffchainMessage(
+  const versioned = VersionedTransaction.deserialize(bytes);
+  if (versioned.version !== 'legacy') {
+    const { signature } = await solana.signTransaction(
+      derivationPath,
+      Buffer.from(versioned.message.serialize())
+    );
+    versioned.addSignature(publicKey, signature);
+    return versioned.serialize();
+  }
+
+  const legacy = Transaction.from(bytes);
+  const { signature } = await solana.signTransaction(
+    derivationPath,
+    legacy.serializeMessage()
+  );
+  legacy.addSignature(publicKey, signature);
+  return new Uint8Array(
+    legacy.serialize({ requireAllSignatures: false, verifySignatures: false })
+  );
+}
+
+/**
+ * Ledger has no injected provider, so it signs on the device. It only signs
+ * with the account it derives itself, so an input's `account` is not used.
+ */
+export const signTransaction: FunctionWithContext<
+  SolanaActions['signTransaction'],
+  Context<SolanaActions>
+> = async (_context, ...inputs) => {
+  try {
+    const outputs = [];
+    for (const { transaction } of inputs) {
+      outputs.push({ signedTransaction: await signOnDevice(transaction) });
+    }
+    return outputs;
+  } catch (error) {
+    throw getLedgerError(error);
+  } finally {
+    await transportDisconnect();
+  }
+};
+
+export const signMessage: FunctionWithContext<
+  SolanaActions['signMessage'],
+  Context<SolanaActions>
+> = async (_context, ...inputs) => {
+  try {
+    const solana = await ledgerSolanaApp();
+    const outputs = [];
+    for (const { message } of inputs) {
+      const { signature } = await solana.signOffchainMessage(
         getDerivationPath(),
-        Buffer.from(msg)
+        Buffer.from(message)
       );
-      return result.signature.toString();
-    } catch (error) {
-      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+      outputs.push({ signedMessage: message, signature });
     }
+    return outputs;
+  } catch (error) {
+    throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, error);
+  } finally {
+    await transportDisconnect();
   }
-
-  async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
-    try {
-      const DefaultSolanaSigner: SolanaWeb3Signer = async (
-        solanaWeb3Transaction: Transaction | VersionedTransaction
-      ) => {
-        const transport = await transportConnect();
-        const LedgerAppSolana = (await import('@ledgerhq/hw-app-solana'))
-          .default;
-        const solana = new LedgerAppSolana(transport);
-
-        let signResult;
-        if (isVersionedTransaction(solanaWeb3Transaction)) {
-          signResult = await solana.signTransaction(
-            getDerivationPath(),
-            solanaWeb3Transaction.message.serialize() as Buffer
-          );
-        } else {
-          signResult = await solana.signTransaction(
-            getDerivationPath(),
-            solanaWeb3Transaction.serialize()
-          );
-        }
-
-        const addressResult = await solana.getAddress(getDerivationPath());
-
-        const publicKey = new PublicKey(addressResult.address);
-
-        solanaWeb3Transaction.addSignature(
-          publicKey,
-          Buffer.from(signResult.signature)
-        );
-
-        const serializedTx = solanaWeb3Transaction.serialize();
-
-        return serializedTx;
-      };
-      const hash = await generalSolanaTransactionExecutor(
-        tx,
-        DefaultSolanaSigner
-      );
-      return { hash };
-    } catch (error) {
-      throw getLedgerError(error);
-    } finally {
-      await transportDisconnect();
-    }
-  }
-}
+};

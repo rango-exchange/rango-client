@@ -3,9 +3,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 import { isEvmNamespace } from '@hub3js/evm';
 import { isSolanaNamespace } from '@hub3js/solana';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'brave';
 export const metadata: ProviderMetadata = {
   name: 'Brave',
@@ -33,10 +30,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };
