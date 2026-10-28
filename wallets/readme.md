@@ -56,10 +56,16 @@ or some specific wallets:
 import { Provider } from '@rango-dev/wallets-react';
 import { buildProvider as metamask } from '@rango-dev/provider-metamask';
 import { buildProvider as phantom } from '@rango-dev/provider-phantom';
+import { mainnet } from 'viem/chains';
 
-// RPC endpoints per namespace, shared by every provider.
-const rpcURLs = { evm: 'https://your-ethereum-rpc' };
-const providers = [metamask(rpcURLs), phantom(rpcURLs)];
+// RPC endpoints per namespace, shared by every provider. They're optional:
+// wallets with their own RPC (e.g. MetaMask) don't need them, while wallets
+// without one (Ledger, Trezor) read from them and reject reads on chains
+// without urls.
+const rpcURLs = {
+  evm: [{ chain: mainnet, rpcUrls: ['https://your-ethereum-rpc'] }],
+};
+const providers = [metamask(rpcURLs), phantom()];
 
 export function App() {
   const blockchains = [...] // An array of blockchains

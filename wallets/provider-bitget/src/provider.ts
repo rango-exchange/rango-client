@@ -9,7 +9,7 @@ import { utxo } from './namespaces/utxo.js';
 import { bitget } from './utils.js';
 
 // RPC URLs are accepted for every namespace, so any of them can start using one.
-const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+const buildProvider = (_rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init(function (context) {
       const [, setState] = context.state();

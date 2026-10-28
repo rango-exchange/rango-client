@@ -11,11 +11,7 @@ import { buildEvm } from './namespaces/evm.js';
 
 const LEDGER_PROVIDER_NAME = 'Ledger Wallet';
 
-const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
-  if (!rpcURLs?.evm) {
-    throw new Error('An RPC URL for the EVM namespace is required.');
-  }
-
+const buildProvider = (rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
@@ -97,7 +93,7 @@ const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
       };
     })
     .config('metadata', metadata)
-    .add('evm', buildEvm(rpcURLs.evm))
+    .add('evm', buildEvm(rpcURLs?.evm))
     .build();
 };
 
