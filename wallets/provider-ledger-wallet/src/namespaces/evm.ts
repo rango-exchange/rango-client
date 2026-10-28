@@ -1,5 +1,5 @@
 import type { Context } from '@hub3js/core';
-import type { Chain, ChainId, EvmActions } from '@hub3js/evm';
+import type { Chain, ChainId, EvmActions, EvmRpcUrls } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import {
@@ -131,7 +131,7 @@ const LEDGER_PUBLIC_ACTIONS: ReadonlyArray<keyof EvmActions> = [
   'simulateContract',
 ];
 
-const buildEvm = (rpcUrls: string[]) => {
+const buildEvm = (rpcUrls?: EvmRpcUrls) => {
   const publicActions = viemPublicAdapter(rpcUrls);
   const publicActionNames = new Set(publicActions.map(([name]) => name));
 
