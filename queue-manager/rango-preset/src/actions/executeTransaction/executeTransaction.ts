@@ -24,6 +24,7 @@ import {
   onNextStateOk,
   produceNextStateForTransaction,
 } from '../common/produceNextStateForTransaction';
+import { sendSolanaTransaction } from '../common/solana';
 import { requestBlockQueue } from '../common/utils';
 
 /**
@@ -98,6 +99,32 @@ export async function executeTransaction(
     }
 
     await sendEvmTransaction(namespace, tx, walletAddress, chainId ?? null)
+      .then(
+        handleSuccessfulSign(actions, {
+          isApproval,
+        }),
+        handleRejectedSign(actions)
+      )
+      .finally(() => {
+        onFinish();
+      });
+    return;
+  }
+
+  // Solana transactions are signed through the wallet's Solana namespace.
+  if (tx.type === TransactionType.SOLANA) {
+    const namespace = context
+      .hubProvider(sourceWallet.walletType)
+      .get('solana');
+    if (!namespace) {
+      handleRejectedSign(actions)(
+        new Error('The Solana namespace is not available on your wallet.')
+      );
+      onFinish();
+      return;
+    }
+
+    await sendSolanaTransaction(namespace, tx, walletAddress)
       .then(
         handleSuccessfulSign(actions, {
           isApproval,
