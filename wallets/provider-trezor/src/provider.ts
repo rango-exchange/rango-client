@@ -11,11 +11,7 @@ let trezorManifest: Environments['manifest'];
 
 export const getTrezorManifest = () => trezorManifest;
 
-const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
-  if (!rpcURLs?.evm) {
-    throw new Error('An RPC URL for the EVM namespace is required.');
-  }
-
+const buildProvider = (rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init(function (context, environments: Environments) {
       const [, setState] = context.state();
@@ -29,7 +25,7 @@ const buildProvider = (rpcURLs: NamespacesRPCUrls) => {
       console.debug('[trezor] instance detected.', context);
     })
     .config('metadata', metadata)
-    .add('evm', buildEvm(rpcURLs.evm))
+    .add('evm', buildEvm(rpcURLs?.evm))
     .add('utxo', utxo)
     .build();
 };
