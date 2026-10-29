@@ -40,6 +40,7 @@
     "@rango-dev/internal-blockchains": "^0.3.1-next.0",
     "@rango-dev/logging-core": "^0.16.1-next.0",
     "@rango-dev/provider-all": "^0.67.1-next.0",
+    "@rango-dev/provider-walletconnect-2": "^0.59.1-next.0",
     "@rango-dev/queue-manager-core": "^0.36.0",
     "@rango-dev/queue-manager-rango-preset": "^0.66.1-next.0",
     "@rango-dev/queue-manager-react": "^0.36.0",
@@ -53,6 +54,7 @@
     "ethers": "^6.13.2",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
+    "qrcode": "1.5.3",
     "rango-sdk": "^0.6.0",
     "rango-types": "^0.6.0",
     "react": "^18.2.0",
@@ -64,6 +66,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "vm-browserify": "^1.1.2"
