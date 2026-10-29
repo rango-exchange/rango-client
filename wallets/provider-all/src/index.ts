@@ -33,7 +33,10 @@ import { buildProvider as tronLink } from '@rango-dev/provider-tron-link';
 import { buildProvider as trustwallet } from '@rango-dev/provider-trustwallet';
 import { buildProvider as unisat } from '@rango-dev/provider-unisat';
 import { buildProvider as vultisig } from '@rango-dev/provider-vultisig';
-import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconnect-2';
+import {
+  buildOathProvider,
+  buildProvider as walletconnect2,
+} from '@rango-dev/provider-walletconnect-2';
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
 
 export { WalletTypes } from './walletTypes.js';
@@ -46,6 +49,7 @@ export const allProviders = (): (() => Provider<any>)[] => {
     defaultInjected,
     metamask,
     walletconnect2,
+    buildOathProvider,
     tonconnect,
     phantom,
     ready,

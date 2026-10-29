@@ -43,3 +43,9 @@ export interface ConnectParams {
    */
   chainReference?: string;
 }
+
+/** The host renders the named wallet QR; closing it cancels only this attempt. */
+export type DirectConnectionUi = (uri: string) => {
+  closed: Promise<void>;
+  close: () => void;
+};

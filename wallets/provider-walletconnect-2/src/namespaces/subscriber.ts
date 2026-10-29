@@ -10,7 +10,7 @@ import type { SessionTypes, SignClientTypes } from '@walletconnect/types';
 
 import { debug } from '@rango-dev/logging-core';
 
-import { getAdapter } from '../adapter/registry.js';
+import { getAdapter as getDefaultAdapter } from '../adapter/registry.js';
 
 /** The WC client events a namespace subscribes to. */
 export type SessionEventName =
@@ -48,7 +48,8 @@ export function createSessionSubscriber<
 >(
   namespace: WalletConnectNamespace,
   event: Name,
-  handle: SessionEventHandler<Name, ActionsType>
+  handle: SessionEventHandler<Name, ActionsType>,
+  getAdapter: () => WalletConnectAdapter = getDefaultAdapter
 ): [Subscriber<ActionsType>, SubscriberCleanUp<ActionsType>] {
   let handler: ((args: SignClientTypes.EventArguments[Name]) => void) | null =
     null;

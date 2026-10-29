@@ -100,6 +100,7 @@ const REQUIRED_CONFIG_BY_WALLET: Partial<
   [WalletTypes.TREZOR]: 'trezorManifest',
   [WalletTypes.TON_CONNECT]: 'tonConnect',
   [WalletTypes.WALLET_CONNECT_2]: 'walletConnectProjectId',
+  [WalletTypes.OATH]: 'walletConnectProjectId',
 };
 
 function hasRequiredConfig(

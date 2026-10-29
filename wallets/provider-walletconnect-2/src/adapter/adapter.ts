@@ -1,4 +1,4 @@
-import type { WalletConnectNamespace } from '../types.js';
+import type { DirectConnectionUi, WalletConnectNamespace } from '../types.js';
 import type {
   AllowanceParams,
   Chain,
@@ -8,10 +8,12 @@ import type { SessionTypes } from '@walletconnect/types';
 import type UniversalProvider from '@walletconnect/universal-provider';
 import type { BlockchainMeta } from 'rango-types';
 
+import { Hub3Error } from '@hub3js/core';
 import { utils } from '@hub3js/evm';
 import { debug } from '@rango-dev/logging-core';
 import { JsonRpcProvider, toBeHex } from 'ethers';
 
+import { connectDirectSession } from '../session/direct.js';
 import {
   ensureConnectedToChain as ensureConnectedToChainHelper,
   getCurrentChainId as getCurrentChainIdHelper,
@@ -56,10 +58,14 @@ export interface WalletConnectAdapterConfig {
   disableModalLink?: string;
   themeMode?: 'light' | 'dark';
   modalZIndex?: number;
+  storagePrefix?: string;
+  directConnectionUi?: DirectConnectionUi;
 }
 
 export class WalletConnectAdapter {
   readonly #projectId: string;
+  readonly #storagePrefix?: string;
+  readonly #directConnectionUi?: DirectConnectionUi;
   readonly #disableModalLink?: string;
   readonly #themeMode?: 'light' | 'dark';
   readonly #modalZIndex?: number;
@@ -93,9 +99,12 @@ export class WalletConnectAdapter {
    * settle, which is exactly the span being protected.
    */
   readonly #sessionQueue = new TaskQueue();
+  readonly #directAttempts = new Set<AbortController>();
 
   constructor(config: WalletConnectAdapterConfig) {
     this.#projectId = config.projectId;
+    this.#storagePrefix = config.storagePrefix;
+    this.#directConnectionUi = config.directConnectionUi;
     this.#meta = config.meta;
     this.#disableModalLink = config.disableModalLink;
     this.#themeMode = config.themeMode;
@@ -113,7 +122,10 @@ export class WalletConnectAdapter {
      * topic X", then "No matching key. session topic doesn't exist: X").
      */
     if (!this.#universalProviderPromise) {
-      this.#universalProviderPromise = createUniversalProvider(this.#projectId)
+      this.#universalProviderPromise = createUniversalProvider(
+        this.#projectId,
+        this.#storagePrefix
+      )
         .then((provider) => {
           this.#universalProvider = provider;
           return provider;
@@ -203,12 +215,34 @@ export class WalletConnectAdapter {
     namespace: WalletConnectNamespace;
     chainReference?: string;
   }): Promise<SessionTypes.Struct> {
-    return this.#sessionQueue.run(async () =>
-      this.#ensureSessionQueued(options)
-    );
+    const controller = this.#directConnectionUi
+      ? new AbortController()
+      : undefined;
+    if (controller) {
+      this.#directAttempts.add(controller);
+    }
+    try {
+      return await this.#sessionQueue.run(async () =>
+        this.#ensureSessionQueued(options, controller?.signal)
+      );
+    } finally {
+      if (controller) {
+        this.#directAttempts.delete(controller);
+      }
+    }
   }
 
   async disconnectSession(namespace: WalletConnectNamespace) {
+    if (namespace === 'evm') {
+      for (const attempt of this.#directAttempts) {
+        attempt.abort(
+          new Hub3Error(
+            'PROVIDER_USER_REJECTED_REQUEST',
+            'Wallet connection cancelled.'
+          )
+        );
+      }
+    }
     return this.#sessionQueue.run(async () =>
       this.#disconnectSessionQueued(namespace)
     );
@@ -312,10 +346,14 @@ export class WalletConnectAdapter {
    * cannot come until that same task finishes, which deadlocks.
    */
 
-  async #ensureSessionQueued(options: {
-    namespace: WalletConnectNamespace;
-    chainReference?: string;
-  }): Promise<SessionTypes.Struct> {
+  async #ensureSessionQueued(
+    options: {
+      namespace: WalletConnectNamespace;
+      chainReference?: string;
+    },
+    signal?: AbortSignal
+  ): Promise<SessionTypes.Struct> {
+    signal?.throwIfAborted();
     const { namespace, chainReference } = options;
     const client = await this.getClient();
     const restored = await restoreAndCacheSession(
@@ -325,6 +363,7 @@ export class WalletConnectAdapter {
       undefined,
       async (targetNamespace) => this.#disconnectSessionQueued(targetNamespace)
     );
+    signal?.throwIfAborted();
     if (restored) {
       return restored;
     }
@@ -333,6 +372,18 @@ export class WalletConnectAdapter {
 
     const universalProvider = await this.getUniversalProvider();
     await universalProvider.cleanupPendingPairings().catch(() => undefined);
+
+    if (this.#directConnectionUi) {
+      const session = await connectDirectSession(client, {
+        chains: evmMetaToCaipChainIds(this.#meta),
+        namespace,
+        chainReference,
+        display: this.#directConnectionUi,
+        signal,
+      });
+      this.#cache.set(namespace, session);
+      return session;
+    }
 
     const session = await connectWalletConnectSession(
       client,
