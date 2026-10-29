@@ -1,5 +1,5 @@
 import type { QueueEventHandlers, TaskEvent } from './queue';
-import type { QueueStorage, TaskPayload } from './types';
+import type { PersistedQueue, QueueStorage, TaskPayload } from './types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -95,6 +95,7 @@ interface ManagerOptions {
   queuesDefs: QueueDef<any, any, any, any>[];
   context?: ManagerContext;
   isPaused?: boolean;
+  beforeResume?: (context: object, item: PersistedQueue) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -121,6 +122,7 @@ class Manager {
   private isPaused = false;
   // The client won't get any update on pause, We are using a polling mode to fix this issue for now.
   private syncInterval: number | null = null;
+  #beforeResume: ManagerOptions['beforeResume'];
 
   /**
    *
@@ -170,6 +172,7 @@ class Manager {
     });
 
     this.context = options.context || {};
+    this.#beforeResume = options.beforeResume;
     this.persistor = new Persistor();
 
     void this.sync();
@@ -219,7 +222,7 @@ class Manager {
         actions: {
           run: () => {
             list.next({
-              context: this.getContext(),
+              context: this.#runBeforeResumeAndGetContext(queue_id),
             });
           },
           cancel: () => {
@@ -342,10 +345,10 @@ class Manager {
       return;
     }
 
-    for (const [, q] of Array.from(this.queues)) {
+    for (const [queue_id, q] of Array.from(this.queues)) {
       if (q.status === Status.RUNNING) {
         q.list.resume({
-          context: this.getContext(),
+          context: this.#runBeforeResumeAndGetContext(queue_id),
         });
         return;
       }
@@ -393,7 +396,7 @@ class Manager {
    */
   public forceExecute(queue_id: string, data?: object) {
     const queue = this.get(queue_id);
-    let context = this.getContext();
+    let context = this.#runBeforeResumeAndGetContext(queue_id);
     if (data) {
       context = {
         ...context,
@@ -457,7 +460,7 @@ class Manager {
           actions: {
             run: () => {
               list.next({
-                context: this.getContext(),
+                context: this.#runBeforeResumeAndGetContext(q.id),
               });
             },
             cancel: () => {
@@ -480,7 +483,7 @@ class Manager {
 
         if (q.status === Status.RUNNING && this.shouldExecute()) {
           list.resume({
-            context: this.getContext(),
+            context: this.#runBeforeResumeAndGetContext(q.id),
           });
         }
       });
@@ -668,6 +671,26 @@ class Manager {
 
   private shouldExecute() {
     return !this.isPaused;
+  }
+
+  /**
+   * Calls `beforeResume` (if set) with the queue about to run, then reads the context,
+   * so mutating the context's `current` inside the hook applies to this run.
+   */
+  #runBeforeResumeAndGetContext(queue_id: QueueID): object {
+    const queue = this.get(queue_id);
+    if (this.#beforeResume && queue) {
+      this.#beforeResume(this.getContext(), {
+        id: queue_id,
+        name: queue.name,
+        createdAt: queue.createdAt,
+        status: queue.status,
+        state: queue.list.state,
+        tasks: queue.list.tasks,
+        storage: queue.list.getStorage(),
+      });
+    }
+    return this.getContext();
   }
 }
 
