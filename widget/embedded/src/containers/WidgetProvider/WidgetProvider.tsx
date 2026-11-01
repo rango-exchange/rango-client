@@ -1,6 +1,7 @@
 import type { PropTypes } from './WidgetProvider.types';
 import type { PropsWithChildren } from 'react';
 
+import { setEvmSignerConfig } from '@rango-dev/signer-evm';
 import { setSolanaSignerConfig } from '@rango-dev/signer-solana';
 import React, { useEffect, useMemo } from 'react';
 
@@ -52,6 +53,12 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
       setSolanaSignerConfig('customRPC', props.config.signers.customSolanaRPC);
     }
   }, [props.config?.signers?.customSolanaRPC]);
+
+  useEffect(() => {
+    if (props.config?.signers?.customEthereumRPC) {
+      setEvmSignerConfig('customRPC', props.config.signers.customEthereumRPC);
+    }
+  }, [props.config?.signers?.customEthereumRPC]);
 
   return (
     <WidgetWallets
