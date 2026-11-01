@@ -2,7 +2,7 @@ import type { FeeData, TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/mainApi';
 
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
+import { getEthereumRpcUrl } from '@rango-dev/signer-evm';
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -67,7 +67,7 @@ export class EthereumSigner implements GenericSigner<EvmTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     try {
-      const provider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL); // Provider to broadcast transaction
+      const provider = new JsonRpcProvider(getEthereumRpcUrl()); // Provider to broadcast transaction
 
       const transactionCount = await provider.getTransactionCount(fromAddress); // Get nonce
 
