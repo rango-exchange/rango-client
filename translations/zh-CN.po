@@ -1445,3 +1445,28 @@ msgstr "最大值"
 msgid "Select gas chain"
 msgstr "选择气链"
 
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Wallets/useOathConnection.tsx:80
+msgid "Scan this QR code with Oath on your iPhone, then review the connection in the app."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Wallets/useOathConnection.tsx:90
+msgid "Oath Wallet connection QR code"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Wallets/useOathConnection.tsx:97
+msgid "Unable to display the QR code. Close this window and try again."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Wallets/useOathConnection.tsx:113
+msgid "Open Oath on this iPhone"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Wallets/useOathConnection.tsx:126
+msgid "Get Oath for iOS"
+msgstr ""

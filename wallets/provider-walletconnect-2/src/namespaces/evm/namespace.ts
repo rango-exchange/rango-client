@@ -1,3 +1,4 @@
+import type { WalletConnectAdapter } from '../../adapter/adapter.js';
 import type { Context } from '@hub3js/core';
 import type {
   AllowanceParams,
@@ -10,7 +11,7 @@ import { actions, builders, utils } from '@hub3js/evm';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
-import { getAdapter } from '../../adapter/registry.js';
+import { getAdapter as getDefaultAdapter } from '../../adapter/registry.js';
 import { WALLET_ID, WALLETCONNECT_REJECTION_CODES } from '../../constants.js';
 import { getAccountsFromSession } from '../../session/accounts.js';
 import { filterEvmAccounts } from '../../session/evm.js';
@@ -22,129 +23,141 @@ import {
   sessionUpdateSubscriber,
 } from './hooks.js';
 
-const [sessionUpdate, sessionUpdateCleanup] = sessionUpdateSubscriber();
-const [sessionEvent, sessionEventCleanup] = sessionEventSubscriber();
-const [sessionDelete, sessionDeleteCleanup] = sessionDeleteSubscriber();
+export function createEvmNamespace(
+  walletId: string,
+  getAdapter: () => WalletConnectAdapter
+) {
+  const [sessionUpdate, sessionUpdateCleanup] =
+    sessionUpdateSubscriber(getAdapter);
+  const [sessionEvent, sessionEventCleanup] =
+    sessionEventSubscriber(getAdapter);
+  const [sessionDelete, sessionDeleteCleanup] =
+    sessionDeleteSubscriber(getAdapter);
 
-const connect = builders
-  .connect()
-  .action(async function (_context: Context<EvmActions>, chain?: string) {
-    try {
-      const adapter = getAdapter();
-      // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
-      const requestedReference = chain ? parseChainReference(chain) : undefined;
-      const session = await adapter.ensureConnectedToChain(chain);
-      const activeReference =
-        requestedReference ?? (await adapter.resolveActiveChainReference());
+  const connect = builders
+    .connect()
+    .action(async function (_context: Context<EvmActions>, chain?: string) {
+      try {
+        const adapter = getAdapter();
+        // `chain` is set when connecting to a specific network (swap auto-switch or hub connect with network).
+        const requestedReference = chain
+          ? parseChainReference(chain)
+          : undefined;
+        const session = await adapter.ensureConnectedToChain(chain);
+        const activeReference =
+          requestedReference ?? (await adapter.resolveActiveChainReference());
 
-      if (!activeReference) {
-        throw new Hub3Error(
-          'PROVIDER_UNEXPECTED',
-          'Unable to determine EVM chain id from WalletConnect session.'
-        );
+        if (!activeReference) {
+          throw new Hub3Error(
+            'PROVIDER_UNEXPECTED',
+            'Unable to determine EVM chain id from WalletConnect session.'
+          );
+        }
+
+        const accounts = getAccountsFromSession(session);
+        const evmAccounts = filterEvmAccounts(accounts, activeReference);
+
+        if (!evmAccounts.length) {
+          throw new Hub3Error(
+            'PROVIDER_UNEXPECTED',
+            'No EVM accounts found in WalletConnect session.'
+          );
+        }
+
+        return {
+          accounts: utils.formatAccountsToCAIP(
+            evmAccounts.map((account) => account.accounts[0]),
+            activeReference
+          ),
+          network: chainReferenceToHex(activeReference),
+        };
+      } catch (error) {
+        const isRejection =
+          typeof error === 'object' &&
+          error !== null &&
+          'code' in error &&
+          WALLETCONNECT_REJECTION_CODES.some((code) => code === error.code);
+
+        if (isRejection) {
+          throw new Hub3Error(
+            'PROVIDER_USER_REJECTED_REQUEST',
+            getErrorMessage(error) ?? 'You rejected the request',
+            { cause: error }
+          );
+        }
+        throw error;
       }
+    })
+    .before(sessionUpdate)
+    .before(sessionEvent)
+    .before(sessionDelete)
+    .or(sessionUpdateCleanup)
+    .or(sessionEventCleanup)
+    .or(sessionDeleteCleanup)
+    .or((_, err) => {
+      void getAdapter().disconnectSession('evm');
+      return err;
+    })
+    .or(standardizeAndThrowError)
+    .build();
 
-      const accounts = getAccountsFromSession(session);
-      const evmAccounts = filterEvmAccounts(accounts, activeReference);
+  const canEagerConnect = builders
+    .canEagerConnect()
+    .action(async () => getAdapter().tryRestoreEagerSession('evm'))
+    .build();
 
-      if (!evmAccounts.length) {
-        throw new Hub3Error(
-          'PROVIDER_UNEXPECTED',
-          'No EVM accounts found in WalletConnect session.'
-        );
-      }
+  const canSwitchNetwork = builders
+    .canSwitchNetwork()
+    .action(actions.canSwitchNetwork())
+    .build();
 
-      return {
-        accounts: utils.formatAccountsToCAIP(
-          evmAccounts.map((account) => account.accounts[0]),
-          activeReference
-        ),
-        network: chainReferenceToHex(activeReference),
-      };
-    } catch (error) {
-      const isRejection =
-        typeof error === 'object' &&
-        error !== null &&
-        'code' in error &&
-        WALLETCONNECT_REJECTION_CODES.some((code) => code === error.code);
+  const disconnect = commonBuilders
+    .disconnect<EvmActions>()
+    .before(async () => {
+      await getAdapter().disconnectSession('evm');
+    })
+    .after(sessionUpdateCleanup)
+    .after(sessionEventCleanup)
+    .after(sessionDeleteCleanup)
+    .build();
 
-      if (isRejection) {
-        throw new Hub3Error(
-          'PROVIDER_USER_REJECTED_REQUEST',
-          getErrorMessage(error) ?? 'You rejected the request',
-          { cause: error }
-        );
-      }
-      throw error;
-    }
-  })
-  .before(sessionUpdate)
-  .before(sessionEvent)
-  .before(sessionDelete)
-  .or(sessionUpdateCleanup)
-  .or(sessionEventCleanup)
-  .or(sessionDeleteCleanup)
-  .or((_, err) => {
-    void getAdapter().disconnectSession('evm');
-    return err;
-  })
-  .or(standardizeAndThrowError)
-  .build();
+  const getChainId = builders
+    .getChainId()
+    .action(async () => getAdapter().getCurrentChainId())
+    .build();
 
-const canEagerConnect = builders
-  .canEagerConnect()
-  .action(async () => getAdapter().tryRestoreEagerSession('evm'))
-  .build();
+  const getAllowance = builders
+    .getAllowance()
+    .action(
+      async (
+        _context: Context<EvmActions>,
+        params: AllowanceParams
+      ): Promise<string> => getAdapter().getAllowance(params)
+    )
+    .build();
 
-const canSwitchNetwork = builders
-  .canSwitchNetwork()
-  .action(actions.canSwitchNetwork())
-  .build();
+  const getTransactionReceipt = builders
+    .getTransactionReceipt()
+    .action(
+      async (
+        _context: Context<EvmActions>,
+        txHash: `0x${string}`
+      ): Promise<EvmTransactionReceipt | null> =>
+        getAdapter().getTransactionReceipt(txHash)
+    )
+    .build();
 
-const disconnect = commonBuilders
-  .disconnect<EvmActions>()
-  .before(async () => {
-    await getAdapter().disconnectSession('evm');
-  })
-  .after(sessionUpdateCleanup)
-  .after(sessionEventCleanup)
-  .after(sessionDeleteCleanup)
-  .build();
+  const evm = new NamespaceBuilder<EvmActions>('EVM', walletId)
+    .action(connect)
+    .action(canEagerConnect)
+    .action(canSwitchNetwork)
+    .action(disconnect)
+    .action(getChainId)
+    .action(getAllowance)
+    .action(getTransactionReceipt)
+    .build();
 
-const getChainId = builders
-  .getChainId()
-  .action(async () => getAdapter().getCurrentChainId())
-  .build();
+  return evm;
+}
 
-const getAllowance = builders
-  .getAllowance()
-  .action(
-    async (
-      _context: Context<EvmActions>,
-      params: AllowanceParams
-    ): Promise<string> => getAdapter().getAllowance(params)
-  )
-  .build();
-
-const getTransactionReceipt = builders
-  .getTransactionReceipt()
-  .action(
-    async (
-      _context: Context<EvmActions>,
-      txHash: `0x${string}`
-    ): Promise<EvmTransactionReceipt | null> =>
-      getAdapter().getTransactionReceipt(txHash)
-  )
-  .build();
-
-const evm = new NamespaceBuilder<EvmActions>('EVM', WALLET_ID)
-  .action(connect)
-  .action(canEagerConnect)
-  .action(canSwitchNetwork)
-  .action(disconnect)
-  .action(getChainId)
-  .action(getAllowance)
-  .action(getTransactionReceipt)
-  .build();
-
-export { evm };
+export const evm = createEvmNamespace(WALLET_ID, getDefaultAdapter);

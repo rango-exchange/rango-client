@@ -8040,6 +8040,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.11.tgz#2596fb352ee96a1379c657734d4b913a613ad563"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
+"@types/qrcode@^1.5.5":
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/@types/qrcode/-/qrcode-1.5.6.tgz#07c33cb9ec0ad88be4636e636e28e54d99b65f42"
+  integrity sha512-te7NQcV2BOvdj2b1hCAHzAoMNuj65kNBMz0KBaxM6c3VGBOhU0dURQKOtH8CFNI/dsKkwlv32p26qYQTWoB5bw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/react-color@^3.0.6":
   version "3.0.10"
   resolved "https://registry.yarnpkg.com/@types/react-color/-/react-color-3.0.10.tgz#f869ab3a46938fb97a5c2ee568bc6469f82b14dd"

@@ -1,11 +1,13 @@
+import type { WalletConnectAdapter } from './adapter/adapter.js';
 import type { SignerFactory } from 'rango-types';
 
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 import { getAdapter } from './adapter/registry.js';
 
-export default async function getSigners(): Promise<SignerFactory> {
-  const adapter = getAdapter();
+export default async function getSigners(
+  adapter: WalletConnectAdapter = getAdapter()
+): Promise<SignerFactory> {
   if (!adapter) {
     throw new Error('WalletConnect provider has not been initialized.');
   }

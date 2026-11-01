@@ -7,7 +7,8 @@ import {
 } from '../wcConstants.js';
 
 export async function createUniversalProvider(
-  projectId: string
+  projectId: string,
+  storagePrefix = WC_STORAGE_PREFIX
 ): Promise<UniversalProvider> {
   return UniversalProvider.init({
     relayUrl: RELAY_URL,
@@ -26,6 +27,6 @@ export async function createUniversalProvider(
      *    store and disconnects them.
      * A prefix of our own gives us a separate Core, relay connection and storage.
      */
-    customStoragePrefix: WC_STORAGE_PREFIX,
+    customStoragePrefix: storagePrefix,
   });
 }

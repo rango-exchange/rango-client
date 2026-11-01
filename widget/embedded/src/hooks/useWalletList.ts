@@ -20,6 +20,7 @@ import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
 const DEFAULT_EVM_WALLETS = new Set<string>([
   WalletTypes.DEFAULT,
   WalletTypes.WALLET_CONNECT_2,
+  WalletTypes.OATH,
   WalletTypes.LEDGER,
 ]);
 

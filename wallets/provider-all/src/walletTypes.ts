@@ -31,13 +31,17 @@ import { WALLET_ID as TRON_LINK } from '@rango-dev/provider-tron-link';
 import { WALLET_ID as TRUST_WALLET } from '@rango-dev/provider-trustwallet';
 import { WALLET_ID as UNISAT } from '@rango-dev/provider-unisat';
 import { WALLET_ID as VULTISIG } from '@rango-dev/provider-vultisig';
-import { WALLET_ID as WALLET_CONNECT_2 } from '@rango-dev/provider-walletconnect-2';
+import {
+  OATH_WALLET_ID as OATH,
+  WALLET_ID as WALLET_CONNECT_2,
+} from '@rango-dev/provider-walletconnect-2';
 import { WALLET_ID as XVERSE } from '@rango-dev/provider-xverse';
 
 export const WalletTypes = {
   DEFAULT,
   META_MASK,
   WALLET_CONNECT_2,
+  OATH,
   TRUST_WALLET,
   BINANCE,
   PHANTOM,

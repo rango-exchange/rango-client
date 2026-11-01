@@ -17,6 +17,7 @@ import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 
+import { useOathConnection } from './useOathConnection';
 import { useUpdates } from './useUpdates';
 import { propagateEvents } from './Wallets.helpers';
 
@@ -71,6 +72,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
   }, [props.config, fetchStatus]);
 
   const isActiveTab = useUiStore.use.isActiveTab();
+  const oathConnection = useOathConnection();
 
   const handlers = useMemo(
     () => ({
@@ -128,12 +130,20 @@ function Main(props: PropsWithChildren<PropTypes>) {
                 meta: blockchains,
               },
             },
+            [WalletTypes.OATH]: {
+              provider: {
+                WC_PROJECT_ID: config.walletConnectProjectId || '',
+                meta: blockchains,
+                DIRECT_CONNECTION_UI: oathConnection.display,
+              },
+            },
             [WalletTypes.LEDGER_WALLET]: {
               provider: config.ledgerWallet,
             },
           },
         }}>
         {props.children}
+        {oathConnection.view}
       </Provider>
     </WidgetContext.Provider>
   );

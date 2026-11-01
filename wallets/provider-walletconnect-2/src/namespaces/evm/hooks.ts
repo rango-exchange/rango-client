@@ -1,8 +1,10 @@
+import type { WalletConnectAdapter } from '../../adapter/adapter.js';
 import type { EvmActions } from '@hub3js/evm';
 
 import { utils } from '@hub3js/evm';
 import { ChainId } from 'caip';
 
+import { getAdapter as getDefaultAdapter } from '../../adapter/registry.js';
 import {
   extractAddress,
   getAccountsFromEvent,
@@ -21,7 +23,9 @@ import { createSessionSubscriber } from '../subscriber.js';
  * WC signals an account switch via `session_update` (re-shared namespaces with the
  * newly-selected account first), so the active account is published from this event.
  */
-export function sessionUpdateSubscriber() {
+export function sessionUpdateSubscriber(
+  getAdapter: () => WalletConnectAdapter = getDefaultAdapter
+) {
   return createSessionSubscriber<'session_update', EvmActions>(
     'evm',
     'session_update',
@@ -72,7 +76,8 @@ export function sessionUpdateSubscriber() {
         utils.formatAccountsToCAIP([evmAccounts[0].accounts[0]], chainIdHex)
       );
       setState('network', chainIdHex);
-    }
+    },
+    getAdapter
   );
 }
 
@@ -92,7 +97,9 @@ function eventAccounts(data: unknown): string[] {
  * accounts, or disconnect when the wallet revokes them all) and `chainChanged`
  * (update and persist the active chain). Any other event is ignored.
  */
-export function sessionEventSubscriber() {
+export function sessionEventSubscriber(
+  getAdapter: () => WalletConnectAdapter = getDefaultAdapter
+) {
   return createSessionSubscriber<'session_event', EvmActions>(
     'evm',
     'session_event',
@@ -125,7 +132,8 @@ export function sessionEventSubscriber() {
           .getClient()
           .then(async (client) => persistCurrentChainId(client, chainIdHex));
       }
-    }
+    },
+    getAdapter
   );
 }
 
@@ -133,7 +141,9 @@ export function sessionEventSubscriber() {
  * Reflects a wallet-initiated `session_delete` into the hub: clears the cached
  * session, expires the WC topic, and runs the hub `disconnect` action.
  */
-export function sessionDeleteSubscriber() {
+export function sessionDeleteSubscriber(
+  getAdapter: () => WalletConnectAdapter = getDefaultAdapter
+) {
   return createSessionSubscriber<'session_delete', EvmActions>(
     'evm',
     'session_delete',
@@ -143,6 +153,7 @@ export function sessionDeleteSubscriber() {
         .getClient()
         .then(async (client) => expireWalletConnectTopic(client, args.topic));
       context.action('disconnect');
-    }
+    },
+    getAdapter
   );
 }
