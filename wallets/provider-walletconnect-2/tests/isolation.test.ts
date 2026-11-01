@@ -41,6 +41,82 @@ describe('oath wallet isolation', () => {
     expect(oath.getSession('evm')).toBe(session);
   });
 
+  it.each(['resolve', 'reject'])(
+    'cancels pending initialization before it can %s, and allows retry',
+    async (outcome) => {
+      let resolveInit!: (provider: UniversalProvider) => void;
+      let rejectInit!: (error: Error) => void;
+      const initializing = new Promise<UniversalProvider>((resolve, reject) => {
+        resolveInit = resolve;
+        rejectInit = reject;
+      });
+      vi.mocked(createUniversalProvider)
+        .mockClear()
+        .mockReturnValueOnce(initializing);
+      const display = vi.fn();
+      const restored = {
+        ...session,
+        namespaces: {
+          eip155: { accounts: ['eip155:1:0xtest'], methods: [], events: [] },
+        },
+      } as SessionTypes.Struct;
+      const client = {
+        session: {
+          getAll: vi.fn(() => [restored]),
+          get: vi.fn(() => restored),
+        },
+        ping: vi.fn().mockResolvedValue(undefined),
+      };
+      const provider = { client } as unknown as UniversalProvider;
+      const oath = new WalletConnectAdapter({
+        projectId: 'test',
+        storagePrefix: 'rango:oath',
+        meta: [],
+        directConnectionUi: display,
+      });
+      const attempt = oath.ensureSession({ namespace: 'evm' });
+      const rejection = expect(attempt).rejects.toMatchObject({
+        type: 'PROVIDER_USER_REJECTED_REQUEST',
+      });
+      await vi.waitFor(() =>
+        expect(createUniversalProvider).toHaveBeenCalled()
+      );
+      let disconnected = false;
+      const disconnect = oath.disconnectSession('evm').then(() => {
+        disconnected = true;
+      });
+      try {
+        await vi.waitFor(() => expect(disconnected).toBe(true));
+        await rejection;
+      } finally {
+        // Release the SDK promise even when the regression fails on old code.
+        if (outcome === 'resolve') {
+          resolveInit(provider);
+        } else {
+          rejectInit(new Error('SDK initialization failed'));
+        }
+        await Promise.allSettled([
+          attempt,
+          rejection,
+          disconnect,
+          initializing,
+        ]);
+      }
+      expect(display).not.toHaveBeenCalled();
+      expect(oath.getSession('evm')).toBeNull();
+      expect(client.session.getAll).not.toHaveBeenCalled();
+      vi.mocked(createUniversalProvider).mockResolvedValueOnce(provider);
+      await expect(oath.ensureSession({ namespace: 'evm' })).resolves.toBe(
+        restored
+      );
+      expect(oath.getSession('evm')).toBe(restored);
+      expect(createUniversalProvider).toHaveBeenCalledTimes(
+        outcome === 'resolve' ? 1 : 2
+      );
+      vi.mocked(createUniversalProvider).mockReset();
+    }
+  );
+
   it('filters namespace events by client and topic and removes only its own listener', async () => {
     const listeners = new Map<string, (event: { topic: string }) => void>();
     const client = {

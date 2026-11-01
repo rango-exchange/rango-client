@@ -339,6 +339,24 @@ export class WalletConnectAdapter {
     return provider;
   }
 
+  async #getClientForAttempt(signal?: AbortSignal) {
+    if (!signal) {
+      return this.getClient();
+    }
+    signal.throwIfAborted();
+    let onAbort = () => {};
+    const cancellation = new Promise<never>((_, reject) => {
+      onAbort = () => reject(signal.reason);
+      signal.addEventListener('abort', onAbort, { once: true });
+    });
+    try {
+      // Cancel only this wait: retries must share the same initializing client.
+      return await Promise.race([this.getClient(), cancellation]);
+    } finally {
+      signal.removeEventListener('abort', onAbort);
+    }
+  }
+
   /*
    * The `Queued` suffix means "already running inside `#sessionQueue`". These
    * call each other directly and must never go back through the public methods
@@ -355,7 +373,8 @@ export class WalletConnectAdapter {
   ): Promise<SessionTypes.Struct> {
     signal?.throwIfAborted();
     const { namespace, chainReference } = options;
-    const client = await this.getClient();
+    const client = await this.#getClientForAttempt(signal);
+    signal?.throwIfAborted();
     const restored = await restoreAndCacheSession(
       client,
       namespace,
