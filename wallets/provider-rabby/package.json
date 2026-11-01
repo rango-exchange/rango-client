@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-rabby",
-  "version": "0.32.0",
+  "version": "0.32.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,7 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.47.0",
+    "@rango-dev/signer-evm": "^0.47.1",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {

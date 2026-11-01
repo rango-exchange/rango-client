@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitget",
-  "version": "0.62.0",
+  "version": "0.62.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@rango-dev/internal-blockchains": "^0.3.0",
-    "@rango-dev/signer-evm": "^0.47.0",
+    "@rango-dev/signer-evm": "^0.47.1",
     "@rango-dev/signer-tron": "^0.44.0",
     "bitcoinjs-lib": "^6.1.7",
     "rango-types": "^0.6.0"
