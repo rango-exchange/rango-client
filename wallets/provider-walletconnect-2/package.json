@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.59.1-next.0",
+  "version": "0.59.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
-    "@rango-dev/internal-blockchains": "^0.3.1-next.0",
-    "@rango-dev/logging-core": "^0.16.1-next.0",
-    "@rango-dev/signer-evm": "^0.47.0",
+    "@rango-dev/internal-blockchains": "^0.3.0",
+    "@rango-dev/logging-core": "^0.16.0",
+    "@rango-dev/signer-evm": "^0.47.1",
     "@reown/appkit": "1.8.20",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "2.23.7",
@@ -38,17 +38,17 @@
     "rango-types": "^0.6.0"
   },
   "devDependencies": {
-    "@hub3js/bip122": "^0.4.0",
-    "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/std": "^0.6.0",
+    "@hub3js/bip122": "^0.3.0",
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/std": "^0.5.0",
     "@walletconnect/types": "2.23.7"
   },
   "peerDependencies": {
-    "@hub3js/bip122": "^0.4.0",
-    "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/std": "^0.6.0"
+    "@hub3js/bip122": "^0.3.0",
+    "@hub3js/core": "^0.63.0",
+    "@hub3js/evm": "^0.6.0",
+    "@hub3js/std": "^0.5.0"
   },
   "publishConfig": {
     "access": "public"

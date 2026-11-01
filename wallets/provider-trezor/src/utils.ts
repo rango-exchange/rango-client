@@ -1,7 +1,7 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
 import { Hub3Error } from '@hub3js/core';
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
+import { getEthereumRpcUrl } from '@rango-dev/signer-evm';
 import { JsonRpcProvider } from 'ethers';
 
 import {
@@ -24,12 +24,13 @@ type DeviceAccounts = {
  * NOTE: If Trezor EVM support ever expands beyond Ethereum, this must select
  * the RPC per chain instead of the single Ethereum endpoint.
  */
-let evmRpcProvider: JsonRpcProvider | undefined;
+let evmRpcProvider: { url: string; provider: JsonRpcProvider } | undefined;
 export function getEvmRpcProvider(): JsonRpcProvider {
-  if (!evmRpcProvider) {
-    evmRpcProvider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL);
+  const url = getEthereumRpcUrl();
+  if (evmRpcProvider?.url !== url) {
+    evmRpcProvider = { url, provider: new JsonRpcProvider(url) };
   }
-  return evmRpcProvider;
+  return evmRpcProvider.provider;
 }
 
 // Trezor resolves a failed connect call instead of throwing; its `code`, not its `error` text, says whether the user cancelled.

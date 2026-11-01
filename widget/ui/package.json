@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.67.1-next.0",
+  "version": "0.67.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -47,7 +47,7 @@
     "react-is": "^18.2.0"
   },
   "dependencies": {
-    "@hub3js/core": "^0.64.0",
+    "@hub3js/core": "^0.63.0",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-popover": "^1.0.6",
@@ -55,7 +55,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@rango-dev/wallets-react": "^0.50.1-next.0",
+    "@rango-dev/wallets-react": "^0.50.1",
     "@stitches/react": "^1.2.8",
     "copy-to-clipboard": "^3.3.3",
     "rango-types": "^0.6.0",

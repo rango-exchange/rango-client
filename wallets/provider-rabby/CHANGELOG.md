@@ -1,3 +1,4 @@
+## [0.32.1](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.32.0...provider-rabby@0.32.1) (2026-11-01)
 # [0.32.0](https://github.com/rango-exchange/rango-client/compare/provider-rabby@0.31.1...provider-rabby@0.32.0) (2026-10-17)
 
 
