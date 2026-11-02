@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-okx",
-  "version": "0.66.1-next.0",
+  "version": "0.66.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/mod.ts",
@@ -22,12 +22,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@rango-dev/internal-blockchains": "^0.3.1-next.0",
+    "@rango-dev/internal-blockchains": "^0.3.1-next.1",
     "@rango-dev/signer-evm": "^0.47.0",
-    "@rango-dev/signer-solana": "^0.51.0",
-    "@rango-dev/signer-sui": "^0.13.0",
-    "@rango-dev/signer-ton": "^0.31.0",
-    "@rango-dev/signer-tron": "^0.44.0",
+    "@rango-dev/signer-solana": "^0.51.1-next.0",
+    "@rango-dev/signer-sui": "^0.13.1-next.0",
+    "@rango-dev/signer-ton": "^0.31.1-next.0",
+    "@rango-dev/signer-tron": "^0.44.1-next.0",
     "@ton/core": "^0.59.0",
     "rango-types": "^0.6.0"
   },
