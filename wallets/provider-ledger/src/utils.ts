@@ -4,7 +4,7 @@ import { getErrorMessage, Hub3Error } from '@hub3js/core';
 import { EVM_NAMESPACE, SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import { CAIP_SOLANA_CHAIN_ID } from '@hub3js/solana';
 import { getAltStatusMessage } from '@ledgerhq/errors';
-import { DEFAULT_ETHEREUM_RPC_URL } from '@rango-dev/signer-evm';
+import { getEthereumRpcUrl } from '@rango-dev/signer-evm';
 import bs58 from 'bs58';
 import { JsonRpcProvider } from 'ethers';
 
@@ -25,12 +25,13 @@ export type Provider = Map<string, unknown>;
  * NOTE: If Ledger EVM support ever expands beyond Ethereum, this must select
  * the RPC per chain instead of the single Ethereum endpoint.
  */
-let evmRpcProvider: JsonRpcProvider | undefined;
+let evmRpcProvider: { url: string; provider: JsonRpcProvider } | undefined;
 export function getEvmRpcProvider(): JsonRpcProvider {
-  if (!evmRpcProvider) {
-    evmRpcProvider = new JsonRpcProvider(DEFAULT_ETHEREUM_RPC_URL);
+  const url = getEthereumRpcUrl();
+  if (evmRpcProvider?.url !== url) {
+    evmRpcProvider = { url, provider: new JsonRpcProvider(url) };
   }
-  return evmRpcProvider;
+  return evmRpcProvider.provider;
 }
 
 type DeviceAccounts = {

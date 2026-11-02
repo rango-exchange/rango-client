@@ -1,3 +1,4 @@
+## [0.59.1](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.59.0...provider-walletconnect-2@0.59.1) (2026-11-01)
 # [0.59.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.58.2...provider-walletconnect-2@0.59.0) (2026-10-17)
 
 
