@@ -1,3 +1,9 @@
+## [0.65.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.65.0...widget-embedded@0.65.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* take a custom ethereum rpc from signers config instead of a hardcoded key ([64d352a](https://github.com/rango-exchange/rango-client/commit/64d352a51cf28603c9307e7b54b4579df520dbbf))
 # [0.65.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.64.3...widget-embedded@0.65.0) (2026-10-17)
 
 

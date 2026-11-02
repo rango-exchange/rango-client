@@ -113,9 +113,11 @@ export type BlockchainAndTokenConfig = {
  * `SignersConfig`
  *
  * @property {string | string[]} customSolanaRPC - This is an optional property that can be used to set custom Solana RPCs.
+ * @property {string} customEthereumRPC - This is an optional property that can be used to set a custom Ethereum RPC.
  */
 export type SignersConfig = {
   customSolanaRPC?: string | string[];
+  customEthereumRPC?: string;
 };
 
 /**
