@@ -35,9 +35,14 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders, RPC_URLS } from '@rango-dev/provider-all';
+import { allProviders, toNamespacesRPCUrls } from '@rango-dev/provider-all';
 
-const providers = allProviders().map((build) => build(RPC_URLS));
+// Optional. Wallets without an RPC of their own (Ledger, Trezor) read each EVM
+// chain through these urls, keyed by chain id. No url is built in.
+const rpcURLs = toNamespacesRPCUrls({
+  evm: { 1: ['https://your-ethereum-rpc'], 56: ['https://your-bsc-rpc'] },
+});
+const providers = allProviders().map((build) => build(rpcURLs));
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -111,9 +116,9 @@ With the use of auto-connect, after reloading the app, wallet provider will auto
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders, RPC_URLS } from '@rango-dev/provider-all';
+import { allProviders } from '@rango-dev/provider-all';
 
-const providers = allProviders().map((build) => build(RPC_URLS));
+const providers = allProviders().map((build) => build());
 
 export function App() {
   const blockchains = [...] // An array of blockchains

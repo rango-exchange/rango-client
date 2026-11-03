@@ -38,21 +38,12 @@ import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconne
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
 
 export { WalletTypes } from './walletTypes.js';
-
-/**
- * The RPC endpoints every provider is built with, declared once for all of
- * them. Namespaces read their own entry, e.g. the EVM namespace's public viem
- * actions go to `evm`.
- */
-export const RPC_URLS: NamespacesRPCUrls = {
-  evm: [
-    'https://rpc.ankr.com/eth/8d43f5e842676d766141cb1943b9b4e12821f463665e180c209bd3dab9639df2',
-  ],
-};
+export { toNamespacesRPCUrls } from './rpcUrls.js';
+export type { RpcUrlsConfig } from './rpcUrls.js';
 
 // Providers register different namespaces, so the list is typed loosely instead of `Provider<unknown>`.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type BuildProvider = (rpcURLs: NamespacesRPCUrls) => Provider<any>;
+type BuildProvider = (rpcURLs?: NamespacesRPCUrls) => Provider<any>;
 
 export const allProviders = (): BuildProvider[] => {
   return [

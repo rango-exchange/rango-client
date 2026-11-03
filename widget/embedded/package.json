@@ -43,7 +43,6 @@
     "@rango-dev/queue-manager-core": "^0.36.1-next.0",
     "@rango-dev/queue-manager-rango-preset": "^0.66.1-next.1",
     "@rango-dev/queue-manager-react": "^0.36.1-next.0",
-    "@rango-dev/signer-evm": "^0.47.1",
     "@rango-dev/signer-solana": "^0.51.1-next.0",
     "@rango-dev/ui": "^0.67.1-next.1",
     "@rango-dev/wallets-react": "^0.50.1-next.1",
