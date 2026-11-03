@@ -9,7 +9,7 @@ import { exodus as exodusInstance } from './utils.js';
 
 const WALLET_INJECTION_DELAY_MS = 1000;
 // RPC URLs are accepted for every namespace, so any of them can start using one.
-const buildProvider = (_rpcURLs: NamespacesRPCUrls) => {
+const buildProvider = (_rpcURLs?: NamespacesRPCUrls) => {
   return new ProviderBuilder(WALLET_ID)
     .init((context) =>
       setTimeout(function () {
