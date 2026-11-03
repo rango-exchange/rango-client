@@ -13,6 +13,7 @@ export function getWalletsList(
   blockchains: BlockchainMeta[]
 ): MapSupportedList[] {
   const allProviders = getAllProviders();
+  // Built only to read each wallet's info, so no RPC urls are needed.
   const allBuiltProviders = allProviders.map((build) => build());
   const walletsList: MapSupportedList[] = [];
   allBuiltProviders.forEach((provider: Provider) => {

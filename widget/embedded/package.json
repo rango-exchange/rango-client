@@ -25,8 +25,8 @@
   "dependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/namespaces": "^0.8.0",
+    "@hub3js/evm": "0.0.0-experimental-1c5b27eb-20261024",
+    "@hub3js/namespaces": "0.0.0-experimental-1c5b27eb-20261024",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/starknet": "^0.6.0",
     "@hub3js/std": "^0.6.0",
@@ -43,7 +43,6 @@
     "@rango-dev/queue-manager-core": "^0.36.1-next.0",
     "@rango-dev/queue-manager-rango-preset": "^0.66.1-next.1",
     "@rango-dev/queue-manager-react": "^0.36.1-next.0",
-    "@rango-dev/signer-evm": "^0.47.1",
     "@rango-dev/signer-solana": "^0.51.1-next.0",
     "@rango-dev/ui": "^0.67.1-next.1",
     "@rango-dev/wallets-react": "^0.50.1-next.1",
