@@ -2932,10 +2932,10 @@
     rango-types "^0.6.0"
     zustand "^4.5.2"
 
-"@hub3js/evm@0.0.0-experimental-80c90a72-20261028", "@hub3js/evm@^0.0.0-experimental-80c90a72-20261028":
-  version "0.0.0-experimental-80c90a72-20261028"
-  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-80c90a72-20261028.tgz#c7a7596752b2eb475d4c23af4b8f0a00146ad1a1"
-  integrity sha512-K2xdIxoHxHHPL7CCowbNNDIp4hRUADkwqtgGNZKE2fLunVOYpOvlCuKswbrkn53poKc1msxkXtZfMI3GhXuD8A==
+"@hub3js/evm@0.0.0-experimental-0b95645d-20261103", "@hub3js/evm@^0.0.0-experimental-80c90a72-20261028":
+  version "0.0.0-experimental-0b95645d-20261103"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-0b95645d-20261103.tgz#b844d295c7b3cd7279be38625c6e37acd6de7526"
+  integrity sha512-64hlbZk2N0dBh58Tt/CILHAvkqXUYV8JFvXaQlI99ApM49Z9AFkxyxAvfKxsRoIlzklzNfeOE2nLIKxeV5FMaQ==
   dependencies:
     "@hub3js/std" "^0.6.0"
     caip "^1.1.1"
@@ -2957,13 +2957,14 @@
     "@hub3js/tvm" "^0.6.0"
     "@hub3js/xrpl" "^0.6.0"
 
-"@hub3js/solana@0.0.0-experimental-80c90a72-20261028", "@hub3js/solana@^0.0.0-experimental-80c90a72-20261028":
-  version "0.0.0-experimental-80c90a72-20261028"
-  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.0.0-experimental-80c90a72-20261028.tgz#30985f2154fca0e8d2d1963f2d3a3a026aec251a"
-  integrity sha512-AfGptZQOAIhZXGpR8L1bGvYCadxCkC97CwsYabKbhNUDM+pUOEldGVTTwLh4am337CxguxLJR11rBdTqUaG+4A==
+"@hub3js/solana@0.0.0-experimental-0b95645d-20261103", "@hub3js/solana@^0.0.0-experimental-80c90a72-20261028":
+  version "0.0.0-experimental-0b95645d-20261103"
+  resolved "https://registry.yarnpkg.com/@hub3js/solana/-/solana-0.0.0-experimental-0b95645d-20261103.tgz#a4d9712119217d2c682d3422af69eda65de12771"
+  integrity sha512-G/bkY0QyUpWT8F8Np5mYOwBr2j18Kk2vmHcEJRNK+m9PA/CTbKnG5dJzFlHzv56bSBX5uttHNgCyh69U81XUOA==
   dependencies:
     "@hub3js/std" "^0.6.0"
     "@solana/kit" "^8.5.0"
+    "@solana/rpc-spec-types" "^8.5.0"
     "@solana/wallet-standard-features" "^1.3.0"
     "@solana/web3.js" "^1.98.4"
     "@wallet-standard/base" "^1.1.0"
@@ -6360,6 +6361,14 @@
     chalk "5.6.2"
     commander "15.0.0"
 
+"@solana/errors@8.6.0":
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/@solana/errors/-/errors-8.6.0.tgz#5340ab756dbd0641a5a0a83e9332a87c22c7e2dd"
+  integrity sha512-viHL51ymR1HZB7ZTp0ESkLOyHCa4bPfok9dvRYbMmYokY5ys1xinISKHUhcOHsg9zbuAWBRJUOnZRWAPbb4+yA==
+  dependencies:
+    chalk "5.6.2"
+    commander "15.0.0"
+
 "@solana/fast-stable-stringify@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@solana/fast-stable-stringify/-/fast-stable-stringify-2.0.0.tgz#ac06b304ee3e050c171bcbe885e91772e22e06fb"
@@ -6955,6 +6964,13 @@
   integrity sha512-YUTMKWWlHCGBmA1wxhIilbxJlad5vEsvc8dDO9VWr7GVkQUlipEU79iGaKk4xQ6Oo1mZWxpGz5mAJUqGraTK4A==
   dependencies:
     "@solana/errors" "8.5.0"
+
+"@solana/rpc-spec-types@^8.5.0":
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/@solana/rpc-spec-types/-/rpc-spec-types-8.6.0.tgz#be5649554f2175449c138805715bf5b0ec1871ce"
+  integrity sha512-6+2F2BN2CXp4g7cnvLp2mRo/XwdN5At7f3HbdEablxNe1UvI5S8WIEY3l/Y+nh2NQIaEVz9fLjmTYV+UfZNzEg==
+  dependencies:
+    "@solana/errors" "8.6.0"
 
 "@solana/rpc-spec@2.0.0":
   version "2.0.0"

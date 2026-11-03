@@ -31,7 +31,7 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/evm": "0.0.0-experimental-0b95645d-20261103",
     "@hub3js/namespaces": "0.0.0-experimental-80c90a72-20261028",
     "@hub3js/std": "^0.6.0",
     "@hub3js/tron": "^0.3.0"
@@ -39,7 +39,7 @@
   "peerDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/evm": "0.0.0-experimental-0b95645d-20261103",
     "@hub3js/namespaces": "0.0.0-experimental-80c90a72-20261028",
     "@hub3js/std": "^0.6.0",
     "@hub3js/tron": "^0.3.0"

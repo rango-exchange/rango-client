@@ -4,7 +4,7 @@ import { ActionBuilder, NamespaceBuilder } from '@hub3js/core';
 import { SOLANA_NAMESPACE } from '@hub3js/namespaces';
 import {
   builders,
-  solanaKitAdapter,
+  solanaKitPublicAdapter,
   walletStandardAdapter,
 } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
@@ -45,7 +45,7 @@ const disconnect = commonBuilders
 const signWallet = () =>
   metamask()?.get(SOLANA_NAMESPACE) as SolanaSignWallet | undefined;
 
-// Signs through the wallet, and reads through the Solana RPC URL when one is given.
+// Signs through the wallet, and reads through the Solana RPC URLs when given.
 const buildSolana = (rpcURLs?: string[]) => {
   const builder = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
     .action(connect)
@@ -53,9 +53,8 @@ const buildSolana = (rpcURLs?: string[]) => {
     .action(canEagerConnect)
     .action(walletStandardAdapter(signWallet));
 
-  const [rpcURL] = rpcURLs ?? [];
-  if (rpcURL) {
-    builder.action(solanaKitAdapter(rpcURL));
+  if (rpcURLs?.length) {
+    builder.action(solanaKitPublicAdapter(rpcURLs));
   }
 
   return builder.build();

@@ -6,7 +6,7 @@ import {
   actions,
   builders,
   injectedToWalletStandard,
-  solanaKitAdapter,
+  solanaKitPublicAdapter,
   utils,
   walletStandardAdapter,
 } from '@hub3js/solana';
@@ -62,7 +62,7 @@ const canEagerConnect = new ActionBuilder<SolanaActions, 'canEagerConnect'>(
  */
 const signWallet = () => injectedToWalletStandard(okx()?.get(SOLANA_NAMESPACE));
 
-// Signs through the wallet, and reads through the Solana RPC URL when one is given.
+// Signs through the wallet, and reads through the Solana RPC URLs when given.
 const buildSolana = (rpcURLs?: string[]) => {
   const builder = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
     .action(connect)
@@ -70,9 +70,8 @@ const buildSolana = (rpcURLs?: string[]) => {
     .action(canEagerConnect)
     .action(walletStandardAdapter(signWallet));
 
-  const [rpcURL] = rpcURLs ?? [];
-  if (rpcURL) {
-    builder.action(solanaKitAdapter(rpcURL));
+  if (rpcURLs?.length) {
+    builder.action(solanaKitPublicAdapter(rpcURLs));
   }
 
   return builder.build();

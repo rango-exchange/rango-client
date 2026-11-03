@@ -6,7 +6,7 @@ import {
   actions,
   builders,
   injectedToWalletStandard,
-  solanaKitAdapter,
+  solanaKitPublicAdapter,
   walletStandardAdapter,
 } from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
@@ -33,16 +33,15 @@ const disconnect = commonBuilders.disconnect<SolanaActions>().build();
 const signWallet = () =>
   injectedToWalletStandard(mathWallet()?.get(SOLANA_NAMESPACE));
 
-// Signs through the wallet, and reads through the Solana RPC URL when one is given.
+// Signs through the wallet, and reads through the Solana RPC URLs when given.
 const buildSolana = (rpcURLs?: string[]) => {
   const builder = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
     .action(connect)
     .action(disconnect)
     .action(walletStandardAdapter(signWallet));
 
-  const [rpcURL] = rpcURLs ?? [];
-  if (rpcURL) {
-    builder.action(solanaKitAdapter(rpcURL));
+  if (rpcURLs?.length) {
+    builder.action(solanaKitPublicAdapter(rpcURLs));
   }
 
   return builder.build();

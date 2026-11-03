@@ -108,7 +108,9 @@
   "resolutions": {
     "valibot": "^0.38.0",
     "react-refresh": "0.9.0",
-    "@types/node": "^20.17.19"
+    "@types/node": "^20.17.19",
+    "@hub3js/solana": "0.0.0-experimental-0b95645d-20261103",
+    "@hub3js/evm": "0.0.0-experimental-0b95645d-20261103"
   },
   "@parcel/resolver-default": {
     "packageExports": true

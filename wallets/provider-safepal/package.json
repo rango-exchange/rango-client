@@ -28,13 +28,13 @@
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/evm": "0.0.0-experimental-0b95645d-20261103",
     "@hub3js/namespaces": "0.0.0-experimental-80c90a72-20261028",
     "@hub3js/std": "^0.6.0"
   },
   "peerDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-80c90a72-20261028",
+    "@hub3js/evm": "0.0.0-experimental-0b95645d-20261103",
     "@hub3js/namespaces": "0.0.0-experimental-80c90a72-20261028",
     "@hub3js/std": "^0.6.0"
   },

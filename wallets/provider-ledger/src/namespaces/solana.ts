@@ -3,7 +3,11 @@ import type { SolanaActions } from '@hub3js/solana';
 import type { CaipAccount } from '@hub3js/std/types';
 
 import { Hub3Error, NamespaceBuilder } from '@hub3js/core';
-import { builders, CAIP_NAMESPACE, solanaKitAdapter } from '@hub3js/solana';
+import {
+  builders,
+  CAIP_NAMESPACE,
+  solanaKitPublicAdapter,
+} from '@hub3js/solana';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { AccountId } from 'caip';
@@ -54,7 +58,7 @@ const connect = builders
 
 const disconnect = commonBuilders.disconnect<SolanaActions>().build();
 
-// Signs on the device, and reads through the Solana RPC URL when one is given.
+// Signs on the device, and reads through the Solana RPC URLs when given.
 const buildSolana = (rpcURLs?: string[]) => {
   const builder = new NamespaceBuilder<SolanaActions>('Solana', WALLET_ID)
     .action(connect)
@@ -63,9 +67,8 @@ const buildSolana = (rpcURLs?: string[]) => {
     .action('signTransaction', signTransaction)
     .action('signMessage', signMessage);
 
-  const [rpcURL] = rpcURLs ?? [];
-  if (rpcURL) {
-    builder.action(solanaKitAdapter(rpcURL));
+  if (rpcURLs?.length) {
+    builder.action(solanaKitPublicAdapter(rpcURLs));
   }
 
   return builder.build();
