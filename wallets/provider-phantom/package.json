@@ -33,16 +33,16 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/namespaces": "^0.8.0",
+    "@hub3js/evm": "0.0.0-experimental-1c5b27eb-20261024",
+    "@hub3js/namespaces": "0.0.0-experimental-1c5b27eb-20261024",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/std": "^0.6.0"
   },
   "peerDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
-    "@hub3js/namespaces": "^0.8.0",
+    "@hub3js/evm": "0.0.0-experimental-1c5b27eb-20261024",
+    "@hub3js/namespaces": "0.0.0-experimental-1c5b27eb-20261024",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/std": "^0.6.0"
   },
