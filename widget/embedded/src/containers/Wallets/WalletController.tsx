@@ -81,6 +81,20 @@ export function WalletControllerScope(props: PropsWithChildren<PropTypes>) {
     [events]
   );
 
+  return (
+    <WalletControllerProvider controller={controller} onEvent={props.onEvent}>
+      {props.children}
+    </WalletControllerProvider>
+  );
+}
+
+export function WalletControllerProvider(
+  props: PropsWithChildren<{
+    controller: WalletController;
+    onEvent: WalletControllerEventHandler;
+  }>
+) {
+  const { controller } = props;
   // The subscription is created once per controller, so it reads the latest handler from here.
   const onEventRef = useRef(props.onEvent);
   onEventRef.current = props.onEvent;

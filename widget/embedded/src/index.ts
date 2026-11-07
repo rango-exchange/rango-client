@@ -13,6 +13,16 @@ import type {
   WidgetTheme,
   WidgetVariant,
 } from './types';
+import type {
+  ConnectResult,
+  ExtendedWalletInfo,
+  InstallObjects,
+  NamespaceInputForConnect,
+  WalletController,
+  WalletControllerEventHandler,
+  WalletControllerEventInfo,
+  WalletState as WalletControllerWalletState,
+} from './types/walletController';
 import type { WalletType } from '@hub3js/core';
 import type {
   PendingSwapWithQueueID,
@@ -87,6 +97,7 @@ import {
   UiEventTypes,
   WidgetEvents,
 } from './types';
+import { WalletControllerEvents } from './types/walletController';
 import { customizedThemeTokens } from './utils/ui';
 
 export const StatefulConnect = {
@@ -136,6 +147,14 @@ export type {
   UiEventData,
   WalletInfoWithExtra,
   UseStatefulConnect,
+  WalletController,
+  WalletControllerEventHandler,
+  WalletControllerEventInfo,
+  WalletControllerWalletState,
+  ExtendedWalletInfo,
+  ConnectResult,
+  NamespaceInputForConnect,
+  InstallObjects,
 };
 export {
   Widget,
@@ -164,6 +183,7 @@ export {
   QuoteEventTypes,
   WalletEventTypes,
   UiEventTypes,
+  WalletControllerEvents,
   RouteEventType,
   StepEventType,
   StepExecutionEventStatus,
