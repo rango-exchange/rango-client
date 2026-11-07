@@ -5,12 +5,12 @@ import type {
   Wallet,
   WalletInfoWithExtra,
 } from '../types';
-import type { WalletType } from '@hub3js/core';
-import type { Network } from '@rango-dev/internal-blockchains';
 import type {
   ExtendedWalletInfo,
-  ProviderContext,
-} from '@rango-dev/wallets-react';
+  WalletController,
+} from '../types/walletController';
+import type { WalletType } from '@hub3js/core';
+import type { Network } from '@rango-dev/internal-blockchains';
 import type { BlockchainMeta, Token, TransactionType } from 'rango-sdk';
 
 import {
@@ -41,10 +41,10 @@ import { numberToString } from './numbers';
 import { formatThousandsWithCommas } from './sanitizers';
 
 export type ExtendedModalWalletInfo = WalletInfoWithExtra &
-  Pick<ExtendedWalletInfo, 'properties' | 'isHub'>;
+  Pick<ExtendedWalletInfo, 'properties'>;
 
 function getConnectedEvmChainName(
-  namespaces: ReturnType<ProviderContext['state']>['namespaces'],
+  namespaces: ReturnType<WalletController['state']>['namespaces'],
   supportedChains: BlockchainMeta[]
 ): string | null {
   const evmNamespace = namespaces?.get('EVM');
@@ -59,7 +59,7 @@ function getConnectedEvmChainName(
 
 export function getWalletConnectionStatus(
   wallet: ExtendedWalletInfo,
-  walletState: ReturnType<ProviderContext['state']>
+  walletState: ReturnType<WalletController['state']>
 ): WalletStatus {
   if (checkIsWalletPartiallyConnected(wallet, walletState)) {
     return WalletStatus.PARTIALLY_CONNECTED;
@@ -77,7 +77,7 @@ export function getWalletConnectionStatus(
 }
 
 export function mapWalletTypesToWalletInfo(
-  getState: ProviderContext['state'],
+  getState: WalletController['state'],
   getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
   list: WalletType[],
   chain?: string
@@ -113,7 +113,6 @@ export function mapWalletTypesToWalletInfo(
         supportedChains,
         needsDerivationPath,
         properties,
-        isHub,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -134,7 +133,6 @@ export function mapWalletTypesToWalletInfo(
         blockchainTypes,
         needsDerivationPath,
         properties,
-        isHub,
       };
     });
 }
@@ -523,7 +521,7 @@ export function filterWalletsByCategory(
 
 export function checkIsWalletPartiallyConnected(
   wallet: ExtendedWalletInfo,
-  walletState: ReturnType<ProviderContext['state']>
+  walletState: ReturnType<WalletController['state']>
 ) {
   if (!wallet.needsNamespace || !walletState.connected) {
     return false;

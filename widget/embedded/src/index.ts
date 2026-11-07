@@ -76,9 +76,9 @@ import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { useAvailableWallets as useWalletList } from './hooks/useAvailableWallets';
 import { useStatefulConnect } from './hooks/useStatefulConnect';
 import { SwapModeContext } from './hooks/useSwapMode';
-import { useWalletList } from './hooks/useWalletList';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
 import { widgetEventEmitter } from './services/eventEmitter';
 import {

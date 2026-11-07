@@ -5,11 +5,11 @@ import type { Namespace } from '@hub3js/namespaces';
 import { Divider } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { useAvailableWallets } from '../../hooks/useAvailableWallets';
 import {
   ResultStatus,
   useStatefulConnect,
 } from '../../hooks/useStatefulConnect';
-import { useWalletList } from '../../hooks/useWalletList';
 import { getContainer } from '../../utils/common';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import {
@@ -47,7 +47,7 @@ export function StatefulConnectModal(props: PropTypes) {
   const catchErrorOnHandle = (error: Error) => {
     setError(error.message);
   };
-  const { terminateConnectingWallets } = useWalletList();
+  const { terminateConnectingWallets } = useAvailableWallets();
 
   const {
     handleConnect,

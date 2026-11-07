@@ -7,9 +7,9 @@ import {
   WalletImageContainer,
   WalletState,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { useWalletController } from '../../containers/Wallets';
 import { getWalletConnectionStatus } from '../../utils/wallets';
 
 import { LogoContainer, Spinner } from './ConnectStatus.styles';
@@ -18,7 +18,7 @@ export function ConnectStatus(props: ConnectStatusProps) {
   // See `wallet` notes on its type definition
   const { wallet, error } = props;
   const { type, image } = wallet;
-  const { state, getWalletInfo } = useWallets();
+  const { state, getWalletInfo } = useWalletController();
   const walletState = getWalletConnectionStatus(
     getWalletInfo(type),
     state(type)

@@ -1,11 +1,11 @@
-import { useWallets } from '@rango-dev/wallets-react';
 import { useEffect, useRef } from 'react';
 
 import { SearchParams } from '../constants/searchParams';
+import { useWalletController } from '../containers/Wallets';
 import { useAppStore } from '../store/AppStore';
 
 export function useForceAutoConnect(): void {
-  const { connect, state } = useWallets();
+  const { connect, state } = useWalletController();
   const initiated = useRef<{ [key: string]: boolean }>({});
   const { fetchStatus } = useAppStore();
   const walletType =

@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { StatefulConnectModal } from '../components/StatefulConnectModal';
-import { useWalletList } from '../hooks/useWalletList';
+import { useAvailableWallets } from '../hooks/useAvailableWallets';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
 import { getContainer, isSingleWalletActive } from '../utils/common';
@@ -45,7 +45,7 @@ export function WalletsPage() {
     useState<WalletInfoWithExtra>();
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const { list } = useWalletList();
+  const { list } = useAvailableWallets();
 
   const filteredBlockchains = filterBlockchainsByWalletTypes(list, blockchains);
   const activeCategoriesCount = getCategoriesCount(filteredBlockchains);

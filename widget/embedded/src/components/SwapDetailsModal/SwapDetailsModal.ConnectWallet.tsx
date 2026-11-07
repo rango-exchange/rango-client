@@ -11,10 +11,10 @@ import {
   Spinner,
   WarningIcon,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React, { useState } from 'react';
 
-import { useWalletList } from '../../hooks/useWalletList';
+import { useWalletController } from '../../containers/Wallets';
+import { useAvailableWallets } from '../../hooks/useAvailableWallets';
 import { useUiStore } from '../../store/ui';
 import { tryRefineError } from '../../utils/errors';
 import { getConciseAddress } from '../../utils/wallets';
@@ -29,9 +29,9 @@ export const ConnectWalletContent = (props: ConnectWalletContentProps) => {
   const { wallet: currentStepWallet, namespace, onClose } = props;
 
   const [error, setError] = useState<Error | null>(null);
-  const { list } = useWalletList();
+  const { list } = useAvailableWallets();
   const isActiveTab = useUiStore.use.isActiveTab();
-  const { state, connect } = useWallets();
+  const { state, connect } = useWalletController();
 
   const wallet = list.find(
     (wallet) => wallet.type === currentStepWallet.walletType

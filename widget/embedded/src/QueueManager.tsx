@@ -11,10 +11,10 @@ import {
   makeQueueDefinition,
 } from '@rango-dev/queue-manager-rango-preset';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
-import { useWallets } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-types';
 import React, { useMemo } from 'react';
 
+import { useWalletController } from './containers/Wallets';
 import { eventEmitter } from './services/eventEmitter';
 import { useAppStore } from './store/AppStore';
 import { useUiStore } from './store/ui';
@@ -30,7 +30,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     canSwitchNetworkTo,
     getWalletInfo,
     hubProvider,
-  } = useWallets();
+  } = useWalletController();
 
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({

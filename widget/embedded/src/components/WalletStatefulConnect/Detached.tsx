@@ -1,6 +1,6 @@
 import type { PropTypes } from './Detached.types';
+import type { NamespaceMeta } from '../../types/walletController';
 import type { Namespace } from '@hub3js/namespaces';
-import type { NamespaceMeta } from '@rango-dev/wallets-react';
 
 import { i18n } from '@lingui/core';
 import {
@@ -11,9 +11,9 @@ import {
   MessageBox,
   WalletImageContainer,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { useWalletController } from '../../containers/Wallets';
 import { NamespaceUnsupportedItem } from '../NamespaceItem/NamespaceUnsupportedItem';
 
 import { NamespacesHeader } from './Detached.styles';
@@ -31,7 +31,7 @@ export function Detached(props: PropTypes) {
   } = props;
   const { targetWallet } = value;
 
-  const { connect, disconnect, state } = useWallets();
+  const { connect, disconnect, state } = useWalletController();
   const walletType = targetWallet.type;
   const walletState = state(walletType);
   const namespacesProperty = targetWallet.properties?.find(

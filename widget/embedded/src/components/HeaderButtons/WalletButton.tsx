@@ -4,7 +4,7 @@ import { i18n } from '@lingui/core';
 import { Image, Tooltip, WalletIcon, WalletState } from '@rango-dev/ui';
 import React from 'react';
 
-import { useWalletList } from '../../hooks/useWalletList';
+import { useAvailableWallets } from '../../hooks/useAvailableWallets';
 
 import {
   ConnectedIcon,
@@ -14,7 +14,7 @@ import {
 } from './HeaderButtons.styles';
 
 function WalletButton(props: PropTypes) {
-  const { list } = useWalletList();
+  const { list } = useAvailableWallets();
   const connectedWallets = list.filter(
     (wallet) =>
       wallet.state === WalletState.CONNECTED ||

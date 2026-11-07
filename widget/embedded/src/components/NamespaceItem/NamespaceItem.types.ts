@@ -1,4 +1,4 @@
-import type { NamespaceMeta } from '@rango-dev/wallets-react';
+import type { NamespaceMeta } from '../../types/walletController';
 
 export type PropTypes = {
   namespace: NamespaceMeta;
