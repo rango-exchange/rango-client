@@ -1,4 +1,4 @@
-import type { InstallObjects } from '@rango-dev/wallets-react';
+import type { InstallObjects } from '../components/Wallet/Wallet.types.js';
 
 function isBrave() {
   let isBrave = false;

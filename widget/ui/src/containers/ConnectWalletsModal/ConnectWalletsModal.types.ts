@@ -1,5 +1,5 @@
 import type { WalletInfo } from '../../components/index.js';
-import type { WalletType } from '@hub3js/core';
+import type { WalletType } from '../../components/Wallet/Wallet.types.js';
 
 export interface ConnectWalletsModalPropTypes {
   open: boolean;
