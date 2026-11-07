@@ -21,9 +21,8 @@ import type {
   WalletController,
   WalletControllerEventHandler,
   WalletControllerEventInfo,
-  WalletState as WalletControllerWalletState,
+  WalletState,
 } from './types/walletController';
-import type { WalletType } from '@hub3js/core';
 import type {
   PendingSwapWithQueueID,
   Route,
@@ -45,13 +44,6 @@ import type {
   StepTxExecutionBlockedEvent,
   StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
-import type {
-  EventHandler as HandleWalletsUpdate,
-  ProviderInterface,
-  WalletEventData,
-  WalletInfo,
-  WalletState,
-} from '@rango-dev/wallets-react';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { Networks, readAccountAddress } from '@rango-dev/internal-blockchains';
@@ -62,11 +54,6 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import {
-  useWallets,
-  Events as WalletEvents,
-  WalletEventTypes,
-} from '@rango-dev/wallets-react';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {
@@ -82,11 +69,9 @@ import {
 import { WIDGET_UI_ID as UI_ID } from './constants';
 import { SUPPORTED_FONTS } from './constants/fonts';
 import { Refuel } from './containers/Refuel';
-import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
-import { useAvailableWallets as useWalletList } from './hooks/useAvailableWallets';
 import { useStatefulConnect } from './hooks/useStatefulConnect';
 import { SwapModeContext } from './hooks/useSwapMode';
 import { useWidgetEvents } from './hooks/useWidgetEvents';
@@ -111,14 +96,9 @@ export const StatefulConnect = {
 
 export type {
   WidgetConfig,
-  WalletType,
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
-  /**
-   * @deprecated Pass a hub `Provider` instead. This type will be removed in future versions.
-   */
-  ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
   RouteEvent,
@@ -138,11 +118,9 @@ export type {
   StepCheckStatusEvent,
   StepApprovalTxSucceededEvent,
   StepOutputRevealedEvent,
-  HandleWalletsUpdate,
   ConnectedWallet,
   Tokens,
   WidgetVariant,
-  WalletEventData,
   QuoteEventData,
   UiEventData,
   WalletInfoWithExtra,
@@ -150,7 +128,7 @@ export type {
   WalletController,
   WalletControllerEventHandler,
   WalletControllerEventInfo,
-  WalletControllerWalletState,
+  WalletState,
   ExtendedWalletInfo,
   ConnectResult,
   NamespaceInputForConnect,
@@ -160,19 +138,13 @@ export {
   Widget,
   Refuel,
   SwapModeContext,
-  /**
-   * @deprecated Use `WidgetProvider` instead. This component will be removed in future versions.
-   */
-  WidgetWallets,
   WidgetProvider,
   useWidget,
-  useWallets,
   useStatefulConnect,
   /**
    * @deprecated Use `widgetEventEmitter` instead. This hook will be removed in future versions.
    */
   useWidgetEvents,
-  useWalletList,
   customizedThemeTokens,
   widgetEventEmitter,
   WidgetEvents,
@@ -181,7 +153,6 @@ export {
    */
   MainEvents,
   QuoteEventTypes,
-  WalletEventTypes,
   UiEventTypes,
   WalletControllerEvents,
   RouteEventType,
@@ -194,8 +165,6 @@ export {
 
 // Internal type exports for Rango
 export type {
-  WalletState,
-  WalletInfo,
   PendingSwap,
   PendingSwapWithQueueID,
   PendingSwapStep,
@@ -206,7 +175,6 @@ export type {
 export {
   readAccountAddress,
   Networks,
-  WalletEvents,
   PendingSwapNetworkStatus,
   EventSeverity,
 };

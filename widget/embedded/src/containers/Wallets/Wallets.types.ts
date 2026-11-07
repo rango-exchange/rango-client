@@ -1,6 +1,5 @@
-import type { WidgetConfigWithoutLegacyProviders } from '../../types';
+import type { WidgetConfig } from '../../types';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
-import type { EventHandler, Events } from '@rango-dev/wallets-react';
 
 export type OnWalletConnectHandler = (wallet: LastConnectedWallet) => void;
 export type OnWalletDisconnectHandler = (walletType: string) => void;
@@ -19,18 +18,6 @@ export interface WidgetContextInterface {
   onDisconnectWallet(handler: OnWalletDisconnectHandler): void;
 }
 
-type EventHandlerParams = Parameters<EventHandler>;
-type EventParam = Exclude<Events, Events.PROVIDER_DISCONNECTED>;
-
-export type OnUpdateState = (
-  type: EventHandlerParams[0],
-  event: EventParam,
-  value: EventHandlerParams[2],
-  coreState: EventHandlerParams[3],
-  info: EventHandlerParams[4]
-) => void;
-
 export interface PropTypes {
-  onUpdateState?: OnUpdateState;
-  config: WidgetConfigWithoutLegacyProviders;
+  config: WidgetConfig;
 }

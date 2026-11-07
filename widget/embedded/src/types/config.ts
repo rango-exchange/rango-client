@@ -1,7 +1,6 @@
 import type { WalletController } from './walletController';
-import type { Provider, WalletType } from '@hub3js/core';
+import type { Provider } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
@@ -174,35 +173,6 @@ export type Routing = Partial<
 > &
   Partial<Record<'maxLength', number>>;
 
-export type TrezorManifest = {
-  appUrl: string;
-  email: string;
-};
-
-/**
- *
- * @property {string} manifestUrl - The URL of the TON Connect [manifest]{@link https://github.com/ton-connect/docs/blob/main/requests-responses.md#app-manifest}, containing the Dapp metadata to be displayed in the user’s wallet.
- *
- */
-export type TonConnectConfig = {
-  manifestUrl?: string;
-};
-
-/**
- * Configuration for the Ledger wallet integration.
- *
- * @property {string} dAppIdentifier - Unique identifier of your dApp, registered with Ledger to authorize the integration.
- * @property {string} apiKey - API key issued by Ledger, used to authenticate requests from your dApp.
- * @property {'fatal' | 'error' | 'warn' | 'info' | 'debug'} [loggerLevel] - Verbosity of the Ledger logger.
- * @property {boolean} [hideButton] - When `true`, hides the built-in Ledger floating button.
- */
-export type LedgerWalletConfig = {
-  dAppIdentifier: string;
-  apiKey: string;
-  loggerLevel?: 'fatal' | 'error' | 'warn' | 'info' | 'debug';
-  hideButton?: boolean;
-};
-
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
@@ -216,20 +186,16 @@ export type LedgerWalletConfig = {
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
- * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
- * as a Trezor Connect integrator,share your e-mail and application url.
- * @property {TonConnectConfig} tonConnect - Configuration for the TON Connect provider.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.
  * blockchain during the transaction.
  * @property {string[]} liquiditySources - The `liquiditySources` property is an optional array of
  * strings that specifies the liquidity sources allowed dexes and bridges for the routing
- * @property {WalletType[]} wallets - The `wallets` property is an optional array of `WalletType`
- * values that represent the types of wallets that the widget should support. For example, it could
- * include values like `"metamask"`, `"kepler"`, or `"phantom"`.
- * @property {WalletController} walletController - Optional. When a host app runs its own wallets (e.g. with `@rango-dev/wallets-react`),
- * it passes them here and in `wallets` (as `Provider`s); the widget then uses them instead of setting up wallets itself.
+ * @property {Provider[]} wallets - The hub `Provider`s (from `@hub3js/core`) the widget should show.
+ * The host app creates and owns them (e.g. using `@rango-dev/provider-all`), including their setup (WalletConnect, TON Connect, Trezor, Ledger options).
+ * @property {WalletController} walletController - Wallet actions and state for those providers, supplied by the host app (e.g. built on `@rango-dev/wallets-react`).
+ * The widget connects, disconnects and signs through it, it doesn't manage wallets itself.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
@@ -244,7 +210,7 @@ export type LedgerWalletConfig = {
  * used to specify the visual theme of the widget. It is of type `WidgetTheme`, which is an interface
  * that defines the various properties of the theme, such as colors, fonts, and others.
  * @property {boolean} externalWallets
- * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
+ * If `externalWallets` is `true`, `Widget` doesn't set up `WidgetProvider` itself, so you should add `WidgetProvider` to your app.
  * @property {boolean} excludeLiquiditySources - The `excludeLiquiditySources` property is a boolean value that when you
  * set it to true, the list of liquidity sources provided in `liquiditySources` will be excluded; otherwise, they will be included.
  * @property {Features} features - An optional object for configuring the visibility of various features.
@@ -271,21 +237,13 @@ export type WidgetConfig = {
   apiKey: string;
   apiUrl?: string;
   title?: string;
-  walletConnectProjectId?: string;
-  trezorManifest?: TrezorManifest;
-  ledgerWallet?: LedgerWalletConfig;
-  tonConnect?: TonConnectConfig;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  /**
-   * Passing a `ProviderInterface` is deprecated. Pass a hub `Provider` instead.
-   * Legacy providers will be removed in future versions.
-   */
-  wallets?: (WalletType | ProviderInterface | Provider)[];
-  walletController?: WalletController;
+  wallets: Provider[];
+  walletController: WalletController;
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
@@ -298,7 +256,6 @@ export type WidgetConfig = {
   signers?: SignersConfig;
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
-    walletConnectListedDesktopWalletLink?: string;
     autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
     campaignTag?: {
       backgroundUrl: string;
@@ -313,12 +270,4 @@ export type WidgetConfig = {
     };
   };
   routing?: Routing;
-};
-
-// TODO: remove this when ProviderInterface gets removed
-export type WidgetConfigWithoutLegacyProviders = WidgetConfig & {
-  wallets?: Exclude<
-    NonNullable<WidgetConfig['wallets']>[number],
-    ProviderInterface
-  >[];
 };

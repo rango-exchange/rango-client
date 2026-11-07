@@ -1,3 +1,10 @@
 export const BALANCE_SEPARATOR = '~';
 
 export const EXCLUDED_WALLETS: string[] = [];
+
+// Plain strings, since the widget doesn't depend on provider packages.
+export const WALLET_IDS = {
+  DEFAULT: 'default',
+  WALLET_CONNECT_2: 'wallet-connect-2',
+  LEDGER: 'ledger',
+} as const;

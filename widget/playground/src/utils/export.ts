@@ -112,13 +112,24 @@ export function getIframeCode(config: string) {
 export function getEmbeddedCode(config: string) {
   return `import { Widget, WidgetConfig } from "@rango-dev/widget-embedded";
 
-export default function App() {
+/*
+ * Wallets are owned by your app: create the providers (e.g. with @rango-dev/provider-all)
+ * and a wallet controller for them (e.g. backed by @rango-dev/wallets-react).
+ * The wallet ids and wallet options below are for that setup.
+ */
+export default function App(props: Pick<WidgetConfig, "wallets" | "walletController">) {
 
   const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
-              
+
   return (
     <div className="App">
-      <Widget config={config} />
+      <Widget
+        config={{
+          ...config,
+          wallets: props.wallets,
+          walletController: props.walletController,
+        }}
+      />
     </div>
   );
 }

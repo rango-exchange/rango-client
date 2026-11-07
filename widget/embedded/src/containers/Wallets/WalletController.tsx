@@ -2,10 +2,8 @@ import type {
   WalletController,
   WalletControllerEventHandler,
 } from '../../types/walletController';
-import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
-import { useWallets } from '@rango-dev/wallets-react';
 import React, {
   createContext,
   useContext,
@@ -14,11 +12,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
-export type WalletEvents = {
-  emit: EventHandler;
-  subscribe: WalletController['subscribe'];
-};
 
 /*
  * `version` changes on every wallet update, so the components using the controller re-render
@@ -37,55 +30,6 @@ export function useWalletController(): WalletController {
     );
   }
   return context.controller;
-}
-
-export function createWalletEvents(): WalletEvents {
-  const handlers = new Set<WalletControllerEventHandler>();
-  return {
-    emit: (...event) => handlers.forEach((handler) => handler(...event)),
-    subscribe: (handler) => {
-      handlers.add(handler);
-      return () => {
-        handlers.delete(handler);
-      };
-    },
-  };
-}
-
-type PropTypes = {
-  events: WalletEvents;
-  onEvent: WalletControllerEventHandler;
-};
-
-// Must be rendered inside the wallets-react `Provider`, since it adapts `useWallets()`.
-export function WalletControllerScope(props: PropsWithChildren<PropTypes>) {
-  const { events } = props;
-  const wallets = useWallets();
-  const walletsRef = useRef(wallets);
-  walletsRef.current = wallets;
-
-  const controller: WalletController = useMemo(
-    () => ({
-      connect: async (type, namespaces) =>
-        walletsRef.current.connect(type, namespaces),
-      disconnect: async (type, namespaces) =>
-        walletsRef.current.disconnect(type, namespaces),
-      state: (type) => walletsRef.current.state(type),
-      canSwitchNetworkTo: (type, network, namespace) =>
-        walletsRef.current.canSwitchNetworkTo(type, network, namespace),
-      getSigners: async (type) => walletsRef.current.getSigners(type),
-      getWalletInfo: (type) => walletsRef.current.getWalletInfo(type),
-      hubProvider: (type) => walletsRef.current.hubProvider(type),
-      subscribe: events.subscribe,
-    }),
-    [events]
-  );
-
-  return (
-    <WalletControllerProvider controller={controller} onEvent={props.onEvent}>
-      {props.children}
-    </WalletControllerProvider>
-  );
 }
 
 export function WalletControllerProvider(

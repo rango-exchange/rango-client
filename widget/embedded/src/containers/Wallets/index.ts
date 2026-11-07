@@ -1,2 +1,2 @@
-export { WidgetWallets, WidgetContext } from './Wallets';
+export { Wallets, WidgetContext } from './Wallets';
 export { useWalletController } from './WalletController';

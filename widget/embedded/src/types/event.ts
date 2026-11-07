@@ -3,10 +3,8 @@ import type {
   RouteEventData,
   StepEventData,
 } from '@rango-dev/queue-manager-rango-preset';
-import type { WalletEventData } from '@rango-dev/wallets-react';
 
 import { WidgetEvents as QueueManagerEvents } from '@rango-dev/queue-manager-rango-preset';
-import { WalletEventChannel } from '@rango-dev/wallets-react';
 
 type EventData<
   T extends QuoteEventTypes | UiEventTypes,
@@ -224,8 +222,6 @@ export enum WidgetEvents {
   RouteEvent = QueueManagerEvents.RouteEvent,
   StepEvent = QueueManagerEvents.StepEvent,
   QuoteEvent = 'quoteEvent',
-  // `isolatedModules` rejects a bare const reference in an enum initializer (TS18055).
-  WalletEvent = `${WalletEventChannel}`,
   UiEvent = 'uiEvent',
 }
 
@@ -233,7 +229,6 @@ export type Events = {
   [WidgetEvents.RouteEvent]: RouteEventData;
   [WidgetEvents.StepEvent]: StepEventData;
   [WidgetEvents.QuoteEvent]: QuoteEventData;
-  [WidgetEvents.WalletEvent]: WalletEventData;
   [WidgetEvents.UiEvent]: UiEventData;
 };
 
