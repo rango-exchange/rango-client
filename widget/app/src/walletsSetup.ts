@@ -26,6 +26,10 @@ export type AppWidgetConfig = Omit<
 > &
   WalletsSetup & {
     wallets?: string[];
+    // Older configs pass it here; it's now part of the wallets setup.
+    __UNSTABLE_OR_INTERNAL__?: WidgetConfig['__UNSTABLE_OR_INTERNAL__'] & {
+      walletConnectListedDesktopWalletLink?: string;
+    };
   };
 
 const REQUIRED_SETUP_BY_WALLET: Partial<Record<string, keyof WalletsSetup>> = {
