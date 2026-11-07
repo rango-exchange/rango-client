@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { PlaygroundConfig } from '../../store/config';
 
 import { getEmbeddedCode, getIframeCode } from '../../utils/export';
 
@@ -43,5 +43,5 @@ export const typesOfCodeBlocks: {
 export interface ExportConfigModalProps {
   open: boolean;
   onClose: () => void;
-  config: WidgetConfig;
+  config: PlaygroundConfig;
 }

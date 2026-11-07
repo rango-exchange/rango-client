@@ -1,26 +1,28 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { PlaygroundConfig } from '../store/config';
 
 import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import subtractObject from 'subtract-object';
 
-function clearEmpties<T extends Record<string, any>>(obj: T): T {
-  for (const key in obj) {
-    if (!obj[key] || typeof obj[key] !== 'object') {
+function clearEmpties<T extends object>(obj: T): T {
+  const record = obj as Record<string, unknown>;
+  for (const key in record) {
+    const value = record[key];
+    if (!value || typeof value !== 'object') {
       continue;
     }
-    clearEmpties(obj[key]);
-    if (Object.keys(obj[key]).length === 0 && !Array.isArray(obj[key])) {
-      delete obj[key];
+    clearEmpties(value);
+    if (Object.keys(value).length === 0 && !Array.isArray(value)) {
+      delete record[key];
     }
   }
   return obj;
 }
 
 function isWalletConfigNeeded(
-  config: WidgetConfig,
-  configKey: keyof WidgetConfig,
+  config: PlaygroundConfig,
+  configKey: keyof PlaygroundConfig,
   walletKey: string
 ): boolean {
   return (
@@ -30,21 +32,21 @@ function isWalletConfigNeeded(
 }
 
 export function filterConfig(
-  WidgetConfig: WidgetConfig,
-  initialConfig: WidgetConfig
+  widgetConfig: PlaygroundConfig,
+  initialConfig: PlaygroundConfig
 ) {
   const config = {
-    ...WidgetConfig,
-    wallets: WidgetConfig.externalWallets
+    ...widgetConfig,
+    wallets: widgetConfig.externalWallets
       ? undefined
-      : WidgetConfig.wallets?.filter((wallet) => typeof wallet === 'string'),
+      : widgetConfig.wallets?.filter((wallet) => typeof wallet === 'string'),
   };
 
   const userSelectedConfig = clearEmpties(
     subtractObject(
-      JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
+      JSON.parse(JSON.stringify(initialConfig)) as PlaygroundConfig,
       JSON.parse(JSON.stringify(config))
-    ) as WidgetConfig
+    ) as PlaygroundConfig
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
@@ -134,7 +136,7 @@ function insertAt(
     .concat(originalString.slice(index));
 }
 
-export function formatConfig(config: WidgetConfig) {
+export function formatConfig(config: PlaygroundConfig) {
   const indentation = '    ';
   let formatedConfig: string = stringifyObject(config, {
     indent: indentation,
