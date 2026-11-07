@@ -1,5 +1,3 @@
-import type { WalletType } from '@rango-dev/widget-embedded';
-
 import { WalletTypes } from '@rango-dev/provider-all';
 import {
   Button,
@@ -9,7 +7,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/widget-embedded';
+import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect';
@@ -26,6 +24,7 @@ import { getWalletsList } from './FunctionalLayout.utils';
 
 export function WalletSection() {
   const { state, connect, disconnect } = useWallets();
+  const isPhantomConnected = state(WalletTypes.PHANTOM).connected;
   const { onChangeWallets, onChangeBooleansConfig, config } = useConfigStore();
   const {
     meta: { blockchains },
@@ -36,7 +35,7 @@ export function WalletSection() {
 
   const onChangeExternalWallet = (checked: boolean) => {
     if (!checked) {
-      if (state(WalletTypes.PHANTOM).connected) {
+      if (isPhantomConnected) {
         void disconnect(WalletTypes.PHANTOM);
       }
     }
@@ -52,10 +51,9 @@ export function WalletSection() {
         label="Supported Wallets"
         icon={<WalletIcon />}
         type="Wallets"
-        value={isSelectAllWallets ? undefined : (wallets as WalletType[])}
+        value={isSelectAllWallets ? undefined : wallets}
         defaultSelectedItems={
-          (wallets as WalletType[]) ||
-          allWalletList.map((wallet) => wallet.name)
+          wallets || allWalletList.map((wallet) => wallet.name)
         }
         list={allWalletList}
         disabled={!!externalWallets}
@@ -107,7 +105,7 @@ export function WalletSection() {
             disabled={!externalWallets}
             className={connectButtonStyles()}
             onClick={() => {
-              if (state(WalletTypes.PHANTOM).connected) {
+              if (isPhantomConnected) {
                 void disconnect(WalletTypes.PHANTOM);
               } else {
                 void connect(WalletTypes.PHANTOM, [
@@ -115,7 +113,7 @@ export function WalletSection() {
                 ]);
               }
             }}>
-            {externalWallets && state(WalletTypes.PHANTOM).connected
+            {externalWallets && isPhantomConnected
               ? 'Disconnect Phantom'
               : 'Connect Phantom'}
           </Button>
