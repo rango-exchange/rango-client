@@ -2,8 +2,9 @@ import type { PropTypes } from './DerivationPath.types';
 
 import { i18n } from '@lingui/core';
 import { Divider, Image, MessageBox, Select, TextField } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React, { useEffect, useMemo, useState } from 'react';
+
+import { useWalletController } from '../../containers/Wallets';
 
 import {
   CUSTOM_DERIVATION_PATH,
@@ -26,7 +27,7 @@ export function DerivationPath(props: PropTypes) {
     providerType: type,
   } = props.value;
 
-  const { getWalletInfo } = useWallets();
+  const { getWalletInfo } = useWalletController();
 
   const [selectedDerivationPathId, setSelectedDerivationPathId] = useState<
     string | null

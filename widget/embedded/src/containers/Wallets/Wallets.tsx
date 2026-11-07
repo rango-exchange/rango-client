@@ -18,6 +18,7 @@ import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 
 import { useUpdates } from './useUpdates';
+import { createWalletEvents, WalletControllerScope } from './WalletController';
 import { propagateEvents } from './Wallets.helpers';
 
 export const WidgetContext = createContext<WidgetContextInterface>({
@@ -54,6 +55,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
     onConnectWalletHandler,
     onDisconnectWalletHandler,
   });
+  const walletEvents = useMemo(createWalletEvents, []);
 
   useEffect(() => {
     void fetchMeta().catch(console.log);
@@ -98,7 +100,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
             state,
             info,
           ];
-          handleEvent(...eventParams);
+          walletEvents.emit(...eventParams);
 
           if (props.onUpdateState) {
             propagateEvents(props.onUpdateState, eventParams);
@@ -133,7 +135,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
             },
           },
         }}>
-        {props.children}
+        <WalletControllerScope events={walletEvents} onEvent={handleEvent}>
+          {props.children}
+        </WalletControllerScope>
       </Provider>
     </WidgetContext.Provider>
   );

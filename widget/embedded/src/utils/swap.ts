@@ -9,8 +9,8 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
+import type { ExtendedWalletInfo } from '../types/walletController';
 import type { WalletType } from '@hub3js/core';
-import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   BestRouteRequest,
   BlockchainMeta,

@@ -2,14 +2,14 @@ import type {
   OnWalletConnectHandler,
   OnWalletDisconnectHandler,
 } from './Wallets.types';
+import type { WalletControllerEventHandler } from '../../types/walletController';
 import type { Network } from '@rango-dev/internal-blockchains';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
-import type { EventHandler } from '@rango-dev/wallets-react';
 
-import { Events } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 
 import { useAppStore } from '../../store/AppStore';
+import { WalletControllerEvents } from '../../types/walletController';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -24,7 +24,7 @@ interface UseUpdatesParams {
   >;
 }
 interface UseUpdates {
-  handler: EventHandler;
+  handler: WalletControllerEventHandler;
 }
 
 export function useUpdates(params: UseUpdatesParams): UseUpdates {
@@ -41,7 +41,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     .map((chain) => chain.name);
 
   const onAccountsEvent = (
-    event: Parameters<EventHandler>,
+    event: Parameters<WalletControllerEventHandler>,
     params: {
       supportedChainNames: Network[] | null;
     }
@@ -72,8 +72,14 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
     }
   };
 
-  const handler: EventHandler = (type, event, value, state, info) => {
-    if (event === Events.ACCOUNTS) {
+  const handler: WalletControllerEventHandler = (
+    type,
+    event,
+    value,
+    state,
+    info
+  ) => {
+    if (event === WalletControllerEvents.ACCOUNTS) {
       const supportedChainNames: Network[] | null =
         walletAndSupportedChainsNames(info.supportedBlockchains);
 
@@ -85,7 +91,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
       }
     }
 
-    if (event === Events.PROVIDER_DISCONNECTED) {
+    if (event === WalletControllerEvents.PROVIDER_DISCONNECTED) {
       disconnectWallet(type);
       if (!!onDisconnectWalletHandler.current) {
         onDisconnectWalletHandler.current(type);
@@ -96,11 +102,11 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
       }
     }
 
-    if (event === Events.NAMESPACE_DISCONNECTED) {
+    if (event === WalletControllerEvents.NAMESPACE_DISCONNECTED) {
       disconnectNamespaces(type, value);
     }
 
-    if (event === Events.CONNECTED && value) {
+    if (event === WalletControllerEvents.CONNECTED && value) {
       const walletFromEvent: LastConnectedWallet = {
         walletType: type,
         network: state.network ?? undefined,
@@ -113,7 +119,7 @@ export function useUpdates(params: UseUpdatesParams): UseUpdates {
       }
     }
 
-    if (event === Events.NETWORK && value) {
+    if (event === WalletControllerEvents.NETWORK && value) {
       const walletFromEvent: LastConnectedWallet = {
         walletType: type,
         network: value,

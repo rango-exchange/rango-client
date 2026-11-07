@@ -7,10 +7,10 @@ import type { WalletInfoWithExtra } from '../../types';
 import type { Namespace } from '@hub3js/namespaces';
 
 import { WalletState } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import { useReducer } from 'react';
 
 import { isOnDetached } from '../../components/StatefulConnectModal';
+import { useWalletController } from '../../containers/Wallets';
 import { tryRefineErrorMessage } from '../../utils/errors';
 import { type ExtendedModalWalletInfo } from '../../utils/wallets';
 
@@ -53,7 +53,7 @@ export interface UseStatefulConnect {
  *
  */
 export function useStatefulConnect(): UseStatefulConnect {
-  const { state, disconnect, connect } = useWallets();
+  const { state, disconnect, connect } = useWalletController();
 
   const [connectState, dispatch] = useReducer(reducer, initState);
 

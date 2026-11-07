@@ -1,12 +1,11 @@
-import type { WalletType } from '../..';
+import type { WalletType } from '@hub3js/core';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 
 import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
 import { isEvmBlockchain } from 'rango-sdk';
 import { useContext, useEffect, useState } from 'react';
 
-import { useWallets } from '../..';
-import { WidgetContext } from '../../containers/Wallets';
+import { useWalletController, WidgetContext } from '../../containers/Wallets';
 import { globalFont } from '../../globalStyles';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
@@ -25,7 +24,7 @@ export function useBootstrap() {
   useSubscribeToWidgetEvents();
   useSyncNotifications();
   const blockchains = useAppStore().blockchains();
-  const { canSwitchNetworkTo } = useWallets();
+  const { canSwitchNetworkTo } = useWalletController();
   const [lastConnectedWallet, setLastConnectedWallet] =
     useState<LastConnectedWallet | null>(null);
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();

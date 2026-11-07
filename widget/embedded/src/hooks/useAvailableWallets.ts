@@ -3,9 +3,9 @@ import type { WalletInfo } from '@rango-dev/ui';
 
 import { WalletTypes } from '@rango-dev/provider-all';
 import { WalletState } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import { useCallback, useEffect } from 'react';
 
+import { useWalletController } from '../containers/Wallets';
 import { useAppStore } from '../store/AppStore';
 import { detectMobileScreens } from '../utils/common';
 import { configWalletsToWalletName } from '../utils/providers';
@@ -39,10 +39,10 @@ interface API {
  * now it only has a method to disconnect the wallets that has `connecting` status. This is useful for exiting page and terminating wallet connection.
  *
  */
-export function useWalletList(params?: Params): API {
+export function useAvailableWallets(params?: Params): API {
   const { chain } = params || {};
   const { getAvailableProviders } = useAppStore();
-  const { state, getWalletInfo } = useWallets();
+  const { state, getWalletInfo } = useWalletController();
   const { handleDisconnect } = useStatefulConnect();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */

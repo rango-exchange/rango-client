@@ -9,8 +9,9 @@ import {
   MessageBox,
   WarningIcon,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
+
+import { useWalletController } from '../../containers/Wallets';
 
 import {
   WalletIcon,
@@ -20,7 +21,7 @@ import {
 export const InstallWalletContent = (props: InstallWalletContentProps) => {
   const { walletType } = props;
 
-  const { getWalletInfo } = useWallets();
+  const { getWalletInfo } = useWalletController();
 
   const walletInfo = walletType ? getWalletInfo(walletType) : null;
 

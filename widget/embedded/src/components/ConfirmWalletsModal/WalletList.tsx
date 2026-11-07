@@ -11,7 +11,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
-import { useWalletList } from '../../hooks/useWalletList';
+import { useAvailableWallets } from '../../hooks/useAvailableWallets';
 import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 import { getAddress, getConciseAddress } from '../../utils/wallets';
@@ -29,7 +29,7 @@ export function WalletList(props: PropTypes) {
   const { connectedWallets } = useAppStore();
   const [selectedWalletToConnect, setSelectedWalletToConnect] =
     useState<ExtendedModalWalletInfo>();
-  const { list } = useWalletList({
+  const { list } = useAvailableWallets({
     chain,
   });
 
@@ -150,8 +150,7 @@ export function WalletList(props: PropTypes) {
         <ShowMoreWallets
           selected={false}
           onClick={onShowMore}
-          id="widget-wallets-list-show-more-wallets-btn"
-        >
+          id="widget-wallets-list-show-more-wallets-btn">
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">
