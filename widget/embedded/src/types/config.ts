@@ -1,3 +1,4 @@
+import type { WalletController } from './walletController';
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
@@ -227,6 +228,8 @@ export type LedgerWalletConfig = {
  * @property {WalletType[]} wallets - The `wallets` property is an optional array of `WalletType`
  * values that represent the types of wallets that the widget should support. For example, it could
  * include values like `"metamask"`, `"kepler"`, or `"phantom"`.
+ * @property {WalletController} walletController - Optional. When a host app runs its own wallets (e.g. with `@rango-dev/wallets-react`),
+ * it passes them here and in `wallets` (as `Provider`s); the widget then uses them instead of setting up wallets itself.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
@@ -282,6 +285,7 @@ export type WidgetConfig = {
    * Legacy providers will be removed in future versions.
    */
   wallets?: (WalletType | ProviderInterface | Provider)[];
+  walletController?: WalletController;
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
