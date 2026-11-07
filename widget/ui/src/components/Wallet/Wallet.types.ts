@@ -1,10 +1,37 @@
-import type { WalletType } from '@hub3js/core';
-import type {
-  InstallObjects,
-  NeedsDerivationPath,
-  NeedsNamespace,
-} from '@rango-dev/wallets-react';
 import type { TransactionType } from 'rango-types';
+
+/** Id of a wallet (e.g. `metamask`). */
+export type WalletType = string;
+
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
+};
+
+/** Namespaces a wallet supports and how many of them can be selected at once. */
+export type NeedsNamespace = {
+  selection: 'single' | 'multiple';
+  data: {
+    label: string;
+    id: string;
+    value: string;
+    unsupported?: boolean;
+    isChainSupported: (chainId: string) => boolean;
+  }[];
+};
+
+/** Namespaces of a wallet which need a derivation path to connect. */
+export type NeedsDerivationPath = {
+  data: {
+    id: string;
+    label: string;
+    namespace: string;
+    generateDerivationPath: (index: string) => string;
+  }[];
+};
 
 export enum WalletState {
   NOT_INSTALLED = 'not_installed',

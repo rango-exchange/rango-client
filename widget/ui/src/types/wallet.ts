@@ -1,4 +1,4 @@
-import type { WalletType } from '@hub3js/core';
+import type { WalletType } from '../components/Wallet/Wallet.types.js';
 
 interface Wallet {
   chain: string;
