@@ -93,9 +93,9 @@
     "execa": "^7.1.1",
     "filesize": "^10.1.2",
     "globals": "^15.14.0",
-    "happy-dom": "^20.9.0",
+    "happy-dom": "^20.14.6",
     "lint-staged": "^13.2.2",
-    "nx": "^22.7.0",
+    "nx": "^22.7.12",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
@@ -103,7 +103,7 @@
     "rimraf": "^5.0.1",
     "semver-parser": "^4.1.4",
     "typescript-eslint": "^8.21.0",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.12"
   },
   "resolutions": {
     "valibot": "^0.38.0",
