@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { EvmTypedData } from '../common/evm';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
+import type { EvmTypedData } from '../executeEvmTransaction';
 import type { HyperliquidTransaction, Transaction } from 'rango-sdk';
 import type { Result } from 'ts-results';
 

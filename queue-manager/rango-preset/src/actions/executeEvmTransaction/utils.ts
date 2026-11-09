@@ -1,9 +1,19 @@
+import type { SwapQueueContext } from '../../types';
 import type { FindProxiedNamespace } from '@hub3js/core';
 import type { EvmActions } from '@hub3js/evm';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
 import type { EvmTransaction } from 'rango-sdk';
+import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
-import { RPCErrorCode, SignerError, SignerErrorCode } from 'rango-types';
+import {
+  RPCErrorCode,
+  SignerError,
+  SignerErrorCode,
+  TransactionType,
+} from 'rango-types';
+
+import { getCurrentStepTxType } from '../../helpers';
+import { getRelatedWalletOrNull } from '../../shared';
 
 export type EvmNamespace = FindProxiedNamespace<'evm', DefaultNamespaces>;
 
@@ -130,6 +140,30 @@ export function toEvmTransactionRequest(
 
   // Built loosely because viem types each fee scheme as its own variant.
   return request as SendTransactionParameters;
+}
+
+/**
+ * The EVM namespace of the wallet that sends the step's transaction. Null when
+ * the transaction isn't EVM, or the wallet has no EVM namespace or isn't
+ * connected yet.
+ */
+export function getEvmNamespaceOfStep(
+  context: SwapQueueContext,
+  swap: PendingSwap,
+  step: PendingSwapStep
+): EvmNamespace | null {
+  if (getCurrentStepTxType(step) !== TransactionType.EVM) {
+    return null;
+  }
+  const sourceWallet = getRelatedWalletOrNull(swap, step);
+  if (!sourceWallet) {
+    return null;
+  }
+  try {
+    return context.hubProvider(sourceWallet.walletType).get('evm') ?? null;
+  } catch {
+    return null;
+  }
 }
 
 function getActiveAddress(namespace: EvmNamespace): string | undefined {

@@ -4,17 +4,15 @@ import type {
   CheckTxStatusRequest,
   TransactionStatusResponse,
 } from 'rango-sdk';
-import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { warn } from '@rango-dev/logging-core';
-import { SignerError, TransactionType } from 'rango-types';
+import { SignerError } from 'rango-types';
 
 import {
   createStepFailedEvent,
   delay,
   getCurrentStep,
   getCurrentStepTx,
-  getCurrentStepTxType,
   getLastFinishedStepInput,
   getLastFinishedStepInputUsd,
   getLastSuccessfulStepOutputUsd,
@@ -28,53 +26,18 @@ import { notifier } from '../services/eventEmitter';
 import {
   getCurrentNamespaceOf,
   getNextStep,
-  getRelatedWallet,
   getScannerUrl,
   MessageSeverity,
 } from '../shared';
 import { prettifyErrorMessage } from '../shared-errors';
 import { StepEventType, SwapActionTypes } from '../types';
 
-import { waitForEvmTransaction } from './common/evm';
+import {
+  getEvmNamespaceOfStep,
+  waitForEvmTransaction,
+} from './executeEvmTransaction';
 
 const INTERVAL_FOR_CHECK_STATUS = 5_000;
-
-type TransactionWaiter = (
-  txId: string,
-  chainId: string | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  txResponse: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) => Promise<{ hash: string; response?: any }>;
-
-/**
- * Finds what waits for the current step's transaction to be mined: the
- * wallet's EVM namespace for EVM transactions, the wallet's signer otherwise.
- * Throws when the wallet isn't connected yet.
- */
-async function getTransactionWaiter(
-  context: SwapQueueContext,
-  swap: PendingSwap,
-  currentStep: PendingSwapStep
-): Promise<TransactionWaiter | null> {
-  const txType = getCurrentStepTxType(currentStep);
-  const sourceWallet = getRelatedWallet(swap, currentStep);
-  if (!txType || !sourceWallet) {
-    return null;
-  }
-
-  if (txType === TransactionType.EVM) {
-    const namespace = context.hubProvider(sourceWallet.walletType).get('evm');
-    return namespace
-      ? async (txId, chainId) => waitForEvmTransaction(namespace, txId, chainId)
-      : null;
-  }
-
-  const signer = (await context.getSigners(sourceWallet.walletType)).getSigner(
-    txType
-  );
-  return signer.wait ? signer.wait.bind(signer) : null;
-}
 
 /**
  * Subscribe to status of swap transaction by checking from server periodically.
@@ -106,30 +69,25 @@ async function checkTransactionStatus({
   let txId = currentStep.executedTransactionId;
   let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
-  let waitForTransaction: TransactionWaiter | null = null;
   const { getTransactionDataByHash, setTransactionDataByHash } =
     inMemoryTransactionsData();
+  /*
+   * Only EVM transactions are waited for through the wallet, which also tells
+   * when one was replaced. Null when the wallet isn't connected yet.
+   */
+  const evmNamespace = getEvmNamespaceOfStep(context, swap, currentStep);
 
   try {
-    waitForTransaction = await getTransactionWaiter(context, swap, currentStep);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    /*
-     * wallet is not connected yet
-     * no need to do anything
-     */
-  }
-
-  try {
-    // if wallet is connected, try to get transaction reciept
-    const { response: txResponse, receiptReceived } =
-      getTransactionDataByHash(txId);
-    if (waitForTransaction && !receiptReceived) {
+    const { receiptReceived } = getTransactionDataByHash(txId);
+    if (evmNamespace && !receiptReceived) {
       const chainId =
         (tx?.blockChain && meta.blockchains?.[tx?.blockChain]?.chainId) ||
         undefined;
-      const { hash: updatedTxHash, response: updatedTxResponse } =
-        await waitForTransaction(txId, chainId, txResponse);
+      const { hash: updatedTxHash } = await waitForEvmTransaction(
+        evmNamespace,
+        txId,
+        chainId
+      );
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
@@ -152,11 +110,6 @@ async function checkTransactionStatus({
           }
         }
         txId = currentStep.executedTransactionId;
-        if (updatedTxHash && updatedTxResponse) {
-          setTransactionDataByHash(updatedTxHash, {
-            response: updatedTxResponse,
-          });
-        }
       } else {
         setTransactionDataByHash(updatedTxHash, {
           receiptReceived: true,

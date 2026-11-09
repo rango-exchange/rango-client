@@ -31,6 +31,7 @@ import {
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
 import { onNextStateError } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+import { checkEnvironmentBeforeExecuteEvmTransaction } from '../executeEvmTransaction';
 
 import { isAllowanceSufficient } from './utils';
 
@@ -139,7 +140,10 @@ export async function checkApprove<
    * 3. Ensure wallet is connected and is on the correct network.
    *
    */
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
+  const checkResult =
+    approveAdapter.namespaceKey === 'evm'
+      ? await checkEnvironmentBeforeExecuteEvmTransaction(actions)
+      : checkEnvironmentBeforeExecuteTransaction(actions);
   if (checkResult.err) {
     requestBlockQueue(actions, checkResult.val);
     return;

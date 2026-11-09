@@ -18,28 +18,34 @@ import {
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
-import { sendEvmTransaction } from '../common/evm';
 import {
   onNextStateError,
   onNextStateOk,
   produceNextStateForTransaction,
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+import { executeEvmTransaction } from '../executeEvmTransaction';
 
 /**
- *
- * Excecute a created transaction.
- *
- * This function implemented the parallel mode by `claim` mechanism which means
- * All the queues the meet certain situation (like multiple evm transaction) will go through
- * a `claim` mechanims that decides which queue should be run and it blocks other ones.
- *
- * A queue will be go to sign process, if the wallet and network is matched.
+ * Executes a created transaction through the wallet's signer, for the chains
+ * that don't have their own execute action. A queue goes to signing once the
+ * required wallet is connected.
  */
 export async function executeTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
+  const currentStepTx = getCurrentStepTx(
+    getCurrentStep(actions.getStorage().swapDetails)!
+  );
+  /*
+   * EVM transactions have their own action. A swap stored by an older version
+   * can still resume here with one, so it's handed over.
+   */
+  if (currentStepTx?.type === TransactionType.EVM) {
+    return executeEvmTransaction(actions);
+  }
+
+  const checkResult = checkEnvironmentBeforeExecuteTransaction(actions);
   if (checkResult.err) {
     requestBlockQueue(actions, checkResult.val);
     return;
@@ -85,30 +91,6 @@ export async function executeTransaction(
   const walletAddress = getCurrentAddressOf(swap, currentStep);
 
   const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
-
-  // EVM transactions go through the wallet's EVM namespace.
-  if (tx.type === TransactionType.EVM) {
-    const namespace = context.hubProvider(sourceWallet.walletType).get('evm');
-    if (!namespace) {
-      handleRejectedSign(actions)(
-        new Error('The EVM namespace is not available on your wallet.')
-      );
-      onFinish();
-      return;
-    }
-
-    await sendEvmTransaction(namespace, tx, walletAddress, chainId ?? null)
-      .then(
-        handleSuccessfulSign(actions, {
-          isApproval,
-        }),
-        handleRejectedSign(actions)
-      )
-      .finally(() => {
-        onFinish();
-      });
-    return;
-  }
 
   let walletSigners: SignerFactory;
   try {

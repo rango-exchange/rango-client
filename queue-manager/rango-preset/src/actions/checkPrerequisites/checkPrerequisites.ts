@@ -7,6 +7,7 @@ import { Networks } from '@rango-dev/internal-blockchains';
 import {
   EVM_APPROVE_TYPE,
   STELLAR_CHANGE_TRUSTLINE_TYPE,
+  TransactionType,
   TRON_APPROVE_TYPE,
   XRPL_CHANGE_TRUSTLINE_TYPE,
 } from 'rango-types';
@@ -121,6 +122,8 @@ export async function checkPrerequisites(
       result = new Ok(SwapActionTypes.EXECUTE_XRPL_TRANSACTION);
     } else if (currentStep.fromBlockchain === Networks.HYPERLIQUID) {
       result = new Ok(SwapActionTypes.EXECUTE_HYPERLIQUID_TRANSACTION);
+    } else if (getCurrentStepTx(currentStep)?.type === TransactionType.EVM) {
+      result = new Ok(SwapActionTypes.EXECUTE_EVM_TRANSACTION);
     } else {
       result = new Ok(SwapActionTypes.EXECUTE_TRANSACTION);
     }
