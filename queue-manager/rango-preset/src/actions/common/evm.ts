@@ -13,6 +13,11 @@ type SendTransactionParameters = NonNullable<
 type SignTypedDataParameters = NonNullable<
   Parameters<EvmActions['signTypedData']>[0]
 >;
+/**
+ * EIP-712 typed data in the shape the EVM namespace's `signTypedData` (viem's)
+ * takes, without the signing account.
+ */
+export type EvmTypedData = Omit<SignTypedDataParameters, 'account'>;
 
 /**
  * A namespace action some wallets add when the hash `sendTransaction` returns
@@ -208,7 +213,7 @@ export async function sendEvmTransaction(
  */
 export async function signEvmTypedData(
   namespace: EvmNamespace,
-  typedData: Omit<SignTypedDataParameters, 'account'>,
+  typedData: EvmTypedData,
   address: string
 ): Promise<`0x${string}`> {
   try {
