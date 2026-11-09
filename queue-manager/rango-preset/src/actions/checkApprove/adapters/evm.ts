@@ -14,7 +14,7 @@ import {
 } from 'rango-types';
 import { Ok } from 'ts-results';
 
-import { sendEvmTransaction } from '../../common/evm';
+import { sendEvmTransaction } from '../../executeEvmTransaction';
 
 /**
  * viem throws this while the transaction is pending. It is matched by name so

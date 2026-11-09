@@ -11,7 +11,7 @@ import {
 } from 'rango-types';
 import { describe, expect, test, vi } from 'vitest';
 
-import { sendEvmTransaction } from './evm';
+import { sendEvmTransaction } from './utils';
 
 const ADDRESS = '0x1111111111111111111111111111111111111111';
 const TO = '0x2222222222222222222222222222222222222222';

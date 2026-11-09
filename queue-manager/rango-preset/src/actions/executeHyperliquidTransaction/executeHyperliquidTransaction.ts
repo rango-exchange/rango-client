@@ -11,14 +11,16 @@ import {
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { SwapActionTypes } from '../../types';
-import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
-import { signEvmTypedData } from '../common/evm';
 import {
   onNextStateError,
   onNextStateOk,
   produceNextStateForTransaction,
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+import {
+  checkEnvironmentBeforeExecuteEvmTransaction,
+  signEvmTypedData,
+} from '../executeEvmTransaction';
 
 import {
   ensureHyperliquidTransactionIsValid,
@@ -30,7 +32,9 @@ import {
 export async function executeHyperliquidTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
+  const checkResult = await checkEnvironmentBeforeExecuteEvmTransaction(
+    actions
+  );
   if (checkResult.err) {
     requestBlockQueue(actions, checkResult.val);
     return;
