@@ -36,7 +36,6 @@ function isReceiptNotFoundError(error: unknown): boolean {
 export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
   prerequisiteType: EVM_APPROVE_TYPE,
   namespaceKey: 'evm',
-  signerTxType: TransactionType.EVM,
 
   isApprovePrerequisite: isEvmApprovePrerequisite,
 
@@ -65,7 +64,7 @@ export const evmApproveAdapter: ApproveAdapter<'evm', EvmTransaction> = {
       })
     ),
 
-  sendTransaction: sendEvmTransaction,
+  send: { through: 'namespace', sendTransaction: sendEvmTransaction },
 
   getTransactionStatus: async (
     namespace,
