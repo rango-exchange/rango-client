@@ -2,6 +2,8 @@ import type {
   ApproveAdapter,
   ApproveCapableNamespaceId,
   ApprovePrerequisite,
+  NamespaceApproveSender,
+  SignerApproveSender,
 } from './types';
 import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
@@ -203,9 +205,12 @@ export async function checkApprove<
     const chainId =
       meta.blockchains[unmetApproveMeta.prerequisite.blockChain]?.chainId;
     const walletAddress = getCurrentAddressOf(swap, currentStep);
+    const sender:
+      | NamespaceApproveSender<K, TTransaction>
+      | SignerApproveSender = approveAdapter.send;
     const sendApproveTransaction = async (transaction: TTransaction) => {
-      if (approveAdapter.sendTransaction) {
-        return approveAdapter.sendTransaction(
+      if (sender.through === 'namespace') {
+        return sender.sendTransaction(
           namespace,
           transaction,
           walletAddress,
@@ -214,7 +219,7 @@ export async function checkApprove<
       }
       const walletSigners = await getSigners(sourceWallet.walletType);
       const signer: GenericSigner<TTransaction> =
-        walletSigners.getSigner<TTransaction>(approveAdapter.signerTxType);
+        walletSigners.getSigner<TTransaction>(sender.txType);
       return signer.signAndSendTx(transaction, walletAddress, chainId);
     };
 

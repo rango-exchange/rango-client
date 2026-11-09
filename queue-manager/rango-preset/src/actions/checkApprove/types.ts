@@ -52,6 +52,40 @@ export type ExecutedApproveResult = Extract<
   { data: { executedTransactionHash: string } }
 >;
 
+/** Sends the approve transaction through the wallet's namespace. */
+export type NamespaceApproveSender<
+  K extends ApproveCapableNamespaceId,
+  TTransaction extends Transaction
+> = {
+  through: 'namespace';
+  sendTransaction: (
+    namespace: ApproveCapableNamespace<K>,
+    transaction: TTransaction,
+    walletAddress: string,
+    chainId: string | null
+  ) => Promise<{ hash: string }>;
+};
+
+/**
+ * Sends the approve transaction through the wallet's signer for `txType`, for
+ * chains whose namespace can't sign yet.
+ */
+export type SignerApproveSender = {
+  through: 'signer';
+  txType: TransactionType;
+};
+
+/**
+ * EVM approvals always go through the namespace; only other chains may still
+ * fall back to a signer.
+ */
+export type ApproveSender<
+  K extends ApproveCapableNamespaceId,
+  TTransaction extends Transaction
+> = [K] extends ['evm']
+  ? NamespaceApproveSender<K, TTransaction>
+  : NamespaceApproveSender<K, TTransaction> | SignerApproveSender;
+
 /**
  * Per-chain strategy for the generic approve-prerequisite actions. Everything
  * that differs between EVM and Tron is captured here; the actions themselves are
@@ -65,8 +99,6 @@ export interface ApproveAdapter<
   prerequisiteType: TransactionPrerequisiteType;
   /** The hub namespace key backing this chain, e.g. `'evm'` | `'tron'`. */
   namespaceKey: K;
-  /** The signer transaction type used to sign the approve tx, when `sendTransaction` isn't set. */
-  signerTxType: TransactionType;
   /** Type guard for this chain's approve prerequisite. */
   isApprovePrerequisite: (
     prerequisite: TransactionPrerequisite
@@ -80,16 +112,8 @@ export interface ApproveAdapter<
     prerequisite: ApprovePrerequisite,
     namespace: ApproveCapableNamespace<K>
   ) => Promise<Result<TTransaction, NextTransactionStateError>>;
-  /**
-   * Sends the approve transaction through the namespace. Without it, the
-   * wallet's signer for `signerTxType` sends it.
-   */
-  sendTransaction?: (
-    namespace: ApproveCapableNamespace<K>,
-    transaction: TTransaction,
-    walletAddress: string,
-    chainId: string | null
-  ) => Promise<{ hash: string }>;
+  /** How the signed approve transaction is sent. */
+  send: ApproveSender<K, TTransaction>;
   /** Reads the on-chain status of a submitted approve transaction. */
   getTransactionStatus: (
     namespace: ApproveCapableNamespace<K>,
