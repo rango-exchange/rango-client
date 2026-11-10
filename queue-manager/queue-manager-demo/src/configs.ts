@@ -22,7 +22,7 @@ export function getConfig(name: keyof Configs) {
   return configs[name];
 }
 
-export function setConfig(name: keyof Configs, value: any) {
+export function setConfig<K extends keyof Configs>(name: K, value: Configs[K]) {
   configs[name] = value;
 
   return value;
@@ -32,3 +32,11 @@ export function initConfig(nextConfigs: Configs) {
   configs = structuredClone(nextConfigs);
   return configs;
 }
+
+/**
+ * RPC urls for wallets that can't read the chain through themselves, such as
+ * Ledger and Trezor. Only Ethereum is configured here, on a public node.
+ */
+export const RPC_URLS = {
+  evm: { 1: ['https://ethereum-rpc.publicnode.com'] },
+};

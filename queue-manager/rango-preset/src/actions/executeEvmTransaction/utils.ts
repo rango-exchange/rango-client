@@ -1,6 +1,6 @@
 import type { SwapQueueContext } from '../../types';
 import type { FindProxiedNamespace } from '@hub3js/core';
-import type { EvmActions } from '@hub3js/evm';
+import type { EvmActions, TypedDataDefinition } from '@hub3js/evm';
 import type { DefaultNamespaces } from '@hub3js/namespaces';
 import type { EvmTransaction } from 'rango-sdk';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
@@ -20,14 +20,6 @@ export type EvmNamespace = FindProxiedNamespace<'evm', DefaultNamespaces>;
 type SendTransactionParameters = NonNullable<
   Parameters<EvmActions['sendTransaction']>[0]
 >;
-type SignTypedDataParameters = NonNullable<
-  Parameters<EvmActions['signTypedData']>[0]
->;
-/**
- * EIP-712 typed data in the shape the EVM namespace's `signTypedData` (viem's)
- * takes, without the signing account.
- */
-export type EvmTypedData = Omit<SignTypedDataParameters, 'account'>;
 
 /**
  * A namespace action some wallets add when the hash `sendTransaction` returns
@@ -73,7 +65,17 @@ export function toEvmSignerError(
   }
 
   let isRejected = false;
+  let context: Record<string, unknown> | undefined;
   for (const item of errorChain(error)) {
+    /*
+     * A wallet can attach context for the logs to the error it throws, e.g.
+     * WalletConnect adds the session's peer. viem wraps it, so it's looked for
+     * along the chain.
+     */
+    const itemContext = (item as { context?: unknown }).context;
+    if (!context && itemContext && typeof itemContext === 'object') {
+      context = itemContext as Record<string, unknown>;
+    }
     if (
       item.code === USER_REJECTED_REQUEST_CODE ||
       item.name === 'UserRejectedRequestError'
@@ -94,7 +96,8 @@ export function toEvmSignerError(
     undefined,
     message,
     isRejected ? RPCErrorCode.REJECTION : RPCErrorCode.UNKNOWN_ERROR,
-    error
+    error,
+    context
   );
 }
 
@@ -206,6 +209,23 @@ async function assertWalletMatches(
 }
 
 /**
+ * Some wallets (e.g. Rainbow over WalletConnect) resolve `eth_sendTransaction`
+ * with `'null'` instead of throwing when the user rejects it. Neither viem nor
+ * the namespace checks the result, so it's checked here, before it can be
+ * stored and polled as the transaction's hash.
+ */
+function assertTransactionHash(hash: unknown): `0x${string}` {
+  if (typeof hash !== 'string' || !hash.startsWith('0x')) {
+    throw new Error(
+      `Received an invalid hash on signing the transaction. (hash=${String(
+        hash
+      )})`
+    );
+  }
+  return hash as `0x${string}`;
+}
+
+/**
  * Sends a transaction from Rango's API through the wallet's EVM namespace.
  */
 export async function sendEvmTransaction(
@@ -225,7 +245,7 @@ export async function sendEvmTransaction(
       const hash = await namespace.sendTransaction(
         toEvmTransactionRequest(tx, address)
       );
-      return { hash };
+      return { hash: assertTransactionHash(hash) };
     } catch (error) {
       // Some wallets reject EIP-1559 fees, retry with a legacy gas price.
       if (errorChainIncludes(error, 'EIP-1559')) {
@@ -233,7 +253,7 @@ export async function sendEvmTransaction(
         const hash = await namespace.sendTransaction(
           toEvmTransactionRequest(tx, address, { legacyGas: true })
         );
-        return { hash };
+        return { hash: assertTransactionHash(hash) };
       }
       throw error;
     }
@@ -247,14 +267,14 @@ export async function sendEvmTransaction(
  */
 export async function signEvmTypedData(
   namespace: EvmNamespace,
-  typedData: EvmTypedData,
+  typedData: TypedDataDefinition,
   address: string
 ): Promise<`0x${string}`> {
   try {
     return await namespace.signTypedData({
       ...typedData,
-      account: address,
-    } as SignTypedDataParameters);
+      account: address as `0x${string}`,
+    });
   } catch (error) {
     throw toEvmSignerError(error, SignerErrorCode.SIGN_TX_ERROR);
   }

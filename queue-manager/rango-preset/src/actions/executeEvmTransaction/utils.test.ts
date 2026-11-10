@@ -180,6 +180,61 @@ describe('sendEvmTransaction', () => {
     expect((error as SignerError).rpcCode).toBe(RPCErrorCode.REJECTION);
   });
 
+  test("fails when the wallet resolves with 'null' instead of a hash", async () => {
+    const { namespace } = createNamespace(() => 'null');
+
+    const error = await sendEvmTransaction(
+      namespace,
+      createEvmTransaction(),
+      ADDRESS,
+      '1'
+    ).catch((error: unknown) => error);
+
+    expect((error as SignerError).code).toBe(SignerErrorCode.SEND_TX_ERROR);
+    expect((error as SignerError).getErrorDetail().detail).toMatch(
+      /invalid hash.*hash=null/
+    );
+  });
+
+  test("fails when the legacy gas retry resolves with 'null'", async () => {
+    let attempts = 0;
+    const { namespace, request } = createNamespace(() => {
+      attempts++;
+      if (attempts === 1) {
+        throw new Error('EIP-1559 is not supported');
+      }
+      return 'null';
+    });
+
+    const error = await sendEvmTransaction(
+      namespace,
+      createEvmTransaction({ gasPrice: '20000000000' }),
+      ADDRESS,
+      '1'
+    ).catch((error: unknown) => error);
+
+    expect(sentParams(request)).toHaveLength(2);
+    expect((error as SignerError).getErrorDetail().detail).toMatch(
+      /invalid hash.*hash=null/
+    );
+  });
+
+  test('keeps the context the wallet attached to its error', async () => {
+    const context = { peering: { name: 'Rainbow' }, code: 5000 };
+    const { namespace } = createNamespace(() => {
+      throw Object.assign(new Error('Relay request failed'), { context });
+    });
+
+    const error = await sendEvmTransaction(
+      namespace,
+      createEvmTransaction(),
+      ADDRESS,
+      '1'
+    ).catch((error: unknown) => error);
+
+    expect((error as SignerError).getErrorContext()).toMatchObject(context);
+  });
+
   test("refuses to send when the wallet's chain doesn't match", async () => {
     const { namespace, request } = createNamespace();
 
