@@ -1,0 +1,12 @@
+diff --git a/node_modules/@ledgerhq/device-signer-kit-ethereum/node_modules/ethers/lib.esm/package.json b/node_modules/@ledgerhq/device-signer-kit-ethereum/node_modules/ethers/lib.esm/package.json
+index 04a5cfd..b18dd00 100644
+--- a/node_modules/@ledgerhq/device-signer-kit-ethereum/node_modules/ethers/lib.esm/package.json
++++ b/node_modules/@ledgerhq/device-signer-kit-ethereum/node_modules/ethers/lib.esm/package.json
+@@ -7,6 +7,6 @@
+     "./utils/geturl.js": "./utils/geturl-browser.js",
+     "./wordlists/wordlists.js": "./wordlists/wordlists-browser.js"
+   },
+-  "sideEffects": false,
++  "sideEffects": true,
+   "type": "module"
+ }
