@@ -14,7 +14,7 @@ import {
   unsubscribeRefuelQuoteStore,
   unsubscribeSwapQuoteStore,
 } from '../../store/quote';
-import { tabManager } from '../../store/ui';
+import { tabManager, useUiStore } from '../../store/ui';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
 import { useSyncNotifications } from '../useSyncNotifications';
@@ -37,8 +37,11 @@ export function useBootstrap() {
   useEffect(() => () => unsubscribeSwapQuoteStore(), []);
   useEffect(() => () => unsubscribeRefuelQuoteStore(), []);
 
+  const isActiveTab = useUiStore.use.isActiveTab();
+
   // At the moment, we only detect the disconnection of EVM wallets.
   useQueueManager({
+    isActive: isActiveTab,
     lastConnectedWallet,
     clearDisconnectedWallet: () => {
       setDisconnectedWallet(undefined);

@@ -42,7 +42,6 @@ export type ProviderContext = {
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: EventHandler;
   allBlockChains?: BlockchainMeta[];
-  autoConnect?: boolean;
   providers: Provider[];
   /** Receives wallet events on the `walletEvent` channel. */
   emitter?: Emitter<WalletEvents>;
