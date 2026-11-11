@@ -312,22 +312,24 @@ class Manager {
     return this.queues;
   }
 
-  public deleteQueue(queue_id: QueueID) {
+  public async deleteQueue(queue_id: QueueID) {
+    await this.persistor.deleteQueue(queue_id);
     this.queues.delete(queue_id);
-    void this.persistor.deleteQueue(queue_id);
   }
 
   public async clearQueue() {
     // Identify queues that are not running
+    const deletions: Promise<void>[] = [];
     this.queues.forEach((queue, queue_id) => {
       if (
         queue.status !== Status.RUNNING &&
         queue.status !== Status.PENDING &&
         queue.status !== Status.BLOCKED
       ) {
-        this.deleteQueue(queue_id);
+        deletions.push(this.deleteQueue(queue_id));
       }
     });
+    await Promise.all(deletions);
   }
 
   /**
