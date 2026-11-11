@@ -24,7 +24,6 @@
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",
     "@rango-dev/internal-blockchains": "^0.3.1-next.1",
-    "@rango-dev/signer-evm": "^0.47.0",
     "@trezor/connect-web": "^9.5.0",
     "bitcoinjs-lib": "^6.1.7",
     "ethers": "^6.13.2",
@@ -33,13 +32,15 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/std": "^0.6.0"
   },
   "peerDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/std": "^0.6.0"
   },
   "publishConfig": {

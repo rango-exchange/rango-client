@@ -1,4 +1,5 @@
 import type { Provider } from '@hub3js/core';
+import type { NamespacesRPCUrls } from '@hub3js/namespaces';
 
 import { buildProvider as binance } from '@rango-dev/provider-binance';
 import { buildProvider as bitget } from '@rango-dev/provider-bitget';
@@ -37,10 +38,14 @@ import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconne
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
 
 export { WalletTypes } from './walletTypes.js';
+export { toNamespacesRPCUrls } from './rpcUrls.js';
+export type { RpcUrlsConfig } from './rpcUrls.js';
 
 // Providers register different namespaces, so the list is typed loosely instead of `Provider<unknown>`.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const allProviders = (): (() => Provider<any>)[] => {
+type BuildProvider = (rpcURLs?: NamespacesRPCUrls) => Provider<any>;
+
+export const allProviders = (): BuildProvider[] => {
   return [
     safe,
     defaultInjected,

@@ -35,9 +35,14 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, toNamespacesRPCUrls } from '@rango-dev/provider-all';
 
-const providers = allProviders().map((build) => build());
+// Optional. Wallets without an RPC of their own (Ledger, Trezor) read each EVM
+// chain through these urls, keyed by chain id. No url is built in.
+const rpcURLs = toNamespacesRPCUrls({
+  evm: { 1: ['https://your-ethereum-rpc'], 56: ['https://your-bsc-rpc'] },
+});
+const providers = allProviders().map((build) => build(rpcURLs));
 
 export function App() {
   const blockchains = [...] // An array of blockchains
@@ -56,8 +61,16 @@ or some specific wallets:
 import { Provider } from '@rango-dev/wallets-react';
 import { buildProvider as metamask } from '@rango-dev/provider-metamask';
 import { buildProvider as phantom } from '@rango-dev/provider-phantom';
+import { mainnet } from 'viem/chains';
 
-const providers = [metamask(), phantom()];
+// RPC endpoints per namespace, shared by every provider. They're optional:
+// wallets with their own RPC (e.g. MetaMask) don't need them, while wallets
+// without one (Ledger, Trezor) read from them and reject reads on chains
+// without urls.
+const rpcURLs = {
+  evm: [{ chain: mainnet, rpcUrls: ['https://your-ethereum-rpc'] }],
+};
+const providers = [metamask(rpcURLs), phantom()];
 
 export function App() {
   const blockchains = [...] // An array of blockchains

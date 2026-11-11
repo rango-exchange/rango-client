@@ -2,6 +2,8 @@ import type {
   ApproveAdapter,
   ApproveCapableNamespaceId,
   ApprovePrerequisite,
+  NamespaceApproveSender,
+  SignerApproveSender,
 } from './types';
 import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
@@ -29,6 +31,7 @@ import {
 import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
 import { onNextStateError } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+import { checkEnvironmentBeforeExecuteEvmTransaction } from '../executeEvmTransaction';
 
 import { isAllowanceSufficient } from './utils';
 
@@ -137,7 +140,10 @@ export async function checkApprove<
    * 3. Ensure wallet is connected and is on the correct network.
    *
    */
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
+  const checkResult =
+    approveAdapter.namespaceKey === 'evm'
+      ? await checkEnvironmentBeforeExecuteEvmTransaction(actions)
+      : checkEnvironmentBeforeExecuteTransaction(actions);
   if (checkResult.err) {
     requestBlockQueue(actions, checkResult.val);
     return;
@@ -203,9 +209,23 @@ export async function checkApprove<
     const chainId =
       meta.blockchains[unmetApproveMeta.prerequisite.blockChain]?.chainId;
     const walletAddress = getCurrentAddressOf(swap, currentStep);
-    const walletSigners = await getSigners(sourceWallet.walletType);
-    const signer: GenericSigner<TTransaction> =
-      walletSigners.getSigner<TTransaction>(approveAdapter.signerTxType);
+    const sender:
+      | NamespaceApproveSender<K, TTransaction>
+      | SignerApproveSender = approveAdapter.send;
+    const sendApproveTransaction = async (transaction: TTransaction) => {
+      if (sender.through === 'namespace') {
+        return sender.sendTransaction(
+          namespace,
+          transaction,
+          walletAddress,
+          chainId ?? null
+        );
+      }
+      const walletSigners = await getSigners(sourceWallet.walletType);
+      const signer: GenericSigner<TTransaction> =
+        walletSigners.getSigner<TTransaction>(sender.txType);
+      return signer.signAndSendTx(transaction, walletAddress, chainId);
+    };
 
     /*
      * Approving takes two waits, and telling them apart matters to the user: a
@@ -235,10 +255,8 @@ export async function checkApprove<
       isApproval: true,
     });
 
-    const transactionResult = await signer.signAndSendTx(
-      approveTransactionResult.val,
-      walletAddress,
-      chainId
+    const transactionResult = await sendApproveTransaction(
+      approveTransactionResult.val
     );
 
     updateStorageWithPrerequisiteResult(actions, {

@@ -1,7 +1,11 @@
 import type { WalletType } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-types';
 
-import { allProviders, WalletTypes } from '@rango-dev/provider-all';
+import {
+  allProviders,
+  toNamespacesRPCUrls,
+  WalletTypes,
+} from '@rango-dev/provider-all';
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
@@ -9,12 +13,15 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
 import {
+  RPC_URLS,
   TON_CONNECT_MANIFEST_URL,
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './configs';
 
-const providers = allProviders().map((build) => build());
+const providers = allProviders().map((build) =>
+  build(toNamespacesRPCUrls(RPC_URLS))
+);
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);

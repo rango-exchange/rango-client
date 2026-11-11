@@ -19,7 +19,8 @@ import { Err, Ok } from 'ts-results';
 export const tronApproveAdapter: ApproveAdapter<'tron', TronTransaction> = {
   prerequisiteType: TRON_APPROVE_TYPE,
   namespaceKey: 'tron',
-  signerTxType: TransactionType.TRON,
+  // The Tron namespace has no signing actions yet.
+  send: { through: 'signer', txType: TransactionType.TRON },
 
   isApprovePrerequisite: isTronApprovePrerequisite,
 

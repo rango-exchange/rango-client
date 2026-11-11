@@ -22,18 +22,18 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@ledgerhq/ledger-wallet-provider": "^1.4.2",
-    "@rango-dev/signer-evm": "^0.47.1",
-    "rango-types": "^0.6.0"
+    "@ledgerhq/ledger-wallet-provider": "^1.4.2"
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/std": "^0.6.0"
   },
   "peerDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "^0.8.0",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/std": "^0.6.0"
   },
   "publishConfig": {

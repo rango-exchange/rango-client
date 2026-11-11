@@ -1,9 +1,7 @@
 import type { SwapQueueContext, SwapStorage } from '../../types';
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { EvmTransaction } from 'rango-sdk';
 
-import { type GenericSigner, TransactionType } from 'rango-types';
 import { Err } from 'ts-results';
 
 import {
@@ -13,17 +11,20 @@ import {
 } from '../../helpers';
 import { getCurrentAddressOf, getRelatedWallet } from '../../shared';
 import { SwapActionTypes } from '../../types';
-import { checkEnvironmentBeforeExecuteTransaction } from '../common/checkEnvironmentBeforeExecuteTransaction';
 import {
   onNextStateError,
   onNextStateOk,
   produceNextStateForTransaction,
 } from '../common/produceNextStateForTransaction';
 import { requestBlockQueue } from '../common/utils';
+import {
+  checkEnvironmentBeforeExecuteEvmTransaction,
+  signEvmTypedData,
+} from '../executeEvmTransaction';
 
 import {
   ensureHyperliquidTransactionIsValid,
-  getEthersV6CompatibleTypedDataFromMessage,
+  getTypedDataFromMessage,
   initiateWithdrawalRequest,
   splitSignature,
 } from './utils';
@@ -31,14 +32,15 @@ import {
 export async function executeHyperliquidTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  const checkResult = await checkEnvironmentBeforeExecuteTransaction(actions);
+  const checkResult = await checkEnvironmentBeforeExecuteEvmTransaction(
+    actions
+  );
   if (checkResult.err) {
     requestBlockQueue(actions, checkResult.val);
     return;
   }
 
   const { failed, getStorage, context, schedule, next } = actions;
-  const { getSigners } = context;
 
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap)!;
@@ -89,22 +91,15 @@ export async function executeHyperliquidTransaction(
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
 
-  let signer: GenericSigner<EvmTransaction>;
-  try {
-    const walletSigners = await getSigners(sourceWallet.walletType);
-    signer = walletSigners.getSigner(TransactionType.EVM); // We need EVM signer for Hyperliquid transactions
-  } catch (error) {
-    handleRejectedSign(actions)(error);
-    onFinish();
-    return;
-  }
-
-  if (!signer?.signTypedData) {
+  // Hyperliquid transactions are EIP-712 messages signed by the EVM wallet.
+  const namespace = context.hubProvider(sourceWallet.walletType).get('evm');
+  if (!namespace) {
     handleErr(
       new Err({
         nextStatus: 'failed',
         nextStepStatus: 'failed',
-        message: 'Unexpected Error: Signer does not support signTypedData.',
+        message:
+          'Unexpected Error: The EVM namespace is not available on your wallet.',
         details: undefined,
         errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
       })
@@ -112,9 +107,21 @@ export async function executeHyperliquidTransaction(
     return;
   }
 
-  const typedData = getEthersV6CompatibleTypedDataFromMessage(
-    hyperliquidTransaction.message
-  );
+  if (!('signTypedData' in namespace)) {
+    handleErr(
+      new Err({
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message:
+          'Unexpected Error: Your wallet does not support signTypedData.',
+        details: undefined,
+        errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      })
+    );
+    return;
+  }
+
+  const typedData = getTypedDataFromMessage(hyperliquidTransaction.message);
   if (typedData.err) {
     handleErr(typedData);
     return;
@@ -122,11 +129,7 @@ export async function executeHyperliquidTransaction(
 
   let signature: `0x${string}`;
   try {
-    signature = (await signer.signTypedData(
-      typedData.val,
-      walletAddress,
-      hyperliquidTransaction.action.signatureChainId
-    )) as `0x${string}`;
+    signature = await signEvmTypedData(namespace, typedData.val, walletAddress);
   } catch (error) {
     handleRejectedSign(actions)(error);
     onFinish();

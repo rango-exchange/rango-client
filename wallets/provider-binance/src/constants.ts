@@ -21,9 +21,6 @@ import {
 } from '@hub3js/evm';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'binance';
 export const EVM_SUPPORTED_CHAINS = [
   CAIP_ETHEREUM_CHAIN_ID,
@@ -72,10 +69,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };
