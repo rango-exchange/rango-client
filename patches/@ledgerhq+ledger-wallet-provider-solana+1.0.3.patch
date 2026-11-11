@@ -19,7 +19,7 @@ index c86f643..0e4822e 100644
  export declare const SOLANA_MAPPING_TABLE: Record<string, SolanaCluster>;
  export declare const DEFAULT_SOLANA_CLUSTER: SolanaCluster;
 diff --git a/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json b/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
-index 41a2750..3774fbb 100644
+index 68b78d6..c628eba 100644
 --- a/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
 +++ b/node_modules/@ledgerhq/ledger-wallet-provider-solana/package.json
 @@ -17,9 +17,9 @@
