@@ -263,7 +263,8 @@ export type LedgerWalletConfig = {
  * @property {RpcUrlsConfig} rpcUrls - Optional RPC urls that wallets without an RPC of their own
  *   (e.g. Ledger and Trezor) read the chain through. EVM urls are keyed by chain id, e.g.
  *   `{ evm: { 1: ['https://…'], 56: ['https://…'] } }`. `signers.customEthereumRPC`, if set, is tried
- *   first for chain 1. Reads on a chain without urls fail.
+ *   first for chain 1. Without any url for chain 1, a public Ethereum node is used, as before `rpcUrls` existed.
+ *   Reads on any other chain without urls fail.
  * @property {WidgetVariant} variant
  *   If it is expanded, multiple routes will show up on the home page;
  *   If it is full-expanded, multiple routes will show up on the home page with full routes;
