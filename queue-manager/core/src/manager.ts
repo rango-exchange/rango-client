@@ -666,6 +666,10 @@ class Manager {
    *
    */
   private handleUpdate(queue_id: QueueID) {
+    if (this.isPaused) {
+      return;
+    }
+
     const queue = this.get(queue_id);
 
     if (queue) {
