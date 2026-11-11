@@ -86,9 +86,17 @@ export interface ConfigSlice {
 }
 
 /**
+ * The public Ethereum node wallets without an RPC of their own (Ledger, Trezor)
+ * read through when the dapp configures none, the same node the EVM signer
+ * used. It keeps them working for dapps that predate `rpcUrls`.
+ */
+export const DEFAULT_ETHEREUM_RPC_URL = 'https://ethereum-rpc.publicnode.com';
+
+/**
  * The RPC urls from the config, with `signers.customEthereumRPC` tried first on
- * Ethereum. Providers get them when they're built, so they never fall back to
- * an RPC the dapp didn't configure.
+ * Ethereum. Providers get them when they're built. Ethereum falls back to
+ * `DEFAULT_ETHEREUM_RPC_URL` when nothing is configured for it; other chains
+ * only get the urls the dapp configures.
  */
 export function rpcURLsFromConfig(config: WidgetConfigWithoutLegacyProviders) {
   const evm = { ...config.rpcUrls?.evm };
@@ -99,6 +107,9 @@ export function rpcURLsFromConfig(config: WidgetConfigWithoutLegacyProviders) {
       customEthereumRPC,
       ...(evm[ETHEREUM_CHAIN_ID] ?? []),
     ];
+  }
+  if (!evm[ETHEREUM_CHAIN_ID]?.length) {
+    evm[ETHEREUM_CHAIN_ID] = [DEFAULT_ETHEREUM_RPC_URL];
   }
 
   return toNamespacesRPCUrls({ ...config.rpcUrls, evm });
