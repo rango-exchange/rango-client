@@ -2927,23 +2927,23 @@
     rango-types "^0.6.0"
     zustand "^4.5.2"
 
-"@hub3js/evm@0.0.0-experimental-1b9b89b0-20261110", "@hub3js/evm@^0.0.0-experimental-1b9b89b0-20261110":
-  version "0.0.0-experimental-1b9b89b0-20261110"
-  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.0.0-experimental-1b9b89b0-20261110.tgz#d82ff391885f9933f1e69d89817cf6b5c9bdd852"
-  integrity sha512-y04RaGvAHj1RwFVt1Yu6Nq8S0qVDv1JT2sBaDdhDRBMNWW6Lv4m1FXcaJXfrNfDZ9TD2ndrJdJhTYESHR9kcjA==
+"@hub3js/evm@0.8.1-next.2", "@hub3js/evm@^0.8.1-next.1":
+  version "0.8.1-next.2"
+  resolved "https://registry.yarnpkg.com/@hub3js/evm/-/evm-0.8.1-next.2.tgz#dfe14be111fed84fcb6bb18736a561dd1382e828"
+  integrity sha512-Eu7DPQleA6xvUYGmcRV98nyj5B6nZNwTUaDy0R/AwDzOg1fy/LQDvyHfEef7mOo2VB3z5+eluR60crgipza/Ng==
   dependencies:
     "@hub3js/std" "^0.6.0"
-    "caip" "^1.1.1"
-    "rango-types" "^0.6.0"
-    "viem" "^2.56.8"
+    caip "^1.1.1"
+    rango-types "^0.6.0"
+    viem "^2.56.8"
 
-"@hub3js/namespaces@0.0.0-experimental-1b9b89b0-20261110":
-  version "0.0.0-experimental-1b9b89b0-20261110"
-  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.0.0-experimental-1b9b89b0-20261110.tgz#b7ef5268a76f61f7894152a9ec94dafa86faf588"
-  integrity sha512-G5fXEy5TyHkpWEMiDuOhRCTC+U+/n4dhg/EzNTL4uY6KIjc0RDBoFwpWPox2A50TgxQMnkTcO58yFHhSUN7LuA==
+"@hub3js/namespaces@0.8.1-next.1":
+  version "0.8.1-next.1"
+  resolved "https://registry.yarnpkg.com/@hub3js/namespaces/-/namespaces-0.8.1-next.1.tgz#94bf15efa7ac57e5d87b8902c5c27ab9389d9a99"
+  integrity sha512-mnd/zARrhBdySL8QI+twBoZGcQCccGQ5BDtdebUn3PISMMn2x6MXzAMS696S08Ls3EEdbmnhtLB3/j8tyD+1Yg==
   dependencies:
     "@hub3js/bip122" "^0.4.0"
-    "@hub3js/evm" "^0.0.0-experimental-1b9b89b0-20261110"
+    "@hub3js/evm" "^0.8.1-next.1"
     "@hub3js/solana" "^0.7.0"
     "@hub3js/starknet" "^0.6.0"
     "@hub3js/stellar" "^0.6.0"
