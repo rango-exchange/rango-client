@@ -15,7 +15,6 @@ import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
-import { useUiStore } from '../../store/ui';
 
 import { useUpdates } from './useUpdates';
 import { propagateEvents } from './Wallets.helpers';
@@ -70,8 +69,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
     }
   }, [props.config, fetchStatus]);
 
-  const isActiveTab = useUiStore.use.isActiveTab();
-
   const handlers = useMemo(
     () => ({
       onConnectWallet: (handler: OnWalletConnectHandler) => {
@@ -104,7 +101,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
             propagateEvents(props.onUpdateState, eventParams);
           }
         }}
-        autoConnect={!!isActiveTab}
         configs={{
           wallets: config.wallets,
           walletOptions: {

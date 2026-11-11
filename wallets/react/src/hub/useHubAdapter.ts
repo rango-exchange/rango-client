@@ -124,7 +124,6 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
   }, [params.allBlockChains, params.configs?.walletOptions]);
 
   useAutoConnect({
-    autoConnect: params.autoConnect,
     allBlockChains: params.allBlockChains,
     autoConnectHandler: () => {
       void autoConnect({
@@ -371,15 +370,13 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
         }
       });
 
-      if (params.autoConnect) {
-        if (namespaces) {
-          lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
-            type,
-            namespaces
-          );
-        } else {
-          lastConnectedWalletsFromStorage.removeWallets([type]);
-        }
+      if (namespaces) {
+        lastConnectedWalletsFromStorage.removeNamespacesFromWallet(
+          type,
+          namespaces
+        );
+      } else {
+        lastConnectedWalletsFromStorage.removeWallets([type]);
       }
     },
     async disconnectAll() {

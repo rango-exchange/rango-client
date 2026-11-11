@@ -391,7 +391,6 @@ describe('auto-connect', () => {
     renderWallets({
       providers: [buildWallet(walletId, namespaces)],
       allBlockChains,
-      autoConnect: true,
       emitter,
     });
 
