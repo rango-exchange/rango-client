@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-1b9b89b0-20261110",
-    "@hub3js/namespaces": "0.0.0-experimental-1b9b89b0-20261110",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/std": "^0.6.0",
     "@solana/wallet-standard-features": "^1.3.0",
@@ -39,8 +39,8 @@
   },
   "peerDependencies": {
     "@hub3js/core": "^0.64.0",
-    "@hub3js/evm": "0.0.0-experimental-1b9b89b0-20261110",
-    "@hub3js/namespaces": "0.0.0-experimental-1b9b89b0-20261110",
+    "@hub3js/evm": "0.8.1-next.2",
+    "@hub3js/namespaces": "0.8.1-next.1",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/std": "^0.6.0"
   },
