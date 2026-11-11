@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { shouldTryAutoConnect } from './helpers.js';
 
 export function useAutoConnect(
-  props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'> & {
+  props: Pick<ProviderProps, 'allBlockChains'> & {
     /**
      * A function to run autoConnect on instances
      */
@@ -19,5 +19,5 @@ export function useAutoConnect(
       autoConnectInitiated.current = true;
       props.autoConnectHandler();
     }
-  }, [props.autoConnect, props.allBlockChains]);
+  }, [props.allBlockChains]);
 }

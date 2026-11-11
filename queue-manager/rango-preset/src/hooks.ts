@@ -60,6 +60,7 @@ function useMigration(): {
 function useQueueManager(params: UseQueueManagerParams): void {
   const { manager } = useManager();
   const {
+    isActive,
     lastConnectedWallet,
     disconnectedWallet,
     evmChains,
@@ -67,8 +68,9 @@ function useQueueManager(params: UseQueueManagerParams): void {
     clearDisconnectedWallet,
   } = params;
 
+  // Only the active tab changes swaps; wallet changes are picked up once the tab becomes active.
   useEffect(() => {
-    if (lastConnectedWallet) {
+    if (isActive && lastConnectedWallet) {
       checkWaitingForConnectWalletChange({
         evmChains,
         lastConnectedWallet,
@@ -76,10 +78,10 @@ function useQueueManager(params: UseQueueManagerParams): void {
       });
       retryOn(lastConnectedWallet, manager, canSwitchNetworkTo);
     }
-  }, [getLastConnectedWalletHash(lastConnectedWallet)]);
+  }, [isActive, getLastConnectedWalletHash(lastConnectedWallet)]);
 
   useEffect(() => {
-    if (disconnectedWallet) {
+    if (isActive && disconnectedWallet) {
       checkWaitingForNetworkChange(manager);
 
       /*
@@ -88,7 +90,13 @@ function useQueueManager(params: UseQueueManagerParams): void {
        */
       clearDisconnectedWallet();
     }
-  }, [disconnectedWallet]);
+  }, [isActive, disconnectedWallet]);
+
+  useEffect(() => {
+    if (isActive) {
+      checkWaitingForNetworkChange(manager);
+    }
+  }, [isActive]);
 }
 
 export { useQueueManager, useMigration };
