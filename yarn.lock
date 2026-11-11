@@ -3232,6 +3232,22 @@
     ws "^8.18.0"
     xstate "5.19.2"
 
+"@ledgerhq/device-management-kit@1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/device-management-kit/-/device-management-kit-1.11.0.tgz#b5213b4b03bc3d09f05ee34b8ade7f1340626fab"
+  integrity sha512-1KAC6tmtLZz+9X0KQY0lukzEAXgIDoMM3LP0pTRh9/Rab/NmZv5+74R9coL2mYTnDQTp8EfR41uJLJ5FylRCug==
+  dependencies:
+    "@noble/hashes" "^1.8.0"
+    "@sentry/minimal" "6.19.7"
+    inversify "7.5.1"
+    isomorphic-ws "^5.0.0"
+    purify-ts "2.1.0"
+    reflect-metadata "0.2.2"
+    semver "7.7.2"
+    uuid "11.0.3"
+    ws "^8.18.0"
+    xstate "5.19.2"
+
 "@ledgerhq/device-signer-kit-ethereum@1.18.1":
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/device-signer-kit-ethereum/-/device-signer-kit-ethereum-1.18.1.tgz#ee6dc76469b979a7202a9028f7767f74657f3e61"
@@ -3406,10 +3422,10 @@
     "@ledgerhq/logs" "^6.12.0"
     events "^3.3.0"
 
-"@ledgerhq/ledger-wallet-provider-core@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-core/-/ledger-wallet-provider-core-2.0.0.tgz#a791710f3bc563f11000cbf3a17bf2ed46348ef3"
-  integrity sha512-45lARV+iJurY2AsK2F95pGNRFz+0Yvs/lZN0U1iYVNyF/otHDeTaE5mEjKEO7m+MR2HusGUqaj1Z8VUf9IBylw==
+"@ledgerhq/ledger-wallet-provider-core@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-core/-/ledger-wallet-provider-core-2.0.2.tgz#ec8347c725e4ccb8379604d7979c8cfa7994504a"
+  integrity sha512-JAZtz2R3U7U3PNCCs/3F/l06xqCwn+H5MZ5hNB5kiI6gV/sU30tpgVXATG6wdwXfnOocwGo35Y4GXpbRWFKsLA==
   dependencies:
     "@ledgerhq/coin-framework" "^5.0.0"
     "@ledgerhq/device-management-kit" "1.10.0"
@@ -3427,20 +3443,20 @@
     xstate "5.19.2"
     zod "4.5.4"
 
-"@ledgerhq/ledger-wallet-provider-evm@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-evm/-/ledger-wallet-provider-evm-1.0.0.tgz#4d11216b471ea3a72d9215b13376f9ebf026e3ab"
-  integrity sha512-il3oxQQuQPgBCwKBRsQu9tOILFcRNPzzGzaT/PAU5RuLe6b9GxIbLx4a6Tiqp80Rf8f2EMRv3J0ZU9jh5t2djQ==
+"@ledgerhq/ledger-wallet-provider-evm@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-evm/-/ledger-wallet-provider-evm-1.0.1.tgz#5aa8ccd5d658300477259ddcb09b5e5bede21c5a"
+  integrity sha512-RsazPCQleuKZxw+1g0ix4/g3K5WNwtyKk2JUDrdx/4jSmSstmAgRLI+2kDlDdWQcN/j9v1a1KiDiL5aBdBAYNg==
   dependencies:
     "@ledgerhq/context-module" "2.6.0"
     "@ledgerhq/device-signer-kit-ethereum" "1.18.1"
     ethers "^6.17.0"
     inversify "^7.5.1"
 
-"@ledgerhq/ledger-wallet-provider-solana@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-solana/-/ledger-wallet-provider-solana-1.0.0.tgz#7e5c8fd19d0a9b64c220017f08dad70cbd81f20c"
-  integrity sha512-d7JGqrF4ZJuF/dOAil5YQaxGzBmeYasEEBrTSC5eHj+EhLKaLHfO38emU8vCtcXhZ6a8jL0DV+zEM08L+jAgYg==
+"@ledgerhq/ledger-wallet-provider-solana@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider-solana/-/ledger-wallet-provider-solana-1.0.1.tgz#093ab3d606504509ece1f37f95f6b7bd5283743d"
+  integrity sha512-LySKCnmQJgAZevxHeCA6a5h4+gRlOEkrDqk02SlMtI0k7lILebEwuXs83jC2rURKBkSe7Yvf5lK5i7zuPrL5qg==
   dependencies:
     "@ledgerhq/context-module" "2.6.0"
     "@ledgerhq/device-signer-kit-solana" "1.13.3"
@@ -3451,13 +3467,13 @@
     "@wallet-standard/wallet" "^1.1.0"
     inversify "^7.5.1"
 
-"@ledgerhq/ledger-wallet-provider@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider/-/ledger-wallet-provider-2.0.0.tgz#5bf3cef4a27a1128f694a956b48af92d7b794945"
-  integrity sha512-dhHZyr3n85GhQkiIlHk4ausVLgNR5MqJtnEYTeVcfUOyv7SfqhLZ6RvDX8JxeGkhjWd/io3N8RnQHuu9hR+afg==
+"@ledgerhq/ledger-wallet-provider@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-wallet-provider/-/ledger-wallet-provider-2.0.2.tgz#f40713c0c46261a06d8612874ee51557d1bff84a"
+  integrity sha512-rWAWIXobpWJXkDVfUCNqIzZe/GxFTZQAOWLPotUTAXFQ1a2t+VFHKzGJnpAP7DqVJ2LL3IsAVUOr1jMrAtj07A==
   dependencies:
     "@floating-ui/dom" "^1.8.0"
-    "@ledgerhq/ledger-wallet-provider-core" "2.0.0"
+    "@ledgerhq/ledger-wallet-provider-core" "2.0.2"
     "@ledgerhq/lumen-design-core" "^0.1.28"
     "@lit/context" "1.1.6"
     class-variance-authority "^0.7.1"
