@@ -23,14 +23,18 @@
   },
   "dependencies": {
     "@ledgerhq/device-management-kit": "1.11.0",
-    "@ledgerhq/ledger-wallet-provider": "^2.0.2",
-    "@ledgerhq/ledger-wallet-provider-evm": "^1.0.1",
-    "@ledgerhq/ledger-wallet-provider-solana": "^1.0.1",
+    "@ledgerhq/ledger-wallet-provider": "2.0.3",
+    "@ledgerhq/ledger-wallet-provider-core": "2.0.3",
+    "@ledgerhq/ledger-wallet-provider-evm": "1.0.3",
+    "@ledgerhq/ledger-wallet-provider-solana": "1.0.3",
     "@rango-dev/signer-evm": "^0.47.1",
     "@rango-dev/signer-solana": "^0.51.1-next.0",
     "@wallet-standard/app": "^1.1.0",
     "bs58": "^5.0.0",
-    "rango-types": "^0.6.0"
+    "purify-ts": "2.1.0",
+    "rango-types": "^0.6.0",
+    "rxjs": "7.8.2",
+    "xstate": "5.19.2"
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
