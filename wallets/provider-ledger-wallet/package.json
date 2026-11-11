@@ -15,25 +15,40 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "yarn run rangutopia library build",
+    "build": "yarn run rangutopia library build --splitting",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@ledgerhq/ledger-wallet-provider": "^1.4.2",
+    "@ledgerhq/device-management-kit": "1.11.0",
+    "@ledgerhq/ledger-wallet-provider": "2.0.3",
+    "@ledgerhq/ledger-wallet-provider-core": "2.0.3",
+    "@ledgerhq/ledger-wallet-provider-evm": "1.0.3",
+    "@ledgerhq/ledger-wallet-provider-solana": "1.0.3",
     "@rango-dev/signer-evm": "^0.47.1",
-    "rango-types": "^0.6.0"
+    "@rango-dev/signer-solana": "^0.51.1-next.0",
+    "@wallet-standard/app": "^1.1.0",
+    "bs58": "^5.0.0",
+    "purify-ts": "2.1.0",
+    "rango-types": "^0.6.0",
+    "rxjs": "7.8.2",
+    "xstate": "5.19.2"
   },
   "devDependencies": {
     "@hub3js/core": "^0.64.0",
     "@hub3js/evm": "^0.8.0",
-    "@hub3js/std": "^0.6.0"
+    "@hub3js/solana": "^0.7.0",
+    "@hub3js/std": "^0.6.0",
+    "@solana/wallet-standard-features": "^1.3.0",
+    "@wallet-standard/base": "^1.1.0",
+    "@wallet-standard/features": "^1.1.0"
   },
   "peerDependencies": {
     "@hub3js/core": "^0.64.0",
     "@hub3js/evm": "^0.8.0",
+    "@hub3js/solana": "^0.7.0",
     "@hub3js/std": "^0.6.0"
   },
   "publishConfig": {

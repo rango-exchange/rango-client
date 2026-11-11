@@ -1,12 +1,13 @@
 import type { Environments } from './types.js';
 import type { ProviderAPI } from '@hub3js/evm';
-import type { EIP6963ProviderDetail } from '@ledgerhq/ledger-wallet-provider';
+import type { EIP6963ProviderDetail } from '@ledgerhq/ledger-wallet-provider-evm';
 
 import { ProviderBuilder } from '@hub3js/core';
 
 import { metadata, WALLET_ID } from './constants.js';
 import { setProvider } from './ledgerProvider.js';
 import { evm } from './namespaces/evm.js';
+import { solana } from './namespaces/solana.js';
 
 const LEDGER_PROVIDER_NAME = 'Ledger Wallet';
 
@@ -39,14 +40,21 @@ const buildProvider = () =>
 
       const initializeProvider = async () => {
         /*
-         * Load Ledger's runtime and its stylesheet lazily (both resolved from
-         * the external `@ledgerhq/ledger-wallet-provider` dependency by the host
-         * bundler) so we only pull them in when the provider initializes.
+         * Load Ledger's runtime, its blockchain families and its stylesheet
+         * lazily (all resolved from the external `@ledgerhq/*` dependencies by
+         * the host bundler) so we only pull them in when the provider
+         * initializes.
          */
         await import('@ledgerhq/ledger-wallet-provider/styles.css');
-        const { initializeLedgerProvider } = await import(
-          '@ledgerhq/ledger-wallet-provider'
-        );
+        const [
+          { initializeLedgerProvider },
+          { evmBlockchainProviderFactory },
+          { solanaBlockchainProviderFactory },
+        ] = await Promise.all([
+          import('@ledgerhq/ledger-wallet-provider'),
+          import('@ledgerhq/ledger-wallet-provider-evm'),
+          import('@ledgerhq/ledger-wallet-provider-solana'),
+        ]);
 
         /*
          * Attach the listener BEFORE initializing so we don't race the
@@ -62,6 +70,10 @@ const buildProvider = () =>
           apiKey: environments.apiKey,
           loggerLevel: environments.loggerLevel || 'info',
           hideButton: environments.hideButton,
+          blockchainProviderFactories: [
+            evmBlockchainProviderFactory,
+            solanaBlockchainProviderFactory,
+          ],
         });
 
         /*
@@ -93,6 +105,7 @@ const buildProvider = () =>
     })
     .config('metadata', metadata)
     .add('evm', evm)
+    .add('solana', solana)
     .build();
 
 export { buildProvider };
