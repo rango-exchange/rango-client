@@ -10,7 +10,6 @@ import { Manager } from '@rango-dev/queue-manager-core';
 import React, {
   createContext,
   useContext,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -28,6 +27,7 @@ const ManagerCtx = createContext<{
 });
 
 interface PropTypes {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   queuesDefs: QueueDef<any, any, any>[];
   context: Context;
   onPersistedDataLoaded?: Events['onPersistedDataLoaded'];
@@ -90,7 +90,8 @@ function Provider(props: PropsWithChildren<PropTypes>) {
     context.current = props.context;
   }, [props.context]);
 
-  useEffect(() => {
+  // A layout effect, so the manager is already running when effects reacting to the same change (e.g. `useQueueManager`) run.
+  useLayoutEffect(() => {
     if (typeof props.isPaused !== 'undefined') {
       if (props.isPaused) {
         manager.pause();

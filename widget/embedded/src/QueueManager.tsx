@@ -112,7 +112,10 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
       queuesDefs={[swapQueueDef]}
       context={context}
       onPersistedDataLoaded={(manager) => {
-        checkWaitingForNetworkChange(manager);
+        // Other tabs only show swaps; the active one checks them, also when a tab becomes active (`useQueueManager`).
+        if (useUiStore.getState().isActiveTab) {
+          checkWaitingForNetworkChange(manager);
+        }
       }}
       isPaused={!isActiveTab}>
       {props.children}

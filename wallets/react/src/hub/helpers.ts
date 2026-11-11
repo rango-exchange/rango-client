@@ -182,7 +182,7 @@ export function createQueue(options?: {
 }
 
 export function shouldTryAutoConnect(
-  props: Pick<ProviderProps, 'allBlockChains' | 'autoConnect'>
+  props: Pick<ProviderProps, 'allBlockChains'>
 ): boolean {
-  return !!props.allBlockChains?.length && !!props.autoConnect;
+  return !!props.allBlockChains?.length;
 }

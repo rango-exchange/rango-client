@@ -112,6 +112,11 @@ export type LastConnectedWallet = {
 };
 
 export interface UseQueueManagerParams {
+  /**
+   * Whether this tab runs the queue. Wallet changes in other tabs are ignored, and swaps waiting
+   * for a wallet or network are checked again when the tab becomes active.
+   */
+  isActive: boolean;
   lastConnectedWallet: LastConnectedWallet | null;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
