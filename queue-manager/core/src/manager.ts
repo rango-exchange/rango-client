@@ -1,5 +1,5 @@
 import type { QueueEventHandlers, TaskEvent } from './queue';
-import type { QueueStorage } from './types';
+import type { QueueStorage, TaskPayload } from './types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -25,15 +25,24 @@ export type BlockedTask = {
 
 export type SetStorage<T> = (nextStorage: T) => T;
 
+export type Payloads<V extends string = string> = {
+  [N in V]: TaskPayload | undefined;
+};
+
+export type PayloadArg<X> = undefined extends X ? [payload?: X] : [payload: X];
+
 export interface ExecuterActions<
   T extends QueueStorage = QueueStorage,
   V extends string = string,
-  C = ManagerContext
+  C = ManagerContext,
+  P extends Payloads<V> = Payloads<V>,
+  K extends V = V
 > {
   next: () => void;
   retry: () => void;
   failed: () => void;
-  schedule: (actionName: V) => void;
+  schedule: <N extends V>(actionName: N, ...payload: PayloadArg<P[N]>) => void;
+  payload: P[K];
   setStorage: SetStorage<T>;
   getStorage: () => T;
   block: (reason: BlockedReason) => void;
@@ -46,11 +55,12 @@ type WhenTaskBlockedEvent = any;
 export interface QueueDef<
   T extends QueueStorage = QueueStorage,
   V extends string = string,
-  C = ManagerContext
+  C = ManagerContext,
+  P extends Payloads<V> = Payloads<V>
 > {
   name: QueueName;
   actions: {
-    [K in V]: (actions: ExecuterActions<T, V, C>) => void | Promise<void>;
+    [K in V]: (actions: ExecuterActions<T, V, C, P, K>) => void | Promise<void>;
   };
   events?: Partial<QueueEventHandlers>;
   run: V[];
@@ -60,6 +70,25 @@ export interface QueueDef<
       queue_id: string;
       queue: Queue;
       context: C;
+      getBlockedTasks: () => BlockedTask[];
+      forceExecute: (queue_id: string, data?: object) => void;
+      retry: () => void;
+      manager: Manager;
+    }
+  ) => void;
+}
+
+export interface AnyQueueDef {
+  name: QueueName;
+  actions: Record<string, (actions: never) => void | Promise<void>>;
+  events?: QueueDef['events'];
+  run: readonly string[];
+  whenTaskBlocked?: (
+    event: WhenTaskBlockedEvent,
+    params: {
+      queue_id: string;
+      queue: Queue;
+      context: never;
       getBlockedTasks: () => BlockedTask[];
       forceExecute: (queue_id: string, data?: object) => void;
       retry: () => void;
@@ -81,7 +110,7 @@ export interface Events {
 
 interface ManagerOptions {
   events?: Partial<Events>;
-  queuesDefs: QueueDef[];
+  queuesDefs: AnyQueueDef[];
   context?: ManagerContext;
   isPaused?: boolean;
 }
@@ -154,8 +183,8 @@ class Manager {
       this.events = defaultEventHandlers;
     }
 
-    options.queuesDefs.map((qDef) => {
-      this.queuesDefs.set(qDef.name, qDef);
+    options.queuesDefs.forEach((qDef) => {
+      this.queuesDefs.set(qDef.name, qDef as QueueDef);
     });
 
     this.context = options.context || {};
