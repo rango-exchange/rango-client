@@ -3,10 +3,6 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, labeled]
 
-# Force Nx to accept and reuse computation caches restored from different CI runners
-env:
-  NX_REJECT_UNKNOWN_LOCAL_CACHE: '0'
-
 jobs:
   check-commits:
     runs-on: ubuntu-latest
