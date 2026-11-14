@@ -8,10 +8,10 @@ import type { ProvidersOptions } from '../../utils/providers';
 import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
-import { WalletTypes } from '@rango-dev/provider-all';
 import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
+import { WALLET_IDS } from '../../constants/wallets';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
@@ -108,18 +108,18 @@ function Main(props: PropsWithChildren<PropTypes>) {
         configs={{
           wallets: config.wallets,
           walletOptions: {
-            [WalletTypes.TON_CONNECT]: {
+            [WALLET_IDS.TON_CONNECT]: {
               provider: { manifestUrl: config.tonConnect?.manifestUrl },
             },
-            [WalletTypes.OKX]: {
+            [WALLET_IDS.OKX]: {
               provider: {
                 tonConnectManifestUrl: config.tonConnect?.manifestUrl,
               },
             },
-            [WalletTypes.TREZOR]: {
+            [WALLET_IDS.TREZOR]: {
               provider: { manifest: config.trezorManifest },
             },
-            [WalletTypes.WALLET_CONNECT_2]: {
+            [WALLET_IDS.WALLET_CONNECT_2]: {
               provider: {
                 WC_PROJECT_ID: config.walletConnectProjectId || '',
                 DISABLE_MODAL_AND_OPEN_LINK:
@@ -128,7 +128,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
                 meta: blockchains,
               },
             },
-            [WalletTypes.LEDGER_WALLET]: {
+            [WALLET_IDS.LEDGER_WALLET]: {
               provider: config.ledgerWallet,
             },
           },
