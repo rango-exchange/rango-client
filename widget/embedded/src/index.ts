@@ -37,7 +37,6 @@ import type {
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
   EventHandler as HandleWalletsUpdate,
-  ProviderInterface,
   WalletEventData,
   WalletInfo,
   WalletState,
@@ -104,10 +103,6 @@ export type {
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
-  /**
-   * @deprecated Pass a hub `Provider` instead. This type will be removed in future versions.
-   */
-  ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
   RouteEvent,
