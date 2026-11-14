@@ -2,33 +2,9 @@ import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
-import type { Provider } from '@hub3js/core';
-
-import {
-  allProviders as getAllProviders,
-  WalletTypes,
-} from '@rango-dev/provider-all';
 
 import { cacheService } from '../../services/cacheService';
-import {
-  matchAndGenerateProviders,
-  type ProvidersOptions,
-} from '../../utils/providers';
 import { matchTokensFromConfigWithMeta } from '../utils';
-
-function makeProvidersOptionsFromConfig(
-  config: WidgetConfig
-): ProvidersOptions {
-  const options: ProvidersOptions = {
-    walletConnectProjectId: config?.walletConnectProjectId,
-    trezorManifest: config?.trezorManifest,
-    tonConnect: config?.tonConnect,
-    walletConnectListedDesktopWalletLink:
-      config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-  };
-
-  return options;
-}
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
@@ -37,6 +13,7 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   excludeLiquiditySources: true,
   customDestination: true,
   variant: 'default',
+  wallets: [],
 };
 
 interface IframeConfigs {
@@ -74,37 +51,6 @@ export interface ConfigSlice {
     name: K,
     value: IframeConfigs[K]
   ) => void;
-  allProviders: Provider[];
-  buildAndSetProviders: () => void;
-  getAvailableProviders: () => Provider[];
-}
-
-function generateProviders(config: WidgetConfig): Provider[] {
-  const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build());
-
-  return allBuiltProviders.filter((provider) =>
-    hasRequiredConfig(provider.id, config)
-  );
-}
-
-const REQUIRED_CONFIG_BY_WALLET: Partial<Record<string, keyof WidgetConfig>> = {
-  [WalletTypes.LEDGER_WALLET]: 'ledgerWallet',
-  [WalletTypes.TREZOR]: 'trezorManifest',
-  [WalletTypes.TON_CONNECT]: 'tonConnect',
-  [WalletTypes.WALLET_CONNECT_2]: 'walletConnectProjectId',
-};
-
-function hasRequiredConfig(walletId: string, config: WidgetConfig): boolean {
-  const requiredKey = REQUIRED_CONFIG_BY_WALLET[walletId];
-  if (!requiredKey || config[requiredKey]) {
-    return true;
-  }
-
-  console.warn(
-    `${walletId} is listed in config wallets but ${requiredKey} config is not provided!`
-  );
-  return false;
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
@@ -116,12 +62,10 @@ export const createConfigSlice: StateCreatorWithInitialData<
     ...DEFAULT_CONFIG,
     ...initialData,
   };
-  const allBuiltProviders = generateProviders(config);
   return {
     config,
     iframe: DEFAULT_IFRAME_CONFIGS,
     campaignMode: DEFAULT_CAMPAIGN_MODE,
-    allProviders: allBuiltProviders,
     getLiquiditySources: () => {
       const { config, campaignMode } = get();
       return campaignMode.liquiditySources?.length
@@ -211,27 +155,6 @@ export const createConfigSlice: StateCreatorWithInitialData<
           [name]: value,
         },
       });
-    },
-
-    buildAndSetProviders: () => {
-      const { config } = get();
-      const allBuiltProviders = generateProviders(config);
-
-      set({
-        allProviders: allBuiltProviders,
-      });
-    },
-
-    getAvailableProviders: () => {
-      const { allProviders, config } = get();
-      const options = makeProvidersOptionsFromConfig(config);
-
-      const availableProviders = matchAndGenerateProviders({
-        allProviders,
-        configWallets: config.wallets,
-        options,
-      });
-      return availableProviders;
     },
   };
 };

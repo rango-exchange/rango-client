@@ -4,7 +4,6 @@ import type {
   PropTypes,
   WidgetContextInterface,
 } from './Wallets.types';
-import type { ProvidersOptions } from '../../utils/providers';
 import type { EventHandler } from '@rango-dev/wallets-react';
 import type { PropsWithChildren } from 'react';
 
@@ -12,7 +11,6 @@ import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { WALLET_IDS } from '../../constants/wallets';
-import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
@@ -35,19 +33,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
     updateSettings,
     fetch: fetchMeta,
     fetchStatus,
+    clearConnectedWallet,
   } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const config = useAppStore().config;
 
-  const walletOptions: ProvidersOptions = {
-    walletConnectProjectId: config?.walletConnectProjectId,
-    trezorManifest: config?.trezorManifest,
-    tonConnect: config.tonConnect,
-    walletConnectListedDesktopWalletLink:
-      props.config.__UNSTABLE_OR_INTERNAL__
-        ?.walletConnectListedDesktopWalletLink,
-  };
-  const { providers } = useWalletProviders(config.wallets, walletOptions);
+  // From the store, like `useWalletList`, so the list never asks for a wallet the engine has already dropped.
+  const providers = config.wallets;
   const onConnectWalletHandler = useRef<OnWalletConnectHandler>();
   const onDisconnectWalletHandler = useRef<OnWalletDisconnectHandler>();
   const { handler: handleEvent } = useUpdates({
@@ -69,6 +61,11 @@ function Main(props: PropsWithChildren<PropTypes>) {
       };
     }
   }, [props.config, fetchStatus]);
+
+  // Connected wallets belong to the host's providers, so they're reset when they change.
+  useEffect(() => {
+    clearConnectedWallet();
+  }, [providers.map((provider) => provider.id).join('-')]);
 
   const isActiveTab = useUiStore.use.isActiveTab();
 
