@@ -1,4 +1,4 @@
-import type { WidgetConfigWithoutLegacyProviders } from '../../types';
+import type { WidgetConfig } from '../../types';
 import type { LastConnectedWallet } from '@rango-dev/queue-manager-rango-preset';
 import type { EventHandler, Events } from '@rango-dev/wallets-react';
 
@@ -32,5 +32,5 @@ export type OnUpdateState = (
 
 export interface PropTypes {
   onUpdateState?: OnUpdateState;
-  config: WidgetConfigWithoutLegacyProviders;
+  config: WidgetConfig;
 }

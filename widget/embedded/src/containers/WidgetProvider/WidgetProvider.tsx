@@ -14,17 +14,8 @@ import { getApiKeyFromEnvOrThrow } from '../../utils/env';
 import { WidgetWallets } from '../Wallets';
 import { WidgetInfo } from '../WidgetInfo';
 
-import { isHubWallet } from './WidgetProvider.helpers';
-
 export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
   const { onUpdateState, config } = props;
-
-  const wallets = config?.wallets;
-  if (wallets && !wallets.every(isHubWallet)) {
-    throw new Error(
-      "Legacy providers aren't supported anymore. Expected a provider with version '1.0.0'."
-    );
-  }
 
   const fontFamily = props.config?.theme?.fontFamily;
 
@@ -61,9 +52,7 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
   }, [props.config?.signers?.customEthereumRPC]);
 
   return (
-    <WidgetWallets
-      config={{ ...config, wallets }}
-      onUpdateState={onUpdateState}>
+    <WidgetWallets config={config} onUpdateState={onUpdateState}>
       <QueueManager apiKey={config.apiKey}>
         <WidgetInfo>{props.children}</WidgetInfo>
       </QueueManager>

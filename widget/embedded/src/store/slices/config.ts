@@ -1,9 +1,6 @@
 import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
-import type {
-  WidgetConfig,
-  WidgetConfigWithoutLegacyProviders,
-} from '../../types';
+import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
 import type { Provider } from '@hub3js/core';
 
@@ -33,7 +30,7 @@ function makeProvidersOptionsFromConfig(
   return options;
 }
 
-export const DEFAULT_CONFIG: WidgetConfigWithoutLegacyProviders = {
+export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
   title: undefined,
   multiWallets: true,
@@ -60,13 +57,13 @@ const DEFAULT_CAMPAIGN_MODE: CampaignMode = {
 
 export interface ConfigSlice {
   // What user can set directly.
-  config: WidgetConfigWithoutLegacyProviders;
+  config: WidgetConfig;
   campaignMode: CampaignMode;
   isInCampaignMode: () => boolean;
   getLiquiditySources: () => string[];
   getDisabledLiquiditySources: () => string[];
   excludeLiquiditySources: () => boolean;
-  updateConfig: (config: WidgetConfigWithoutLegacyProviders) => void;
+  updateConfig: (config: WidgetConfig) => void;
   updateCampaignMode: <K extends keyof CampaignMode>(
     name: K,
     value: CampaignMode[K]
@@ -82,9 +79,7 @@ export interface ConfigSlice {
   getAvailableProviders: () => Provider[];
 }
 
-function generateProviders(
-  config: WidgetConfigWithoutLegacyProviders
-): Provider[] {
+function generateProviders(config: WidgetConfig): Provider[] {
   const allProviders = getAllProviders();
   const allBuiltProviders = allProviders.map((build) => build());
 
@@ -93,19 +88,14 @@ function generateProviders(
   );
 }
 
-const REQUIRED_CONFIG_BY_WALLET: Partial<
-  Record<string, keyof WidgetConfigWithoutLegacyProviders>
-> = {
+const REQUIRED_CONFIG_BY_WALLET: Partial<Record<string, keyof WidgetConfig>> = {
   [WalletTypes.LEDGER_WALLET]: 'ledgerWallet',
   [WalletTypes.TREZOR]: 'trezorManifest',
   [WalletTypes.TON_CONNECT]: 'tonConnect',
   [WalletTypes.WALLET_CONNECT_2]: 'walletConnectProjectId',
 };
 
-function hasRequiredConfig(
-  walletId: string,
-  config: WidgetConfigWithoutLegacyProviders
-): boolean {
+function hasRequiredConfig(walletId: string, config: WidgetConfig): boolean {
   const requiredKey = REQUIRED_CONFIG_BY_WALLET[walletId];
   if (!requiredKey || config[requiredKey]) {
     return true;
@@ -118,11 +108,11 @@ function hasRequiredConfig(
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
-  WidgetConfigWithoutLegacyProviders,
+  WidgetConfig,
   ConfigSlice & SettingsSlice & DataSlice,
   ConfigSlice
 > = (initialData, set, get) => {
-  const config: WidgetConfigWithoutLegacyProviders = {
+  const config: WidgetConfig = {
     ...DEFAULT_CONFIG,
     ...initialData,
   };
@@ -156,7 +146,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
     },
 
     // Actions
-    updateConfig: (nextConfig: WidgetConfigWithoutLegacyProviders) => {
+    updateConfig: (nextConfig: WidgetConfig) => {
       const currentConfig = get().config;
       const {
         _tokensMapByTokenHash: tokensMapByTokenHash,
