@@ -1,11 +1,11 @@
 import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
 
-import { WalletTypes } from '@rango-dev/provider-all';
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { useCallback, useEffect } from 'react';
 
+import { WALLET_IDS } from '../constants/wallets';
 import { useAppStore } from '../store/AppStore';
 import { detectMobileScreens } from '../utils/common';
 import { configWalletsToWalletName } from '../utils/providers';
@@ -18,9 +18,9 @@ import {
 import { useStatefulConnect } from './useStatefulConnect/useStatefulConnect';
 
 const DEFAULT_EVM_WALLETS = new Set<string>([
-  WalletTypes.DEFAULT,
-  WalletTypes.WALLET_CONNECT_2,
-  WalletTypes.LEDGER,
+  WALLET_IDS.DEFAULT,
+  WALLET_IDS.WALLET_CONNECT_2,
+  WALLET_IDS.LEDGER,
 ]);
 
 interface Params {
@@ -89,7 +89,7 @@ export function useWalletList(params?: Params): API {
   const shouldShowDefaultInjectedWallet = (wallets: WalletInfo[]) => {
     // don't show default injected wallet when it's not installed
     const defaultWallet = wallets.find(
-      (wallet) => wallet.type === WalletTypes.DEFAULT
+      (wallet) => wallet.type === WALLET_IDS.DEFAULT
     );
     if (!defaultWallet || defaultWallet.state === WalletState.NOT_INSTALLED) {
       return false;
@@ -112,7 +112,7 @@ export function useWalletList(params?: Params): API {
 
   const shouldExcludeWallet = (walletType: string) => {
     return (
-      walletType == WalletTypes.DEFAULT &&
+      walletType == WALLET_IDS.DEFAULT &&
       !shouldShowDefaultInjectedWallet(wallets)
     );
   };
