@@ -23,7 +23,7 @@ import {
 import { PLAYGROUND_CONTAINER_ID } from '../../constants';
 import { useTheme } from '../../hooks/useTheme';
 import { initialConfig, useConfigStore } from '../../store/config';
-import { filterConfig, formatConfig } from '../../utils/export';
+import { filterConfig } from '../../utils/export';
 
 import { CodeBlock } from './CodeBlock';
 import {
@@ -50,7 +50,6 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
   const [selected, setSelected] = useState<ExportType>('embedded');
   const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
-  const formatedConfig = formatConfig(filteredConfigForExport);
   const apiKey = useConfigStore.use.config().apiKey;
   const onChangeApiKey = useConfigStore.use.onChangeApiKey();
 
@@ -154,7 +153,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         selectedType={selected}
         language={typesOfCodeBlocks[selected].language}
         theme={syntaxHighlighterTheme}>
-        {typesOfCodeBlocks[selected].generateCode(formatedConfig)}
+        {typesOfCodeBlocks[selected].generateCode(filteredConfigForExport)}
       </CodeBlock>
     </Modal>
   );

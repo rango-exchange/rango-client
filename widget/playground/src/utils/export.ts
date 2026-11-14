@@ -1,26 +1,28 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { PlaygroundConfig } from '../store/config';
 
 import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import subtractObject from 'subtract-object';
 
-function clearEmpties<T extends Record<string, any>>(obj: T): T {
-  for (const key in obj) {
-    if (!obj[key] || typeof obj[key] !== 'object') {
+function clearEmpties<T extends object>(obj: T): T {
+  const record = obj as Record<string, unknown>;
+  for (const key in record) {
+    const value = record[key];
+    if (!value || typeof value !== 'object') {
       continue;
     }
-    clearEmpties(obj[key]);
-    if (Object.keys(obj[key]).length === 0 && !Array.isArray(obj[key])) {
-      delete obj[key];
+    clearEmpties(value);
+    if (Object.keys(value).length === 0 && !Array.isArray(value)) {
+      delete record[key];
     }
   }
   return obj;
 }
 
 function isWalletConfigNeeded(
-  config: WidgetConfig,
-  configKey: keyof WidgetConfig,
+  config: PlaygroundConfig,
+  configKey: keyof PlaygroundConfig,
   walletKey: string
 ): boolean {
   return (
@@ -30,21 +32,23 @@ function isWalletConfigNeeded(
 }
 
 export function filterConfig(
-  WidgetConfig: WidgetConfig,
-  initialConfig: WidgetConfig
+  playgroundConfig: PlaygroundConfig,
+  initialConfig: PlaygroundConfig
 ) {
   const config = {
-    ...WidgetConfig,
-    wallets: WidgetConfig.externalWallets
+    ...playgroundConfig,
+    wallets: playgroundConfig.externalWallets
       ? undefined
-      : WidgetConfig.wallets?.filter((wallet) => typeof wallet === 'string'),
+      : playgroundConfig.wallets?.filter(
+          (wallet) => typeof wallet === 'string'
+        ),
   };
 
   const userSelectedConfig = clearEmpties(
     subtractObject(
-      JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
+      JSON.parse(JSON.stringify(initialConfig)) as PlaygroundConfig,
       JSON.parse(JSON.stringify(config))
-    ) as WidgetConfig
+    ) as PlaygroundConfig
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
@@ -107,16 +111,35 @@ export function getIframeCode(config: string) {
 `;
 }
 
-export function getEmbeddedCode(config: string) {
-  return `import { Widget, WidgetConfig } from "@rango-dev/widget-embedded";
+export function getEmbeddedCode(config: PlaygroundConfig) {
+  // The widget takes wallets as providers, so the selected ids are printed apart from the config.
+  const { wallets: walletIds = [], ...widgetConfig } = config;
+  const formatedConfig = formatConfig(widgetConfig);
+
+  return `import { Widget } from "@rango-dev/widget-embedded";
+import { allProviders } from "@rango-dev/provider-all";
+
+// Wallets are created by your app; build them once, they keep their own state.
+const providers = allProviders().map((build) => build());
+
+// Ids of the wallets to show (empty: all wallets).
+const walletIds: string[] = ${JSON.stringify(walletIds)};
+
+const wallets = providers.filter(
+  (provider) => !walletIds.length || walletIds.includes(provider.id)
+);
 
 export default function App() {
 
-  const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
-              
+  const config = ${insertAt(
+    formatedConfig,
+    '  ',
+    formatedConfig.lastIndexOf('}')
+  )}
+
   return (
     <div className="App">
-      <Widget config={config} />
+      <Widget config={{ ...config, wallets }} />
     </div>
   );
 }
@@ -134,7 +157,7 @@ function insertAt(
     .concat(originalString.slice(index));
 }
 
-export function formatConfig(config: WidgetConfig) {
+export function formatConfig(config: PlaygroundConfig) {
   const indentation = '    ';
   let formatedConfig: string = stringifyObject(config, {
     indent: indentation,
