@@ -9692,10 +9692,10 @@ bitcoin-ops@^1.3.0, bitcoin-ops@^1.4.1:
   resolved "https://registry.yarnpkg.com/bitcoin-ops/-/bitcoin-ops-1.4.1.tgz#e45de620398e22fd4ca6023de43974ff42240278"
   integrity sha512-pef6gxZFztEhaE9RY9HmWVmiIHqCb2OyS4HPKkpc6CIiiOa3Qmuoylxc5P2EkU3w+5eTSifI9SEZC88idAIGow==
 
-bitcoinjs-lib@^6.1.7:
-  version "6.1.7"
-  resolved "https://registry.yarnpkg.com/bitcoinjs-lib/-/bitcoinjs-lib-6.1.7.tgz#0f98dec1333d658574eefa455295668cfae38bb0"
-  integrity sha512-tlf/r2DGMbF7ky1MgUqXHzypYHakkEnm0SZP23CJKIqNY/5uNAnMbFhMJdhjrL/7anfb/U8+AlpdjPWjPnAalg==
+bitcoinjs-lib@^6.1.8:
+  version "6.1.10"
+  resolved "https://registry.yarnpkg.com/bitcoinjs-lib/-/bitcoinjs-lib-6.1.10.tgz#d6650fc70f5849d374a2c39c156faf00349ad56e"
+  integrity sha512-9KpnS5JKVP0j0yfTsBNFIsNA6+JdBDb7VtL35F20I/pJYobosi3TmZFGtu6qxhJCfb0vubJixr5Zv61/lUYETw==
   dependencies:
     "@noble/hashes" "^1.2.0"
     bech32 "^2.0.0"
