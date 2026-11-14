@@ -1,4 +1,5 @@
-import type { Tokens, WidgetConfig } from '@rango-dev/widget-embedded';
+import type { PlaygroundConfig } from '../store/config';
+import type { Tokens } from '@rango-dev/widget-embedded';
 import type { Token } from 'rango-sdk';
 
 import { initialConfig } from '../store/config';
@@ -49,7 +50,7 @@ export const isTokenExcludedInConfig = (
   return result;
 };
 
-export const isConfigChanged = (widgetConfig: WidgetConfig) => {
+export const isConfigChanged = (widgetConfig: PlaygroundConfig) => {
   return !shallowEqual(
     filterConfig(initialConfig, initialConfig)?.filteredConfigForExport,
     filterConfig(widgetConfig, initialConfig)?.filteredConfigForExport
