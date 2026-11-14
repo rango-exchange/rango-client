@@ -8,7 +8,6 @@ import { useCallback, useEffect } from 'react';
 import { WALLET_IDS } from '../constants/wallets';
 import { useAppStore } from '../store/AppStore';
 import { detectMobileScreens } from '../utils/common';
-import { configWalletsToWalletName } from '../utils/providers';
 import {
   hashWalletsState,
   mapWalletTypesToWalletInfo,
@@ -41,13 +40,12 @@ interface API {
  */
 export function useWalletList(params?: Params): API {
   const { chain } = params || {};
-  const { getAvailableProviders } = useAppStore();
+  const { config } = useAppStore();
   const { state, getWalletInfo } = useWallets();
   const { handleDisconnect } = useStatefulConnect();
 
-  /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
-  const listAvailableWalletTypes = configWalletsToWalletName(
-    getAvailableProviders()
+  const listAvailableWalletTypes = config.wallets.map(
+    (provider) => provider.id
   );
 
   let wallets = mapWalletTypesToWalletInfo(

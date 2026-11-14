@@ -1,4 +1,4 @@
-import type { Provider, WalletType } from '@hub3js/core';
+import type { Provider } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
@@ -223,8 +223,8 @@ export type LedgerWalletConfig = {
  * blockchain during the transaction.
  * @property {string[]} liquiditySources - The `liquiditySources` property is an optional array of
  * strings that specifies the liquidity sources allowed dexes and bridges for the routing
- * @property {(WalletType | Provider)[]} wallets - The wallets the widget should support: wallet ids
- * (e.g. `"metamask"`, `"phantom"`) or hub `Provider`s.
+ * @property {Provider[]} wallets - The hub `Provider`s (from `@hub3js/core`) the widget should support.
+ * The host app creates them (e.g. with `@rango-dev/provider-all`); the widget connects and uses them.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
@@ -275,7 +275,7 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | Provider)[];
+  wallets: Provider[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };

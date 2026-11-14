@@ -20,6 +20,7 @@ let rangoBlockchain: EvmBlockchainMeta;
 
 const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
+  wallets: [],
   walletConnectProjectId: 'e24844c5deb5193c1c14840a7af6a40b',
   title: undefined,
   multiWallets: true,
