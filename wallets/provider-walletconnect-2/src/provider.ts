@@ -7,9 +7,10 @@ import { setAdapter } from './adapter/registry.js';
 import { metadata, WALLET_ID } from './constants.js';
 import { evm } from './namespaces/evm/namespace.js';
 
-const buildProvider = () =>
+const buildProvider = (environments: Environments) =>
   new ProviderBuilder(WALLET_ID)
-    .init(function (context, environments: Environments) {
+    // The blockchain meta is only known at runtime, so it's passed at init.
+    .init(function (context, runtime?: Pick<Environments, 'meta'>) {
       const [, setState] = context.state();
 
       if (!environments.WC_PROJECT_ID) {
@@ -19,7 +20,7 @@ const buildProvider = () =>
       setAdapter(
         new WalletConnectAdapter({
           projectId: environments.WC_PROJECT_ID,
-          meta: environments.meta || [],
+          meta: runtime?.meta || environments.meta || [],
           disableModalLink: environments.DISABLE_MODAL_AND_OPEN_LINK,
           themeMode: environments.themeMode,
           modalZIndex: environments.modalZIndex,

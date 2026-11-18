@@ -1,8 +1,18 @@
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, WalletTypes } from '@rango-dev/provider-all';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
-export const providers = allProviders().map((build) => build());
+import {
+  TON_CONNECT_MANIFEST_URL,
+  TREZOR_MANIFEST,
+  WC_PROJECT_ID,
+} from '../../configs';
+
+export const providers = allProviders({
+  [WalletTypes.WALLET_CONNECT_2]: { WC_PROJECT_ID },
+  [WalletTypes.TREZOR]: { manifest: TREZOR_MANIFEST },
+  [WalletTypes.TON_CONNECT]: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+}).map((build) => build());
 
 export const wallets = providers.map((provider) => provider.id);
 

@@ -79,32 +79,28 @@ export interface ConfigSlice {
   getAvailableProviders: () => Provider[];
 }
 
+// Wallets whose setup is missing from the config are left out by `allProviders`.
 function generateProviders(config: WidgetConfig): Provider[] {
-  const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build());
+  const walletConnectProjectId = config.walletConnectProjectId;
+  const tonConnectManifestUrl = config.tonConnect?.manifestUrl;
 
-  return allBuiltProviders.filter((provider) =>
-    hasRequiredConfig(provider.id, config)
-  );
-}
-
-const REQUIRED_CONFIG_BY_WALLET: Partial<Record<string, keyof WidgetConfig>> = {
-  [WalletTypes.LEDGER_WALLET]: 'ledgerWallet',
-  [WalletTypes.TREZOR]: 'trezorManifest',
-  [WalletTypes.TON_CONNECT]: 'tonConnect',
-  [WalletTypes.WALLET_CONNECT_2]: 'walletConnectProjectId',
-};
-
-function hasRequiredConfig(walletId: string, config: WidgetConfig): boolean {
-  const requiredKey = REQUIRED_CONFIG_BY_WALLET[walletId];
-  if (!requiredKey || config[requiredKey]) {
-    return true;
-  }
-
-  console.warn(
-    `${walletId} is listed in config wallets but ${requiredKey} config is not provided!`
-  );
-  return false;
+  return getAllProviders({
+    [WalletTypes.WALLET_CONNECT_2]: walletConnectProjectId
+      ? {
+          WC_PROJECT_ID: walletConnectProjectId,
+          DISABLE_MODAL_AND_OPEN_LINK:
+            config.__UNSTABLE_OR_INTERNAL__
+              ?.walletConnectListedDesktopWalletLink,
+        }
+      : undefined,
+    [WalletTypes.TON_CONNECT]: tonConnectManifestUrl
+      ? { manifestUrl: tonConnectManifestUrl }
+      : undefined,
+    [WalletTypes.TREZOR]: config.trezorManifest
+      ? { manifest: config.trezorManifest }
+      : undefined,
+    [WalletTypes.LEDGER_WALLET]: config.ledgerWallet,
+  }).map((build) => build());
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
