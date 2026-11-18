@@ -20,6 +20,8 @@ jobs:
         with:
           PLAYGROUND_RANGO_API_KEY: ${{ vars.PLAYGROUND_RANGO_API_KEY }}
           RANGO_API_KEY: ${{ vars.RANGO_API_KEY }}                        
+          LEDGER_WALLET_IDENTIFIER: ${{ vars.REACT_APP_LEDGER_WALLET_IDENTIFIER }}
+          LEDGER_WALLET_API_KEY: ${{ vars.REACT_APP_LEDGER_WALLET_API_KEY }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}

@@ -41,6 +41,10 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        ledgerWallet: {
+          dAppIdentifier: process.env.REACT_APP_LEDGER_WALLET_IDENTIFIER || '',
+          apiKey: process.env.REACT_APP_LEDGER_WALLET_API_KEY || '',
+        },
       };
     }
     if (!!config) {

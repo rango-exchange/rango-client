@@ -134,8 +134,10 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   }
 
   /*
-   * Tx is already broadcast; Ledger cannot serve getTransaction/receipts.
-   * Return the hash so checkStatus can continue via the API watcher.
+   * Tx is already broadcast; Ledger cannot serve eth_getTransactionByHash, which
+   * DefaultEvmSigner.wait relies on. Return the hash so checkStatus can continue
+   * via the API watcher (approvals are tracked via the namespace's
+   * getTransactionReceipt instead).
    */
   async wait(txHash: string): Promise<{ hash: string }> {
     return { hash: txHash };

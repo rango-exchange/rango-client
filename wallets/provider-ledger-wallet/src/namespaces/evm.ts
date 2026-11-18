@@ -3,6 +3,7 @@ import type { Chain, ChainId, EvmActions } from '@hub3js/evm';
 
 import { NamespaceBuilder } from '@hub3js/core';
 import { actions, builders, utils } from '@hub3js/evm';
+import { disconnect as disconnectAction } from '@hub3js/std/actions';
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 
@@ -63,8 +64,12 @@ const disconnect = commonBuilders
    * Tell the Ledger provider to clear its cached account/chain (see
    * `LedgerEIP1193Provider.disconnect`) so a later reconnect starts clean.
    * It must never make our own disconnect flow fail, hence the guard.
+   *
+   * This lives in the action rather than a `before` hook because hub3 doesn't
+   * await `before` hooks. Awaiting it here makes callers wait for Ledger's
+   * session reset to finish before, e.g., connecting another namespace.
    */
-  .before(async () => {
+  .action(async (context: Context<EvmActions>) => {
     try {
       /*
        * hub3 types `disconnect` as `() => void`, but the Ledger provider's
@@ -75,6 +80,8 @@ const disconnect = commonBuilders
     } catch (error) {
       console.error('[ledger-wallet] provider.disconnect failed', error);
     }
+
+    disconnectAction(context);
   })
   .after(changeAccountCleanup)
   .build();
