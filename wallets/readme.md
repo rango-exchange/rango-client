@@ -35,8 +35,10 @@ After adding the dependencies, you can use them. Using all supported wallets (`p
 
 ```js
 import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { allProviders, WalletTypes } from '@rango-dev/provider-all';
 
+// Wallets that need a setup (e.g. WalletConnect, Trezor) are only built when it is passed, keyed by wallet id:
+// allProviders({ [WalletTypes.WALLET_CONNECT_2]: { WC_PROJECT_ID }, [WalletTypes.TREZOR]: { manifest } })
 const providers = allProviders().map((build) => build());
 
 export function App() {

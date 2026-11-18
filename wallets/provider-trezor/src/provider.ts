@@ -10,9 +10,9 @@ let trezorManifest: Environments['manifest'];
 
 export const getTrezorManifest = () => trezorManifest;
 
-const buildProvider = () =>
+const buildProvider = (environments: Environments) =>
   new ProviderBuilder(WALLET_ID)
-    .init(function (context, environments: Environments) {
+    .init(function (context) {
       const [, setState] = context.state();
 
       if (!environments.manifest) {
