@@ -1,5 +1,4 @@
 import type { ColorsType, Type } from '../types';
-import type { Provider, WalletType } from '@hub3js/core';
 import type {
   Tokens,
   WidgetColorsKeys,
@@ -23,10 +22,15 @@ import createSelectors from './selectors';
 
 export type Mode = 'dark' | 'light' | 'auto';
 
+// Wallets are kept by their ids so the config can be persisted; they're mapped to providers for the widget.
+export type PlaygroundConfig = Omit<WidgetConfig, 'wallets'> & {
+  wallets?: string[];
+};
+
 interface ConfigState {
-  config: WidgetConfig;
+  config: PlaygroundConfig;
   onChangeApiKey: (apiKey: string) => void;
-  onChangeWallets: (wallets?: (WalletType | Provider)[]) => void;
+  onChangeWallets: (wallets?: string[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangePinnedTokens: (tokens?: Asset[], type?: Type) => void;
@@ -76,7 +80,7 @@ interface ConfigState {
   onChangeVariant: (variant?: WidgetVariant) => void;
 }
 
-export const initialConfig: WidgetConfig = {
+export const initialConfig: PlaygroundConfig = {
   apiKey: getConfig('API_KEY'),
   walletConnectProjectId: getConfig('WC_PROJECT_ID'),
   trezorManifest: TREZOR_MANIFEST,
@@ -270,8 +274,7 @@ export const useConfigStore = createSelectors(
                 config: {
                   ...storage.state.config,
                   wallets: storage.state.config.wallets?.filter(
-                    (wallet: WalletType | Provider) =>
-                      typeof wallet === 'string'
+                    (wallet: unknown) => typeof wallet === 'string'
                   ),
                 },
               },

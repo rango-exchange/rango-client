@@ -1,6 +1,10 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { PlaygroundConfig } from '../../store/config';
 
-import { getEmbeddedCode, getIframeCode } from '../../utils/export';
+import {
+  formatConfig,
+  getEmbeddedCode,
+  getIframeCode,
+} from '../../utils/export';
 
 export type ExportType = 'embedded' | 'iframe' | 'config';
 export type Language = 'jsx' | 'javascript';
@@ -23,7 +27,7 @@ export const typesOfCodeBlocksTabs = [
 export const typesOfCodeBlocks: {
   [key in ExportType]: {
     language: Language;
-    generateCode: (config: string) => string;
+    generateCode: (config: PlaygroundConfig) => string;
   };
 } = {
   embedded: {
@@ -32,16 +36,16 @@ export const typesOfCodeBlocks: {
   },
   iframe: {
     language: 'javascript',
-    generateCode: (config) => getIframeCode(config),
+    generateCode: (config) => getIframeCode(formatConfig(config)),
   },
   config: {
     language: 'javascript',
-    generateCode: (config) => config,
+    generateCode: (config) => formatConfig(config),
   },
 };
 
 export interface ExportConfigModalProps {
   open: boolean;
   onClose: () => void;
-  config: WidgetConfig;
+  config: PlaygroundConfig;
 }
