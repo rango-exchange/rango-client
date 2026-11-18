@@ -5,14 +5,16 @@ import type { BlockchainMeta } from 'rango-sdk';
 import { getSupportedChainsFromProvider } from '@rango-dev/internal-blockchains';
 import { allProviders as getAllProviders } from '@rango-dev/provider-all';
 
+import { initialConfig } from '../../store/config';
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
+import { getProvidersOptions } from '../../utils/walletsSetup';
 
 // Considering that the wallets list of the config used for `WidgetProvider` gets filtered by the selected wallets here, we can not directly use `getWalletInfo` of `useWallets` to get the info related to each wallet item because the required provider for an unselected wallet item will not be passed to `Provider`.
 export function getWalletsList(
   blockchains: BlockchainMeta[]
 ): MapSupportedList[] {
-  const allProviders = getAllProviders();
+  const allProviders = getAllProviders(getProvidersOptions(initialConfig));
   const allBuiltProviders = allProviders.map((build) => build());
   const walletsList: MapSupportedList[] = [];
   allBuiltProviders.forEach((provider: Provider) => {

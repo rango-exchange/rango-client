@@ -48,13 +48,5 @@ export type ProviderProps = PropsWithChildren<{
   emitter?: Emitter<WalletEvents>;
   configs?: {
     wallets?: (WalletType | Provider)[];
-    walletOptions?: {
-      [key: WalletType]: {
-        provider?: unknown;
-        namespaces?: {
-          [namespaceId: string]: unknown;
-        };
-      };
-    };
   };
 }>;

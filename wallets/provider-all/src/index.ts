@@ -1,4 +1,9 @@
 import type { Provider } from '@hub3js/core';
+import type { Environments as LedgerWalletOptions } from '@rango-dev/provider-ledger-wallet';
+import type { Environments as OkxOptions } from '@rango-dev/provider-okx';
+import type { Environments as TonConnectOptions } from '@rango-dev/provider-tonconnect';
+import type { Environments as TrezorOptions } from '@rango-dev/provider-trezor';
+import type { Environments as WalletConnectOptions } from '@rango-dev/provider-walletconnect-2';
 
 import { buildProvider as binance } from '@rango-dev/provider-binance';
 import { buildProvider as bitget } from '@rango-dev/provider-bitget';
@@ -36,17 +41,66 @@ import { buildProvider as vultisig } from '@rango-dev/provider-vultisig';
 import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconnect-2';
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
 
-export { WalletTypes } from './walletTypes.js';
+import { WalletTypes } from './walletTypes.js';
+
+export { WalletTypes };
+
+/**
+ * Setup for the wallets that need it, keyed by wallet id. A wallet whose required setup is missing is left out.
+ * OKX reads the TON Connect manifest from the TON Connect setup unless its own setup is given.
+ */
+export type ProvidersOptions = {
+  [WalletTypes.WALLET_CONNECT_2]?: WalletConnectOptions;
+  [WalletTypes.TON_CONNECT]?: TonConnectOptions;
+  [WalletTypes.TREZOR]?: TrezorOptions;
+  [WalletTypes.LEDGER_WALLET]?: LedgerWalletOptions;
+  [WalletTypes.OKX]?: OkxOptions;
+};
 
 // Providers register different namespaces, so the list is typed loosely instead of `Provider<unknown>`.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const allProviders = (): (() => Provider<any>)[] => {
-  return [
+type ProviderBuilder = () => Provider<any>;
+
+/**
+ * Returns the builder when the wallet's setup is complete, otherwise warns and leaves the wallet out.
+ */
+function withSetup<T>(
+  walletId: string,
+  setup: T | undefined,
+  isComplete: (setup: T) => boolean,
+  build: (setup: T) => ProviderBuilder
+): ProviderBuilder | undefined {
+  if (setup && isComplete(setup)) {
+    return build(setup);
+  }
+  console.warn(`${walletId} left out: missing \`${walletId}\` setup`);
+  return undefined;
+}
+
+export const allProviders = (
+  options: ProvidersOptions = {}
+): ProviderBuilder[] => {
+  const tonConnectOptions = options[WalletTypes.TON_CONNECT];
+  const okxOptions = options[WalletTypes.OKX] ?? {
+    tonConnectManifestUrl: tonConnectOptions?.manifestUrl,
+  };
+
+  const builders: (ProviderBuilder | undefined)[] = [
     safe,
     defaultInjected,
     metamask,
-    walletconnect2,
-    tonconnect,
+    withSetup(
+      WalletTypes.WALLET_CONNECT_2,
+      options[WalletTypes.WALLET_CONNECT_2],
+      (setup) => !!setup.WC_PROJECT_ID,
+      (setup) => () => walletconnect2(setup)
+    ),
+    withSetup(
+      WalletTypes.TON_CONNECT,
+      tonConnectOptions,
+      (setup) => !!setup.manifestUrl,
+      (setup) => () => tonconnect(setup)
+    ),
     phantom,
     ready,
     trustwallet,
@@ -62,15 +116,25 @@ export const allProviders = (): (() => Provider<any>)[] => {
     freighter,
     exodus,
     mathwallet,
-    okx,
+    () => okx(okxOptions),
     tokenPocket,
     tomo,
     taho,
     braavos,
     ledger,
-    ledgerWallet,
+    withSetup(
+      WalletTypes.LEDGER_WALLET,
+      options[WalletTypes.LEDGER_WALLET],
+      (setup) => !!setup.dAppIdentifier && !!setup.apiKey,
+      (setup) => () => ledgerWallet(setup)
+    ),
     rabby,
-    trezor,
+    withSetup(
+      WalletTypes.TREZOR,
+      options[WalletTypes.TREZOR],
+      (setup) => !!setup.manifest,
+      (setup) => () => trezor(setup)
+    ),
     solflare,
     slush,
     unisat,
@@ -78,4 +142,6 @@ export const allProviders = (): (() => Provider<any>)[] => {
     gemwallet,
     noirWallet,
   ];
+
+  return builders.filter((builder): builder is ProviderBuilder => !!builder);
 };

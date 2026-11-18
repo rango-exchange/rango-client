@@ -113,16 +113,27 @@ export function useHubAdapter(params: UseAdapterParams): ProviderContext {
     getStore().subscribe(onStoreEvent).flushEvents();
   }, []);
 
-  // Initialize hub only after blockchain meta is available (e.g. WalletConnect needs it at init).
+  /*
+   * Initialize providers only after blockchain meta is available (e.g. WalletConnect needs it at init).
+   * Providers get their own setup when they're built, so the meta is the only thing passed here.
+   * `Hub.init` only takes args keyed by provider id, so the shared meta is passed to each provider here.
+   * TODO: go back to `getHub().init({ meta })` once hub3js's `Hub.init` accepts args shared by all providers.
+   */
   useEffect(() => {
     if (hubInitiated.current || !params.allBlockChains?.length) {
       return;
     }
 
-    getHub().init(params.configs?.walletOptions);
+    const environments = { meta: params.allBlockChains };
+    getHub()
+      .getAll()
+      .forEach((provider) => {
+        provider.init(environments);
+        provider.getAll().forEach((namespace) => namespace.init());
+      });
     rerender((currentRender) => currentRender + 1);
     hubInitiated.current = true;
-  }, [params.allBlockChains, params.configs?.walletOptions]);
+  }, [params.allBlockChains]);
 
   useAutoConnect({
     autoConnect: params.autoConnect,

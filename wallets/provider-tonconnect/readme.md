@@ -7,7 +7,7 @@ More about implementation status can be found [here](../readme.md).
 ## Implementation notes/limitations
 
 #### ⚠️ Initialization
-You should provide TonConnect configs in configs.walletOptions[WalletTypes.TON_CONNECT] (which equals configs.walletOptions.tonconnect)
+You should pass the TonConnect configs when building the provider: `buildProvider({ manifestUrl })`. With `@rango-dev/provider-all`, pass them as `allProviders({ [WalletTypes.TON_CONNECT]: { manifestUrl } })`.
 
 ### Feature
 

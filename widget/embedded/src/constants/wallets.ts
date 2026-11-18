@@ -7,8 +7,4 @@ export const WALLET_IDS = {
   DEFAULT: 'default',
   WALLET_CONNECT_2: 'wallet-connect-2',
   LEDGER: 'ledger',
-  LEDGER_WALLET: 'ledger-wallet',
-  TREZOR: 'trezor',
-  TON_CONNECT: 'tonconnect',
-  OKX: 'okx',
 } as const;

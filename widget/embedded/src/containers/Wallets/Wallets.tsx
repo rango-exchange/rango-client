@@ -11,7 +11,6 @@ import type { PropsWithChildren } from 'react';
 import { Provider } from '@rango-dev/wallets-react';
 import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
-import { WALLET_IDS } from '../../constants/wallets';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { eventEmitter } from '../../services/eventEmitter';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
@@ -107,31 +106,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
         autoConnect={!!isActiveTab}
         configs={{
           wallets: config.wallets,
-          walletOptions: {
-            [WALLET_IDS.TON_CONNECT]: {
-              provider: { manifestUrl: config.tonConnect?.manifestUrl },
-            },
-            [WALLET_IDS.OKX]: {
-              provider: {
-                tonConnectManifestUrl: config.tonConnect?.manifestUrl,
-              },
-            },
-            [WALLET_IDS.TREZOR]: {
-              provider: { manifest: config.trezorManifest },
-            },
-            [WALLET_IDS.WALLET_CONNECT_2]: {
-              provider: {
-                WC_PROJECT_ID: config.walletConnectProjectId || '',
-                DISABLE_MODAL_AND_OPEN_LINK:
-                  config.__UNSTABLE_OR_INTERNAL__
-                    ?.walletConnectListedDesktopWalletLink,
-                meta: blockchains,
-              },
-            },
-            [WALLET_IDS.LEDGER_WALLET]: {
-              provider: config.ledgerWallet,
-            },
-          },
         }}>
         {props.children}
       </Provider>
