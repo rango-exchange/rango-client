@@ -22,9 +22,15 @@ import createSelectors from './selectors';
 
 export type Mode = 'dark' | 'light' | 'auto';
 
-// Wallets are kept by their ids so the config can be persisted; they're mapped to providers for the widget.
+/*
+ * Wallets are kept by their ids so the config can be persisted; they're mapped to providers for the widget,
+ * built with the setup of the wallets that need it.
+ */
 export type PlaygroundConfig = Omit<WidgetConfig, 'wallets'> & {
   wallets?: string[];
+  walletConnectProjectId?: string;
+  trezorManifest?: { appUrl: string; email: string };
+  tonConnect?: { manifestUrl?: string };
 };
 
 interface ConfigState {
