@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@rango-dev/provider-all": "latest",
     "@rango-dev/widget-embedded": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
