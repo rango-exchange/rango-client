@@ -1,3 +1,4 @@
+import type { AppWidgetConfig } from './providers';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import { Widget } from '@rango-dev/widget-embedded';
@@ -9,13 +10,14 @@ import {
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './constants';
+import { createProviders } from './providers';
 
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
   const configParam = searchParams.get('config');
 
-  let config: WidgetConfig | undefined = undefined;
+  let config: AppWidgetConfig | undefined = undefined;
 
   if (!configRef.current) {
     if (!!configParam) {
@@ -44,7 +46,8 @@ export function App() {
       };
     }
     if (!!config) {
-      configRef.current = config;
+      // Read once: providers hold state and must not be recreated.
+      configRef.current = { ...config, wallets: createProviders(config) };
     }
   }
 
