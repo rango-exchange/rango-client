@@ -2,33 +2,9 @@ import type { DataSlice } from './data';
 import type { SettingsSlice } from './settings';
 import type { WidgetConfig } from '../../types';
 import type { StateCreatorWithInitialData } from '../app';
-import type { Provider } from '@hub3js/core';
-
-import {
-  allProviders as getAllProviders,
-  WalletTypes,
-} from '@rango-dev/provider-all';
 
 import { cacheService } from '../../services/cacheService';
-import {
-  matchAndGenerateProviders,
-  type ProvidersOptions,
-} from '../../utils/providers';
 import { matchTokensFromConfigWithMeta } from '../utils';
-
-function makeProvidersOptionsFromConfig(
-  config: WidgetConfig
-): ProvidersOptions {
-  const options: ProvidersOptions = {
-    walletConnectProjectId: config?.walletConnectProjectId,
-    trezorManifest: config?.trezorManifest,
-    tonConnect: config?.tonConnect,
-    walletConnectListedDesktopWalletLink:
-      config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-  };
-
-  return options;
-}
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
@@ -37,6 +13,7 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   excludeLiquiditySources: true,
   customDestination: true,
   variant: 'default',
+  wallets: [],
 };
 
 interface IframeConfigs {
@@ -74,33 +51,6 @@ export interface ConfigSlice {
     name: K,
     value: IframeConfigs[K]
   ) => void;
-  allProviders: Provider[];
-  buildAndSetProviders: () => void;
-  getAvailableProviders: () => Provider[];
-}
-
-// Wallets whose setup is missing from the config are left out by `allProviders`.
-function generateProviders(config: WidgetConfig): Provider[] {
-  const walletConnectProjectId = config.walletConnectProjectId;
-  const tonConnectManifestUrl = config.tonConnect?.manifestUrl;
-
-  return getAllProviders({
-    [WalletTypes.WALLET_CONNECT_2]: walletConnectProjectId
-      ? {
-          WC_PROJECT_ID: walletConnectProjectId,
-          DISABLE_MODAL_AND_OPEN_LINK:
-            config.__UNSTABLE_OR_INTERNAL__
-              ?.walletConnectListedDesktopWalletLink,
-        }
-      : undefined,
-    [WalletTypes.TON_CONNECT]: tonConnectManifestUrl
-      ? { manifestUrl: tonConnectManifestUrl }
-      : undefined,
-    [WalletTypes.TREZOR]: config.trezorManifest
-      ? { manifest: config.trezorManifest }
-      : undefined,
-    [WalletTypes.LEDGER_WALLET]: config.ledgerWallet,
-  }).map((build) => build());
 }
 
 export const createConfigSlice: StateCreatorWithInitialData<
@@ -112,12 +62,10 @@ export const createConfigSlice: StateCreatorWithInitialData<
     ...DEFAULT_CONFIG,
     ...initialData,
   };
-  const allBuiltProviders = generateProviders(config);
   return {
     config,
     iframe: DEFAULT_IFRAME_CONFIGS,
     campaignMode: DEFAULT_CAMPAIGN_MODE,
-    allProviders: allBuiltProviders,
     getLiquiditySources: () => {
       const { config, campaignMode } = get();
       return campaignMode.liquiditySources?.length
@@ -207,27 +155,6 @@ export const createConfigSlice: StateCreatorWithInitialData<
           [name]: value,
         },
       });
-    },
-
-    buildAndSetProviders: () => {
-      const { config } = get();
-      const allBuiltProviders = generateProviders(config);
-
-      set({
-        allProviders: allBuiltProviders,
-      });
-    },
-
-    getAvailableProviders: () => {
-      const { allProviders, config } = get();
-      const options = makeProvidersOptionsFromConfig(config);
-
-      const availableProviders = matchAndGenerateProviders({
-        allProviders,
-        configWallets: config.wallets,
-        options,
-      });
-      return availableProviders;
     },
   };
 };

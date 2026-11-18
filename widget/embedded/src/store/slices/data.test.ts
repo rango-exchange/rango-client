@@ -20,20 +20,12 @@ let rangoBlockchain: EvmBlockchainMeta;
 
 const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
-  walletConnectProjectId: 'e24844c5deb5193c1c14840a7af6a40b',
+  wallets: [],
   title: undefined,
   multiWallets: true,
   excludeLiquiditySources: true,
   customDestination: true,
   variant: 'default',
-  trezorManifest: {
-    appUrl: 'https://widget.rango.exchange/',
-    email: 'hi+trezorwidget@rango.exchange',
-  },
-  tonConnect: {
-    manifestUrl:
-      'https://raw.githubusercontent.com/rango-exchange/assets/refs/heads/main/manifests/tonconnect/manifest.json',
-  },
 };
 
 beforeEach(() => {
