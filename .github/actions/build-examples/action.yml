@@ -1,5 +1,5 @@
 name: 'Build Examples'
-description: 'Links the current widget embedded package to example projects and builds them'
+description: 'Links the current widget embedded and provider-all packages to example projects and builds them'
 
 runs:
   using: 'composite'
@@ -9,6 +9,7 @@ runs:
       run: |
         echo "::group::🔗 Creating symbolic links for widget and React dependencies"
         yarn link --cwd widget/embedded
+        yarn link --cwd wallets/provider-all
         yarn link --cwd node_modules/react
         yarn link --cwd node_modules/react-dom
         echo "✅ Packages linked successfully"
@@ -59,6 +60,21 @@ runs:
         echo "::endgroup::"
       shell: bash
 
+    # Must run before linking: `yarn add` re-links the whole example, and with the widget
+    # already linked, yarn writes the nested deps of the example's old published widget
+    # (e.g. queue-manager-rango-preset@0.48.0) through the symlink into widget/embedded/node_modules.
+    - name: 📦 Add Vite Plugin Dependencies
+      if: steps.cache-examples.outputs.cache-hit != 'true'
+      run: |
+        echo "::group::📦 Adding vite-plugin-node-polyfills"
+        echo "  📦 Adding to Vite example..."
+        yarn --cwd examples/vite add -D vite-plugin-node-polyfills@0.17.0
+        echo "  📦 Adding to Vue example..."
+        yarn --cwd examples/vue add -D vite-plugin-node-polyfills@0.17.0
+        echo "✅ Vite plugin dependencies added"
+        echo "::endgroup::"
+      shell: bash
+
     - name: 🔗 Link Packages to Examples
       run: |
         echo "::group::🔗 Linking packages to example projects"
@@ -66,6 +82,7 @@ runs:
           if [ -f "$dir/package.json" ]; then
             echo "📂 Linking in: $(basename $dir)"
             yarn --cwd $dir link @rango-dev/widget-embedded
+            yarn --cwd $dir link @rango-dev/provider-all
             yarn --cwd $dir link react
             yarn --cwd $dir link react-dom
           fi
@@ -80,18 +97,6 @@ runs:
         cp -rf scripts/build-examples/vite.config.ts examples/vite
         cp -rf scripts/build-examples/vite.vue.config.ts examples/vue/vite.config.ts
         echo "✅ Vite configurations copied"
-        echo "::endgroup::"
-      shell: bash
-
-    - name: 📦 Add Vite Plugin Dependencies
-      if: steps.cache-examples.outputs.cache-hit != 'true'
-      run: |
-        echo "::group::📦 Adding vite-plugin-node-polyfills"
-        echo "  📦 Adding to Vite example..."
-        yarn --cwd examples/vite add -D vite-plugin-node-polyfills@0.17.0
-        echo "  📦 Adding to Vue example..."
-        yarn --cwd examples/vue add -D vite-plugin-node-polyfills@0.17.0
-        echo "✅ Vite plugin dependencies added"
         echo "::endgroup::"
       shell: bash
 

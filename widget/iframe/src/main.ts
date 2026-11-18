@@ -7,6 +7,29 @@ import {
 } from './styles';
 import { canParse } from './utils';
 
+/*
+ * Wallets can't be passed to an iframe, so they're selected by their ids (e.g. `metamask`);
+ * the widget app creates them, along with the setup of the wallets that need it.
+ */
+type IframeWidgetConfig = Omit<
+  WidgetConfig,
+  'wallets' | '__UNSTABLE_OR_INTERNAL__'
+> & {
+  wallets?: string[];
+  walletConnectProjectId?: string;
+  trezorManifest?: { appUrl: string; email: string };
+  tonConnect?: { manifestUrl?: string };
+  ledgerWallet?: {
+    dAppIdentifier: string;
+    apiKey: string;
+    loggerLevel?: 'fatal' | 'error' | 'warn' | 'info' | 'debug';
+    hideButton?: boolean;
+  };
+  __UNSTABLE_OR_INTERNAL__?: WidgetConfig['__UNSTABLE_OR_INTERNAL__'] & {
+    walletConnectListedDesktopWalletLink?: string;
+  };
+};
+
 // Actual app that will be loaded inside the iframe.
 const WIDGET_URL = 'https://widget.rango.exchange/';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
@@ -37,7 +60,7 @@ export class RangoWidget {
   };
   private options?: Options;
 
-  public init(configuration?: WidgetConfig, options?: string | Options) {
+  public init(configuration?: IframeWidgetConfig, options?: string | Options) {
     /**
      * It was only an string for setting rootId previously, so for backward compatibility we should keep the string yet.
      * Here, we are parsing the value and convert it to an object.
@@ -118,7 +141,7 @@ export class RangoWidget {
   /**
    * Encode configuration object into a string that can be passed as url param.
    */
-  private encode(configuration: WidgetConfig): string {
+  private encode(configuration: IframeWidgetConfig): string {
     const configParams = JSON.stringify(configuration, (key, value) => {
       // Take # out of the url parameters
       if (typeof value === 'string' && value[0] === '#') {
@@ -147,7 +170,7 @@ export class RangoWidget {
   /**
    * Creating an iframe node with desired attributes to load the widget.
    */
-  private createWidget(configuration?: WidgetConfig) {
+  private createWidget(configuration?: IframeWidgetConfig) {
     if (!configuration) {
       throw new Error('Make sure you are passing configurations.');
     }
