@@ -1,4 +1,4 @@
-import type { Provider, WalletType } from '@hub3js/core';
+import type { Provider } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
@@ -172,35 +172,6 @@ export type Routing = Partial<
 > &
   Partial<Record<'maxLength', number>>;
 
-export type TrezorManifest = {
-  appUrl: string;
-  email: string;
-};
-
-/**
- *
- * @property {string} manifestUrl - The URL of the TON Connect [manifest]{@link https://github.com/ton-connect/docs/blob/main/requests-responses.md#app-manifest}, containing the Dapp metadata to be displayed in the user’s wallet.
- *
- */
-export type TonConnectConfig = {
-  manifestUrl?: string;
-};
-
-/**
- * Configuration for the Ledger wallet integration.
- *
- * @property {string} dAppIdentifier - Unique identifier of your dApp, registered with Ledger to authorize the integration.
- * @property {string} apiKey - API key issued by Ledger, used to authenticate requests from your dApp.
- * @property {'fatal' | 'error' | 'warn' | 'info' | 'debug'} [loggerLevel] - Verbosity of the Ledger logger.
- * @property {boolean} [hideButton] - When `true`, hides the built-in Ledger floating button.
- */
-export type LedgerWalletConfig = {
-  dAppIdentifier: string;
-  apiKey: string;
-  loggerLevel?: 'fatal' | 'error' | 'warn' | 'info' | 'debug';
-  hideButton?: boolean;
-};
-
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
@@ -214,17 +185,14 @@ export type LedgerWalletConfig = {
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
  * exchange.It can also used to limit source swap blockchains/tokens to some limited ones.
- * @property {TrezorManifest} trezorManifest - Trezor Connect Manifest requires that you,
- * as a Trezor Connect integrator,share your e-mail and application url.
- * @property {TonConnectConfig} tonConnect - Configuration for the TON Connect provider.
  * @property {BlockchainAndTokenConfig} to - The "to" property is an optional property of type
  * "BlockchainAndTokenConfig" that specifies the default blockchain and token to which the user wants to
  * exchange.It can also used to limit destination swap blockchains/tokens to some limited ones.
  * blockchain during the transaction.
  * @property {string[]} liquiditySources - The `liquiditySources` property is an optional array of
  * strings that specifies the liquidity sources allowed dexes and bridges for the routing
- * @property {(WalletType | Provider)[]} wallets - The wallets the widget should support: wallet ids
- * (e.g. `"metamask"`, `"phantom"`) or hub `Provider`s.
+ * @property {Provider[]} wallets - The hub `Provider`s (from `@hub3js/core`) the widget should support.
+ * The host app creates them (e.g. with `@rango-dev/provider-all`); the widget connects and uses them.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
@@ -266,16 +234,12 @@ export type WidgetConfig = {
   apiKey: string;
   apiUrl?: string;
   title?: string;
-  walletConnectProjectId?: string;
-  trezorManifest?: TrezorManifest;
-  ledgerWallet?: LedgerWalletConfig;
-  tonConnect?: TonConnectConfig;
   affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | Provider)[];
+  wallets: Provider[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
@@ -288,7 +252,6 @@ export type WidgetConfig = {
   signers?: SignersConfig;
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
-    walletConnectListedDesktopWalletLink?: string;
     autoUpdateSettings?: boolean; // If true, settings will be updated automatically based on the configuration.
     campaignTag?: {
       backgroundUrl: string;
