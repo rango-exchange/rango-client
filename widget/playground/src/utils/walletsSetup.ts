@@ -1,9 +1,11 @@
+import type { PlaygroundConfig } from '../store/config';
 import type { ProvidersOptions } from '@rango-dev/provider-all';
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import { WalletTypes } from '@rango-dev/provider-all';
 
-export function getProvidersOptions(config: WidgetConfig): ProvidersOptions {
+export function getProvidersOptions(
+  config: PlaygroundConfig
+): ProvidersOptions {
   return {
     [WalletTypes.WALLET_CONNECT_2]: config.walletConnectProjectId
       ? { WC_PROJECT_ID: config.walletConnectProjectId }
