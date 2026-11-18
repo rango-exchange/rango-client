@@ -6,9 +6,9 @@ import { metadata, WALLET_ID } from './constants.js';
 import { ton } from './namespaces/ton.js';
 import { tonConnect } from './utils.js';
 
-const buildProvider = () =>
+const buildProvider = (environments: Environments) =>
   new ProviderBuilder(WALLET_ID)
-    .init(function (context, environments: Environments) {
+    .init(function (context) {
       const [, setState] = context.state();
 
       if (!environments) {

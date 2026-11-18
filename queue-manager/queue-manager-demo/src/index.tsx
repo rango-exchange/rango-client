@@ -1,20 +1,13 @@
 import type { WalletType } from '@hub3js/core';
 import type { BlockchainMeta } from 'rango-types';
 
-import { allProviders, WalletTypes } from '@rango-dev/provider-all';
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
-import {
-  TON_CONNECT_MANIFEST_URL,
-  TREZOR_MANIFEST,
-  WC_PROJECT_ID,
-} from './configs';
-
-const providers = allProviders().map((build) => build());
+import { providers } from './components/Wallets';
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);
@@ -40,17 +33,6 @@ function AppContainer() {
     <Provider
       providers={providers}
       allBlockChains={blockchains}
-      configs={{
-        walletOptions: {
-          [WalletTypes.WALLET_CONNECT_2]: {
-            provider: { WC_PROJECT_ID, meta: blockchains },
-          },
-          [WalletTypes.TREZOR]: { provider: { manifest: TREZOR_MANIFEST } },
-          [WalletTypes.TON_CONNECT]: {
-            provider: { manifestUrl: TON_CONNECT_MANIFEST_URL },
-          },
-        },
-      }}
       onUpdateState={(type, event, value, coreState) => {
         if (event === Events.ACCOUNTS && coreState.connected) {
           if (coreState.connected) {

@@ -12,9 +12,9 @@ import { tron } from './namespaces/tron.js';
 import { utxo } from './namespaces/utxo.js';
 import { okx as okxInstance } from './utils.js';
 
-const buildProvider = () =>
+const buildProvider = (environments?: Environments) =>
   new ProviderBuilder(WALLET_ID)
-    .init(function (context, environments?: Environments) {
+    .init(function (context) {
       setEnvironments(environments);
       const [, setState] = context.state();
 

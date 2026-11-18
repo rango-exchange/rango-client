@@ -10,9 +10,9 @@ import { evm } from './namespaces/evm.js';
 
 const LEDGER_PROVIDER_NAME = 'Ledger Wallet';
 
-const buildProvider = () =>
+const buildProvider = (environments: Environments) =>
   new ProviderBuilder(WALLET_ID)
-    .init(function (context, environments: Environments) {
+    .init(function (context) {
       const [, setState] = context.state();
 
       const handleAnnounceProvider = (
