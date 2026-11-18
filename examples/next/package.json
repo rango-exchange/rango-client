@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@rango-dev/provider-all": "latest",
     "@rango-dev/widget-embedded": "latest",
     "next": "13.4.4",
     "react": "^18.2.0",

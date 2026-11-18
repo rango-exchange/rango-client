@@ -10,7 +10,7 @@ import {
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
 } from './constants';
-import { createProviders } from './providers';
+import { toWidgetConfig } from './providers';
 
 export function App() {
   const [searchParams] = useSearchParams();
@@ -47,7 +47,7 @@ export function App() {
     }
     if (!!config) {
       // Read once: providers hold state and must not be recreated.
-      configRef.current = { ...config, wallets: createProviders(config) };
+      configRef.current = toWidgetConfig(config);
     }
   }
 
