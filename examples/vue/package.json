@@ -11,6 +11,7 @@
   "dependencies": {
     "veaury": "^2.3.16",
     "vue": "^3.4.21",
+    "@rango-dev/provider-all": "latest",
     "@rango-dev/widget-embedded": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
