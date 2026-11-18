@@ -1,6 +1,5 @@
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { Asset } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
@@ -224,9 +223,8 @@ export type LedgerWalletConfig = {
  * blockchain during the transaction.
  * @property {string[]} liquiditySources - The `liquiditySources` property is an optional array of
  * strings that specifies the liquidity sources allowed dexes and bridges for the routing
- * @property {WalletType[]} wallets - The `wallets` property is an optional array of `WalletType`
- * values that represent the types of wallets that the widget should support. For example, it could
- * include values like `"metamask"`, `"kepler"`, or `"phantom"`.
+ * @property {(WalletType | Provider)[]} wallets - The wallets the widget should support: wallet ids
+ * (e.g. `"metamask"`, `"phantom"`) or hub `Provider`s.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
  * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
@@ -277,11 +275,7 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  /**
-   * Passing a `ProviderInterface` is deprecated. Pass a hub `Provider` instead.
-   * Legacy providers will be removed in future versions.
-   */
-  wallets?: (WalletType | ProviderInterface | Provider)[];
+  wallets?: (WalletType | Provider)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   defaultCustomDestinations?: { [blockchain: string]: string };
@@ -309,12 +303,4 @@ export type WidgetConfig = {
     };
   };
   routing?: Routing;
-};
-
-// TODO: remove this when ProviderInterface gets removed
-export type WidgetConfigWithoutLegacyProviders = WidgetConfig & {
-  wallets?: Exclude<
-    NonNullable<WidgetConfig['wallets']>[number],
-    ProviderInterface
-  >[];
 };
