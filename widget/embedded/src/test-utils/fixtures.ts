@@ -1,9 +1,5 @@
 import type { AppStoreState } from '../store/app';
-import type {
-  Blockchain,
-  TokenHash,
-  WidgetConfigWithoutLegacyProviders,
-} from '../types';
+import type { Blockchain, TokenHash, WidgetConfig } from '../types';
 import type { BlockchainMeta, EvmBlockchainMeta, Token } from 'rango-sdk';
 
 import { faker } from '@faker-js/faker';
@@ -220,7 +216,7 @@ export function createInitialAppStore() {
 
 export function updateAppStoreConfig(
   appStoreState: AppStoreState,
-  config: Partial<WidgetConfigWithoutLegacyProviders>
+  config: Partial<WidgetConfig>
 ): AppStoreState {
   appStoreState.config = {
     ...appStoreState.config,
