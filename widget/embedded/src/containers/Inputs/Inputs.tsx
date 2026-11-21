@@ -17,6 +17,7 @@ import {
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import { useSwapMode } from '../../hooks/useSwapMode';
+import { useModeStrategy } from '../../modes';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { getContainer } from '../../utils/common';
@@ -43,6 +44,7 @@ export function Inputs(props: PropTypes) {
     selectedQuote,
   } = useQuoteStore()();
   const { swapMode } = useSwapMode();
+  const { strategy, context } = useModeStrategy();
   const { connectedWallets, getBalanceFor } = useAppStore();
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
   const fromTokenFormattedBalance =
@@ -86,7 +88,11 @@ export function Inputs(props: PropTypes) {
           onInputBlur={sanitizeInputAmount}
           balance={fromTokenFormattedBalance}
           chain={{
-            displayName: fromBlockchain?.displayName || '',
+            displayName: strategy.chainLabel({
+              ...context,
+              token: fromToken,
+              blockchain: fromBlockchain,
+            }),
             image: fromBlockchain?.logo,
           }}
           token={{
@@ -125,17 +131,21 @@ export function Inputs(props: PropTypes) {
           }}
           anyWalletConnected={connectedWallets.length > 0}
         />
-        {swapMode === 'swap' && <SwitchFromAndToButton />}
+        {swapMode !== 'refuel' && <SwitchFromAndToButton />}
       </FromContainer>
       <SwapInput
-        selectionType={swapMode === 'swap' ? 'token' : 'chain'}
+        selectionType={swapMode !== 'refuel' ? 'token' : 'chain'}
         sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
         label={i18n.t('To')}
         mode="To"
         id="widget-swap-to-input"
         fetchingQuote={fetchingQuote}
         chain={{
-          displayName: toBlockchain?.displayName || '',
+          displayName: strategy.chainLabel({
+            ...context,
+            token: toToken,
+            blockchain: toBlockchain,
+          }),
           image: toBlockchain?.logo,
         }}
         token={{
