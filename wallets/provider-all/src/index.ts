@@ -9,7 +9,6 @@ import { buildProvider as coinbase } from '@rango-dev/provider-coinbase';
 import { buildProvider as defaultInjected } from '@rango-dev/provider-default';
 import { buildProvider as enkrypt } from '@rango-dev/provider-enkrypt';
 import { buildProvider as exodus } from '@rango-dev/provider-exodus';
-import { buildProvider as freighter } from '@rango-dev/provider-freighter';
 import { buildProvider as gemwallet } from '@rango-dev/provider-gemwallet';
 import { buildProvider as ledger } from '@rango-dev/provider-ledger';
 import { buildProvider as ledgerWallet } from '@rango-dev/provider-ledger-wallet';
@@ -32,6 +31,7 @@ import { buildProvider as trezor } from '@rango-dev/provider-trezor';
 import { buildProvider as tronLink } from '@rango-dev/provider-tron-link';
 import { buildProvider as trustwallet } from '@rango-dev/provider-trustwallet';
 import { buildProvider as unisat } from '@rango-dev/provider-unisat';
+import { buildProvider as varial } from '@rango-dev/provider-varial';
 import { buildProvider as vultisig } from '@rango-dev/provider-vultisig';
 import { buildProvider as walletconnect2 } from '@rango-dev/provider-walletconnect-2';
 import { buildProvider as xverse } from '@rango-dev/provider-xverse';
@@ -59,7 +59,7 @@ export const allProviders = (): (() => Provider<any>)[] => {
     brave,
     coin98,
     coinbase,
-    freighter,
+    varial,
     exodus,
     mathwallet,
     okx,
