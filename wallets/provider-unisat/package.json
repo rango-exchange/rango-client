@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@rango-dev/internal-blockchains": "^0.3.1-next.1",
-    "bitcoinjs-lib": "^6.1.7",
+    "bitcoinjs-lib": "^6.1.8",
     "caip": "^1.1.1",
     "rango-types": "^0.6.0"
   },
