@@ -45,15 +45,17 @@ export class TabManager implements TabManagerInterface {
   };
 
   /**
-   * remove event listeners
+   * release the tab and remove event listeners
    */
   destroy = () => {
+    this.release();
     this.channel.removeEventListener('message', this.handleMessageEvent);
     document.removeEventListener(
       'visibilitychange',
       this.handleVisibilityChange
     );
     document.removeEventListener('resume', this.handleResume);
+    window.removeEventListener('pagehide', this.release);
   };
 
   /**
@@ -74,6 +76,8 @@ export class TabManager implements TabManagerInterface {
      * https://developer.chrome.com/docs/web-platform/page-lifecycle-api
      */
     document.addEventListener('resume', this.handleResume);
+
+    window.addEventListener('pagehide', this.release);
   }
 
   /**
@@ -87,8 +91,12 @@ export class TabManager implements TabManagerInterface {
    *    and eventually all of them will `claim` the queue after the TIMEOUT.
    *    For avoiding this, we will accepts the oldest broadcasted ping. (`isPingSentBefore`)
    */
-  private claimedByCurrentTab(pingAt: number) {
-    const isPingSentBefore = this.lastTryClaim && this.lastTryClaim < pingAt;
+  private claimedByCurrentTab(pingAt: number, candidateId: ID) {
+    // Tabs pinging in the same millisecond (e.g. all receiving one `release`) are ordered by their id.
+    const isPingSentBefore =
+      !!this.lastTryClaim &&
+      (this.lastTryClaim < pingAt ||
+        (this.lastTryClaim === pingAt && this.tabId < candidateId));
 
     if (this.isClaimed() || isPingSentBefore) {
       const message: Message = {
@@ -104,7 +112,7 @@ export class TabManager implements TabManagerInterface {
 
     switch (name) {
       case 'ping':
-        this.claimedByCurrentTab(event.data.pingAt);
+        this.claimedByCurrentTab(event.data.pingAt, event.data.candidateId);
         break;
 
       case 'pong':
@@ -121,6 +129,12 @@ export class TabManager implements TabManagerInterface {
         }
         break;
 
+      case 'release':
+        if (document.visibilityState === 'visible') {
+          void this.tryClaim();
+        }
+        break;
+
       default:
         throw new Error(`${name} is not supported.`);
     }
@@ -129,6 +143,19 @@ export class TabManager implements TabManagerInterface {
   private handleVisibilityChange = async () => {
     if (document.visibilityState === 'visible') {
       await this.tryClaim();
+    }
+  };
+
+  /**
+   * Visible tabs only claim on `visibilitychange`, which doesn't fire when the active tab is closed
+   * or the widget unmounts while they stay in view, so the active tab tells them it's gone.
+   */
+  private release = () => {
+    if (this.isClaimed()) {
+      this.state = 'not-claimed';
+      this.events.onRelease?.();
+      const message: Message = { name: 'release' };
+      this.channel.postMessage(message);
     }
   };
 
@@ -196,6 +223,7 @@ export class TabManager implements TabManagerInterface {
     const message: Message = {
       name: 'ping',
       pingAt: this.lastTryClaim,
+      candidateId: this.tabId,
     };
     this.channel.postMessage(message);
   }
