@@ -42,6 +42,12 @@ export const getUsdValue = (
     ? new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0)
     : null;
 
+/**
+ * Only meaningful in `stocks` mode.
+ * buy: crypto -> stock, sell: stock -> crypto
+ */
+export type TradeDirection = 'buy' | 'sell';
+
 export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 
 export type SetTokenParams =
@@ -81,6 +87,7 @@ export interface QuoteState {
   customDestination: string | null;
   error: QuoteError | null;
   warning: QuoteWarning | null;
+  tradeDirection: TradeDirection;
   resetQuote: () => void;
   resetAlerts: () => void;
 
@@ -104,6 +111,7 @@ export interface QuoteState {
   setCustomDestination: (address: string | null) => void;
   resetQuoteWallets: () => void;
   setQuoteWarningsConfirmed: (flag: boolean) => void;
+  setTradeDirection: (direction: TradeDirection) => void;
 }
 
 const initializer: StateCreator<
@@ -137,6 +145,7 @@ const initializer: StateCreator<
   selectedWallets: [],
   customDestination: null,
   quoteWarningsConfirmed: false,
+  tradeDirection: 'buy',
   updateQuotePartialState: (key, value) =>
     set((state) => ({
       ...state,
@@ -294,6 +303,7 @@ const initializer: StateCreator<
       inputUsdValue: state.toToken
         ? getUsdValue(state.toToken, state.outputAmount?.toString() || '')
         : new BigNumber(0),
+      tradeDirection: state.tradeDirection === 'buy' ? 'sell' : 'buy',
     })),
   resetFromBlockchain: () =>
     set(() => ({
@@ -326,6 +336,7 @@ const initializer: StateCreator<
       customDestination: null,
     }),
   setQuoteWarningsConfirmed: (flag) => set({ quoteWarningsConfirmed: flag }),
+  setTradeDirection: (direction) => set({ tradeDirection: direction }),
 });
 
 const createSwapQuoteSelectors = create<QuoteState>()(
@@ -336,15 +347,22 @@ const createRefuelQuoteSelectors = create<QuoteState>()(
 );
 
 export const useSwapQuoteStore = createSelectors(createSwapQuoteSelectors);
+const createStocksQuoteSelectors = create<QuoteState>()(
+  subscribeWithSelector(initializer)
+);
+
 export const useRefuelQuoteStore = createSelectors(createRefuelQuoteSelectors);
+export const useStocksQuoteStore = createSelectors(createStocksQuoteSelectors);
+
+const quoteStoresByMode = {
+  swap: createSwapQuoteSelectors,
+  refuel: createRefuelQuoteSelectors,
+  stocks: createStocksQuoteSelectors,
+};
 
 export function useQuoteStore() {
   const { swapMode } = useSwapMode();
-  return createSelectors(
-    swapMode === 'refuel'
-      ? createRefuelQuoteSelectors
-      : createSwapQuoteSelectors
-  );
+  return createSelectors(quoteStoresByMode[swapMode]);
 }
 
 const subscribeCallback = (
@@ -406,3 +424,5 @@ export const unsubscribeSwapQuoteStore =
   useSwapQuoteStore.subscribe(subscribeCallback);
 export const unsubscribeRefuelQuoteStore =
   useRefuelQuoteStore.subscribe(subscribeCallback);
+export const unsubscribeStocksQuoteStore =
+  useStocksQuoteStore.subscribe(subscribeCallback);

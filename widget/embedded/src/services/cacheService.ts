@@ -1,3 +1,4 @@
+import type { StocksToken } from '../types';
 import type { Token } from 'rango-sdk';
 
 interface CacheServiceInterface<V> {
@@ -30,6 +31,9 @@ class CacheService<T> implements CacheServiceInterface<T> {
 export type CachedEntries = {
   supportedSourceTokens: Token[];
   supportedDestinationTokens: Token[];
+  stocksCryptoTokens: StocksToken[];
+  stocksAssetTokens: StocksToken[];
+  stocksTokensByHash: Map<string, StocksToken>;
 };
 
 export const cacheService = new CacheService<CachedEntries>();

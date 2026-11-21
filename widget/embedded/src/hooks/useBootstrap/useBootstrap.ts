@@ -12,6 +12,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import {
   unsubscribeRefuelQuoteStore,
+  unsubscribeStocksQuoteStore,
   unsubscribeSwapQuoteStore,
 } from '../../store/quote';
 import { tabManager, useUiStore } from '../../store/ui';
@@ -36,6 +37,7 @@ export function useBootstrap() {
   // Unsubscribe QuoteStore listeners
   useEffect(() => () => unsubscribeSwapQuoteStore(), []);
   useEffect(() => () => unsubscribeRefuelQuoteStore(), []);
+  useEffect(() => () => unsubscribeStocksQuoteStore(), []);
 
   const isActiveTab = useUiStore.use.isActiveTab();
 

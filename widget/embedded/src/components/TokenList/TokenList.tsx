@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { PropTypes, RenderDescProps, TokenData } from './TokenList.types';
+import type {
+  PropTypes,
+  RenderDescProps,
+  TokenData,
+  TokenListHeader,
+  TokenListRow,
+} from './TokenList.types';
+import type { TokenItemTag } from '../../modes';
 
 import { i18n } from '@lingui/core';
 import {
@@ -32,6 +39,8 @@ import { ImportCustomToken } from '../ImportCustomToken';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
+  bridgeTagStyles,
+  bridgeTagTitleStyles,
   Container,
   descriptionStyles,
   End,
@@ -39,6 +48,7 @@ import {
   List,
   ListItemContainer,
   Pin,
+  SectionHeader,
   StyledLink,
   StyledListItemButton,
   Tag,
@@ -53,16 +63,32 @@ import {
 } from './TokenList.styles';
 
 const PAGE_SIZE = 20;
+// Names set by the mode (e.g. issuer · liquidity in stocks) are longer than token names.
+const WIDE_NAME_MAX_WIDTH = 200;
+
+const isHeaderRow = (row: TokenListRow | undefined): row is TokenListHeader =>
+  typeof row === 'object' && 'kind' in row && row.kind === 'header';
 
 const renderDesc = (props: RenderDescProps) => {
-  const { address, name, url, token, customCssForTag, customCssForTagTitle } =
-    props;
+  const {
+    address,
+    name,
+    wideName,
+    url,
+    token,
+    customCssForTag,
+    customCssForTagTitle,
+  } = props;
   const length = address.length;
 
   return (
     <div className={descriptionStyles()}>
       {name ? (
-        <div className={tokenNameStyles()}>{name}</div>
+        <div
+          className={tokenNameStyles()}
+          style={wideName ? { maxWidth: WIDE_NAME_MAX_WIDTH } : undefined}>
+          {name}
+        </div>
       ) : (
         <Title className={tokenTitleStyles()}>
           <Typography variant="title" size="xmedium">
@@ -109,7 +135,9 @@ export function TokenList(props: PropTypes) {
     action,
     type,
     showWarning = true,
+    getItemOverrides,
   } = props;
+  const hasTokens = tokens.some((row) => !isHeaderRow(row));
 
   const fetchStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
@@ -202,6 +230,15 @@ export function TokenList(props: PropTypes) {
         }}
         itemContent={(index) => {
           const token = tokens[index];
+          if (isHeaderRow(token)) {
+            return (
+              <SectionHeader>
+                <Typography variant="label" size="medium" color="neutral700">
+                  {token.title}
+                </Typography>
+              </SectionHeader>
+            );
+          }
           if (token === 'skeleton') {
             return (
               <ListItem
@@ -258,8 +295,35 @@ export function TokenList(props: PropTypes) {
 
           const handleClick = () => {
             if (typeof token !== 'string' && !token.customToken) {
-              onChange?.(token);
+              const { sectionId, ...selectedToken } = token;
+              onChange?.(selectedToken);
             }
+          };
+
+          const overrides = getItemOverrides?.(token) ?? null;
+          // e.g. issuer in stocks mode, it is replaced by the contract address on hover like the token name.
+          const name = overrides?.name || token.name;
+          const tags: TokenItemTag[] = overrides?.tags ?? [
+            { label: token.blockchain, variant: 'blockchain' },
+          ];
+          const renderTag = (tag: TokenItemTag) => {
+            const isBridge = tag.variant === 'bridge';
+            return (
+              <React.Fragment key={tag.label}>
+                <Divider direction="horizontal" size={4} />
+                <Tag
+                  className={isBridge ? bridgeTagStyles() : undefined}
+                  css={isBridge ? undefined : customCssForTag}>
+                  <TagTitle
+                    variant="body"
+                    size="xsmall"
+                    className={isBridge ? bridgeTagTitleStyles() : undefined}
+                    css={isBridge ? undefined : customCssForTagTitle}>
+                    {tag.label}
+                  </TagTitle>
+                </Tag>
+              </React.Fragment>
+            );
           };
 
           const url = address
@@ -299,20 +363,12 @@ export function TokenList(props: PropTypes) {
                   </ImageSection>
                 }
                 title={
-                  !!token.name || (!token.name && !address) ? (
+                  !!name || (!name && !address) ? (
                     <Title>
                       <Typography variant="title" size="xmedium">
                         {token.symbol}
                       </Typography>
-                      <Divider direction="horizontal" size={4} />
-                      <Tag css={customCssForTag}>
-                        <TagTitle
-                          variant="body"
-                          size="xsmall"
-                          css={customCssForTagTitle}>
-                          {token.blockchain}
-                        </TagTitle>
-                      </Tag>
+                      {tags.map(renderTag)}
                       {showWarning && token.warning && (
                         <>
                           <Divider direction="horizontal" size={4} />
@@ -332,15 +388,28 @@ export function TokenList(props: PropTypes) {
                         token,
                         customCssForTag,
                         customCssForTagTitle,
-                        name: token.name,
+                        name,
+                        wideName: !!overrides?.name,
                         url,
                       })
-                    : token.name || undefined
+                    : name || undefined
                 }
                 end={endRenderer(token)}
               />
             </ListItemContainer>
           );
+        }}
+        computeItemKey={(index) => {
+          const row = tokens[index];
+          if (isHeaderRow(row)) {
+            return `header-${row.id}`;
+          }
+          if (!row || row === 'skeleton') {
+            return `skeleton-${index}`;
+          }
+          return `${row.sectionId ?? ''}-${row.blockchain}-${row.symbol}-${
+            row.address ?? ''
+          }`;
         }}
         totalCount={tokens.length}
         key={`${selectedBlockchain}-${searchedFor}`}
@@ -367,7 +436,7 @@ export function TokenList(props: PropTypes) {
         <Divider size={4} />
         {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
         {fetchStatus === 'success' &&
-          (tokens.length ? (
+          (hasTokens ? (
             <>
               <ImportCustomToken
                 token={customToken}

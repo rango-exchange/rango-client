@@ -123,7 +123,8 @@ export function useConfirmSwap(): ConfirmSwap {
           settings: swapSettings,
           validateBalanceOrFee: proceedAnyway ? false : true,
           meta: { blockchains, tokens },
-          swapMode,
+          // Queue manager only knows swap and refuel; stocks swaps are regular swaps.
+          swapMode: swapMode === 'refuel' ? 'refuel' : 'swap',
         });
 
         return {

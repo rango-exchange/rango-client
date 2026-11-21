@@ -2,12 +2,15 @@ import type { Asset } from 'rango-sdk';
 
 import { useEffect, useRef } from 'react';
 
+import { getDefaultStocksToken, getInitialTradeDirection } from '../modes';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import {
   isBlockchainExcludedInConfig,
   isTokenExcludedInConfig,
 } from '../utils/configs';
+
+import { useSwapMode } from './useSwapMode';
 
 export function useSyncStoresWithConfig() {
   const {
@@ -21,9 +24,13 @@ export function useSyncStoresWithConfig() {
     toToken,
     fromBlockchain,
     toBlockchain,
+    setTradeDirection,
+    tradeDirection,
   } = useQuoteStore()();
+  const { swapMode } = useSwapMode();
 
-  const config = useAppStore().config;
+  const appStore = useAppStore();
+  const config = appStore.config;
   const fetchMetaStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const { findToken } = useAppStore();
@@ -125,6 +132,60 @@ export function useSyncStoresWithConfig() {
     config?.to?.blockchain,
     fetchMetaStatus,
   ]);
+
+  const stocksConfig = config.__UNSTABLE_OR_INTERNAL__?.stocks;
+  const prevStocksTicker = useRef(stocksConfig?.ticker);
+
+  // Initial direction comes from the config; after that it is changed only by the switch button.
+  useEffect(() => {
+    if (swapMode !== 'stocks' || fetchMetaStatus !== 'success') {
+      return;
+    }
+    const direction = getInitialTradeDirection(appStore, config.from?.token);
+    setTradeDirection(direction);
+
+    // On buy, the ticker's stock is preselected as destination unless the host passed one.
+    if (direction === 'buy' && !config.to?.token) {
+      const defaultStocksToken = getDefaultStocksToken(appStore);
+      if (defaultStocksToken) {
+        setToToken({ token: defaultStocksToken, meta: { blockchains } });
+      }
+    }
+  }, [
+    swapMode,
+    fetchMetaStatus,
+    config?.from?.token?.symbol,
+    config?.from?.token?.address,
+    config?.from?.token?.blockchain,
+  ]);
+
+  /*
+   * When the host changes the ticker, the current direction is kept
+   * and the new ticker's stock replaces the stock on its side (destination on buy, source on sell).
+   */
+  useEffect(() => {
+    const ticker = stocksConfig?.ticker;
+    const tickerChanged = prevStocksTicker.current !== ticker;
+    prevStocksTicker.current = ticker;
+
+    if (
+      !tickerChanged ||
+      swapMode !== 'stocks' ||
+      fetchMetaStatus !== 'success'
+    ) {
+      return;
+    }
+
+    const defaultStocksToken = getDefaultStocksToken(appStore);
+    if (!defaultStocksToken) {
+      return;
+    }
+    if (tradeDirection === 'sell') {
+      setFromToken({ token: defaultStocksToken, meta: { blockchains } });
+    } else {
+      setToToken({ token: defaultStocksToken, meta: { blockchains } });
+    }
+  }, [stocksConfig?.ticker]);
 
   useEffect(() => {
     setAffiliateRef(config?.affiliate?.ref ?? null);

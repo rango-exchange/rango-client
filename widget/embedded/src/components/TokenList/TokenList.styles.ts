@@ -129,6 +129,23 @@ export const Tag = styled('div', {
 
 export const TagTitle = styled(Typography, {});
 
+export const bridgeTagStyles = css({
+  $$color: '$colors$success100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$success700',
+  },
+  backgroundColor: '$$color',
+});
+
+export const bridgeTagTitleStyles = css({
+  color: '$success500',
+});
+
+export const SectionHeader = styled('div', {
+  padding: '$15 0 $5',
+  color: '$neutral700',
+});
+
 export const BalanceContainer = styled('div', {
   textAlign: 'right',
   width: '100%',
