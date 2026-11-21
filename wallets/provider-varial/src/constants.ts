@@ -4,24 +4,24 @@ import { isStellarNamespace } from '@hub3js/stellar';
 
 import getSigners from './signer.js';
 
-export const WALLET_ID = 'frighter';
+export const WALLET_ID = 'varial';
 export const HORIZON_URL = 'https://horizon.stellar.org';
 export const RPC_URL = 'https://mainnet.sorobanrpc.com';
 export const NETWORK_PASSPHRASE =
   'Public Global Stellar Network ; September 2015';
-// The code of Freighter's `FreighterApiDeclinedError`.
-export const FREIGHTER_DECLINED_ERROR_CODE = -4;
+// The code of Varial's `FreighterApiDeclinedError` (the SDK still uses the Freighter name internally).
+export const VARIAL_DECLINED_ERROR_CODE = -4;
 
 export const metadata: ProviderMetadata = {
-  name: 'Freighter',
-  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/freighter/icon.svg',
+  name: 'Varial',
+  icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/varial/icon.svg',
   extensions: {
     chrome:
       'https://chromewebstore.google.com/detail/freighter/bcacfldlkkdogcmkkibnjlakofdplcbk',
     firefox: 'https://addons.mozilla.org/en-US/firefox/addon/freighter/',
     brave:
       'https://chromewebstore.google.com/detail/freighter/bcacfldlkkdogcmkkibnjlakofdplcbk',
-    homepage: 'https://www.freighter.app/',
+    homepage: 'https://varialwallet.com/',
   },
   properties: [
     {

@@ -161,7 +161,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [GemWallet](provider-gemwallet/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
 | [Vultisig](provider-vultisig/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [TonConnect](provider-tonconnect/readme.md)         | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
-| [Freighter](provider-freighter/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
+| [Varial](provider-varial/readme.md)                 | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Safe](provider-safe/readme.md)                     | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Noir Wallet](provider-noir-wallet/readme.md)       | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
@@ -200,7 +200,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | GemWallet     | ✅             | ❌             | ⚠️           | Injected                  | ❌            |
 | Vultisig      | ❌             | ❌             | ✅           | Injected                  | ❌            |
 | TonConnect    | ❌             | ❌             | ✅           | TonConnect                | ❌            |
-| Freighter     | ✅             | ❌             | ✅           | Injected                  | ✅            |
+| Varial        | ✅             | ❌             | ✅           | Injected                  | ✅            |
 | Trezor        | ❌             | ❌             | ❌           | Transport                 | ✅            |
 | Safe          | ⚠️             | ⚠️             | ✅           | Safe App                  | ✅            |
 | Noir Wallet   | ✅             | ❌             | ✅           | Injected                  | ❌            |
