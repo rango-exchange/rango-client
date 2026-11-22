@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-varial",
+  "name": "@rango-dev/provider-freighter",
   "version": "0.6.1-next.1",
   "license": "MIT",
   "type": "module",
@@ -22,8 +22,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@stellar/varial-sdk": "^7.0.0",
     "@stellar/stellar-sdk": "^15.0.1",
+    "@stellar/varial-sdk": "^7.0.0",
     "rango-types": "^0.6.0"
   },
   "devDependencies": {

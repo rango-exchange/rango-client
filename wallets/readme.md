@@ -161,7 +161,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | [GemWallet](provider-gemwallet/readme.md)           | ❌  | ❌   | ❌     | ❌  | ❌   | ✅  | ❌       | ❌      |
 | [Vultisig](provider-vultisig/readme.md)             | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [TonConnect](provider-tonconnect/readme.md)         | ❌  | ❌   | ❌     | ✅  | ❌   | ❌  | ❌       | ❌      |
-| [Varial](provider-varial/readme.md)                 | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
+| [Varial](provider-freighter/readme.md)              | ❌  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ✅      |
 | [Trezor](provider-trezor/readme.md)                 | ⚠️  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Safe](provider-safe/readme.md)                     | ✅  | ❌   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |
 | [Noir Wallet](provider-noir-wallet/readme.md)       | ❌  | ⚠️   | ❌     | ❌  | ❌   | ❌  | ❌       | ❌      |

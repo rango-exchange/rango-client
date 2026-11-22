@@ -7,6 +7,7 @@ import { WALLET_ID as COINBASE } from '@rango-dev/provider-coinbase';
 import { WALLET_ID as DEFAULT } from '@rango-dev/provider-default';
 import { WALLET_ID as ENKRYPT } from '@rango-dev/provider-enkrypt';
 import { WALLET_ID as EXODUS } from '@rango-dev/provider-exodus';
+import { WALLET_ID as FREIGHTER } from '@rango-dev/provider-freighter';
 import { WALLET_ID as GEMWALLET } from '@rango-dev/provider-gemwallet';
 import { WALLET_ID as LEDGER } from '@rango-dev/provider-ledger';
 import { WALLET_ID as LEDGER_WALLET } from '@rango-dev/provider-ledger-wallet';
@@ -29,7 +30,6 @@ import { WALLET_ID as TREZOR } from '@rango-dev/provider-trezor';
 import { WALLET_ID as TRON_LINK } from '@rango-dev/provider-tron-link';
 import { WALLET_ID as TRUST_WALLET } from '@rango-dev/provider-trustwallet';
 import { WALLET_ID as UNISAT } from '@rango-dev/provider-unisat';
-import { WALLET_ID as VARIAL } from '@rango-dev/provider-varial';
 import { WALLET_ID as VULTISIG } from '@rango-dev/provider-vultisig';
 import { WALLET_ID as WALLET_CONNECT_2 } from '@rango-dev/provider-walletconnect-2';
 import { WALLET_ID as XVERSE } from '@rango-dev/provider-xverse';
@@ -65,7 +65,7 @@ export const WalletTypes = {
   SLUSH,
   TON_CONNECT,
   XVERSE,
-  VARIAL,
+  FREIGHTER,
   GEMWALLET,
   NOIR_WALLET,
   UNISAT,

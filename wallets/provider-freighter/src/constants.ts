@@ -4,7 +4,7 @@ import { isStellarNamespace } from '@hub3js/stellar';
 
 import getSigners from './signer.js';
 
-export const WALLET_ID = 'varial';
+export const WALLET_ID = 'frighter';
 export const HORIZON_URL = 'https://horizon.stellar.org';
 export const RPC_URL = 'https://mainnet.sorobanrpc.com';
 export const NETWORK_PASSPHRASE =
