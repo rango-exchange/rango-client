@@ -15,6 +15,8 @@ export const SYNC_POLLING_INTERVAL = 5_000;
 
 export type QueueStorage = Record<string, unknown>;
 
+export type TaskPayload = Record<string, unknown>;
+
 export type QueueType = Queue;
 
 export interface PersistedQueue {
