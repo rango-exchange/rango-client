@@ -17,10 +17,10 @@ export const metadata: ProviderMetadata = {
   icon: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/varial/icon.svg',
   extensions: {
     chrome:
-      'https://chromewebstore.google.com/detail/freighter/bcacfldlkkdogcmkkibnjlakofdplcbk',
+      'https://chromewebstore.google.com/detail/varial-wallet/bcacfldlkkdogcmkkibnjlakofdplcbk',
     firefox: 'https://addons.mozilla.org/en-US/firefox/addon/freighter/',
     brave:
-      'https://chromewebstore.google.com/detail/freighter/bcacfldlkkdogcmkkibnjlakofdplcbk',
+      'https://chromewebstore.google.com/detail/varial-wallet/bcacfldlkkdogcmkkibnjlakofdplcbk',
     homepage: 'https://varialwallet.com/',
   },
   properties: [
