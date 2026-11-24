@@ -37,6 +37,11 @@ export function MultiSelect(props: MuliSelectPropTypes) {
   const noneSelected = !valueAll && !value.length;
   const hasValue = !valueAll;
   const showMore = hasValue && value.length > MAX_CHIPS;
+  // Values are ids (e.g. a wallet id), which can differ from the display name.
+  const getChipLabel = (selected: string) =>
+    props.type === 'Tokens'
+      ? selected
+      : props.list.find((item) => item.name === selected)?.title ?? selected;
   const onBack = () => setShowNextModal(false);
   const onOpenNextModal = () => {
     if (!disabled) {
@@ -60,7 +65,9 @@ export function MultiSelect(props: MuliSelectPropTypes) {
             {valueAll && <Chip label={`All ${type}`} />}
             {noneSelected && <Chip label="None Selected" />}
             {hasValue &&
-              value.slice(0, MAX_CHIPS).map((v) => <Chip key={v} label={v} />)}
+              value
+                .slice(0, MAX_CHIPS)
+                .map((v) => <Chip key={v} label={getChipLabel(v)} />)}
             {showMore && (
               <Chip label={`+${value.length - MAX_CHIPS}`} variant="outlined" />
             )}
