@@ -14,9 +14,20 @@
   },
   "packageRules": [
     {
-      "description": "One weekly PR for all stable minor/patch updates",
+      "description": "One weekly PR for all stable minor/patch updates. Packages needing approval are excluded: one approval-only member would block the whole group",
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
+      "matchPackageNames": [
+        "!@ledgerhq/**",
+        "!@walletconnect/**",
+        "!@reown/**",
+        "!viem",
+        "!ox",
+        "!@mysten/**",
+        "!valibot",
+        "!react-refresh",
+        "!@types/node"
+      ],
       "groupName": "non-major dependencies",
       "groupSlug": "non-major"
     },
@@ -43,6 +54,18 @@
       ],
       "dependencyDashboardApproval": true,
       "addLabels": ["patched-package"]
+    },
+    {
+      "description": "Sui packages share types and must move together",
+      "matchPackageNames": ["@mysten/**"],
+      "groupName": "mysten",
+      "groupSlug": "mysten"
+    },
+    {
+      "description": "Pinned on purpose in root resolutions: bump only on approval",
+      "matchPackageNames": ["valibot", "react-refresh", "@types/node"],
+      "dependencyDashboardApproval": true,
+      "addLabels": ["pinned-resolution"]
     },
     {
       "description": "GitHub Actions: pin to digests, monthly",
