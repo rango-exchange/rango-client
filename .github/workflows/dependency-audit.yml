@@ -1,0 +1,21 @@
+name: Dependency audit
+
+# Independent weekly scan of yarn.lock against the OSV database.
+# Results go to Security > Code scanning; the run fails when anything is found.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  osv-scan:
+    # v2.7.1
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@32d3cd482bdadfb38b186c0ad1b031902d55d932
+    with:
+      scan-args: |-
+        --lockfile=yarn.lock

@@ -1,0 +1,42 @@
+# Dependabot version updates (security updates are enabled in repo settings).
+# Mirrors renovate.json so the two bots can be compared on this fork.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: UTC
+    open-pull-requests-limit: 5
+    labels: ['dependencies']
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope
+    ignore:
+      # Majors are reviewed manually; to verify on the fork: does this also
+      # suppress security PRs whose only fix is a major?
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      ledger:
+        patterns: ['@ledgerhq/*']
+      non-major:
+        update-types: ['minor', 'patch']
+        patterns: ['*']
+        exclude-patterns:
+          - '@ledgerhq/*'
+          - '@walletconnect/*'
+          - '@reown/*'
+          - 'viem'
+          - 'ox'
+
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns: ['*']

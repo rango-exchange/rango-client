@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits"],
+  "timezone": "UTC",
+  "schedule": ["at any time"],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 10,
+  "labels": ["dependencies"],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"],
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "One weekly PR for all stable minor/patch updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "groupName": "non-major dependencies",
+      "groupSlug": "non-major"
+    },
+    {
+      "description": "Majors wait for approval on the Dependency Dashboard",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "addLabels": ["major-upgrade"]
+    },
+    {
+      "description": "Ledger packages pin exact peers and must move together",
+      "matchPackageNames": ["@ledgerhq/**"],
+      "groupName": "ledger",
+      "groupSlug": "ledger"
+    },
+    {
+      "description": "Packages patched in /patches: bump only on approval, then regenerate the patch",
+      "matchPackageNames": [
+        "@ledgerhq/**",
+        "@walletconnect/**",
+        "@reown/**",
+        "viem",
+        "ox"
+      ],
+      "dependencyDashboardApproval": true,
+      "addLabels": ["patched-package"]
+    },
+    {
+      "description": "GitHub Actions: pin to digests, monthly",
+      "matchManagers": ["github-actions"],
+      "pinDigests": true,
+      "groupName": "github actions"
+    }
+  ]
+}
