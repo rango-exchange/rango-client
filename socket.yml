@@ -1,0 +1,5 @@
+version: 2
+
+# Example apps are not shipped; keep their dependencies out of Socket alerts.
+projectIgnorePaths:
+  - "examples/**"
