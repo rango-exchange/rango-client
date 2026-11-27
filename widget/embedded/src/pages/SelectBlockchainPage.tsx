@@ -14,6 +14,7 @@ import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSwapMode } from '../hooks/useSwapMode';
+import { useModeStrategy } from '../modes';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { UiEventTypes } from '../types';
@@ -37,9 +38,11 @@ export function SelectBlockchainPage(props: PropTypes) {
   const navigate = useNavigate();
   const { swapMode } = useSwapMode();
 
-  const blockchains = useAppStore().blockchains({
-    type,
-  });
+  const { strategy, context } = useModeStrategy();
+  const blockchains =
+    type === 'custom-token'
+      ? context.store.blockchains({ type })
+      : strategy.blockchains({ ...context, type });
   const tokens = useAppStore().tokens();
   const filteredBlockchains = useMemo(
     () => filterBlockchainsWithAtLeastOneToken(blockchains, tokens),
@@ -64,7 +67,7 @@ export function SelectBlockchainPage(props: PropTypes) {
       if (type === 'source') {
         setFromBlockchain(blockchain);
       } else {
-        if (swapMode === 'swap') {
+        if (swapMode !== 'refuel') {
           setToBlockchain(blockchain);
         } else {
           const blockchainNativeToken = findNativeToken(blockchain);

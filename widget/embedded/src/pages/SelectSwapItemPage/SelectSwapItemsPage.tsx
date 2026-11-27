@@ -12,12 +12,13 @@ import { TokenList } from '../../components/TokenList';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useSearchCustomTokens } from '../../hooks/useSearchCustomTokens';
-import { useAppStore } from '../../store/AppStore';
+import { useModeStrategy } from '../../modes';
 import { useQuoteStore } from '../../store/quote';
 import { UiEventTypes } from '../../types';
 import { emitUiEvent } from '../../utils/events';
 
 import {
+  flattenTokenSections,
   getTokenSelectionMethod,
   prepareTokensList,
   shouldSearchForCustomTokens,
@@ -39,7 +40,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setFromBlockchain,
     setToBlockchain,
   } = useQuoteStore()();
-  const { getBalanceFor } = useAppStore();
+  const { strategy, context } = useModeStrategy();
   const {
     fetch,
     loading,
@@ -52,23 +53,29 @@ export function SelectSwapItemsPage(props: PropTypes) {
   const selectedBlockchainName = selectedBlockchain?.name ?? '';
 
   // Tokens & Blockchains list
-  const blockchains = useAppStore().blockchains({
+  const blockchains = strategy.blockchains({ ...context, type });
+  const sections = strategy.tokenSections({
+    ...context,
     type,
-  });
-  const tokens = useAppStore().tokens({
-    type,
-    blockchain: selectedBlockchainName,
+    blockchain: selectedBlockchain,
     searchFor: searchedFor,
-    getBalanceFor: getBalanceFor,
   });
+  const tokens = sections.flatMap((section) => section.tokens);
+  const canSearchForCustomTokens = (tokens: Token[]) =>
+    strategy.allowCustomTokens &&
+    shouldSearchForCustomTokens(tokens, searchedFor, selectedBlockchain?.name);
 
-  const modifiedTokens = prepareTokensList(
-    tokens,
-    customTokens,
-    searchedFor,
-    loading,
-    selectedBlockchain?.name
-  );
+  const rows = flattenTokenSections(sections);
+  const modifiedTokens = strategy.allowCustomTokens
+    ? prepareTokensList(
+        rows,
+        tokens,
+        customTokens,
+        searchedFor,
+        loading,
+        selectedBlockchain?.name
+      )
+    : rows;
 
   const updateBlockchain = (blockchain: BlockchainMeta) => {
     if (type === 'source') {
@@ -116,9 +123,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
   };
 
   useEffect(() => {
-    if (
-      shouldSearchForCustomTokens(tokens, searchedFor, selectedBlockchain?.name)
-    ) {
+    if (canSearchForCustomTokens(tokens)) {
       fetch(searchedFor, selectedBlockchain?.name ?? undefined);
     }
 
@@ -155,11 +160,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
           setValue={() => setSearchedFor('')}
           onChange={(event) => setSearchedFor(event.target.value)}
           suffix={
-            shouldSearchForCustomTokens(
-              tokens,
-              searchedFor,
-              selectedBlockchain?.name
-            ) && loading ? (
+            canSearchForCustomTokens(tokens) && loading ? (
               <Spinner size={12} color="secondary" />
             ) : undefined
           }
@@ -170,6 +171,13 @@ export function SelectSwapItemsPage(props: PropTypes) {
           selectedBlockchain={selectedBlockchainName}
           searchedFor={searchedFor}
           type={type}
+          getItemOverrides={(token) =>
+            strategy.tokenItem({
+              ...context,
+              token,
+              sectionId: token.sectionId,
+            })
+          }
           onChange={(token) => {
             emitTokenSelected(token);
             updateToken(token);

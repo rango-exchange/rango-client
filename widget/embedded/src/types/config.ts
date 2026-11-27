@@ -1,7 +1,7 @@
 import type { Provider, WalletType } from '@hub3js/core';
 import type { Language, theme } from '@rango-dev/ui';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { Asset } from 'rango-sdk';
+import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { ReactElement } from 'react';
 
 export type WidgetVariant = 'default' | 'expanded' | 'full-expanded';
@@ -107,6 +107,47 @@ export type BlockchainAndTokenConfig = {
   blockchains?: string[];
   pinnedTokens?: Asset[];
   tokens?: Asset[] | { [blockchain: string]: Tokens };
+};
+
+export type StocksAssetClass = 'stablecoin' | 'native' | 'stocks';
+
+/**
+ * `StocksToken`
+ *
+ * @property {StocksAssetClass} assetClass - `native` and `stablecoin` tokens are the crypto side, `stocks` tokens are the stocks side.
+ * @property {number} liquidity - Liquidity volume in USD, shown in the token list.
+ * @property {string} issuerId - Name of the token issuer, matches `StocksIssuer.info.name`. e.g. 'xStocks'
+ */
+export type StocksToken = Token & {
+  assetClass: StocksAssetClass;
+  liquidity: number;
+  issuerId: string;
+};
+
+export type StocksIssuer = {
+  info: { logo: string; name: string; website: string };
+  chains: string[];
+};
+
+export type StocksMeta = {
+  blockchains: BlockchainMeta[];
+  swappers: SwapperMeta[];
+  tokens: StocksToken[];
+  issuers: StocksIssuer[];
+};
+
+/**
+ * `StocksConfig` (experimental)
+ *
+ * When it is set, the widget works in stocks mode: buying and selling stocks with crypto.
+ * In this mode, `from.tokens`, `to.tokens`, `from.blockchains`, `to.blockchains` and `pinnedTokens` are ignored.
+ *
+ * @property {StocksMeta} meta - Supported tokens and issuers, provided by the host app.
+ * @property {string} ticker - The stock being traded (e.g. 'TSLA'). The stocks side only shows tokens of this ticker.
+ */
+export type StocksConfig = {
+  meta: StocksMeta;
+  ticker: string;
 };
 
 /**
@@ -307,6 +348,7 @@ export type WidgetConfig = {
       element: ReactElement;
       routes?: string[];
     };
+    stocks?: StocksConfig;
   };
   routing?: Routing;
 };

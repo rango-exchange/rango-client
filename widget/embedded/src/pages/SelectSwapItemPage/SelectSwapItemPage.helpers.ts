@@ -1,4 +1,5 @@
 import type { TokenList } from '../../components/TokenList';
+import type { TokenListSection } from '../../modes';
 import type { Token } from 'rango-sdk';
 import type { ComponentProps } from 'react';
 
@@ -34,8 +35,35 @@ export function shouldSearchForCustomTokens(
   );
 }
 
+/**
+ * Flattens sections into a single list of rows (headers + tokens),
+ * so the token list can still render them in one virtualized list.
+ * Sections without tokens are skipped.
+ */
+export function flattenTokenSections(
+  sections: TokenListSection[]
+): ComponentProps<typeof TokenList>['list'] {
+  return sections.flatMap((section) => {
+    if (!section.tokens.length) {
+      return [];
+    }
+    const tokens = section.tokens.map((token) => ({
+      ...token,
+      sectionId: section.id,
+    }));
+
+    return section.title
+      ? [
+          { kind: 'header' as const, id: section.id, title: section.title },
+          ...tokens,
+        ]
+      : tokens;
+  });
+}
+
 export function prepareTokensList(
-  tokens: Token[],
+  tokens: ComponentProps<typeof TokenList>['list'],
+  metaTokens: Token[],
   customTokens: Token[],
   query: string,
   loading: boolean,
@@ -43,7 +71,7 @@ export function prepareTokensList(
 ) {
   let modifiedList: ComponentProps<typeof TokenList>['list'] = [...tokens];
 
-  if (shouldSearchForCustomTokens(tokens, query, blockchain)) {
+  if (shouldSearchForCustomTokens(metaTokens, query, blockchain)) {
     modifiedList = loading
       ? [...modifiedList, 'skeleton', 'skeleton', 'skeleton']
       : [

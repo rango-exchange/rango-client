@@ -192,6 +192,10 @@ export const createConfigSlice: StateCreatorWithInitialData<
         'supportedDestinationTokens',
         supportedDestinationTokens
       );
+      // Stocks lists are recalculated lazily on the next read (see `stocksTokens` in data slice).
+      cacheService.remove('stocksCryptoTokens');
+      cacheService.remove('stocksAssetTokens');
+      cacheService.remove('stocksTokensByHash');
 
       set({
         config: {

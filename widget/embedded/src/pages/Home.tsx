@@ -1,6 +1,5 @@
 import type { SelectedQuote } from '../types';
 
-import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
@@ -20,6 +19,7 @@ import { QuoteInfo } from '../containers/QuoteInfo';
 import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useSwapMode } from '../hooks/useSwapMode';
+import { useModeStrategy } from '../modes';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
@@ -79,6 +79,7 @@ export function Home() {
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const currentSlippage = customSlippage !== null ? customSlippage : slippage;
   const { swapMode } = useSwapMode();
+  const { strategy, context } = useModeStrategy();
 
   const slippageValidation = getSlippageValidation(currentSlippage);
 
@@ -172,7 +173,7 @@ export function Home() {
       onHandleNavigation(navigationRoutes.fromSwap);
     } else {
       onHandleNavigation(
-        swapMode === 'swap'
+        swapMode !== 'refuel'
           ? navigationRoutes.toSwap
           : navigationRoutes.toSwap + '/' + navigationRoutes.blockchains
       );
@@ -231,9 +232,7 @@ export function Home() {
             onHandleNavigation(navigationRoutes.wallets);
           },
           hasBackButton: false,
-          title:
-            config.title ||
-            (swapMode === 'swap' ? i18n.t('Swap') : i18n.t('Refuel')),
+          title: strategy.title({ ...context, fromToken, toToken }),
           suffix: (
             <HeaderButtons
               hidden={isExpandable ? ['refresh'] : undefined}
