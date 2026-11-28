@@ -177,7 +177,49 @@ describe('sendEvmTransaction', () => {
     ).catch((error: unknown) => error);
 
     expect(SignerError.isSignerError(error)).toBe(true);
+    expect((error as SignerError).code).toBe(SignerErrorCode.REJECTED_BY_USER);
     expect((error as SignerError).rpcCode).toBe(RPCErrorCode.REJECTION);
+  });
+
+  test('reports a rejection sent as an internal error (e.g. Bitget) as a rejection', async () => {
+    const { namespace } = createNamespace(() => {
+      // The wallet throws its raw EIP-1193 error, a plain object.
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
+      throw { code: -32603, message: 'User rejected the request' };
+    });
+
+    const error = await sendEvmTransaction(
+      namespace,
+      createEvmTransaction(),
+      ADDRESS,
+      '1'
+    ).catch((error: unknown) => error);
+
+    expect((error as SignerError).code).toBe(SignerErrorCode.REJECTED_BY_USER);
+    expect((error as SignerError).rpcCode).toBe(RPCErrorCode.REJECTION);
+    expect((error as SignerError).message).toBe(
+      'User rejected the transaction'
+    );
+  });
+
+  test("reports other internal errors with the wallet's message", async () => {
+    const { namespace } = createNamespace(() => {
+      // The wallet throws its raw EIP-1193 error, a plain object.
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
+      throw { code: -32603, message: 'execution reverted' };
+    });
+
+    const error = await sendEvmTransaction(
+      namespace,
+      createEvmTransaction(),
+      ADDRESS,
+      '1'
+    ).catch((error: unknown) => error);
+
+    expect((error as SignerError).code).toBe(SignerErrorCode.SEND_TX_ERROR);
+    expect((error as SignerError).getErrorDetail().detail).toBe(
+      'execution reverted'
+    );
   });
 
   test("fails when the wallet resolves with 'null' instead of a hash", async () => {

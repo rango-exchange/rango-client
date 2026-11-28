@@ -32,12 +32,71 @@ type ResolveTransactionHash = (hash: string) => Promise<string>;
 /** EIP-1193 code for a request the user rejected. */
 const USER_REJECTED_REQUEST_CODE = 4001;
 
+/** Guards the `cause` walk against cyclic chains. */
+const MAX_ERROR_CHAIN_DEPTH = 10;
+
+type ErrorChainItem = {
+  name?: unknown;
+  code?: unknown;
+  message?: unknown;
+  shortMessage?: unknown;
+  details?: unknown;
+  context?: unknown;
+};
+
+/**
+ * Walks an error and its `cause`s. The last link is usually the wallet's raw
+ * EIP-1193 error, a plain object rather than an `Error`, so `cause` is followed
+ * on any object.
+ */
 function* errorChain(error: unknown) {
   let current: unknown = error;
-  while (current) {
-    yield current as { name?: string; code?: unknown; message?: string };
-    current = current instanceof Error ? current.cause : undefined;
+  let depth = 0;
+  while (current && typeof current === 'object') {
+    yield current as ErrorChainItem;
+    if (++depth >= MAX_ERROR_CHAIN_DEPTH) {
+      return;
+    }
+    current = (current as { cause?: unknown }).cause;
   }
+}
+
+/**
+ * Whether a link of the chain is a user rejection. Some wallets (e.g. Bitget)
+ * reject with the generic `-32603` internal error, which viem reports as "An
+ * internal error was received.", so the wallet's own message is checked too.
+ *
+ * Only strings go to `isRejectedError`: for objects it calls `JSON.stringify`,
+ * which throws on the bigints viem's errors carry.
+ */
+function isRejectionItem(item: ErrorChainItem): boolean {
+  if (
+    item.code === USER_REJECTED_REQUEST_CODE ||
+    item.name === 'UserRejectedRequestError'
+  ) {
+    return true;
+  }
+  return [item.message, item.details].some(
+    (text) => typeof text === 'string' && SignerError.isRejectedError(text)
+  );
+}
+
+/**
+ * The wallet's own message. viem replaces it with a generic `shortMessage` and
+ * keeps it in `details`.
+ */
+function getWalletErrorMessage(error: unknown): unknown {
+  if (!(error instanceof Error)) {
+    return error;
+  }
+  const { details, shortMessage } = error as Error & ErrorChainItem;
+  if (typeof details === 'string' && details) {
+    return details;
+  }
+  if (typeof shortMessage === 'string' && shortMessage) {
+    return shortMessage;
+  }
+  return error.message;
 }
 
 function errorChainIncludes(error: unknown, text: string): boolean {
@@ -72,30 +131,31 @@ export function toEvmSignerError(
      * WalletConnect adds the session's peer. viem wraps it, so it's looked for
      * along the chain.
      */
-    const itemContext = (item as { context?: unknown }).context;
-    if (!context && itemContext && typeof itemContext === 'object') {
-      context = itemContext as Record<string, unknown>;
+    if (!context && item.context && typeof item.context === 'object') {
+      context = item.context as Record<string, unknown>;
     }
-    if (
-      item.code === USER_REJECTED_REQUEST_CODE ||
-      item.name === 'UserRejectedRequestError'
-    ) {
+    if (isRejectionItem(item)) {
       isRejected = true;
       break;
     }
   }
 
-  const message =
-    error instanceof Error
-      ? (error as Error & { shortMessage?: string }).shortMessage ||
-        error.message
-      : error;
+  if (isRejected) {
+    return new SignerError(
+      SignerErrorCode.REJECTED_BY_USER,
+      undefined,
+      undefined,
+      RPCErrorCode.REJECTION,
+      error,
+      context
+    );
+  }
 
   return new SignerError(
     code,
     undefined,
-    message,
-    isRejected ? RPCErrorCode.REJECTION : RPCErrorCode.UNKNOWN_ERROR,
+    getWalletErrorMessage(error),
+    RPCErrorCode.UNKNOWN_ERROR,
     error,
     context
   );
