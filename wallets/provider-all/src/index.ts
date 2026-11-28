@@ -8,7 +8,6 @@ import { buildProvider as coin98 } from '@rango-dev/provider-coin98';
 import { buildProvider as coinbase } from '@rango-dev/provider-coinbase';
 import { buildProvider as defaultInjected } from '@rango-dev/provider-default';
 import { buildProvider as enkrypt } from '@rango-dev/provider-enkrypt';
-import { buildProvider as exodus } from '@rango-dev/provider-exodus';
 import { buildProvider as freighter } from '@rango-dev/provider-freighter';
 import { buildProvider as gemwallet } from '@rango-dev/provider-gemwallet';
 import { buildProvider as ledger } from '@rango-dev/provider-ledger';
@@ -60,7 +59,6 @@ export const allProviders = (): (() => Provider<any>)[] => {
     coin98,
     coinbase,
     freighter,
-    exodus,
     mathwallet,
     okx,
     tokenPocket,

@@ -422,12 +422,3 @@ export const OKX_WALLET_SUPPORTED_CHAINS = [
   Networks.LTC,
   Networks.AVAX_CCHAIN,
 ];
-
-export const EXODUS_WALLET_SUPPORTED_CHAINS = [
-  Networks.SOLANA,
-  Networks.ETHEREUM,
-  Networks.BSC,
-  Networks.POLYGON,
-  Networks.AVAX_CCHAIN,
-  BNB_SYMBOL,
-];
