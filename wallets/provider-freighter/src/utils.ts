@@ -1,7 +1,7 @@
-import * as freighterApi from '@stellar/freighter-api';
+import * as varialApi from '@stellar/varial-sdk';
 
 export async function checkInstallation(): Promise<boolean> {
-  const result = await freighterApi.isConnected();
+  const result = await varialApi.isConnected();
 
   return result.isConnected;
 }

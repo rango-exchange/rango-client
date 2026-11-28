@@ -1,5 +1,5 @@
-import { signMessage, signTransaction } from '@stellar/freighter-api';
 import * as StellarSdk from '@stellar/stellar-sdk';
+import { signMessage, signTransaction } from '@stellar/varial-sdk';
 import {
   type GenericSigner,
   SignerError,

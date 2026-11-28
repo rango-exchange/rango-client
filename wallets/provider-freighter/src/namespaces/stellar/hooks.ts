@@ -2,7 +2,7 @@ import type { StellarActions } from '@hub3js/stellar';
 
 import { ChangeAccountSubscriberBuilder } from '@hub3js/std/hooks';
 import { utils } from '@hub3js/stellar';
-import { WatchWalletChanges } from '@stellar/freighter-api';
+import { WatchWalletChanges } from '@stellar/varial-sdk';
 
 const WATCH_WALLET_INTERVAL = 1000; // how often you want to check for changes in the wallet
 
