@@ -54,6 +54,29 @@ export interface WalletConnectAdapterConfig {
   modalZIndex?: number;
 }
 
+/**
+ * Attaches the session's namespaces and peer metadata, and the wallet's error
+ * code, to an error a relayed request failed with.
+ */
+function withSessionContext(error: unknown, session: SessionTypes.Struct) {
+  const wrapped =
+    error instanceof Error
+      ? error
+      : Object.assign(
+          new Error(
+            (error as { message?: string } | null)?.message ?? String(error)
+          ),
+          { code: (error as { code?: unknown } | null)?.code }
+        );
+  return Object.assign(wrapped, {
+    context: {
+      namespaces: session.namespaces,
+      peering: session.peer?.metadata,
+      code: (error as { code?: unknown } | null)?.code,
+    },
+  });
+}
+
 export class WalletConnectAdapter {
   readonly #projectId: string;
   readonly #disableModalLink?: string;
@@ -171,11 +194,21 @@ export class WalletConnectAdapter {
           );
         }
 
-        return (await this.getClient()).request({
-          topic: session.topic,
-          chainId: `${NAMESPACES.ETHEREUM}:${reference}`,
-          request: { method, params },
-        });
+        try {
+          return await (
+            await this.getClient()
+          ).request({
+            topic: session.topic,
+            chainId: `${NAMESPACES.ETHEREUM}:${reference}`,
+            request: { method, params },
+          });
+        } catch (error) {
+          /*
+           * Tells the logs which wallet app the session is with. queue-manager
+           * passes it on as the signer error's context.
+           */
+          throw withSessionContext(error, session);
+        }
       }
 
       const provider = await this.#getRpcProvider();

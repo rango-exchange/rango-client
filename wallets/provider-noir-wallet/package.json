@@ -30,11 +30,13 @@
   "devDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
+    "@hub3js/namespaces": "0.0.0-experimental-1b9b89b0-20261110",
     "@hub3js/std": "^0.6.0"
   },
   "peerDependencies": {
     "@hub3js/bip122": "^0.4.0",
     "@hub3js/core": "^0.64.0",
+    "@hub3js/namespaces": "0.0.0-experimental-1b9b89b0-20261110",
     "@hub3js/std": "^0.6.0"
   },
   "publishConfig": {

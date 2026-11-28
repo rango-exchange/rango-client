@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { NextTransactionStateError } from '../common/produceNextStateForTransaction';
-import type { EvmTypedData } from '../executeEvmTransaction';
+import type { TypedDataDefinition } from '@hub3js/evm';
 import type { HyperliquidTransaction, Transaction } from 'rango-sdk';
 import type { Result } from 'ts-results';
 
@@ -58,7 +58,7 @@ export function ensureHyperliquidTransactionIsValid(
 
 export function getTypedDataFromMessage(
   message: string
-): Result<EvmTypedData, NextTransactionStateError> {
+): Result<TypedDataDefinition, NextTransactionStateError> {
   try {
     const typedData = JSON.parse(message);
     // `types` holds only the primary type: `EIP712Domain` is derived from `domain`.

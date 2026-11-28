@@ -6,4 +6,4 @@ export {
   signEvmTypedData,
   waitForEvmTransaction,
 } from './utils.js';
-export type { EvmNamespace, EvmTypedData } from './utils.js';
+export type { EvmNamespace } from './utils.js';
