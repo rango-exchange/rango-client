@@ -9,9 +9,9 @@ import {
 import * as commonBuilders from '@hub3js/std/builders';
 import { standardizeAndThrowError } from '@hub3js/std/operators';
 import { builders, utils } from '@hub3js/stellar';
-import * as freighterApi from '@stellar/freighter-api';
+import * as varialApi from '@stellar/varial-sdk';
 
-import { FREIGHTER_DECLINED_ERROR_CODE, WALLET_ID } from '../../constants.js';
+import { VARIAL_DECLINED_ERROR_CODE, WALLET_ID } from '../../constants.js';
 
 import { changeAccountSubscriberBuilder } from './hooks.js';
 
@@ -22,7 +22,7 @@ const connect = builders
   .connect()
   .action(async function () {
     try {
-      const result = await freighterApi.requestAccess();
+      const result = await varialApi.requestAccess();
 
       if (result.error) {
         throw result.error;
@@ -34,7 +34,7 @@ const connect = builders
         typeof error === 'object' &&
         error !== null &&
         'code' in error &&
-        error.code === FREIGHTER_DECLINED_ERROR_CODE;
+        error.code === VARIAL_DECLINED_ERROR_CODE;
 
       if (isDeclined) {
         throw new Hub3Error(
@@ -55,7 +55,7 @@ const canEagerConnect = new ActionBuilder<StellarActions, 'canEagerConnect'>(
   'canEagerConnect'
 )
   .action(async function () {
-    const result = await freighterApi.getAddress();
+    const result = await varialApi.getAddress();
     return !!result.address;
   })
   .build();

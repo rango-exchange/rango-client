@@ -7497,14 +7497,6 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@stellar/freighter-api@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@stellar/freighter-api/-/freighter-api-6.0.1.tgz#93807387b84d56425b281d0bdb0da180c9de5503"
-  integrity sha512-eqwakEqSg+zoLuPpSbKyrX0pG8DQFzL/J5GtbfuMCmJI+h+oiC9pQ5C6QLc80xopZQKdGt8dUAFCmDMNdAG95w==
-  dependencies:
-    buffer "6.0.3"
-    semver "7.7.1"
-
 "@stellar/js-xdr@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@stellar/js-xdr/-/js-xdr-4.0.0.tgz#5c4bd396a71ea3aef7a91dee885cf8dd2e10c5cf"
@@ -7536,6 +7528,14 @@
     randombytes "^2.1.0"
     toml "^3.0.0"
     urijs "^1.19.11"
+
+"@stellar/varial-sdk@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@stellar/varial-sdk/-/varial-sdk-7.0.0.tgz#473e37d815b53c13ed7d60fe668384c6bc652f02"
+  integrity sha512-lF56k2v1TjfARsdpJdCO5pP70lW2SSsm6VupbWFV6vHNy7bi9sOFWXvn30B+AvUqqpFiXTHwRaVQWXt+dR9XXA==
+  dependencies:
+    buffer "6.0.3"
+    semver "7.8.4"
 
 "@stitches/react@^1.2.8":
   version "1.2.8"
@@ -16711,11 +16711,6 @@ semver@7.6.0:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@7.7.1:
-  version "7.7.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.1.tgz#abd5098d82b18c6c81f6074ff2647fd3e7220c9f"
-  integrity sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==
-
 semver@7.7.2:
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
@@ -16725,6 +16720,11 @@ semver@7.7.4:
   version "7.7.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.4.tgz#28464e36060e991fa7a11d0279d2d3f3b57a7e8a"
   integrity sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==
+
+semver@7.8.4:
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.4.tgz#c73eceebae0616934be8dff28a7fd70757c8e696"
+  integrity sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==
 
 semver@^6.3.1:
   version "6.3.1"
