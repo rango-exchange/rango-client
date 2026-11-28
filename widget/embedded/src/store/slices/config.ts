@@ -9,7 +9,7 @@ import type { Provider } from '@hub3js/core';
 
 import {
   allProviders as getAllProviders,
-  RPC_URLS,
+  toNamespacesRPCUrls,
   WalletTypes,
 } from '@rango-dev/provider-all';
 
@@ -19,6 +19,8 @@ import {
   type ProvidersOptions,
 } from '../../utils/providers';
 import { matchTokensFromConfigWithMeta } from '../utils';
+
+const ETHEREUM_CHAIN_ID = 1;
 
 function makeProvidersOptionsFromConfig(
   config: WidgetConfig
@@ -83,11 +85,31 @@ export interface ConfigSlice {
   getAvailableProviders: () => Provider[];
 }
 
+/**
+ * The RPC urls from the config, with `signers.customEthereumRPC` tried first on
+ * Ethereum. Providers get them when they're built, so they never fall back to
+ * an RPC the dapp didn't configure.
+ */
+export function rpcURLsFromConfig(config: WidgetConfigWithoutLegacyProviders) {
+  const evm = { ...config.rpcUrls?.evm };
+  const customEthereumRPC = config.signers?.customEthereumRPC;
+
+  if (customEthereumRPC) {
+    evm[ETHEREUM_CHAIN_ID] = [
+      customEthereumRPC,
+      ...(evm[ETHEREUM_CHAIN_ID] ?? []),
+    ];
+  }
+
+  return toNamespacesRPCUrls({ ...config.rpcUrls, evm });
+}
+
 function generateProviders(
   config: WidgetConfigWithoutLegacyProviders
 ): Provider[] {
   const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build(RPC_URLS));
+  const rpcURLs = rpcURLsFromConfig(config);
+  const allBuiltProviders = allProviders.map((build) => build(rpcURLs));
 
   return allBuiltProviders.filter((provider) =>
     hasRequiredConfig(provider.id, config)
