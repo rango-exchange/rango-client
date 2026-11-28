@@ -4364,7 +4364,6 @@ export const meta = {
       'LTC',
       'BOBA',
     ],
-    exodus: ['BSC', 'POLYGON', 'ETH', 'AVAX_CCHAIN', 'SOLANA', 'BNB'],
     'token-pocket': [
       'BSC',
       'POLYGON',

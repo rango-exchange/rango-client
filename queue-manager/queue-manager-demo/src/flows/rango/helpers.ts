@@ -39,7 +39,6 @@ import { isEvmBlockchain, isSolanaBlockchain, SignerError } from 'rango-types';
 import { sampleRawAccounts } from './mock';
 import {
   ApiMethodName,
-  EXODUS_WALLET_SUPPORTED_CHAINS,
   NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH,
   NETWORKS_FOR_1INCH,
   OKX_WALLET_SUPPORTED_CHAINS,
@@ -656,11 +655,6 @@ export const walletsAndSupportedChainsMetaSelector = (
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
       OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
-
-    [WalletTypes.EXODUS]: blockchainsArray.filter((blockchainMeta) =>
-      EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
-    ),
-
     [WalletTypes.TOKEN_POCKET]: evmBlockchains,
     [WalletTypes.MATH]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.SAFEPAL]: [

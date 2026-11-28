@@ -6,7 +6,6 @@ import { WALLET_ID as COIN98 } from '@rango-dev/provider-coin98';
 import { WALLET_ID as COINBASE } from '@rango-dev/provider-coinbase';
 import { WALLET_ID as DEFAULT } from '@rango-dev/provider-default';
 import { WALLET_ID as ENKRYPT } from '@rango-dev/provider-enkrypt';
-import { WALLET_ID as EXODUS } from '@rango-dev/provider-exodus';
 import { WALLET_ID as FREIGHTER } from '@rango-dev/provider-freighter';
 import { WALLET_ID as GEMWALLET } from '@rango-dev/provider-gemwallet';
 import { WALLET_ID as LEDGER } from '@rango-dev/provider-ledger';
@@ -52,7 +51,6 @@ export const WalletTypes = {
   BRAVE,
   BRAAVOS,
   MATH,
-  EXODUS,
   OKX,
   ENKRYPT,
   TAHO,
