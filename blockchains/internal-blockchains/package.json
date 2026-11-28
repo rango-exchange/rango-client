@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@hub3js/bip122": "^0.4.0",
-    "@hub3js/evm": "^0.8.0",
+    "@hub3js/evm": "0.8.1-next.2",
     "@hub3js/solana": "^0.7.0",
     "@hub3js/starknet": "^0.6.0",
     "@hub3js/stellar": "^0.6.0",

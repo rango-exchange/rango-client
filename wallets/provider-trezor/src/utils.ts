@@ -1,8 +1,6 @@
 import type { TrezorConnect } from '@trezor/connect-web';
 
 import { Hub3Error } from '@hub3js/core';
-import { getEthereumRpcUrl } from '@rango-dev/signer-evm';
-import { JsonRpcProvider } from 'ethers';
 
 import {
   ETHEREUM_CHAIN_ID,
@@ -15,23 +13,6 @@ type DeviceAccounts = {
   chainId: string;
   derivationPath: string;
 };
-
-/**
- * Trezor EVM is Ethereum-only today and has no injected provider, so a single
- * JSON-RPC provider over the Ethereum endpoint serves both the signer (nonce +
- * broadcast) and the read-only namespace actions (allowance, receipt).
- *
- * NOTE: If Trezor EVM support ever expands beyond Ethereum, this must select
- * the RPC per chain instead of the single Ethereum endpoint.
- */
-let evmRpcProvider: { url: string; provider: JsonRpcProvider } | undefined;
-export function getEvmRpcProvider(): JsonRpcProvider {
-  const url = getEthereumRpcUrl();
-  if (evmRpcProvider?.url !== url) {
-    evmRpcProvider = { url, provider: new JsonRpcProvider(url) };
-  }
-  return evmRpcProvider.provider;
-}
 
 // Trezor resolves a failed connect call instead of throwing; its `code`, not its `error` text, says whether the user cancelled.
 export function throwTrezorConnectionError(payload: {

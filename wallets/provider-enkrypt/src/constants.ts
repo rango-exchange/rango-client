@@ -2,9 +2,6 @@ import type { ProviderMetadata } from '@hub3js/core';
 
 import { isEvmNamespace } from '@hub3js/evm';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const WALLET_ID = 'enkrypt';
 // Enkrypt rejects with a bare string, not an error object.
 export const ENKRYPT_REJECTION =
@@ -36,10 +33,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

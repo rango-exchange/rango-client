@@ -1,16 +1,12 @@
 import type { WalletConnectNamespace } from '../types.js';
-import type {
-  AllowanceParams,
-  Chain,
-  EvmTransactionReceipt,
-} from '@hub3js/evm';
+import type { AllowanceParams, Chain, ProviderAPI } from '@hub3js/evm';
 import type { SessionTypes } from '@walletconnect/types';
 import type UniversalProvider from '@walletconnect/universal-provider';
 import type { BlockchainMeta } from 'rango-types';
 
 import { utils } from '@hub3js/evm';
 import { debug } from '@rango-dev/logging-core';
-import { JsonRpcProvider, toBeHex } from 'ethers';
+import { JsonRpcProvider } from 'ethers';
 
 import {
   ensureConnectedToChain as ensureConnectedToChainHelper,
@@ -56,6 +52,29 @@ export interface WalletConnectAdapterConfig {
   disableModalLink?: string;
   themeMode?: 'light' | 'dark';
   modalZIndex?: number;
+}
+
+/**
+ * Attaches the session's namespaces and peer metadata, and the wallet's error
+ * code, to an error a relayed request failed with.
+ */
+function withSessionContext(error: unknown, session: SessionTypes.Struct) {
+  const wrapped =
+    error instanceof Error
+      ? error
+      : Object.assign(
+          new Error(
+            (error as { message?: string } | null)?.message ?? String(error)
+          ),
+          { code: (error as { code?: unknown } | null)?.code }
+        );
+  return Object.assign(wrapped, {
+    context: {
+      namespaces: session.namespaces,
+      peering: session.peer?.metadata,
+      code: (error as { code?: unknown } | null)?.code,
+    },
+  });
 }
 
 export class WalletConnectAdapter {
@@ -147,21 +166,57 @@ export class WalletConnectAdapter {
     return BigInt(result === '0x' ? 0 : result).toString();
   }
 
-  /** Reads a transaction receipt from the active chain's node. */
-  async getTransactionReceipt(
-    txHash: `0x${string}`
-  ): Promise<EvmTransactionReceipt | null> {
-    const provider = await this.#getRpcProvider();
-    const receipt = await provider.getTransactionReceipt(txHash);
-    if (!receipt) {
-      return null;
-    }
+  /**
+   * An EIP-1193 view of the EVM session, for viem and hub3's EVM actions.
+   *
+   * The methods the session negotiated go to the wallet over the relay, on the
+   * session's active chain. Everything else (reads such as
+   * `eth_getTransactionReceipt`) goes to a node for that chain, for the reasons
+   * given on `#getRpcProvider`.
+   */
+  getEip1193Provider(): ProviderAPI {
+    const request = async ({
+      method,
+      params,
+    }: {
+      method: string;
+      params?: unknown;
+    }): Promise<unknown> => {
+      const session = this.getSession('evm');
+      const negotiatedMethods =
+        session?.namespaces[NAMESPACES.ETHEREUM]?.methods;
 
-    return {
-      status: receipt.status === 1 ? '0x1' : '0x0',
-      transactionHash: receipt.hash,
-      blockNumber: toBeHex(receipt.blockNumber),
+      if (session && negotiatedMethods?.includes(method)) {
+        const reference = await this.resolveActiveChainReference();
+        if (!reference) {
+          throw new Error(
+            'Unable to determine EVM chain id from WalletConnect session.'
+          );
+        }
+
+        try {
+          return await (
+            await this.getClient()
+          ).request({
+            topic: session.topic,
+            chainId: `${NAMESPACES.ETHEREUM}:${reference}`,
+            request: { method, params },
+          });
+        } catch (error) {
+          /*
+           * Tells the logs which wallet app the session is with. queue-manager
+           * passes it on as the signer error's context.
+           */
+          throw withSessionContext(error, session);
+        }
+      }
+
+      const provider = await this.#getRpcProvider();
+      return provider.send(method, (params as unknown[] | undefined) ?? []);
     };
+
+    // Session events reach the namespace through its own hooks, not this view.
+    return { request } as unknown as ProviderAPI;
   }
 
   getSession(namespace: WalletConnectNamespace): SessionTypes.Struct | null {

@@ -1,4 +1,5 @@
 import type { Provider, WalletType } from '@hub3js/core';
+import type { RpcUrlsConfig } from '@rango-dev/provider-all';
 import type { Language, theme } from '@rango-dev/ui';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { Asset } from 'rango-sdk';
@@ -114,6 +115,7 @@ export type BlockchainAndTokenConfig = {
  *
  * @property {string | string[]} customSolanaRPC - This is an optional property that can be used to set custom Solana RPCs.
  * @property {string} customEthereumRPC - This is an optional property that can be used to set a custom Ethereum RPC.
+ * It's tried first for chain 1, before any url in `rpcUrls.evm`.
  */
 export type SignersConfig = {
   customSolanaRPC?: string | string[];
@@ -258,6 +260,11 @@ export type LedgerWalletConfig = {
  *   - 'avoidNativeFee': If you want to exclude swappers that have native tokens as fee, for example when you are using an AA account, you could set this parameter.
  *   - 'experimental': Use this parameter to enable experimental routes. This settings shouldn't be used in your production environment.
  *   - 'enableCentralizedSwappers': If you want to enable routing from the centralized protocols like XO Swap, you could set this parameter.
+ * @property {RpcUrlsConfig} rpcUrls - Optional RPC urls that wallets without an RPC of their own
+ *   (e.g. Ledger and Trezor) read the chain through. EVM urls are keyed by chain id, e.g.
+ *   `{ evm: { 1: ['https://…'], 56: ['https://…'] } }`. `signers.customEthereumRPC`, if set, is tried
+ *   first for chain 1. Without any url for chain 1, a public Ethereum node is used, as before `rpcUrls` existed.
+ *   Reads on any other chain without urls fail.
  * @property {WidgetVariant} variant
  *   If it is expanded, multiple routes will show up on the home page;
  *   If it is full-expanded, multiple routes will show up on the home page with full routes;
@@ -292,6 +299,7 @@ export type WidgetConfig = {
   features?: Features;
   variant?: WidgetVariant;
   signers?: SignersConfig;
+  rpcUrls?: RpcUrlsConfig;
   // These are likely to change or remove at anytime. Please use with a caution.
   __UNSTABLE_OR_INTERNAL__?: {
     walletConnectListedDesktopWalletLink?: string;

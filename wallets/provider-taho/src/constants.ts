@@ -11,9 +11,6 @@ import {
 } from '@hub3js/evm';
 import { getChainIdFromCaip2ChainId } from '@hub3js/std/utils';
 
-import getSigners from './signer.js';
-import { getInstanceOrThrow } from './utils.js';
-
 export const TAHO_WALLET_SUPPORTED_EVM_CHAINS = [
   CAIP_ETHEREUM_CHAIN_ID,
   CAIP_POLYGON_CHAIN_ID,
@@ -52,10 +49,6 @@ export const metadata: ProviderMetadata = {
           },
         ],
       },
-    },
-    {
-      name: 'signers',
-      value: { getSigners: async () => getSigners(getInstanceOrThrow()) },
     },
   ],
 };

@@ -9,6 +9,7 @@ import type { Provider } from '@hub3js/core';
 
 import {
   allProviders as getAllProviders,
+  toNamespacesRPCUrls,
   WalletTypes,
 } from '@rango-dev/provider-all';
 
@@ -18,6 +19,8 @@ import {
   type ProvidersOptions,
 } from '../../utils/providers';
 import { matchTokensFromConfigWithMeta } from '../utils';
+
+const ETHEREUM_CHAIN_ID = 1;
 
 function makeProvidersOptionsFromConfig(
   config: WidgetConfig
@@ -82,11 +85,42 @@ export interface ConfigSlice {
   getAvailableProviders: () => Provider[];
 }
 
+/**
+ * The public Ethereum node wallets without an RPC of their own (Ledger, Trezor)
+ * read through when the dapp configures none, the same node the EVM signer
+ * used. It keeps them working for dapps that predate `rpcUrls`.
+ */
+export const DEFAULT_ETHEREUM_RPC_URL = 'https://ethereum-rpc.publicnode.com';
+
+/**
+ * The RPC urls from the config, with `signers.customEthereumRPC` tried first on
+ * Ethereum. Providers get them when they're built. Ethereum falls back to
+ * `DEFAULT_ETHEREUM_RPC_URL` when nothing is configured for it; other chains
+ * only get the urls the dapp configures.
+ */
+export function rpcURLsFromConfig(config: WidgetConfigWithoutLegacyProviders) {
+  const evm = { ...config.rpcUrls?.evm };
+  const customEthereumRPC = config.signers?.customEthereumRPC;
+
+  if (customEthereumRPC) {
+    evm[ETHEREUM_CHAIN_ID] = [
+      customEthereumRPC,
+      ...(evm[ETHEREUM_CHAIN_ID] ?? []),
+    ];
+  }
+  if (!evm[ETHEREUM_CHAIN_ID]?.length) {
+    evm[ETHEREUM_CHAIN_ID] = [DEFAULT_ETHEREUM_RPC_URL];
+  }
+
+  return toNamespacesRPCUrls({ ...config.rpcUrls, evm });
+}
+
 function generateProviders(
   config: WidgetConfigWithoutLegacyProviders
 ): Provider[] {
   const allProviders = getAllProviders();
-  const allBuiltProviders = allProviders.map((build) => build());
+  const rpcURLs = rpcURLsFromConfig(config);
+  const allBuiltProviders = allProviders.map((build) => build(rpcURLs));
 
   return allBuiltProviders.filter((provider) =>
     hasRequiredConfig(provider.id, config)

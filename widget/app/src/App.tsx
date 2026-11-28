@@ -5,6 +5,7 @@ import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 
 import {
+  RPC_URLS,
   TON_CONNECT_MANIFEST_URL,
   TREZOR_MANIFEST,
   WC_PROJECT_ID,
@@ -41,6 +42,7 @@ export function App() {
         walletConnectProjectId: WC_PROJECT_ID,
         trezorManifest: TREZOR_MANIFEST,
         tonConnect: { manifestUrl: TON_CONNECT_MANIFEST_URL },
+        rpcUrls: RPC_URLS,
       };
     }
     if (!!config) {
